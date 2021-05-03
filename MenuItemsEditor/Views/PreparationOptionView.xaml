@@ -1,0 +1,933 @@
+﻿<ContentControl x:Class="MenuItemsEditor.Views.PreparationOptionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:localViews="clr-namespace:MenuItemsEditor.Views"
+        xmlns:local="clr-namespace:MenuItemsEditor"
+        xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
+       xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+                xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+                mc:Ignorable="d"  d:DesignWidth="398.571"  >
+    <ContentControl.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+            <VisualBrush x:Key="WavyBrush" Viewbox="0,0,3,2" ViewboxUnits="Absolute" Viewport="0,0.8,6,4" ViewportUnits="Absolute" TileMode="Tile">
+                <VisualBrush.Visual>
+                    <Path Data="M 0,1 C 1,0 2,2 3,1" Stroke="#FFA2068D" StrokeThickness="0.2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                </VisualBrush.Visual>
+            </VisualBrush>
+            
+            <ControlTemplate x:Key="MinPreparationOptionView" TargetType="{x:Type ContentControl}">
+                <Grid d:DataContext="{d:DesignInstance ViewModel:PreparationOptionViewModel, IsDesignTimeCreatable=True}" >
+                    <Border BorderThickness="0 0 0 1"  BorderBrush="{StaticResource ListBoxBorderBrush}" >
+                        <Grid Margin="4,0,4,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid HorizontalAlignment="Stretch"  Margin="0,0,4,0">
+                                <ControlsEx:EditableTextBlock SpellCheckEnable="True"  FontWeight="{Binding FontWeight}" Translator="{Binding Translator}" UnTranslated="{Binding UnTranslated}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Opacity="{Binding Opacity}" Text="{Binding Name,Mode=TwoWay}" />
+                                <!--<Rectangle Margin="0,0,0,-6" Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  VerticalAlignment="Bottom" Height="9"  HorizontalAlignment="Stretch" StrokeThickness="17" >
+                                <Rectangle.Stroke>
+                                    <VisualBrush Viewbox="0,1,3,2" ViewboxUnits="Absolute" Viewport="0,1,6,17" ViewportUnits="Absolute" TileMode="Tile">
+                                        <VisualBrush.Visual>
+                                            <Path Data="M 0,1 C1,1 1,2 3,1" Stroke="Red" StrokeThickness="0.2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>-->
+
+                            </Grid>
+                            <Grid Grid.Column="1" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18"/>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="18" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Opacity="{Binding Opacity}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Visibility="{Binding PriceIsVisible}" Text="{Binding Path=Price,StringFormat=C}"></TextBlock>
+                                <Image Opacity="{Binding Opacity}" Grid.Column="0" HorizontalAlignment="Left"  Width="12" Height="12" VerticalAlignment="Center"  Source="{Binding UncheckOptionImage}" Margin="3,0,0,0"  ></Image>
+                                <Button Grid.Column="2" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+                                    <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="/MenuItemsEditor;component/Image/MaximizeWindow.png"></Image>
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="MaxPreparationScaledOptionView" TargetType="{x:Type ContentControl}">
+
+                <Grid Margin="4">
+                    <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
+                        </Border.Effect>
+                    </Border>
+                    <Grid  Background="{StaticResource ListBoxBackgroundBrush}"  >
+                        <Grid Margin="0,3,0,3" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png" Margin="10,0,10,0"></Image>
+                                    <Label Grid.Column="1" DockPanel.Dock="Left" Content="Preparation Option" FontWeight="SemiBold" Padding="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}"></Label>
+                                    <Grid Grid.Column="2"  HorizontalAlignment="Left">
+                                        <Label DockPanel.Dock="Left"    FontWeight="SemiBold" Margin="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}">
+                                            <Label.Content>
+                                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                                            </Label.Content>
+
+                                        </Label>
+                                        <Rectangle  Margin="10,0,0,-2" Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  VerticalAlignment="Bottom" Height="9"  HorizontalAlignment="Stretch" StrokeThickness="17" >
+                                            <Rectangle.Stroke>
+                                                <VisualBrush Viewbox="0,1,3,2" ViewboxUnits="Absolute" Viewport="0,1,6,17" ViewportUnits="Absolute" TileMode="Tile">
+                                                    <VisualBrush.Visual>
+                                                        <Path Data="M 0,1 C1,1 1,2 3,1" Stroke="Red" StrokeThickness="0.2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Rectangle.Stroke>
+                                        </Rectangle>
+                                    </Grid>
+
+                                    <Button  DockPanel.Dock="Right" Grid.Column="3" HorizontalAlignment="Right" Command="{Binding MinimizeCommand}"  Style="{StaticResource WindowButton}"   >
+                                        <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="/MenuItemsEditor;component/Image/MinimizeWindow.png"></Image>
+                                    </Button>
+                                </Grid>
+                                <Border Margin="5,2,0,0"  BorderThickness="0 0 0 1" BorderBrush="{StaticResource TitleBarForeColor}"></Border>
+                                <!--<Line Margin="5,2,5,0"  VerticalAlignment="Top" HorizontalAlignment="Stretch" StrokeThickness="0.5" Stroke="{StaticResource TitleBarForeColor}"  X2="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"></Line>-->
+                            </StackPanel>
+
+
+                            <Grid Grid.Row="1" Margin="4" Opacity="{Binding Opacity}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="186*"/>
+                                    <ColumnDefinition Width="175*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid  Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionNameLabel}"  />
+
+
+
+                                    <Grid Grid.Row="1"   HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ControlsEx:MultiligualWatermarkTextBox MinHeight="30" UnTranslated="{Binding UnTranslated }" 
+                                                                    Translator="{Binding Translator}"  
+                                                                    Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                                    VerticalAlignment="Top"  
+                                                                    IsEnabled="{Binding IsEditable}"
+                                                                   AcceptsReturn="True" 
+                                                                   HorizontalAlignment="Stretch" 
+                                                                   TextWrapping="Wrap"/>
+
+
+                                        <!--<wpftoolkitex:WatermarkTextBox Padding="5,8" IsEnabled="{Binding IsEditable}" MinHeight="30" Grid.Row="1" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                       Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   
+                                                       AcceptsReturn="True" 
+                                                       HorizontalAlignment="Stretch" 
+                                                       TextWrapping="Wrap">
+                                        <wpftoolkitex:WatermarkTextBox.Style>
+                                            <Style TargetType="wpftoolkitex:WatermarkTextBox">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UnTranslated }" Value="True">
+                                                        <Setter Property="TextDecorations">
+                                                            <Setter.Value>
+                                                                <TextDecorationCollection>
+                                                                    <TextDecoration Location="Underline">
+                                                                        <TextDecoration.Pen>
+                                                                            <Pen Brush="{StaticResource WavyBrush}" Thickness="6"/>
+                                                                        </TextDecoration.Pen>
+                                                                    </TextDecoration>
+                                                                </TextDecorationCollection>
+                                                            </Setter.Value>
+                                                        </Setter>
+
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </wpftoolkitex:WatermarkTextBox.Style>
+
+                                    </wpftoolkitex:WatermarkTextBox>
+
+                                    <Border Grid.Column="1" BorderThickness="0,1,1,1" BorderBrush="{StaticResource TextBoxBorderBrush}"></Border>
+                                    <Button Command="{Binding TranslateOptionNameCommand}"  ToolTip="Translate"  Grid.Column="1" Margin="3,2,3,2"  Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="25"  HorizontalAlignment="Right" >
+                                        <Image  Width="16" Height="16" Source="/MenuItemsEditor;component/Image/Translate24.png" ></Image>
+                                    </Button>-->
+                                    </Grid>
+
+
+
+
+
+
+                                </Grid>
+
+                                <Grid  Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="2,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionScaleTypeLabel}"    />
+
+                                    <Grid  Grid.Row="1" Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition />
+                                            <RowDefinition Height="40"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="32"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ComboBox IsEnabled="{Binding IsEditable}"  x:Name="comboBox" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding ScaleTypes}" DisplayMemberPath="Name" SelectedItem="{Binding ScaleType}"  />
+                                        <Button IsEnabled="{Binding IsEditable}"  Margin="1,0,1,0" Command="{Binding EditScaleTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}"   Grid.Column="1" ToolTip = "{x:Static resx:Resources.TooltipForEditScaleTypes}">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/adjustment16.png"></Image>
+                                        </Button>
+                                        <ListBox Grid.Row="1" Grid.ColumnSpan="2" SelectedValue="{Binding Path=SelectedOptionLevel}"  ItemsSource="{Binding Path=Levels}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid >
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="20"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="auto"/>
+
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Width="10" Height="10" Source="{Binding Image}" Margin="2,0,3,0" ToolTip="Initial level of preparation option" ></Image>
+                                                        <Image Grid.Column="1" Width="12" Height="12" Source="{Binding UncheckOptionImage}" VerticalAlignment="Center" ToolTip="{x:Static resx:Resources.UncheckOptionSignPrompt}" ></Image>
+                                                        <TextBlock Grid.Column="2" Text="{Binding Path=Name}" />
+                                                        <TextBlock Grid.Column="3" Text="{Binding Path=Price, StringFormat=C }" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+
+                                        <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
+                                            <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                                <Grid  >
+                                                    <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                                        <Button  Command="{Binding SetSelectedLevelInitialCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1" ToolTip="{x:Static resx:Resources.SetInitialOptionLevelTooltip}">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/checkmark16.png"></Image>
+                                                        </Button>
+                                                        <!--<Button Command="{Binding DeleteSelectedScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                        </Button>
+
+                                        <Button Command="{Binding AddScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                        </Button>-->
+                                                    </StackPanel>
+                                                    <StackPanel IsEnabled="{Binding IsEditable}" Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                        <Button Command="{Binding RenameSelectedScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                        </Button>
+
+
+
+                                                        <!--<Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>-->
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid  Grid.Row="1" Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="0" Content="Quantitative" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
+                                    <Grid  Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.PriceLabel}"/>
+                                        <!--<wpftoolkitex:WatermarkTextBox Grid.Row="1" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   VerticalAlignment="Top"  HorizontalAlignment="Stretch" />-->
+                                        <!--<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding Path=Price,StringFormat=C}" Grid.Row="1" >
+                        <TextBox.ToolTip>
+                            <ToolTip Content="{Binding OrgPrice}"></ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>-->
+                                        <localViews:ContextPriceTextBox OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1" VerticalAlignment="Top"></localViews:ContextPriceTextBox>
+                                    </Grid>
+                                    <Grid Visibility="{Binding PriceContextsVisibility}"  Grid.Row="2" Grid.Column="0" Margin="0,0,0,1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="84*"/>
+                                            <ColumnDefinition Width="113*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.PriceContextLabel}" Grid.ColumnSpan="2"/>
+
+                                        <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
+                                    </Grid>
+                                    <CheckBox HorizontalAlignment="Left" Grid.Row="3" Margin="-2,5,5,5" IsChecked="{Binding IsRecipeIngredient}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"></CheckBox>
+                                </Grid>
+
+
+
+
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="MaxPreparationOptionsGroupView" TargetType="{x:Type ContentControl}">
+
+
+                <Grid Margin="4" >
+                    <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
+                        </Border.Effect>
+                    </Border>
+                    <Grid Opacity="{Binding Opacity}" Background="{StaticResource ListBoxBackgroundBrush}"  >
+
+
+
+                        <Grid Margin="0,3,0,3" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png" Margin="10,0,10,0"></Image>
+                                    <Label Grid.Column="1" DockPanel.Dock="Left" Content="{x:Static resx:Resources.OptionGroupTitle}" FontWeight="SemiBold" Padding="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}"></Label>
+                                    <Grid Grid.Column="2"  HorizontalAlignment="Left">
+                                        <Label DockPanel.Dock="Left"    FontWeight="SemiBold" Margin="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}">
+                                            <Label.Content>
+                                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                                            </Label.Content>
+
+                                        </Label>
+                                        <Rectangle  Margin="10,0,0,-2" Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  VerticalAlignment="Bottom" Height="9"  HorizontalAlignment="Stretch" StrokeThickness="17" >
+                                            <Rectangle.Stroke>
+                                                <VisualBrush Viewbox="0,1,3,2" ViewboxUnits="Absolute" Viewport="0,1,6,17" ViewportUnits="Absolute" TileMode="Tile">
+                                                    <VisualBrush.Visual>
+                                                        <Path Data="M 0,1 C1,1 1,2 3,1" Stroke="Red" StrokeThickness="0.2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Rectangle.Stroke>
+                                        </Rectangle>
+                                    </Grid>
+
+                                    <Button  DockPanel.Dock="Right" Grid.Column="3" HorizontalAlignment="Right" Command="{Binding MinimizeCommand}"  Style="{DynamicResource WindowButton}"   >
+                                        <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="/MenuItemsEditor;component/Image/MinimizeWindow.png"></Image>
+                                    </Button>
+                                </Grid>
+                                <Border Margin="5,2,0,0"  BorderThickness="0 0 0 1" BorderBrush="{StaticResource TitleBarForeColor}"></Border>
+                                <!--<Line Margin="5,2,5,0"  VerticalAlignment="Top" HorizontalAlignment="Stretch" StrokeThickness="0.5" Stroke="{StaticResource TitleBarForeColor}"  X2="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"></Line>-->
+                            </StackPanel>
+
+
+                            <Grid Grid.Row="1" Margin="4" Opacity="{Binding Opacity}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Visibility="{Binding PriceContextsVisibility}"  Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="30" />
+                                    </Grid.RowDefinitions>
+                                    <CheckBox  HorizontalAlignment="Center" Margin="5,0,5,0" Grid.Row="2"  Grid.Column="1"   VerticalAlignment="Bottom" IsChecked="{Binding IsRecipeIngredient}"  Content="{x:Static resx:Resources.GroupOtionsIngredientCheckBoxLabel}"></CheckBox>
+
+                                    <Label HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.PriceContextLabel}"/>
+
+                                    <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}"  />
+                                </Grid>
+
+                                <Grid  Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="186*"/>
+                                        <ColumnDefinition Width="175*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Bottom" Margin="0,0,0,4" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label  Content="{x:Static resx:Resources.OptionGroupNameLabel}"/>
+                                        <Grid Grid.Column="1" HorizontalAlignment="Right">
+                                            <CheckBox Margin="0,0,15,0" IsChecked="{Binding HideName}" IsEnabled="{Binding IsEditable}" HorizontalAlignment="Right" Content="Hidden"/>
+                                        </Grid>
+                                    </Grid>
+
+
+
+
+                                    <Grid Grid.Row="1"   HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ControlsEx:MultiligualWatermarkTextBox  MinHeight="30"  UnTranslated="{Binding UnTranslated }" 
+                                                                    Translator="{Binding Translator}"  
+                                                                    Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                                    VerticalAlignment="Top"  
+                                                                    SpellCheckEnable="True" 
+                                                                    IsEnabled="{Binding IsEditable}"
+                                                                   AcceptsReturn="True" 
+                                                                   HorizontalAlignment="Stretch" 
+                                                                   TextWrapping="Wrap"/>
+
+                                        <!--<wpftoolkitex:WatermarkTextBox Padding="5,8" MinHeight="30" Grid.Row="1" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                       Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   
+                                                   IsEnabled="{Binding IsEditable}"
+                                                       AcceptsReturn="True" 
+                                                       HorizontalAlignment="Stretch" 
+                                                       TextWrapping="Wrap">
+                                <wpftoolkitex:WatermarkTextBox.Style>
+                                    <Style TargetType="wpftoolkitex:WatermarkTextBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding UnTranslated }" Value="True">
+                                                <Setter Property="TextDecorations">
+                                                    <Setter.Value>
+                                                        <TextDecorationCollection>
+                                                            <TextDecoration Location="Underline">
+                                                                <TextDecoration.Pen>
+                                                                    <Pen Brush="{StaticResource WavyBrush}" Thickness="6"/>
+                                                                </TextDecoration.Pen>
+                                                            </TextDecoration>
+                                                        </TextDecorationCollection>
+                                                    </Setter.Value>
+                                                </Setter>
+
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </wpftoolkitex:WatermarkTextBox.Style>
+
+                            </wpftoolkitex:WatermarkTextBox>
+
+                            <Border Grid.Column="1" BorderThickness="0,1,1,1" BorderBrush="{StaticResource TextBoxBorderBrush}"></Border>
+                            <Button Command="{Binding TranslateOptionNameCommand}"  ToolTip="Translate"  Grid.Column="1" Margin="3,2,3,2"  Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="25"  HorizontalAlignment="Right" >
+                                <Image  Width="16" Height="16" Source="/MenuItemsEditor;component/Image/Translate24.png" ></Image>
+                            </Button>-->
+                                    </Grid>
+
+
+
+                                    <Label Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionsGroupType}"/>
+                                    <wpftoolkitex:DropDownButton IsEnabled="{Binding IsEditable}"   Content="{Binding Path= SelectionType.SelectionTypeDescription}" x:Name="OptionsGroupSelectionTypeDropDown" Grid.Column="1" Grid.Row="1">
+                                        <wpftoolkitex:DropDownButton.DropDownContent>
+                                            <Grid   Margin="8" >
+                                                <ItemsControl ItemsSource="{Binding SelectionTypes}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid  HorizontalAlignment="Stretch">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                                    <ColumnDefinition Width="20"></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Margin="0,0,4,0" VerticalAlignment="Center" Grid.Column="0" Text="{Binding Path=SelectionTypeDescription}"></TextBlock>
+                                                                <CheckBox Style="{StaticResource ListViewCheckBoxStyle}" IsEnabled="{Binding CheckBoxIsEnable}" IsChecked="{Binding IsChecked}"  VerticalAlignment="Center"  Grid.Column="1" 
+                                                          ToolTip="{Binding CheckBoxTooltip}"
+                                                          ToolTipService.ShowOnDisabled="True">
+
+
+                                                                </CheckBox>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Grid>
+
+                                        </wpftoolkitex:DropDownButton.DropDownContent>
+                                    </wpftoolkitex:DropDownButton>
+
+                                    <!--<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectionTypes}" Text="{Binding SelectionType}">
+                      
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding SelectionTypeDescription}"></TextBlock>
+                                    <CheckBox HorizontalAlignment="Right"></CheckBox>
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>-->
+
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="11" Margin="0,0,0,180"></Grid>
+                                <Grid  Grid.Row="2" Grid.ColumnSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="26"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="44"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionsLabel}"></Label>
+
+                                    <ListBox SelectedValue="{Binding SelectedOption}"  
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                             Grid.Row="1" ItemsSource="{Binding GroupedOptions}"
+                             ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Grid  >
+                                                    <localViews:PreparationOptionView ViewType="{Binding ViewType}"></localViews:PreparationOptionView>
+                                                </Grid>
+
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+
+                                    <Grid Grid.Row="2" Background="WhiteSmoke" Margin="0,0,0,2">
+                                        <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                            <Grid  Visibility="{Binding OptionsListViewButtonsVisible}" >
+                                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                                    <Button Command="{Binding DeleteSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                    </Button>
+                                                    <Grid IsEnabled="{Binding IsEditable}" >
+                                                        <Popup Placement="Top" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="AddPopup"  StaysOpen="False"   >
+                                                            <Popup.Resources>
+                                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ListViewBarButtonStyle}" >
+                                                                    <Setter Property="ConnectableCtrl:ButtonClosePopupBehavior.ClosePopupOnClick" Value="True" />
+                                                                </Style>
+                                                            </Popup.Resources>
+                                                            <Grid Background="WhiteSmoke">
+                                                                <StackPanel Margin="2">
+                                                                    <Grid HorizontalAlignment="Stretch">
+                                                                        <Button Command="{Binding AddOptionCommand}" HorizontalContentAlignment="Left"  Margin="1" >
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png"></Image>
+                                                                                <Label Margin="4,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionLabel}" ></Label>
+                                                                            </StackPanel>
+                                                                        </Button>
+                                                                    </Grid>
+                                                                    <Grid HorizontalAlignment="Stretch" Visibility="{Binding AddOptionsGroupVisibility}" >
+                                                                        <Button Command="{Binding AddOptionsGroupCommand}" HorizontalContentAlignment="Left" Margin="1"  >
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/optionsGroup16.png"></Image>
+                                                                                <Label Margin="4,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionsGoupLabel}" ></Label>
+                                                                            </StackPanel>
+                                                                        </Button>
+                                                                    </Grid>
+
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </Popup>
+                                                        <ToggleButton Style="{StaticResource ListViewBarToggleButtonStyle}" IsChecked="{Binding ElementName=AddPopup, Path=IsOpen, Mode=TwoWay}" Width="36" Height="36"  Margin="1,0,1,3" VerticalAlignment="Bottom" >
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                        </ToggleButton >
+                                                    </Grid>
+                                                </StackPanel>
+
+
+                                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button  x:Uid="serma" Command="{Binding Path=SetSelectedOptionCheckUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SelectedScaleType.SetSelectedScaleTypeLevelUncheckTooltip}">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
+                                                    </Button>
+                                                    <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveUpSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
+                                                    </Button>
+                                                    <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveDownSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/movedown16.png"></Image>
+                                                    </Button>
+                                                    <Button IsEnabled="{Binding IsEditable}" Command="{Binding RenameSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                    </Button>
+                                                    <Button IsEnabled="{Binding IsEditable}" Command="{Binding EditSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+            </ControlTemplate>
+
+            <Style TargetType="{x:Type localViews:PreparationOptionView}">
+                <Style.Triggers>
+                    <Trigger Property="ViewType" Value="{x:Static local:PreparationOptionViewType.Minimize}">
+                        <Setter Property="Template" Value="{StaticResource MinPreparationOptionView}" />
+                    </Trigger>
+                    <!--<Trigger Property="ViewType" Value="{x:Static local:PreparationOptionViewType.ScaledOption}">
+                        <Setter Property="Template" Value="{StaticResource MaxPreparationScaledOptionView}" />
+                    </Trigger>-->
+                    <Trigger Property="ViewType" Value="{x:Static local:PreparationOptionViewType.OptionsGroup}">
+                    <Setter Property="Template" Value="{StaticResource MaxPreparationOptionsGroupView}" />
+                </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentControl.Resources>
+
+
+
+    <Grid Margin="4">
+        <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
+            </Border.Effect>
+        </Border>
+        <Grid  Background="{StaticResource ListBoxBackgroundBrush}"  >
+            <Grid Margin="0,3,0,3" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png" Margin="10,0,10,0"></Image>
+                        <Label Grid.Column="1" DockPanel.Dock="Left" Content="Preparation Option" FontWeight="SemiBold" Padding="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}"></Label>
+                        <Grid Grid.Column="2"  HorizontalAlignment="Left">
+                            <Label DockPanel.Dock="Left"    FontWeight="SemiBold" Margin="10,0,0,0"                                                                                  
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Foreground="{StaticResource TitleBarForeColor}">
+                                <Label.Content>
+                                    <AccessText TextWrapping="Wrap" Text="{Binding FullName}"/>
+                                </Label.Content>
+
+                            </Label>
+                            <Rectangle  Margin="10,0,0,-2" Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  VerticalAlignment="Bottom" Height="9"  HorizontalAlignment="Stretch" StrokeThickness="17" >
+                                <Rectangle.Stroke>
+                                    <VisualBrush Viewbox="0,1,3,2" ViewboxUnits="Absolute" Viewport="0,1,6,17" ViewportUnits="Absolute" TileMode="Tile">
+                                        <VisualBrush.Visual>
+                                            <Path Data="M 0,1 C1,1 1,2 3,1" Stroke="Red" StrokeThickness="0.2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                        </Grid>
+
+                        <Button  DockPanel.Dock="Right" Grid.Column="3" HorizontalAlignment="Right" Command="{Binding MinimizeCommand}"  Style="{DynamicResource WindowButton}"   >
+                            <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="/MenuItemsEditor;component/Image/MinimizeWindow.png"></Image>
+                        </Button>
+                    </Grid>
+                    <Border Margin="5,2,0,0"  BorderThickness="0 0 0 1" BorderBrush="{StaticResource TitleBarForeColor}"></Border>
+                    <!--<Line Margin="5,2,5,0"  VerticalAlignment="Top" HorizontalAlignment="Stretch" StrokeThickness="0.5" Stroke="{StaticResource TitleBarForeColor}"  X2="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"></Line>-->
+                </StackPanel>
+
+
+                <Grid Grid.Row="1" Margin="4" Opacity="{Binding Opacity}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="186*"/>
+                        <ColumnDefinition Width="175*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid  Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionNameLabel}"  />
+
+
+
+                        <Grid Grid.Row="1"   HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ControlsEx:MultiligualWatermarkTextBox MinHeight="30" UnTranslated="{Binding UnTranslated }" 
+                                                                    Translator="{Binding Translator}"  
+                                                                    Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                                    VerticalAlignment="Top"  
+                                                                    IsEnabled="{Binding IsEditable}"
+                                                                   AcceptsReturn="True" 
+                                                                   HorizontalAlignment="Stretch" 
+                                                                   TextWrapping="Wrap"/>
+
+
+                            <!--<wpftoolkitex:WatermarkTextBox Padding="5,8" IsEnabled="{Binding IsEditable}" MinHeight="30" Grid.Row="1" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" 
+                                                       Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   
+                                                       AcceptsReturn="True" 
+                                                       HorizontalAlignment="Stretch" 
+                                                       TextWrapping="Wrap">
+                                        <wpftoolkitex:WatermarkTextBox.Style>
+                                            <Style TargetType="wpftoolkitex:WatermarkTextBox">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UnTranslated }" Value="True">
+                                                        <Setter Property="TextDecorations">
+                                                            <Setter.Value>
+                                                                <TextDecorationCollection>
+                                                                    <TextDecoration Location="Underline">
+                                                                        <TextDecoration.Pen>
+                                                                            <Pen Brush="{StaticResource WavyBrush}" Thickness="6"/>
+                                                                        </TextDecoration.Pen>
+                                                                    </TextDecoration>
+                                                                </TextDecorationCollection>
+                                                            </Setter.Value>
+                                                        </Setter>
+
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </wpftoolkitex:WatermarkTextBox.Style>
+
+                                    </wpftoolkitex:WatermarkTextBox>
+
+                                    <Border Grid.Column="1" BorderThickness="0,1,1,1" BorderBrush="{StaticResource TextBoxBorderBrush}"></Border>
+                                    <Button Command="{Binding TranslateOptionNameCommand}"  ToolTip="Translate"  Grid.Column="1" Margin="3,2,3,2"  Visibility="{Binding Path=UnTranslated, Converter={StaticResource BooleanToVisibilityConverter}}"  Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="25"  HorizontalAlignment="Right" >
+                                        <Image  Width="16" Height="16" Source="/MenuItemsEditor;component/Image/Translate24.png" ></Image>
+                                    </Button>-->
+                        </Grid>
+
+
+
+
+
+
+                    </Grid>
+
+                    <Grid  Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="2,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionScaleTypeLabel}"    />
+
+                        <Grid  Grid.Row="1" Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="32"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox IsEnabled="{Binding IsEditable}"  x:Name="comboBox" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding ScaleTypes}" DisplayMemberPath="Name" SelectedItem="{Binding ScaleType}"  />
+                            <Button IsEnabled="{Binding IsEditable}"  Margin="1,0,1,0" Command="{Binding EditScaleTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}"   Grid.Column="1" ToolTip = "{x:Static resx:Resources.TooltipForEditScaleTypes}">
+                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/adjustment16.png"></Image>
+                            </Button>
+                            <ListBox Grid.Row="1" Grid.ColumnSpan="2" SelectedValue="{Binding Path=SelectedOptionLevel}"  ItemsSource="{Binding Path=Levels}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+
+                                            </Grid.ColumnDefinitions>
+                                            <Image Width="10" Height="10" Source="{Binding Image}" Margin="2,0,3,0" ToolTip="Initial level of preparation option" ></Image>
+                                            <Image Grid.Column="1" Width="12" Height="12" Source="{Binding UncheckOptionImage}" VerticalAlignment="Center" ToolTip="{x:Static resx:Resources.UncheckOptionSignPrompt}" ></Image>
+                                            <TextBlock Grid.Column="2" Text="{Binding Path=Name}" />
+                                            <TextBlock Grid.Column="3" Text="{Binding Path=Price, StringFormat=C }" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
+                                <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                    <Grid  >
+                                        <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                            <Button  Command="{Binding SetSelectedLevelInitialCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1" ToolTip="{x:Static resx:Resources.SetInitialOptionLevelTooltip}">
+                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/checkmark16.png"></Image>
+                                            </Button>
+                                            <!--<Button Command="{Binding DeleteSelectedScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                        </Button>
+
+                                        <Button Command="{Binding AddScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                        </Button>-->
+                                        </StackPanel>
+                                        <StackPanel IsEnabled="{Binding IsEditable}" Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Command="{Binding RenameSelectedScaleTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Margin="1">
+                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                            </Button>
+
+
+
+                                            <!--<Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>-->
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid  Grid.Row="1" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid  Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"   Content="{x:Static resx:Resources.FullNameLabel}"/>
+                            <CheckBox VerticalAlignment="Center" Content="Auto" IsChecked="{Binding AutoGenFullName}" HorizontalAlignment="Right" Margin="0,0,5,0" Grid.Column="1"></CheckBox>
+
+                            <ControlsEx:MultiligualWatermarkTextBox Grid.Row="1" Grid.ColumnSpan="2" MinHeight="30" UnTranslated="{Binding UntranslatedFullName }" 
+                                                                    Translator="{Binding Translator}"  
+                                                                    Watermark="{x:Static resx:Resources.WriteOptionFullNamePrompt}" 
+                                                                    Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                                    VerticalAlignment="Top"  
+                                                                    IsEnabled="{Binding IsEditable}"
+                                                                   AcceptsReturn="True" 
+                                                                   HorizontalAlignment="Stretch" 
+                                                                   TextWrapping="Wrap"/>
+
+                        </Grid>
+                        <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="1" Content="Quantitative" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
+                        <Grid  Grid.Row="2" Grid.Column="0" Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.PriceLabel}"/>
+                         
+                            <localViews:ContextPriceTextBox OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1" VerticalAlignment="Top"></localViews:ContextPriceTextBox>
+                        </Grid>
+                        <Grid Visibility="{Binding PriceContextsVisibility}"  Grid.Row="3" Grid.Column="0" Margin="0,0,0,1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="84*"/>
+                                <ColumnDefinition Width="113*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.PriceContextLabel}" Grid.ColumnSpan="2"/>
+
+                            <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
+                        </Grid>
+                        <CheckBox HorizontalAlignment="Left" Grid.Row="4" Margin="-2,5,5,5" IsChecked="{Binding IsRecipeIngredient}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"></CheckBox>
+                    </Grid>
+
+
+
+
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+
+
+</ContentControl>

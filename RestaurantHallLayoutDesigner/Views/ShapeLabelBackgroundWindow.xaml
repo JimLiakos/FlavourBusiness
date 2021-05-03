@@ -1,0 +1,152 @@
+﻿<sw:Window x:Class="FloorLayoutDesigner.Views.ShapeLabelBackgroundWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+        xmlns:ContrοlsEx="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
+        xmlns:ViewModel="clr-namespace:FloorLayoutDesigner.ViewModel"
+        xmlns:Resx="clr-namespace:FloorLayoutDesigner.Properties"
+        Icon="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/textBackground32.png"
+        xmlns:local="clr-namespace:FloorLayoutDesigner.Views"
+        mc:Ignorable="d"
+        Title="{x:Static Resx:Resources.ShapeLabelBackgroundTitlebarText}" 
+        ShowInTaskbar="False" 
+        MinimizeBox="False" 
+        MaximizeBox="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Height="402.667" Width="601">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:HallLayoutViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Grid>
+        <sw:DialogContentControl >
+
+
+            <StackPanel DataContext="{Binding Value, Mode=OneWay}" >
+                <Grid   Margin="24,20,24,10" Height="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="401*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="39*"/>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="39*"/>
+                        <RowDefinition Height="5*"/>
+
+                    </Grid.RowDefinitions>
+                    <Label Content="Padding" VerticalAlignment="Bottom"></Label>
+                    <Grid Grid.Row="1" VerticalAlignment="Top" Height="36">
+                        <Grid  VerticalAlignment="Top" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="22*"/>
+                                <ColumnDefinition Width="73*"/>
+                                <ColumnDefinition Width="64*"/>
+                                <ColumnDefinition Width="73*"/>
+                                <ColumnDefinition Width="42*"/>
+                                <ColumnDefinition Width="73*"/>
+                                <ColumnDefinition Width="52*"/>
+                                <ColumnDefinition Width="73*"/>
+                                <ColumnDefinition Width="7*"/>
+                            </Grid.ColumnDefinitions>
+
+
+
+                            <TextBlock Margin="0,4,3,4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Top:" Height="18" Width="24" Grid.ColumnSpan="2"></TextBlock>
+                            <Controls:TextBoxNumberWithUnit  VerticalContentAlignment="Center" Number="{Binding LabelPaddingTop,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding MarginUnit}" Grid.Column="2" VerticalAlignment="Center" Height="22" Margin="0,2" />
+
+                            <TextBlock Margin="0,4,3,4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Bottom:" Height="18" Width="47"></TextBlock>
+                            <Controls:TextBoxNumberWithUnit Number="{Binding LabelPaddingBottom,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding MarginUnit}" Grid.Column="4" VerticalAlignment="Center" Height="22" Margin="0,2" />
+
+                            <TextBlock Margin="0,4,5,4"  Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Text="left:" Height="18" Width="22"></TextBlock>
+                            <Controls:TextBoxNumberWithUnit  Number="{Binding LabelPaddingLeft,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding MarginUnit}" VerticalAlignment="Center" Grid.Column="6" Height="22" Margin="0,2"/>
+
+                            <TextBlock Margin="0,4,5,4" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Right:" Height="18" Width="34"/>
+                            <Controls:TextBoxNumberWithUnit Number="{Binding LabelPaddingRight,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding MarginUnit}" Grid.Column="8" VerticalAlignment="Center" Height="22" Margin="0,2"  />
+
+
+                        </Grid>
+                    </Grid>
+
+
+                    <Border Grid.Row="2" BorderBrush="{StaticResource BorderBrush}"  BorderThickness="0,1,0,0"/>
+                    <Label Content="Border" Grid.Row="2" VerticalAlignment="Bottom"></Label>
+                    <Grid Grid.Row="3" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108*"/>
+                            <ColumnDefinition Width="56*"/>
+                            <ColumnDefinition Width="89*"/>
+                            <ColumnDefinition Width="90*"/>
+                            <ColumnDefinition Width="123*"/>
+                            <ColumnDefinition Width="71*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Margin="0,6,3,6" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Corner Radius:"  Height="18" Width="85"></TextBlock>
+                        <Controls:TextBoxNumberWithUnit VerticalContentAlignment="Center" Height="28" Number="{Binding LabelBkCornerRadius,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding RadiusUnit}" Grid.Column="1" VerticalAlignment="Center" Margin="0,1"    />
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="BK Color:" HorizontalAlignment="Right"  Margin="0,6,3,6" Height="18" Width="54"></TextBlock>
+                        <wpftoolkitex:ColorPicker SelectedColor="{Binding LabelBkColor}" Width="80" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,0"   />
+
+                        <TextBlock Grid.Column="4" VerticalAlignment="Center"  Text="{Binding Path=OpacityValue, StringFormat=Opacity: {0}}"  HorizontalAlignment="Right"  Margin="0,6,7,6" Height="18"    ></TextBlock>
+
+                        <Slider Grid.Column="5" VerticalAlignment="Center"  Value="{Binding Path=Opacity}"   Maximum="1" Minimum="0"   Height="16" Margin="0,0,10,0"></Slider>
+
+                    </Grid>
+
+                    <Border Grid.Row="5" BorderBrush="{StaticResource BorderBrush}"  BorderThickness="0,0,0,1" Grid.ColumnSpan="2"></Border>
+
+
+                </Grid>
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Height="85" Width="300" >
+                    <Grid>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static Resx:Resources.HallLayoutLabelFontMenuItemHeader}" Command="{Binding HallLayoutShapeLabelFont}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/font16.png" Width="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Border  VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="{Binding LabelBkCornerRadius}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{Binding LabelBkColor}" Opacity="{Binding Path=Opacity}"/>
+                            </Border.Background>
+                            <Grid Margin="{Binding LabelMargin}">
+                                <ContrοlsEx:OutlineTextBlock  x:Name="LabelCtrl" Text="Label"  
+                                                           
+                                   HorizontalAlignment="Center"  
+                                    Fill="{Binding Foreground}" 
+                                    FontFamily="{Binding FontFamily}" 
+                                    FontSize="{Binding FontSize}" 
+                                    FontSpacing="{Binding FontSpacing}"
+                                    Stroke="{Binding StrokeFill}" 
+                                    FontStyle="{Binding FontStyle}" 
+                                    FontWeight="{Binding FontWeight}"
+                                    AllCaps="{Binding AllCaps}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    Effect="{Binding DropShadowEffect}">
+                                    <!--<ContrοlsEx:OutlineTextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="1" Direction="320" Color="#FFAAD0E2" Opacity="1" BlurRadius="1.5" />
+                            </ContrοlsEx:OutlineTextBlock.Effect>-->
+                                    <!--<ContrοlsEx:OutlineTextBlock.Background>
+                                <SolidColorBrush Color="Azure" Opacity="0.5" />
+                            </ContrοlsEx:OutlineTextBlock.Background>-->
+                                </ContrοlsEx:OutlineTextBlock>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Grid/>
+            </StackPanel>
+        </sw:DialogContentControl>
+
+    </Grid>
+</sw:Window>

@@ -1,0 +1,14 @@
+﻿<sw:Window x:Class="MenuItemsEditor.Views.Browser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:local="clr-namespace:MenuItemsEditor.Views"
+        mc:Ignorable="d"
+        Title="Browser" Height="300" Width="300">
+    <Grid>
+        <WebBrowser HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="WebBrowser" Source="http://msdn.microsoft.com"   ></WebBrowser>
+
+    </Grid>
+</sw:Window>

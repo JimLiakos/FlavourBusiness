@@ -1,0 +1,390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7591234-BBA1-4E08-AA43-2B9CE34C69FC}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>FloorLayoutDesigner</RootNamespace>
+    <AssemblyName>RestaurantHallLayoutDesigner</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SharpVectors.Converters.Wpf, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Converters.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionAdorner.cs" />
+    <Compile Include="Connector.cs" />
+    <Compile Include="ConnectorAdorner.cs" />
+    <Compile Include="Controls\DragThumb.cs" />
+    <Compile Include="Controls\RelativePositionPanel.cs" />
+    <Compile Include="Controls\ResizeThumb.cs" />
+    <Compile Include="DesignerCanvas.Commands.cs" />
+    <Compile Include="DesignerCanvas.cs" />
+    <Compile Include="DesignerItem.cs" />
+    <Compile Include="FloorLayoutDesigner.xaml.cs">
+      <DependentUpon>FloorLayoutDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FloorLayoutToolBox.xaml.cs">
+      <DependentUpon>FloorLayoutToolBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HallLayoutDesignerPage.xaml.cs">
+      <DependentUpon>HallLayoutDesignerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IGroupable.cs" />
+    <Compile Include="ISelectable.cs" />
+    <Compile Include="PathFinder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RubberbandAdorner.cs" />
+    <Compile Include="SelectionService.cs" />
+    <Compile Include="SvgHostControl.xaml.cs">
+      <DependentUpon>SvgHostControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Toolbox.cs" />
+    <Compile Include="ToolboxItem.cs" />
+    <Compile Include="UndoRedoCommand.cs" />
+    <Compile Include="UndoRedoManager.cs" />
+    <Compile Include="ViewModel\HallLayoutDesignerHost.cs" />
+    <Compile Include="ViewModel\HallLayoutViewModel.cs" />
+    <Compile Include="ViewModel\ServiceAreaPresentation.cs" />
+    <Compile Include="ViewModel\ServicePointPresentation.cs" />
+    <Compile Include="Views\HallLayoutDesignerToolBar.xaml.cs">
+      <DependentUpon>HallLayoutDesignerToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HallLayoutWindow.xaml.cs">
+      <DependentUpon>HallLayoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShapeLabelBackgroundWindow.xaml.cs">
+      <DependentUpon>ShapeLabelBackgroundWindow.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="FloorLayoutDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FloorLayoutToolBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HallLayoutDesignerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Connection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DesignerItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Toolbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ToolboxItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RestaurantHallLayoutDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\GroupBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Shared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SvgHostControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HallLayoutDesignerToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HallLayoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShapeLabelBackgroundWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CoffeeTableChairs009.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs016.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs020.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs023.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs026.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs042.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs042Copy.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs043.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiningTableChairs047.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
+      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
+      <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8E8B-44A9-BCC8-9A6E979E3EB6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
+      <Project>{E0E5873E-E5E4-46F6-94F1-731C172CC1C6}</Project>
+      <Name>UserInterface - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\StyleableWindow\StyleableWindow.csproj">
+      <Project>{6368d7f0-70f8-4b7a-8b36-ef31d07c11c1}</Project>
+      <Name>StyleableWindow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\WindowsBaseEx.csproj">
+      <Project>{d83eae0a-82cd-4496-8524-c734c6236b78}</Project>
+      <Name>WindowsBaseEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WPFUIElementObjectBind\WPFUIElementObjectBind-VS10.csproj">
+      <Project>{8dfec0f3-c2ec-4d16-9e1d-09d33199e73f}</Project>
+      <Name>WPFUIElementObjectBind-VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
+      <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
+      <Name>FlavourBusinessFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessToolKit\FlavourBusinessToolKit.csproj">
+      <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
+      <Name>FlavourBusinessToolKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessUI\FlavourBusinessUI.csproj">
+      <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
+      <Name>FlavourBusinessUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuPresentationModel\MenuPresentationModel.csproj">
+      <Project>{5C51FA19-E5E2-493D-84C8-2CD88567F908}</Project>
+      <Name>MenuPresentationModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RestaurantHallLayoutModel\RestaurantHallLayoutModel.csproj">
+      <Project>{0111e912-93a7-4e95-81c6-1f565684336a}</Project>
+      <Name>RestaurantHallLayoutModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\HallLayoutSize16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\font16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\textBackground16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\textBackground32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ServicePoint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Ungroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Rename16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ServiceArea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\sketch16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsCenteredHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsCenteredVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BringForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BringToFront.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DistributeObjectsHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DistributeObjectsVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-size16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-height16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-width16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\360-degrees16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\redo16.png" />
+    <Resource Include="Resources\Images\Metro\undo16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\SendToBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\SendBackward.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

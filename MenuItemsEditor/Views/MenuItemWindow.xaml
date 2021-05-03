@@ -1,0 +1,33 @@
+<sw:Window x:Class="MenuItemsEditor.Views.MenuItemWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuItemsEditor.Views"
+             xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+             xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"  
+             xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+             xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
+             xmlns:localViews="clr-namespace:MenuItemsEditor.Views"
+             xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             Height="646.445" Width="941" 
+             x:Name="MainWindow"
+             Title="Menu Item"
+             Icon="/MenuItemsEditor;component/Image/MenuItem16.png" 
+             ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
+             ResizeMode="CanResize"
+             MinWidth="750"
+             LanguageButton="True"
+             SelectedCulture="{Binding Value.SelectedCulture, Mode=OneWayToSource}"
+             WindowStartupLocation="CenterOwner">
+
+
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:MenuItemViewModel}"    Name="Connection" TransactionOption="RequiredNested"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Grid>
+        <localViews:MenuItemView DataContext="{Binding Value}"></localViews:MenuItemView>
+    </Grid>
+</sw:Window>

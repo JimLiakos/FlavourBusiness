@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCategoryMenuItemHeader" xml:space="preserve">
+    <value>Add category</value>
+    <comment>Defines the ContextMenu MenuItem Header to add category tree node</comment>
+  </data>
+  <data name="AddMagnitudeOtionsGoupLabel" xml:space="preserve">
+    <value>Add Magnitude Options</value>
+    <comment>Defines the label for add magnitude  options group command</comment>
+  </data>
+  <data name="AddPreparationOtionLabel" xml:space="preserve">
+    <value>Add Option</value>
+    <comment>Defines the label for add option command</comment>
+  </data>
+  <data name="AddPreparationOtionsGoupLabel" xml:space="preserve">
+    <value>Add Options group</value>
+    <comment>Defines the label for add options group command</comment>
+  </data>
+  <data name="ChangeUncheckOptionPropertyValuePrompt" xml:space="preserve">
+    <value>Change UncheckOption level property</value>
+  </data>
+  <data name="DeleteMenuItemHeader" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Defines the ContextMenu MenuItem Header to delete somthing</comment>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description </value>
+    <comment>Defines the label for menu item TextBox</comment>
+  </data>
+  <data name="EditObject" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="FixedScaleTypeEditMessage" xml:space="preserve">
+    <value>You can't change fixed scale type</value>
+  </data>
+  <data name="MagnitudeOptionsGroupDefaultName" xml:space="preserve">
+    <value>Magnitude Options </value>
+    <comment>Defines the default name of MagnitudeOptionsGroup class instances</comment>
+  </data>
+  <data name="MemuEditorRootTreeNodeName" xml:space="preserve">
+    <value>Restaurant</value>
+    <comment>Defines the name of root tree node of restaurant tree view </comment>
+  </data>
+  <data name="MenuDefaultName" xml:space="preserve">
+    <value>Menu</value>
+    <comment>Defines the default name of Menu class instances</comment>
+  </data>
+  <data name="MenuItemNameLabel" xml:space="preserve">
+    <value>Menu item name :</value>
+    <comment>Defines the label for menu item TextBox</comment>
+  </data>
+  <data name="MenuItemsListActionsLabel" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="MenuItemTypeDefaultName" xml:space="preserve">
+    <value>New Menu Item Type</value>
+    <comment>Defines the default name of MenuItemType class instances</comment>
+  </data>
+  <data name="NewItemMenuItemHeader" xml:space="preserve">
+    <value>New Menu item</value>
+    <comment>Defines the ContextMenu MenuItem Header to add new menu item tree node</comment>
+  </data>
+  <data name="NewItemsCategoryName" xml:space="preserve">
+    <value>New Category</value>
+    <comment>Defines the ContextMenu MenuItem Header for new items category command</comment>
+  </data>
+  <data name="NewMenuMenuItemHeader" xml:space="preserve">
+    <value>New menu</value>
+    <comment>Defines the ContextMenu MenuItem Header for new restaraunt menu command</comment>
+  </data>
+  <data name="OptionScaleTypeLabel" xml:space="preserve">
+    <value>Scale Type</value>
+  </data>
+  <data name="OptionsGroupType" xml:space="preserve">
+    <value>Options group type</value>
+  </data>
+  <data name="OptionsLabel" xml:space="preserve">
+    <value>Options :</value>
+    <comment>Defines the label for options List</comment>
+  </data>
+  <data name="OptionsTypesLabel" xml:space="preserve">
+    <value>Options Types :</value>
+    <comment>Defines the label for options types List</comment>
+  </data>
+  <data name="OrgPriceLabel" xml:space="preserve">
+    <value>Original Price</value>
+    <comment>Inform user for the original price of pricing dubject</comment>
+  </data>
+  <data name="PreparationOptionsGroupDefaultName" xml:space="preserve">
+    <value>Options group</value>
+    <comment>Defines the default name of PreparationOptionsGroupclass instances</comment>
+  </data>
+  <data name="PreparationOptionsGroupInvariantMessage" xml:space="preserve">
+    <value>You can't change uncheck option property. 
+You must check preparation options wich refered to this level</value>
+  </data>
+  <data name="PreparationScaledOptionDefaultName" xml:space="preserve">
+    <value>Option</value>
+    <comment>Defines the default name of PreparationScaledOptionDefault class instances</comment>
+  </data>
+  <data name="PriceContextLabel" xml:space="preserve">
+    <value>Price context :</value>
+  </data>
+  <data name="PriceLabel" xml:space="preserve">
+    <value>Price :</value>
+  </data>
+  <data name="ScaleTypeDefaultName" xml:space="preserve">
+    <value>New scale type</value>
+    <comment>Defines the default name of ScaleType class instances</comment>
+  </data>
+  <data name="ScaleTypeLevelDefaultName" xml:space="preserve">
+    <value>New level</value>
+    <comment>Defines the default name of Level class instances</comment>
+  </data>
+  <data name="ScaleTypeLevelsListLabel" xml:space="preserve">
+    <value>Scale Type Levels</value>
+  </data>
+  <data name="ScaleTypesListLabel" xml:space="preserve">
+    <value>Scale Types</value>
+  </data>
+  <data name="ScaleTypesListWindowTitle" xml:space="preserve">
+    <value>Scale Types</value>
+  </data>
+  <data name="SelectionTypeAtLeastOneSelectedDescription" xml:space="preserve">
+    <value>At Least one Selected</value>
+  </data>
+  <data name="SelectionTypeMultiSelectionDescription" xml:space="preserve">
+    <value>Multiple Selection</value>
+  </data>
+  <data name="SelectionTypeSimpleGroupDescription" xml:space="preserve">
+    <value>Simple Group</value>
+  </data>
+  <data name="SelectionTypeSingleSelectionDescription" xml:space="preserve">
+    <value>Single Selection</value>
+  </data>
+  <data name="SelectionTypeViewModelCheckBoxPrompt" xml:space="preserve">
+    <value>You can't check {0}.
+There are preaparation oprtions with wrang, scale type.</value>
+  </data>
+  <data name="SetInitialOptionLevelTooltip" xml:space="preserve">
+    <value>Sets this level as option initial level</value>
+  </data>
+  <data name="ShowCategoryOptionTypesMenuItemHeader" xml:space="preserve">
+    <value>Show options types </value>
+  </data>
+  <data name="TooltipForEditScaleTypes" xml:space="preserve">
+    <value>Edit the scale types</value>
+  </data>
+  <data name="TreeNodeRenameMenuItemHeader" xml:space="preserve">
+    <value>Rename</value>
+    <comment>Defines the ContextMenu MenuItem Header to rename tree node text</comment>
+  </data>
+  <data name="UncheckOptionSignPrompt" xml:space="preserve">
+    <value>Uncheck preparation option sign</value>
+  </data>
+  <data name="WriteDescriptionPrompt" xml:space="preserve">
+    <value>Write a description</value>
+    <comment>Defines a prompt to WatermarkTextBox for item description</comment>
+  </data>
+  <data name="MenuItemDescriptionLabel" xml:space="preserve">
+    <value>Description :</value>
+    <comment>Defines the label for menu item notes TextBox</comment>
+  </data>
+  <data name="MenuItemExtrasDescriptionLabel" xml:space="preserve">
+    <value>Extras description :</value>
+    <comment>Defines the label for menu item extras description TextBox</comment>
+  </data>
+  <data name="WriteExtrasDescriptionPrompt" xml:space="preserve">
+    <value>Write a description for extras</value>
+    <comment>Defines a prompt to WatermarkTextBox for item description</comment>
+  </data>
+  <data name="WriteItemNamePrompt" xml:space="preserve">
+    <value>Write a item name</value>
+    <comment>Defines a prompt to WatermarkTextBox for item description</comment>
+  </data>
+  <data name="SaleTaxesLabel" xml:space="preserve">
+    <value>Sales Taxes :</value>
+    <comment>Defines a title for Taxe selection compobox</comment>
+  </data>
+  <data name="WriteTaxableTypeDescriptionPrompt" xml:space="preserve">
+    <value>Write a taxable type description</value>
+    <comment>Defines a prompt to WatermarkTextBox for taxable type description</comment>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+    <comment>Defines the label for language selection</comment>
+  </data>
+  <data name="OptionNameLabel" xml:space="preserve">
+    <value>Option name</value>
+    <comment>Defines the label for option name TextBox</comment>
+  </data>
+  <data name="IngredientCheckBoxLabel" xml:space="preserve">
+    <value>Is recipe ingredient</value>
+  </data>
+  <data name="GroupOtionsIngredientCheckBoxLabel" xml:space="preserve">
+    <value>All options are recipe ingredient</value>
+  </data>
+  <data name="MenuItemFullNameLabel" xml:space="preserve">
+    <value>Menu item full name :</value>
+    <comment>Defines the label for menu item TextBox</comment>
+  </data>
+  <data name="WriteFullNamePrompt" xml:space="preserve">
+    <value>Write a full name</value>
+    <comment>Defines a prompt to WatermarkTextBox for item full name</comment>
+  </data>
+  <data name="WriteNamePrompt" xml:space="preserve">
+    <value>Write a name</value>
+    <comment>Defines a prompt to WatermarkTextBox for item name</comment>
+  </data>
+  <data name="SelectionTypeItemSelectionDescription" xml:space="preserve">
+    <value>Product Selection</value>
+  </data>
+  <data name="OptionLevelPriceFactorPrompt" xml:space="preserve">
+    <value>Option price progress</value>
+  </data>
+  <data name="OptionGroupNameLabel" xml:space="preserve">
+    <value>Name</value>
+    <comment>Defines the label for option name TextBox</comment>
+  </data>
+  <data name="OptionGroupTitle" xml:space="preserve">
+    <value>Options group</value>
+    <comment>Defines the label for option name TextBox</comment>
+  </data>
+  <data name="AddStepperOtionsGoupLabel" xml:space="preserve">
+    <value>Add Stepper Options group</value>
+  </data>
+  <data name="StepOptionsGroupName" xml:space="preserve">
+    <value>Step Options </value>
+    <comment>Defines the default name of MagnitudeOptionsGroup class instances</comment>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Full name : </value>
+  </data>
+  <data name="WriteOptionFullNamePrompt" xml:space="preserve">
+    <value>Write a full name</value>
+    <comment>Defines a prompt to WatermarkTextBox for optionfull name</comment>
+  </data>
+  <data name="CustomMenuItemCheckBoxLabel" xml:space="preserve">
+    <value>Allow Custom</value>
+  </data>
+  <data name="StepperCheckBoxLabel" xml:space="preserve">
+    <value>Stepper</value>
+  </data>
+  <data name="MealPartLabel" xml:space="preserve">
+    <value>Part of meals :</value>
+  </data>
+  <data name="MealTypeCoursesListLabel" xml:space="preserve">
+    <value>Meal Courses</value>
+  </data>
+  <data name="MealTypesListLabel" xml:space="preserve">
+    <value>Meal Types</value>
+  </data>
+  <data name="MealTypeDefaultName" xml:space="preserve">
+    <value>New Meal</value>
+    <comment>Defines the default name of MealType class instances</comment>
+  </data>
+  <data name="MealCourseDurationPrompt" xml:space="preserve">
+    <value>Meal course duration</value>
+  </data>
+</root>

@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="el" original="MENUITEMSEDITOR/PROPERTIES/RESOURCES.RESX" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1795.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MENUITEMSEDITOR/PROPERTIES/RESOURCES.RESX" datatype="resx">
+        <trans-unit id="MemuEditorRootTreeNodeName" translate="yes" xml:space="preserve">
+          <source>Restaurant</source>
+          <target state="translated">Εστιατόριο</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the name of root tree node of restaurant tree view </note>
+        </trans-unit>
+        <trans-unit id="MenuDefaultName" translate="yes" xml:space="preserve">
+          <source>Menu</source>
+          <target state="translated">Μενού</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of Menu class instances</note>
+        </trans-unit>
+        <trans-unit id="NewMenuMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>New menu</source>
+          <target state="translated">Νέο μενού</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header for new restaraunt menu command</note>
+        </trans-unit>
+        <trans-unit id="AddCategoryMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>Add category</source>
+          <target state="translated">Προσθήκη κατηγορίας</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header to add category tree node</note>
+        </trans-unit>
+        <trans-unit id="TreeNodeRenameMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="translated">Μετονομασία</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header to rename tree node text</note>
+        </trans-unit>
+        <trans-unit id="DeleteMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">Διαγραφή</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header to delete somthing</note>
+        </trans-unit>
+        <trans-unit id="NewItemsCategoryName" translate="yes" xml:space="preserve">
+          <source>New Category</source>
+          <target state="new">New Category</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header for new items category command</note>
+        </trans-unit>
+        <trans-unit id="NewItemMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>New Menu item</source>
+          <target state="new">New Menu item</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the ContextMenu MenuItem Header to add new menu item tree node</note>
+        </trans-unit>
+        <trans-unit id="WriteDescriptionPrompt" translate="yes" xml:space="preserve">
+          <source>Write a description</source>
+          <target state="new">Write a description</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for item description</note>
+        </trans-unit>
+        <trans-unit id="MenuItemNameLabel" translate="yes" xml:space="preserve">
+          <source>Menu item name :</source>
+          <target state="needs-review-translation">Περιγραφή :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for menu item TextBox</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="EditObject" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="new">Edit</target>
+        </trans-unit>
+        <trans-unit id="OptionsTypesLabel" translate="yes" xml:space="preserve">
+          <source>Options Types :</source>
+          <target state="new">Options Types :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for options types List</note>
+        </trans-unit>
+        <trans-unit id="OptionsLabel" translate="yes" xml:space="preserve">
+          <source>Options :</source>
+          <target state="new">Options :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for options List</note>
+        </trans-unit>
+        <trans-unit id="AddPreparationOtionLabel" translate="yes" xml:space="preserve">
+          <source>Add Option</source>
+          <target state="new">Add Option</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for add option command</note>
+        </trans-unit>
+        <trans-unit id="AddPreparationOtionsGoupLabel" translate="yes" xml:space="preserve">
+          <source>Add Options group</source>
+          <target state="new">Add Options group</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for add options group command</note>
+        </trans-unit>
+        <trans-unit id="PreparationScaledOptionDefaultName" translate="yes" xml:space="preserve">
+          <source>Option</source>
+          <target state="new">Option</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of PreparationScaledOptionDefault class instances</note>
+        </trans-unit>
+        <trans-unit id="PreparationOptionsGroupDefaultName" translate="yes" xml:space="preserve">
+          <source>Options group</source>
+          <target state="new">Options group</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of PreparationOptionsGroupclass instances</note>
+        </trans-unit>
+        <trans-unit id="DescriptionLabel" translate="yes" xml:space="preserve">
+          <source>Description </source>
+          <target state="new">Description </target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for menu item TextBox</note>
+        </trans-unit>
+        <trans-unit id="PriceLabel" translate="yes" xml:space="preserve">
+          <source>Price :</source>
+          <target state="new">Price :</target>
+        </trans-unit>
+        <trans-unit id="OptionScaleTypeLabel" translate="yes" xml:space="preserve">
+          <source>Scale Type</source>
+          <target state="new">Scale Type</target>
+        </trans-unit>
+        <trans-unit id="ScaleTypeDefaultName" translate="yes" xml:space="preserve">
+          <source>New scale type</source>
+          <target state="new">New scale type</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of ScaleType class instances</note>
+        </trans-unit>
+        <trans-unit id="ScaleTypesListLabel" translate="yes" xml:space="preserve">
+          <source>Scale Types</source>
+          <target state="new">Scale Types</target>
+        </trans-unit>
+        <trans-unit id="ScaleTypesListWindowTitle" translate="yes" xml:space="preserve">
+          <source>Scale Types</source>
+          <target state="new">Scale Types</target>
+        </trans-unit>
+        <trans-unit id="ScaleTypeLevelsListLabel" translate="yes" xml:space="preserve">
+          <source>Scale Type Levels</source>
+          <target state="new">Scale Type Levels</target>
+        </trans-unit>
+        <trans-unit id="ScaleTypeLevelDefaultName" translate="yes" xml:space="preserve">
+          <source>New level</source>
+          <target state="new">New level</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of Level class instances</note>
+        </trans-unit>
+        <trans-unit id="SetInitialOptionLevelTooltip" translate="yes" xml:space="preserve">
+          <source>Sets this level as option initial level</source>
+          <target state="new">Sets this level as option initial level</target>
+        </trans-unit>
+        <trans-unit id="TooltipForEditScaleTypes" translate="yes" xml:space="preserve">
+          <source>Edit the scale types</source>
+          <target state="new">Edit the scale types</target>
+        </trans-unit>
+        <trans-unit id="FixedScaleTypeEditMessage" translate="yes" xml:space="preserve">
+          <source>You can't change fixed scale type</source>
+          <target state="new">You can't change fixed scale type</target>
+        </trans-unit>
+        <trans-unit id="PreparationOptionsGroupInvariantMessage" translate="yes" xml:space="preserve">
+          <source>You can't change uncheck option property. 
+You must check preparation options wich refered to this level</source>
+          <target state="new">You can't change uncheck option property. 
+You must check preparation options wich refered to this level</target>
+        </trans-unit>
+        <trans-unit id="ChangeUncheckOptionPropertyValuePrompt" translate="yes" xml:space="preserve">
+          <source>Change UncheckOption level property</source>
+          <target state="new">Change UncheckOption level property</target>
+        </trans-unit>
+        <trans-unit id="UncheckOptionSignPrompt" translate="yes" xml:space="preserve">
+          <source>Uncheck preparation option sign</source>
+          <target state="new">Uncheck preparation option sign</target>
+        </trans-unit>
+        <trans-unit id="OptionsGroupType" translate="yes" xml:space="preserve">
+          <source>Options group type</source>
+          <target state="new">Options group type</target>
+        </trans-unit>
+        <trans-unit id="SelectionTypeMultiSelectionDescription" translate="yes" xml:space="preserve">
+          <source>Multiple Selection</source>
+          <target state="new">Multiple Selection</target>
+        </trans-unit>
+        <trans-unit id="SelectionTypeSimpleGroupDescription" translate="yes" xml:space="preserve">
+          <source>Simple Group</source>
+          <target state="new">Simple Group</target>
+        </trans-unit>
+        <trans-unit id="SelectionTypeSingleSelectionDescription" translate="yes" xml:space="preserve">
+          <source>Single Selection</source>
+          <target state="new">Single Selection</target>
+        </trans-unit>
+        <trans-unit id="SelectionTypeAtLeastOneSelectedDescription" translate="yes" xml:space="preserve">
+          <source>At Least one Selected</source>
+          <target state="new">At Least one Selected</target>
+        </trans-unit>
+        <trans-unit id="SelectionTypeViewModelCheckBoxPrompt" translate="yes" xml:space="preserve">
+          <source>You can't check {0}.
+There are preaparation oprtions with wrang, scale type.</source>
+          <target state="new">You can't check {0}.
+There are preaparation oprtions with wrang, scale type.</target>
+        </trans-unit>
+        <trans-unit id="ShowCategoryOptionTypesMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>Show options types </source>
+          <target state="new">Show options types </target>
+        </trans-unit>
+        <trans-unit id="MenuItemTypeDefaultName" translate="yes" xml:space="preserve">
+          <source>New Menu Item Type</source>
+          <target state="new">New Menu Item Type</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of MenuItemType class instances</note>
+        </trans-unit>
+        <trans-unit id="AddMagnitudeOtionsGoupLabel" translate="yes" xml:space="preserve">
+          <source>Add Magnitude Options</source>
+          <target state="new">Add Magnitude Options</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for add magnitude  options group command</note>
+        </trans-unit>
+        <trans-unit id="MagnitudeOptionsGroupDefaultName" translate="yes" xml:space="preserve">
+          <source>Magnitude Options </source>
+          <target state="new">Magnitude Options </target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of MagnitudeOptionsGroup class instances</note>
+        </trans-unit>
+        <trans-unit id="PriceContextLabel" translate="yes" xml:space="preserve">
+          <source>Price context :</source>
+          <target state="new">Price context :</target>
+        </trans-unit>
+        <trans-unit id="OrgPriceLabel" translate="yes" xml:space="preserve">
+          <source>Original Price</source>
+          <target state="new">Original Price</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Inform user for the original price of pricing dubject</note>
+        </trans-unit>
+        <trans-unit id="MenuItemsListActionsLabel" translate="yes" xml:space="preserve">
+          <source>Actions</source>
+          <target state="new">Actions</target>
+        </trans-unit>
+        <trans-unit id="MenuItemExtrasDescriptionLabel" translate="yes" xml:space="preserve">
+          <source>Extras description :</source>
+          <target state="new">Extras description :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for menu item extras description TextBox</note>
+        </trans-unit>
+        <trans-unit id="MenuItemDescriptionLabel" translate="yes" xml:space="preserve">
+          <source>Description :</source>
+          <target state="new">Description :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for menu item notes TextBox</note>
+        </trans-unit>
+        <trans-unit id="WriteItemNamePrompt" translate="yes" xml:space="preserve">
+          <source>Write a item name</source>
+          <target state="new">Write a item name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for item description</note>
+        </trans-unit>
+        <trans-unit id="WriteExtrasDescriptionPrompt" translate="yes" xml:space="preserve">
+          <source>Write a description for extras</source>
+          <target state="new">Write a description for extras</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for item description</note>
+        </trans-unit>
+        <trans-unit id="SaleTaxesLabel" translate="yes" xml:space="preserve">
+          <source>Sales Taxes :</source>
+          <target state="new">Sales Taxes :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a title for Taxe selection compobox</note>
+        </trans-unit>
+        <trans-unit id="WriteTaxableTypeDescriptionPrompt" translate="yes" xml:space="preserve">
+          <source>Write a taxable type description</source>
+          <target state="new">Write a taxable type description</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for taxable type description</note>
+        </trans-unit>
+        <trans-unit id="LanguageLabel" translate="yes" xml:space="preserve">
+          <source>Language</source>
+          <target state="new">Language</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for language selection</note>
+        </trans-unit>
+        <trans-unit id="OptionNameLabel" translate="yes" xml:space="preserve">
+          <source>Option name</source>
+          <target state="new">Option name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for option name TextBox</note>
+        </trans-unit>
+        <trans-unit id="IngredientCheckBoxLabel" translate="yes" xml:space="preserve">
+          <source>Is recipe ingredient</source>
+          <target state="new">Is recipe ingredient</target>
+        </trans-unit>
+        <trans-unit id="GroupOtionsIngredientCheckBoxLabel" translate="yes" xml:space="preserve">
+          <source>All options are recipe ingredient</source>
+          <target state="new">All options are recipe ingredient</target>
+        </trans-unit>
+        <trans-unit id="MenuItemFullNameLabel" translate="yes" xml:space="preserve">
+          <source>Menu item full name :</source>
+          <target state="new">Menu item full name :</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for menu item TextBox</note>
+        </trans-unit>
+        <trans-unit id="WriteFullNamePrompt" translate="yes" xml:space="preserve">
+          <source>Write a full name</source>
+          <target state="new">Write a full name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for item full name</note>
+        </trans-unit>
+        <trans-unit id="WriteNamePrompt" translate="yes" xml:space="preserve">
+          <source>Write a name</source>
+          <target state="new">Write a name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for item name</note>
+        </trans-unit>
+        <trans-unit id="SelectionTypeItemSelectionDescription" translate="yes" xml:space="preserve">
+          <source>Product Selection</source>
+          <target state="new">Product Selection</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

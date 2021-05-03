@@ -1,0 +1,89 @@
+﻿<sw:Window x:Class="MenuItemsEditor.Views.MenuItemsTypesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MenuItemsEditor.Views"
+        xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"   
+        xmlns:resx="clr-namespace:MenuItemsEditor.Properties" 
+        xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        mc:Ignorable="d"
+        Title="Select Option Type" Height="358.5" Width="534.313"
+            Icon="/MenuItemsEditor;component/Image/type16.png"
+           ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:OptionsTypeSelctionViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <sw:DialogContentControl >
+            <Grid DataContext="{Binding Value}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="196*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="313*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="29"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="1" Grid.Row="0" Content="{x:Static resx:Resources.OptionsTypesLabel}"></Label>
+                <ListBox Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" ItemsSource="{Binding MenuItemTypes}"  SelectedValue="{Binding SelectedMenuType}" SelectionMode="Extended"  Margin="0,0,0,1">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                         <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="411*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding IsChecked}" Style="{StaticResource ListViewCheckBoxStyle}" Grid.Column="0"></CheckBox>
+                                <ControlsEx:EditableTextBlock Grid.Column="1" HorizontalAlignment="Left" IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />
+                        
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Label Grid.Column="3" Content="{x:Static resx:Resources.OptionsLabel}"></Label>
+
+                <ListBox x:Name="List" SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  
+                             ScrollViewer.CanContentScroll="False"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                             Grid.Column="3"
+                             Grid.Row="1" 
+                             ItemsSource="{Binding Path= SelectedMenuType.Options}"
+                             ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <Grid  >
+                                <!--<TextBlock  Text="sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf "></TextBlock>-->
+                                <local:PreparationOptionView ViewType="{Binding ViewType}"></local:PreparationOptionView>
+                                <!--<ControlsEx:EditableTextBlock  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />-->
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </Grid>
+
+        </sw:DialogContentControl>
+    </Grid>
+</sw:Window>

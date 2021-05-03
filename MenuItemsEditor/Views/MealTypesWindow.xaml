@@ -1,0 +1,158 @@
+﻿<sw:Window x:Class="MenuItemsEditor.Views.MealTypesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MenuItemsEditor.Views"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" 
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel" 
+        xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+        xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
+        mc:Ignorable="d"
+        Title="MealTypesWindow" Height="358.5" Width="567.5"
+        Icon="/MenuItemsEditor;component/Image/MealCoursesClock24.png" 
+        ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
+        LanguageButton="True"
+        SelectedCulture="{Binding Value.SelectedCulture, Mode=TwoWay}"
+        WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:MealTypesViewModel}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Window.Resources>
+        <ViewModel:MealTypesViewModel x:Key="D_MealTypeViewModel"></ViewModel:MealTypesViewModel>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+       
+            
+            <ContentControl Grid.ColumnSpan="2" >
+                <Grid DataContext="{Binding Value, Mode=OneWay}" d:DataContext="{StaticResource D_MealTypeViewModel}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180*"/>
+
+                        <ColumnDefinition Width="233*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,0,13,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition />
+                            <RowDefinition Height="44"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label VerticalAlignment="Bottom"  Margin="10,0,0,4"  Content="{x:Static resx:Resources.MealTypesListLabel}" ></Label>
+                        <ListBox Grid.Row="1" ItemsSource="{Binding MealTypes}" SelectedValue="{Binding SelectedMealType}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <ControlsEx:EditableTextBlock UnTranslated="{Binding UnTranslatedName}"  Translator="{Binding Translator}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />
+
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid Grid.Row="2" Background="WhiteSmoke" Margin="0,0,0,2">
+                            <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                <Grid>
+                                    <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                        <Button Command="{Binding DeleteSelectedMealTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                        </Button>
+
+                                        <Button Command="{Binding AddMealTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Command="{Binding RenameSelectedMealTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                        </Button>
+                                        <!--<Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>-->
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+                    <GridSplitter VerticalAlignment="Stretch" Margin="0,30,0,3"  Grid.Column="0"></GridSplitter>
+
+                    <Grid Margin="3,0,0,0" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition  />
+                            <RowDefinition Height="44"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="{x:Static resx:Resources.MealTypeCoursesListLabel}" VerticalAlignment="Bottom"  Margin="10,0,0,4" ></Label>
+                        <ListBox ItemsSource="{Binding Path=SelectedMealType.Courses}" SelectedValue="{Binding Path =SelectedMealType.SelectedCourse}"  Grid.Row="1" Grid.RowSpan="2" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid  Margin="0,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="55"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Width="12" Height="12" Source="{Binding Image}" Margin="0,0,5,0"></Image>
+                                        <ControlsEx:EditableTextBlock  UnTranslated="{Binding UnTranslatedName}" Translator="{Binding Translator}"  Grid.Column="1"  IsInEditMode="{Binding  Path=Edit,Mode=TwoWay}" Text="{Binding Path=Name,Mode=TwoWay}" Margin="0,0,5,0"/>
+                                        <Grid Grid.Column="2" ToolTip="{x:Static resx:Resources.MealCourseDurationPrompt}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ControlsEx:EditableTextBlock  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=DurationInMinutes,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Grid Grid.Row="3" Background="WhiteSmoke" Margin="0,0,0,2">
+                            <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                <Grid>
+                                    <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                        <Button Command="{Binding Path=SelectedMealType.DeleteSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                        </Button>
+
+                                        <Button Command="{Binding Path=SelectedMealType.AddMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <!--<Button x:Uid="serma" Command="{Binding Path=SelectedMealType.SetSelectedMealTypeLevelUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SelectedMealType.SetSelectedMealTypeLevelUncheckTooltip}">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/unchecked16.png"></Image>
+                                        </Button>-->
+                                        <Button Command="{Binding Path=SelectedMealType.MoveUpSelectedMealCourseTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
+                                        </Button>
+                                        <Button Command="{Binding Path=SelectedMealType.MoveDownSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/movedown16.png"></Image>
+                                        </Button>
+                                        <Button Command="{Binding Path=SelectedMealType.RenameSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                        </Button>
+                                        <!--<Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>-->
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </ContentControl>
+        </Grid>
+
+    </Grid>
+</sw:Window>

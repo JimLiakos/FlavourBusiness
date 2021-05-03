@@ -1,0 +1,558 @@
+Natural : Afar, aa
+Afar (Djibouti), aa-DJ
+Natural : Afrikaans, af
+Afrikaans (Namibia), af-NA
+Natural : Aghem, agq
+Aghem (Cameroon), agq-CM
+Natural : Akan, ak
+Akan (Ghana), ak-GH
+Natural : Amharic, am
+Arabic (United Arab Emirates), ar-AE
+Natural : Arabic, ar
+Arabic (United Arab Emirates), ar-AE
+Natural : Mapudungun, arn
+Mapudungun (Chile), arn-CL
+Natural : Assamese, as
+Assamese (India), as-IN
+Natural : Asu, asa
+Asu (Tanzania), asa-TZ
+Natural : Asturian, ast
+Asturian (Spain), ast-ES
+Natural : Azerbaijani, az
+Bashkir (Russia), ba-RU
+Natural : Azerbaijani (Cyrillic), az-Cyrl
+Bashkir (Russia), ba-RU
+Natural : Azerbaijani (Latin), az-Latn
+Bashkir (Russia), ba-RU
+Natural : Bashkir, ba
+Bashkir (Russia), ba-RU
+Natural : Basaa, bas
+Basaa (Cameroon), bas-CM
+Natural : Belarusian, be
+Bena (Tanzania), bez-TZ
+Natural : Bemba, bem
+Bena (Tanzania), bez-TZ
+Natural : Bena, bez
+Bena (Tanzania), bez-TZ
+Natural : Bulgarian, bg
+Bulgarian (Bulgaria), bg-BG
+Natural : Edo, bin
+Edo (Nigeria), bin-NG
+Natural : Bamanankan, bm
+Bangla (Bangladesh), bn-BD
+Natural : Bamanankan (Latin), bm-Latn
+Bangla (Bangladesh), bn-BD
+Natural : Bangla, bn
+Bangla (Bangladesh), bn-BD
+Natural : Tibetan, bo
+Tibetan (China), bo-CN
+Natural : Breton, br
+Breton (France), br-FR
+Natural : Bodo, brx
+Bodo (India), brx-IN
+Natural : Bosnian, bs
+Catalan (Catalan), ca-ES
+Natural : Bosnian (Cyrillic), bs-Cyrl
+Catalan (Catalan), ca-ES
+Natural : Bosnian (Latin), bs-Latn
+Catalan (Catalan), ca-ES
+Natural : Blin, byn
+Catalan (Catalan), ca-ES
+Natural : Catalan, ca
+Catalan (Catalan), ca-ES
+Natural : Chechen, ce
+Chechen (Russia), ce-RU
+Natural : Chiga, cgg
+Cherokee (Cherokee, United States), chr-Cher-US
+Natural : Cherokee, chr
+Cherokee (Cherokee, United States), chr-Cher-US
+Natural : Cherokee, chr-Cher
+Cherokee (Cherokee, United States), chr-Cher-US
+Natural : Corsican, co
+Corsican (France), co-FR
+Natural : Czech, cs
+Czech (Czechia), cs-CZ
+Natural : Church Slavic, cu
+Church Slavic (Russia), cu-RU
+Natural : Welsh, cy
+Welsh (United Kingdom), cy-GB
+Natural : Danish, da
+Danish (Denmark), da-DK
+Natural : Taita, dav
+German (Belgium), de-BE
+Natural : German, de
+German (Belgium), de-BE
+Natural : Zarma, dje
+Zarma (Niger), dje-NE
+Natural : Lower Sorbian, dsb
+Lower Sorbian (Germany), dsb-DE
+Natural : Duala, dua
+Duala (Cameroon), dua-CM
+Natural : Divehi, dv
+Divehi (Maldives), dv-MV
+Natural : Jola-Fonyi, dyo
+Jola-Fonyi (Senegal), dyo-SN
+Natural : Dzongkha, dz
+Ewe (Ghana), ee-GH
+Natural : Embu, ebu
+Ewe (Ghana), ee-GH
+Natural : Ewe, ee
+Ewe (Ghana), ee-GH
+The thread 0x7d88 has exited with code 0 (0x0).
+Natural : Greek, el
+Greek (Greece), el-GR
+The thread 0x4180 has exited with code 0 (0x0).
+Natural : English, en
+English (Antigua and Barbuda), en-AG
+Natural : Esperanto, eo
+Spanish (Brazil), es-BR
+Natural : Spanish, es
+Spanish (Brazil), es-BR
+Natural : Estonian, et
+Basque (Basque), eu-ES
+Natural : Basque, eu
+Basque (Basque), eu-ES
+Natural : Ewondo, ewo
+Ewondo (Cameroon), ewo-CM
+Natural : Persian, fa
+Fulah (Cameroon), ff-CM
+Natural : Fulah, ff
+Fulah (Cameroon), ff-CM
+Natural : Fulah, ff-Latn
+Fulah (Latin, Senegal), ff-Latn-SN
+Natural : Finnish, fi
+Finnish (Finland), fi-FI
+Natural : Filipino, fil
+Filipino (Philippines), fil-PH
+Natural : Faroese, fo
+Faroese (Denmark), fo-DK
+Natural : French, fr
+French (Belgium), fr-BE
+Natural : Friulian, fur
+Friulian (Italy), fur-IT
+Natural : Western Frisian, fy
+Irish (Ireland), ga-IE
+Natural : Irish, ga
+Irish (Ireland), ga-IE
+Natural : Scottish Gaelic, gd
+Scottish Gaelic (United Kingdom), gd-GB
+Natural : Galician, gl
+Galician (Galician), gl-ES
+Natural : Guarani, gn
+Swiss German (Switzerland), gsw-CH
+Natural : Swiss German, gsw
+Swiss German (Switzerland), gsw-CH
+Natural : Gujarati, gu
+Gujarati (India), gu-IN
+Natural : Gusii, guz
+Hausa (Latin, Ghana), ha-Latn-GH
+Natural : Manx, gv
+Hausa (Latin, Ghana), ha-Latn-GH
+Natural : Hausa, ha
+Hausa (Latin, Ghana), ha-Latn-GH
+Natural : Hausa (Latin), ha-Latn
+Hausa (Latin, Ghana), ha-Latn-GH
+Natural : Hawaiian, haw
+Hawaiian (United States), haw-US
+Natural : Hebrew, he
+Hebrew (Israel), he-IL
+Natural : Hindi, hi
+Hindi (India), hi-IN
+Natural : Croatian, hr
+Upper Sorbian (Germany), hsb-DE
+Natural : Upper Sorbian, hsb
+Upper Sorbian (Germany), hsb-DE
+Natural : Hungarian, hu
+Hungarian (Hungary), hu-HU
+Natural : Armenian, hy
+Armenian (Armenia), hy-AM
+Natural : Interlingua, ia
+Interlingua (France), ia-FR
+Natural : Ibibio, ibb
+Ibibio (Nigeria), ibb-NG
+Natural : Indonesian, id
+Indonesian (Indonesia), id-ID
+Natural : Igbo, ig
+Igbo (Nigeria), ig-NG
+Natural : Yi, ii
+Yi (China), ii-CN
+Natural : Icelandic, is
+Icelandic (Iceland), is-IS
+Natural : Italian, it
+Italian (Switzerland), it-CH
+Natural : Inuktitut, iu
+Inuktitut (Syllabics, Canada), iu-Cans-CA
+Natural : Inuktitut (Syllabics), iu-Cans
+Inuktitut (Syllabics, Canada), iu-Cans-CA
+Natural : Inuktitut (Latin), iu-Latn
+Inuktitut (Latin, Canada), iu-Latn-CA
+Natural : Japanese, ja
+Japanese (Japan), ja-JP
+Natural : Ngomba, jgo
+Ngomba (Cameroon), jgo-CM
+Natural : Machame, jmc
+Machame (Tanzania), jmc-TZ
+Natural : Javanese, jv
+Javanese (Javanese, Indonesia), jv-Java-ID
+Natural : Javanese (Javanese), jv-Java
+Javanese (Javanese, Indonesia), jv-Java-ID
+Natural : Javanese, jv-Latn
+Javanese (Indonesia), jv-Latn-ID
+Natural : Georgian, ka
+Georgian (Georgia), ka-GE
+Natural : Kabyle, kab
+Kabyle (Algeria), kab-DZ
+Natural : Kamba, kam
+Makonde (Tanzania), kde-TZ
+Natural : Makonde, kde
+Makonde (Tanzania), kde-TZ
+Natural : Kabuverdianu, kea
+Kako (Cameroon), kkj-CM
+Natural : Koyra Chiini, khq
+Kako (Cameroon), kkj-CM
+Natural : Kikuyu, ki
+Kako (Cameroon), kkj-CM
+Natural : Kazakh, kk
+Kako (Cameroon), kkj-CM
+Natural : Kako, kkj
+Kako (Cameroon), kkj-CM
+Natural : Greenlandic, kl
+Greenlandic (Greenland), kl-GL
+Natural : Kalenjin, kln
+Kannada (India), kn-IN
+Natural : Khmer, km
+Kannada (India), kn-IN
+Natural : Kannada, kn
+Kannada (India), kn-IN
+Natural : Korean, ko
+Korean (North Korea), ko-KP
+Natural : Konkani, kok
+Konkani (India), kok-IN
+Natural : Kanuri, kr
+Kanuri (Nigeria), kr-NG
+Natural : Kashmiri, ks
+Kashmiri (Perso-Arabic), ks-Arab-IN
+Natural : Kashmiri (Perso-Arabic), ks-Arab
+Kashmiri (Perso-Arabic), ks-Arab-IN
+Natural : Kashmiri (Devanagari), ks-Deva
+Kashmiri (Devanagari), ks-Deva-IN
+Natural : Shambala, ksb
+Shambala (Tanzania), ksb-TZ
+Natural : Bafia, ksf
+Bafia (Cameroon), ksf-CM
+Natural : Colognian, ksh
+Colognian (Germany), ksh-DE
+Natural : Central Kurdish, ku
+Cornish (United Kingdom), kw-GB
+Natural : Central Kurdish, ku-Arab
+Cornish (United Kingdom), kw-GB
+Natural : Cornish, kw
+Cornish (United Kingdom), kw-GB
+Natural : Kyrgyz, ky
+Langi (Tanzania), lag-TZ
+Natural : Latin, la
+Langi (Tanzania), lag-TZ
+Natural : Langi, lag
+Langi (Tanzania), lag-TZ
+Natural : Luxembourgish, lb
+Luxembourgish (Luxembourg), lb-LU
+Natural : Ganda, lg
+Lakota (United States), lkt-US
+Natural : Lakota, lkt
+Lakota (United States), lkt-US
+Natural : Lingala, ln
+Lingala (Congo), ln-CG
+Natural : Lao, lo
+Lao (Laos), lo-LA
+Natural : Northern Luri, lrc
+Lithuanian (Lithuania), lt-LT
+Natural : Lithuanian, lt
+Lithuanian (Lithuania), lt-LT
+Natural : Luba-Katanga, lu
+Masai (Tanzania), mas-TZ
+Natural : Luo, luo
+Masai (Tanzania), mas-TZ
+Natural : Luyia, luy
+Masai (Tanzania), mas-TZ
+Natural : Latvian, lv
+Masai (Tanzania), mas-TZ
+Natural : Masai, mas
+Masai (Tanzania), mas-TZ
+Natural : Meru, mer
+Morisyen (Mauritius), mfe-MU
+Natural : Morisyen, mfe
+Morisyen (Mauritius), mfe-MU
+Natural : Malagasy, mg
+Malagasy (Madagascar), mg-MG
+Natural : Makhuwa-Meetto, mgh
+Makhuwa-Meetto (Mozambique), mgh-MZ
+Natural : Meta?, mgo
+Meta? (Cameroon), mgo-CM
+Natural : Maori, mi
+Maori (New Zealand), mi-NZ
+Natural : Macedonian, mk
+Macedonian (Macedonia, FYRO), mk-MK
+Natural : Malayalam, ml
+Malayalam (India), ml-IN
+Natural : Mongolian, mn
+Mongolian (Traditional Mongolian, China), mn-Mong-CN
+Natural : Mongolian, mn-Cyrl
+Mongolian (Traditional Mongolian, China), mn-Mong-CN
+Natural : Mongolian (Traditional Mongolian), mn-Mong
+Mongolian (Traditional Mongolian, China), mn-Mong-CN
+Natural : Manipuri, mni
+Manipuri (India), mni-IN
+Natural : Mohawk, moh
+Mohawk (Mohawk), moh-CA
+Natural : Marathi, mr
+Marathi (India), mr-IN
+Natural : Malay, ms
+Maltese (Malta), mt-MT
+Natural : Maltese, mt
+Maltese (Malta), mt-MT
+Natural : Mundang, mua
+Mundang (Cameroon), mua-CM
+Natural : Burmese, my
+Nama (Namibia), naq-NA
+Natural : Mazanderani, mzn
+Nama (Namibia), naq-NA
+Natural : Nama, naq
+Nama (Namibia), naq-NA
+Natural : Norwegian Bokmal, nb
+Norwegian Bokmal (Norway), nb-NO
+Natural : North Ndebele, nd
+Low German (Germany), nds-DE
+Natural : Low German, nds
+Low German (Germany), nds-DE
+Natural : Nepali, ne
+Nepali (India), ne-IN
+Natural : Dutch, nl
+Dutch (Aruba), nl-AW
+Natural : Kwasio, nmg
+Kwasio (Cameroon), nmg-CM
+Natural : Norwegian Nynorsk, nn
+Norwegian Nynorsk (Norway), nn-NO
+Natural : Ngiemboon, nnh
+Ngiemboon (Cameroon), nnh-CM
+Natural : Norwegian, no
+South Ndebele (South Africa), nr-ZA
+Natural : N'ko, nqo
+South Ndebele (South Africa), nr-ZA
+Natural : South Ndebele, nr
+South Ndebele (South Africa), nr-ZA
+Natural : Sesotho sa Leboa, nso
+Sesotho sa Leboa (South Africa), nso-ZA
+Natural : Nuer, nus
+Occitan (France), oc-FR
+Natural : Nyankole, nyn
+Occitan (France), oc-FR
+Natural : Occitan, oc
+Occitan (France), oc-FR
+Natural : Oromo, om
+Odia (India), or-IN
+Natural : Odia, or
+Odia (India), or-IN
+Natural : Ossetic, os
+Ossetic (Georgia), os-GE
+Natural : Punjabi, pa
+Punjabi (Pakistan), pa-Arab-PK
+Natural : Punjabi, pa-Arab
+Punjabi (Pakistan), pa-Arab-PK
+Natural : Punjabi, pa-Guru
+Punjabi (India), pa-IN
+Natural : Papiamento, pap
+Polish (Poland), pl-PL
+Natural : Polish, pl
+Polish (Poland), pl-PL
+Natural : Prussian, prg
+Portuguese (Brazil), pt-BR
+Natural : Dari, prs
+Portuguese (Brazil), pt-BR
+Natural : Pashto, ps
+Portuguese (Brazil), pt-BR
+Natural : Portuguese, pt
+Portuguese (Brazil), pt-BR
+Natural : K'iche', quc
+Romansh (Switzerland), rm-CH
+Natural : K'iche', quc-Latn
+Romansh (Switzerland), rm-CH
+Natural : Quechua, quz
+Romansh (Switzerland), rm-CH
+Natural : Romansh, rm
+Romansh (Switzerland), rm-CH
+Natural : Rundi, rn
+Rundi (Burundi), rn-BI
+Natural : Romanian, ro
+Romanian (Romania), ro-RO
+Natural : Rombo, rof
+Rombo (Tanzania), rof-TZ
+Natural : Russian, ru
+Russian (Russia), ru-RU
+Natural : Kinyarwanda, rw
+Rwa (Tanzania), rwk-TZ
+Natural : Rwa, rwk
+Rwa (Tanzania), rwk-TZ
+Natural : Sanskrit, sa
+Sanskrit (India), sa-IN
+Natural : Sakha, sah
+Sakha (Russia), sah-RU
+Natural : Samburu, saq
+Sangu (Tanzania), sbp-TZ
+Natural : Sangu, sbp
+Sangu (Tanzania), sbp-TZ
+Natural : Sindhi, sd
+Sindhi (Pakistan), sd-Arab-PK
+Natural : Sindhi, sd-Arab
+Sindhi (Pakistan), sd-Arab-PK
+Natural : Sindhi (Devanagari), sd-Deva
+Sindhi (Devanagari, India), sd-Deva-IN
+Natural : Northern Sami, se
+Sami, Northern (Finland), se-FI
+Natural : Sena, seh
+Sena (Mozambique), seh-MZ
+Natural : Koyraboro Senni, ses
+Tachelhit (Latin, Morocco), shi-Latn-MA
+Natural : Sango, sg
+Tachelhit (Latin, Morocco), shi-Latn-MA
+Natural : Tachelhit, shi
+Tachelhit (Latin, Morocco), shi-Latn-MA
+Natural : Tachelhit (Latin), shi-Latn
+Tachelhit (Latin, Morocco), shi-Latn-MA
+Natural : Tachelhit (Tifinagh), shi-Tfng
+Tachelhit (Tifinagh, Morocco), shi-Tfng-MA
+Natural : Sinhala, si
+Slovak (Slovakia), sk-SK
+Natural : Slovak, sk
+Slovak (Slovakia), sk-SK
+Natural : Slovenian, sl
+Sami, Southern (Norway), sma-NO
+Natural : Sami (Southern), sma
+Sami, Southern (Norway), sma-NO
+Natural : Sami (Lule), smj
+Sami, Lule (Norway), smj-NO
+Natural : Sami (Inari), smn
+Sami, Inari (Finland), smn-FI
+Natural : Sami (Skolt), sms
+Sami, Skolt (Finland), sms-FI
+Natural : Shona, sn
+Somali (Djibouti), so-DJ
+Natural : Shona (Latin), sn-Latn
+Somali (Djibouti), so-DJ
+Natural : Somali, so
+Somali (Djibouti), so-DJ
+Natural : Albanian, sq
+Albanian (Macedonia, FYRO), sq-MK
+Natural : Serbian, sr
+siSwati (South Africa), ss-ZA
+Natural : Serbian (Cyrillic), sr-Cyrl
+siSwati (South Africa), ss-ZA
+Natural : Serbian (Latin), sr-Latn
+siSwati (South Africa), ss-ZA
+Natural : siSwati, ss
+siSwati (South Africa), ss-ZA
+Natural : Saho, ssy
+Sesotho (South Africa), st-ZA
+Natural : Sesotho, st
+Sesotho (South Africa), st-ZA
+Natural : Swedish, sv
+Swedish (Finland), sv-FI
+Natural : Kiswahili, sw
+Kiswahili (Tanzania), sw-TZ
+Natural : Syriac, syr
+Syriac (Syria), syr-SY
+Natural : Tamil, ta
+Tamil (India), ta-IN
+Natural : Telugu, te
+Telugu (India), te-IN
+Natural : Teso, teo
+Thai (Thailand), th-TH
+Natural : Tajik, tg
+Thai (Thailand), th-TH
+Natural : Tajik (Cyrillic), tg-Cyrl
+Thai (Thailand), th-TH
+Natural : Thai, th
+Thai (Thailand), th-TH
+Natural : Tigrinya, ti
+Setswana (Botswana), tn-BW
+Natural : Tigre, tig
+Setswana (Botswana), tn-BW
+Natural : Turkmen, tk
+Setswana (Botswana), tn-BW
+Natural : Setswana, tn
+Setswana (Botswana), tn-BW
+Natural : Tongan, to
+Turkish (Turkey), tr-TR
+Natural : Turkish, tr
+Turkish (Turkey), tr-TR
+Natural : Tsonga, ts
+Xitsonga (South Africa), ts-ZA
+Natural : Tatar, tt
+Tatar (Russia), tt-RU
+Natural : Tasawaq, twq
+Tasawaq (Niger), twq-NE
+Natural : Central Atlas Tamazight, tzm
+Central Atlas Tamazight (Arabic, Morocco), tzm-Arab-MA
+Natural : Central Atlas Tamazight (Arabic), tzm-Arab
+Central Atlas Tamazight (Arabic, Morocco), tzm-Arab-MA
+Natural : Central Atlas Tamazight (Latin), tzm-Latn
+Central Atlas Tamazight (Latin, Algeria), tzm-Latn-DZ
+Natural : Central Atlas Tamazight (Tifinagh), tzm-Tfng
+Central Atlas Tamazight (Tifinagh, Morocco), tzm-Tfng-MA
+Natural : Uyghur, ug
+Uyghur (China), ug-CN
+Natural : Ukrainian, uk
+Ukrainian (Ukraine), uk-UA
+Natural : Urdu, ur
+Urdu (India), ur-IN
+Natural : Uzbek, uz
+Venda (South Africa), ve-ZA
+Natural : Uzbek (Perso-Arabic), uz-Arab
+Venda (South Africa), ve-ZA
+Natural : Uzbek (Cyrillic), uz-Cyrl
+Venda (South Africa), ve-ZA
+Natural : Uzbek (Latin), uz-Latn
+Venda (South Africa), ve-ZA
+Natural : Vai, vai
+Venda (South Africa), ve-ZA
+Natural : Vai (Latin), vai-Latn
+Venda (South Africa), ve-ZA
+Natural : Vai (Vai), vai-Vaii
+Venda (South Africa), ve-ZA
+Natural : Venda, ve
+Venda (South Africa), ve-ZA
+Natural : Vietnamese, vi
+Vietnamese (Vietnam), vi-VN
+Natural : Volapuk, vo
+Vunjo (Tanzania), vun-TZ
+Natural : Vunjo, vun
+Vunjo (Tanzania), vun-TZ
+Natural : Walser, wae
+Walser (Switzerland), wae-CH
+Natural : Wolaytta, wal
+Wolof (Senegal), wo-SN
+Natural : Wolof, wo
+Wolof (Senegal), wo-SN
+Natural : isiXhosa, xh
+isiXhosa (South Africa), xh-ZA
+Natural : Soga, xog
+Yangben (Cameroon), yav-CM
+Natural : Yangben, yav
+Yangben (Cameroon), yav-CM
+Natural : Yiddish, yi
+Yoruba (Benin), yo-BJ
+The thread 0x58fc has exited with code 0 (0x0).
+Natural : Yoruba, yo
+Yoruba (Benin), yo-BJ
+Natural : Standard Moroccan Tamazight, zgh
+Standard Moroccan Tamazight (Tifinagh, Morocco), zgh-Tfng-MA
+Natural : Standard Moroccan Tamazight (Tifinagh), zgh-Tfng
+Standard Moroccan Tamazight (Tifinagh, Morocco), zgh-Tfng-MA
+Natural : Chinese, zh
+Chinese (Simplified, China), zh-CN
+Natural : Chinese (Simplified), zh-Hans
+isiZulu (South Africa), zu-ZA
+Natural : Chinese (Traditional), zh-Hant
+isiZulu (South Africa), zu-ZA
+Natural : isiZulu, zu
+isiZulu (South Africa), zu-ZA
+

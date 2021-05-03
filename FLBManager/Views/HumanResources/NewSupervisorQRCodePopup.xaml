@@ -1,0 +1,21 @@
+﻿<sw:Window x:Class="FLBManager.Views.HumanResources.NewUserQRCodePopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        WindowStartupLocation="CenterScreen" 
+        xmlns:local="clr-namespace:FLBManager.Views.HumanResources"
+        mc:Ignorable="d"
+        ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" ResizeMode="NoResize"
+           Icon="/MenuDesignerLib;component/Resources/Images/Metro/Supervisor16.png"
+        Title="{Binding TitleText}" Height="600" Width="400">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock  HorizontalAlignment="Center" Text="{Binding Prompt}"   FontSize="20"></TextBlock>
+            <Image Margin="0,20,0,0" Width="240" Height="240" Source="{Binding Path=QRCodeImage}"></Image>
+        </StackPanel>
+        
+    </Grid>
+</sw:Window>

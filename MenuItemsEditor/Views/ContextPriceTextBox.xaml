@@ -1,0 +1,16 @@
+﻿<ContentControl x:Class="MenuItemsEditor.Views.ContextPriceTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuItemsEditor.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300">
+    
+    <Grid x:Name="ContextPrice"  MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Background="Bisque">
+        <TextBox ToolTip="{Binding ContextPriceToolTip}" FontWeight="{Binding PriceFontWeight}" VerticalContentAlignment="Center" x:Name="PriceTextBox" Text="{Binding DisplayedValue ,StringFormat=C,UpdateSourceTrigger=LostFocus}" ></TextBox>
+        <Button Visibility="Collapsed" Margin="3" Width="14" Height="14"  x:Name="RemovePriceBtn" Click="RemovePriceBtn_Click" HorizontalAlignment="Right"    Style="{StaticResource WindowButton}" >
+            <Image Stretch="Uniform"  x:Name="CloseBoxImage" Width="10" Height="10"  Source="/StyleableWindow;component/Resources/Images/CloseWindow.png"></Image>
+        </Button>
+    </Grid>
+</ContentControl>

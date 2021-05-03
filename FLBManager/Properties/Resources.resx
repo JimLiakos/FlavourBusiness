@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCallerIDLine" xml:space="preserve">
+    <value>Add phone line</value>
+  </data>
+  <data name="AddServiceAreaHeader" xml:space="preserve">
+    <value>Add Service Area</value>
+    <comment>Defines the ContextMenu MenuItem Header to add service Area tree node</comment>
+  </data>
+  <data name="AddServicesContextHeader" xml:space="preserve">
+    <value>Add Restaurant</value>
+    <comment>Defines the ContextMenu MenuItem Header to add restaurant tree node</comment>
+  </data>
+  <data name="AdministrationTitle" xml:space="preserve">
+    <value>Administration</value>
+    <comment>Tree view node Name for Administration</comment>
+  </data>
+  <data name="CompanyResourcesLabel" xml:space="preserve">
+    <value>Company Resources</value>
+  </data>
+  <data name="CompanyTitleLabel" xml:space="preserve">
+    <value>Company Title :</value>
+  </data>
+  <data name="DefaultServiceAreaDescription" xml:space="preserve">
+    <value>Main Room</value>
+    <comment>Specifies the description of the 'service area' when it is created.</comment>
+  </data>
+  <data name="GraphicMenusTitle" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="GraphicMenuTitle" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="HeadingListViewTitle" xml:space="preserve">
+    <value>Menu Headings</value>
+  </data>
+  <data name="LaunchCallerIDServer" xml:space="preserve">
+    <value>Launch CallerID Server</value>
+  </data>
+  <data name="MenuItemsListActionsLabel" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="MenuMakersTitle" xml:space="preserve">
+    <value>Menu makers</value>
+    <comment>Tree view node Name for Menu nakers</comment>
+  </data>
+  <data name="MenuMakerWindowTilte" xml:space="preserve">
+    <value>Menu maker</value>
+  </data>
+  <data name="NewCashierStationPrompt" xml:space="preserve">
+    <value>New cashier desk</value>
+  </data>
+  <data name="NewGraphicMenuDesignerMenuItemHeader" xml:space="preserve">
+    <value>Add Menu Maker</value>
+  </data>
+  <data name="NewGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>New Menu</value>
+  </data>
+  <data name="NewPreparationStationPrompt" xml:space="preserve">
+    <value>New preparation station</value>
+  </data>
+  <data name="NewTranslatorMenuPrompt" xml:space="preserve">
+    <value>Add Translator</value>
+  </data>
+  <data name="NewWaiterPrompt" xml:space="preserve">
+    <value>New Waiter</value>
+  </data>
+  <data name="OpenGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Open Menu</value>
+  </data>
+  <data name="OrganizationMenuItemHeader" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="PreparationSattionsTitle" xml:space="preserve">
+    <value>Food Preparation</value>
+    <comment>Tree view node Name for preparation stations</comment>
+  </data>
+  <data name="PreparationStationDescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PreparationStationIdentityLabel" xml:space="preserve">
+    <value>Credential key</value>
+  </data>
+  <data name="PreparationStationWindowTitle" xml:space="preserve">
+    <value>Preparation Station</value>
+  </data>
+  <data name="ProvidedProductsTitle" xml:space="preserve">
+    <value>Provided products</value>
+    <comment>Restaurant provided products title bar title</comment>
+  </data>
+  <data name="RemoveCallerIDServer" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveServicesContextHeader" xml:space="preserve">
+    <value>Remove Restaurant</value>
+    <comment>Defines the ContextMenu MenuItem Header to remove restaurant tree node</comment>
+  </data>
+  <data name="RestaurandProductsMenuItemHeader" xml:space="preserve">
+    <value>Products &amp; Services</value>
+  </data>
+  <data name="RestaurantMenusMenuItemHeader" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="SaveGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Save Menu</value>
+  </data>
+  <data name="SettingsMenuPrompt" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="TaxAuthoritySelectionLabel" xml:space="preserve">
+    <value>Tax Authority :</value>
+  </data>
+  <data name="ToolTipAlignBottoms" xml:space="preserve">
+    <value>Align Bottoms</value>
+  </data>
+  <data name="ToolTipAlignLefts" xml:space="preserve">
+    <value>Align Lefts</value>
+  </data>
+  <data name="ToolTipAlignRights" xml:space="preserve">
+    <value>Align Rights</value>
+  </data>
+  <data name="ToolTipAlignTops" xml:space="preserve">
+    <value>Align Tops</value>
+  </data>
+  <data name="ToolTipBringFront" xml:space="preserve">
+    <value>Bring to Front</value>
+  </data>
+  <data name="ToolTipCenterHorizontally" xml:space="preserve">
+    <value>Center Horizontally</value>
+  </data>
+  <data name="ToolTipCenterVertically" xml:space="preserve">
+    <value>Center Vertically</value>
+  </data>
+  <data name="ToolTipCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="ToolTipCut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="ToolTipDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ToolTipExpandLineSpace" xml:space="preserve">
+    <value>Expand Page Spacing</value>
+  </data>
+  <data name="ToolTipExpandPageFontsSizes" xml:space="preserve">
+    <value>Grow fonts</value>
+  </data>
+  <data name="ToolTipGroupObjects" xml:space="preserve">
+    <value>Group Objects</value>
+  </data>
+  <data name="ToolTipHorizontalSpacingEqual" xml:space="preserve">
+    <value>Make Horizontal Spacing Equal</value>
+  </data>
+  <data name="ToolTipNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ToolTipOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="ToolTipPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="ToolTipPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ToolTipRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="ToolTipResetLineSpace" xml:space="preserve">
+    <value>Reset Page Spacing</value>
+  </data>
+  <data name="ToolTipResetPageFontsSizes" xml:space="preserve">
+    <value>Reset fonts to Style defaults</value>
+  </data>
+  <data name="ToolTipSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ToolTipSendBack" xml:space="preserve">
+    <value>Send to Back</value>
+  </data>
+  <data name="ToolTipShrinkLineSpace" xml:space="preserve">
+    <value>Shrink Page Spacing</value>
+  </data>
+  <data name="ToolTipShrinkPageFontsSizes" xml:space="preserve">
+    <value>Shrink fonts</value>
+  </data>
+  <data name="ToolTipUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="ToolTipUngroupObjects" xml:space="preserve">
+    <value>Ungroup Objects</value>
+  </data>
+  <data name="ToolTipVerticalSpacingEqual" xml:space="preserve">
+    <value>Make Vertical Spacing Equal</value>
+  </data>
+  <data name="TranslatorActivitiesLabel" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="TranslatorEmailLabel" xml:space="preserve">
+    <value>Email </value>
+  </data>
+  <data name="TranslatorsTitle" xml:space="preserve">
+    <value>Translators</value>
+    <comment>Tree view node Name for Translators</comment>
+  </data>
+  <data name="TreasuryTitle" xml:space="preserve">
+    <value>Treasury</value>
+    <comment>Tree view node Name for treasury</comment>
+  </data>
+  <data name="WaitersTitle" xml:space="preserve">
+    <value>Waiters</value>
+    <comment>Tree view node Name for waiters</comment>
+  </data>
+  <data name="WriteCompanyTitlePrompt" xml:space="preserve">
+    <value>Write the company title</value>
+  </data>
+  <data name="WriteMenuMakerEmailPrompt" xml:space="preserve">
+    <value>Write  menu maker email</value>
+  </data>
+  <data name="WritePreparationStationDescriptionPrompt" xml:space="preserve">
+    <value>Write preparation statio description</value>
+  </data>
+  <data name="WriteTranslatorEmailPrompt" xml:space="preserve">
+    <value>Write  translator email</value>
+  </data>
+</root>

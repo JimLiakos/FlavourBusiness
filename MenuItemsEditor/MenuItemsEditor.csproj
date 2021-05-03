@@ -1,0 +1,679 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{615B9B02-7115-4A3C-B218-4732958801C8}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MenuItemsEditor</RootNamespace>
+    <AssemblyName>MenuItemsEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Label="MultilingualAppToolkit">
+    <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+    <MultilingualFallbackLanguage>en</MultilingualFallbackLanguage>
+    <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+    <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\UserInterface\WPFUserInterfaceLibrary\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\UserInterface\WPFUserInterfaceLibrary\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\UserInterface\WpfUserInterfaceLibrary\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\UserInterface\WpfUserInterfaceLibrary\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\UserInterface\WpfUserInterfaceLibrary\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MenuItemsEditorViewModel.cs" />
+    <Compile Include="RestaurantMenus.cs" />
+    <Compile Include="Translator.cs" />
+    <Compile Include="ViewModel\DragItemsCategory.cs" />
+    <Compile Include="ViewModel\EditableMenuItemType.cs" />
+    <Compile Include="ViewModel\ItemsCategoryViewModel.cs" />
+    <Compile Include="ViewModel\ItemSelectorViewModel.cs" />
+    <Compile Include="ViewModel\LevelViewModel.cs" />
+    <Compile Include="ViewModel\MealCourseTypeViewModel.cs" />
+    <Compile Include="ViewModel\MealTypesViewModel.cs" />
+    <Compile Include="ViewModel\MealTypeViewModel.cs" />
+    <Compile Include="ViewModel\MenuItemTSViewModel.cs" />
+    <Compile Include="ViewModel\OptionsTypeSelctionViewModel.cs" />
+    <Compile Include="ViewModel\OptionsTypesViewModel.cs" />
+    <Compile Include="ViewModel\MenuItemViewModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\OptionLevelViewModel.cs" />
+    <Compile Include="ViewModel\PartOfMealViewModel.cs" />
+    <Compile Include="ViewModel\PreparationOptionsGroupViewModel.cs" />
+    <Compile Include="ViewModel\PreparationOptionViewModel.cs" />
+    <Compile Include="ViewModel\PreparationScaledOptionViewModel.cs" />
+    <Compile Include="ViewModel\PriceContextViewModel.cs" />
+    <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
+    <Compile Include="ViewModel\ScaleTypesViewModel.cs" />
+    <Compile Include="ViewModel\ScaleTypeViewModel.cs" />
+    <Compile Include="ViewModel\TaxableTypeViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewMenuItemViewModel.cs" />
+    <Compile Include="Views\CategoryMenuItemTypesWindow.xaml.cs">
+      <DependentUpon>CategoryMenuItemTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContextPriceTextBox.xaml.cs">
+      <DependentUpon>ContextPriceTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MealTypesWindow.xaml.cs">
+      <DependentUpon>MealTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemPage.xaml.cs">
+      <DependentUpon>MenuItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemsTypesWindow.xaml.cs">
+      <DependentUpon>MenuItemsTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemsWindow.xaml.cs">
+      <DependentUpon>MenuItemsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemTypesPage.xaml.cs">
+      <DependentUpon>MenuItemTypesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemTypesView.xaml.cs">
+      <DependentUpon>MenuItemTypesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemView.xaml.cs">
+      <DependentUpon>MenuItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuItemWindow.xaml.cs">
+      <DependentUpon>MenuItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreparationOptionView.xaml.cs">
+      <DependentUpon>PreparationOptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RestaurantMenuItemsTreeView.xaml.cs">
+      <DependentUpon>RestaurantMenuItemsTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScaleTypesWindow.xaml.cs">
+      <DependentUpon>ScaleTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxableTypeWindow.xaml.cs">
+      <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="..\..\UserInterface\WPFUserInterfaceLibrary\ThemesEx\Themes\Metro\Metro.Theme.xaml">
+      <Link>Themes\Metro.Theme.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CategoryMenuItemTypesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ContextPriceTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MealTypesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemsTypesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemTypesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemTypesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreparationOptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RestaurantMenuItemsTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScaleTypesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaxableTypeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MenusTreeNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.el.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\MenuItemsEditor.el.xlf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Edit16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
+      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
+      <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{F20E4565-5DDB-4E1E-A343-369927C01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\RestApiRemoting\RestApiRemoting.csproj">
+      <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
+      <Name>RestApiRemoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
+      <Project>{e0e5873e-e5e4-46f6-94f1-731c172cc1c6}</Project>
+      <Name>UserInterface - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\StyleableWindow\StyleableWindow.csproj">
+      <Project>{6368d7f0-70f8-4b7a-8b36-ef31d07c11c1}</Project>
+      <Name>StyleableWindow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WpfUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
+      <Project>{0a6dbbc9-d8d3-4466-9a4e-80ae0582eb0a}</Project>
+      <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WPFUIElementObjectBind\WPFUIElementObjectBind-VS10.csproj">
+      <Project>{8dfec0f3-c2ec-4d16-9e1d-09d33199e73f}</Project>
+      <Name>WPFUIElementObjectBind-VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
+      <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
+      <Name>FlavourBusinessFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BingAPILibrary\BingAPILibrary.csproj">
+      <Project>{0082f653-f24c-470c-b6d8-15f0ad290592}</Project>
+      <Name>BingAPILibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessManager\FlavourBusinessManager.csproj">
+      <Project>{25aec1bf-1882-41c8-8b4a-b3b3e1ef624d}</Project>
+      <Name>FlavourBusinessManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModel.csproj">
+      <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
+      <Name>MenuModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
+      <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
+      <Name>MenuModelFacade</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\category-add128.png" />
+    <Resource Include="Image\category-add16.png" />
+    <Resource Include="Image\category-add256.png" />
+    <Resource Include="Image\category-add32.png" />
+    <Resource Include="Image\category-add512.png" />
+    <Resource Include="Image\category128.png" />
+    <Resource Include="Image\category16.png" />
+    <Resource Include="Image\category256.png" />
+    <Resource Include="Image\category32.png" />
+    <Resource Include="Image\category512.png" />
+    <Resource Include="Image\cooker.png" />
+    <Resource Include="Image\Empty.png" />
+    <Resource Include="Image\Menu-add128.png" />
+    <Resource Include="Image\Menu-add16.png" />
+    <Resource Include="Image\Menu-add32.png" />
+    <Resource Include="Image\Menu-add512.png" />
+    <Resource Include="Image\Menu-del128.png" />
+    <Resource Include="Image\Menu-del16.png" />
+    <Resource Include="Image\Menu-del32.png" />
+    <Resource Include="Image\Menu-del512.png" />
+    <Resource Include="Image\menu.png" />
+    <Resource Include="Image\Menu128.png" />
+    <Resource Include="Image\Menu16.png" />
+    <Resource Include="Image\Menu32.png" />
+    <Resource Include="Image\Menu512.png" />
+    <Resource Include="Image\MenuItem-add16.png" />
+    <Resource Include="Image\MenuItem16.ico" />
+    <Resource Include="Image\MenuItem16.png" />
+    <Resource Include="Image\new-file128.png" />
+    <Resource Include="Image\new-file16.png" />
+    <Resource Include="Image\new-file256.png" />
+    <Resource Include="Image\new-file32.png" />
+    <Resource Include="Image\new-file512.png" />
+    <Resource Include="Image\Rename16.png" />
+    <Resource Include="Image\restaurant.png" />
+    <Resource Include="Image\restaurant16.png" />
+    <Resource Include="Image\restaurant32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\add16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\OptionsGroup16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\option16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\adjustment16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\MoveUp16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Movedown16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\checkmark16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\checkRed16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\unchecked16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\uncheck-square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\check-square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\CloseWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\type16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\MenuITemType16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\expand16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\expand-button16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\hide16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\ItemPreparation.js">
+      <Link>MenuItemsEditorHtml\App_Scripts\ItemPreparation.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\JavaScriptUtilities.js">
+      <Link>MenuItemsEditorHtml\App_Scripts\JavaScriptUtilities.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\OrderMenuItemViewModel.js">
+      <Link>MenuItemsEditorHtml\App_Scripts\OrderMenuItemViewModel.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\arrow-pointing-to-down.png">
+      <Link>MenuItemsEditorHtml\Image\arrow-pointing-to-down.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\arrow-pointing-to-up.png">
+      <Link>MenuItemsEditorHtml\Image\arrow-pointing-to-up.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\check-square.png">
+      <Link>MenuItemsEditorHtml\Image\check-square.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\rubbish-bin16.png">
+      <Link>MenuItemsEditorHtml\Image\rubbish-bin16.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\uncheck-square.png">
+      <Link>MenuItemsEditorHtml\Image\uncheck-square.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery-1.11.3.min.js">
+      <Link>MenuItemsEditorHtml\jquerymobile\jquery-1.11.3.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery.mobile-1.4.5.min.css">
+      <Link>MenuItemsEditorHtml\jquerymobile\jquery.mobile-1.4.5.min.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery.mobile-1.4.5.min.js">
+      <Link>MenuItemsEditorHtml\jquerymobile\jquery.mobile-1.4.5.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\PublicMenu\TransitionHtmlPage.html">
+      <Link>MenuItemsEditorHtml\PublicMenu\TransitionHtmlPage.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\collections.js">
+      <Link>MenuItemsEditorHtml\Scripts\collections.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\jquery-ui-1.12.1.min.js">
+      <Link>MenuItemsEditorHtml\Scripts\jquery-ui-1.12.1.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\jquery.ui.touch-punch.min.js">
+      <Link>MenuItemsEditorHtml\Scripts\jquery.ui.touch-punch.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\knockout-3.4.0.js">
+      <Link>MenuItemsEditorHtml\Scripts\knockout-3.4.0.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\typings\events\strongly-typed-events.js">
+      <Link>MenuItemsEditorHtml\Scripts\typings\events\strongly-typed-events.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Image\dropdownmenu.png" />
+    <Resource Include="Image\Taxes128.png" />
+    <Resource Include="Image\Taxes16.png" />
+    <Resource Include="Image\Taxes32.png" />
+    <Resource Include="Image\Taxes64.png" />
+    <Resource Include="Image\mono-flags\AE.png" />
+    <Resource Include="Image\mono-flags\AG.png" />
+    <Resource Include="Image\mono-flags\AM.png" />
+    <Resource Include="Image\mono-flags\AU.png" />
+    <Resource Include="Image\mono-flags\AW.png" />
+    <Resource Include="Image\mono-flags\BD.png" />
+    <Resource Include="Image\mono-flags\BE.png" />
+    <Resource Include="Image\mono-flags\BF.png" />
+    <Resource Include="Image\mono-flags\BG.png" />
+    <Resource Include="Image\mono-flags\BH.png" />
+    <Resource Include="Image\mono-flags\BI.png" />
+    <Resource Include="Image\mono-flags\BJ.png" />
+    <Resource Include="Image\mono-flags\BR.png" />
+    <Resource Include="Image\mono-flags\BS.png" />
+    <Resource Include="Image\mono-flags\BW.png" />
+    <Resource Include="Image\mono-flags\CA.png" />
+    <Resource Include="Image\mono-flags\CG.png" />
+    <Resource Include="Image\mono-flags\CH.png" />
+    <Resource Include="Image\mono-flags\CK.png" />
+    <Resource Include="Image\mono-flags\CL.png" />
+    <Resource Include="Image\mono-flags\CM.png" />
+    <Resource Include="Image\mono-flags\CN.png" />
+    <Resource Include="Image\mono-flags\CO.png" />
+    <Resource Include="Image\mono-flags\CU.png" />
+    <Resource Include="Image\mono-flags\CZ.png" />
+    <Resource Include="Image\mono-flags\DE.png" />
+    <Resource Include="Image\mono-flags\DJ.png" />
+    <Resource Include="Image\mono-flags\DK.png" />
+    <Resource Include="Image\mono-flags\DZ.png" />
+    <Resource Include="Image\mono-flags\ES.png" />
+    <Resource Include="Image\mono-flags\EU.png" />
+    <Resource Include="Image\mono-flags\FI.png" />
+    <Resource Include="Image\mono-flags\FR.png" />
+    <Resource Include="Image\mono-flags\GB.png" />
+    <Resource Include="Image\mono-flags\GE.png" />
+    <Resource Include="Image\mono-flags\GG.png" />
+    <Resource Include="Image\mono-flags\GH.png" />
+    <Resource Include="Image\mono-flags\GL.png" />
+    <Resource Include="Image\mono-flags\GR.png" />
+    <Resource Include="Image\mono-flags\GW.png" />
+    <Resource Include="Image\mono-flags\GY.png" />
+    <Resource Include="Image\mono-flags\HN.png" />
+    <Resource Include="Image\mono-flags\HU.png" />
+    <Resource Include="Image\mono-flags\ID.png" />
+    <Resource Include="Image\mono-flags\IE.png" />
+    <Resource Include="Image\mono-flags\IL.png" />
+    <Resource Include="Image\mono-flags\IN.png" />
+    <Resource Include="Image\mono-flags\IS.png" />
+    <Resource Include="Image\mono-flags\IT.png" />
+    <Resource Include="Image\mono-flags\JM.png" />
+    <Resource Include="Image\mono-flags\JO.png" />
+    <Resource Include="Image\mono-flags\JP.png" />
+    <Resource Include="Image\mono-flags\KM.png" />
+    <Resource Include="Image\mono-flags\KP.png" />
+    <Resource Include="Image\mono-flags\KR.png" />
+    <Resource Include="Image\mono-flags\KW.png" />
+    <Resource Include="Image\mono-flags\LA.png" />
+    <Resource Include="Image\mono-flags\LT.png" />
+    <Resource Include="Image\mono-flags\LU.png" />
+    <Resource Include="Image\mono-flags\MA.png" />
+    <Resource Include="Image\mono-flags\MG.png" />
+    <Resource Include="Image\mono-flags\MK.png" />
+    <Resource Include="Image\mono-flags\MT.png" />
+    <Resource Include="Image\mono-flags\MU.png" />
+    <Resource Include="Image\mono-flags\MV.png" />
+    <Resource Include="Image\mono-flags\MZ.png" />
+    <Resource Include="Image\mono-flags\NA.png" />
+    <Resource Include="Image\mono-flags\NE.png" />
+    <Resource Include="Image\mono-flags\NG.png" />
+    <Resource Include="Image\mono-flags\NO.png" />
+    <Resource Include="Image\mono-flags\NZ.png" />
+    <Resource Include="Image\mono-flags\PA.png" />
+    <Resource Include="Image\mono-flags\PH.png" />
+    <Resource Include="Image\mono-flags\PK.png" />
+    <Resource Include="Image\mono-flags\PL.png" />
+    <Resource Include="Image\mono-flags\PS.png" />
+    <Resource Include="Image\mono-flags\PW.png" />
+    <Resource Include="Image\mono-flags\QA.png" />
+    <Resource Include="Image\mono-flags\RO.png" />
+    <Resource Include="Image\mono-flags\RU.png" />
+    <Resource Include="Image\mono-flags\SD.png" />
+    <Resource Include="Image\mono-flags\SE.png" />
+    <Resource Include="Image\mono-flags\sk.png" />
+    <Resource Include="Image\mono-flags\SL.png" />
+    <Resource Include="Image\mono-flags\SN.png" />
+    <Resource Include="Image\mono-flags\SO.png" />
+    <Resource Include="Image\mono-flags\SR.png" />
+    <Resource Include="Image\mono-flags\ST.png" />
+    <Resource Include="Image\mono-flags\SY.png" />
+    <Resource Include="Image\mono-flags\TG.png" />
+    <Resource Include="Image\mono-flags\TH.png" />
+    <Resource Include="Image\mono-flags\TL.png" />
+    <Resource Include="Image\mono-flags\TR.png" />
+    <Resource Include="Image\mono-flags\TT.png" />
+    <Resource Include="Image\mono-flags\TZ.png" />
+    <Resource Include="Image\mono-flags\UA.png" />
+    <Resource Include="Image\mono-flags\US.png" />
+    <Resource Include="Image\mono-flags\VN.png" />
+    <Resource Include="Image\mono-flags\YE.png" />
+    <Resource Include="Image\mono-flags\ZA.png" />
+    <Resource Include="Image\mono-flags\SK24.png" />
+    <Resource Include="Image\Translate24.png" />
+    <Resource Include="Image\refresh24.png" />
+    <Resource Include="Image\MaximizeWindow.png" />
+    <Resource Include="Image\Cut.png" />
+    <Resource Include="Image\Copy.png" />
+    <Resource Include="Image\Paste.png" />
+    <Resource Include="Image\steps16.png" />
+    <Resource Include="Image\MinimizeWindow.png" />
+    <Resource Include="Image\MealCoursesClock24.png" />
+    <Resource Include="Image\Save.png" />
+    <Resource Include="Image\MealCoursesClock16.png" />
+    <Resource Include="Image\restriction16.png" />
+    <Resource Include="Image\view16.png" />
+    <Content Include="MenuItemsEditorHtml\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MenuItemsEditorHtml\JavaScript\AppJavaScript.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MenuItemsEditorHtml\JavaScript\jquery-3.1.1.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MenuItemsEditorHtml\MenuItemPreparationView.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\ItemPreparation.ts">
+      <Link>MenuItemsEditorHtml\App_Scripts\ItemPreparation.ts</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MenuItemsEditorHtml\Scripts\typings\jquery\" />
+    <Folder Include="MenuItemsEditorHtml\Scripts\typings\knockout\" />
+    <Folder Include="MenuItemsEditorHtml\Scripts\typings\node\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\typings\events\strongly-typed-events.ts">
+      <Link>MenuItemsEditorHtml\Scripts\typings\events\strongly-typed-events.ts</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
+  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets')" Label="MultilingualAppToolkit">
+    <Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build. If building with Visual Studio, please check to ensure that toolkit is properly installed." />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MemuEditorRootTreeNodeName" xml:space="preserve">
+    <value>Εστιατόριο</value>
+    <comment>Defines the name of root tree node of restaurant tree view </comment>
+  </data>
+  <data name="MenuDefaultName" xml:space="preserve">
+    <value>Μενού</value>
+    <comment>Defines the default name of Menu class instances</comment>
+  </data>
+  <data name="NewMenuMenuItemHeader" xml:space="preserve">
+    <value>Νέο μενού</value>
+    <comment>Defines the ContextMenu MenuItem Header for new restaraunt menu command</comment>
+  </data>
+  <data name="AddCategoryMenuItemHeader" xml:space="preserve">
+    <value>Προσθήκη κατηγορίας</value>
+    <comment>Defines the ContextMenu MenuItem Header to add category tree node</comment>
+  </data>
+  <data name="TreeNodeRenameMenuItemHeader" xml:space="preserve">
+    <value>Μετονομασία</value>
+    <comment>Defines the ContextMenu MenuItem Header to rename tree node text</comment>
+  </data>
+  <data name="DeleteMenuItemHeader" xml:space="preserve">
+    <value>Διαγραφή</value>
+    <comment>Defines the ContextMenu MenuItem Header to delete somthing</comment>
+  </data>
+  <data name="MenuItemNameLabel" xml:space="preserve">
+    <value>Περιγραφή :</value>
+    <comment>Defines the label for menu item TextBox</comment>
+  </data>
+</root>

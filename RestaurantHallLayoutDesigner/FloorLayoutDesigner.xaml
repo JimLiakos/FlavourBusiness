@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="FloorLayoutDesigner.HallLayoutDesigner"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FloorLayoutDesigner"
+             xmlns:Resx="clr-namespace:FloorLayoutDesigner.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="450">
+    <UserControl.Resources>
+        <Style x:Key="DesignItemLabel" TargetType="{x:Type Label}" 
+       BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <ScrollViewer x:Name="HallScrollViewer"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+            <Grid MouseWheel="ViewBoxHost_MouseWheel">
+                <Viewbox  x:Name="ZoomViewBox">
+                    <Grid Height="{Binding HallLayoutHeight}" Width="{Binding HallLayoutWidth}">
+                        <Border BorderThickness="0" BorderBrush="Black">
+                            <Border BorderThickness="{Binding BorderThickness}" BorderBrush="Transparent" >
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="{Binding BorderThickness}" ShadowDepth="4" />
+                                </Border.Effect>
+                                <Grid Background="White">
+                                </Grid>
+                            </Border>
+                        </Border>
+                        <Border Name="DesignerCanvasHost"  Margin="{Binding BorderThickness}" ClipToBounds="True">
+
+                            <Border.ContextMenu >
+                                <ContextMenu>
+                                    <MenuItem Header="{x:Static Resx:Resources.HallLayoutLabelFontMenuItemHeader}" Command="{Binding HallLayoutShapeLabelFont}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/font16.png" Width="16"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static Resx:Resources.HallLayoutLabelBkMenuItemHeader}"  Command="{Binding HallLayoutShapeLabelBackgroundCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/textBackground16.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <Separator/>
+
+
+                                    <MenuItem Header="Hall page setup" Command="{Binding HallLayoutPageSetupCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/HallLayoutSize16.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Cut" Command="{Binding HallLayoutCutCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/cut.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Copy" Command="{Binding HallLayoutCopyCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/copy.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Paste" Command="{Binding HallLayoutPasteCommand}" InputGestureText="Ctrl+P">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/paste.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator/>
+
+                                    <MenuItem Header="Delete" Command="{Binding HallLayoutDeleteCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/delete.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Border.ContextMenu>
+
+                            
+                            <!--<local:DesignerCanvas  Background="WhiteSmoke" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:FieldModifier="public" x:Name="Canvas" Visibility="Collapsed">
+                                    <local:DesignerCanvas.ContextMenu >
+                                        <ContextMenu>
+                                        <MenuItem Header="{x:Static Resx:Resources.HallLayoutLabelFontMenuItemHeader}" Command="{Binding HallLayoutShapeLabelFont}">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/Images/Metro/font16.png" Width="16"/>
+                                            </MenuItem.Icon>
+
+                                        </MenuItem>
+                                        <MenuItem Header="{x:Static Resx:Resources.HallLayoutLabelBkMenuItemHeader}"  Command="{Binding HallLayoutShapeLabelBackground}">
+                                            <MenuItem.Icon>
+                                                <Image Source="Resources/Images/Metro/textBackground16.png" Width="16"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                            
+                                   
+                                        <Separator/>
+
+
+                                        <MenuItem Header="Hall page setup" Command="{Binding PageSetup}">
+                                                <MenuItem.Icon>
+                                                    <Image Source="Resources/Images/Metro/HallLayoutSize16.png" Width="16"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}">
+                                                <MenuItem.Icon>
+                                                    <Image Source="Resources/Images/Metro/cut.png" Width="16"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Copy" Command="{x:Static ApplicationCommands.Copy}">
+                                                <MenuItem.Icon>
+                                                    <Image Source="Resources/Images/Metro/copy.png" Width="16"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Paste" Command="{Binding Paste}" InputGestureText="Ctrl+P">
+                                                <MenuItem.Icon>
+                                                    <Image Source="Resources/Images/Metro/paste.png" Width="16"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <Separator/>
+
+                                            <MenuItem Header="Delete" Command="{x:Static ApplicationCommands.Delete}">
+                                                <MenuItem.Icon>
+                                                    <Image Source="Resources/Images/Metro/delete.png" Width="16"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </local:DesignerCanvas.ContextMenu>
+                                </local:DesignerCanvas>-->
+
+
+                        </Border>
+
+                    </Grid>
+                </Viewbox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+
+
+</UserControl>

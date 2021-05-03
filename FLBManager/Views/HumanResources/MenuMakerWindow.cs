@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace FLBManager.Views.HumanResources
+{
+    /// <summary>
+    /// Interaction logic for GraphicMenuDesigner.xaml
+    /// </summary>
+    /// <MetaDataID>{b10ab5d6-f8b9-4a13-b11c-4770084ea4d3}</MetaDataID>
+    public partial class MenuMakerWindow : StyleableWindow.Window
+    {
+        public MenuMakerWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}

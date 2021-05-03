@@ -1,0 +1,21 @@
+﻿<sw:PageDialogViewEmulator  xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" x:Class="MenuItemsEditor.Views.MenuItemTypesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MenuItemsEditor.Views"
+      xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+      mc:Ignorable="d" 
+      LanguageButton="True"
+      d:DesignHeight="450" d:DesignWidth="800"
+      SelectedCulture="{Binding Value.SelectedCulture, Mode=OneWayToSource}"
+      Title="{Binding Path= Value.WindowsTitle}">
+
+    <Page.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:OptionsTypesViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </Page.DataContext>
+    <Grid>
+
+        <local:MenuItemTypesView DataContext="{Binding Value}"></local:MenuItemTypesView>
+    </Grid>
+</sw:PageDialogViewEmulator>

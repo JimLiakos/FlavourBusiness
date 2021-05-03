@@ -1,0 +1,346 @@
+﻿<UserControl  x:Class="FloorLayoutDesigner.Views.HallLayoutDesignerToolBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FloorLayoutDesigner.Views" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:Resx="clr-namespace:FloorLayoutDesigner.Properties" 
+             xmlns:ViewModel="clr-namespace:FloorLayoutDesigner.ViewModel"
+             xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" 
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ViewModel:HallLayoutViewModel x:Key="HallLayout"/>
+        <Style x:Key="IntegerUpDownStyle1" TargetType="{x:Type xctk:IntegerUpDown}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="WatermarkTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Focusable="False" Margin="0,0,3,0"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IntegerUpDown}">
+                        <xctk:ButtonSpinner x:Name="PART_Spinner" AllowSpin="{Binding AllowSpin, RelativeSource={RelativeSource TemplatedParent}}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ButtonSpinnerLocation="{Binding ButtonSpinnerLocation, RelativeSource={RelativeSource TemplatedParent}}" Background="{TemplateBinding Background}" HorizontalContentAlignment="Stretch" IsTabStop="False" ShowButtonSpinner="{Binding ShowButtonSpinner, RelativeSource={RelativeSource TemplatedParent}}" VerticalContentAlignment="Stretch" Style="{DynamicResource ButtonSpinnerStyle1}">
+                            <xctk:WatermarkTextBox x:Name="PART_TextBox" AutoMoveFocus="{Binding AutoMoveFocus, RelativeSource={RelativeSource TemplatedParent}}" AutoSelectBehavior="{Binding AutoSelectBehavior, RelativeSource={RelativeSource TemplatedParent}}" AcceptsReturn="False" BorderThickness="0" Background="Transparent" ContextMenu="{TemplateBinding ContextMenu}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="True" IsUndoEnabled="True" MinWidth="20" MaxLength="{Binding MaxLength, RelativeSource={RelativeSource TemplatedParent}}" Padding="{TemplateBinding Padding}" TextAlignment="{Binding TextAlignment, RelativeSource={RelativeSource TemplatedParent}}" TextWrapping="NoWrap" TabIndex="{TemplateBinding TabIndex}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" WatermarkTemplate="{Binding WatermarkTemplate, RelativeSource={RelativeSource TemplatedParent}}" Watermark="{Binding Watermark, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </xctk:ButtonSpinner>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlMouseOverBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsReadOnly, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                    <Condition Binding="{Binding AllowTextInput, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsReadOnly" TargetName="PART_TextBox" Value="True"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="IsReadOnly" TargetName="PART_TextBox" Value="True"/>
+                            </DataTrigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlSelectedBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="FocusManager.FocusedElement" TargetName="PART_TextBox" Value="{Binding ElementName=PART_TextBox}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonSpinnerStyle1" TargetType="{x:Type xctk:ButtonSpinner}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="IsTabStop" Value="True"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:ButtonSpinner}">
+                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="firstContentColumn" Width="*"/>
+                                    <ColumnDefinition x:Name="secondContentColumn" Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Grid x:Name="gridContent" Grid.Column="1" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <RepeatButton  x:Name="PART_IncreaseButton" IsTabStop="{TemplateBinding IsTabStop}" Style="{DynamicResource RepeatButtonStyle1}">
+                                        <RepeatButton.ContentTemplate>
+                                            <DataTemplate>
+                                                <Path Data="M0,5L4.5,0.5 9,5 6,5 4.5,3.5 3,5z" Focusable="False" Fill="{DynamicResource {ComponentResourceKey ResourceId=GlyphNormalForegroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}" HorizontalAlignment="Center" Height="5" SnapsToDevicePixels="True" VerticalAlignment="Center" Width="9"/>
+                                            </DataTemplate>
+                                        </RepeatButton.ContentTemplate>
+                                    </RepeatButton>
+                                    <RepeatButton   x:Name="PART_DecreaseButton" IsTabStop="{TemplateBinding IsTabStop}" Grid.Row="1" Style="{DynamicResource {ComponentResourceKey ResourceId=SpinnerButtonStyleKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}">
+                                        <RepeatButton.ContentTemplate>
+                                            <DataTemplate>
+                                                <Path Data="M0,0L3,0 4.5,1.5 6,0 9,0 4.5,4.5z" Focusable="False" Fill="{DynamicResource {ComponentResourceKey ResourceId=GlyphNormalForegroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}" HorizontalAlignment="Center" Height="5" SnapsToDevicePixels="True" VerticalAlignment="Center" Width="9"/>
+                                            </DataTemplate>
+                                        </RepeatButton.ContentTemplate>
+                                    </RepeatButton>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ShowButtonSpinner" Value="False">
+                                <Setter Property="Visibility" TargetName="gridContent" Value="Hidden"/>
+                                <Setter Property="Width" TargetName="gridContent" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlMouseOverBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlSelectedBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlDisabledBackgroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" SourceName="PART_IncreaseButton" Value="False">
+                                <Setter Property="ContentTemplate" TargetName="PART_IncreaseButton">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Path Data="M0,5L4.5,0.5 9,5 6,5 4.5,3.5 3,5z" Focusable="False" Fill="{DynamicResource {ComponentResourceKey ResourceId=GlyphDisabledForegroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}" HorizontalAlignment="Center" Height="5" SnapsToDevicePixels="True" VerticalAlignment="Center" Width="9"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" SourceName="PART_DecreaseButton" Value="False">
+                                <Setter Property="ContentTemplate" TargetName="PART_DecreaseButton">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Path Data="M0,0L3,0 4.5,1.5 6,0 9,0 4.5,4.5z" Focusable="False" Fill="{DynamicResource {ComponentResourceKey ResourceId=GlyphDisabledForegroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}" HorizontalAlignment="Center" Height="5" SnapsToDevicePixels="True" VerticalAlignment="Center" Width="9"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="ButtonSpinnerLocation" Value="Left">
+                                <Setter Property="Width" TargetName="firstContentColumn" Value="Auto"/>
+                                <Setter Property="Width" TargetName="secondContentColumn" Value="*"/>
+                                <Setter Property="Grid.Column" TargetName="contentPresenter" Value="1"/>
+                                <Setter Property="Grid.Column" TargetName="gridContent" Value="0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RepeatButtonStyle1" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey ResourceId=ButtonNormalBackgroundKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ButtonNormalOuterBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Grid>
+                            <!--<xctk:ButtonChrome x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource {ComponentResourceKey ResourceId=SpinButtonCornerRadiusKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}" RenderNormal="True" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RenderEnabled="{TemplateBinding IsEnabled}" SnapsToDevicePixels="True"/>-->
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="4,0,4,6" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Width="30" Height="30" Margin="0,0,4,0"  Command="{Binding CutCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Cut.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipCut}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="0,0,4,0" Command="{Binding CopyCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Copy.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipCopy}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="0,0,4,0" Command="{Binding PasteCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Paste.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipPaste}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="0,0,4,0" Command="{Binding DeleteCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Delete.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipDelete}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="0,0,4,0" Command="{Binding UndoCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/undo16.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipUndo}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="0,0,4,0" Command="{Binding RedoCommand }" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/redo16.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipRedo}"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+
+            <Rectangle VerticalAlignment="Stretch" Width="2" Margin="2" Stroke="{DynamicResource ToolBarSpliterBorderBrush}" />
+
+            <Button Width="30" Height="30" Margin="2,0,2,0"   Command="{Binding AlignLeftCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipAlignLefts}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsLeft.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding AlignHorizontalCentersCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipCenterHorizontally}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsCenteredHorizontal.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding AlignRightCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipAlignRights}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsRight.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding AlignTopCommand}" Style="{StaticResource ToolbarButtonStyle}" >
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipAlignTops}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsTop.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding AlignVerticalCentersCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipCenterVertically}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsCenteredVertical.png" />
+            </Button>
+
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding AlignBottomCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipAlignBottoms}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/AlignObjectsBottom.png" />
+            </Button>
+
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding DistributeVerticalCommand}" Style="{StaticResource ToolbarButtonStyle}" >
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipVerticalSpacingEqual}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/DistributeObjectsVertical.png" />
+            </Button>
+
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding DistributeHorizontalCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipHorizontalSpacingEqual}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/DistributeObjectsHorizontal.png" />
+            </Button>
+
+
+
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding SameWidthCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipHorizontalSpacingEqual}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/same-width16.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding SameHeightCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipHorizontalSpacingEqual}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/same-height16.png" />
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0" Command="{Binding SameSizeCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipHorizontalSpacingEqual}"/>
+                </Button.ToolTip>
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/same-size16.png" />
+            </Button>
+            <Rectangle VerticalAlignment="Stretch" Width="2" Margin="2" Stroke="{StaticResource ToolBarSpliterBorderBrush}" />
+
+            <Button Width="28" Height="28" Margin="2,0,2,0" Command="{Binding RotateCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipHorizontalSpacingEqual}"/>
+                </Button.ToolTip>
+
+                <Grid>
+                    <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/360-degrees16.png" />
+                    <Popup  VerticalOffset="10" Placement="Bottom" AllowsTransparency="True"  PopupAnimation="Fade"   StaysOpen="False"  IsOpen="{Binding RotatePopupIsOpen, Mode=OneWay}"  >
+                        <Border CornerRadius="2" BorderThickness="1" Background="{StaticResource ToolbarBrush}" BorderBrush="{StaticResource ToolbarDarkBorderBrush}">
+                            <StackPanel Margin="15,25,15,25">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Rotate angle : "/>
+                                    <xctk:IntegerUpDown MinWidth="60" Value="{Binding DesignerCanvas.SelectedShape.RotationDeegrees}" Text="{Binding DesignerCanvas.SelectedShape.RotationDeegrees}" Style="{DynamicResource IntegerUpDownStyle1}"/>
+                                    <!--<TextBlock Text="{Binding Path=HallLayoutCanvas.SelectedShape.RotationDeegrees}"></TextBlock>
+                                            <TextBlock Text="&#176;"/>-->
+                                </StackPanel>
+                                <Slider    Value="{Binding DesignerCanvas.SelectedShape.RotationDeegrees}"  Maximum="360"   Width="150"  VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+            </Button>
+
+            <Rectangle VerticalAlignment="Stretch" Width="2" Margin="2" Stroke="{StaticResource ToolBarSpliterBorderBrush}" />
+
+            <Button Visibility="Collapsed" Width="30" Height="30" Margin="2,0,2,0" Command="{Binding BringForward}" >
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/BringForward.png" />
+            </Button>
+            <Button Visibility="Collapsed" Width="30" Height="30" Margin="2,0,2,0" Command="{Binding  SendBackward}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/SendBackward.png" />
+
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0"  Command="{Binding BringToFrontCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/BringToFront.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipBringFront}" ></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0"  Command="{Binding SendToBackCommand}" Style="{StaticResource ToolbarButtonStyle}" >
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/SendToBack.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipSendBack}" ></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Rectangle VerticalAlignment="Stretch" Width="2" Margin="2" Stroke="{StaticResource ToolBarSpliterBorderBrush}" />
+            <Button Width="30" Height="30" Margin="2,0,2,0"  Command="{Binding GroupCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Group.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipGroupObjects}" ></ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Width="30" Height="30" Margin="2,0,2,0"  Command="{Binding UngroupCommand}" Style="{StaticResource ToolbarButtonStyle}">
+                <Image Width="16" Height="16" Source="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/Ungroup.png" />
+                <Button.ToolTip>
+                    <ToolTip Content="{x:Static Resx:Resources.ToolTipUngroupObjects}" ></ToolTip>
+                </Button.ToolTip>
+            </Button>
+
+
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
