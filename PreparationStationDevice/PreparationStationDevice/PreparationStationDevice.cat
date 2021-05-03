@@ -1,0 +1,326 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "PreparationStationDevice"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"PreparationStationDevice")
+	(object Attribute
+	    tool       	"C#"
+	    name       	"Root Namespace"
+	    value      	TRUE)
+	(object Attribute
+	    tool       	"C#"
+	    name       	"FullName"
+	    value      	"PreparationStationDevice"))
+    quid       	"5D8217EA0172"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "ApplicationSettings"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{bc38e2f6-8ead-4a8a-8a19-0e5e54123264}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{cb26b77f-6f40-4d8e-a583-c0661f82ba96}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"3"))
+	    quid       	"5D821872026F"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "AppSettingsStorage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{34c4d2b6-a10e-4b77-b298-1d424d5e8f2e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D8295AA0279")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5D8295AA0279"
+		    type       	"OOAdvantech.PersistenceLayer.ObjectStorage"
+		    exportControl 	"Public")
+		(object ClassAttribute "CommunicationCredentialKey"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D8307EB02A3")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{706f0d10-8c30-473a-b1a1-958081b7637b}"))
+		    quid       	"5D8307EB02A3"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Current"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{73b8024c-cf56-4592-8a79-4e83fc9cab65}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D830A9A0236")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"5D830A9A0236"
+		    type       	"PreparationStationDevice.ApplicationSettings"
+		    exportControl 	"Public")
+		(object ClassAttribute "PreparationStationTitle"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d33915e8-efd6-4a5e-9140-430c65e49b65}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6081C8CA028A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"6081C8CA028A"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ExtraStoragePath"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f7bdf5cc-1cb2-45ef-9a97-3e7a0db20410}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6081C8CA02F3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"6081C8CA02F3"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::PreparationStationDevice::PreparationStationDevice"
+	    quidu      	"5D830A58019E"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "App"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{84775fa1-2535-4ec3-a93d-cb1200930bfc}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5D830A8B010B"
+	    operations 	(list Operations
+		(object Operation "App"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5a543e78-c458-4d2c-bc10-3e589da6aaf0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D830A91030C"))
+		    quid       	"5D830A91030C"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OnStart"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{49c9e858-b320-4cea-89ad-832303819215}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D830A91032F"))
+		    quid       	"5D830A91032F"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OnSleep"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cc78ddd3-bd8c-4430-8305-19069bc120fb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D830A91034F"))
+		    quid       	"5D830A91034F"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OnResume"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b88483b2-cce9-4e11-aa68-356e8520e869}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5D830A910367"))
+		    quid       	"5D830A910367"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View::PreparationStationDevice::PreparationStationDevice"
+	    quidu      	"5D830A58019E"
+	    language   	"C#")
+	(object Class "FlavoursPreparationStation"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{293c7b92-a89a-4179-a8ff-616948355d82}"))
+	    quid       	"5D830AB70013"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5D830AB70216"
+		    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+		    quidu      	"416244F90271"))
+	    module     	"Component View::PreparationStationDevice::PreparationStationDevice"
+	    quidu      	"5D830A58019E"
+	    language   	"C#"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"5D821870003E"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::PreparationStationDevice::ApplicationSettings" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(821, 547)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(543, 456)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	557
+			justify    	0
+			label      	"ApplicationSettings")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5D821872026F"
+		    width      	575
+		    height     	206
+		    annotation 	8)))))
