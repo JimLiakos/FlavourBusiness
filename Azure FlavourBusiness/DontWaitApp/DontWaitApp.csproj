@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props" Condition="Exists('..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props')" />
+  <Import Project="..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props" Condition="Exists('..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props')" />
+  <Import Project="..\..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props" Condition="Exists('..\..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props')" />
+  <Import Project="..\..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props" Condition="Exists('..\..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1351A577-4267-492C-894C-E3B5705E321D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DontWaitApp</RootNamespace>
+    <AssemblyName>DontWaitApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DontWaitApp;FlavourBusinessDevice</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DontWaitApp;FlavourBusinessDevice</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\QRCoder.1.3.9\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.HashFunction.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.HashFunction.Core.2.0.0\lib\net45\System.Data.HashFunction.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.CRC, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.HashFunction.CRC.2.0.0\lib\net45\System.Data.HashFunction.CRC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Interfaces, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Data.HashFunction.Interfaces.2.0.0\lib\net45\System.Data.HashFunction.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
+      <Link>FlavoursOrderServer.cs</Link>
+    </Compile>
+    <Compile Include="WaitView\Block.xaml.cs">
+      <DependentUpon>Block.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WaitView\DispatcherCollection.cs" />
+    <Compile Include="WaitView\LoadingAnimation.xaml.cs">
+      <DependentUpon>LoadingAnimation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WaitView\WPFHelper.cs" />
+    <Page Include="DeviceSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
+      <Link>ApplicationSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs">
+      <Link>FoodServiceClientVM.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
+      <Link>IFlavoursOrderServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
+      <Link>Messmate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs">
+      <Link>UIBaseEx\FontData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\IHtmlView.cs">
+      <Link>UIBaseEx\IHtmlView.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs">
+      <Link>UIBaseEx\Margin.cs</Link>
+    </Compile>
+    <Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs">
+      <Link>ItemPreparation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\FlavourBusinessManager\OptionChange.cs">
+      <Link>OptionChange.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\CustomazedPrice.cs">
+      <Link>MenuModel\CustomazedPrice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\itemPreparation.cs">
+      <Link>MenuModel\itemPreparation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\ItemSelectorOption.cs">
+      <Link>MenuModel\ItemSelectorOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\Option.cs">
+      <Link>MenuModel\Option.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\OptionGroup.cs">
+      <Link>MenuModel\OptionGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\OptionMenuItemSpecific.cs">
+      <Link>MenuModel\OptionMenuItemSpecific.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MenuModel\JsonViewModel\TypedObject.cs">
+      <Link>MenuModel\TypedObject.cs</Link>
+    </Compile>
+    <None Include="..\..\MenuPresentationModel\IPriceHeading.cs">
+      <Link>MenuCanvas\IPriceHeading.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\HeadingAccent.cs">
+      <Link>MenuCanvas\HeadingAccent.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItem.cs">
+      <Link>MenuCanvas\MenuCanvasFoodItem.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItemPrice.cs">
+      <Link>MenuCanvas\MenuCanvasFoodItemPrice.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItemText.cs">
+      <Link>MenuCanvas\MenuCanvasFoodItemText.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasHeading.cs">
+      <Link>MenuCanvas\MenuCanvasHeading.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasHeadingAccent.cs">
+      <Link>MenuCanvas\MenuCanvasHeadingAccent.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasLine.cs">
+      <Link>MenuCanvas\MenuCanvasLine.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasPriceLeader.cs">
+      <Link>MenuCanvas\MenuCanvasPriceLeader.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuImage.cs">
+      <Link>MenuCanvas\MenuImage.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuPageCanvas.cs">
+      <Link>MenuCanvas\MenuPageCanvas.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\PageImage.cs">
+      <Link>MenuCanvas\PageImage.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\RestaurantMenu.cs">
+      <Link>MenuCanvas\RestaurantMenu.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\HeadingType.cs">
+      <Link>MenuCanvas\HeadingType.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IFoodItemsGroupColumn.cs">
+      <Link>MenuCanvas\IFoodItemsGroupColumn.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IGroupedItem.cs">
+      <Link>MenuCanvas\IGroupedItem.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IItemMultiPriceHeading.cs">
+      <Link>MenuCanvas\IItemMultiPriceHeading.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasFoodItemPrice.cs">
+      <Link>MenuCanvas\IMenuCanvasFoodItemPrice.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasFoodItemText.cs">
+      <Link>MenuCanvas\IMenuCanvasFoodItemText.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasHeading.cs">
+      <Link>MenuCanvas\IMenuCanvasHeading.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasHeadingAccent.cs">
+      <Link>MenuCanvas\IMenuCanvasHeadingAccent.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasLine.cs">
+      <Link>MenuCanvas\IMenuCanvasLine.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasPriceLeader.cs">
+      <Link>MenuCanvas\IMenuCanvasPriceLeader.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IRestaurantMenu.cs">
+      <Link>MenuCanvas\IRestaurantMenu.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\Rect.cs">
+      <Link>MenuCanvas\Rect.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvas.cs">
+      <Link>MenuCanvas\ΙMenuCanvas.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasColumn.cs">
+      <Link>MenuCanvas\ΙMenuCanvasColumn.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasFoodItem.cs">
+      <Link>MenuCanvas\ΙMenuCanvasFoodItem.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasFoodItemsGroup.cs">
+      <Link>MenuCanvas\ΙMenuCanvasFoodItemsGroup.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasItem.cs">
+      <Link>MenuCanvas\ΙMenuCanvasItem.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\FontData.cs">
+      <Link>MenuCanvas\FontData.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IAccentImage.cs">
+      <Link>MenuCanvas\IAccentImage.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IHeadingAccent.cs">
+      <Link>MenuCanvas\IHeadingAccent.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IPageImage.cs">
+      <Link>MenuCanvas\IPageImage.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\LineType.cs">
+      <Link>MenuCanvas\LineType.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\Margin.cs">
+      <Link>MenuCanvas\Margin.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\MenuStyles\Resource.cs">
+      <Link>MenuCanvas\Resource.cs</Link>
+    </None>
+    <None Include="..\..\MenuPresentationModel\TransformOrigin.cs">
+      <Link>MenuCanvas\TransformOrigin.cs</Link>
+    </None>
+    <Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs">
+      <Link>RestaurantHallLayoutModel\HallLayout.cs</Link>
+    </Compile>
+    <Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs">
+      <Link>RestaurantHallLayoutModel\HallLayoutShape.cs</Link>
+    </Compile>
+    <Compile Include="..\..\RestaurantHallLayoutModel\ServicPointShape.cs">
+      <Link>RestaurantHallLayoutModel\ServicPointShape.cs</Link>
+    </Compile>
+    <Compile Include="..\..\RestaurantHallLayoutModel\ShapesGroup.cs">
+      <Link>RestaurantHallLayoutModel\ShapesGroup.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DeviceSelectorWindow.xaml.cs">
+      <DependentUpon>DeviceSelectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="WaitView\Block.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WaitView\LoadingAnimation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
+      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
+      <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{f20e4565-5ddb-4e1e-a343-369927c01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Net\OOAdvantech.Net.csproj">
+      <Project>{ceb65441-0a94-444a-af99-5e4850ae623c}</Project>
+      <Name>OOAdvantech.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\RestApiRemoting\RestApiRemoting.csproj">
+      <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
+      <Name>RestApiRemoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
+      <Project>{0A6DBBC9-D8D3-4466-9A4E-80AE0582EB0A}</Project>
+      <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
+      <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
+      <Name>MenuModelFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
+      <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
+      <Name>FlavourBusinessFacade</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props'))" />
+    <Error Condition="!Exists('..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets" Condition="Exists('..\..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets')" />
+  <Import Project="..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets" Condition="Exists('..\..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
