@@ -18,6 +18,7 @@ namespace FinanceFacade
         ITax Tax { get; set; }
 
 
+
         /// <MetaDataID>{9b008ecf-f372-4d9b-8ffd-f418278e34e2}</MetaDataID>
         [AssociationClassRole(Roles.RoleA)]
         ITaxesContext TaxesContext { get; set; }
