@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="FlavourBusinessCloudServices" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WorkerRole name="FlavourBusinessWorkerRole" vmsize="Standard_D1">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InternalEndpoint name="tcpinternal" protocol="tcp" />
+      <InternalEndpoint name="httpInternal" protocol="http" />
+      <InputEndpoint name="httpPublic" protocol="http" port="8090" />
+    </Endpoints>
+  </WorkerRole>
+</ServiceDefinition>
