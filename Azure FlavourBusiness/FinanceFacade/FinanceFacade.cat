@@ -1,0 +1,3710 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "FinanceFacade"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"FinanceFacade"))
+    quid       	"5C6A6F270283"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "ITaxable"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{9ad5edca-fcf1-4d91-83af-6397a36bc23b}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{9ad5edca-fcf1-4d91-83af-6397a36bc23b}"))
+	    quid       	"5C6A60EB0325"
+	    stereotype 	"Interface"
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITaxableType"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{983f82cb-182e-4dda-8a07-ff395f43f7e9}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{983f82cb-182e-4dda-8a07-ff395f43f7e9}"))
+	    quid       	"5C6A61DE02D0"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute " Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6A6C2B0114")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3ea9ef81-0fe3-4077-9666-9a725458b783}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6A6C2B0114"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITax"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{cde10026-ea3b-407e-bd5a-b4976499a44e}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"4")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{cde10026-ea3b-407e-bd5a-b4976499a44e}"))
+	    quid       	"5C6A6160024B"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute " Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6A6C6601B4")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{247e41d4-ffa8-4896-a7e5-60718fbd3334}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6A6C6601B4"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BDE7102EC")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7ee333f1-83f2-4da7-b021-c06b21768582}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6BDE7102EC"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BDEEA0276")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{525bb340-089d-4b3d-9c7b-c3a70f549a26}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C6BDEEA0276"
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITaxesContext"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{1470eb53-1488-4d56-955e-a2cea88fc722}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{1470eb53-1488-4d56-955e-a2cea88fc722}"))
+	    quid       	"5C6A63D303B2"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute " Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6A6C6D002D")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{25f342b0-5889-43d0-9233-2ba9f500ca7b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6A6C6D002D"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITaxOverride"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{aa142034-c096-43cf-b1d0-b7cd60852c66}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{aa142034-c096-43cf-b1d0-b7cd60852c66}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"3"))
+	    quid       	"5C6A6D02014E"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BDF16033B")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6193793e-ca66-46c4-b635-23724226712e}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6BDF16033B"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BDF16033F")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e045d60f-3859-4da0-bbab-66127f26650c}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6BDF16033F"
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITransaction"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{4fba9d38-4340-4447-8008-acf24fa3ab39}"))
+	    quid       	"5C6BBD69034C"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{51986f1a-f2d4-4809-a941-8a4df3bd7748}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DC701F7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DC701F7"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "InvoiceNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cc41c482-497e-4c88-9f2e-8e9730a2ded3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DC8033F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DC8033F"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a39e41f4-5c67-47ff-9787-56cd1de4c89c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF73A0124")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6CF73A0124"
+		    type       	"Quantity"
+		    quidu      	"14791CEF701D"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "IItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{1efed191-267f-4beb-90d6-8ffe00bd2fa8}"))
+	    quid       	"5C6BBDA2021E"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Category"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b8f353b8-33d4-4fb3-9a63-c907e11d0845}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF50383")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF50383"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{63d34d84-fbf8-49b7-a68c-ad8da36023ae}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF60078")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF60078"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dfd8fa23-486f-4db4-9926-882aa8e32b55}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF6013F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF6013F"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Price"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ac726086-6b84-4c99-907d-9a047a53094b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF60246")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF60246"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "Quantity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{26e6f527-6ad6-44a8-ac17-1b5923504fc2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF6030B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF6030B"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "Sku"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{83f35f0f-2421-4d4a-b93f-f56a31e35085}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6C0DF603CD")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6C0DF603CD"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "Amount"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{16ac0a20-93a6-4323-98ad-94e75fc02aef}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5C6BC5790048"
+	    stereotype 	"Structure"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Total"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{382677a3-2754-4c31-971d-7fc7c86d95c8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BF30E0111")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6BF30E0111"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "Currency"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f4611c90-5caa-466d-a3e0-d837950d0a6f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BF30F02CE")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6BF30F02CE"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "TaxAmount"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{5f5afb5b-4753-415a-8e01-24c8a9854dcd}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5C6BD7AB00BA"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BD8470358")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4dadaa3a-1044-46df-9b24-02fa6efd7338}"))
+		    quid       	"5C6BD8470358"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BDF54034A")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dd6cbb6a-32ec-42c2-b4fc-37adcb60ad8b}"))
+		    quid       	"5C6BDF54034A"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "Transaction"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{f4fdf9fe-3c45-48fd-b958-c16677d2397c}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"7"))
+	    quid       	"5C6CE6AD03E4"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6CEA910034"
+		    supplier   	"Logical View::FinanceFacade::ITransaction"
+		    quidu      	"5C6BBD69034C"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{37cb0b91-e4b3-465e-9211-01644466a8f9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF248032B")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6CF248032B"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "InvoiceNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{36c58bba-1602-4ea3-ba13-7428a5b1f717}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF248036A")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C6CF248036A"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Items"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{414777ff-5a14-4bba-a10a-fa9900d41e71}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF2490010")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C6CF2490010"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.IItem>"
+		    exportControl 	"Public")
+		(object ClassAttribute "TransactionTaxes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d83595b4-e005-4d29-878a-fa02bb297519}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF249006F")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"5C6CF249006F"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.TaxAmount>"
+		    exportControl 	"Public")
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a73db1df-3024-41b4-9b3e-b9f33eb8dba9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CF6B7016D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"5C6CF6B7016D"
+		    type       	"FinanceFacade.Amount"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "Item"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{f96ee9e1-2527-443f-b2b1-42414f6affbf}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"8")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{f96ee9e1-2527-443f-b2b1-42414f6affbf}"))
+	    quid       	"5C6CE6CF0194"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6CEA98014C"
+		    supplier   	"Logical View::FinanceFacade::IItem"
+		    quidu      	"5C6BBDA2021E"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Category"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{654bddcb-fc56-47dc-bb82-ad3e5ffd22c5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA230370")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6CFA230370"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3acb114e-f97d-4a1a-894f-e6476b732c74}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA2303AE")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C6CFA2303AE"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{90fa7c85-613e-4e19-976d-cb96e5118f59}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA2303D1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C6CFA2303D1"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Price"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b69f4281-d067-46fa-82e2-6a725b637e9a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA240028")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"5C6CFA240028"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "Quantity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{eca6dce8-f5b7-40d2-b7c0-cb4af60ee163}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA240057")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"5C6CFA240057"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "Sku"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{315499a2-6cc2-4a8e-a122-71a2965b503e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA240099")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"5C6CFA240099"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Taxes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{74c47746-adec-4859-91bf-07340565354e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6CFA240116")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6CFA240116"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.TaxAmount>"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "ICashierDevice"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{0f548f7a-569e-4247-93e0-0de805f5d7f1}"))
+	    quid       	"5C6D17CC0237"
+	    stereotype 	"Interface"
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "TaxableType"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{45ab4ae9-9fca-406c-a49a-6ace066ba7fb}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"3")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{45ab4ae9-9fca-406c-a49a-6ace066ba7fb}"))
+	    quid       	"5C6E2CFC0371"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6E2D360196"
+		    supplier   	"Logical View::FinanceFacade::ITaxableType"
+		    quidu      	"5C6A61DE02D0"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7202cbbf-f261-4b1d-84ad-1009234441e8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E5B4101B9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6E5B4101B9"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Taxes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{015abca3-f488-47c7-b0a5-7dd9d5bdf2fa}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E5B4102BE")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6E5B4102BE"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.ITax>"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "Tax"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{d9975ab9-c471-46b3-a81d-33fda33e4230}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"5")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{d9975ab9-c471-46b3-a81d-33fda33e4230}"))
+	    quid       	"5C6E2D3E021D"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6E2D59017F"
+		    supplier   	"Logical View::FinanceFacade::ITax"
+		    quidu      	"5C6A6160024B"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bc617940-10ac-4940-a1a0-08e7ae433aef}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E640B02A6")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6E640B02A6"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a60fac2b-2071-49e5-bc84-3f990289571e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E640B0382")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6E640B0382"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxOverrides"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5c1b4e8f-8584-4cce-8714-6d54f992f078}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E640C00CB")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C6E640C00CB"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.ITaxesContext>"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ecf3ca70-ccf7-40c8-b36e-d4c67ead14b0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E640C01E4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C6E640C01E4"
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "TaxesContext"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{7ca6d63b-e8a6-4d70-9de4-b5db24664639}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"3")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{7ca6d63b-e8a6-4d70-9de4-b5db24664639}"))
+	    quid       	"5C6E2D80037E"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6E2D870266"
+		    supplier   	"Logical View::FinanceFacade::ITaxesContext"
+		    quidu      	"5C6A63D303B2"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6699a607-0ea0-4bf6-97a5-b2789b42accc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6F0879005F")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6F0879005F"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxOverrides"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5366a24d-8b93-4c1b-9cf3-9986c226f806}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6F087900DF")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"5C6F087900DF"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.ITax>"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "TaxOverride"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{6730c08f-b107-4846-b47f-11625755c856}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"5"))
+	    quid       	"5C6E2DB701D6"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C6E2DED03DD"
+		    supplier   	"Logical View::FinanceFacade::ITaxOverride"
+		    quidu      	"5C6A6D02014E"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{12929305-4536-46a4-9f9f-fbb857f360b2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E681B0395")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6E681B0395"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Tax"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{aee1d5f9-d02b-4e80-867f-cb73e7bcefca}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E681C005C")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6E681C005C"
+		    type       	"FinanceFacade.ITax"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxesContext"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4aaeca1a-4541-473b-8536-873e6664116e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E681C0090")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C6E681C0090"
+		    type       	"FinanceFacade.ITaxesContext"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{31f5e81a-fe63-49a9-bd87-9301b5939fb5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E681C0174")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C6E681C0174"
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "ITaxAuthority"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{e2f5fd0a-5bdc-4ad2-9ed4-37bf92496b57}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{e2f5fd0a-5bdc-4ad2-9ed4-37bf92496b57}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"4"))
+	    quid       	"5C6E352E016D"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E3A900038")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ff93dd07-b966-4204-a5fc-aaf7deebd8a6}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C6E3A900038"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Notes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E3AC0028F")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{44221c56-42e6-4090-8a84-211b40842ab9}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C6E3AC0028F"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C71ACCD03C8")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d6e530e0-2086-4366-bcc6-766144f6f7fe}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C71ACCD03C8"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "TaxAuthority"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{e74cbe1f-6959-40ae-b0ba-449cb8f0bf1e}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{e74cbe1f-6959-40ae-b0ba-449cb8f0bf1e}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"5"))
+	    quid       	"5C7104940072"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5C7104B90077"
+		    supplier   	"Logical View::FinanceFacade::ITaxAuthority"
+		    quidu      	"5C6E352E016D"))
+	    operations 	(list Operations
+		(object Operation "AddTaxableType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{530a45b7-854f-4e6c-865a-f57f879aaaac}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C71ADAF027D"))
+		    quid       	"5C71ADAF027D"
+		    parameters 	(list Parameters
+			(object Parameter "taxableType"
+			    quid       	"5C71ADAF029B"
+			    type       	"FinanceFacade.ITaxableType"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveTaxableType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8e8145bb-fc80-4e3f-a331-0aa731a8250d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C71ADAF02CE"))
+		    quid       	"5C71ADAF02CE"
+		    parameters 	(list Parameters
+			(object Parameter "taxableType"
+			    quid       	"5C71ADAF02F5"
+			    type       	"FinanceFacade.ITaxableType"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9ee3f248-6387-4ff7-80cf-ea6b7be1be27}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C710606009D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5C710606009D"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Notes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{258495d8-d3c9-4b48-8fbc-22d6baaa12f3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C710606012D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5C710606012D"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxableTypes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{82f5108f-ed1a-405a-94a7-e3161d892490}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C710606018E")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5C710606018E"
+		    type       	"System.Collections.Generic.IList<FinanceFacade.ITaxableType>"
+		    exportControl 	"Public")
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5f3c0ef3-0b11-4f53-8621-5cd7e886187e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C71ADB10245")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C71ADB10245"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Association "TransactionItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5C6BC45002C1")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"7ccfc6ee-4f2d-4f52-bd22-b8c63e74d0f9"))
+	    quid       	"5C6BC45002C1"
+	    roles      	(list role_list
+		(object Role "Items"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	(value Text "System.Collections.Generic.IList<FinanceFacade.IItem>"))
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BC4510266")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{05f57dc9-8cd0-42df-87f7-226e2764255c}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BC4510266"
+		    label      	"Items"
+		    supplier   	"Logical View::FinanceFacade::IItem"
+		    quidu      	"5C6BBDA2021E"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BC451026C")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{846a9a75-71d7-4374-8201-0f86ebff49ac}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BC451026C"
+		    supplier   	"Logical View::FinanceFacade::ITransaction"
+		    quidu      	"5C6BBD69034C")))
+	(object Association "ItemTaxes"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5C6BD82500BB")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"c9808e66-f681-4644-8ba2-98d00a7acd25"))
+	    quid       	"5C6BD82500BB"
+	    roles      	(list role_list
+		(object Role "Taxes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BD8270016")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ae937035-e2e3-4564-a14b-32138449d714}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	(value Text "System.Collections.Generic.IList<FinanceFacade.TaxAmount>"))
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BD8270016"
+		    label      	"Taxes"
+		    supplier   	"Logical View::FinanceFacade::TaxAmount"
+		    quidu      	"5C6BD7AB00BA"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BD8270019")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2965757f-0b9c-4a20-b331-a5c9439a709e}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BD8270019"
+		    supplier   	"Logical View::FinanceFacade::IItem"
+		    quidu      	"5C6BBDA2021E"
+		    client_cardinality 	(value cardinality "0..1"))))
+	(object Association "TransactionTax"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5C6BE1DA00E9")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"10fb597c-93b2-42f7-99b5-b2b6e6654102"))
+	    quid       	"5C6BE1DA00E9"
+	    roles      	(list role_list
+		(object Role "TransactionTaxes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BE1DE027E")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cb10f1b4-f848-4b66-b1cf-1794c081e028}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	(value Text "System.Collections.Generic.IList<FinanceFacade.TaxAmount>"))
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BE1DE027E"
+		    label      	"TransactionTaxes"
+		    supplier   	"Logical View::FinanceFacade::TaxAmount"
+		    quidu      	"5C6BD7AB00BA"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6BE1DE0287")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2c2a770a-4858-440a-ae35-bfa6b5d22fa4}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5C6BE1DE0287"
+		    supplier   	"Logical View::FinanceFacade::ITransaction"
+		    quidu      	"5C6BBD69034C"
+		    client_cardinality 	(value cardinality "0..1"))))
+	(object Association "AuthorityTaxableTypes"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5C6E399B0111")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"4b415a9e-1195-4e8e-be2b-07edf585e114"))
+	    quid       	"5C6E399B0111"
+	    roles      	(list role_list
+		(object Role "TaxableTypes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	(value Text "IList<ITaxableType>"))
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E399C01FD")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e55ec88a-f4c6-42be-8d30-730030d7bf2b}"))
+		    quid       	"5C6E399C01FD"
+		    label      	"TaxableTypes"
+		    supplier   	"Logical View::FinanceFacade::ITaxableType"
+		    quidu      	"5C6A61DE02D0"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "Authority"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6E399C01FF")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8bb29723-c1be-407c-a2f9-1af835f2d06d}"))
+		    quid       	"5C6E399C01FF"
+		    label      	"Authority"
+		    supplier   	"Logical View::FinanceFacade::ITaxAuthority"
+		    quidu      	"5C6E352E016D"
+		    client_cardinality 	(value cardinality "1")))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Taxes"
+	    quid       	"5C6A4E47015F"
+	    title      	"Taxes"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::FinanceFacade::ITaxOverride" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2772, 191)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(2572, 141)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	401
+			justify    	0
+			label      	"ITaxOverride")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6A6D02014E"
+		    width      	419
+		    height     	300
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::TaxableType" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1190, 1194)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(940, 1062)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	501
+			justify    	0
+			label      	"TaxableType")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6E2CFC0371"
+		    width      	519
+		    height     	288
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::Tax" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2085, 1222)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1819, 1068)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	532
+			justify    	0
+			label      	"Tax")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6E2D3E021D"
+		    width      	550
+		    height     	332
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::TaxesContext" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3485, 1178)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(3213, 1059)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	545
+			justify    	0
+			label      	"TaxesContext")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6E2D80037E"
+		    width      	563
+		    height     	262
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::TaxOverride" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2757, 1215)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(2488, 1068)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"TaxOverride")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6E2DB701D6"
+		    width      	556
+		    height     	319
+		    annotation 	8)
+		(object RealizeView "" @6
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6E2DED03DD"
+		    client     	@5
+		    supplier   	@1
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::FinanceFacade::ITaxesContext" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3462, 631)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(3209, 581)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	507
+			justify    	0
+			label      	"ITaxesContext")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6A63D303B2"
+		    width      	525
+		    height     	300
+		    annotation 	8)
+		(object RealizeView "" @8
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6E2D870266"
+		    client     	@4
+		    supplier   	@7
+		    line_style 	3
+		    origin_attachment 	(3469, 1047)
+		    terminal_attachment 	(3469, 781))
+		(object ClassView "Class" "Logical View::FinanceFacade::ITaxable" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(293, 625)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(90, 594)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	407
+			justify    	0
+			label      	"ITaxable")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6A60EB0325"
+		    width      	425
+		    height     	263
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::ITax" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2085, 578)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(1825, 484)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	520
+			justify    	0
+			label      	"ITax")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6A6160024B"
+		    width      	538
+		    height     	388
+		    annotation 	8)
+		(object AssociationViewNew "TaxOverride" @11
+		    location   	(2777, 641)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @12
+			Parent_View 	@11
+			location   	(2777, 582)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"TaxOverride"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6A6D45011F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "TaxOverrides" @13
+			    Parent_View 	@11
+			    location   	(718, 137)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @14
+				Parent_View 	@13
+				location   	(3110, 572)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	273
+				justify    	0
+				label      	"+TaxOverrides"
+				pctDist    	0.788851
+				height     	70
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A6D46028E"
+			    client     	@11
+			    supplier   	@7
+			    line_style 	3
+			    origin_attachment 	(2777, 641)
+			    terminal_attachment 	(3200, 641))
+			(object RoleView "TaxOverrides" @15
+			    Parent_View 	@11
+			    location   	(718, 137)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @16
+				Parent_View 	@15
+				location   	(2439, 600)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	273
+				justify    	0
+				label      	"+TaxOverrides"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A6D460291"
+			    client     	@11
+			    supplier   	@10
+			    line_style 	3
+			    origin_attachment 	(2777, 641)
+			    terminal_attachment 	(2354, 641))))
+		(object AssocAttachView "" @17
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@11
+		    supplier   	@1
+		    line_style 	1
+		    origin_attachment 	(2777, 641)
+		    terminal_attachment 	(2773, 341))
+		(object RealizeView "" @18
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6E2D59017F"
+		    client     	@3
+		    supplier   	@10
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::FinanceFacade::ITaxableType" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1178, 640)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(968, 600)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	420
+			justify    	0
+			label      	"ITaxableType")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6A61DE02D0"
+		    width      	438
+		    height     	281
+		    annotation 	8)
+		(object AssociationViewNew "TaxableType" @20
+		    location   	(732, 616)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @21
+			Parent_View 	@20
+			location   	(717, 502)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"TaxableType"
+			pctDist    	0.250000
+			height     	115
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6A67550309"
+		    roleview_list 	(list RoleViews
+			(object RoleView "TaxableType" @22
+			    Parent_View 	@20
+			    location   	(379, 204)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @23
+				Parent_View 	@22
+				location   	(859, 580)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	256
+				justify    	0
+				label      	"+TaxableType"
+				pctDist    	0.562791
+				height     	37
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A675700B0"
+			    client     	@20
+			    supplier   	@19
+			    line_style 	3
+			    origin_attachment 	(732, 616)
+			    terminal_attachment 	(959, 616)
+			    label      	(object SegLabel @24
+				Parent_View 	@22
+				location   	(936, 676)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.898678
+				height     	60
+				orientation 	1))
+			(object RoleView "" @25
+			    Parent_View 	@20
+			    location   	(379, 204)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A675700B4"
+			    client     	@20
+			    supplier   	@9
+			    line_style 	3
+			    origin_attachment 	(732, 616)
+			    terminal_attachment 	(505, 616))))
+		(object AssociationViewNew "TaxableTypeTaxes" @26
+		    location   	(1606, 641)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @27
+			Parent_View 	@26
+			location   	(1600, 511)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"TaxableTypeTaxes"
+			pctDist    	0.400000
+			height     	131
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6A693D0322"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Taxes" @28
+			    Parent_View 	@26
+			    location   	(403, 238)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @29
+				Parent_View 	@28
+				location   	(1714, 606)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+Taxes"
+				pctDist    	0.513393
+				height     	36
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A693E02C7"
+			    client     	@26
+			    supplier   	@10
+			    line_style 	3
+			    origin_attachment 	(1606, 641)
+			    terminal_attachment 	(1816, 641)
+			    label      	(object SegLabel @30
+				Parent_View 	@28
+				location   	(1774, 695)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.804878
+				height     	54
+				orientation 	1))
+			(object RoleView "" @31
+			    Parent_View 	@26
+			    location   	(403, 238)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6A693E02CA"
+			    client     	@26
+			    supplier   	@19
+			    line_style 	3
+			    origin_attachment 	(1606, 641)
+			    terminal_attachment 	(1397, 641))))
+		(object RealizeView "" @32
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6E2D360196"
+		    client     	@2
+		    supplier   	@19
+		    line_style 	3
+		    origin_attachment 	(1185, 1049)
+		    terminal_attachment 	(1185, 780))
+		(object ClassView "Class" "Logical View::FinanceFacade::ITaxAuthority" @33
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(315, 1487)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@33
+			location   	(55, 1400)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	520
+			justify    	0
+			label      	"ITaxAuthority")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6E352E016D"
+		    width      	538
+		    height     	375
+		    annotation 	8)
+		(object AssociationViewNew "AuthorityTaxableTypes" @34
+		    location   	(768, 1039)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @35
+			Parent_View 	@34
+			location   	(768, 980)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"AuthorityTaxableTypes"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6E399B0111"
+		    roleview_list 	(list RoleViews
+			(object RoleView "TaxableTypes" @36
+			    Parent_View 	@34
+			    location   	(465, -458)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @37
+				Parent_View 	@36
+				location   	(769, 800)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	276
+				justify    	0
+				label      	"+TaxableTypes"
+				pctDist    	0.454136
+				height     	171
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6E399C01FD"
+			    client     	@34
+			    supplier   	@19
+			    line_style 	0
+			    label      	(object SegLabel @38
+				Parent_View 	@36
+				location   	(1043, 845)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "Authority" @39
+			    Parent_View 	@34
+			    location   	(465, -458)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @40
+				Parent_View 	@39
+				location   	(529, 1218)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	186
+				justify    	0
+				label      	"+Authority"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6E399C01FF"
+			    client     	@34
+			    supplier   	@33
+			    line_style 	0
+			    label      	(object SegLabel @41
+				Parent_View 	@39
+				location   	(440, 1262)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	1.055477
+				height     	73
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::FinanceFacade::TaxAuthority" @42
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(334, 2141)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@42
+			location   	(56, 1950)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	557
+			justify    	0
+			label      	"TaxAuthority")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C7104940072"
+		    width      	575
+		    height     	406
+		    annotation 	8)
+		(object RealizeView "" @43
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C7104B90077"
+		    client     	@42
+		    supplier   	@33
+		    line_style 	3
+		    origin_attachment 	(316, 1938)
+		    terminal_attachment 	(316, 1674))))
+	(object ClassDiagram "Transactions"
+	    quid       	"5C6E2AD8005E"
+	    title      	"Transactions"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	1836
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::FinanceFacade::Transaction" @44
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(487, 1377)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@44
+			location   	(212, 1205)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	551
+			justify    	0
+			label      	"Transaction")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6CE6AD03E4"
+		    width      	569
+		    height     	368
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::Item" @45
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1478, 1400)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(1178, 1253)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	600
+			justify    	0
+			label      	"Item")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6CE6CF0194"
+		    width      	618
+		    height     	319
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @46
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1465, 735)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(1168, 601)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	595
+			justify    	0
+			label      	"IItem")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6BBDA2021E"
+		    width      	613
+		    height     	469
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::TaxAmount" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2592, 763)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(2311, 644)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	563
+			justify    	0
+			label      	"TaxAmount")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6BD7AB00BA"
+		    width      	581
+		    height     	263
+		    annotation 	8)
+		(object AssociationViewNew "ItemTaxes" @48
+		    location   	(2036, 734)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @49
+			Parent_View 	@48
+			location   	(2036, 675)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"ItemTaxes"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6BD82500BB"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Taxes" @50
+			    Parent_View 	@48
+			    location   	(824, -559)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @51
+				Parent_View 	@50
+				location   	(2248, 693)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+Taxes"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BD8270016"
+			    client     	@48
+			    supplier   	@47
+			    line_style 	3
+			    origin_attachment 	(2036, 734)
+			    terminal_attachment 	(2302, 734)
+			    label      	(object SegLabel @52
+				Parent_View 	@50
+				location   	(2275, 788)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$1" @53
+			    Parent_View 	@48
+			    location   	(824, -559)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BD8270019"
+			    client     	@48
+			    supplier   	@46
+			    line_style 	3
+			    origin_attachment 	(2036, 734)
+			    terminal_attachment 	(1771, 734)
+			    label      	(object SegLabel @54
+				Parent_View 	@53
+				location   	(1831, 788)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.779116
+				height     	54
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::FinanceFacade::ITransaction" @55
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(482, 723)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(226, 626)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	513
+			justify    	0
+			label      	"ITransaction")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6BBD69034C"
+		    width      	531
+		    height     	394
+		    annotation 	8)
+		(object AssociationViewNew "TransactionItem" @56
+		    location   	(953, 723)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @57
+			Parent_View 	@56
+			location   	(895, 584)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	294
+			justify    	0
+			label      	"TransactionItem"
+			pctDist    	-0.483333
+			height     	140
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6BC45002C1"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Items" @58
+			    Parent_View 	@56
+			    location   	(431, -611)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @59
+				Parent_View 	@58
+				location   	(1107, 673)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	124
+				justify    	0
+				label      	"+Items"
+				pctDist    	0.745455
+				height     	51
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BC4510266"
+			    client     	@56
+			    supplier   	@46
+			    line_style 	3
+			    origin_attachment 	(953, 723)
+			    terminal_attachment 	(1159, 723))
+			(object RoleView "$UNNAMED$0" @60
+			    Parent_View 	@56
+			    location   	(431, -611)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BC451026C"
+			    client     	@56
+			    supplier   	@55
+			    line_style 	3
+			    origin_attachment 	(953, 723)
+			    terminal_attachment 	(747, 723))))
+		(object AssociationViewNew "TransactionTax" @61
+		    location   	(1550, 390)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @62
+			Parent_View 	@61
+			location   	(1550, 331)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"TransactionTax"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6BE1DA00E9"
+		    roleview_list 	(list RoleViews
+			(object RoleView "TransactionTaxes" @63
+			    Parent_View 	@61
+			    location   	(1262, -916)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @64
+				Parent_View 	@63
+				location   	(2533, 349)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	350
+				justify    	0
+				label      	"+TransactionTaxes"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BE1DE027E"
+			    client     	@61
+			    supplier   	@47
+			    vertices   	(list Points
+				(1550, 390)
+				(2538, 390)
+				(2538, 632))
+			    line_style 	3
+			    origin_attachment 	(1550, 390)
+			    terminal_attachment 	(2538, 632)
+			    label      	(object SegLabel @65
+				Parent_View 	@63
+				location   	(2592, 509)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "$UNNAMED$2" @66
+			    Parent_View 	@61
+			    location   	(1262, -916)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C6BE1DE0287"
+			    client     	@61
+			    supplier   	@55
+			    vertices   	(list Points
+				(1550, 390)
+				(456, 390)
+				(456, 526))
+			    line_style 	3
+			    origin_attachment 	(1550, 390)
+			    terminal_attachment 	(456, 526)
+			    label      	(object SegLabel @67
+				Parent_View 	@66
+				location   	(514, 434)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.843089
+				height     	44
+				orientation 	0))))
+		(object RealizeView "" @68
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6CEA910034"
+		    client     	@44
+		    supplier   	@55
+		    line_style 	0)
+		(object RealizeView "" @69
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6CEA98014C"
+		    client     	@45
+		    supplier   	@46
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::FinanceFacade::ICashierDevice" @70
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3711, 628)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@70
+			location   	(3483, 613)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	457
+			justify    	0
+			label      	"ICashierDevice")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6D17CC0237"
+		    width      	475
+		    height     	231
+		    annotation 	8)))))
