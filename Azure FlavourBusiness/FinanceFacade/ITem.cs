@@ -12,6 +12,7 @@ namespace FinanceFacade
     /// <MetaDataID>{1efed191-267f-4beb-90d6-8ffe00bd2fa8}</MetaDataID>
     public interface IItem
     {
+
         /// <MetaDataID>{50f519ce-2209-4ef9-827f-a2bd8c8cc5a2}</MetaDataID>
         [RoleAMultiplicityRange(0)]
         [Association("ItemTaxes", Roles.RoleA, "c9808e66-f681-4644-8ba2-98d00a7acd25")]
