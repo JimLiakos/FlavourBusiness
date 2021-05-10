@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="FloorLayoutDesigner.SvgHostControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FloorLayoutDesigner"
+               xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             mc:Ignorable="d" Width="310.148" Height="273.985">
+    <Grid>
+        <svgc:SvgViewbox x:Name="svgHost" x:FieldModifier="public"  Margin="3,0" HorizontalAlignment="Stretch"  IsHitTestVisible="False"   VerticalAlignment="Stretch"  Stretch="Uniform" Source="/Resources/Images/kitchen.svg" />
+    </Grid>
+</UserControl>

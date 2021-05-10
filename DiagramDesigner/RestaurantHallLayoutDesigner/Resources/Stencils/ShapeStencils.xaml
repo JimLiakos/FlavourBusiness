@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:FloorLayoutDesigner"
+                    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+                    xmlns:c="clr-namespace:FloorLayoutDesigner.Controls">
+
+    <RadialGradientBrush x:Key="RadialBrushOrange" Center="0.2, 0.2" GradientOrigin="0.2, 0.2" RadiusX="0.8" RadiusY="0.8">
+        <GradientStop Color="White" Offset="0"/>
+        <GradientStop Color="Orange" Offset="0.9"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="RadialBrushGreen" Center="0.2, 0.2" GradientOrigin="0.2, 0.2" RadiusX="0.8" RadiusY="0.8">
+        <GradientStop Color="White" Offset="0"/>
+        <GradientStop Color="Green" Offset="0.9"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="RadialBrushBlue" Center="0.2, 0.2" GradientOrigin="0.2, 0.2" RadiusX="0.8" RadiusY="0.8">
+        <GradientStop Color="White" Offset="0"/>
+        <GradientStop Color="Blue" Offset="0.9"/>
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="BrushStar" StartPoint="0,0" EndPoint="0,1" Opacity="1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FAFBE9" Offset="0.1" />
+            <GradientStop Color="Orange" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <s:Toolbox x:Key="ShapeStencils" ItemSize="90,90">
+        <ItemsControl.Items>
+
+
+            <!--<s:SvgHostControl Margin="3,0" Height="40" Width="37"   ></s:SvgHostControl>-->
+            <!--<Ellipse Fill="{StaticResource RadialBrushOrange}" ToolTip="Ellipse" IsHitTestVisible="false"/>-->
+
+            <svgc:SvgViewbox Margin="3,0" Height="65" Width="65" Source="/Resources/Images/DiningTableChairs016.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs047.svg" />
+
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs020.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs023.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs026.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs042.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs042Copy.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs043.svg" />
+            <svgc:SvgViewbox Margin="3,0"  Height="65" Width="65" Source="/Resources/Images/DiningTableChairs047.svg" />
+            
+      
+        </ItemsControl.Items>
+    </s:Toolbox>
+</ResourceDictionary>
