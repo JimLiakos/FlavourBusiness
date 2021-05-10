@@ -57,7 +57,7 @@
     <Compile Include="IAzureInstancesManager.cs" />
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
-    <Compile Include="IFoodServiceSection.cs" />
+    <Compile Include="IMealCourse.cs" />
     <Compile Include="IMenuMaker.cs" />
     <Compile Include="IMenuDesignActivity.cs" />
     <Compile Include="IMessageConsumer.cs" />

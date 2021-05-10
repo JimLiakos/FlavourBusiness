@@ -14,6 +14,13 @@
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IIsolatedComputingContext.cs" Link="IIsolatedComputingContext.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndPoint.cs" Link="EndPoint.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndUserData.cs" Link="EndUserData.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IActivity.cs" Link="HumanResources\IActivity.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IServicesContextWorker.cs" Link="HumanResources\IServicesContextWorker.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITranslationActivity.cs" Link="HumanResources\ITranslationActivity.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITranslator.cs" Link="HumanResources\ITranslator.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IWorker.cs" Link="HumanResources\IWorker.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ΙShifWork.cs" Link="HumanResources\ΙShifWork.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAcountability.cs" Link="IAcountability.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAuthFlavourBusiness.cs" Link="IAuthFlavourBusiness.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAzureInstancesManager.cs" Link="IAzureInstancesManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDLine.cs" Link="ICallerIDLine.cs" />
@@ -28,8 +35,11 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodServiceClientSession.cs" Link="IFoodServiceClientSession.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodServiceSession.cs" Link="IFoodServiceSession.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IItemPreparation.cs" Link="IItemPreparation.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMealCourse.cs" Link="IMealCourse.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMessageConsumer.cs" Link="IMessageConsumer.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IOptionChange.cs" Link="IOptionChange.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IOrganization.cs" Link="IOrganization.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IParty.cs" Link="IParty.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPreparationStationRuntime.cs" Link="IPreparationStationRuntime.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPrepartionStation.cs" Link="IPrepartionStation.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IServiceArea.cs" Link="IServiceArea.cs" />
@@ -45,7 +55,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Notification.cs" Link="Notification.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\OrganizationsManager.cs" Link="OrganizationsManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ResourceManager.cs" Link="ResourceManager.cs" />
-    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ServiceContextHumanResources.cs" Link="ServiceContextHumanResources.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ServiceContextHumanResources.cs" Link="HumanResources\ServiceContextHumanResources.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ServiceContextResources.cs" Link="ServiceContextResources.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ServicePointPreparationItems.cs" Link="ServicePointPreparationItems.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\UserData.cs" Link="UserData.cs" />
@@ -53,6 +63,9 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ΙHallLayout.cs" Link="ΙHallLayout.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HumanResources\" />
   </ItemGroup>
 </Project>

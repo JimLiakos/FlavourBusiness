@@ -8,7 +8,9 @@ using MenuModel;
 using FlavourBusinessFacade.EndUsers;
 using System;
 using OOAdvantech.Json;
+#if !FlavourBusinessDevice
 using FlavourBusinessManager.ServicePointRunTime;
+#endif
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -85,12 +87,14 @@ namespace FlavourBusinessManager.RoomService
                         _State = value;
                         stateTransition.Consistent = true;
                     }
-
+#if !FlavourBusinessDevice
                     if (ClientSession is EndUsers.FoodServiceClientSession)
                     {
                         foreach (var preparationStation in (ClientSession as EndUsers.FoodServiceClientSession).ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                             preparationStation.OnPreparationItemChangeState(this);
                     }
+#endif
+
 
                 }
             }

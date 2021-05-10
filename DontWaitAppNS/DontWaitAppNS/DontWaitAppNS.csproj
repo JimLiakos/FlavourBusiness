@@ -13,10 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MainPage.xaml.cs" />
     <Compile Remove="MainPage_p.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="MainPage_p.xaml" />
   </ItemGroup>
 
@@ -28,15 +30,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
     <Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
     <Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="MenuModel\IMealCourseType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="MenuModel\IMealType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPartofMeal.cs" Link="MenuModel\IPartofMeal.cs" />
     <Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs" Link="HallLayoutModel\HallLayout.cs" />
     <Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs" Link="HallLayoutModel\HallLayoutShape.cs" />
     <Compile Include="..\..\RestaurantHallLayoutModel\ServicPointShape.cs" Link="HallLayoutModel\ServicPointShape.cs" />
     <Compile Include="..\..\RestaurantHallLayoutModel\ShapesGroup.cs" Link="HallLayoutModel\ShapesGroup.cs" />
-    <Compile Include="..\..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
-    <Compile Include="..\..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,8 +56,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
-    <ProjectReference Include="..\..\Linq.NetStandard\Linq.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
     <ProjectReference Include="..\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
 
