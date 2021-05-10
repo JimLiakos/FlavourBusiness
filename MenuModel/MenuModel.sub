@@ -1,0 +1,824 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object SubSystem "MenuModel"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"5721E66E017C"
+    physical_models 	(list unit_reference_list
+	(object module "MenuModel" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Solution"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusiness.sln")
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Project"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\MenuModel\\MenuModel.csproj")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{3BD146EA-5976-40DB-8D3A-68B7C20054C5}"))
+	    quid       	"5721E69F03B9"
+	    stereotype 	""
+	    language   	"C#")
+	(object module "MenuModelFacade" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Solution"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusiness.sln")
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Project"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\MenuModel\\MenuModelFacade\\MenuModelFacade.csproj"))
+	    quid       	"5D03255500E1"
+	    stereotype 	""
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5D0325B002A9"
+		    supplier   	"Logical View::MenuModel::IClass"
+		    quidu      	"5801B52E0335")
+		(object Realize_Relationship
+		    quid       	"5D0325B50141"
+		    supplier   	"Logical View::MenuModel::IClassified"
+		    quidu      	"5801B0D101BF")
+		(object Realize_Relationship
+		    quid       	"5D0325B80007"
+		    supplier   	"Logical View::MenuModel::ICustomizedPrice"
+		    quidu      	"57C2DB0E02EC")
+		(object Realize_Relationship
+		    quid       	"5D0325BA0065"
+		    supplier   	"Logical View::MenuModel::IItemsCategory"
+		    quidu      	"5801B60600A7")
+		(object Realize_Relationship
+		    quid       	"5D0325BC01C7"
+		    supplier   	"Logical View::MenuModel::ILevel"
+		    quidu      	"5723880F027C")
+		(object Realize_Relationship
+		    quid       	"5D0325BE03BE"
+		    supplier   	"Logical View::MenuModel::IMenu"
+		    quidu      	"5802FC080000")
+		(object Realize_Relationship
+		    quid       	"5D0325C102EA"
+		    supplier   	"Logical View::MenuModel::IMenuItem"
+		    quidu      	"5721EC2D00C7")
+		(object Realize_Relationship
+		    quid       	"5D0325C303D0"
+		    supplier   	"Logical View::MenuModel::IMenuItemPrice"
+		    quidu      	"589D595702DB")
+		(object Realize_Relationship
+		    quid       	"5D0325C60119"
+		    supplier   	"Logical View::MenuModel::IMenuItemType"
+		    quidu      	"5723464300C1")
+		(object Realize_Relationship
+		    quid       	"5D0325C801B7"
+		    supplier   	"Logical View::MenuModel::IOptionMenuItemSpecific"
+		    quidu      	"58A5881303E1")
+		(object Realize_Relationship
+		    quid       	"5D0325CA0288"
+		    supplier   	"Logical View::MenuModel::IPreparationOption"
+		    quidu      	"57247359011A")
+		(object Realize_Relationship
+		    quid       	"5D0325CC0384"
+		    supplier   	"Logical View::MenuModel::IPreparationOptionsGroup"
+		    quidu      	"57234870011D")
+		(object Realize_Relationship
+		    quid       	"5D0325CF001A"
+		    supplier   	"Logical View::MenuModel::IPreparationScaledOption"
+		    quidu      	"57221D830252")
+		(object Realize_Relationship
+		    quid       	"5D0325D100F5"
+		    supplier   	"Logical View::MenuModel::IPricedSubject"
+		    quidu      	"57C2DA260099")
+		(object Realize_Relationship
+		    quid       	"5D0325D50169"
+		    supplier   	"Logical View::MenuModel::IPricingContext"
+		    quidu      	"57C2E556007B")
+		(object Realize_Relationship
+		    quid       	"5D0325D8027C"
+		    supplier   	"Logical View::MenuModel::IScaleType"
+		    quidu      	"572379C50148")
+		(object Realize_Relationship
+		    quid       	"6075171301F7"
+		    supplier   	"Logical View::MenuModel::IMealCourseType"
+		    quidu      	"6075144803C3")
+		(object Realize_Relationship
+		    quid       	"607576DB03A9"
+		    supplier   	"Logical View::MenuModel::IMealType"
+		    quidu      	"6075762C025B")
+		(object Realize_Relationship
+		    quid       	"60757A76011F"
+		    supplier   	"Logical View::MenuModel::IPartofMeal"
+		    quidu      	"6075775A010B"))
+	    language   	"C#"))
+    physical_presentations 	(list unit_reference_list
+	(object Module_Diagram "Main"
+	    quid       	"5721E69B03D7"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ModView "Component View::MenuModel::MenuModel" "NotAModuleType" "NotAModulePart" @1
+		    location   	(2637, 634)
+		    font       	(object Font
+			size       	8
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(2602, 609)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	126
+			label      	"MenuModel")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5721E69F03B9"
+		    width      	228
+		    width      	228
+		    height     	162)
+		(object InterfaceView "Logical View::MenuModel::IMenuItem" @2
+		    location   	(659, 123)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(658, 231)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMenuItem")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5721EC2D00C7"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IPreparationOptionsGroup" @3
+		    location   	(299, 753)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(297, 862)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPreparationOptionsGroup")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57234870011D"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IPreparationScaledOption" @4
+		    location   	(749, 1113)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(747, 1222)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPreparationScaledOption")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57221D830252"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IMenuItemType" @5
+		    location   	(1199, 843)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1198, 951)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMenuItemType")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5723464300C1"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IScaleType" @6
+		    location   	(299, 123)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(297, 232)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IScaleType")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"572379C50148"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::ILevel" @7
+		    location   	(1109, 303)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1107, 412)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ILevel")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5723880F027C"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IPreparationOption" @8
+		    location   	(299, 1113)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(298, 1221)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPreparationOption")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57247359011A"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IPricedSubject" @9
+		    location   	(1559, 393)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(1557, 502)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPricedSubject")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57C2DA260099"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::ICustomizedPrice" @10
+		    location   	(1199, 1203)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(1197, 1312)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ICustomizedPrice")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57C2DB0E02EC"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IPricingContext" @11
+		    location   	(749, 1473)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(748, 1581)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPricingContext")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57C2E556007B"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IItemsCategory" @12
+		    location   	(1649, 843)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(1648, 951)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IItemsCategory")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5801B60600A7"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IClass" @13
+		    location   	(1649, 1293)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1648, 1401)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IClass")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5801B52E0335"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IClassified" @14
+		    location   	(1559, 123)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(1558, 231)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IClassified")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5801B0D101BF"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IMenu" @15
+		    location   	(389, 1473)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(388, 1581)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMenu")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5802FC080000"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IMenuItemPrice" @16
+		    location   	(2009, 393)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(2008, 501)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMenuItemPrice")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"589D595702DB"
+		    width      	180
+		    height     	60)
+		(object InterfaceView "Logical View::MenuModel::IOptionMenuItemSpecific" @17
+		    location   	(1199, 1563)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(1198, 1671)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IOptionMenuItemSpecific")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"58A5881303E1"
+		    width      	180
+		    height     	60)
+		(object ModView "Component View::MenuModel::MenuModelFacade" "NotAModuleType" "NotAModulePart" @18
+		    location   	(644, 580)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(591, 555)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	197
+			label      	"MenuModelFacade")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5D03255500E1"
+		    width      	356
+		    width      	356
+		    height     	162)
+		(object RealizeView "" @19
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325B002A9"
+		    client     	@18
+		    supplier   	@13
+		    line_style 	0)
+		(object RealizeView "" @20
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325B50141"
+		    client     	@18
+		    supplier   	@14
+		    line_style 	0)
+		(object RealizeView "" @21
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325B80007"
+		    client     	@18
+		    supplier   	@10
+		    line_style 	0)
+		(object RealizeView "" @22
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325BA0065"
+		    client     	@18
+		    supplier   	@12
+		    line_style 	0)
+		(object RealizeView "" @23
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325BC01C7"
+		    client     	@18
+		    supplier   	@7
+		    line_style 	0)
+		(object RealizeView "" @24
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325BE03BE"
+		    client     	@18
+		    supplier   	@15
+		    line_style 	0)
+		(object RealizeView "" @25
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325C102EA"
+		    client     	@18
+		    supplier   	@2
+		    line_style 	0)
+		(object RealizeView "" @26
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325C303D0"
+		    client     	@18
+		    supplier   	@16
+		    line_style 	0)
+		(object RealizeView "" @27
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325C60119"
+		    client     	@18
+		    supplier   	@5
+		    line_style 	0)
+		(object RealizeView "" @28
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325C801B7"
+		    client     	@18
+		    supplier   	@17
+		    line_style 	0)
+		(object RealizeView "" @29
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325CA0288"
+		    client     	@18
+		    supplier   	@8
+		    line_style 	0)
+		(object RealizeView "" @30
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325CC0384"
+		    client     	@18
+		    supplier   	@3
+		    line_style 	0)
+		(object RealizeView "" @31
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325CF001A"
+		    client     	@18
+		    supplier   	@4
+		    line_style 	0)
+		(object RealizeView "" @32
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325D100F5"
+		    client     	@18
+		    supplier   	@9
+		    line_style 	0)
+		(object RealizeView "" @33
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325D50169"
+		    client     	@18
+		    supplier   	@11
+		    line_style 	0)
+		(object RealizeView "" @34
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5D0325D8027C"
+		    client     	@18
+		    supplier   	@6
+		    line_style 	0)
+		(object InterfaceView "Logical View::MenuModel::IMealCourseType" @35
+		    location   	(659, 1833)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@35
+			location   	(658, 1941)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMealCourseType")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"6075144803C3"
+		    width      	180
+		    height     	60)
+		(object RealizeView "" @36
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"6075171301F7"
+		    client     	@18
+		    supplier   	@35
+		    line_style 	0)
+		(object InterfaceView "Logical View::MenuModel::IMealType" @37
+		    location   	(299, 1833)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(298, 1941)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMealType")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"6075762C025B")
+		(object RealizeView "" @38
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"607576DB03A9"
+		    client     	@18
+		    supplier   	@37
+		    line_style 	0)
+		(object InterfaceView "Logical View::MenuModel::IPartofMeal" @39
+		    location   	(1109, 1923)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(1108, 2031)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPartofMeal")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"6075775A010B")
+		(object RealizeView "" @40
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"60757A76011F"
+		    client     	@18
+		    supplier   	@39
+		    line_style 	0)))))

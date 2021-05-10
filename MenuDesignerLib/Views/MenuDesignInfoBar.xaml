@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="MenuDesigner.Views.MenuDesignInfoBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuDesigner.Views"
+             xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="1000">
+    <UserControl.Resources>
+
+
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="pack://application:,,,/MenuDesignerLib;Component/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+
+
+            <Style x:Key="PageAttributesStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="SteelBlue"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            <Style x:Key="PageAttributesValuesStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="SlateBlue" />
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <ViewModel:BookViewModel x:Key="BookViewModel"></ViewModel:BookViewModel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid d:DataContext="{StaticResource BookViewModel}">
+        <WrapPanel Grid.Column="1"   HorizontalAlignment="Center"  Margin="20,0,0,0" Visibility="{Binding MenuDesignerVisibility}" >
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="160" Margin="0,7,1,0">
+                         <!--Command="{x:Static s:DesignerCanvas.StyleSelection}" CommandTarget="{Binding ElementName=MyPageDesigner}"-->
+                                <Hyperlink Command="{Binding StyleSelectionCommand}"  >
+                                    <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+                                        <TextBlock Margin="0,0,0,0" VerticalAlignment="Top" Foreground="SteelBlue"    Text="Style : " FontSize="14" FontFamily="Segoe UI Semibold" />
+                                        <TextBlock Style="{StaticResource PageAttributesValuesStyle}"   Text="{Binding SelectedStyleName}"  />
+                                        </StackPanel>
+                                </Hyperlink>    
+                            </TextBlock>
+
+
+            <StackPanel Orientation="Horizontal" Margin="0,7,0,0" Width="98">
+                <TextBlock Text="Page:" Style="{StaticResource PageAttributesStyle}" Margin="0,0,2,0"></TextBlock>
+                <TextBlock  Text="{Binding PageNumber}" Style="{StaticResource PageAttributesValuesStyle}" ></TextBlock>
+                <TextBlock Text=" of " Style="{StaticResource PageAttributesValuesStyle}" ></TextBlock>
+                <TextBlock  Text="{Binding PagesCount}" Style="{StaticResource PageAttributesValuesStyle}" ></TextBlock>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,7,0,0" >
+                <TextBlock Text="Spacing:" Style="{StaticResource PageAttributesStyle}" Margin="0,0,2,0"></TextBlock>
+                <TextBlock  Width="50" Text="{Binding LineSpacing}" Style="{StaticResource PageAttributesValuesStyle}" ></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
+                <TextBlock Text="Size:" Style="{StaticResource PageAttributesStyle}" Margin="0,0,2,0"></TextBlock>
+                <TextBlock Background="Transparent" Width="110" Text="{Binding PageSize}"  Style="{StaticResource PageAttributesValuesStyle}"></TextBlock>
+            </StackPanel>
+            <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" >
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" >
+                                    <Label Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Content="{x:Static Resx:Resources.LanguageLabel}"/>
+                                    <ComboBox Width="256" Margin="10,0,0,0.222" ItemsSource="{Binding Cultures}" DisplayMemberPath="NativeName" SelectedItem="{Binding SelectedCulture}" ></ComboBox>
+                                </StackPanel>
+                            </StackPanel>-->
+        </WrapPanel>
+
+
+    </Grid>
+</UserControl>

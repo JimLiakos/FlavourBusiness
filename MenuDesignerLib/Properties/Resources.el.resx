@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CopyMenuItemHeader" xml:space="preserve">
+    <value>Αντιγραφή</value>
+  </data>
+  <data name="CutMenuItemHeader" xml:space="preserve">
+    <value>Αποκοπή</value>
+  </data>
+  <data name="DeleteGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Διαγραφή του μενού</value>
+  </data>
+  <data name="DeleteMenuItemHeader" xml:space="preserve">
+    <value>Διαγραφή</value>
+  </data>
+  <data name="EditMenuItemHeader" xml:space="preserve">
+    <value>Επεξεργασία</value>
+  </data>
+  <data name="ExitMenuItemHeader" xml:space="preserve">
+    <value>Έξοδος</value>
+  </data>
+  <data name="FilesMenuItemHeader" xml:space="preserve">
+    <value>Αρχείου</value>
+  </data>
+  <data name="FontsMenuItemHeader" xml:space="preserve">
+    <value>Γραμματοσειρές</value>
+  </data>
+  <data name="FoodItemDescriptionFontsMenuItemHeader" xml:space="preserve">
+    <value>Περιγραφή Στοιχείου μενού </value>
+  </data>
+  <data name="FoodItemExtrasMenuItemHeader" xml:space="preserve">
+    <value>Στοιχείο μενού πρόσθετα</value>
+  </data>
+  <data name="FoodItemNameFontsMenuItemHeader" xml:space="preserve">
+    <value>Όνομα Στοιχείου μενού </value>
+  </data>
+  <data name="FoodItemPriceMenuItemHeader" xml:space="preserve">
+    <value>Τιμή Στοιχείου μενού </value>
+  </data>
+  <data name="GraphicMenuTitle" xml:space="preserve">
+    <value>Μενού</value>
+  </data>
+  <data name="MenuItemsTitle" xml:space="preserve">
+    <value>Στοιχεία μενού</value>
+  </data>
+  <data name="NewGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Δημιουργία μενού</value>
+  </data>
+  <data name="NormalHeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Κανονική επικεφαλίδα</value>
+  </data>
+  <data name="OpenGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Άνοιγμα μενού</value>
+  </data>
+  <data name="PageSetupMenuItemHeader" xml:space="preserve">
+    <value>Διαμόρφωση σελίδας</value>
+  </data>
+  <data name="PasteMenuItemHeader" xml:space="preserve">
+    <value>Επικόλληση</value>
+  </data>
+  <data name="SaveGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Αποθήκευση μενού</value>
+  </data>
+  <data name="SubheadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Δευτερεύουσα επικεφαλίδα</value>
+  </data>
+  <data name="TitleHeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Τίτλος επικεφαλίδας</value>
+  </data>
+  <data name="ToolTipBringFront" xml:space="preserve">
+    <value>Μεταφορά σε πρώτο πλάνο</value>
+  </data>
+  <data name="ToolTipCopy" xml:space="preserve">
+    <value>Αντιγραφή</value>
+  </data>
+  <data name="ToolTipCut" xml:space="preserve">
+    <value>Αποκοπή</value>
+  </data>
+  <data name="ToolTipDelete" xml:space="preserve">
+    <value>Διαγραφή</value>
+  </data>
+  <data name="ToolTipNew" xml:space="preserve">
+    <value>Νέο</value>
+  </data>
+  <data name="ToolTipOpen" xml:space="preserve">
+    <value>Άνοιγμα</value>
+  </data>
+  <data name="ToolTipPaste" xml:space="preserve">
+    <value>Επικόλληση</value>
+  </data>
+  <data name="ToolTipPrint" xml:space="preserve">
+    <value>Εκτύπωση</value>
+  </data>
+  <data name="ToolTipSave" xml:space="preserve">
+    <value>Αποθήκευση</value>
+  </data>
+  <data name="ToolTipSendBack" xml:space="preserve">
+    <value>Μεταφορά στο φόντο</value>
+  </data>
+  <data name="ToolTipAlignBottoms" xml:space="preserve">
+    <value>Στοίχιση κάτω</value>
+  </data>
+  <data name="ToolTipAlignLefts" xml:space="preserve">
+    <value>Στοίχιση Αριστερά</value>
+  </data>
+  <data name="ToolTipAlignRights" xml:space="preserve">
+    <value>Στοίχιση Δεξιά</value>
+  </data>
+  <data name="ToolTipAlignTops" xml:space="preserve">
+    <value>Στοίχιση Πάνω</value>
+  </data>
+  <data name="ToolTipCenterHorizontally" xml:space="preserve">
+    <value>Οριζόντια στοίχιση στο κέντρο</value>
+  </data>
+  <data name="ToolTipCenterVertically" xml:space="preserve">
+    <value>Κατακόρυφη στοίχιση στο κέντρο</value>
+  </data>
+  <data name="ToolTipHorizontalSpacingEqual" xml:space="preserve">
+    <value>Εξίσωση Οριζόντιων Διαστημάτων</value>
+  </data>
+  <data name="ToolTipVerticalSpacingEqual" xml:space="preserve">
+    <value>Εξίσωση Κάθετων διαστημάτων</value>
+  </data>
+  <data name="ToolTipGroupObjects" xml:space="preserve">
+    <value>Ομαδοποίηση αντικειμένων</value>
+  </data>
+  <data name="ToolTipUngroupObjects" xml:space="preserve">
+    <value>Κατάργηση ομαδοποίησης αντικειμένων</value>
+  </data>
+  <data name="TransformColor" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\transformcolor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StylePrototype" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\styleprototype.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

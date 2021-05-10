@@ -1,0 +1,21 @@
+﻿<sw:PageDialogViewEmulator x:Class="MenuDesigner.Views.FoodItemPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MenuDesigner.Views" 
+      xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" 
+      xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+      xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas"
+      mc:Ignorable="d" d:DesignWidth="1205"
+      Title="{Binding Value.PageTitle}" d:DesignHeight="744" >
+    <Page.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:FoodItemViewModel}"    Name="Connection" TransactionOption="RequiredNested"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </Page.DataContext>
+
+
+    <Grid>
+        <local:FoodItemView  DataContext="{Binding Value, Mode=OneWay}" HorizontalAlignment="Stretch" ></local:FoodItemView>
+
+    </Grid>
+</sw:PageDialogViewEmulator>

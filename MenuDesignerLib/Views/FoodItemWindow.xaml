@@ -1,0 +1,24 @@
+<sw:Window x:Class="MenuDesigner.Views.FoodItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="clr-namespace:MenuDesigner"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
+        xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"  
+       xmlns:controlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+        xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas"
+        mc:Ignorable="d"
+        xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+        xmlns:resx="clr-namespace:MenuDesigner.Properties" xmlns:Views="clr-namespace:MenuDesigner.Views"
+           ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
+        Icon="/MenuDesignerLib;component/Resources/Images/Metro/MenuItemOnPage16.png"
+        Title="Menu Item" Height="573.175" Width="721.536">
+  <Window.DataContext>
+    <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:FoodItemViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+  </Window.DataContext>
+    <Views:FoodItemView DataContext="{Binding Value, Mode=OneWay}" ></Views:FoodItemView>
+
+</sw:Window>

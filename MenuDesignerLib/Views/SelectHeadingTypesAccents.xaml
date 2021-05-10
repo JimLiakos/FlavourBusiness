@@ -1,0 +1,143 @@
+﻿<sw:Window x:Class="MenuDesigner.Views.SelectHeadingTypesAccents"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MenuDesigner.Views"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
+        xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel"
+        xmlns:MenuCanvasViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas"
+        xmlns:resx="clr-namespace:MenuDesigner.Properties"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
+        xmlns:MenuDesigner="clr-namespace:MenuDesigner"  
+        Icon="/MenuDesignerLib;component/Resources/Images/Metro/header24.png"
+        mc:Ignorable="d"
+        ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
+        Title="Select Headings Accents" Height="513.73" Width="440.459">
+    <sw:Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type MenuCanvasViewModel:HeadingTypesAccentsViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"/>
+    </sw:Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="pack://application:,,,/MenuDesignerLib;Component/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <sw:DialogContentControl  DataContext="{Binding Value, Mode=OneWay}" Style="{StaticResource ModalDialog}">
+            <Grid Margin="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="103*"/>
+                    <RowDefinition Height="103*"/>
+                    <RowDefinition Height="103*"/>
+
+                </Grid.RowDefinitions>
+                <Grid  Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="54*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                    </Grid.RowDefinitions>
+                    <Label VerticalAlignment="Bottom" Content="Title Headings" Grid.ColumnSpan="2" Margin="0,0,-0.222,0.222"/>
+                    <ComboBox VerticalAlignment="Top"  HorizontalContentAlignment="Center"   SelectedValue="{Binding TitleHeadingsSelectedAccent}" ItemsSource="{Binding AccentImages}" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,38,-0.222,0" Grid.RowSpan="2"   >
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center" Width="170">
+
+                                    <TextBlock Margin="3,0" HorizontalAlignment="Left" Visibility="{Binding TextVisibility}" Text="{Binding Description}"/>
+                                    <svgc:SvgViewbox Margin="3,0" HorizontalAlignment="Stretch"  Width="{Binding TemplateBinding MinWidth}" Visibility="{Binding ImageVisibility}"  Height="20"  x:Name="svg" VerticalAlignment="Center"  MenuDesigner:SvgViewboxAttachedProperties.Drawing="{Binding Drawing}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+                    <wpftoolkitex:ColorPicker IsEnabled="{Binding TitleHeadingsAccentColorize}"  Width="80" Grid.Column="1"  Grid.Row="2" SelectedColor="{Binding TitleHeadingsAccentSelectedColor}"  HorizontalAlignment="Right" VerticalAlignment="Center" Height="30"  Margin="0,4.556,-0.222,3.667"   ></wpftoolkitex:ColorPicker>
+                    <CheckBox IsChecked="{Binding TitleHeadingsAccentColorize}" Content="Colorize:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,9.556,3.778,8.667" Width="103"/>
+
+                </Grid>
+
+                <Grid  Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="54*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                    </Grid.RowDefinitions>
+                    <Label VerticalAlignment="Bottom" Content="Normal Headings" Grid.ColumnSpan="2" Margin="0,0,-0.222,0.222" Height="29"/>
+                    <ComboBox VerticalAlignment="Top"  HorizontalContentAlignment="Center"  SelectedValue="{Binding NormalHeadingSelectedAccent}" ItemsSource="{Binding AccentImages}" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,38,-0.222,0" Grid.RowSpan="2" Height="30"   >
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center" Width="170">
+
+                                    <TextBlock Margin="3,0" HorizontalAlignment="Left" Visibility="{Binding TextVisibility}" Text="{Binding Description}"/>
+                                    <svgc:SvgViewbox Margin="3,0" HorizontalAlignment="Stretch"  Width="{Binding TemplateBinding MinWidth}" Visibility="{Binding ImageVisibility}"  Height="20"  x:Name="svg" VerticalAlignment="Center"  MenuDesigner:SvgViewboxAttachedProperties.Drawing="{Binding Drawing}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+                    <wpftoolkitex:ColorPicker    IsEnabled="{Binding NormalHeadingsAccentColorize}" Width="80" Grid.Column="1"  Grid.Row="2" SelectedColor="{Binding NormalHeadingsAccentSelectedColor}"  HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Margin="0,4.556,-0.222,3.667"    ></wpftoolkitex:ColorPicker>
+                    <CheckBox IsChecked="{Binding NormalHeadingsAccentColorize}"  Content="Colorize:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,9.556,3.778,8.667" Width="103"/>
+
+                </Grid>
+
+                <Grid  Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="54*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                    </Grid.RowDefinitions>
+                    <Label VerticalAlignment="Bottom" Content="Subheadings" Grid.ColumnSpan="2" Margin="0,0,-0.222,0.222"/>
+                    <ComboBox VerticalAlignment="Top"  HorizontalContentAlignment="Center"  SelectedValue="{Binding SubHeadingsSelectedAccent}" ItemsSource="{Binding AccentImages}" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,38,-0.222,0" Grid.RowSpan="2"   >
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center" Width="170">
+
+                                    <TextBlock Margin="3,0" HorizontalAlignment="Left" Visibility="{Binding TextVisibility}" Text="{Binding Description}"/>
+                                    <svgc:SvgViewbox Margin="3,0" HorizontalAlignment="Stretch"  Width="{Binding TemplateBinding MinWidth}" Visibility="{Binding ImageVisibility}"  Height="20"  x:Name="svg" VerticalAlignment="Center"  MenuDesigner:SvgViewboxAttachedProperties.Drawing="{Binding Drawing}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+                    <wpftoolkitex:ColorPicker  IsEnabled="{Binding SubHeadingsAccentColorize}"   Margin="0,4.556,-0.222,4.111" Width="80" Grid.Column="1"  Grid.Row="2" SelectedColor="{Binding SubHeadingAccentSelectedColor}"  HorizontalAlignment="Right" VerticalAlignment="Center" Height="30"    ></wpftoolkitex:ColorPicker>
+                    <CheckBox IsChecked="{Binding SubHeadingsAccentColorize}"  Content="Colorize:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,9.556,3.778,8.667" Width="103"/>
+
+                </Grid>
+            </Grid>
+        </sw:DialogContentControl>
+
+    </Grid>
+</sw:Window>

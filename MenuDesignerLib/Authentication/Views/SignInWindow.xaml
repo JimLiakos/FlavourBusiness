@@ -1,0 +1,67 @@
+﻿<Window x:Class="FLBAuthentication.Views.SignInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:local="clr-namespace:FLBAuthentication.Views"
+        mc:Ignorable="d"
+        Title="SignInWindow"  Height="657" Width="605.256"
+            Background="Transparent"
+        WindowStyle="None"
+         AllowsTransparency="True"
+        ShowInTaskbar="False"  >
+    <Grid Background="Transparent" >
+
+        <Grid x:Name="MainGrid" Margin="10"   >
+            <Path Fill="#F8F8F8" Stretch="Fill" 
+                              Stroke="#F1F1F1" 
+	                            StrokeThickness="3" StrokeLineJoin="Round"
+	                            Margin="0" Data="{Binding PathPoints}">
+                <Path.Effect>
+                    <DropShadowEffect BlurRadius="12" Color="Black" 
+                                                  Direction="315" Opacity="0.8"/>
+                </Path.Effect>
+            </Path>
+
+
+            <Grid Margin="10,25,10,5"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+
+                <Grid Grid.Row="1" Margin="0,5,0,5">
+                    <local:SignInUserControl  x:Name="SignInUserView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:SignInUserControl>
+                </Grid>
+
+            </Grid>
+
+
+        </Grid>
+
+        <!--<local:SignInUserControl  x:Name="WebBrowserHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:SignInUserControl>-->
+        <!--<Grid  >
+        <Border  VerticalAlignment="Top" HorizontalAlignment="Left"  x:Name="WebBrowserHost">
+            
+        </Border>
+        </Grid>
+        <Grid >
+            <Misc:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Misc:LoadingAnimation.Style>
+                    <Style TargetType="{x:Type Misc:LoadingAnimation}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding State}" Value="Busy">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Misc:LoadingAnimation.Style>
+            </Misc:LoadingAnimation>
+        </Grid>-->
+    </Grid>
+</Window>

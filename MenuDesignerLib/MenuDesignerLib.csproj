@@ -1,0 +1,893 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AABB569-BFB9-4484-A3D9-38B2F930F1EC}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>MenuDesigner</RootNamespace>
+    <AssemblyName>MenuDesignerLib</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExCSS, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExCSS.net40.2.0.5\lib\net451\ExCSS.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SharpVectors.Converters.Wpf, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Converters.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Core, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7407205e337c98ef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Css, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7a46e3f532fdb787, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Css.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Dom, Version=1.5.0.0, Culture=neutral, PublicKeyToken=517340b6277b1a7a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Dom.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Model, Version=1.5.0.0, Culture=neutral, PublicKeyToken=2236cfc76b505845, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Rendering.Gdi, Version=1.5.0.0, Culture=neutral, PublicKeyToken=03902092284347e3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Rendering.Gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Rendering.Wpf, Version=1.5.0.0, Culture=neutral, PublicKeyToken=d0902381100df30e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Rendering.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Runtime.Wpf, Version=1.5.0.0, Culture=neutral, PublicKeyToken=d16e717f0a981fb9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpVectors\Output\net46\SharpVectors.Runtime.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
+      <Link>ViewModel\Preview\IFlavoursOrderServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
+      <Link>ViewModel\Preview\Messmate.cs</Link>
+    </Compile>
+    <Compile Include="Authentication\ViewModel\SignInUserPopupViewModel.cs" />
+    <Compile Include="Authentication\Views\SignInToolBar.xaml.cs">
+      <DependentUpon>SignInToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\Views\SignInUserControl.xaml.cs">
+      <DependentUpon>SignInUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\Views\SignInWindow.xaml.cs">
+      <DependentUpon>SignInWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CSSStyles\DownloadStylesWindow.xaml.cs">
+      <DependentUpon>DownloadStylesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPresentetion\MenuItemPresentationViewModel.cs" />
+    <Compile Include="MenuPresentetion\MenuItemsPresentationViewModel.cs" />
+    <Compile Include="Misc\Block.xaml.cs">
+      <DependentUpon>Block.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\DispatcherCollection.cs" />
+    <Compile Include="Misc\LoadingAnimation.xaml.cs">
+      <DependentUpon>LoadingAnimation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\SvgViewboxAttachedProperties.cs" />
+    <Compile Include="Misc\WPFHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModel\GraphicMenusPresentation.cs" />
+    <Compile Include="ViewModel\GraphicMenuTreeNode.cs" />
+    <Compile Include="ViewModel\MenusTreeNode.cs" />
+    <Compile Include="ViewModel\Menu\AccentImagePresentation.cs" />
+    <Compile Include="ViewModel\Menu\BackgroundSelectionViewModel.cs" />
+    <Compile Include="ViewModel\Menu\BookPageViewModel.cs" />
+    <Compile Include="ViewModel\Menu\BookViewModel.cs" />
+    <Compile Include="ViewModel\Menu\BorderSelectionViewModel.cs" />
+    <Compile Include="ViewModel\Menu\CanvasFrameViewModel.cs" />
+    <Compile Include="ViewModel\Menu\DragCanvasItem.cs" />
+    <Compile Include="ViewModel\Menu\FoodItemViewModel.cs" />
+    <Compile Include="ViewModel\Menu\HeadingAccentPresentation.cs" />
+    <Compile Include="ViewModel\Menu\HeadingStyleAccentViewModel.cs" />
+    <Compile Include="ViewModel\Menu\HeadingTypesAccentsViewModel.cs" />
+    <Compile Include="ViewModel\Menu\ICanvasItem.cs" />
+    <Compile Include="ViewModel\Menu\ItemsCategoryViewModel.cs" />
+    <Compile Include="ViewModel\Menu\LayoutOptionsPresentation.cs" />
+    <Compile Include="ViewModel\Menu\MenuCanvasItemViewModel.cs" />
+    <Compile Include="ViewModel\Menu\MenuCanvasLinePresentation.cs" />
+    <Compile Include="ViewModel\Menu\MenuHeadingPresentation.cs" />
+    <Compile Include="ViewModel\Menu\MenuHeadingsPresentation.cs" />
+    <Compile Include="ViewModel\Menu\MenuHeadingViewModel.cs" />
+    <Compile Include="ViewModel\Menu\MenuDesignerHost.cs" />
+    <Compile Include="ViewModel\Menu\MultiPriceHeadingsViewModel.cs" />
+    <Compile Include="ViewModel\Menu\PriceHeadingViewModel.cs" />
+    <Compile Include="ViewModel\Menu\PriceOptionsViewModel.cs" />
+    <Compile Include="ViewModel\Menu\Shapes\ArrowLine.cs" />
+    <Compile Include="ViewModel\Menu\StyleSheetAccentsAccentViewModel.cs" />
+    <Compile Include="ViewModel\Menu\TreeBlankItemViewModel.cs" />
+    <Compile Include="ViewModel\Menu\TreeFoodItemViewModel.cs" />
+    <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
+    <Compile Include="ViewModel\Preview\PseudoCode.cs" />
+    <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
+    <Compile Include="Views\BackgroundSelectorWindow.xaml.cs">
+      <DependentUpon>BackgroundSelectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BorderSelectorWindow.xaml.cs">
+      <DependentUpon>BorderSelectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DesignerCanvas.cs" />
+    <Compile Include="Views\FoodItemPage.xaml.cs">
+      <DependentUpon>FoodItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FoodItemView.xaml.cs">
+      <DependentUpon>FoodItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FoodItemWindow.xaml.cs">
+      <DependentUpon>FoodItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphicMenuPreviewPage.xaml.cs">
+      <DependentUpon>GraphicMenuPreviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphicMenusForm.xaml.cs">
+      <DependentUpon>GraphicMenusForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HeadingListView.xaml.cs">
+      <DependentUpon>HeadingListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HeadingWindow.xaml.cs">
+      <DependentUpon>HeadingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LayoutOptionsForm.xaml.cs">
+      <DependentUpon>LayoutOptionsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuDesigner.xaml.cs">
+      <DependentUpon>MenuDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuDesignerPage.xaml.cs">
+      <DependentUpon>MenuDesignerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuDesignerToolBar.xaml.cs">
+      <DependentUpon>MenuDesignerToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuDesignInfoBar.xaml.cs">
+      <DependentUpon>MenuDesignInfoBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuStyleWindow.xaml.cs">
+      <DependentUpon>MenuStyleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovingFrame.xaml.cs">
+      <DependentUpon>MovingFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MultiPriceHeadingsForm.xaml.cs">
+      <DependentUpon>MultiPriceHeadingsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceOptionsForm.xaml.cs">
+      <DependentUpon>PriceOptionsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RestaurantMenuItemsTreeView.xaml.cs">
+      <DependentUpon>RestaurantMenuItemsTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectHeadingTypesAccents.xaml.cs">
+      <DependentUpon>SelectHeadingTypesAccents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StyleSheetAccentWindow.xaml.cs">
+      <DependentUpon>StyleSheetAccentWindow.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.el.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\StylePrototype.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FLBManager\ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\..\UserInterface\WPFUserInterfaceLibrary\ThemesEx\Themes\Metro\Metro.Theme.xaml">
+      <Link>Themes\Metro.Theme.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authentication\Views\SignInToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authentication\Views\SignInUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Authentication\Views\SignInWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CSSStyles\DownloadStylesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Misc\Block.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Misc\LoadingAnimation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackgroundSelectorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BorderSelectorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FoodItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FoodItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FoodItemWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GraphicMenuPreviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphicMenusForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HeadingListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HeadingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LayoutOptionsForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MenuDesigner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\MenuDesignerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuDesignerToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuDesignInfoBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuStyleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MovingFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MultiPriceHeadingsForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PriceOptionsForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RestaurantMenuItemsTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SelectHeadingTypesAccents.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StyleSheetAccentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
+      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
+      <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{f20e4565-5ddb-4e1e-a343-369927c01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\RestApiRemoting\RestApiRemoting.csproj">
+      <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
+      <Name>RestApiRemoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
+      <Project>{e0e5873e-e5e4-46f6-94f1-731c172cc1c6}</Project>
+      <Name>UserInterface - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\StyleableWindow\StyleableWindow.csproj">
+      <Project>{6368d7f0-70f8-4b7a-8b36-ef31d07c11c1}</Project>
+      <Name>StyleableWindow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
+      <Project>{0a6dbbc9-d8d3-4466-9a4e-80ae0582eb0a}</Project>
+      <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\WindowsBaseEx.csproj">
+      <Project>{d83eae0a-82cd-4496-8524-c734c6236b78}</Project>
+      <Name>WindowsBaseEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WPFUIElementObjectBind\WPFUIElementObjectBind-VS10.csproj">
+      <Project>{8dfec0f3-c2ec-4d16-9e1d-09d33199e73f}</Project>
+      <Name>WPFUIElementObjectBind-VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
+      <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
+      <Name>FlavourBusinessFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessToolKit\FlavourBusinessToolKit.csproj">
+      <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
+      <Name>FlavourBusinessToolKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessManager\FlavourBusinessManager.csproj">
+      <Project>{25aec1bf-1882-41c8-8b4a-b3b3e1ef624d}</Project>
+      <Name>FlavourBusinessManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessUI\FlavourBusinessUI.csproj">
+      <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
+      <Name>FlavourBusinessUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuItemsEditor\MenuItemsEditor.csproj">
+      <Project>{615b9b02-7115-4a3c-b218-4732958801c8}</Project>
+      <Name>MenuItemsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModel.csproj">
+      <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
+      <Name>MenuModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
+      <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
+      <Name>MenuModelFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuPresentationModel\MenuPresentationModel.csproj">
+      <Project>{5c51fa19-e5e2-493d-84c8-2cd88567f908}</Project>
+      <Name>MenuPresentationModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultilingualLib\MultilingualLib.csproj">
+      <Project>{f303e4e2-7fca-44b0-a804-f9a05f4a8cd3}</Project>
+      <Name>MultilingualLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SvgAccentModifier\SvgAccentModifier.csproj">
+      <Project>{3ece3c45-143e-40fe-9c9e-a21fa57fc421}</Project>
+      <Name>SvgAccentModifier</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsCenteredHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsCenteredVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AlignObjectsTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ArrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BringForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BringToFront.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CloseWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DistributeObjectsHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DistributeObjectsVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\GenericDocument.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\GroupItems.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\360-degrees16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\accounting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\accounting16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\administration16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsCenteredHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsCenteredVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\AlignObjectsTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\bilingual16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BlankSign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BlankSign16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BringForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\BringToFront.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\businessman24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\cafe16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\CallerID16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\CallerIDLine16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\cashier16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\chef16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Columns.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DistributeObjectsHorizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DistributeObjectsVertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DocumentHeader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\DocumentHeaderAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Edit16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ExpandLineSpace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ExpanFontSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\FlavourBusiness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\GenericDocument.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\human-resources16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\infrastructure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\kitchen16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\language16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\language24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\MenuItemOnPage16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\MenuItemOnPage16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\menusfolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\NextPage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\OpenFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\PreviousPage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\redo16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\redo32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Rename16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ResetFontSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ResetLineSpace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Restaurant16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Restaurant255.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Restaurant32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Restaurant512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Restaurant64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateBottomCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateBottomLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateBottomRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateCenterLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateCenterRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateTopCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateTopLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\RotateTopRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-height16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-size16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\same-width16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\savings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\SendBackward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\SendToBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ServiceArea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ServicePoint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\settings16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ShrinkFontSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\ShrinkLineSpace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\sketch16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Supervisor16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\undo16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\undo32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Ungroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\waiter16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\waiters16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\OpenFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\PasteBig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\push-pin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\RestoreWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\SendBackward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\SendToBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Test.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\TransformColor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Ungroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\background16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\layout16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\layout24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\background24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\frame16.png" />
+    <Resource Include="Resources\Images\Metro\frame24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\header16.png" />
+    <Resource Include="Resources\Images\Metro\header24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\study16.png" />
+    <Resource Include="Resources\Images\Metro\study24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Movedown16.png" />
+    <Resource Include="Resources\Images\Metro\Moveup16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\S_Movedown16.png" />
+    <Resource Include="Resources\Images\Metro\S_Moveup16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\preview24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\cloud-computing16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\cloud-computing24.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

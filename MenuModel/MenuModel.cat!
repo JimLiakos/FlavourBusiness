@@ -1,0 +1,1930 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "MenuModel"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"MenuModel")
+	(object Attribute
+	    tool       	"C#"
+	    name       	"FullName"
+	    value      	"MenuModel"))
+    quid       	"5721EBAD02D9"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "IMenuItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{5b1dc307-2ce6-4339-ab21-a69b6c4a71ec}"))
+	    quid       	"5721EC2D00C7"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721EC70001E")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f8617cc8-9df2-44ba-8be2-65228da3d7fd}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5721EC70001E"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "IPreparationScaledOption"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{b39bddb7-8b3f-447d-a8ba-6130d048cbf0}"))
+	    quid       	"57221D830252"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"57247367030C"
+		    supplier   	"Logical View::MenuModel::IPreparationOption"
+		    quidu      	"57247359011A"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f8617cc8-9df2-44ba-8be2-65228da3d7fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723AC0E0388")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5723AC0E0388"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "IMenuItemType"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{e2352da1-a028-4f5c-980b-0403e38510c5}"))
+	    quid       	"5723464300C1"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f8617cc8-9df2-44ba-8be2-65228da3d7fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723AC050232")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5723AC050232"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "IPreparationOptionGroup"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{52f7dd82-cbf1-44f7-afff-a648f960e989}"))
+	    quid       	"57234870011D"
+	    stereotype 	"Interface"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"572348DA01BE"
+		    supplier   	"Logical View::MenuModel::IPreparationOption"
+		    quidu      	"57247359011A"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "IScaleType"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{833f995c-ee01-43ca-8b54-1e7fd367767a}"))
+	    quid       	"572379C50148"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f8617cc8-9df2-44ba-8be2-65228da3d7fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723ABFC02F7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5723ABFC02F7"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "ILevel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{a0ca7e03-bc94-42fb-b1d8-547fece40d09}"))
+	    quid       	"5723880F027C"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f8617cc8-9df2-44ba-8be2-65228da3d7fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723ABD902B8")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5723ABD902B8"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "SelectionType"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{72cb7d9b-60a7-48ab-94c6-15301e6d2241}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"57245A720022"
+	    stereotype 	"enum"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "SingleSelection"
+		    quid       	"57245DCC0361"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultiSelection"
+		    quid       	"57245DDE01DF"
+		    exportControl 	"Public")
+		(object ClassAttribute "AtListOneSelected"
+		    quid       	"57245DE0009F"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Class "IPreparationOption"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{045c9257-9642-4479-ba52-73bf7f75348a}"))
+	    quid       	"57247359011A"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dd06cb4c-2872-4b2f-a24b-8e1fabb03d6a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572474C903B2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"572474C903B2"
+		    type       	"System.string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuModel::MenuModel"
+	    quidu      	"5721E69F03B9"
+	    language   	"C#")
+	(object Association "ItemTypes"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5723470800E5")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"acf70d37-a943-4b51-a02f-e012fdac9f03"))
+	    quid       	"5723470800E5"
+	    roles      	(list role_list
+		(object Role "Types"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723470900C6")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6113ba5f-36c7-4c69-b746-19c07b8dfb35}"))
+		    quid       	"5723470900C6"
+		    label      	"Types"
+		    supplier   	"Logical View::MenuModel::IMenuItemType"
+		    quidu      	"5723464300C1"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723470900C9")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cd1a1a96-396d-4ec6-b570-5844ceac1ac2}"))
+		    quid       	"5723470900C9"
+		    supplier   	"Logical View::MenuModel::IMenuItem"
+		    quidu      	"5721EC2D00C7")))
+	(object Association "OptionsGroup"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"572348E40211")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"40a09710-0820-4640-9989-655ea652dc97"))
+	    quid       	"572348E40211"
+	    roles      	(list role_list
+		(object Role "GroupedOptions"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572348E700F6")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{124bddc3-37de-4b05-80b7-579c6636456f}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<MenuModel.IPreparationOption>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"572348E700F6"
+		    label      	"GroupedOptions"
+		    supplier   	"Logical View::MenuModel::IPreparationScaledOption"
+		    quidu      	"57221D830252"
+		    client_cardinality 	(value cardinality "2..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572348E700FA")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4b2f3c1c-6227-41e2-b78e-0fce234d3d85}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"572348E700FA"
+		    supplier   	"Logical View::MenuModel::IPreparationOptionGroup"
+		    quidu      	"57234870011D"
+		    is_aggregate 	TRUE)))
+	(object Association "ItemTypePreparation"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"57234A0000FB")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"102fcd8d-cc58-42cd-8dcc-4bd51cd424e9"))
+	    quid       	"57234A0000FB"
+	    roles      	(list role_list
+		(object Role "Options"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57234A020206")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fb48d37c-f53c-40b5-a835-55524d2a1e66}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<MenuModel.IPreparationOption>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"57234A020206"
+		    label      	"Options"
+		    supplier   	"Logical View::MenuModel::IPreparationOption"
+		    quidu      	"57247359011A"
+		    client_cardinality 	(value cardinality "1..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57234A02020B")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{368e5a47-41f0-4e62-bfcd-721232b11f9b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"57234A02020B"
+		    supplier   	"Logical View::MenuModel::IMenuItemType"
+		    quidu      	"5723464300C1"
+		    is_aggregate 	TRUE)))
+	(object Association "OptionLevels"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"57237B6D0344")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"9ad86ca3-f76e-40e1-96bc-615c78999e5e"))
+	    quid       	"57237B6D0344"
+	    roles      	(list role_list
+		(object Role "LevelType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57237B6F019B")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d643b2f1-ed4e-4d77-8b19-ac65e979fd43}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"57237B6F019B"
+		    label      	"LevelType"
+		    supplier   	"Logical View::MenuModel::IScaleType"
+		    quidu      	"572379C50148"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$3"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57237B6F019D")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d59c409b-57d6-448a-8a56-8b29f5f8ad32}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"57237B6F019D"
+		    supplier   	"Logical View::MenuModel::IPreparationScaledOption"
+		    quidu      	"57221D830252")))
+	(object Association "TypeLevels"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5723882900CD")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"aaedcc45-fbdf-4f6c-ba38-fc00c1e343ba"))
+	    quid       	"5723882900CD"
+	    roles      	(list role_list
+		(object Role "Levels"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723882902AF")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e69ffce7-7fdd-410d-b228-b941f91e8d9c}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<MenuModel.ILevel>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	TRUE))
+		    quid       	"5723882902AF"
+		    label      	"Levels"
+		    supplier   	"Logical View::MenuModel::ILevel"
+		    quidu      	"5723880F027C"
+		    client_cardinality 	(value cardinality "2..*")
+		    Constraints 	"ordered"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$4"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5723882902B9")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dea7ba7f-15d9-4cbb-814c-8e0f6336a15c}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5723882902B9"
+		    supplier   	"Logical View::MenuModel::IScaleType"
+		    quidu      	"572379C50148"
+		    is_aggregate 	TRUE)))
+	(object Association "OptionInitialLevel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"572388BD017F")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"54ef027c-dd0c-4592-a946-f4482de5d1d9"))
+	    quid       	"572388BD017F"
+	    roles      	(list role_list
+		(object Role "Initital"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572388C00022")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fdc920ce-7145-47c4-9a97-b3ed33f9237d}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"572388C00022"
+		    label      	"Initital"
+		    supplier   	"Logical View::MenuModel::ILevel"
+		    quidu      	"5723880F027C"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$5"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572388C00027")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4e16e7b7-1480-484a-8fd8-a817e853a486}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"572388C00027"
+		    supplier   	"Logical View::MenuModel::IPreparationScaledOption"
+		    quidu      	"57221D830252")))
+	(object Association "$UNNAMED$6"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Association Attributes"
+		    value      	FALSE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"57245E340226")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"013f52ae-c4c0-47e3-bbbd-201ff96170dd"))
+	    quid       	"57245E340226"
+	    roles      	(list role_list
+		(object Role "SelectionType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57245E35027C")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{28e6e8db-087d-48d8-9e6f-48fd39641d60}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Synchronize"
+			    value      	FALSE))
+		    quid       	"57245E35027C"
+		    label      	"SelectionType"
+		    supplier   	"Logical View::MenuModel::SelectionType"
+		    quidu      	"57245A720022"
+		    client_cardinality 	(value cardinality "1")
+		    Containment 	"By Value"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$7"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57245E350286")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6cb0b7c9-c46c-4e6b-a244-0c39de48cc70}"))
+		    quid       	"57245E350286"
+		    supplier   	"Logical View::MenuModel::IPreparationOptionGroup"
+		    quidu      	"57234870011D"
+		    is_aggregate 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"5721EBDE0192"
+	    title      	"Main"
+	    external_docs 	(list external_doc_list
+		(object external_doc
+		    external_doc_path 	"$dot Net Projects Path\\Taste Project\\MenuItemPreparation.docx"))
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	400
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::MenuModel::IMenuItem" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(368, 1355)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(106, 1317)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	525
+			justify    	0
+			label      	"IMenuItem")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5721EC2D00C7"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(106, 1384)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	303
+			compartmentItems 	(list Compartment
+			    "+ Name : string"))
+		    width      	543
+		    height     	281
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuModel::IScaleType" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3161, 852)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(2939, 808)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	445
+			justify    	0
+			label      	"IScaleType")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"572379C50148"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(2939, 869)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
+		    width      	463
+		    height     	288
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuModel::ILevel" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3102, 260)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(2898, 210)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	408
+			justify    	0
+			label      	"ILevel")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5723880F027C"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(2898, 271)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
+		    width      	426
+		    height     	300
+		    annotation 	8)
+		(object AssociationViewNew "TypeLevels" @4
+		    location   	(3187, 558)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @5
+			Parent_View 	@4
+			location   	(3180, 585)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"TypeLevels"
+			pctDist    	0.383333
+			height     	27
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5723882900CD"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Levels" @6
+			    Parent_View 	@4
+			    location   	(574, 33)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @7
+				Parent_View 	@6
+				location   	(3187, 483)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	148
+				justify    	0
+				label      	"+Levels"
+				pctDist    	0.516556
+				height     	0
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5723882902AF"
+			    client     	@4
+			    supplier   	@3
+			    line_style 	3
+			    origin_attachment 	(3187, 558)
+			    terminal_attachment 	(3187, 410)
+			    label      	(object SegLabel @8
+				Parent_View 	@6
+				location   	(3241, 426)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"2..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1)
+			    label      	(object SegLabel @9
+				Parent_View 	@6
+				location   	(3376, 442)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	3
+				anchor_loc 	1
+				nlines     	1
+				max_width  	163
+				justify    	0
+				label      	"{ordered}"
+				pctDist    	0.783784
+				height     	189
+				orientation 	1))
+			(object RoleView "$UNNAMED$4" @10
+			    Parent_View 	@4
+			    location   	(574, 33)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5723882902B9"
+			    client     	@4
+			    supplier   	@2
+			    line_style 	3
+			    origin_attachment 	(3187, 558)
+			    terminal_attachment 	(3187, 707))))
+		(object ClassView "Class" "Logical View::MenuModel::IPreparationScaledOption" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2325, 1000)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(2085, 975)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	481
+			justify    	0
+			label      	"IPreparationScaledOption")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57221D830252"
+		    width      	499
+		    height     	250
+		    annotation 	8)
+		(object AssociationViewNew "OptionLevels" @12
+		    location   	(2752, 959)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @13
+			Parent_View 	@12
+			location   	(2715, 849)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"OptionLevels"
+			pctDist    	-0.133333
+			height     	111
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"57237B6D0344"
+		    roleview_list 	(list RoleViews
+			(object RoleView "LevelType" @14
+			    Parent_View 	@12
+			    location   	(1155, 362)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @15
+				Parent_View 	@14
+				location   	(2839, 921)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	201
+				justify    	0
+				label      	"+LevelType"
+				pctDist    	0.488189
+				height     	39
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57237B6F019B"
+			    client     	@12
+			    supplier   	@2
+			    line_style 	3
+			    origin_attachment 	(2752, 959)
+			    terminal_attachment 	(2930, 959)
+			    label      	(object SegLabel @16
+				Parent_View 	@14
+				location   	(2886, 1009)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.759843
+				height     	50
+				orientation 	1))
+			(object RoleView "$UNNAMED$3" @17
+			    Parent_View 	@12
+			    location   	(1155, 362)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57237B6F019D"
+			    client     	@12
+			    supplier   	@11
+			    line_style 	3
+			    origin_attachment 	(2752, 959)
+			    terminal_attachment 	(2574, 959))))
+		(object AssociationViewNew "OptionInitialLevel" @18
+		    location   	(2411, 308)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @19
+			Parent_View 	@18
+			location   	(2411, 249)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"OptionInitialLevel"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"572388BD017F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Initital" @20
+			    Parent_View 	@18
+			    location   	(814, -438)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(2775, 178)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	140
+				justify    	0
+				label      	"+Initital"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"572388C00022"
+			    client     	@18
+			    supplier   	@3
+			    vertices   	(list Points
+				(2411, 308)
+				(2411, 219)
+				(2889, 219))
+			    line_style 	3
+			    origin_attachment 	(2411, 308)
+			    terminal_attachment 	(2889, 219)
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(2832, 273)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$5" @23
+			    Parent_View 	@18
+			    location   	(814, -438)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"572388C00027"
+			    client     	@18
+			    supplier   	@11
+			    line_style 	3
+			    origin_attachment 	(2411, 308)
+			    terminal_attachment 	(2411, 874))))
+		(object ClassView "Class" "Logical View::MenuModel::SelectionType" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2901, 1612)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(2632, 1518)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"SelectionType")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@24
+			location   	(2632, 1468)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"<<enum>>")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57245A720022"
+		    compartment 	(object Compartment
+			Parent_View 	@24
+			location   	(2632, 1579)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	400)
+		    width      	556
+		    height     	312
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuModel::IPreparationOptionGroup" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1659, 1631)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(1409, 1612)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	501
+			justify    	0
+			label      	"IPreparationOptionGroup")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57234870011D"
+		    width      	519
+		    height     	238
+		    annotation 	8)
+		(object AssociationViewNew "OptionsGroup" @26
+		    location   	(2272, 1537)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @27
+			Parent_View 	@26
+			location   	(2272, 1478)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"OptionsGroup"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"572348E40211"
+		    roleview_list 	(list RoleViews
+			(object RoleView "GroupedOptions" @28
+			    Parent_View 	@26
+			    location   	(1085, -50)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @29
+				Parent_View 	@28
+				location   	(2325, 1239)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	317
+				justify    	0
+				label      	"+GroupedOptions"
+				pctDist    	0.726297
+				height     	53
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"572348E700F6"
+			    client     	@26
+			    supplier   	@11
+			    line_style 	3
+			    origin_attachment 	(2272, 1537)
+			    terminal_attachment 	(2272, 1124)
+			    label      	(object SegLabel @30
+				Parent_View 	@28
+				location   	(2219, 1166)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"2..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "$UNNAMED$1" @31
+			    Parent_View 	@26
+			    location   	(1085, -50)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"572348E700FA"
+			    client     	@26
+			    supplier   	@25
+			    vertices   	(list Points
+				(2272, 1537)
+				(2272, 1597)
+				(1918, 1597))
+			    line_style 	3
+			    origin_attachment 	(2272, 1537)
+			    terminal_attachment 	(1918, 1597))))
+		(object AssociationViewNew "$UNNAMED$6" @32
+		    location   	(2270, 1703)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"57245E340226"
+		    roleview_list 	(list RoleViews
+			(object RoleView "SelectionType" @33
+			    Parent_View 	@32
+			    location   	(693, 297)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @34
+				Parent_View 	@33
+				location   	(2350, 1650)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	287
+				justify    	0
+				label      	"+SelectionType"
+				pctDist    	0.227941
+				height     	54
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57245E35027C"
+			    client     	@32
+			    supplier   	@24
+			    line_style 	3
+			    origin_attachment 	(2270, 1703)
+			    terminal_attachment 	(2623, 1703)
+			    label      	(object SegLabel @35
+				Parent_View 	@33
+				location   	(2588, 1757)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$7" @36
+			    Parent_View 	@32
+			    location   	(693, 297)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57245E350286"
+			    client     	@32
+			    supplier   	@25
+			    line_style 	3
+			    origin_attachment 	(2270, 1703)
+			    terminal_attachment 	(1918, 1703))))
+		(object ClassView "Class" "Logical View::MenuModel::IPreparationOption" @37
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1903, 462)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(1603, 437)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	601
+			justify    	0
+			label      	"IPreparationOption")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"57247359011A"
+		    compartment 	(object Compartment
+			Parent_View 	@37
+			location   	(1603, 498)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	456)
+		    width      	619
+		    height     	250
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuModel::IMenuItemType" @38
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(443, 497)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@38
+			location   	(218, 453)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	451
+			justify    	0
+			label      	"IMenuItemType")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5723464300C1"
+		    compartment 	(object Compartment
+			Parent_View 	@38
+			location   	(218, 514)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
+		    width      	469
+		    height     	288
+		    annotation 	8)
+		(object AssociationViewNew "ItemTypes" @39
+		    location   	(394, 927)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @40
+			Parent_View 	@39
+			location   	(539, 959)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"ItemTypes"
+			pctDist    	2.916667
+			height     	32
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5723470800E5"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Types" @41
+			    Parent_View 	@39
+			    location   	(13, 456)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @42
+				Parent_View 	@41
+				location   	(475, 764)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	144
+				justify    	0
+				label      	"+Types"
+				pctDist    	0.575000
+				height     	81
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5723470900C6"
+			    client     	@39
+			    supplier   	@38
+			    line_style 	3
+			    origin_attachment 	(394, 927)
+			    terminal_attachment 	(394, 641)
+			    label      	(object SegLabel @43
+				Parent_View 	@41
+				location   	(305, 727)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.699301
+				height     	90
+				orientation 	0))
+			(object RoleView "$UNNAMED$0" @44
+			    Parent_View 	@39
+			    location   	(13, 456)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5723470900C9"
+			    client     	@39
+			    supplier   	@1
+			    line_style 	3
+			    origin_attachment 	(394, 927)
+			    terminal_attachment 	(394, 1214))))
+		(object AssociationViewNew "ItemTypePreparation" @45
+		    location   	(1135, 469)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @46
+			Parent_View 	@45
+			location   	(1109, 334)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"ItemTypePreparation"
+			pctDist    	0.066667
+			height     	136
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"57234A0000FB"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Options" @47
+			    Parent_View 	@45
+			    location   	(782, -671)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @48
+				Parent_View 	@47
+				location   	(1440, 428)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	176
+				justify    	0
+				label      	"+Options"
+				pctDist    	0.664820
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57234A020206"
+			    client     	@45
+			    supplier   	@37
+			    line_style 	3
+			    origin_attachment 	(1135, 469)
+			    terminal_attachment 	(1594, 469)
+			    label      	(object SegLabel @49
+				Parent_View 	@47
+				location   	(1547, 523)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$2" @50
+			    Parent_View 	@45
+			    location   	(782, -671)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"57234A02020B"
+			    client     	@45
+			    supplier   	@38
+			    line_style 	3
+			    origin_attachment 	(1135, 469)
+			    terminal_attachment 	(677, 469))))
+		(object InheritTreeView "" @51
+		    location   	(1891, 763)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    supplier   	@37
+		    vertices   	(list Points
+			(1891, 763)
+			(1891, 587)))
+		(object InheritView "" @52
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"57247367030C"
+		    client     	@11
+		    supplier   	@37
+		    line_style 	3
+		    origin_attachment 	(2194, 874)
+		    terminal_attachment 	(2194, 763)
+		    drawSupplier 	@51)
+		(object InheritView "" @53
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"572348DA01BE"
+		    client     	@25
+		    supplier   	@37
+		    line_style 	3
+		    origin_attachment 	(1628, 1511)
+		    terminal_attachment 	(1628, 763)
+		    drawSupplier 	@51)))))

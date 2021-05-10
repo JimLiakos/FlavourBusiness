@@ -1,0 +1,36 @@
+﻿<sw:PageDialogViewEmulator  xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" x:Class="MenuDesigner.Views.MenuDesignerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MenuDesigner.Views" 
+                            xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+                            xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas" xmlns:resx="clr-namespace:MenuDesigner.Properties"
+                            mc:Ignorable="d"
+                            
+      Title="{Binding Value.MenuName}" 
+                            TitleBarComments="{Binding Value.Comments, Mode=OneWay}">
+    <sw:PageDialogViewEmulator.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:BookViewModel}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </sw:PageDialogViewEmulator.DataContext>
+    <sw:PageDialogViewEmulator.Resources>
+        <ViewModel:BookViewModel x:Key="SampleBookViewModel" />
+    </sw:PageDialogViewEmulator.Resources>
+    <Grid DataContext="{Binding Value}"  d:DataContext="{StaticResource SampleBookViewModel}" >
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding BeforeSaveCommand}"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Flat="True" InitialWidth="Infinity" InitialHeight="Infinity"     SubTitle="Regulate the Menu Style layout" >
+            <local:MenuDesignerControl    Grid.Row="1" x:Name="MenuDesigner"/>
+            <sw:DialogContentControl.Footer>
+
+                <ContentControl  >
+                    
+                    <Button HorizontalAlignment="Right" Width="90" Command="{Binding PreviewCommand}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="/MenuDesignerLib;component/Resources/Images/Metro/preview24.png"/>
+                            <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.GraphicMenuPreview}" ></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ContentControl>
+            </sw:DialogContentControl.Footer>
+        </sw:DialogContentControl>
+    </Grid>
+</sw:PageDialogViewEmulator>

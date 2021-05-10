@@ -1,0 +1,664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CopyMenuItemHeader" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CutMenuItemHeader" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="DeleteGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Delete Menu</value>
+  </data>
+  <data name="DeleteMenuIHeadingHeader" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteMenuItemHeader" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DesignMenuTitle" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="EditMenuItemHeader" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ExitMenuItemHeader" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="FilesMenuItemHeader" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FontsMenuItemHeader" xml:space="preserve">
+    <value>Fonts</value>
+  </data>
+  <data name="FoodItemDescriptionFontsMenuItemHeader" xml:space="preserve">
+    <value>Menu item Description</value>
+  </data>
+  <data name="FoodItemExtrasMenuItemHeader" xml:space="preserve">
+    <value>Menu item Extras</value>
+  </data>
+  <data name="FoodItemNameFontsMenuItemHeader" xml:space="preserve">
+    <value>Menu item Name</value>
+  </data>
+  <data name="FoodItemPriceMenuItemHeader" xml:space="preserve">
+    <value>Menu item Price</value>
+  </data>
+  <data name="GraphicMenuTitle" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="HeadingListActionsLabel" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="HeadingListViewTitle" xml:space="preserve">
+    <value>Menu Headings</value>
+  </data>
+  <data name="LayoutOptionsMenuTitle" xml:space="preserve">
+    <value>Layout Options</value>
+  </data>
+  <data name="MenuHeadingTextPrompt" xml:space="preserve">
+    <value>Write the text of heading</value>
+  </data>
+  <data name="MenuItemDescriptionLabel" xml:space="preserve">
+    <value>Menu item description :</value>
+  </data>
+  <data name="MenuItemExtrasLabel" xml:space="preserve">
+    <value>Menu item extras :</value>
+  </data>
+  <data name="MenuItemsListActionsLabel" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="MenuItemsTitle" xml:space="preserve">
+    <value>Menu Items</value>
+  </data>
+  <data name="MenuItemTitleLabel" xml:space="preserve">
+    <value>Menu item title :</value>
+  </data>
+  <data name="MenuStylesListLabel" xml:space="preserve">
+    <value>Menu Styles</value>
+  </data>
+  <data name="NewGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>New Menu</value>
+  </data>
+  <data name="NewMenuIHeadingHeader" xml:space="preserve">
+    <value>New Heading</value>
+  </data>
+  <data name="NormalHeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Normal Heading</value>
+  </data>
+  <data name="OpenGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Open Menu</value>
+  </data>
+  <data name="PageSetupMenuItemHeader" xml:space="preserve">
+    <value>Page Setup</value>
+  </data>
+  <data name="PasteMenuItemHeader" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="RenameMenuIHeadingHeader" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="SaveGraphicMenuMenuItemHeader" xml:space="preserve">
+    <value>Save Menu</value>
+  </data>
+  <data name="SubheadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Subheading</value>
+  </data>
+  <data name="TitleHeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Title Heading</value>
+  </data>
+  <data name="ToolTipAlignBottoms" xml:space="preserve">
+    <value>Align Bottoms</value>
+  </data>
+  <data name="ToolTipAlignLefts" xml:space="preserve">
+    <value>Align Lefts</value>
+  </data>
+  <data name="ToolTipAlignRights" xml:space="preserve">
+    <value>Align Rights</value>
+  </data>
+  <data name="ToolTipAlignTops" xml:space="preserve">
+    <value>Align Tops</value>
+  </data>
+  <data name="ToolTipBringFront" xml:space="preserve">
+    <value>Bring to Front</value>
+  </data>
+  <data name="ToolTipCenterHorizontally" xml:space="preserve">
+    <value>Center Horizontally</value>
+  </data>
+  <data name="ToolTipCenterVertically" xml:space="preserve">
+    <value>Center Vertically</value>
+  </data>
+  <data name="ToolTipCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="ToolTipCut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="ToolTipDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ToolTipExpandLineSpace" xml:space="preserve">
+    <value>Expand Page Spacing</value>
+  </data>
+  <data name="ToolTipExpandPageFontsSizes" xml:space="preserve">
+    <value>Grow fonts</value>
+  </data>
+  <data name="ToolTipGroupObjects" xml:space="preserve">
+    <value>Group Objects</value>
+  </data>
+  <data name="ToolTipHorizontalSpacingEqual" xml:space="preserve">
+    <value>Make Horizontal Spacing Equal</value>
+  </data>
+  <data name="ToolTipNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ToolTipOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="ToolTipPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="ToolTipPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ToolTipResetLineSpace" xml:space="preserve">
+    <value>Reset Page Spacing</value>
+  </data>
+  <data name="ToolTipResetPageFontsSizes" xml:space="preserve">
+    <value>Reset fonts to Style defaults</value>
+  </data>
+  <data name="ToolTipSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ToolTipSendBack" xml:space="preserve">
+    <value>Send to Back</value>
+  </data>
+  <data name="ToolTipShrinkLineSpace" xml:space="preserve">
+    <value>Shrink Page Spacing</value>
+  </data>
+  <data name="ToolTipShrinkPageFontsSizes" xml:space="preserve">
+    <value>Shrink fonts</value>
+  </data>
+  <data name="ToolTipUngroupObjects" xml:space="preserve">
+    <value>Ungroup Objects</value>
+  </data>
+  <data name="ToolTipVerticalSpacingEqual" xml:space="preserve">
+    <value>Make Vertical Spacing Equal</value>
+  </data>
+  <data name="WriteMenuItemDescriptionPrompt" xml:space="preserve">
+    <value>Write the description of menu item</value>
+  </data>
+  <data name="WriteMenuItemExtrasPrompt" xml:space="preserve">
+    <value>Write the extras of menu item</value>
+  </data>
+  <data name="WriteMenuItemTitlePrompt" xml:space="preserve">
+    <value>Write the title of menu item</value>
+  </data>
+  <data name="MenuItemEditDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="MenuHeadingTitleLabel" xml:space="preserve">
+    <value>Menu heading title :</value>
+  </data>
+  <data name="WriteMenuHeadingTitlePrompt" xml:space="preserve">
+    <value>Write the title of menu hrading</value>
+  </data>
+  <data name="HeadingsAccentsMenuTitle" xml:space="preserve">
+    <value>Heading Accents</value>
+  </data>
+  <data name="BorderMenuTitle" xml:space="preserve">
+    <value>Border</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TransformColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\transformcolor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundMenuTitle" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="ExtraDescriptionFollowNamePrompt" xml:space="preserve">
+    <value>1st line</value>
+  </data>
+  <data name="ExtraDescriptionInNewLinePrompt" xml:space="preserve">
+    <value>2nd line</value>
+  </data>
+  <data name="FooItemAlignCenterPrompt" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="FooItemAlignLeftPrompt" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="FooItemAlignRightPrompt" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="PriceLayoutDoNotDisplayPrompt" xml:space="preserve">
+    <value>Don't Display</value>
+  </data>
+  <data name="PriceLayoutFollowDescriptionPrompt" xml:space="preserve">
+    <value>Follow Description</value>
+  </data>
+  <data name="PriceLayoutNormalPrompt" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="PriceLayoutWithDescriptionPrompt" xml:space="preserve">
+    <value>With Description</value>
+  </data>
+  <data name="PriceLayoutWithNamePrompt" xml:space="preserve">
+    <value>With Name</value>
+  </data>
+  <data name="PriceHeadingRotationLabel" xml:space="preserve">
+    <value>Rotate Price Heading</value>
+  </data>
+  <data name="PriceHeadingHorizontalMoveLabel" xml:space="preserve">
+    <value>Horizontal Move</value>
+  </data>
+  <data name="PriceHeadingRotationAngleLabel" xml:space="preserve">
+    <value>Angle:</value>
+  </data>
+  <data name="PriceHeadingRotationPointLabel" xml:space="preserve">
+    <value>Price Heading Rotation Point</value>
+  </data>
+  <data name="PriceHeadingBotomMarginLabel" xml:space="preserve">
+    <value>Price Heading Bottom Margin</value>
+  </data>
+  <data name="UseStyleDefaultsPrompt" xml:space="preserve">
+    <value>Use Style defaults</value>
+  </data>
+  <data name="MultiPriceHeadingsVerticalMoveLabel" xml:space="preserve">
+    <value>Vertical Move</value>
+  </data>
+  <data name="MultiPriceSpacingLabel" xml:space="preserve">
+    <value>Multi price spacing</value>
+  </data>
+  <data name="PriceLeaderTypeSelectionLabel" xml:space="preserve">
+    <value>Use the Leader</value>
+  </data>
+  <data name="ShowMultiplePricesCheboxLabel" xml:space="preserve">
+    <value>Show multiple prices</value>
+  </data>
+  <data name="PriceLeaderExtraSpaceNearItemLabel" xml:space="preserve">
+    <value>Extra space near Item</value>
+  </data>
+  <data name="PriceLeaderExtraSpaceNearPriceLabel" xml:space="preserve">
+    <value>Extra space near Price</value>
+  </data>
+  <data name="PriceLeaderExtraSpaceOptionLabel" xml:space="preserve">
+    <value>Extra Dots Space</value>
+  </data>
+  <data name="PriceLeaderMatchNameColorLabel" xml:space="preserve">
+    <value>Dots match Name color</value>
+  </data>
+  <data name="PriceLocationOptionsLabel" xml:space="preserve">
+    <value>Price location</value>
+  </data>
+  <data name="GraphicMenusTitle" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="AddGraphicMenuLabel" xml:space="preserve">
+    <value>New Menu</value>
+  </data>
+  <data name="CompanyResourcesLabel" xml:space="preserve">
+    <value>Company Resources</value>
+  </data>
+  <data name="RemoveServicesContextHeader" xml:space="preserve">
+    <value>Remove Restaurant</value>
+    <comment>Defines the ContextMenu MenuItem Header to remove restaurant tree node</comment>
+  </data>
+  <data name="AddServiceAreaHeader" xml:space="preserve">
+    <value>Add Service Area</value>
+    <comment>Defines the ContextMenu MenuItem Header to add service Area tree node</comment>
+  </data>
+  <data name="AddServicesContextHeader" xml:space="preserve">
+    <value>Add Restaurant</value>
+    <comment>Defines the ContextMenu MenuItem Header to add restaurant tree node</comment>
+  </data>
+  <data name="RemoveServiceAreaHeader" xml:space="preserve">
+    <value>Remove Service Area</value>
+    <comment>Defines the ContextMenu MenuItem Header to remove service Area tree node</comment>
+  </data>
+  <data name="DefaultServiceAreaDescription" xml:space="preserve">
+    <value>Main Room</value>
+    <comment>Specifies the description of the 'service area' when it is created.</comment>
+  </data>
+  <data name="LoadingPrompt" xml:space="preserve">
+    <value>Loadding...</value>
+  </data>
+  <data name="DefaultServicePointDescription" xml:space="preserve">
+    <value>Table</value>
+    <comment>Specifies the description of the 'service point' when it is created.</comment>
+  </data>
+  <data name="AddServicePointHeader" xml:space="preserve">
+    <value>New Table</value>
+    <comment>Defines the ContextMenu MenuItem Header to add service point tree node</comment>
+  </data>
+  <data name="RemoveGraphicMenuContextHeader" xml:space="preserve">
+    <value>Remove Menu</value>
+    <comment>Defines the ContextMenu MenuItem Header to remove graphic tree node</comment>
+  </data>
+  <data name="LaunchCallerIDServer" xml:space="preserve">
+    <value>Launch CallerID Server</value>
+  </data>
+  <data name="RemoveCallerIDServer" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Accent Padding" xml:space="preserve">
+    <value>Add phone line</value>
+  </data>
+  <data name="TreasuryTitle" xml:space="preserve">
+    <value>Treasury</value>
+    <comment>Tree view node Name for treasury</comment>
+  </data>
+  <data name="NewCashierStationPrompt" xml:space="preserve">
+    <value>New cashier desk</value>
+  </data>
+  <data name="SettingsMenuPrompt" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="CompanyTitleLabel" xml:space="preserve">
+    <value>Company Title :</value>
+  </data>
+  <data name="TaxAuthoritySelectionLabel" xml:space="preserve">
+    <value>Tax Authority :</value>
+  </data>
+  <data name="WriteCompanyTitlePrompt" xml:space="preserve">
+    <value>Write the company title</value>
+  </data>
+  <data name="PreparationSattionsTitle" xml:space="preserve">
+    <value>Food Preparation</value>
+    <comment>Tree view node Name for preparation stations</comment>
+  </data>
+  <data name="NewPreparationStationPrompt" xml:space="preserve">
+    <value>New preparation station</value>
+  </data>
+  <data name="ProvidedProductsTitle" xml:space="preserve">
+    <value>Provided products</value>
+    <comment>Restaurant provided products title bar title</comment>
+  </data>
+  <data name="PreparationStationDescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="WritePreparationStationDescriptionPrompt" xml:space="preserve">
+    <value>Write preparation statio description</value>
+  </data>
+  <data name="PreparationStationIdentityLabel" xml:space="preserve">
+    <value>Credential key</value>
+  </data>
+  <data name="DesignGraphicMenuContextHeader" xml:space="preserve">
+    <value>Design Menu</value>
+    <comment>Defines the ContextMenu MenuItem Header to designe graphic tree node</comment>
+  </data>
+  <data name="DesignServiceAreaMenuContextHeader" xml:space="preserve">
+    <value>Design Hall Layout</value>
+  </data>
+  <data name="ToolTipRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="ToolTipUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="RedoMenuItemHeader" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="UndoMenuItemHeader" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="HallLayoutLabelFontMenuItemHeader" xml:space="preserve">
+    <value>Hall layout shape label</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+    <comment>Defines the label for language selection</comment>
+  </data>
+  <data name="AlignmentCenterPrompt" xml:space="preserve">
+    <value>Center</value>
+    <comment>Descripe manu canvas item alignment</comment>
+  </data>
+  <data name="AlignmentLeftPrompt" xml:space="preserve">
+    <value>Left</value>
+    <comment>Descripe manu canvas item alignment </comment>
+  </data>
+  <data name="AlignmentRightPrompt" xml:space="preserve">
+    <value>Right</value>
+    <comment>Descripe manu canvas item alignment</comment>
+  </data>
+  <data name="CustomLabel" xml:space="preserve">
+    <value>Custom</value>
+    <comment>Label for Custom</comment>
+  </data>
+  <data name="StyleSheetLabel" xml:space="preserve">
+    <value>Style</value>
+    <comment>Label for style sheet values</comment>
+  </data>
+  <data name="StyleSheetValuePrompt" xml:space="preserve">
+    <value>(Style)</value>
+    <comment>Use the org value from Style sheet</comment>
+  </data>
+  <data name="ItemLineSpacingTooltipPrompt" xml:space="preserve">
+    <value>Sets the overall line spacing within the food items and headings themselves (and also between them).</value>
+  </data>
+  <data name="ItemNameIntentTooltipPrompt" xml:space="preserve">
+    <value>Sets the left indent for food item names to the specified value (has no effect on centered items).</value>
+  </data>
+  <data name="PriceOptionsDetailsPrompt" xml:space="preserve">
+    <value>Price Options Details</value>
+    <comment>Price option details button prompt</comment>
+  </data>
+  <data name="StyleSheetAccentsMenuTitle" xml:space="preserve">
+    <value>StyleSheet Accents </value>
+  </data>
+  <data name="StylePrototype" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\styleprototype.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BlankItemName" xml:space="preserve">
+    <value>{blank}</value>
+  </data>
+  <data name="NewBlankItemMenuItemHeader" xml:space="preserve">
+    <value>New blank menu item</value>
+  </data>
+  <data name="AccentPaddingLabel" xml:space="preserve">
+    <value>Accent Padding</value>
+  </data>
+  <data name="AddCallerIDLine" xml:space="preserve">
+    <value>Add phone line</value>
+  </data>
+  <data name="PageMarginLabel" xml:space="preserve">
+    <value>Page Margin</value>
+  </data>
+  <data name="ThicknessBottomLabel" xml:space="preserve">
+    <value>Bottom:</value>
+    <comment>The width, of the lower side of the bounding rectangle.</comment>
+  </data>
+  <data name="ThicknessLeftLabel" xml:space="preserve">
+    <value>Left:</value>
+    <comment>The width, of the left side of the bounding rectangle.</comment>
+  </data>
+  <data name="ThicknessRightLabel" xml:space="preserve">
+    <value>Right:</value>
+    <comment>The width, of the right side of the bounding rectangle.</comment>
+  </data>
+  <data name="ThicknessTopLabel" xml:space="preserve">
+    <value>Top:</value>
+    <comment>The width, of the upper side of the bounding rectangle.</comment>
+  </data>
+  <data name="MenuItemFullTitleLabel" xml:space="preserve">
+    <value>Menu item full title :</value>
+  </data>
+  <data name="WriteMenuItemFullTitlePrompt" xml:space="preserve">
+    <value>Write the full title of menu item</value>
+  </data>
+  <data name="WaitersTitle" xml:space="preserve">
+    <value>Waiters</value>
+    <comment>Tree view node Name for waiters</comment>
+  </data>
+  <data name="NewWaiterPrompt" xml:space="preserve">
+    <value>New Waiter</value>
+  </data>
+  <data name="AdministrationTitle" xml:space="preserve">
+    <value>Administration</value>
+    <comment>Tree view node Name for Administration</comment>
+  </data>
+  <data name="NewTranslatorMenuPrompt" xml:space="preserve">
+    <value>Add Translator</value>
+  </data>
+  <data name="WriteTranslatorEmailPrompt" xml:space="preserve">
+    <value>Write  translator email</value>
+  </data>
+  <data name="TranslatorEmailLabel" xml:space="preserve">
+    <value>Email </value>
+  </data>
+  <data name="TranslatorsTitle" xml:space="preserve">
+    <value>Translators</value>
+    <comment>Tree view node Name for Translators</comment>
+  </data>
+  <data name="TranslatorActivitiesLabel" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="ToolTipMoveToNextPage" xml:space="preserve">
+    <value>Move to next page</value>
+  </data>
+  <data name="ToolTipMoveToPreviousPage" xml:space="preserve">
+    <value>Move to previous page</value>
+  </data>
+  <data name="RestaurantMenusMenuItemHeader" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="GraphicMenuItemMoveDownMenuItemHeader" xml:space="preserve">
+    <value>Move down</value>
+    <comment>Move graphic menu item up</comment>
+  </data>
+  <data name="GraphicMenuItemMoveUpMenuItemHeader" xml:space="preserve">
+    <value>Move up</value>
+    <comment>Move graphic menu item up</comment>
+  </data>
+  <data name="GraphicMenuItemRemoveMenuItemHeader" xml:space="preserve">
+    <value>Remove from menu</value>
+  </data>
+  <data name="GraphicMenuPreview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Title bar button for menu preview</comment>
+  </data>
+  <data name="PublishMenuContextMenuHeader" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="PriceΙnvisibleLabel" xml:space="preserve">
+    <value>Price invisible</value>
+  </data>
+  <data name="GraphicMenuDefaultLanguageLabel" xml:space="preserve">
+    <value>Default '{0}'</value>
+  </data>
+</root>

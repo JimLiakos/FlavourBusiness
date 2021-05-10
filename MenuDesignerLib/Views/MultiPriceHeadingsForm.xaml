@@ -1,0 +1,126 @@
+﻿<sw:Window x:Class="MenuDesigner.Views.MultiPriceHeadingsForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"   
+        xmlns:local="clr-namespace:MenuDesigner.Views"
+        mc:Ignorable="d"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"    
+        xmlns:controlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+        xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.MenuCanvas"
+        xmlns:resx="clr-namespace:MenuDesigner.Properties"
+        ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
+        Title="Multi Price Headings" Height="462.696" Width="630.094">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:MultiPriceHeadingsViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="pack://application:,,,/MenuDesignerLib;Component/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <sw:DialogContentControl   DataContext="{Binding Value, Mode=OneWay}" Style="{StaticResource ModalDialog}">
+            <Grid>
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="6" Margin="0,5,0,0">
+                    <Border BorderBrush="{StaticResource BorderBrush}"  BorderThickness="0,1,0,0">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="264*"/>
+                                <ColumnDefinition Width="135*"/>
+                                <ColumnDefinition Width="140*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+
+
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.ColumnSpan="5" Content="Multiple Prices "></Label>
+
+
+                            <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Static resx:Resources.PriceHeadingHorizontalMoveLabel}" ></TextBlock>
+                            <Slider  Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Left" Value="{Binding PriceHeadingHorizontalPos,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center"   Maximum="100" Width="100"   ></Slider>
+
+                            <TextBlock   Grid.Column="2" Grid.Row="3" TextAlignment="Right" Text="{x:Static resx:Resources.PriceHeadingRotationPointLabel}"  VerticalAlignment="Center" HorizontalAlignment="Left"   ></TextBlock>
+                            <ComboBox HorizontalContentAlignment="Center" x:Name="AccentImageSlector" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding SelectedTransformOrigin}" ItemsSource="{Binding TransformOriginImages}" HorizontalAlignment="Stretch"  Height="30"  VerticalAlignment="Center" >
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch" Height="22">
+                                            <Image HorizontalAlignment="Center"  Source="{Binding}"></Image>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            
+                            <TextBlock Grid.Column="2" Grid.Row="5"  TextAlignment="Right" Text="{x:Static resx:Resources.PriceHeadingRotationLabel}"  VerticalAlignment="Center" HorizontalAlignment="Left"   ></TextBlock>
+                            <Grid Grid.Column="2" Grid.Row="6">
+                                <StackPanel VerticalAlignment="Center">
+                                    <Grid HorizontalAlignment="Right">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Static resx:Resources.PriceHeadingRotationAngleLabel}" Margin="4,0"></TextBlock>
+                                        <TextBlock  HorizontalAlignment="Left" Text="{Binding AngleDescription}" Grid.Column="1"  >
+                                        </TextBlock>
+
+                                    </Grid>
+                                    <Slider   x:Name="slider" HorizontalAlignment="Stretch" Value="{Binding AngePos,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top"   Maximum="360" Height="16"  >
+
+                                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="LostMouseCapture">
+                                <ConnectableCtrl:CallMethodAction MethodName="UnevenSlipStopped"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                                    </Slider>
+                                </StackPanel>
+                            </Grid>
+
+   
+                            <TextBlock Grid.Row="7" Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Static resx:Resources.PriceHeadingBotomMarginLabel}"></TextBlock>
+                            <controlsEx:TextBoxNumberWithUnit Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" Width="80"  VerticalContentAlignment="Center" Number="{Binding MultiPriceHeadingsBottomMargin,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding MarginUnit}"  VerticalAlignment="Center" Height="28" />
+                            <Slider  Maximum="100" Value="{Binding MultiPriceHeadingsTopMargin}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Grid.RowSpan="3" Orientation="Vertical"></Slider>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Grid.Column="3" TextAlignment="Right" VerticalAlignment="Center" Text="{x:Static resx:Resources.MultiPriceHeadingsVerticalMoveLabel}"></TextBlock>
+
+                            
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <sw:DialogContentControl.Footer>
+                <ContentControl>
+                    <Button HorizontalAlignment="Right"  Command="{Binding UseStyleDefaultsCommand}" >
+                        <StackPanel Margin="20,0" Orientation="Horizontal">
+                            <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.UseStyleDefaultsPrompt}" ></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ContentControl>
+            </sw:DialogContentControl.Footer>
+        
+        </sw:DialogContentControl>
+
+    </Grid>
+</sw:Window>

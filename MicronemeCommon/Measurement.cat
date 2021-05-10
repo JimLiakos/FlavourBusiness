@@ -1,0 +1,899 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "Measurement"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"Measurement")
+	(object Attribute
+	    tool       	"C#"
+	    name       	"Root Namespace"
+	    value      	TRUE)
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"FullName"
+	    value      	"AbstractionsAndPersistency"))
+    quid       	"14265FB9C00F"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "IUnitMeasure"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"VMObjectID"
+		    value      	"435734A60261")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{AA121092-B061-4E47-BDB7-60D4D501FF29}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"HierarchyNum"
+		    value      	"")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"FullName"
+		    value      	"AbstractionsAndPersistency.IUnitMeasure")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"ClassInstaditationName"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"ClassInstaditationVersion"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"COM C++"
+		    name       	"ComClass GUID"
+		    value      	"{D5B49C2D-75DC-4295-BADC-A31D37124667}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	(value Text "{CADCA9E0-951B-4199-A228-FCD84FE29EA1}"))
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"AssignedModuleVMObjectID"
+		    value      	"4265FE710213")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"ClassFileName"
+		    value      	"X:\\source\\OpenVersions\\PersistenceLayer\\DotNetPersistenceLayer\\AbstractionsAndPersistency\\IUnitMeasure.cs")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"{AA121092-B061-4E47-BDB7-60D4D501FF29}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE))
+	    quid       	"1435734A6026"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MemberID"
+			    value      	"1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"VMObjectID"
+			    value      	"4357351A0261")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{B8A2C0F3-AB83-4764-A1E7-3BB3E40B6A65}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"virtual"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"override"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"static"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Auto Generate Property Data"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14357351A026"))
+		    quid       	"14357351A026"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MicronemeCommon::MicronemeCommon"
+	    quidu      	"5C6D0BAF003D"
+	    language   	"C#")
+	(object Class "UnitMeasure"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"VMObjectID"
+		    value      	"435734D9001F")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{5D6E3DAA-ECC6-48DC-9E68-CD9CD61A0CFA}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"HierarchyNum"
+		    value      	"")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"FullName"
+		    value      	"AbstractionsAndPersistency.UnitMeasure")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"ClassInstaditationName"
+		    value      	"AbstractionsAndPersistency.UnitMeasure")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"ClassInstaditationVersion"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"COM C++"
+		    name       	"ComClass GUID"
+		    value      	"{32E35CB3-A8B2-40A5-8662-2FFC8EB460BB}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	(value Text "{E066CA31-290C-41F3-8A7D-ACB4E24130AA}"))
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"AssignedModuleVMObjectID"
+		    value      	"4265FE710213")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"ClassFileName"
+		    value      	"X:\\source\\OpenVersions\\PersistenceLayer\\DotNetPersistenceLayer\\AbstractionsAndPersistency\\UnitMeasure.cs")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"FullNameAttributes"
+		    value      	FALSE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"{5D6E3DAA-ECC6-48DC-9E68-CD9CD61A0CFA}"))
+	    quid       	"1435734D9001"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{AEA068D7-1236-4446-B0A1-338E3F1EB139}"))
+		    quid       	"14357350D01C"
+		    supplier   	"Logical View::Measurement::IUnitMeasure"
+		    quidu      	"1435734A6026")
+		(object Realize_Relationship
+		    quid       	"5C6D103200C4"
+		    supplier   	"Logical View::FlavourBusinessFacade::OOAdvantech::Remoting::IExtMarshalByRefObject"
+		    quidu      	"416244F90271"))
+	    operations 	(list Operations
+		(object Operation "Convert"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{94e5d655-9f70-4a3c-aa5c-aa6a863db3be}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6D10330310"))
+		    quid       	"5C6D10330310"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"5C6D1033032F"
+			    type       	"Measurement.Quantity"))
+		    result     	"Measurement.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CanConvert"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bfcb318d-a7e8-4ee9-a8d4-27adfd0522b1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6D1033035E"))
+		    quid       	"5C6D1033035E"
+		    parameters 	(list Parameters
+			(object Parameter "value"
+			    quid       	"5C6D1033037D"
+			    type       	"Measurement.Quantity"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{B8A2C0F3-AB83-4764-A1E7-3BB3E40B6A65}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6D10330216")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5C6D10330216"
+		    type       	"System.string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Properties"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{104C1537-8BDF-4C7C-B693-E5493737CC4E}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C6D103303AC")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5C6D103303AC"
+		    type       	"OOAdvantech.ObjectStateManagerLink"))
+	    module     	"Component View::MicronemeCommon::MicronemeCommon"
+	    quidu      	"5C6D0BAF003D"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "Quantity"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{0536322a-cf72-443d-8c04-2b88946b130c}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	(value Text "{9F81A93D-804D-4F50-A08B-50838800157D}")))
+	    quid       	"14791CEF701D"
+	    stereotype 	"Structure"
+	    operations 	(list Operations
+		(object Operation "Quantity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b347ff8a-f6e5-4e71-926e-3f8d568cd49e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"147923CC3006"))
+		    quid       	"147923CC3006"
+		    parameters 	(list Parameters
+			(object Parameter "amount"
+			    quid       	"147923CC3007"
+			    type       	"decimal")
+			(object Parameter "unitMeasure"
+			    quid       	"147923CC3008"
+			    type       	"AbstractionsAndPersistency.IUnitMeasure"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator -"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d6d55984-2c4c-4e15-ac15-d6a19ea88425}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F8001"))
+		    quid       	"14AEFD9F8001"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F800F"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "right"
+			    quid       	"14AEFD9F8011"
+			    type       	"AbstractionsAndPersistency.Quantity"))
+		    result     	"AbstractionsAndPersistency.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator +"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b29df420-85eb-4ccd-97f8-5683088dd8c6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F801C"))
+		    quid       	"14AEFD9F801C"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F801F"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "right"
+			    quid       	"14AEFD9F8022"
+			    type       	"AbstractionsAndPersistency.Quantity"))
+		    result     	"AbstractionsAndPersistency.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator -"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{238aa1c5-9289-4ac1-808f-db63f675f26b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F802D"))
+		    quid       	"14AEFD9F802D"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F8031"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "amount"
+			    quid       	"14AEFD9F8034"
+			    type       	"System.Single"))
+		    result     	"AbstractionsAndPersistency.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator +"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{86a2bc72-9362-47ea-91c3-b6e0cf82f11b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F9000"))
+		    quid       	"14AEFD9F9000"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F9003"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "amount"
+			    quid       	"14AEFD9F9005"
+			    type       	"System.Single"))
+		    result     	"AbstractionsAndPersistency.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator =="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{42b7a7bd-9e3a-4eb4-8857-6c5bf82e823e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F9010"))
+		    quid       	"14AEFD9F9010"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F9014"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "right"
+			    quid       	"14AEFD9F9016"
+			    type       	"AbstractionsAndPersistency.Quantity"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "operator !="
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{faaa9261-062d-472a-8ed7-5cd492bbdb00}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F9021"))
+		    quid       	"14AEFD9F9021"
+		    parameters 	(list Parameters
+			(object Parameter "left"
+			    quid       	"14AEFD9F9024"
+			    type       	"AbstractionsAndPersistency.Quantity")
+			(object Parameter "right"
+			    quid       	"14AEFD9F9028"
+			    type       	"AbstractionsAndPersistency.Quantity"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OOAdvantech.IAccount<Quantity>.GetTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{190a3d44-62e5-44fa-9563-c6665760b8b7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9F9030"))
+		    quid       	"14AEFD9F9030"
+		    parameters 	(list Parameters
+			(object Parameter "newValue"
+			    quid       	"14AEFD9F9033"
+			    type       	"AbstractionsAndPersistency.Quantity"))
+		    result     	"object"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "OOAdvantech.IAccount<Quantity>.MakeTransaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{96e972fa-9d65-4b7b-b7f2-e9deaf03f905}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14AEFD9FA000"))
+		    quid       	"14AEFD9FA000"
+		    parameters 	(list Parameters
+			(object Parameter "transaction"
+			    quid       	"14AEFD9FA004"
+			    type       	"object"))
+		    result     	"AbstractionsAndPersistency.Quantity"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c3d0b370-fb04-4349-8eee-5b9433c60dda}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"147923BFE016")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"147923BFE016"
+		    type       	"decimal"
+		    exportControl 	"Public"))
+	    module     	"Component View::MicronemeCommon::MicronemeCommon"
+	    quidu      	"5C6D0BAF003D"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Association "QuantityUnit"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"4ceb0118-0e37-46c2-a62e-792bb7bd6182")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"14791E57001A")
+		(object Attribute
+		    tool       	"Persistent"
+		    name       	"Persistent"
+		    value      	TRUE))
+	    quid       	"14791E57001A"
+	    roles      	(list role_list
+		(object Role "UnitMeasure"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14791E57001A")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a5a8e863-191f-4ac2-9dc4-ea83cf3d38a5}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Referential Integrity"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Loading Type"
+			    value      	("LoadingTypeSet" 1))
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"14791E57001A"
+		    label      	"UnitMeasure"
+		    supplier   	"Logical View::Measurement::IUnitMeasure"
+		    quidu      	"1435734A6026"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"14791E57001A")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9bc1f4ef-7870-42b5-9c97-8adfc17431c1}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"14791E57001A"
+		    supplier   	"Logical View::Measurement::Quantity"
+		    quidu      	"14791CEF701D"
+		    client_cardinality 	(value cardinality "0..*")))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"14265FBCC01D"
+	    title      	"Main"
+	    zoom       	95
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Measurement::UnitMeasure" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1740, 1175)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1483, 1072)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	515
+			justify    	0
+			label      	"UnitMeasure")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"1435734D9001"
+		    width      	533
+		    height     	231
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::Measurement::Quantity" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(283, 427)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(42, 394)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	482
+			justify    	0
+			label      	"Quantity")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(42, 344)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	482
+			justify    	0
+			label      	"<<Structure>>")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"14791CEF701D"
+		    width      	500
+		    height     	191
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::Measurement::IUnitMeasure" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1757, 483)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1523, 475)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	469
+			justify    	0
+			label      	"IUnitMeasure")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"1435734A6026"
+		    width      	487
+		    height     	217
+		    annotation 	8)
+		(object AssociationViewNew "QuantityUnit" @4
+		    location   	(1023, 428)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @5
+			Parent_View 	@4
+			location   	(965, 394)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"QuantityUnit"
+			pctDist    	-0.483333
+			height     	35
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"14791E57001A"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$0" @6
+			    Parent_View 	@4
+			    location   	(-2633, -1431)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @7
+				Parent_View 	@6
+				location   	(631, 470)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"14791E57001A"
+			    client     	@4
+			    supplier   	@2
+			    line_style 	3
+			    origin_attachment 	(1023, 428)
+			    terminal_attachment 	(533, 428)
+			    label      	(object SegLabel @8
+				Parent_View 	@6
+				location   	(622, 376)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	70
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.818452
+				height     	53
+				orientation 	1))
+			(object RoleView "UnitMeasure" @9
+			    Parent_View 	@4
+			    location   	(-2633, -1431)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @10
+				Parent_View 	@9
+				location   	(1331, 318)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	333
+				justify    	0
+				label      	"+UnitMeasure"
+				pctDist    	0.629328
+				height     	111
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"14791E57001A"
+			    client     	@4
+			    supplier   	@3
+			    line_style 	3
+			    origin_attachment 	(1023, 428)
+			    terminal_attachment 	(1514, 428)
+			    label      	(object SegLabel @11
+				Parent_View 	@9
+				location   	(1464, 375)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object RealizeView "" @12
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"14357350D01C"
+		    client     	@1
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(1731, 1060)
+		    terminal_attachment 	(1731, 591))))))

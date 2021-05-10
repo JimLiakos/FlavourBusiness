@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="MenuDesigner.Views.FoodItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuDesigner.Views" 
+             xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+             xmlns:resx="clr-namespace:MenuDesigner.Properties" 
+             xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:controlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
+             xmlns:s="clr-namespace:MenuDesigner"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="800" MinWidth="480">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="pack://application:,,,/MenuDesignerLib;Component/Themes/Metro.Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <sw:DialogContentControl Flat="False" HorizontalAlignment="Stretch"  InitialWidth="801" InitialHeight="550"  Icon="/MenuDesignerLib;component/Resources/Images/Metro/MenuItemOnPage16.png" Title="Menu Item"  SubTitle="Regulate the Menu Style layout"   >
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120*" ></RowDefinition>
+                    <RowDefinition Height="95*" ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid x:Name="Man" Margin="0,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="335*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="336*"/>
+                        <ColumnDefinition Width="9*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="46*"/>
+                        <RowDefinition Height="34"/>
+                        <RowDefinition Height="28*"/>
+                        <RowDefinition Height="68*"/>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="68*"/>
+                        <RowDefinition Height="11*"/>
+                    </Grid.RowDefinitions>
+                    <Label VerticalAlignment="Bottom" Content="{x:Static resx:Resources.MenuItemTitleLabel}" Grid.Column="1" />
+                    <wpftoolkitex:WatermarkTextBox Text="{Binding Title,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Watermark="{x:Static resx:Resources.WriteMenuItemTitlePrompt}"  HorizontalAlignment="Stretch"  Grid.Row="1" Grid.Column="1" AcceptsReturn="True" />
+
+                    <Label Content="{x:Static resx:Resources.MenuItemFullTitleLabel}" Grid.Column="3" VerticalAlignment="Bottom" />
+                    <wpftoolkitex:WatermarkTextBox Text="{Binding FullTitle,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Watermark="{x:Static resx:Resources.WriteMenuItemFullTitlePrompt}"  HorizontalAlignment="Stretch"  Grid.Row="1" Grid.Column="3" AcceptsReturn="True"  />
+
+                    <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" IsChecked="{Binding PriceInvisible}" Content="{x:Static resx:Resources.PriceΙnvisibleLabel}"/>
+                    <Label Grid.Row="3" Grid.Column="1"  Content="{x:Static resx:Resources.MenuItemDescriptionLabel}" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                    <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
+                        <wpftoolkitex:WatermarkTextBox  Text="{Binding Description,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap"   Watermark="{x:Static resx:Resources.WriteMenuItemDescriptionPrompt}"  HorizontalAlignment="Stretch" AcceptsReturn="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}"  />
+                    </Grid>
+                    <Label Grid.Row="5" Grid.Column="1" Content="{x:Static resx:Resources.MenuItemExtrasLabel}" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                    <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" >
+                        <wpftoolkitex:WatermarkTextBox  Text="{Binding Extras,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Watermark="{x:Static resx:Resources.WriteMenuItemExtrasPrompt}"  HorizontalAlignment="Stretch" AcceptsReturn="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}" />
+                    </Grid>
+
+
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="191*"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="244*"/>
+                        <ColumnDefinition Width="13"/>
+                        <ColumnDefinition Width="204*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="24*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Layout Tweaks" VerticalAlignment="Bottom" Margin="0,0,0,4" />
+                        <CheckBox Grid.Row="1"  VerticalAlignment="Center" Height="20" Margin="-1,2,1,3">
+                            <TextBlock Text="Center"></TextBlock>
+                        </CheckBox>
+                        <CheckBox Grid.Row="2" IsChecked="{Binding Span}"  VerticalAlignment="Center" Height="20" Margin="-1,2,1,3">
+                            <TextBlock Text="Span"></TextBlock>
+                        </CheckBox>
+                        <CheckBox Grid.Row="3"  VerticalAlignment="Center" Height="20" Margin="-1,2,1,3">
+                            <TextBlock Text="Price with Name"></TextBlock>
+                        </CheckBox>
+                        <CheckBox Grid.Row="4"  VerticalAlignment="Center" Height="20" Margin="-1,2,1,3">
+                            <TextBlock Text="Wrap Text"></TextBlock>
+                        </CheckBox>
+                    </Grid>
+                    <Grid Grid.Column="3" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="64*"/>
+                            <RowDefinition Height="42*"/>
+                            <RowDefinition Height="44*"/>
+                            <RowDefinition Height="42*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="40*"/>
+
+                            </Grid.RowDefinitions>
+                            <Label Content="Box/Accent" VerticalAlignment="Bottom" Margin="0,0,0,4" ></Label>
+                            <ComboBox   x:Name="AccentImageSlector" Margin="3,0,0,0" Grid.Column="1" SelectedValue="{Binding SelectedAccent}" ItemsSource="{Binding AccentImages}" HorizontalAlignment="Stretch"  Grid.Row="1" VerticalAlignment="Top" >
+
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Center" Width="190" >
+                                            <TextBlock Margin="3,0" HorizontalAlignment="Left" Visibility="{Binding TextVisibility}" Text="{Binding Description}"></TextBlock>
+                                            <svgc:SvgViewbox Margin="3,0" HorizontalAlignment="Stretch"   Visibility="{Binding ImageVisibility}"  Height="20"  Name="svg" VerticalAlignment="Center"  s:SvgViewboxAttachedProperties.Drawing="{Binding Path=Drawing}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Row="1" IsEnabled="{Binding CustomAccent}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="95*"/>
+                                <ColumnDefinition Width="92*"/>
+                                <ColumnDefinition Width="94*"/>
+                            </Grid.ColumnDefinitions>
+                            <wpftoolkitex:ColorPicker IsEnabled="{Binding AccentColorize}"  Width="80" Grid.Column="2" SelectedColor="{Binding AccentSelectedColor}"  HorizontalAlignment="Right" VerticalAlignment="Center" Height="32"  Margin="0,8,0,4"   />
+                            <Label  VerticalAlignment="Center"  HorizontalAlignment="Right" Content="Box/Accent Color" Margin="0,12,3,12" Grid.ColumnSpan="2" Height="20" Width="116" ></Label>
+                            <!--<CheckBox IsChecked="{Binding HeadingsAccentColorize}" Content="Colorize:" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Margin="0,0,4,0" Width="103" />-->
+
+
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="5" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="162*"/>
+                            <ColumnDefinition Width="53*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="29*"/>
+                            <RowDefinition Height="25*"/>
+                            <RowDefinition Height="25*"/>
+
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="31*"/>
+                            <RowDefinition Height="25*"/>
+                            <RowDefinition Height="31*"/>
+                            <RowDefinition Height="8*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Spacing" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,4" ></Label>
+
+                        <RadioButton Grid.Row="1" Content="{x:Static resx:Resources.StyleSheetLabel}" IsChecked="{Binding StyleSpacing, Mode=OneWay}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="55" Grid.RowSpan="2"/>
+                        <RadioButton Grid.Row="2" Content="{x:Static resx:Resources.CustomLabel}" IsChecked="{Binding CustomSpacing}"  HorizontalAlignment="Left"  VerticalAlignment="Top" Height="30" Width="74" Grid.RowSpan="2"/>
+                        <Label Grid.Row="3" VerticalAlignment="Bottom" Content="Before:" Height="18" Margin="0,0,0,3" ></Label>
+                        <controlsEx:TextBoxNumberWithUnit  Padding="3" IsEnabled="{Binding CustomSpacing}" Grid.Row="4" VerticalAlignment="Center" Margin="0,1,0,0" Number="{Binding BeforeSpacing,UpdateSourceTrigger=LostFocus,Mode=TwoWay}"  Unit="{Binding SpacingUnit}"></controlsEx:TextBoxNumberWithUnit>
+                        <Label Grid.Row="5" VerticalAlignment="Bottom" Content="After:" Height="18" Margin="0,0,0,3" ></Label>
+                        <controlsEx:TextBoxNumberWithUnit  Padding="3" IsEnabled="{Binding CustomSpacing}" Grid.Row="6" VerticalAlignment="Center" Margin="0,1,0,0" Number="{Binding AfterSpacing,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="{Binding SpacingUnit}"  ></controlsEx:TextBoxNumberWithUnit>
+
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+            <sw:DialogContentControl.Footer>
+
+                <ContentControl>
+
+                    <Button HorizontalAlignment="Right" Width="90" Command="{Binding MenuItemDetailsCommand}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="/MenuDesignerLib;component/Resources/Images/Metro/Edit16.png"/>
+                            <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.MenuItemEditDetails}" ></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ContentControl>
+            </sw:DialogContentControl.Footer>
+        </sw:DialogContentControl>
+
+    </Grid>
+</UserControl>
