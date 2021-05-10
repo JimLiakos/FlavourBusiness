@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Main>
+  <SOFTWARE>
+    <_x0031_e200f2a-3567-4ee5-ad5b-3cc24c4fa290>
+      <V_CurrentVersion Value="CDD69E5C-1A99-4C70-80C0-F64D315D0EE8" Type="System.String" />
+    </_x0031_e200f2a-3567-4ee5-ad5b-3cc24c4fa290>
+    <ArionSoftware>
+      <_x007B_e1c81254-0ece-4418-8af3-5183c39c2469_x007D_>
+        <V_OwnerPassword Value="+e3Wfbf/QE1bZxobm15/WA==" Type="System.String" />
+        <V_Language Value="ell" Type="System.String" />
+        <V_ReportFolder Value="F:\Commerce2013\reports\" Type="System.String" />
+        <V_installDirName Value="C:\Program Files (x86)\Arion Software\Commerce\" Type="System.String" />
+      </_x007B_e1c81254-0ece-4418-8af3-5183c39c2469_x007D_>
+    </ArionSoftware>
+    <_x0031_33>
+      <_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+        <V_UnlockKey Value="1278949055" Type="System.String" />
+      </_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+    </_x0031_33>
+    <e1c81254-0ece-4418-8af3-5183c39c2469>
+      <V_CurrentVersion Value="DD919F99-59EF-47D0-83A2-C0B6FA2AC218" Type="System.String" />
+    </e1c81254-0ece-4418-8af3-5183c39c2469>
+    <_x0032_30>
+      <_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+        <V_UnlockKey Value="9418252192" Type="System.String" />
+      </_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+    </_x0032_30>
+    <_x0032_32>
+      <_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+        <V_UnlockKey Value="9769866615" Type="System.String" />
+      </_x007B_A842D6E4-E648-4435-A017-205DA387171E_x007D_>
+    </_x0032_32>
+  </SOFTWARE>
+  <HKEY_CURRENT_USER>
+    <SOFTWARE>
+      <ArionSoftware>
+        <Commerce>
+          <database>
+            <OrderServer>
+              <V_ConnectionString Value="SQLNET;Data Source=10.0.0.13\Meridian;Initial Catalog=OrderServer;User ID=sa;Password=arionsapwd" Type="System.String" />
+            </OrderServer>
+            <MenuData>
+              <V_ConnectionString Value="SQLNET;Data Source=10.0.0.13\Meridian;Initial Catalog=OrderServer;User ID=sa;Password=arionsapwd" Type="System.String" />
+            </MenuData>
+            <salesappreg>
+              <V_ConnectionString Value="SQLNET;Data Source=10.0.0.13\Meridian;Initial Catalog=OrderServer;User ID=sa;Password=arionsapwd" Type="System.String" />
+            </salesappreg>
+            <BarcodeData>
+              <V_ConnectionString Value="SQLNET;Data Source=10.0.0.13\Meridian;Initial Catalog=OrderServer;User ID=sa;Password=arionsapwd" Type="System.String" />
+            </BarcodeData>
+            <SecurityData>
+              <V_ConnectionString Value="SQLNET;Data Source=10.0.0.13\Meridian;Initial Catalog=OrderServer;User ID=sa;Password=arionsapwd" Type="System.String" />
+            </SecurityData>
+            <master />
+            <V_commerce Value="10.0.0.115\Meridian" Type="System.String" />
+          </database>
+          <V_Commerce Value="10.0.0.115\Meridian" Type="System.String" />
+          <Settings>
+            <TextColor />
+            <V_ClientBarcodeID Value="" Type="System.String" />
+            <V_PrevBonusLabel Value="ΠΡ ΠΟΝΤΟΙ" Type="System.String" />
+            <V_BonusLabel Value="ΠΟΝΤΟΙ" Type="System.String" />
+            <V_RestTSView Value="0" Type="System.String" />
+            <V_RestSpaceView Value="0" Type="System.String" />
+            <V_PicturePath Value="" Type="System.String" />
+            <V_GoogleMapApiKey Value="AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI" Type="System.String" />
+            <V_TouchSortName Value="0" Type="System.UInt32" />
+            <V_DeliTSView Value="0" Type="System.String" />
+            <V_DeliTouchSortName Value="0" Type="System.UInt32" />
+            <V_PrintOnAssign Value="0" Type="System.UInt32" />
+            <V_TapiDeviceName Value="Qualcomm HS-USB Modem 9091" Type="System.String" />
+            <V_Admin Value="0" Type="System.String" />
+            <V_MaxDistance Value="1000" Type="System.String" />
+            <V_ClientStop Value="5" Type="System.String" />
+          </Settings>
+          <Logo />
+          <Report>
+            <V_ttxpath Value="F:\Commerce2013\reports\ttx\" Type="System.String" />
+            <_x007B_6B268018-E3BE-4D79-9AB4-40B5B2617C59_x007D_>
+              <V_ReportFile Value="DeliveryOrder.rpt" Type="System.String" />
+            </_x007B_6B268018-E3BE-4D79-9AB4-40B5B2617C59_x007D_>
+          </Report>
+          <MachineDatabase>
+            <V_COMMERCE Value="" Type="System.String" />
+          </MachineDatabase>
+        </Commerce>
+        <V_ThreeLetterISORegionName Value="GRC" Type="System.String" />
+      </ArionSoftware>
+    </SOFTWARE>
+  </HKEY_CURRENT_USER>
+  <HKEY_CLASSES_ROOT>
+    <TypeLib>
+      <_x007B_85D8E774-16A3-4A75-9738-03480E56DB40_x007D_>
+        <_x0031_.0>
+          <_x0030_>
+            <win32 />
+          </_x0030_>
+        </_x0031_.0>
+      </_x007B_85D8E774-16A3-4A75-9738-03480E56DB40_x007D_>
+    </TypeLib>
+  </HKEY_CLASSES_ROOT>
+</Main>

@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "881594421690",
+    "firebase_url": "https://demomicroneme.firebaseio.com",
+    "project_id": "demomicroneme",
+    "storage_bucket": "demomicroneme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881594421690:android:83178f67d29ec09d",
+        "android_client_info": {
+          "package_name": "com.microneme.dontwait.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2rKvbQGj1DLFxVIRd3wsF7AuTrRBKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.microneme.DontWaitAppIOS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881594421690:android:33e2e457af664ff6194d83",
+        "android_client_info": {
+          "package_name": "com.microneme.dontwaitmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2rKvbQGj1DLFxVIRd3wsF7AuTrRBKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.microneme.DontWaitAppIOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

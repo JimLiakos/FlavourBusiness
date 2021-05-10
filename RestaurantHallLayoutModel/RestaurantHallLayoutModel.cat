@@ -1,0 +1,1733 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "RestaurantHallLayoutModel"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"RestaurantHallLayoutModel"))
+    quid       	"5DEBF83602D1"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "HallLayout"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{7b510ebb-3506-47e0-90ad-bece1601c6c4}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"10")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{7b510ebb-3506-47e0-90ad-bece1601c6c4}"))
+	    quid       	"5DEBF84300B7"
+	    documentation 	"shape"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"5DF321B60077"
+		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IHallLayout"
+		    quidu      	"5DF32099019D"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{12c715d6-2d08-4397-9689-6c7bba6e8d65}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DECFB1C00CF")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5DECFB1C00CF"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Height"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5a43cab0-5038-4afb-9085-76446b0a4984}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E1383F602E1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	(value Text "+3")))
+		    quid       	"5E1383F602E1"
+		    documentation 	
+|
+|Gets or sets the height  of the hall.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Width"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e15557cc-ff30-4b98-a986-707760360c6f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E1383F602E3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5E1383F602E3"
+		    documentation 	
+|
+|Gets or sets the width of the hall.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Font"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4a85b4c9-5932-4ada-b118-2abe99c04592}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E22B86C00B0")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5E22B86C00B0"
+		    type       	"MenuPresentationModel.MenuStyles.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "Margin"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{213963ac-4ba2-4e8f-9467-f0160e29083e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E26B4EA014C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"5E26B4EA014C"
+		    type       	"WindowsBaseEx.Margin"
+		    exportControl 	"Public")
+		(object ClassAttribute "LabelBkOpacity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8729cd42-aa80-44c3-8016-34d7a8a6951f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E27EA70001D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"5E27EA70001D"
+		    documentation 	
+|
+|Gets or sets the  background label opacity of the hall.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "LabelBkColor"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a19c0bf-3ebc-430b-be75-b6eecfefa4c8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E27ED6A035B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"5E27ED6A035B"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "LabelBkCornerRadius"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b55121a6-5668-49eb-a31a-1fe4228d6e28}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E27ED990249")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"5E27ED990249"
+		    documentation 	
+|
+|Gets or sets the  background border corner radius of the hall.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServicesContextIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{416afd27-7e83-4ae7-9d4a-465a8a19148a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5FB6C29000D9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Length"
+			    value      	300)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+9"))
+		    quid       	"5FB6C29000D9"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::RestaurantHallLayoutModel::RestaurantHallLayoutModel"
+	    quidu      	"5DEBF6100058"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "Shape"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{744f2bff-88cd-448e-9a2b-624a2f6646b3}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"11")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{744f2bff-88cd-448e-9a2b-624a2f6646b3}"))
+	    quid       	"5DEBFCB702D2"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Height"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c8381647-cf1e-4b42-90d4-1bfb6d486f69}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEC8CB7025B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5DEC8CB7025B"
+		    documentation 	
+|
+|Gets or sets the height of the shape. 
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Width"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a6060060-fcda-4783-bc20-d644fea62195}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEC8CB90085")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5DEC8CB90085"
+		    documentation 	
+|
+|Gets or sets the width of the shape. 
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "ZIndex"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2c6ad3ea-15b2-4f8a-a6d8-a9122eb6f334}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEC8CB90119")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"5DEC8CB90119"
+		    type       	"int"
+		    exportControl 	"Public")
+		(object ClassAttribute "Top"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{92af05f0-10ae-4f0d-925a-780203e5ddf8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DECBE1D023C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE))
+		    quid       	"5DECBE1D023C"
+		    documentation 	
+|
+| Gets or sets the position of the shape's top edge, in relation to the Canvas.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Left"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fafa4cc4-9cdb-49fb-911e-fe65b76c451d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DECBE1D02E0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"5DECBE1D02E0"
+		    documentation 	
+|
+| Gets or sets the position of the shape's left edge, in relation to the Canvas.
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "ShapeImageUrl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DECEB880073")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bd4ce134-eec7-49ad-8022-7d9940ed284b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE))
+		    quid       	"5DECEB880073"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEE061202AF")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{56426007-e753-4015-bf61-9003d79778a0}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"5DEE061202AF"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "RotateAngle"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fb3dd6cd-5a21-4cad-ac26-0de2e258a331}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E12FF85019D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"5E12FF85019D"
+		    documentation 	
+|
+|Gets or sets the rotation angle of the shape. 
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServicesPointIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5FA914E303AB")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{87d281f8-ff22-40cf-becf-dbf81cd39cab}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+9"))
+		    quid       	"5FA914E303AB"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Label"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5FAA831F0214")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{65267040-0f20-47a0-b730-95938a14fc96}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+10"))
+		    quid       	"5FAA831F0214"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::RestaurantHallLayoutModel::RestaurantHallLayoutModel"
+	    quidu      	"5DEBF6100058"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "ServicePointShape"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{8ee2017e-a1df-4c13-b2d6-3d6856bb81c5}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"2")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{8ee2017e-a1df-4c13-b2d6-3d6856bb81c5}"))
+	    quid       	"5DEC038002C1"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"5DEC79F302E8"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::Shape"
+		    quidu      	"5DEBFCB702D2"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ServicePointUri"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5226504a-825a-415e-ae62-ccca3259292f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DECFA86000B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5DECFA86000B"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::RestaurantHallLayoutModel::RestaurantHallLayoutModel"
+	    quidu      	"5DEBF6100058"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "ShapesGroup"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{34e5c918-a60f-4116-8b2c-76b8699a6cdc}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{34e5c918-a60f-4116-8b2c-76b8699a6cdc}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"3"))
+	    quid       	"5DEF529E01ED"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"5DEF52BA00E0"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::Shape"
+		    quidu      	"5DEBFCB702D2"))
+	    operations 	(list Operations
+		(object Operation "AddGroupedShape"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b44acd1f-e403-4fdf-b6a1-56aae0e09814}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEF5B2802C6"))
+		    quid       	"5DEF5B2802C6"
+		    parameters 	(list Parameters
+			(object Parameter "shape"
+			    quid       	"5DEF5B2802D5"
+			    type       	"RestaurantHallLayoutModel.Shape"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveGroupedShape"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{13e002d3-d3ef-4c92-babb-e0167824be50}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEF5B620399"))
+		    quid       	"5DEF5B620399"
+		    parameters 	(list Parameters
+			(object Parameter "shape"
+			    quid       	"5DEF5B6203AA"
+			    type       	"RestaurantHallLayoutModel.Shape"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ClientAreaHeight"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2366cb08-1fbc-4ae7-847d-7e0f04679bab}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E0F722B0353")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5E0F722B0353"
+		    documentation 	
+|
+|Gets or sets the height of the shape. 
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "ClientAreaWidth"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3cb3dc10-54ba-422d-ac43-6c40d285ff39}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5E0F723E0082")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"5E0F723E0082"
+		    documentation 	
+|
+|Gets or sets the height of the shape. 
+|
+		    
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View::RestaurantHallLayoutModel::RestaurantHallLayoutModel"
+	    quidu      	"5DEBF6100058"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Association "HallLayoutShape"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"Persistent"
+		    name       	"Persistent"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5DED19750252")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"8fb70efa-27ff-46cd-b6cb-082761d76962"))
+	    quid       	"5DED19750252"
+	    roles      	(list role_list
+		(object Role "Shapes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DED19770072")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ac33137c-455f-45e7-87e9-c6369c3c783f}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Referential Integrity"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Cascade Delete"
+			    value      	TRUE))
+		    quid       	"5DED19770072"
+		    label      	"Shapes"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::Shape"
+		    quidu      	"5DEBFCB702D2"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DED19770075")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b69a99ef-2b6d-42b7-ac79-c172826708a3}"))
+		    quid       	"5DED19770075"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::HallLayout"
+		    quidu      	"5DEBF84300B7"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "GroupedShapes"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"5DEF52DE001A")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"babd469a-0c54-4be8-abaa-7fed51b0fdc7")
+		(object Attribute
+		    tool       	"Persistent"
+		    name       	"Persistent"
+		    value      	TRUE))
+	    quid       	"5DEF52DE001A"
+	    roles      	(list role_list
+		(object Role "Shapes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEF52E00380")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1b9fabce-7975-4d97-b7af-3bf309044738}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<RestaurantHallLayoutModel.Shape>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Referential Integrity"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Cascade Delete"
+			    value      	TRUE))
+		    quid       	"5DEF52E00380"
+		    label      	"Shapes"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::Shape"
+		    quidu      	"5DEBFCB702D2"
+		    client_cardinality 	(value cardinality "1..*")
+		    is_navigable 	TRUE)
+		(object Role "Group"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5DEF52E00382")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{223b7774-edeb-457c-8da9-a20c48bd257b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"5DEF52E00382"
+		    label      	"Group"
+		    supplier   	"Logical View::RestaurantHallLayoutModel::ShapesGroup"
+		    quidu      	"5DEF529E01ED"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"5DEBF83F03DD"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::RestaurantHallLayoutModel::ServicePointShape" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1366, 1606)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1122, 1462)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	488
+			justify    	0
+			label      	"ServicePointShape")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5DEC038002C1"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(1122, 1523)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	471)
+		    width      	506
+		    height     	313
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::RestaurantHallLayoutModel::HallLayout" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(500, 909)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(222, 696)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	557
+			justify    	0
+			label      	"HallLayout")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5DEBF84300B7"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(222, 757)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	10
+			max_width  	1696)
+		    width      	575
+		    height     	450
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::RestaurantHallLayoutModel::Shape" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1729, 746)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1438, 421)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	582
+			justify    	0
+			label      	"Shape")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5DEBFCB702D2"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1438, 482)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	575)
+		    width      	600
+		    height     	675
+		    annotation 	8)
+		(object AssociationViewNew "HallLayoutShape" @4
+		    location   	(1108, 841)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @5
+			Parent_View 	@4
+			location   	(1025, 758)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"HallLayoutShape"
+			pctDist    	-0.900000
+			height     	84
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5DED19750252"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Shapes" @6
+			    Parent_View 	@4
+			    location   	(627, 353)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @7
+				Parent_View 	@6
+				location   	(1322, 792)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	160
+				justify    	0
+				label      	"+Shapes"
+				pctDist    	0.669421
+				height     	50
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5DED19770072"
+			    client     	@4
+			    supplier   	@3
+			    line_style 	3
+			    origin_attachment 	(1108, 841)
+			    terminal_attachment 	(1429, 841)
+			    label      	(object SegLabel @8
+				Parent_View 	@6
+				location   	(1397, 895)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$0" @9
+			    Parent_View 	@4
+			    location   	(627, 353)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5DED19770075"
+			    client     	@4
+			    supplier   	@2
+			    line_style 	3
+			    origin_attachment 	(1108, 841)
+			    terminal_attachment 	(787, 841)
+			    label      	(object SegLabel @10
+				Parent_View 	@9
+				location   	(819, 895)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object InheritTreeView "" @11
+		    location   	(1729, 1303)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    supplier   	@3
+		    vertices   	(list Points
+			(1729, 1303)
+			(1729, 1083)))
+		(object InheritView "" @12
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5DEC79F302E8"
+		    client     	@1
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(1369, 1450)
+		    terminal_attachment 	(1369, 1303)
+		    drawSupplier 	@11)
+		(object ClassView "Class" "Logical View::RestaurantHallLayoutModel::ShapesGroup" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2094, 1612)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1825, 1459)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"ShapesGroup")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5DEF529E01ED"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(1825, 1520)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	518)
+		    width      	556
+		    height     	331
+		    annotation 	8)
+		(object InheritView "" @14
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5DEF52BA00E0"
+		    client     	@13
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(2020, 1446)
+		    terminal_attachment 	(2020, 1303)
+		    drawSupplier 	@11)
+		(object AssociationViewNew "GroupedShapes" @15
+		    location   	(2600, 1016)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(2600, 957)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"GroupedShapes"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5DEF52DE001A"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Shapes" @17
+			    Parent_View 	@15
+			    location   	(553, -206)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(2181, 791)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	160
+				justify    	0
+				label      	"+Shapes"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5DEF52E00380"
+			    client     	@15
+			    supplier   	@3
+			    vertices   	(list Points
+				(2600, 1016)
+				(2600, 832)
+				(2029, 832))
+			    line_style 	3
+			    origin_attachment 	(2600, 1016)
+			    terminal_attachment 	(2029, 832)
+			    label      	(object SegLabel @19
+				Parent_View 	@17
+				location   	(2106, 886)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "Group" @20
+			    Parent_View 	@15
+			    location   	(553, -206)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(2524, 1502)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	141
+				justify    	0
+				label      	"+Group"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5DEF52E00382"
+			    client     	@15
+			    supplier   	@13
+			    vertices   	(list Points
+				(2600, 1016)
+				(2600, 1543)
+				(2372, 1543))
+			    line_style 	3
+			    origin_attachment 	(2600, 1016)
+			    terminal_attachment 	(2372, 1543)
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(2448, 1597)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHallLayout" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(497, 240)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(225, 178)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	545
+			justify    	0
+			label      	"IHallLayout")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5DF32099019D"
+		    compartment 	(object Compartment
+			Parent_View 	@23
+			location   	(225, 283)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	621)
+		    width      	563
+		    height     	325
+		    annotation 	8)
+		(object RealizeView "" @24
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5DF321B60077"
+		    client     	@2
+		    supplier   	@23
+		    line_style 	3
+		    origin_attachment 	(497, 684)
+		    terminal_attachment 	(497, 402))))))

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             mc:Ignorable="d"
+             xmlns:local="clr-namespace:OOAdvantech.Web;assembly=OOAdvantech"
+             x:Class="ServiceContextManagerApp.MainPage"
+             NavigationPage.HasNavigationBar="false"
+             ios:Page.UseSafeArea="true">
+
+
+    <ContentPage.Content>
+        <Grid  RowSpacing="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid x:Name="SigninTitleBar" IsVisible="false" BackgroundColor="LightBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.ColumnSpan="2" TextColor="White"   VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" Text="Sign in" ></Label>
+                <Label  Text="&#xf060;"  TextColor="White" FontFamily="FA-S" Padding="10,4,4,4" FontSize="22">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Back_Clicked"/>
+                    </Label.GestureRecognizers>
+                    
+                </Label>
+                
+            </Grid>
+            <local:HybridWebView Grid.Row="1"  x:Name="hybridWebView" EnableRestApi="True"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+    <!--<StackLayout>
+        
+        <Label Text="Welcome to Xamarin.Forms!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+    </StackLayout>-->
+
+</ContentPage>

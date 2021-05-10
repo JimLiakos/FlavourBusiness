@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="facebook_app_id">264679681257442</string>
+    <string name="fb_login_protocol_scheme">fb264679681257442</string>
+    <string name="app_name">Don\'t wait manager</string>
+</resources>
