@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk" ProjectGUID="de841188-a466-433f-86ac-068ac6ae5899">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>DontWait</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DeviceDotNet;</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Category.cs" Link="Category.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Client.cs" Link="Client.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IClient.cs" Link="IClient.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IInspection.cs" Link="IInspection.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\INodeObject.cs" Link="INodeObject.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Inspection.cs" Link="Inspection.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IOrder.cs" Link="IOrder.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IOrderDetails.cs" Link="IOrderDetails.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IStorePlace.cs" Link="IStorePlace.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\IUnitMeasure.cs" Link="IUnitMeasure.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\LiquidProduct.cs" Link="LiquidProduct.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\LiquidStore.cs" Link="LiquidStore.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Order.cs" Link="Order.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\OrderDetail.cs" Link="OrderDetail.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\PriceList.cs" Link="PriceList.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\PriceList1.cs" Link="PriceList1.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Product.cs" Link="Product.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Product1.cs" Link="Product1.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\ProductPrice.cs" Link="ProductPrice.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\ProductPrice1.cs" Link="ProductPrice1.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\Quantity.cs" Link="Quantity.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\StorePlace.cs" Link="StorePlace.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\SubPriceList.cs" Link="SubPriceList.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\SubProduct.cs" Link="SubProduct.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\SubProductPrice.cs" Link="SubProductPrice.cs" />
+    <Compile Include="..\..\..\DotNetPersistenceLayer\AbstractionsAndPersistency\UnitMeasure.cs" Link="UnitMeasure.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Linq.NetStandard\Linq.NetStandard.csproj" />
+    <ProjectReference Include="..\..\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+  </ItemGroup>
+</Project>

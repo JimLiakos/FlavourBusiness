@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+   NavigationPage.HasNavigationBar="False"
+    x:Class="DontWaitApp.MainPage">
+	<ContentPage.Content>
+          <StackLayout>
+    <StackLayout>
+      <Label Text="Main Page"
+             VerticalOptions="Start"
+             HorizontalTextAlignment="Center"
+             IsVisible="true"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="Aqua" />
+      <Button Text="Click"
+               Command="{Binding ButtonClickCommand}">
+      </Button>
+      <Button Text="Load Storage Objects"
+             Command="{Binding LoadObjectsCommand}">
+      </Button>
+      <Button Text="SQLite"
+            Command="{Binding SQLiteCommand}">
+      </Button>
+     <Button Text="Barcode Scan"
+            Command="{Binding BarcodeScanCommand}">
+      </Button>
+       <Button Text="Delete Storage"
+            Command="{Binding DeleteStorageCommand}">
+      </Button>
+    </StackLayout>
+
+  </StackLayout>
+	</ContentPage.Content>
+</ContentPage>
