@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ZxingForms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             
+             NavigationPage.HasNavigationBar="False"
+             
+             x:Class="ServiceContextManagerApp.ScanPage">
+    <ContentPage.Content>
+
+        <Grid Margin="0,0,0,0" x:Name="MainGrid">
+            <ZxingForms:ZXingScannerView   AutomationId = "zxingScannerView" HorizontalOptions="Fill" VerticalOptions="Fill" x:Name="ZxingView" x:FieldModifier="private"></ZxingForms:ZXingScannerView>
+
+            <Grid x:Name="OverlayView">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"></RowDefinition>
+                    <RowDefinition Height="60*"></RowDefinition>
+                    <RowDefinition Height="45*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+
+                <Grid Grid.Row="0" Opacity="0.6" BackgroundColor="Black"></Grid>
+                <Grid Grid.Row="0">
+                    <Label VerticalOptions="Center" HorizontalOptions="Center" Text="Hold your phone up to the place Identity" TextColor="White"></Label>
+                </Grid>
+                <Grid x:Name="Footer" Grid.Row="2" Opacity="0.6"  BackgroundColor="Black">
+
+
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"  VerticalOptions="Center" HorizontalOptions="Center" Text="Scanning will happen automatically" TextColor="White"></Label>
+                    <StackLayout Grid.Row="1" VerticalOptions="End" >
+                        <Button x:FieldModifier="public" VerticalOptions="End" x:Name="ToggleTorchButton" Text="Toggle Torch" />
+                    </StackLayout>
+
+                </Grid>
+
+            </Grid>
+            
+        </Grid>
+        
+        <!--<Grid BackgroundColor="Bisque">
+            <StackLayout>
+                <Label VerticalOptions="Start" HorizontalOptions="Center" Text="Scan place identity"></Label>
+                <Button Clicked="Button_Clicked"></Button>
+            </StackLayout>
+            
+        </Grid>-->
+        <!--<StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>-->
+    </ContentPage.Content>
+</ContentPage>
