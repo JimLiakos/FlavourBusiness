@@ -12,6 +12,7 @@ using SharpVectors.Converters;
 
 namespace FloorLayoutDesigner
 {
+    /// <MetaDataID>FloorLayoutDesigner.DesignerCanvas</MetaDataID>
     public partial class DesignerCanvas : Canvas
     {
         private Point? rubberbandSelectionStartPoint = null;

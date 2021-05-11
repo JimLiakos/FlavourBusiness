@@ -21,6 +21,44 @@
           <target state="new">New Menu Item Type</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of MenuItemType class instances</note>
         </trans-unit>
+        <trans-unit id="AppetizerMealCourseName" translate="yes" xml:space="preserve">
+          <source>Appetizer</source>
+          <target state="new">Appetizer</target>
+        </trans-unit>
+        <trans-unit id="DessertMealCourseName" translate="yes" xml:space="preserve">
+          <source>Dessert</source>
+          <target state="new">Dessert</target>
+        </trans-unit>
+        <trans-unit id="FourCourseMealTypeName" translate="yes" xml:space="preserve">
+          <source>4 Course Meal</source>
+          <target state="new">4 Course Meal</target>
+        </trans-unit>
+        <trans-unit id="HorsDOeuvreMealCourseName" translate="yes" xml:space="preserve">
+          <source>Hors d'oeuvre</source>
+          <target state="new">Hors d'oeuvre</target>
+        </trans-unit>
+        <trans-unit id="MainMealCourseName" translate="yes" xml:space="preserve">
+          <source>Main course</source>
+          <target state="new">Main course</target>
+        </trans-unit>
+        <trans-unit id="NewMealCourseName" translate="yes" xml:space="preserve">
+          <source>Meal course</source>
+          <target state="new">Meal course</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the name for new MealCourseType instance</note>
+        </trans-unit>
+        <trans-unit id="PreparationOptionsGroupDefaultName" translate="yes" xml:space="preserve">
+          <source>Options group</source>
+          <target state="new">Options group</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of PreparationOptionsGroupclass instances</note>
+        </trans-unit>
+        <trans-unit id="ThreeCourseMealTypeName" translate="yes" xml:space="preserve">
+          <source>3 Course Meal</source>
+          <target state="new">3 Course Meal</target>
+        </trans-unit>
+        <trans-unit id="TwoCourseMealTypeName" translate="yes" xml:space="preserve">
+          <source>2 Course Meal</source>
+          <target state="new">2 Course Meal</target>
+        </trans-unit>
       </group>
     </body>
   </file>

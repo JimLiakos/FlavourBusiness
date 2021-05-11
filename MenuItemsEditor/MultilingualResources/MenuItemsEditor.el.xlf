@@ -277,6 +277,67 @@ There are preaparation oprtions with wrang, scale type.</target>
           <source>Product Selection</source>
           <target state="new">Product Selection</target>
         </trans-unit>
+        <trans-unit id="OptionLevelPriceFactorPrompt" translate="yes" xml:space="preserve">
+          <source>Option price progress</source>
+          <target state="new">Option price progress</target>
+        </trans-unit>
+        <trans-unit id="OptionGroupNameLabel" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <target state="new">Name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for option name TextBox</note>
+        </trans-unit>
+        <trans-unit id="OptionGroupTitle" translate="yes" xml:space="preserve">
+          <source>Options group</source>
+          <target state="new">Options group</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the label for option name TextBox</note>
+        </trans-unit>
+        <trans-unit id="AddStepperOtionsGoupLabel" translate="yes" xml:space="preserve">
+          <source>Add Stepper Options group</source>
+          <target state="new">Add Stepper Options group</target>
+        </trans-unit>
+        <trans-unit id="StepOptionsGroupName" translate="yes" xml:space="preserve">
+          <source>Step Options </source>
+          <target state="new">Step Options </target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of MagnitudeOptionsGroup class instances</note>
+        </trans-unit>
+        <trans-unit id="FullNameLabel" translate="yes" xml:space="preserve">
+          <source>Full name : </source>
+          <target state="new">Full name : </target>
+        </trans-unit>
+        <trans-unit id="WriteOptionFullNamePrompt" translate="yes" xml:space="preserve">
+          <source>Write a full name</source>
+          <target state="new">Write a full name</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines a prompt to WatermarkTextBox for optionfull name</note>
+        </trans-unit>
+        <trans-unit id="CustomMenuItemCheckBoxLabel" translate="yes" xml:space="preserve">
+          <source>Allow Custom</source>
+          <target state="new">Allow Custom</target>
+        </trans-unit>
+        <trans-unit id="StepperCheckBoxLabel" translate="yes" xml:space="preserve">
+          <source>Stepper</source>
+          <target state="new">Stepper</target>
+        </trans-unit>
+        <trans-unit id="MealPartLabel" translate="yes" xml:space="preserve">
+          <source>Part of meals :</source>
+          <target state="new">Part of meals :</target>
+        </trans-unit>
+        <trans-unit id="MealTypeCoursesListLabel" translate="yes" xml:space="preserve">
+          <source>Meal Courses</source>
+          <target state="new">Meal Courses</target>
+        </trans-unit>
+        <trans-unit id="MealTypesListLabel" translate="yes" xml:space="preserve">
+          <source>Meal Types</source>
+          <target state="new">Meal Types</target>
+        </trans-unit>
+        <trans-unit id="MealTypeDefaultName" translate="yes" xml:space="preserve">
+          <source>New Meal</source>
+          <target state="new">New Meal</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Defines the default name of MealType class instances</note>
+        </trans-unit>
+        <trans-unit id="MealCourseDurationPrompt" translate="yes" xml:space="preserve">
+          <source>Meal course duration</source>
+          <target state="new">Meal course duration</target>
+        </trans-unit>
       </group>
     </body>
   </file>

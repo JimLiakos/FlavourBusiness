@@ -15,6 +15,7 @@ using Microsoft.Win32;
 
 namespace FloorLayoutDesigner
 {
+    /// <MetaDataID>FloorLayoutDesigner.DesignerCanvas</MetaDataID>
     public partial class DesignerCanvas
     {
         public static RoutedCommand Group = new RoutedCommand();

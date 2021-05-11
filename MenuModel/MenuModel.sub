@@ -782,7 +782,9 @@
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"6075762C025B")
+		    quidu      	"6075762C025B"
+		    width      	180
+		    height     	60)
 		(object RealizeView "" @38
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -814,7 +816,9 @@
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"6075775A010B")
+		    quidu      	"6075775A010B"
+		    width      	180
+		    height     	60)
 		(object RealizeView "" @40
 		    stereotype 	TRUE
 		    line_color 	3342489

@@ -71,6 +71,7 @@
     <Compile Include="UserData.cs" />
     <Compile Include="ΙHallLayout.cs" />
     <Compile Include="HumanResources\ΙShifWork.cs" />
+    <None Include="app.config" />
     <None Include="IComputingCluster.cs" />
     <None Include="IComputingResource.cs" />
     <Compile Include="ICashierStation.cs" />

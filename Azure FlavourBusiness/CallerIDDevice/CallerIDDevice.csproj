@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Atapi, Version=1.4.0.0, Culture=neutral, PublicKeyToken=6148c7b92dc86471, processorArchitecture=x86">
-      <HintPath>..\packages\ATAPI.2013.1.04.00\lib\net40\Atapi.dll</HintPath>
+      <HintPath>..\..\packages\ATAPI.2013.1.04.00\lib\net40\Atapi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
