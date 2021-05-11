@@ -61,6 +61,8 @@ namespace FlavourBusinessToolKit
     /// <MetaDataID>{c544a747-2012-4f8d-98ee-21c91666f568}</MetaDataID>
     internal class BlobInfo : FileInfo
     {
+        
+        
         CloudBlob CloudBlob;
         public BlobInfo(CloudBlob cloudBlob)
         {

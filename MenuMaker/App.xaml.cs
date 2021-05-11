@@ -21,10 +21,10 @@ namespace MenuMaker
         {
             
 
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.2:8090/api/Storages");
             
 
-            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
+            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.2:8090/api/";
             var ss = OOAdvantech.PersistenceLayer.StorageServerInstanceLocator.Current.GetSorageMetaData("7021ec91-37df-4417-8c1a-a6afb012fd09");
 
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();

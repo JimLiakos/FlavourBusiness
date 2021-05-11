@@ -36,7 +36,7 @@ namespace PreparationStationDevice.WPF
             SerializationBinder.TypesNamesDictionary[typeof(PreparationStationDevice.Ingredient)] = "PreparationStationDevice.Ingredient";
 
 
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.2:8090/api/Storages");
 
         }
     }

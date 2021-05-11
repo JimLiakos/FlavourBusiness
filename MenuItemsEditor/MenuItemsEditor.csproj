@@ -194,11 +194,6 @@
     <Compile Include="Views\TaxableTypeWindow.xaml.cs">
       <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="..\..\UserInterface\WPFUserInterfaceLibrary\ThemesEx\Themes\Metro\Metro.Theme.xaml">
-      <Link>Themes\Metro.Theme.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\CategoryMenuItemTypesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -447,74 +442,6 @@
     <Resource Include="Image\hide16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\ItemPreparation.js">
-      <Link>MenuItemsEditorHtml\App_Scripts\ItemPreparation.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\JavaScriptUtilities.js">
-      <Link>MenuItemsEditorHtml\App_Scripts\JavaScriptUtilities.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\OrderMenuItemViewModel.js">
-      <Link>MenuItemsEditorHtml\App_Scripts\OrderMenuItemViewModel.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\arrow-pointing-to-down.png">
-      <Link>MenuItemsEditorHtml\Image\arrow-pointing-to-down.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\arrow-pointing-to-up.png">
-      <Link>MenuItemsEditorHtml\Image\arrow-pointing-to-up.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\check-square.png">
-      <Link>MenuItemsEditorHtml\Image\check-square.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\rubbish-bin16.png">
-      <Link>MenuItemsEditorHtml\Image\rubbish-bin16.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Image\uncheck-square.png">
-      <Link>MenuItemsEditorHtml\Image\uncheck-square.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery-1.11.3.min.js">
-      <Link>MenuItemsEditorHtml\jquerymobile\jquery-1.11.3.min.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery.mobile-1.4.5.min.css">
-      <Link>MenuItemsEditorHtml\jquerymobile\jquery.mobile-1.4.5.min.css</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\jquerymobile\jquery.mobile-1.4.5.min.js">
-      <Link>MenuItemsEditorHtml\jquerymobile\jquery.mobile-1.4.5.min.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\PublicMenu\TransitionHtmlPage.html">
-      <Link>MenuItemsEditorHtml\PublicMenu\TransitionHtmlPage.html</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\collections.js">
-      <Link>MenuItemsEditorHtml\Scripts\collections.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\jquery-ui-1.12.1.min.js">
-      <Link>MenuItemsEditorHtml\Scripts\jquery-ui-1.12.1.min.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\jquery.ui.touch-punch.min.js">
-      <Link>MenuItemsEditorHtml\Scripts\jquery.ui.touch-punch.min.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\knockout-3.4.0.js">
-      <Link>MenuItemsEditorHtml\Scripts\knockout-3.4.0.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\typings\events\strongly-typed-events.js">
-      <Link>MenuItemsEditorHtml\Scripts\typings\events\strongly-typed-events.js</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Image\dropdownmenu.png" />
     <Resource Include="Image\Taxes128.png" />
     <Resource Include="Image\Taxes16.png" />
@@ -634,35 +561,9 @@
     <Resource Include="Image\MealCoursesClock16.png" />
     <Resource Include="Image\restriction16.png" />
     <Resource Include="Image\view16.png" />
-    <Content Include="MenuItemsEditorHtml\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MenuItemsEditorHtml\JavaScript\AppJavaScript.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MenuItemsEditorHtml\JavaScript\jquery-3.1.1.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MenuItemsEditorHtml\MenuItemPreparationView.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\App_Scripts\ItemPreparation.ts">
-      <Link>MenuItemsEditorHtml\App_Scripts\ItemPreparation.ts</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MenuItemsEditorHtml\Scripts\typings\jquery\" />
-    <Folder Include="MenuItemsEditorHtml\Scripts\typings\knockout\" />
-    <Folder Include="MenuItemsEditorHtml\Scripts\typings\node\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\Azure FlavourBusiness\FlavourBusinessWebRole\Scripts\typings\events\strongly-typed-events.ts">
-      <Link>MenuItemsEditorHtml\Scripts\typings\events\strongly-typed-events.ts</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
