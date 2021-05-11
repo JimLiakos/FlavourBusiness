@@ -277,13 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FLBManager\ViewModel\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\UserInterface\WPFUserInterfaceLibrary\ThemesEx\Themes\Metro\Metro.Theme.xaml">
-      <Link>Themes\Metro.Theme.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Authentication\Views\SignInToolBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
