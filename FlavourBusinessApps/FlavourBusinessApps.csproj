@@ -56,6 +56,9 @@
     <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
       <Link>ViewModel\FlavoursOrderServer.cs</Link>
     </Compile>
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
+      <Link>ApplicationSettings.cs</Link>
+    </Compile>
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\ApplicationSettings.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\ApplicationSettings.cs</Link>
     </Compile>
@@ -200,9 +203,6 @@
     <None Include="..\menupresentationmodel\menucanvas\ΙMenuCanvasItem.cs">
       <Link>MenuCanvas\ΙMenuCanvasItem.cs</Link>
     </None>
-    <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
-      <Link>ApplicationSettings.cs</Link>
-    </Compile>
     <Compile Include="..\..\persistencelayer\xamarin\dontwaitappns\dontwaitappns\FoodServiceClientVM.cs">
       <Link>ViewModel\FoodServiceClientVM.cs</Link>
     </Compile>
