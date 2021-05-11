@@ -114,8 +114,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
       <Link>FlavoursOrderServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
+      <Link>ApplicationSettings.cs</Link>
     </Compile>
     <Compile Include="WaitView\Block.xaml.cs">
       <DependentUpon>Block.xaml</DependentUpon>
@@ -133,16 +136,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
-      <Link>ApplicationSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs">
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs">
       <Link>FoodServiceClientVM.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
       <Link>IFlavoursOrderServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
       <Link>Messmate.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs">
