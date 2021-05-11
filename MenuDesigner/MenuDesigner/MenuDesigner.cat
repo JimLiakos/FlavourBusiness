@@ -2,7 +2,7 @@
 (object Petal
     version    	47
     _written   	"Rose 8.0.0303.1400"
-    charSet    	0)
+    charSet    	161)
 
 (object Class_Category "MenuDesigner"
     is_unit    	TRUE
@@ -2845,7 +2845,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::MenuDesigner::MainWindow" @2
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(1075, 331)
+		    location   	(1096, 265)
 		    font       	(object Font
 			size       	12
 			face       	"Arial"
@@ -2858,7 +2858,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(731, 189)
+			location   	(752, 123)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	689
@@ -2870,7 +2870,7 @@
 		    quidu      	"5720DDFC030F"
 		    compartment 	(object Compartment
 			Parent_View 	@2
-			location   	(731, 256)
+			location   	(752, 190)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2918,6 +2918,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5720DDF40082"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1377, 564)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	1900)
 		    width      	1143
 		    height     	600
 		    annotation 	8)
@@ -2948,6 +2966,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5720D20B00D4"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(2439, 1080)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	521)
 		    width      	624
 		    height     	686
 		    annotation 	8)
@@ -2978,6 +3014,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AF6EE7C01D9"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(118, 969)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	1562)
 		    width      	919
 		    height     	750
 		    annotation 	8)))))
