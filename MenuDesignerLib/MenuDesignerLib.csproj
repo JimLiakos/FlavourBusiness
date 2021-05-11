@@ -121,10 +121,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
       <Link>ViewModel\Preview\IFlavoursOrderServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
       <Link>ViewModel\Preview\Messmate.cs</Link>
     </Compile>
     <Compile Include="Authentication\ViewModel\SignInUserPopupViewModel.cs" />
