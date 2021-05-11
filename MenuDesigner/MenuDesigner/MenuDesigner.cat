@@ -1,0 +1,2983 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	0)
+
+(object Class_Category "MenuDesigner"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    attributes 	(list Attribute_Set
+	(object Attribute
+	    tool       	"MetaData"
+	    name       	"MetaObjectID"
+	    value      	"MenuDesigner")
+	(object Attribute
+	    tool       	"C#"
+	    name       	"FullName"
+	    value      	(value Text "MenuDesigner")))
+    quid       	"5720D20A01FB"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"5CC91C0C0397"
+	    supplier   	"Logical View::MenuModel"
+	    quidu      	"5721EBAD02D9")
+	(object Visibility_Relationship
+	    quid       	"5CC91C100330"
+	    supplier   	"Logical View::MenuPresentationModel"
+	    quidu      	"57ACBCA601F2"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "App"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{7f2f3f78-eaaf-47bc-a00b-861ba15bed51}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720D20A0210"
+	    documentation 	
+|
+|Interaction logic for App.xaml
+|
+	    
+	    operations 	(list Operations
+		(object Operation "InitializeComponent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b04ad213-047c-4825-9959-32505296c0b0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720D20A03C5"))
+		    quid       	"5720D20A03C5"
+		    documentation 	
+|
+|InitializeComponent
+|
+		    
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Main"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b4892757-d9b6-4f7b-ad18-b37290fd8aa1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720D20B001F"))
+		    quid       	"5720D20B001F"
+		    documentation 	
+|
+|Application Entry Point.
+|
+		    
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InitializeComponent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f2717d28-dfc2-4067-abf7-d7f9f62745fb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDF302C4"))
+		    quid       	"5720DDF302C4"
+		    documentation 	
+|
+|InitializeComponent
+|
+		    
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Main"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d15e325b-5111-4203-8054-29194755701e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDF3032C"))
+		    quid       	"5720DDF3032C"
+		    documentation 	
+|
+|Application Entry Point.
+|
+		    
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "_contentLoaded"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2824f269-fcde-4d59-82e7-3841efa55d31}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720D20B0071")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720D20B0071"
+		    type       	"bool"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "BookPageViewModel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{f40bad5d-afee-408c-b2f8-e9e0c1ee271d}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720D20B00D4"
+	    operations 	(list Operations
+		(object Operation "SerializeDesignerItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{20619cc0-37c9-4fce-a235-8db0023ba6ed}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B0039"))
+		    quid       	"5721A00B0039"
+		    parameters 	(list Parameters
+			(object Parameter "designerItems"
+			    quid       	"5721A00B005B"
+			    type       	"System.Collections.Generic.IEnumerable<MenuDesigner.DesignerItem>"))
+		    result     	"System.Xml.Linq.XElement"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "Select"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da3fbc6d-d330-499b-9e70-827201635877}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B00B9"))
+		    quid       	"5721A00B00B9"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "BookPageViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{91c8ec2a-3fda-4180-a7d8-b34e4bcd5056}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B0139"))
+		    quid       	"5721A00B0139"
+		    parameters 	(list Parameters
+			(object Parameter "pageXML"
+			    quid       	"5721A00B015B"
+			    type       	"System.Xml.Linq.XElement"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BookPageViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2a5253bb-3fa4-41bb-8783-209b1f3386be}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B01A7"))
+		    quid       	"5721A00B01A7"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DeserializeDesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8c143893-ca7f-4732-bbd6-b6c496a4cee1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B02F1"))
+		    quid       	"5721A00B02F1"
+		    parameters 	(list Parameters
+			(object Parameter "itemXML"
+			    quid       	"5721A00B0314"
+			    type       	"System.Xml.Linq.XElement")
+			(object Parameter "id"
+			    quid       	"5721A00B0328"
+			    type       	"System.Guid")
+			(object Parameter "OffsetX"
+			    quid       	"5721A00B033F"
+			    type       	"double")
+			(object Parameter "OffsetY"
+			    quid       	"5721A00B0356"
+			    type       	"double"))
+		    result     	"MenuDesigner.DesignerItem"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AddDesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f117ce2f-5ff8-40e8-8fd6-8c31dd1bdac5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00B03CB"))
+		    quid       	"5721A00B03CB"
+		    parameters 	(list Parameters
+			(object Parameter "designerItem"
+			    quid       	"5721A00C0001"
+			    type       	"MenuDesigner.DesignerItem"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "RemoveDesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cfffe366-2f41-4b62-b7b0-97ad3f2d0466}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00C0067"))
+		    quid       	"5721A00C0067"
+		    parameters 	(list Parameters
+			(object Parameter "designerItem"
+			    quid       	"5721A00C0083"
+			    type       	"MenuDesigner.DesignerItem"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "PageWidth"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{515bce28-4163-4db0-bc43-5710ba2abaa5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00C00D4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	FALSE))
+		    quid       	"5721A00C00D4"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PageHeight"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ab5c103b-03bf-4f01-893c-c5f259fcc6a0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00C0173")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	FALSE))
+		    quid       	"5721A00C0173"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Border"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{42d63f98-8f66-4302-b70d-a3ece90f84a6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A00C01F3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	FALSE))
+		    quid       	"5721A00C01F3"
+		    type       	"double"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "BookViewModel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{fe45389d-e764-41a0-9cf1-c6476ffe25d2}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDF40082"
+	    operations 	(list Operations
+		(object Operation "AddPageAfter"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a3bb9949-2a2a-4546-822b-5eeb01ee5d45}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE7B02E2"))
+		    quid       	"5720DE7B02E2"
+		    parameters 	(list Parameters
+			(object Parameter "page"
+			    quid       	"5721A51C016D"
+			    type       	"MenuDesigner.BookPageViewModel"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "MoveSelectedPageLeft"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9496b7e3-63ea-41be-b3e7-6ea2fdf7a4f5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE7B033E"))
+		    quid       	"5720DE7B033E"
+		    parameters 	(list Parameters
+			(object Parameter "page"
+			    quid       	"5721A51C01D5"
+			    type       	"MenuDesigner.BookPageViewModel"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "LoadMenu"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{28afd124-eb12-4ab2-ad20-a960f1370da1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE7C002E"))
+		    quid       	"5720DE7C002E"
+		    parameters 	(list Parameters
+			(object Parameter "menu"
+			    quid       	"5720DE7C0047"
+			    type       	"System.Xml.Linq.XElement"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Pages"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4a875097-2293-464d-be4d-dd45107e1543}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE7C00C0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"5720DE7C00C0"
+		    type       	"System.Collections.ObjectModel.ObservableCollection<MenuDesigner.BookPageViewModel>"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "DesignerCanvas"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"DiagramDesigner.DesignerCanvas")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDF400F9"
+	    operations 	(list Operations
+		(object Operation "DesignerCanvas"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7cb37773-9eae-4d6d-ad90-b4c40f91e5e9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDFA01E4"))
+		    quid       	"5720DDFA01E4"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ItemSelected"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{30a3a7d3-e8de-44b5-81d1-b903773280ec}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDFA0276"))
+		    quid       	"5720DDFA0276"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "CopyCurrentSelection"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{555da4c6-d95a-49c7-bb21-112acf03dbd1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDFB030E"))
+		    quid       	"5720DDFB030E"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "DeleteCurrentSelection"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ef3842af-04ab-477b-9753-34e8d6a27063}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDFB036D"))
+		    quid       	"5720DDFB036D"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "UpdateZIndex"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fd409a60-9b9a-4f57-a5af-9367dfc607fc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DDFB03A4"))
+		    quid       	"5720DDFB03A4"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "DesignerItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{a3134b2e-496b-402d-a37c-db8575f65ceb}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC01CB"
+	    operations 	(list Operations
+		(object Operation "GetDragThumbTemplate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{22bb9f70-745e-4324-a566-6d27fa2345a8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4700F2"))
+		    quid       	"5720DE4700F2"
+		    parameters 	(list Parameters
+			(object Parameter "element"
+			    quid       	"5720DE470115"
+			    type       	"System.Windows.UIElement"))
+		    result     	"System.Windows.Controls.ControlTemplate"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetDragThumbTemplate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{79668261-2267-4eca-8aab-7a32a353e675}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE47016F"))
+		    quid       	"5720DE47016F"
+		    parameters 	(list Parameters
+			(object Parameter "element"
+			    quid       	"5720DE470189"
+			    type       	"System.Windows.UIElement")
+			(object Parameter "value"
+			    quid       	"5720DE470198"
+			    type       	"System.Windows.Controls.ControlTemplate"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a03cc9c-4399-4b84-a669-335a586c2593}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4701BE"))
+		    quid       	"5720DE4701BE"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "DesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1fb44dd5-8750-44f8-935c-fb8e2c2c7b32}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE47022C"))
+		    quid       	"5720DE47022C"
+		    parameters 	(list Parameters
+			(object Parameter "id"
+			    quid       	"5720DE47024D"
+			    type       	"System.Guid"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DesignerItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7a75f060-f605-4fc3-8ae6-4538104baf41}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE47027A"))
+		    quid       	"5720DE47027A"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "OnPreviewMouseDown"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2f23b2dd-2a28-467c-8518-22d51c57ea53}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4702AC"))
+		    quid       	"5720DE4702AC"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"5720DE4702C9"
+			    type       	"System.Windows.Input.MouseButtonEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DesignerItem_Loaded"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{32921cc6-ee98-4508-8b62-d0804c612b99}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE47034B"))
+		    quid       	"5720DE47034B"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5720DE470365"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5720DE470378"
+			    type       	"System.Windows.RoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2eb81eb6-3454-40d3-a785-ad009a727809}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4703A6"))
+		    quid       	"5720DE4703A6"
+		    type       	"System.Guid"
+		    exportControl 	"Public")
+		(object ClassAttribute "ParentID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{84d1ae0e-32f8-4f5d-9c76-60c423cff26d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4703DE"))
+		    quid       	"5720DE4703DE"
+		    type       	"System.Guid"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsGroup"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8ef60628-1387-46ad-a6cf-736d967f3efa}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE480037"))
+		    quid       	"5720DE480037"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsSelected"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{21f52fff-03b2-4f0b-897a-efa4b95c3390}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE48006C"))
+		    quid       	"5720DE48006C"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsDragConnectionOver"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c30dc218-67f9-43ef-a624-f885eca61a42}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4800A3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	FALSE))
+		    quid       	"5720DE4800A3"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "id"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{feb8ad99-38af-4f9f-bbfb-db0209d09399}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE48014C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE48014C"
+		    type       	"System.Guid")
+		(object ClassAttribute "ParentIDProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1ad723f1-eb0a-478c-b225-738e8828ec10}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE480198")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE480198"
+		    type       	"System.Windows.DependencyProperty"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsGroupProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4ef60e96-9714-4f08-bb90-28bbda8b66a8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE4801D9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE4801D9"
+		    type       	"System.Windows.DependencyProperty"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsSelectedProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d24af474-7f48-4366-a36b-bf3bb725c333}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE480214")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE480214"
+		    type       	"System.Windows.DependencyProperty"
+		    exportControl 	"Public")
+		(object ClassAttribute "DragThumbTemplateProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8cffea8c-dbf7-42a3-bcfa-4f7e7b232189}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE480255")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE480255"
+		    type       	"System.Windows.DependencyProperty"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsDragConnectionOverProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fcd68d31-7bfe-49dd-8879-e6a3d4d7ff0d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5720DE480299")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"5720DE480299"
+		    type       	"System.Windows.DependencyProperty"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "IGroupable"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{f9bacf6d-30f8-4595-a469-db5a74264d57}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC01E5"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "ISelectable"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{a2e90f4a-5f42-4645-9e07-52c0d1ef2d42}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC0224"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "MenuDesignerControl"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{5f832311-fd18-4366-8fe6-14b23c5315d9}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC023D"
+	    operations 	(list Operations
+		(object Operation "MenuDesignerControl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e75bd865-01cb-4add-a453-0d6fba1ecf79}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03B02F2"))
+		    quid       	"5721A03B02F2"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BookScrollViewer_SizeChanged"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a579ef07-ddc1-424c-ad48-9e62220b4e81}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03C0019"))
+		    quid       	"5721A03C0019"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03C0041"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03C005A"
+			    type       	"System.Windows.SizeChangedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "NewPage_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b2cbdc93-da5c-485e-aba5-ba44b68768f6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03C010E"))
+		    quid       	"5721A03C010E"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03C0132"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03C0157"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Grid_MouseWheel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{794af5f8-f785-483b-89eb-c3433b9c7db0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03C0212"))
+		    quid       	"5721A03C0212"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03C0236"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03C025C"
+			    type       	"System.Windows.Input.MouseWheelEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "DeletePage_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{277d135e-459d-4d52-bc0c-a3876f0bb456}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03C02DE"))
+		    quid       	"5721A03C02DE"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03C02FF"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03C0328"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "MovePageLeft_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{750916bc-fe1c-4bfa-85b8-d2142563ecb4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03C03DF"))
+		    quid       	"5721A03C03DF"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03D001A"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03D003D"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "MovePageRight_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bc95b07e-6c66-43b5-94ef-0010719b4e2d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03D00EB"))
+		    quid       	"5721A03D00EB"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03D010F"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03D0132"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "BringForward_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7d495909-a27d-48f3-b667-9f63e14ef707}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03D01B6"))
+		    quid       	"5721A03D01B6"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03D01D9"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03D0203"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "BringToFront_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3fb7df22-afed-48d2-bd6f-869af27ef9af}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03D029D"))
+		    quid       	"5721A03D029D"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03D02BD"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03D02DE"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "SendBackward_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a5065b3-6d21-4c12-9d66-b61622021011}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03D0362"))
+		    quid       	"5721A03D0362"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03D0381"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03D03A3"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "SendToBack_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{10eda9bd-13d1-42f6-838e-11df682d4bf3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03E003C"))
+		    quid       	"5721A03E003C"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03E0069"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03E008F"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignTop_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{15a2e8f5-fddc-48d1-b93e-f655dbeb1e1b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03E0112"))
+		    quid       	"5721A03E0112"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03E0135"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03E015E"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignVerticalCenters_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4277e047-aa43-4554-bc61-96a88ca1405d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03E01E2"))
+		    quid       	"5721A03E01E2"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03E0203"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03E0227"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignBottom_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c2b3c2c9-a31b-475e-bdec-28c24bbb75fa}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03E02BC"))
+		    quid       	"5721A03E02BC"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03E02E6"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03E030F"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignLeft_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9c887b01-d4b6-4e7a-a303-a43755e156e4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03E039D"))
+		    quid       	"5721A03E039D"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03E03C5"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03F0004"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignHorizontalCenters_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b1d39d90-1fbf-4371-89c0-026339fa531e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03F0087"))
+		    quid       	"5721A03F0087"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03F00AA"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03F00D2"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "AlignRight_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e5d80cfe-7d7d-43e2-b583-35f7090ed4d4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03F0154"))
+		    quid       	"5721A03F0154"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03F0176"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03F0199"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "DistributeHorizontal_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b95e27cb-847c-4730-b1cf-2e331358b9c8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03F0223"))
+		    quid       	"5721A03F0223"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03F0244"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03F0267"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "DistributeVertical_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{92d9c375-3059-4aab-8e28-3aecd9c83636}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03F02E9"))
+		    quid       	"5721A03F02E9"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03F0314"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A03F0337"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "SelectAll_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b1c6926b-ce8d-414e-b8d0-c160eb638d79}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A03F03C1"))
+		    quid       	"5721A03F03C1"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A03F03E3"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0400028"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Ungroup_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{adb2384a-3054-4f23-a248-63ab567f9f55}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04000B1"))
+		    quid       	"5721A04000B1"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A04000D2"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04000F8"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Copy_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9581e6d3-b956-4e86-b0f9-eabb7c68fe39}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A040018C"))
+		    quid       	"5721A040018C"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A04001B0"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04001D6"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Paste_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3888e81f-281f-408f-849a-eecafec3cc5c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A040026E"))
+		    quid       	"5721A040026E"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A040029D"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04002C4"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Delete_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{be11c576-d389-4473-bc74-6e51d6ba8597}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A040034E"))
+		    quid       	"5721A040034E"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A040036F"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0400399"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Group_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f2597fe8-e550-4322-90c7-2db764a94637}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A041003F"))
+		    quid       	"5721A041003F"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0410065"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A041008C"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Copy_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1b5d5f8f-6649-490c-bd2b-025199a018a5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A041015A"))
+		    quid       	"5721A041015A"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A041017D"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04101A2"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Align_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1538066b-bcbb-40ba-bebc-451cdf272696}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A041022C"))
+		    quid       	"5721A041022C"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0410256"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A041027A"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Distribute_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{feb874f2-09e3-4537-8aca-7aa68d85dd9b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0410302"))
+		    quid       	"5721A0410302"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0410324"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A041034F"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Cut_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5905d702-2a41-45bb-8eff-a734ac267ebb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04103D9"))
+		    quid       	"5721A04103D9"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0420012"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0420038"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Paste_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d3c85c3d-c33d-4d3d-b666-f8f61cc5f575}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04200CE"))
+		    quid       	"5721A04200CE"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A04200F0"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0420115"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Delete_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2a0044b7-3195-4198-be66-4fc9c127094e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04201A8"))
+		    quid       	"5721A04201A8"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A04201CA"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04201EE"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Group_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d14790ac-8ade-43f0-8087-1d3f7d813f1e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A042027D"))
+		    quid       	"5721A042027D"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A04202A6"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04202CB"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Ungroup_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cd07989f-d56f-4601-8159-7bb690f7f9e6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0420360"))
+		    quid       	"5721A0420360"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0420384"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04203B0"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Order_Enabled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a2e8787c-23d8-4ded-92ae-9551ad676ec1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A043005D"))
+		    quid       	"5721A043005D"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0430081"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A04300B0"
+			    type       	"System.Windows.Input.CanExecuteRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Cut_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c2f5e32c-a436-4782-bbd1-3aea5c0df414}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0430143"))
+		    quid       	"5721A0430143"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0430167"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0430197"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Print_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{be2c9838-0e35-407a-917f-399777aa06b1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A043022F"))
+		    quid       	"5721A043022F"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0430253"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A043027F"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Save_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0324c446-1e46-4062-9a4c-d17f58d889aa}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0430310"))
+		    quid       	"5721A0430310"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0430332"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0430364"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "SaveFile"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e66a2568-7819-416f-bf73-0110b349bee9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A044004B"))
+		    quid       	"5721A044004B"
+		    parameters 	(list Parameters
+			(object Parameter "xElement"
+			    quid       	"5721A0440071"
+			    type       	"System.Xml.Linq.XElement"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "New_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{56872a7b-ec87-4e99-947e-d12bf3ab5505}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0440116"))
+		    quid       	"5721A0440116"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A044013C"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A0440160"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Open_Executed"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{70e23090-561a-4632-baa1-a7164bce624c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0440204"))
+		    quid       	"5721A0440204"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"5721A0440227"
+			    type       	"object")
+			(object Parameter "e"
+			    quid       	"5721A044024F"
+			    type       	"System.Windows.Input.ExecutedRoutedEventArgs"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "LoadSerializedDataFromFile"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c95c54cd-c1ca-400c-9bac-5e30e84b13c1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04402C5"))
+		    quid       	"5721A04402C5"
+		    result     	"System.Xml.Linq.XElement"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "InitializeComponent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2e97679d-03c0-40ea-8298-7e20a707cf44}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A0440313"))
+		    quid       	"5721A0440313"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "System.Windows.Markup.IComponentConnector.Connect"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{59665b3d-637b-4a2f-8a26-7bb1b385360c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721A04403CC"))
+		    quid       	"5721A04403CC"
+		    parameters 	(list Parameters
+			(object Parameter "connectionId"
+			    quid       	"5721A045000C"
+			    type       	"int")
+			(object Parameter "target"
+			    quid       	"5721A0450030"
+			    type       	"object"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "RubberbandAdorner"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{d251f2f5-cba2-451b-a142-cbf9396c1834}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC028C"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "SelectionService"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{c8d91082-998f-4a86-b524-6dae1f0bbf31}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC02A7"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "Toolbox"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{9ce80383-bb15-4f1b-b6d9-00b08b8dd2f0}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC02C4"
+	    operations 	(list Operations
+		(object Operation "GetContainerForItemOverride"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{741c85a4-9d64-4a7f-85a2-4aef154048af}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721960C0042"))
+		    quid       	"5721960C0042"
+		    result     	"System.Windows.DependencyObject"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsItemItsOwnContainerOverride"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4ba5803e-7386-454e-b127-b40df22f35ea}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721960C005B"))
+		    quid       	"5721960C005B"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"5721960C0078"
+			    type       	"object"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ItemSize"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{921fddef-212a-4d0f-a28e-be5ca4d0be35}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5721960C00F7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	FALSE))
+		    quid       	"5721960C00F7"
+		    type       	"System.Windows.Size"
+		    exportControl 	"Public")
+		(object ClassAttribute "itemSize"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{55c5118c-f5d7-4ef1-957e-cdd17c971386}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"572196110195")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"572196110195"
+		    type       	"System.Windows.Size"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "ToolboxItem"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{dc812174-e7c9-4ff0-a469-166daec5d5f5}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC02DD"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "DragObject"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{773b64f3-fff6-42fc-bf46-c29d3fc5a341}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC02F6"
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "MainWindow"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{9b85f465-b03e-4989-ad24-8e8cf77440f8}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"5720DDFC030F"
+	    operations 	(list Operations
+		(object Operation "MainWindow"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2d99df56-f6a0-4e8b-b377-d5e0f67db175}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57219FEC0019"))
+		    quid       	"57219FEC0019"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InitializeComponent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c5ce34bb-2ae4-4799-8cff-e9ad9d4c6fab}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57219FEC004A"))
+		    quid       	"57219FEC004A"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "System.Windows.Markup.IComponentConnector.Connect"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{71b5bf6c-8be3-455f-a76a-86458da2cbe9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"57219FEC0106"))
+		    quid       	"57219FEC0106"
+		    parameters 	(list Parameters
+			(object Parameter "connectionId"
+			    quid       	"57219FEC012E"
+			    type       	"int")
+			(object Parameter "target"
+			    quid       	"57219FEC0152"
+			    type       	"object"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#")
+	(object Class "ApplicationSettings"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{d2560ed7-6c28-4e1d-8f49-98a4ef93784a}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"6")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{d2560ed7-6c28-4e1d-8f49-98a4ef93784a}"))
+	    quid       	"5AF6EE7C01D9"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "SignInUserName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1aa6eeca-93e3-44f9-9f42-de763b037039}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5AF6F256038C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"5AF6F256038C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "SignInUserIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4a51c48b-5fec-4309-9fbe-6b418094b292}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5AF7B06D01FC")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5AF7B06D01FC"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AppSettingsStorage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da878c84-7957-48fd-a7ac-fef703351615}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5AF7B06D02EE")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"5AF7B06D02EE"
+		    type       	"OOAdvantech.PersistenceLayer.ObjectStorage"
+		    exportControl 	"Public")
+		(object ClassAttribute "Current"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{82643791-08c8-4d09-a3db-c5e8de5e5061}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5AF7B06D035A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"5AF7B06D035A"
+		    type       	"MenuDesigner.ApplicationSettings"
+		    exportControl 	"Public")
+		(object ClassAttribute "SignInProvider"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dda41587-5296-4cce-85d4-a0c9567fee7b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5AF7B06E0095")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"5AF7B06E0095"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "FriendlyName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d527686e-187a-4e4f-9128-7cc0d2275d63}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"5C9C81FA037C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"5C9C81FA037C"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuDesigner::MenuDesigner"
+	    quidu      	"5720681A03E5"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class_Category "Controls"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"DiagramDesigner.Controls"))
+	    quid       	"5720DDF40097"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "DragThumb"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4d39308e-a938-438d-980e-a869a663aa4a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"5720DDF400AA"
+		    operations 	(list Operations
+			(object Operation "DragThumb"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0daa20dc-3cd9-4ac4-af26-3eb7619b1fdc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE830332"))
+			    quid       	"5720DE830332"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "DragThumb_DragDelta"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2e4b350c-8037-4c60-8bab-169334fb6b51}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8303E5"))
+			    quid       	"5720DE8303E5"
+			    parameters 	(list Parameters
+				(object Parameter "sender"
+				    quid       	"5720DE840016"
+				    type       	"object")
+				(object Parameter "e"
+				    quid       	"5720DE840025"
+				    type       	"System.Windows.Controls.Primitives.DragDeltaEventArgs"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0))
+		    module     	"Component View::MenuDesigner::MenuDesigner"
+		    quidu      	"5720681A03E5"
+		    language   	"C#")
+		(object Class "RelativePositionPanel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{402f5bf0-ad8f-46b9-a8df-35ba28773b57}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"5720DDF400C4"
+		    operations 	(list Operations
+			(object Operation "GetRelativePosition"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{313c6b70-9f8e-43f9-8be1-30efaca798c5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE880057"))
+			    quid       	"5720DE880057"
+			    parameters 	(list Parameters
+				(object Parameter "element"
+				    quid       	"5720DE880071"
+				    type       	"System.Windows.UIElement"))
+			    result     	"System.Windows.Point"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SetRelativePosition"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{306caf82-5a8e-4590-bc92-844f8030551a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8800C4"))
+			    quid       	"5720DE8800C4"
+			    parameters 	(list Parameters
+				(object Parameter "element"
+				    quid       	"5720DE8800EA"
+				    type       	"System.Windows.UIElement")
+				(object Parameter "value"
+				    quid       	"5720DE8800F9"
+				    type       	"System.Windows.Point"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "OnRelativePositionChanged"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7fe67d16-69e5-4430-ae52-9052f10156ce}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE88019D"))
+			    quid       	"5720DE88019D"
+			    parameters 	(list Parameters
+				(object Parameter "d"
+				    quid       	"5720DE8801B8"
+				    type       	"System.Windows.DependencyObject")
+				(object Parameter "e"
+				    quid       	"5720DE8801C8"
+				    type       	"System.Windows.DependencyPropertyChangedEventArgs"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "ArrangeOverride"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8e0131c2-3549-40f4-ac93-79254142851a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8801E3"))
+			    quid       	"5720DE8801E3"
+			    parameters 	(list Parameters
+				(object Parameter "finalSize"
+				    quid       	"5720DE8801F9"
+				    type       	"System.Windows.Size"))
+			    result     	"System.Windows.Size"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MeasureOverride"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9bb580ca-ffa8-4944-bc56-b45f451295b6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE88020C"))
+			    quid       	"5720DE88020C"
+			    parameters 	(list Parameters
+				(object Parameter "availableSize"
+				    quid       	"5720DE88022C"
+				    type       	"System.Windows.Size"))
+			    result     	"System.Windows.Size"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "RelativePositionProperty"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3728724c-cd39-4899-8210-54c900a96182}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE880254")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"5720DE880254"
+			    type       	"System.Windows.DependencyProperty"
+			    exportControl 	"Public"))
+		    module     	"Component View::MenuDesigner::MenuDesigner"
+		    quidu      	"5720681A03E5"
+		    language   	"C#")
+		(object Class "ResizeThumb"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{48f1dd53-fee2-4ca9-aa41-086222e7c2e5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"5720DDF400E0"
+		    operations 	(list Operations
+			(object Operation "ResizeThumb"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{efd1809d-0af3-4378-9e70-8a90c3354e12}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8C0284"))
+			    quid       	"5720DE8C0284"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ResizeThumb_DragDelta"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a787fb83-d1de-408a-a176-656cf27d9d7f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8C02FA"))
+			    quid       	"5720DE8C02FA"
+			    parameters 	(list Parameters
+				(object Parameter "sender"
+				    quid       	"5720DE8C0328"
+				    type       	"object")
+				(object Parameter "e"
+				    quid       	"5720DE8C033C"
+				    type       	"System.Windows.Controls.Primitives.DragDeltaEventArgs"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "DragLeft"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{aeeca2c2-d47b-4373-8bfd-197ec67e92ad}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8D0003"))
+			    quid       	"5720DE8D0003"
+			    parameters 	(list Parameters
+				(object Parameter "scale"
+				    quid       	"5720DE8D0029"
+				    type       	"double")
+				(object Parameter "item"
+				    quid       	"5720DE8D0038"
+				    type       	"DiagramDesigner.DesignerItem")
+				(object Parameter "selectionService"
+				    quid       	"5720DE8D0047"
+				    type       	"DiagramDesigner.SelectionService"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "DragTop"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2112fae6-36e6-4105-9aa5-bb610e63d1ca}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8D00A3"))
+			    quid       	"5720DE8D00A3"
+			    parameters 	(list Parameters
+				(object Parameter "scale"
+				    quid       	"5720DE8D00C0"
+				    type       	"double")
+				(object Parameter "item"
+				    quid       	"5720DE8D00D0"
+				    type       	"DiagramDesigner.DesignerItem")
+				(object Parameter "selectionService"
+				    quid       	"5720DE8D00EB"
+				    type       	"DiagramDesigner.SelectionService"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "DragRight"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a38fca49-9497-43fe-a4af-a0b39b0a242f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8D0144"))
+			    quid       	"5720DE8D0144"
+			    parameters 	(list Parameters
+				(object Parameter "scale"
+				    quid       	"5720DE8D015E"
+				    type       	"double")
+				(object Parameter "item"
+				    quid       	"5720DE8D016C"
+				    type       	"DiagramDesigner.DesignerItem")
+				(object Parameter "selectionService"
+				    quid       	"5720DE8D017A"
+				    type       	"DiagramDesigner.SelectionService"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "DragBottom"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5f3720cd-9d71-4c2c-b447-ebdb5fbebe09}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8D01D9"))
+			    quid       	"5720DE8D01D9"
+			    parameters 	(list Parameters
+				(object Parameter "scale"
+				    quid       	"5720DE8D01FE"
+				    type       	"double")
+				(object Parameter "item"
+				    quid       	"5720DE8D020D"
+				    type       	"DiagramDesigner.DesignerItem")
+				(object Parameter "selectionService"
+				    quid       	"5720DE8D021C"
+				    type       	"DiagramDesigner.SelectionService"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "CalculateDragLimits"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f3f1eeb9-4cc8-471f-b0d3-b49d0da3a244}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5720DE8D030F"))
+			    quid       	"5720DE8D030F"
+			    parameters 	(list Parameters
+				(object Parameter "selectedItems"
+				    quid       	"5720DE8D032C"
+				    type       	"System.Collections.Generic.IEnumerable<DiagramDesigner.DesignerItem>")
+				(object Parameter "minLeft"
+				    quid       	"5720DE8D033D"
+				    type       	"double")
+				(object Parameter "minTop"
+				    quid       	"5720DE8D034E"
+				    type       	"double")
+				(object Parameter "minDeltaHorizontal"
+				    quid       	"5720DE8D0368"
+				    type       	"double")
+				(object Parameter "minDeltaVertical"
+				    quid       	"5720DE8D0377"
+				    type       	"double"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0))
+		    module     	"Component View::MenuDesigner::MenuDesigner"
+		    quidu      	"5720681A03E5"
+		    language   	"C#"))
+	    logical_presentations 	(list unit_reference_list))
+	(object Class_Category "Properties"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"DiagramDesigner.Properties"))
+	    quid       	"5720DDFC0246"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Resources"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{776968c6-b41f-4476-b542-650eb3a000c0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"5720DDFC0257"
+		    module     	"Component View::MenuDesigner::MenuDesigner"
+		    quidu      	"5720681A03E5"
+		    language   	"C#")
+		(object Class "Settings"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{205e26e8-3d9f-4781-912b-056af3d65641}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"5720DDFC0272"
+		    module     	"Component View::MenuDesigner::MenuDesigner"
+		    quidu      	"5720681A03E5"
+		    language   	"C#"))
+	    logical_presentations 	(list unit_reference_list)))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"5721143101A2"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::MenuDesigner::App" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(281, 269)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(140, 205)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	282
+			justify    	0
+			label      	"App")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5720D20A0210"
+		    width      	300
+		    height     	157
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuDesigner::MainWindow" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1075, 331)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(731, 189)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	689
+			justify    	0
+			label      	"MainWindow")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5720DDFC030F"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(731, 256)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	1121
+			compartmentItems 	(list Compartment
+			    "+ MainWindow()"))
+		    width      	707
+		    height     	312
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuDesigner::BookViewModel" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1939, 791)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1377, 503)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1125
+			justify    	0
+			label      	"BookViewModel")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5720DDF40082"
+		    width      	1143
+		    height     	600
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuDesigner::BookPageViewModel" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2742, 1350)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2439, 1019)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	606
+			justify    	0
+			label      	"BookPageViewModel")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5720D20B00D4"
+		    width      	624
+		    height     	686
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuDesigner::ApplicationSettings" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(568, 1263)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(118, 902)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	901
+			justify    	0
+			label      	"ApplicationSettings")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5AF6EE7C01D9"
+		    width      	919
+		    height     	750
+		    annotation 	8)))))

@@ -1,0 +1,72 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object SubSystem "MenuDesigner"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"572068070298"
+    visible_modules 	(list dependency_list
+	(object Module_Visibility_Relationship
+	    quid       	"5721E69801DC"
+	    supplier   	"Component View::MenuModel"
+	    quidu      	"5721E66E017C"
+	    supplier_is_subsystem 	TRUE))
+    physical_models 	(list unit_reference_list
+	(object module "MenuDesigner" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Solution"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusiness.sln")
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Project"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\MenuDesigner\\MenuDesigner\\MenuDesigner.csproj")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{B437DF5F-20E0-4082-A92E-5C1D9C31A8E9}"))
+	    quid       	"5720681A03E5"
+	    stereotype 	""
+	    language   	"C#"))
+    physical_presentations 	(list unit_reference_list
+	(object Module_Diagram "Main"
+	    quid       	"5720681303C9"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ModView "Component View::MenuDesigner::MenuDesigner" "NotAModuleType" "NotAModulePart" @1
+		    location   	(593, 325)
+		    font       	(object Font
+			size       	12
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(548, 300)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	169
+			label      	"MenuDesigner")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5720681A03E5"
+		    width      	304
+		    autoResize 	TRUE
+		    width      	304
+		    height     	162)))))
