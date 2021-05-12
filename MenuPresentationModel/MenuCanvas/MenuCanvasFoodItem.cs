@@ -451,7 +451,7 @@ namespace MenuPresentationModel.MenuCanvas
 
 
         /// <MetaDataID>{a3931068-a9d7-46e3-b329-2945dc96be4e}</MetaDataID>
-        [ImplementationMember(nameof(_HostingArea))]
+        [PersistentMember(nameof(_HostingArea))]
         public IMenuCanvasFoodItemsGroup HostingArea
         {
             get
