@@ -52,6 +52,8 @@ namespace FLBManager
             // Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
+            // Restore(@"C:\Projects\Azure blob storage\Backup", "DevStorage", "", "");
+
 
             base.OnStartup(e);
         }

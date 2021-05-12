@@ -24,9 +24,9 @@
     <Window.Resources>
 
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <!--<ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary Source="pack://application:,,,/MenuDesignerLib;Component/Themes/Metro.Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
             <MenuCanvasViewModel:MenuHeadingViewModel x:Key="D_MenuHeadingViewModel"/>
             <VisualBrush x:Key="WavyBrush" Viewbox="0,0,3,2" ViewboxUnits="Absolute" Viewport="0,0.8,7,12" ViewportUnits="Absolute" TileMode="Tile">
                 <VisualBrush.Visual>
