@@ -14,10 +14,25 @@ using OOAdvantech.Transactions;
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
     /// <MetaDataID>{a0b00e06-a3ba-4803-9098-95d6f4382670}</MetaDataID>
-    public class FoodItemViewModel : MarshalByRefObject, INotifyPropertyChanged
+    public class FoodItemViewModel : OOAdvantech.UserInterface.Runtime.PresentationObject<IMenuCanvasFoodItem>, INotifyPropertyChanged
     {
         private IMenuCanvasFoodItem MenuCanvasFoodItem;
         private RestaurantMenu GraphicMenu;
+
+        public override void FormClosed()
+        {
+            if (MenuCanvasFoodItem != null)
+                MenuCanvasFoodItem.ObjectChangeState -= MenuCanvasFoodItem_ObjectChangeState;
+
+            base.FormClosed();
+        }
+        public override void Initialize()
+        {
+            if (MenuCanvasFoodItem != null)
+                MenuCanvasFoodItem.ObjectChangeState += MenuCanvasFoodItem_ObjectChangeState;
+
+            base.Initialize();
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -116,66 +131,14 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
 
 
-        public FoodItemViewModel(IMenuCanvasFoodItem menuCanvasFoodItem, RestaurantMenu graphicMenu)
+        public FoodItemViewModel(IMenuCanvasFoodItem menuCanvasFoodItem, RestaurantMenu graphicMenu):base(menuCanvasFoodItem)
         {
             MenuCanvasFoodItem = menuCanvasFoodItem;
             GraphicMenu = graphicMenu;
 
-         if(MenuCanvasFoodItem!=null)
-                MenuCanvasFoodItem.ObjectChangeState += MenuCanvasFoodItem_ObjectChangeState;
-
+       
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(DownloadStylesWindow.HeadingAccentStorage);
             var accents = (from accent in storage.GetObjectCollection<Accent>() where accent.MultipleItemsAccent select accent).ToList();
-
-            //var prorotypeAccent = (from accent in storage.GetObjectCollection<HeadingAccent>() where accent.SelectionAccentImageUri == @"AccentImages\boxes\Box.svg" select accent).FirstOrDefault();
-            //var prorotypeImage = prorotypeAccent.AccentImages[0];
-
-            //using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
-            //{
-
-
-            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //    {
-            //    foreach(var boxAccent in     (from accent in storage.GetObjectCollection<HeadingAccent>()
-            //         where accent.MultipleItemsAccent==true select accent))
-            //        {
-            //            if (boxAccent.MarginLeft == 0)
-            //                boxAccent.MarginLeft = boxAccent.MarginRight = boxAccent.MarginTop;
-            //        }
-
-            //        //System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(@"C:\ProgramData\Microneme\DontWaitWater\AccentImages\JoinBoxes\tmp");
-            //        //foreach (var file in dirInfo.GetFiles())
-            //        //{
-
-            //        //    Resource image = new Resource();
-            //        //    image.Uri = @"AccentImages\" + file.Name;
-            //        //    MenuImage menuImage = new MenuImage(image, prorotypeImage.Width, prorotypeImage.Height);
-
-            //        //    var accentName = file.Name.Replace(file.Extension, "").Replace("_", " ");
-            //        //    HeadingAccent headingAccent = new HeadingAccent();
-            //        //    headingAccent.SelectionAccentImageUri = @"AccentImages\boxes\" + file.Name;
-            //        //    headingAccent.AccentColor = prorotypeAccent.AccentColor;
-            //        //    headingAccent.DoubleImage = prorotypeAccent.DoubleImage;
-            //        //    headingAccent.FullRowImage = prorotypeAccent.FullRowImage;
-            //        //    headingAccent.Height = prorotypeAccent.Height;
-            //        //    headingAccent.MarginBottom = prorotypeAccent.MarginBottom;
-            //        //    headingAccent.MarginLeft = prorotypeAccent.MarginLeft;
-            //        //    headingAccent.MarginRight = prorotypeAccent.MarginRight;
-            //        //    headingAccent.MarginTop = prorotypeAccent.MarginTop;
-            //        //    headingAccent.MultipleItemsAccent = true;
-
-            //        //    headingAccent.Name = accentName;
-            //        //    headingAccent.TextBackgroundImage = prorotypeAccent.TextBackgroundImage;
-            //        //    headingAccent.UnderlineImage = prorotypeAccent.UnderlineImage;
-            //        //    headingAccent.AddAccentImage(menuImage);
-
-            //        //    DownloadStylesWindow.HeadingAccentStorage.CommitTransientObjectState(menuImage);
-            //        //    DownloadStylesWindow.HeadingAccentStorage.CommitTransientObjectState(headingAccent);
-            //        //}
-            //        stateTransition.Consistent = true;
-            //    }
-
-            //}
 
 
 

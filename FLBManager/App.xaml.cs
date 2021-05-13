@@ -49,7 +49,7 @@ namespace FLBManager
 
             EventManager.RegisterClassHandler(typeof(UIElement), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
 
-             Backup(@"F:\NewPc\Azure blob storage\Backup");
+             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
             // Restore(@"C:\Projects\Azure blob storage\Backup", "DevStorage", "", "");
@@ -79,8 +79,8 @@ namespace FLBManager
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.2:8090/api/Storages");
-            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.2:8090/api/";
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
+            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
         }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
