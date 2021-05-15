@@ -8,6 +8,8 @@ namespace FinanceFacade
     [BackwardCompatibilityID("{983f82cb-182e-4dda-8a07-ff395f43f7e9}")]
     public interface ITaxableType
     {
+        [Association("TaxableType", Roles.RoleB, "4451a5bd-476a-4b7a-a0ca-af63e2229c1d")]
+        List<ITaxable> TaxableSubjects { get; }
 
         /// <MetaDataID>{3ea9ef81-0fe3-4077-9666-9a725458b783}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]

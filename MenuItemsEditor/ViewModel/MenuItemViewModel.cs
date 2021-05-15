@@ -163,7 +163,7 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                if (OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_MenuItem)==null)
+                if (OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_MenuItem) == null)
                 {
                     ObjectStorage objectStorage = ObjectStorage.GetStorageOfObject(ItemsCategory);
                     objectStorage.CommitTransientObjectState(_MenuItem);
@@ -316,14 +316,7 @@ namespace MenuItemsEditor.ViewModel
 
             //LoadPricingContexts();
 
-            AddTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
-            {
-                var newTaxableType = (MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.NewTaxableType();
-                _TaxableTypes[newTaxableType] = new TaxableTypeViewModel(newTaxableType);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
 
-
-            }, (object sender) => CanAddTaxableType());
 
 
 
@@ -409,23 +402,32 @@ namespace MenuItemsEditor.ViewModel
             });
 
 
+            AddTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                var newTaxableType = (MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.NewTaxableType();
+                _TaxableTypes[newTaxableType] = new TaxableTypeViewModel(newTaxableType);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
 
+
+            }, (object sender) => CanAddTaxableType());
             DeleteSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 //{
-                (MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.RemoveTaxableType(SelectedTaxableType.TaxableType);
-                _TaxableTypes.Remove(SelectedTaxableType.TaxableType);
 
 
-                if (_TaxableTypes.Count > 0)
-                    SelectedTaxableType = _TaxableTypes.Values.ToList()[0];
-                else
-                    SelectedTaxableType = null;
+                var taxableType = SelectedTaxableType.TaxableType;
+                SelectedTaxableType = null;
+               
+                if( (MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.RemoveTaxableType(taxableType))
+                    _TaxableTypes.Remove(taxableType);
+              
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedTaxableType)));
+                
                 //}
-            }, (object sender) => { return SelectedTaxableType != null; });
+            }, (object sender) => CanDeleteSelectedTaxableType());
 
             EditSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
@@ -457,7 +459,13 @@ namespace MenuItemsEditor.ViewModel
             }, (object sender) => CanEditTaxableType());
 
         }
-
+        bool CanDeleteSelectedTaxableType()
+        {
+            if (SelectedTaxableType != null)
+                return SelectedTaxableType.TaxableType.TaxableSubjects.Count == 1 && SelectedTaxableType.TaxableType.TaxableSubjects.Contains(_MenuItem)|| SelectedTaxableType.TaxableType.TaxableSubjects.Count==0;
+            else
+                return false;
+        }
         private void RefreshMealTypes()
         {
             if (MealTypes.Count > 0)
@@ -929,8 +937,8 @@ namespace MenuItemsEditor.ViewModel
                 if (MenuItem != null)
                 {
                     //using (new OOAdvantech.CultureContext(SelectedCulture))
-                    
-                    if(string.IsNullOrWhiteSpace(value))
+
+                    if (string.IsNullOrWhiteSpace(value))
                         MenuItem.Name = null;
                     else
                         MenuItem.Name = value;
@@ -1032,6 +1040,7 @@ namespace MenuItemsEditor.ViewModel
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FullName)));
                     }
                 }));
+
             }
         }
 

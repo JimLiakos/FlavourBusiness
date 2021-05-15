@@ -91,6 +91,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{82f5108f-ed1a-405a-94a7-e3161d892490}</MetaDataID>
         [PersistentMember(nameof(_TaxableTypes))]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         [BackwardCompatibilityID("+3")]
         public IList<ITaxableType> TaxableTypes
         {
@@ -143,13 +144,20 @@ namespace FinanceFacade
         }
 
         /// <MetaDataID>{8e8145bb-fc80-4e3f-a331-0aa731a8250d}</MetaDataID>
-        public void RemoveTaxableType(ITaxableType taxableType)
+        public bool RemoveTaxableType(ITaxableType taxableType)
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            if (taxableType.TaxableSubjects.Count == 0)
             {
-                _TaxableTypes.Remove(taxableType);
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+
+                    _TaxableTypes.Remove(taxableType);
+                    stateTransition.Consistent = true;
+                }
+                return true;
             }
+            else
+                return false;
         }
 
         /// <MetaDataID>{bac8ca9f-8792-44c5-90a1-5007b5bce3e4}</MetaDataID>

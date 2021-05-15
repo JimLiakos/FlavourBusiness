@@ -72,7 +72,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
                                                           where item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
-                                                          select item).ToArray()
+                                                          select item.Fetching(item.ClientSession)).ToArray()
                                                           group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
                                                           select ServicePointItems))
             {
