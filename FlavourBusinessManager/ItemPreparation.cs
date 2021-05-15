@@ -486,13 +486,13 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <exclude>Excluded</exclude>
-        IFoodServiceClientSession _ClientSession;
+        OOAdvantech.Member<IFoodServiceClientSession> _ClientSession=new OOAdvantech.Member<IFoodServiceClientSession>();
 
         /// <MetaDataID>{837efcf4-421f-42a2-be0b-a2d6c911a92a}</MetaDataID>
         [PersistentMember(nameof(_ClientSession))]
         //[AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+9")]
-        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession ClientSession => _ClientSession;
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession ClientSession => _ClientSession.Value;
 
 
         /// <exclude>Excluded</exclude>

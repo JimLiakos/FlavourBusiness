@@ -30,7 +30,21 @@ namespace FLBManager
             //var type = typeof(OOAdvantech.DotNetMetaDataRepository.Assembly);
             //System.Reflection.ConstructorInfo constructorInfo = type.GetConstructor(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, ParamTypes, null);
 
-         
+
+            string storageName = "jimliakosgmailcom";
+            string storageLocation = "DevStorage";
+            string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+            
+           var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+
+
+            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
+
+            List<FlavourBusinessFacade.RoomService.IItemPreparation> items = (from item in servicesContextStorage.GetObjectCollection<FlavourBusinessFacade.RoomService.IItemPreparation>()
+                                                                              select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
+
+            var sds = items[0].ClientSession;
+
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";

@@ -16,7 +16,8 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{f8309b8a-8d4b-491a-9af9-bab1fc04fb67}</MetaDataID>
         void AddItem(IItemPreparation itemPreparation);
 
-        //
+        /// <MetaDataID>{7999416a-5ea6-44d2-bb01-953986e1d9b9}</MetaDataID>
+        ItemPreparationState PreparationState { get; set; }
 
         /// <MetaDataID>{3de93cf9-61ad-4dda-b02a-99d2e810f125}</MetaDataID>
         [BackwardCompatibilityID("+1")]
@@ -24,7 +25,7 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{ec3023f2-0cb5-4472-9a52-c171fdd905fe}</MetaDataID>
         [BackwardCompatibilityID("+2")]
-        DateTime PreparedAt { get; set; }
+        DateTime ServedAt{ get; set; }
 
 
     }

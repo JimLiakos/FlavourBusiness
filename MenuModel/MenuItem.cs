@@ -466,7 +466,7 @@ namespace MenuModel
 
 
         /// <exclude>Excluded</exclude>
-        ITaxableType _TaxableType;
+       Member< ITaxableType> _TaxableType=new Member<ITaxableType>();
 
         /// <MetaDataID>{ed3807ec-bea1-49ef-a315-032befbcabc0}</MetaDataID>
         [PersistentMember(nameof(_TaxableType))]
@@ -476,7 +476,7 @@ namespace MenuModel
         {
             get
             {
-                return _TaxableType;
+                return _TaxableType.Value;
             }
 
             set
@@ -485,7 +485,7 @@ namespace MenuModel
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _TaxableType = value;
+                        _TaxableType.Value = value;
                         stateTransition.Consistent = true;
                     }
                 }
