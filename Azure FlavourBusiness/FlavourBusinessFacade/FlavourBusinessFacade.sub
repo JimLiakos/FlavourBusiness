@@ -64,7 +64,7 @@
 		    quidu      	"5BB21F630373")
 		(object Realize_Relationship
 		    quid       	"5BF91572007F"
-		    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession"
+		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"
 		    quidu      	"5BF913870050")
 		(object Realize_Relationship
 		    quid       	"5C060D800261"
@@ -625,7 +625,7 @@
 		    client     	@1
 		    supplier   	@23
 		    line_style 	0)
-		(object InterfaceView "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession" @25
+		(object InterfaceView "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @25
 		    location   	(2189, 393)
 		    font       	(object Font
 			size       	10

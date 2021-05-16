@@ -1566,10 +1566,10 @@ namespace DontWaitApp
         {
             Dictionary<string, ItemPreparationState> itemsNewState = null;
 
-            if (!WaiterView)
+            //if (!WaiterView)
                 itemsNewState = this.FoodServiceClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
-            else
-                itemsNewState = this.FoodServiceClientSession.Prepare(OrderItems.OfType<IItemPreparation>().ToList());
+            //else
+            //    itemsNewState = this.FoodServiceClientSession.Prepare(OrderItems.OfType<IItemPreparation>().ToList());
 
             foreach (var itemNewState in itemsNewState)
             {

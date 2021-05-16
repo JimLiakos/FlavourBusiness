@@ -5178,7 +5178,7 @@
 				    value      	FALSE))
 			    quid       	"5BF914980078"
 			    label      	"ServiceSessions"
-			    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession"
+			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"
 			    quidu      	"5BF913870050"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
@@ -5553,7 +5553,7 @@
 			    width      	743
 			    height     	337
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession" @3
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @3
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5581,6 +5581,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@3
+				location   	(4014, 376)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	0)
 			    width      	569
 			    height     	300
 			    annotation 	8)
@@ -7811,135 +7829,6 @@
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
-		(object Class "IFoodServiceSession"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
-			    value      	"{f1dab94d-0e50-4490-bf2f-7e233e619728}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"LastMemberID"
-			    value      	"3")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Generate Backward ID"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Identity"
-			    value      	"{f1dab94d-0e50-4490-bf2f-7e233e619728}"))
-		    quid       	"5BF913870050"
-		    stereotype 	"Interface"
-		    operations 	(list Operations
-			(object Operation "AddPartialSession"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{cbd8040a-7e39-41c2-9b9a-c3c9c5035f3c}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C062D5803D9"))
-			    quid       	"5C062D5803D9"
-			    parameters 	(list Parameters
-				(object Parameter "partialSession"
-				    quid       	"5C062D590024"
-				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceClientSession"))
-			    result     	"void"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0)
-			(object Operation "RemovePartialSession"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{b88cdc8c-90c3-4a52-8f71-cc551a101066}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C062DA003D4"))
-			    quid       	"5C062DA003D4"
-			    parameters 	(list Parameters
-				(object Parameter "partialSession"
-				    quid       	"5C062DA1001F"
-				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceClientSession"))
-			    result     	"void"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0))
-		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "SessionEnds"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{5ef17468-8f86-47d4-8ad3-4c8c01bdb790}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5BF9281D0055")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+1"))
-			    quid       	"5BF9281D0055"
-			    type       	"System.DateTime"
-			    exportControl 	"Public")
-			(object ClassAttribute "SessionStarts"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{49801850-132d-4c7f-98e7-5fb7cce430ef}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5BF9287000BB")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+2"))
-			    quid       	"5BF9287000BB"
-			    type       	"System.DateTime"
-			    exportControl 	"Public"))
-		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
-		    quidu      	"5AA773E702B6"
-		    language   	"C#")
 		(object Class "Message"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -8461,7 +8350,7 @@
 				    value      	FALSE))
 			    quid       	"5C0612B80312"
 			    label      	"MainSession"
-			    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession"
+			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"
 			    quidu      	"5BF913870050"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)))
@@ -8876,7 +8765,7 @@
 			    multi      	FALSE)
 			(object Object "Meal"
 			    quid       	"5C432B8402F8"
-			    class      	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession"
+			    class      	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"
 			    quidu      	"5BF913870050"
 			    persistence 	"Transient"
 			    creationObj 	FALSE
@@ -9079,7 +8968,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession" @67
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @67
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -9107,6 +8996,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@67
+				location   	(43, 1135)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	678)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -11007,6 +10914,9 @@
 		    name       	"MetaObjectID"
 		    value      	"FlavourBusinessFacade.RoomService"))
 	    quid       	"5D024DCB0038"
+	    external_docs 	(list external_doc_list
+		(object external_doc
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Meal Users Stories.docx"))
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "IItemPreparation"
@@ -11457,6 +11367,135 @@
 		    quid       	"609FE471004D"
 		    stereotype 	"Interface"
 		    language   	"C#")
+		(object Class "IFoodServiceSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f1dab94d-0e50-4490-bf2f-7e233e619728}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"{f1dab94d-0e50-4490-bf2f-7e233e619728}"))
+		    quid       	"5BF913870050"
+		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "RemovePartialSession"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b88cdc8c-90c3-4a52-8f71-cc551a101066}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5C062DA003D4"))
+			    quid       	"5C062DA003D4"
+			    parameters 	(list Parameters
+				(object Parameter "partialSession"
+				    quid       	"60A0C64501E1"
+				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddPartialSession"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{45ae4db3-87ca-4a6e-b867-bb5f33886b05}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60A0C645015B"))
+			    quid       	"60A0C645015B"
+			    parameters 	(list Parameters
+				(object Parameter "partialSession"
+				    quid       	"60A0C645018D"
+				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "SessionEnds"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5ef17468-8f86-47d4-8ad3-4c8c01bdb790}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5BF9281D0055")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+1"))
+			    quid       	"5BF9281D0055"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "SessionStarts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{49801850-132d-4c7f-98e7-5fb7cce430ef}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"5BF9287000BB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
+			    quid       	"5BF9287000BB"
+			    type       	"System.DateTime"
+			    exportControl 	"Public"))
+		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
+		    quidu      	"5AA773E702B6"
+		    language   	"C#")
 		(object Association "ServiceSectionFoodItems"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -11815,7 +11854,7 @@
 			    width      	628
 			    height     	318
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession" @156
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @156
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -11845,7 +11884,7 @@
 			    quidu      	"5BF913870050"
 			    compartment 	(object Compartment
 				Parent_View 	@156
-				location   	(25, 1106)
+				location   	(25, 1062)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13538,7 +13577,7 @@
 		    origin_x   	1294
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceSession" @232
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @232
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -13568,7 +13607,7 @@
 			    quidu      	"5BF913870050"
 			    compartment 	(object Compartment
 				Parent_View 	@232
-				location   	(46, 684)
+				location   	(46, 640)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"

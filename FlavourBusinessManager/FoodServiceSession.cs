@@ -163,6 +163,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{a9c1e448-ba0d-4491-8520-0dc47dfdc530}</MetaDataID>
         public void MonitorTick()
         {
 
@@ -179,13 +180,13 @@ namespace FlavourBusinessManager.ServicesContextResources
             var commitedItems = items.Where(x => x.State == ItemPreparationState.Committed).ToList();
             AssignToMealCourse(commitedItems);
 
-            
+
             var itemsInConversationSessions = itemsInConversation.Select(x => x.ClientSession).Distinct().ToList();
             var commitedItemsSessions = commitedItems.Where(x => !itemsInConversationSessions.Contains(x.ClientSession)).Select(x => x.ClientSession).Distinct().ToList();
             //commitedItemsSessions defines the sessions which has not items in conversation
             if (commitedItemsSessions.Count > 0)
             {
-
+                //
                 foreach (var conversationSession in itemsInConversationSessions.OfType<FoodServiceClientSession>())
                     conversationSession.YouMustDecide(commitedItemsSessions);
             }
@@ -217,6 +218,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSession.AddItem(flavourItem);
 
             }
+        }
+
+        public enum SessionState
+        {
+            Conversation=0,
+            PromptsUserToDecide=1
         }
     }
 }
