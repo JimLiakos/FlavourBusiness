@@ -12,6 +12,16 @@ namespace FinanceFacade
     public class TaxableType : ITaxableType
     {
 
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ITaxable> _TaxableSubjects = new OOAdvantech.Collections.Generic.Set<ITaxable>();
+
+        /// <MetaDataID>{55948d8e-1c63-4a2d-9c76-cece3542be1c}</MetaDataID>
+        [PersistentMember(nameof(_TaxableSubjects))]
+        [BackwardCompatibilityID("+3")]
+        public List<ITaxable> TaxableSubjects => _TaxableSubjects.ToThreadSafeList();
+
+        /// <MetaDataID>{495d3804-ab15-45fb-84e7-11e986cdbc54}</MetaDataID>
         [ObjectActivationCall]
         public void OnObjectActivation()
         {
@@ -69,5 +79,8 @@ namespace FinanceFacade
                 }
             }
         }
+
+
+      
     }
 }

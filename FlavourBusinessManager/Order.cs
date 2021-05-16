@@ -17,11 +17,7 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
-        /// <MetaDataID>{064a3eea-736b-48e1-a66a-ad75a5925297}</MetaDataID>
-        public void Fosotpd()
-        {
-
-        }
+   
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _FoodItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();
@@ -46,7 +42,17 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{f5802cfc-5c51-4da8-891f-c48fa3abd3b3}</MetaDataID>
         [PersistentMember(nameof(_PreparedAt))]
         [BackwardCompatibilityID("+3")]
-        public System.DateTime PreparedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public System.DateTime ServedAt { get => _PreparedAt; set => throw new NotImplementedException(); }
+
+
+
+        /// <exclude>Excluded</exclude>
+        ItemPreparationState _PreparationState;
+
+        /// <MetaDataID>{fdf1dea6-88ed-41fa-8302-6d5392ea0359}</MetaDataID>
+        [PersistentMember(nameof(_PreparationState))]
+        [BackwardCompatibilityID("+4")]
+        public ItemPreparationState PreparationState { get => _PreparationState; set => throw new NotImplementedException(); }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -72,6 +78,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{72860a38-cffd-4a68-807b-4c2ece8cddc5}</MetaDataID>
         internal static void AssignMealCourseToItem(ItemPreparation flavourItem)
         {
             //flavourItem.ClientSession.ServicePoint.

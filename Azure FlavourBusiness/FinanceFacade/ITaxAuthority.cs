@@ -27,7 +27,7 @@ namespace FinanceFacade
         ITaxableType NewTaxableType();
 
         /// <MetaDataID>{e97fb40a-0e0c-46dd-8db6-98d3b7c536d3}</MetaDataID>
-        void RemoveTaxableType(ITaxableType taxableType);
+        bool RemoveTaxableType(ITaxableType taxableType);
 
         [Association("AuthorityTaxableTypes", Roles.RoleA, "4b415a9e-1195-4e8e-be2b-07edf585e114")]
         [RoleBMultiplicityRange(1, 1)]

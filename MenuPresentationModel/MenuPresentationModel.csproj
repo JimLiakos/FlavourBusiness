@@ -125,6 +125,7 @@
     <Compile Include="MenuCanvas\ΙMenuCanvasItem.cs" />
     <None Include="MenuCanvas\MenuPageCanvas.cs" />
     <Compile Include="MenuStyles\Alignment.cs" />
+    <None Include="MenuPresentationModel.cat" />
     <None Include="MenuStyles\FontData.cs" />
     <Compile Include="MenuStyles\HeadingStyle.cs" />
     <None Include="MenuStyles\IFontData.cs" />

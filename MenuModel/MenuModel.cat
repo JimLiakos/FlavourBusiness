@@ -8268,7 +8268,7 @@
 		    quidu      	"5C6A61DE02D0"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$8"
+		(object Role "TaxableSubjects"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8287,8 +8287,11 @@
 			    name       	"Indexer"
 			    value      	FALSE))
 		    quid       	"5C6A675700B4"
+		    label      	"TaxableSubjects"
 		    supplier   	"Logical View::FinanceFacade::ITaxable"
-		    quidu      	"5C6A60EB0325")))
+		    quidu      	"5C6A60EB0325"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)))
 	(object Association "TaxableTypeTaxes"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -8321,7 +8324,7 @@
 		    quidu      	"5C6A6160024B"
 		    client_cardinality 	(value cardinality "1..*")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$9"
+		(object Role "$UNNAMED$8"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8425,7 +8428,7 @@
 		    quidu      	"5C6E352E016D"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$10"
+		(object Role "$UNNAMED$9"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8562,7 +8565,7 @@
 		    quidu      	"6075762C025B"
 		    client_cardinality 	(value cardinality "0..*")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$11"
+		(object Role "$UNNAMED$10"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8584,7 +8587,7 @@
 		    supplier   	"Logical View::MenuModel::IMenuItem"
 		    quidu      	"5721EC2D00C7"))
 	    AssociationClass 	"Logical View::MenuModel::IPartofMeal")
-	(object Association "$UNNAMED$12"
+	(object Association "$UNNAMED$11"
 	    attributes 	(list Attribute_Set
 		(object Attribute
 		    tool       	"MetaData"
@@ -8628,7 +8631,7 @@
 		    quidu      	"6075144803C3"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$13"
+		(object Role "$UNNAMED$12"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8692,7 +8695,7 @@
 		    supplier   	"Logical View::MenuModel::IMealCourseType"
 		    quidu      	"6075144803C3"
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$14"
+		(object Role "$UNNAMED$13"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8800,24 +8803,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2DA260099"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(2353, 809)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	331)
 		    width      	613
 		    height     	362
 		    annotation 	8)
@@ -8848,24 +8833,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2E556007B"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(834, 858)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	303)
 		    width      	456
 		    height     	339
 		    annotation 	8)
@@ -9840,24 +9807,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57221D830252"
-		    compartment 	(object Compartment
-			Parent_View 	@47
-			location   	(3804, 1709)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	937)
 		    width      	588
 		    height     	312
 		    annotation 	8)
@@ -10266,24 +10215,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2E556007B"
-		    compartment 	(object Compartment
-			Parent_View 	@68
-			location   	(4785, 2077)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	303)
 		    width      	456
 		    height     	339
 		    annotation 	8)
@@ -12762,6 +12693,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
+		    compartment 	(object Compartment
+			Parent_View 	@186
+			location   	(75, 1026)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	0)
 		    width      	468
 		    height     	307
 		    annotation 	8)
@@ -13017,7 +12966,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))
-			(object RoleView "$UNNAMED$10" @199
+			(object RoleView "$UNNAMED$9" @199
 			    Parent_View 	@194
 			    location   	(-479, -1)
 			    stereotype 	TRUE
@@ -13263,7 +13212,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	1041
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::MealCourseType" @214
@@ -13422,7 +13371,7 @@
 		    width      	544
 		    height     	313
 		    annotation 	8)
-		(object AssociationViewNew "$UNNAMED$12" @218
+		(object AssociationViewNew "$UNNAMED$11" @218
 		    location   	(2317, 273)
 		    font       	(object Font
 			size       	10
@@ -13503,7 +13452,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "$UNNAMED$13" @222
+			(object RoleView "$UNNAMED$12" @222
 			    Parent_View 	@218
 			    location   	(875, -7)
 			    stereotype 	TRUE
@@ -13646,7 +13595,7 @@
 				pctDist    	0.750000
 				height     	56
 				orientation 	0))
-			(object RoleView "$UNNAMED$11" @229
+			(object RoleView "$UNNAMED$10" @229
 			    Parent_View 	@224
 			    location   	(-2789, 247)
 			    stereotype 	TRUE
@@ -13742,7 +13691,7 @@
 			    client     	@231
 			    supplier   	@217
 			    line_style 	0)
-			(object RoleView "$UNNAMED$14" @235
+			(object RoleView "$UNNAMED$13" @235
 			    Parent_View 	@231
 			    location   	(496, -170)
 			    stereotype 	TRUE

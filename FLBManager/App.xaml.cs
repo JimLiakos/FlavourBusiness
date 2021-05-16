@@ -30,7 +30,21 @@ namespace FLBManager
             //var type = typeof(OOAdvantech.DotNetMetaDataRepository.Assembly);
             //System.Reflection.ConstructorInfo constructorInfo = type.GetConstructor(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, ParamTypes, null);
 
-         
+
+            string storageName = "jimliakosgmailcom";
+            string storageLocation = "DevStorage";
+            string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+            
+           var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+
+
+            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
+
+            List<FlavourBusinessFacade.RoomService.IItemPreparation> items = (from item in servicesContextStorage.GetObjectCollection<FlavourBusinessFacade.RoomService.IItemPreparation>()
+                                                                              select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
+
+            var sds = items[0].ClientSession;
+
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
@@ -79,8 +93,8 @@ namespace FLBManager
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.2:8090/api/Storages");
-            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.2:8090/api/";
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
+            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
         }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
