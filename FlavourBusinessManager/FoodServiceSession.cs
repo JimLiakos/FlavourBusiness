@@ -108,15 +108,40 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{40eff473-e07d-4486-97f2-f44bcd37c877}</MetaDataID>
         public void AddPartialSession(IFoodServiceClientSession partialSession)
         {
-
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            if (!PartialClientSessions.Contains(partialSession))
             {
-                _PartialClientSessions.Add(partialSession);
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _PartialClientSessions.Add(partialSession);
+
+                    stateTransition.Consistent = true;
+                }
+                partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
+                PromptsUserToDecideSessionStateCheck();
             }
 
         }
 
+        private void PartialSession_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IFoodServiceClientSession.SessionState))
+            {
+                PromptsUserToDecideSessionStateCheck();
+
+            }
+        }
+
+        private void PromptsUserToDecideSessionStateCheck()
+        {
+            var partialClientSessions = PartialClientSessions;
+            if (partialClientSessions.Where(x => x.SessionState == ClientSessionState.Conversation).Count() > 0 && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() > 0)
+                SessionState = SessionState.PromptsUserToDecide;
+
+            if (partialClientSessions.Where(x => x.SessionState == ClientSessionState.Conversation).Count() == partialClientSessions.Count)
+                SessionState = SessionState.Conversation;
+        }
+
+        /// <MetaDataID>{f7125663-4378-4d70-868d-4c90af7c98fd}</MetaDataID>
         public static TimeSpan YouMustDecideFromStartOfSession
         {
             get
@@ -124,6 +149,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return TimeSpan.FromMinutes(6);
             }
         }
+        /// <MetaDataID>{3e61ac19-61f9-45cd-bc8a-a58b62a7bbcf}</MetaDataID>
         public static TimeSpan YouMustDecideFromFirstPreparationItemCommit
         {
             get
@@ -132,6 +158,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{d9669276-6fef-49a6-a5db-3d56880a9958}</MetaDataID>
         public static TimeSpan YouMustDecideWhenDeviceIsIdle
         {
             get
@@ -141,11 +168,34 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{115bab53-101d-444f-b364-e8f27d160e71}</MetaDataID>
         public static TimeSpan MealConversetionTime
         {
             get
             {
                 return TimeSpan.FromMinutes(10);
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        SessionState _SessionState;
+
+        /// <MetaDataID>{992bbbb9-bddc-4b7d-89f9-90360d6fe4d1}</MetaDataID>
+        [PersistentMember(nameof(_SessionState))]
+        [BackwardCompatibilityID("+5")]
+        public SessionState SessionState
+        {
+            get => _SessionState;
+            set
+            {
+                if (_SessionState != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SessionState = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 
@@ -160,6 +210,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PartialClientSessions.Remove(partialSession);
                 stateTransition.Consistent = true;
             }
+            PromptsUserToDecideSessionStateCheck();
+            partialSession.ObjectChangeState -= PartialSession_ObjectChangeState;
+        }
+        [ObjectActivationCall]
+        internal void OnActivated()
+        {
+
+            foreach (var partialSession in PartialClientSessions)
+                partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
 
         }
 
@@ -204,11 +263,13 @@ namespace FlavourBusinessManager.ServicesContextResources
             #endregion
         }
 
+        /// <MetaDataID>{29befc39-e794-46cc-8600-80ee7bbed2ff}</MetaDataID>
         private void AssignToMealCourse(List<IItemPreparation> commitedItems)
         {
-            
+
         }
 
+        /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
         internal void ReassignSharedItem(ItemPreparation flavourItem)
         {
             if (flavourItem.SharedInSessions.Count != 0)
@@ -220,10 +281,5 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        public enum SessionState
-        {
-            Conversation=0,
-            PromptsUserToDecide=1
-        }
     }
 }

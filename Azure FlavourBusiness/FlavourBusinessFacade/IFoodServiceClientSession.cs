@@ -174,8 +174,19 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{5e5aa9fa-5b59-43f6-9e62-0852f60c6c4b}</MetaDataID>
         void MenuItemProposal(IFoodServiceClientSession messmateClientSesion, string menuItemUri);
+
+        /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
+        ClientSessionState SessionState { get; set; }
+
+
     }
 
+    /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>
+    public enum ClientSessionState
+    {
+        Conversation = 0,
+        ItemsCommited = 1
+    }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages
     {

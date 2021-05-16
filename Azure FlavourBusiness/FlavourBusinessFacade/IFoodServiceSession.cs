@@ -33,6 +33,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+2")]
         DateTime SessionStarts { get; set; }
 
-       
+        /// <MetaDataID>{1859dba8-9740-40df-92a0-ceacd7586667}</MetaDataID>
+        SessionState SessionState { get; set; }
+
+
+    }
+
+    /// <MetaDataID>{e95ad745-80af-4906-8191-1962f605d70b}</MetaDataID>
+    public enum SessionState
+    {
+        Conversation = 0,
+        PromptsUserToDecide = 1
     }
 }

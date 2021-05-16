@@ -750,7 +750,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <exclude>Excluded</exclude>;
-        OOAdvantech.Member<FlavourBusinessFacade.HumanResources.IWaiter> _Waiter=new OOAdvantech.Member<IWaiter>();
+        OOAdvantech.Member<FlavourBusinessFacade.HumanResources.IWaiter> _Waiter = new OOAdvantech.Member<IWaiter>();
 
         /// <MetaDataID>{efecab6b-0f79-4b59-8137-e18550333365}</MetaDataID>
         [PersistentMember(nameof(_Waiter))]
@@ -760,6 +760,30 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 return _Waiter.Value;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        ClientSessionState _SessionState;
+
+        /// <MetaDataID>{d3a7b762-52a5-4926-8f7a-4e6389581d2f}</MetaDataID>
+        [PersistentMember(nameof(_SessionState))]
+        [BackwardCompatibilityID("+22")]
+        public ClientSessionState SessionState
+        {
+            get => _SessionState;
+            set
+            {
+                if (_SessionState != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SessionState = value;
+                        stateTransition.Consistent = true;
+                    }
+
+                    ObjectChangeState?.Invoke(this, nameof(SessionState));
+                }
             }
         }
 
@@ -1017,12 +1041,12 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
-
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
+                        if (_FlavourItems.Where(x => x.State == ItemPreparationState.New).Count() > 0)
+                                ItemUndoCommitment();
 
                         foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                             preparationStation.OnPreparationItemChangeState(existingItem);
-
                     }
 
                     ModificationTime = DateTime.UtcNow;
@@ -1049,6 +1073,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+       
 
 
         /// <MetaDataID>{6f3aecf2-dbfb-4493-a33a-88a5f34578f4}</MetaDataID>
@@ -1081,7 +1106,7 @@ namespace FlavourBusinessManager.EndUsers
                     _FlavourItems.Add(item);
                     (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                     ModificationTime = DateTime.UtcNow;
-                    
+
                     MealCourse.AssignMealCourseToItem(flavourItem);
 
                     stateTransition.Consistent = true;
@@ -1296,7 +1321,7 @@ namespace FlavourBusinessManager.EndUsers
             ItemsStateChanged?.Invoke(newItemsState);
 
         }
-        
+
         /// <MetaDataID>{fc8a4f16-49d7-43d7-af13-fe9049a196a7}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations)
         {
@@ -1317,7 +1342,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var item in flavourItems)
                 {
-                    if (item.State == ItemPreparationState.New|| item.State == ItemPreparationState.Committed)
+                    if (item.State == ItemPreparationState.New || item.State == ItemPreparationState.Committed)
                     {
                         item.State = ItemPreparationState.PendingPreparation;
                         itemsNewState[item.uid] = item.State;
@@ -1327,7 +1352,7 @@ namespace FlavourBusinessManager.EndUsers
                 stateTransition.Consistent = true;
             }
 
-           
+
 
 
             if (MainSession != null)
@@ -1349,6 +1374,9 @@ namespace FlavourBusinessManager.EndUsers
                 stateTransition.Consistent = true;
             }
         }
+
+
+
 
         /// <MetaDataID>{e91f2250-533d-4aab-b78c-bb88fd0c2106}</MetaDataID>
         public void DeviceSleep()
@@ -1384,6 +1412,8 @@ namespace FlavourBusinessManager.EndUsers
                         changeStateFlavourItems.Add(item);
                     }
                 }
+                AllItemsCommited();
+          
                 stateTransition.Consistent = true;
             }
 
@@ -1394,6 +1424,19 @@ namespace FlavourBusinessManager.EndUsers
             }
 
             return itemsNewState;
+        }
+
+        /// <MetaDataID>{9db073fb-148b-4efe-99c6-2cb6f4e68f42}</MetaDataID>
+        private void AllItemsCommited()
+        {
+            if (_SessionState == ClientSessionState.Conversation)
+                _SessionState = ClientSessionState.ItemsCommited;
+        }
+        /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
+        private void ItemUndoCommitment()
+        {
+            if (_SessionState == ClientSessionState.ItemsCommited)
+                _SessionState = ClientSessionState.Conversation;
         }
     }
 
