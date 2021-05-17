@@ -281,6 +281,7 @@
     <Compile Include="HumanResources\Waiter.cs" />
     <None Include="app.config" />
     <None Include="FlavourBusinessManager.cat" />
+    <None Include="FlavourBusinessManager.sub" />
     <None Include="IsolatedComputingContext.cs" />
     <Compile Include="ItemPreparation.cs" />
     <Compile Include="ItemsPriparationInfo.cs" />

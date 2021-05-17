@@ -1,0 +1,92 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object SubSystem "FlavourBusinessManager"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"5A71DF740060"
+    physical_models 	(list unit_reference_list
+	(object module "FlavourBusinessManager" "NotAModuleType" "NotAModulePart"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Solution"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusiness.sln")
+		(object Attribute
+		    tool       	"DotNet"
+		    name       	"Project"
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusinessManager\\FlavourBusinessManager.csproj")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{25AEC1BF-1882-41C8-8B4A-B3B3E1EF624D}"))
+	    quid       	"5A71E29001B9"
+	    stereotype 	""
+	    language   	"C#"))
+    physical_presentations 	(list unit_reference_list
+	(object Module_Diagram "Main"
+	    quid       	"5A71E0230241"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ModView "Component View::FlavourBusinessManager::FlavourBusinessManager" "NotAModuleType" "NotAModulePart" @1
+		    location   	(763, 787)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(701, 762)
+			fill_color 	13434879
+			anchor_loc 	3
+			nlines     	2
+			max_width  	230
+			label      	"FlavourBusinessManager")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5A71E29001B9"
+		    width      	416
+		    width      	416
+		    height     	162)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::IOrganization" @2
+		    location   	(839, 213)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(838, 321)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IOrganization")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5A71E30A0241"
+		    width      	180
+		    height     	60)))))
