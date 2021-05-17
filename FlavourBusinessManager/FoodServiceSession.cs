@@ -282,11 +282,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             #endregion
         }
 
-        /// <MetaDataID>{29befc39-e794-46cc-8600-80ee7bbed2ff}</MetaDataID>
-        private void AssignToMealCourse(List<IItemPreparation> commitedItems)
-        {
+       
 
-        }
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
         internal void ReassignSharedItem(ItemPreparation flavourItem)
