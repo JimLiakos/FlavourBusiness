@@ -17,5 +17,12 @@ namespace MenuModel
         /// <MetaDataID>{9593497e-bd77-4e59-87fd-d2928e26c624}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         string Name { get; set; }
+
+        /// <summary>
+        /// All menu items where are not parts o of meal type assigned to meal course of default meal course type
+        /// </summary>
+        /// <MetaDataID>{8d8bec0f-5c00-4a1f-a87f-02eb7dff8fd6}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        bool IsDefault { get; }
     }
 }

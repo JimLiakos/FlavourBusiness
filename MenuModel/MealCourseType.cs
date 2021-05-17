@@ -10,6 +10,7 @@ namespace MenuModel
     [Persistent()]
     public class MealCourseType :MarshalByRefObject, IMealCourseType
     {
+      
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -74,5 +75,30 @@ namespace MenuModel
 
         /// <MetaDataID>{b896d9eb-3624-45c6-a301-6ee6940b056b}</MetaDataID>
         public Multilingual MultilingualName => new Multilingual(_Name);
+
+
+        /// <exclude>Excluded</exclude>
+        private  bool _IsDefault;
+
+        /// <MetaDataID>{dab697e1-e1c9-4cd9-a5d4-7362440f8373}</MetaDataID>
+        [PersistentMember(nameof(_IsDefault))]
+        [BackwardCompatibilityID("+3")]
+        public bool IsDefault
+        {
+            get => _IsDefault;
+            internal set
+            {
+
+                if (_IsDefault != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsDefault = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
     }
 }

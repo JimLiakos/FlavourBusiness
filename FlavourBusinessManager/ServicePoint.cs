@@ -338,7 +338,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                             if (user is HumanResources.Waiter)
                             {
-                                fsClientSession.WaiterSession = true;
+                                fsClientSession.IsWaiterSession = true;
                                 (user as HumanResources.Waiter).AddClientSession(fsClientSession);
                             }
 
@@ -367,7 +367,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     lock (ServicePointLock)
                     {
                         
-                        if (_ActiveFoodServiceClientSessions.Where(x => !x.WaiterSession).Count() == 0&&!fsClientSession.WaiterSession)
+                        if (_ActiveFoodServiceClientSessions.Where(x => !x.IsWaiterSession).Count() == 0&&!fsClientSession.IsWaiterSession)
                             ChangeServicePointState(ServicePointState.Laying);
 
 
@@ -439,7 +439,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
             var collection = (from foodServiceClient in storage.GetObjectCollection<FoodServiceClientSession>()
-                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession && !foodServiceClient.WaiterSession
+                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession && !foodServiceClient.IsWaiterSession
                               select foodServiceClient).ToList();
 
 

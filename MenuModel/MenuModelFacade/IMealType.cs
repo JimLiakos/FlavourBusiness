@@ -6,6 +6,10 @@ namespace MenuModel
     /// <MetaDataID>{d6b8d9b8-631e-41c9-95bc-21011b6812dd}</MetaDataID>
     public interface IMealType
     {
+        /// <MetaDataID>{0165b687-3af9-417e-abe1-bcccef60ac86}</MetaDataID>
+        void SetDefaultMealCourse(IMealCourseType mealCourseType);
+
+
         /// <MetaDataID>{cde546b3-05c0-4510-8845-bfbd7369e9f8}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         Multilingual MultilingualName { get; }
@@ -26,6 +30,7 @@ namespace MenuModel
         void RemoveMealCourseType(IMealCourseType mealCourseType);
 
 
+        /// <MetaDataID>{9a70d048-dbde-4eaa-aab0-99337ffbe527}</MetaDataID>
         MenuModel.IMealCourseType NewMealCourseType();
     }
 }

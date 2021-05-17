@@ -13,6 +13,30 @@ namespace MenuModel
     [Persistent()]
     public class MealType : MarshalByRefObject, IMealType
     {
+        /// <MetaDataID>{97478e3f-39d5-4caa-bae7-3114a53758ca}</MetaDataID>
+        public void SetDefaultMealCourse(IMealCourseType mealCourseType)
+        {
+            lock (CoursesLock)
+            {
+                if (mealCourseType != null)
+                {
+                    var defaultMealCourseType = Courses.OfType<MealCourseType>().Where(x => x.IsDefault).FirstOrDefault();
+                    if (defaultMealCourseType == mealCourseType)
+                        return;
+                    else
+                    {
+
+                        if (defaultMealCourseType != null)
+                            defaultMealCourseType.IsDefault = false;
+                        (mealCourseType as MealCourseType).IsDefault = true;
+                    }
+                }
+
+
+
+            }
+
+        }
 
         /// <MetaDataID>{5810ad84-2397-4473-8fb1-84fc190dea02}</MetaDataID>
         protected MealType()
@@ -32,25 +56,40 @@ namespace MenuModel
         /// <MetaDataID>{3afdc45d-df0d-47d0-962a-a39ad502a427}</MetaDataID>
         public virtual IMealCourseType NewMealCourseType()
         {
-            IMealCourseType mealCourseType;
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            lock (CoursesLock)
             {
-                mealCourseType = new MealCourseType(Properties.Resources.NewMealCourseName);
-                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(mealCourseType);
-                _Courses.Add(mealCourseType);
-                
-                stateTransition.Consistent = true;
+                MealCourseType mealCourseType;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    mealCourseType = new MealCourseType(Properties.Resources.NewMealCourseName);
+                    if (_Courses.Where(x => x.IsDefault).Count() == 0)
+                        mealCourseType.IsDefault = true;
+
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(mealCourseType);
+                    _Courses.Add(mealCourseType);
+                    stateTransition.Consistent = true;
+                }
+                return mealCourseType;
             }
-            return mealCourseType;
         }
 
         /// <MetaDataID>{f9bb0ec8-6183-47c2-999a-fe16d254855c}</MetaDataID>
         public virtual void RemoveMealCourseType(IMealCourseType mealCourseType)
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            lock (CoursesLock)
             {
-                _Courses.Remove(mealCourseType);
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Courses.Remove(mealCourseType);
+                    if(mealCourseType.IsDefault)
+                    {
+                        var firstMealCourseType = _Courses.OfType<MealCourseType>().FirstOrDefault();
+                        if (firstMealCourseType != null)
+                            firstMealCourseType.IsDefault = true;
+                    }
+
+                    stateTransition.Consistent = true;
+                }
             }
         }
 
@@ -70,7 +109,7 @@ namespace MenuModel
 
 
 
-
+        object CoursesLock = new object();
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IMealCourseType> _Courses = new OOAdvantech.Collections.Generic.Set<IMealCourseType>();

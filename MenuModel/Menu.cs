@@ -57,6 +57,7 @@ namespace MenuModel
             }
         }
 
+        /// <MetaDataID>{9016aae0-96aa-4ac6-81a1-f84d106b6a3b}</MetaDataID>
         OOAdvantech.Member<ITaxAuthority> _TaxAuthority = new OOAdvantech.Member<ITaxAuthority>();
 
         /// <MetaDataID>{509986d9-e260-48c8-8c66-1b47ee2979ad}</MetaDataID>
@@ -128,6 +129,7 @@ namespace MenuModel
 
         }
 
+        /// <MetaDataID>{20b41867-4995-4028-8268-af1ee865c46c}</MetaDataID>
         public void BeforeCommitObjectState()
         {
         }

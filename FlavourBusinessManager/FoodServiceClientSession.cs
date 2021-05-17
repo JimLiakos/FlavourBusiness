@@ -61,21 +61,21 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <exclude>Excluded</exclude>
-        bool _WaiterSession;
+        bool _IsWaiterSession;
 
         /// <MetaDataID>{93acba25-648a-45a6-9326-18b83386e592}</MetaDataID>
-        [PersistentMember(nameof(_WaiterSession))]
+        [PersistentMember(nameof(_IsWaiterSession))]
         [BackwardCompatibilityID("+20")]
-        public bool WaiterSession
+        public bool IsWaiterSession
         {
-            get => _WaiterSession;
+            get => _IsWaiterSession;
             set
             {
-                if (_WaiterSession != value)
+                if (_IsWaiterSession != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _WaiterSession = value;
+                        _IsWaiterSession = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -1023,16 +1023,13 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{18d66316-cbc0-4673-8b25-5e0af87b32a0}</MetaDataID>
         public void ItemChanged(IItemPreparation item)
         {
-
             try
             {
-
                 ItemPreparation existingItem;
                 if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
                     existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
                 else
                     existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
-
 
                 if (existingItem == null)
                     return;
@@ -1048,7 +1045,6 @@ namespace FlavourBusinessManager.EndUsers
                         foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                             preparationStation.OnPreparationItemChangeState(existingItem);
                     }
-
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }

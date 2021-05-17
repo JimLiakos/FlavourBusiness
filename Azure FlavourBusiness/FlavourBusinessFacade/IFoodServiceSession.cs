@@ -43,6 +43,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
     public enum SessionState
     {
         Conversation = 0,
-        PromptsUserToDecide = 1
+        PromptsUserToDecide = 1,
+        MealMonitoring=2
+
     }
 }

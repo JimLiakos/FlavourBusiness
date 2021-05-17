@@ -6301,7 +6301,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4")
+		    value      	"5")
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"BackwardCompatibilityIDTransfered"
@@ -6410,7 +6410,36 @@
 			    name       	"Identity"
 			    value      	"+3"))
 		    quid       	"6078FEDB03A2"
-		    type       	"Multilingual"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsDefault"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8d8bec0f-5c00-4a1f-a87f-02eb7dff8fd6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"60A207DD033A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"60A207DD033A"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModelFacade"
 	    quidu      	"5D03255500E1"
@@ -6432,7 +6461,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"3")
+		    value      	"4")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -6569,6 +6598,39 @@
 			    value      	TRUE))
 		    quid       	"607903370031"
 		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsDefault"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dab697e1-e1c9-4cd9-a5d4-7362440f8373}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"60A208640131")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"60A208640131"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModel"
 	    quidu      	"5721E69F03B9"
@@ -6626,6 +6688,26 @@
 			    value      	"6075A98300A7"))
 		    quid       	"6075A98300A7"
 		    result     	"MenuModel.IMealCourseType"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetDefaultMealCourse"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"60A209100239")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0165b687-3af9-417e-abe1-bcccef60ac86}"))
+		    quid       	"60A209100239"
+		    parameters 	(list Parameters
+			(object Parameter "mealCourseType"
+			    quid       	"60A209610272"
+			    type       	"IMealCourseType"
+			    quidu      	"6075144803C3"))
+		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -6997,6 +7079,26 @@
 			(object Parameter "objectStorage"
 			    quid       	"607903260210"
 			    type       	"OOAdvantech.PersistenceLayer.ObjectStorage"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetDefaultMealCourse"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"60A209EF01D8")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{97478e3f-39d5-4caa-bae7-3114a53758ca}"))
+		    quid       	"60A209EF01D8"
+		    parameters 	(list Parameters
+			(object Parameter "mealCourseType"
+			    quid       	"60A209EF01D9"
+			    type       	"IMealCourseType"
+			    quidu      	"6075144803C3"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -12693,24 +12795,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
-		    compartment 	(object Compartment
-			Parent_View 	@186
-			location   	(75, 1026)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	4
-			max_width  	0)
 		    width      	468
 		    height     	307
 		    annotation 	8)
@@ -13206,9 +13290,9 @@
 		    client     	@209
 		    supplier   	@212
 		    line_style 	0)))
-	(object ClassDiagram "Meal"
+	(object ClassDiagram "Meal metadata"
 	    quid       	"607574C5037B"
-	    title      	"Meal"
+	    title      	"Meal metadata"
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
@@ -13323,7 +13407,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::MenuModel::IMealCourseType" @217
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3219, 284)
+		    location   	(3228, 303)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13339,7 +13423,7 @@
 			location   	(2956, 228)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	526
+			max_width  	545
 			justify    	0
 			label      	"IMealCourseType")
 		    icon       	"Interface"
@@ -13368,8 +13452,8 @@
 			compartmentItems 	(list Compartment
 			    "+ DurationInMinutes : double"
 			    "+ Name : string"))
-		    width      	544
-		    height     	313
+		    width      	563
+		    height     	350
 		    annotation 	8)
 		(object AssociationViewNew "$UNNAMED$11" @218
 		    location   	(2317, 273)
@@ -13429,7 +13513,7 @@
 			    supplier   	@217
 			    line_style 	3
 			    origin_attachment 	(2317, 273)
-			    terminal_attachment 	(2947, 273)
+			    terminal_attachment 	(2956, 292)
 			    label      	(object SegLabel @221
 				Parent_View 	@219
 				location   	(2883, 327)
@@ -13613,7 +13697,7 @@
 		    supplier   	@215
 		    line_style 	0)
 		(object AssociationViewNew "MealTypeCurses" @231
-		    location   	(2666, 487)
+		    location   	(2666, 497)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13626,7 +13710,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @232
 			Parent_View 	@231
-			location   	(2677, 591)
+			location   	(2677, 601)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -13652,7 +13736,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "Courses" @233
 			    Parent_View 	@231
-			    location   	(496, -170)
+			    location   	(496, -160)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13665,7 +13749,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @234
 				Parent_View 	@233
-				location   	(2894, 482)
+				location   	(2893, 498)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13693,7 +13777,7 @@
 			    line_style 	0)
 			(object RoleView "$UNNAMED$13" @235
 			    Parent_View 	@231
-			    location   	(496, -170)
+			    location   	(496, -160)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"60757B080132"
@@ -13743,7 +13827,7 @@
 		    supplier   	@217
 		    line_style 	3
 		    origin_attachment 	(3141, 1065)
-		    terminal_attachment 	(3141, 440))
+		    terminal_attachment 	(3141, 477))
 		(object ClassView "Class" "Logical View::MenuModel::MealType" @239
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(2203, 1187)

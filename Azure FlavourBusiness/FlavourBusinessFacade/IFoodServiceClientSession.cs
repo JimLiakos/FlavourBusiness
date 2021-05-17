@@ -20,7 +20,7 @@ namespace FlavourBusinessFacade.EndUsers
         
         /// <MetaDataID>{a8310e74-53f0-4f82-9400-63f5377dacae}</MetaDataID>
         [BackwardCompatibilityID("+9")]
-        bool WaiterSession { get; }
+        bool IsWaiterSession { get; }
  
         [Association("WaterServiceSession", Roles.RoleB, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
         HumanResources.IWaiter Waiter { get; }

@@ -115,6 +115,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{878f062d-16a9-4852-8ab0-343a213640c4}</MetaDataID>
         private void Supervisor_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IWaiter.ActiveShiftWork))
@@ -158,6 +159,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{e9759669-6bd8-4091-b318-90229918434e}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IWaiter.ActiveShiftWork))
@@ -237,11 +239,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
             SessionsMonitoringTimer.Start();
             SessionsMonitoringTimer.Elapsed += SessionsMonitoringTimer_Elapsed;
             SessionsMonitoringTimer.AutoReset = false;
-
+            _Current = this;
         }
 
+        /// <exclude>Excluded</exclude>
+        static ServicesContextRunTime _Current;
+        /// <MetaDataID>{925c577b-d2f2-457e-99ed-c29b27e24eda}</MetaDataID>
+        public static ServicesContextRunTime Current { get => _Current; }
+
+
+        /// <MetaDataID>{54caa9a3-5612-44a1-a91d-91e7294825ba}</MetaDataID>
         MenuModel.Menu OperativeRestaurantMenu;
 
+        /// <MetaDataID>{269a82d7-69e7-4e6c-9832-c50e7a1fa8b2}</MetaDataID>
         [ObjectActivationCall]
         void ObjectActivation()
         {
@@ -261,9 +271,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
-        /// <MetaDataID>{8c618e2f-cf26-437a-8353-dfba3e97a50e}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         object ObjLock = new object();
-        /// <MetaDataID>{0de9e788-725f-4b08-a6ff-6fcfca4a8c48}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         List<EndUsers.FoodServiceClientSession> _OpenClientSessions;
         /// <MetaDataID>{b6321911-81bf-401b-93fe-a0b4277bc301}</MetaDataID>
         List<EndUsers.FoodServiceClientSession> OpenClientSessions
@@ -549,7 +559,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{c1f668e1-a630-46cf-9797-3569d2e193b2}</MetaDataID>
         List<HumanResources.Waiter> WaitersWithUnreadedMessages = null;
+        /// <MetaDataID>{a8d06287-3ab2-4a1a-8858-e36d8822fcb9}</MetaDataID>
         internal void ServicePointChangeState(ServicePoint servicePoint, ServicePointState oldState, ServicePointState newState)
         {
             if (newState == ServicePointState.Laying)
@@ -690,6 +702,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //    PublishMenuRestaurantMenuData();
         }
 
+        /// <MetaDataID>{86ae372e-b324-43c2-a142-debc7505971f}</MetaDataID>
         void PublishMenuRestaurantMenuData()
         {
 
@@ -708,11 +721,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 version = "v" + v.ToString();
             }
 
-            string previousVersionServerStorageFolder = GetVersionFolder( oldVersion);
+            string previousVersionServerStorageFolder = GetVersionFolder(oldVersion);
 
-            string serverStorageFolder = GetVersionFolder( version);
+            string serverStorageFolder = GetVersionFolder(version);
             string jsonFileName = serverStorageFolder + restaurantMenusData.Name + ".json";
-            WritePublicRestaurantMenuData( jsonFileName);
+            WritePublicRestaurantMenuData(jsonFileName);
 
             if (fileManager != null)
             {
@@ -731,7 +744,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
             //var sss = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.IMenuItem>>(jsonEx, jSetttings);
         }
-        private  void WritePublicRestaurantMenuData( string jsonFileName)
+        /// <MetaDataID>{09d076c1-518e-4c4c-8c94-ad05f45ab97a}</MetaDataID>
+        private void WritePublicRestaurantMenuData(string jsonFileName)
         {
             IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
 
@@ -762,7 +776,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{a6d225d5-a273-4988-bbc2-d773cbd1ecb9}</MetaDataID>
-        private  string GetVersionFolder( string version)
+        private string GetVersionFolder(string version)
         {
             string versionSuffix = "";
             if (!string.IsNullOrWhiteSpace(version))
@@ -819,9 +833,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
 
-          
+
         }
 
+        /// <MetaDataID>{e1d0f93c-b314-44dd-a9ba-41a73faf3a51}</MetaDataID>
         public void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef)
         {
             SetRestaurantMenusData(restaurantMenusDataStorageRef);
@@ -831,7 +846,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
-        /// <MetaDataID>{1493900f-6d55-49dd-beb8-5194a97a9b5b}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         List<IServiceArea> _ServiceAreas;
         /// <MetaDataID>{cabdf8c9-31ab-4668-9bc0-861e965e6996}</MetaDataID>
         public IList<IServiceArea> ServiceAreas
@@ -964,6 +979,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
+        /// <MetaDataID>{a82e0e64-72d8-4c6c-bc2d-6c30c4737337}</MetaDataID>
         IList<IShiftWork> GetActiveShiftWorks()
         {
             var mileStoneDate = System.DateTime.UtcNow - TimeSpan.FromDays(1);
@@ -1000,6 +1016,32 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         where preparationStation.ServicesContextIdentity == servicesContextIdentity
                         select preparationStation).ToList();
 
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        int _AllMessmetesCommitedTimeSpan=120;
+
+        /// <summary>
+        /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 
+        /// </summary>
+        /// <MetaDataID>{594d0953-06b7-46d0-953e-5efd14086a70}</MetaDataID>
+        [PersistentMember(nameof(_AllMessmetesCommitedTimeSpan))]
+        [BackwardCompatibilityID("+6")]
+        public int AllMessmetesCommitedTimeSpan
+        {
+            get => _AllMessmetesCommitedTimeSpan;
+            set
+            {
+                if (_AllMessmetesCommitedTimeSpan != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AllMessmetesCommitedTimeSpan = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 
@@ -1280,7 +1322,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public IUploadSlot GetUploadSlotFor(OrganizationStorageRef storageRef)
         {
             var fbStorage = (from storage in this._Storages
-                             where storage.StorageIdentity == storageRef.StorageIdentity&&storage.FlavourStorageType==storage.FlavourStorageType
+                             where storage.StorageIdentity == storageRef.StorageIdentity && storage.FlavourStorageType == storage.FlavourStorageType
                              select storage).FirstOrDefault();
 
             if (fbStorage == null)
@@ -1400,11 +1442,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{234a4e8e-d5b5-4a98-9372-8719ced1568e}</MetaDataID>
         public void ChangeSiftWork(IShiftWork shiftWork, DateTime startedAt, double timespanInHours)
         {
             shiftWork.Worker.ChangeSiftWork(shiftWork, startedAt, timespanInHours);
         }
 
+        /// <MetaDataID>{ad553593-59ac-4542-944d-b02f1ee008ac}</MetaDataID>
         public IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours)
         {
             return worker.NewShiftWork(startedAt, timespanInHours);
@@ -1435,6 +1479,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{bc4d31f4-b44e-4d59-845e-582531cd8584}</MetaDataID>
         public bool IsGraphicMenuAssigned(string storageIdentity)
         {
             var fbstorage = (from storage in _Storages

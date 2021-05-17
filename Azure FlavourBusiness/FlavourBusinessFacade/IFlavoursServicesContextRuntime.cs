@@ -13,6 +13,14 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContextRuntime
     {
+
+        /// <summary>
+        /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 
+        /// </summary>
+        /// <MetaDataID>{968458ec-cde6-4550-aaf1-7a07b8c2df52}</MetaDataID>
+        //// <MetaDataID>{365997d7-44db-4eb6-ac10-1a82b540c918}</MetaDataID>
+        int AllMessmetesCommitedTimeSpan { get; set; }
+
         /// <MetaDataID>{477e1b7a-ca3c-4692-9916-8da26be81967}</MetaDataID>
         bool RemoveSupervisor(IServiceContextSupervisor supervisor);
 
@@ -66,7 +74,7 @@ namespace FlavourBusinessFacade
         event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{e63eeb30-6665-4aaa-9c93-9eb6797c7b44}</MetaDataID>
-        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID,  string deviceFirebaseToken,string clientIdentity, IUser user, string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool create);
+        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, IUser user, string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool create);
 
 
 
@@ -77,6 +85,7 @@ namespace FlavourBusinessFacade
         System.Collections.Generic.List<OrganizationStorageRef> GraphicMenus { get; }
 
 
+        /// <MetaDataID>{d721f72e-a993-4207-804b-6eeff7a18ae8}</MetaDataID>
         bool IsGraphicMenuAssigned(string storageIdentity);
 
 
@@ -89,7 +98,7 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{60523b70-56ae-4d3a-962b-2c3911f4c9da}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+2")]
-        string ServicesContextIdentity { get;  }
+        string ServicesContextIdentity { get; }
 
 
         /// <MetaDataID>{2e3ac379-09ee-4a82-be2f-721452356c5b}</MetaDataID>
@@ -104,6 +113,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{875524bb-8d42-4f6a-8286-98a1aaf524df}</MetaDataID>
         void GraphicMenuStorageUpdated(OrganizationStorageRef graphicMenuStorageRef);
 
+        /// <MetaDataID>{8e7c1368-77d0-408a-9854-b31b76758af9}</MetaDataID>
         void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef);
 
         /// <MetaDataID>{9ee24cdb-c006-4969-8a2d-a3ba893eac62}</MetaDataID>

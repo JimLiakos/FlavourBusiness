@@ -284,6 +284,7 @@
     <None Include="IsolatedComputingContext.cs" />
     <Compile Include="ItemPreparation.cs" />
     <Compile Include="ItemsPriparationInfo.cs" />
+    <Compile Include="Meal.cs" />
     <Compile Include="MenuDesignActivity.cs" />
     <Compile Include="OptionChange.cs" />
     <Compile Include="Order.cs" />
