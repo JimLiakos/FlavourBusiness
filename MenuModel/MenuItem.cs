@@ -466,7 +466,7 @@ namespace MenuModel
 
 
         /// <exclude>Excluded</exclude>
-       Member< ITaxableType> _TaxableType=new Member<ITaxableType>();
+        Member<ITaxableType> _TaxableType = new Member<ITaxableType>();
 
         /// <MetaDataID>{ed3807ec-bea1-49ef-a315-032befbcabc0}</MetaDataID>
         [PersistentMember(nameof(_TaxableType))]
@@ -507,7 +507,14 @@ namespace MenuModel
         [BackwardCompatibilityID("+19")]
         public IList<IPartofMeal> PartofMeals
         {
-            get => _PartofMeals.ToThreadSafeList();
+            get
+            {
+                if(_PartofMeals==null)
+                {
+
+                }
+                return _PartofMeals.ToThreadSafeList();
+            }
 
         }
 

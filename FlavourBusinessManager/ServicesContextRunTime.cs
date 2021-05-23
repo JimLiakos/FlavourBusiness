@@ -1021,7 +1021,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         /// <exclude>Excluded</exclude>
-        int _AllMessmetesCommitedTimeSpan=120;
+        int _AllMessmetesCommitedTimeSpan=120;//3min
 
         /// <summary>
         /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 

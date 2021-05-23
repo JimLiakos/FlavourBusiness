@@ -185,7 +185,13 @@ namespace FlavourBusinessFacade.EndUsers
     public enum ClientSessionState
     {
         Conversation = 0,
-        ItemsCommited = 1
+        ItemsCommited = 1,
+        ConversationStandy=2,
+        UrgesToDecide=3,
+        Inactive =4,
+        Closed=100
+
+
     }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages

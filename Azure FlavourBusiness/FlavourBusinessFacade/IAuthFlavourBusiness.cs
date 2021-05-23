@@ -11,9 +11,16 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{abc46398-4664-452f-b75b-26620640c201}</MetaDataID>
         IFoodServiceClient SignUpEndUser(EndUserData endUser);
 
-
+#if DEBUG
         /// <MetaDataID>{a63bbf17-8e18-475e-aaf9-7fae77753b15}</MetaDataID>
         UserData GetUser(string userName);
+        
+        IUser SignIn(UserData.RoleType roleType);
+
+        IUser SignUp(UserData userData, UserData.RoleType roleType);
+
+        void UpdateUserProfile(UserData userData, UserData.RoleType roleType);
+#endif
 
 
         /// <MetaDataID>{bfa334fa-25de-4c63-ba62-c674cdba65f6}</MetaDataID>
@@ -50,7 +57,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{a41d6ec3-96b6-4383-aec9-dcd4b3f88bea}</MetaDataID>
         void UpdateFounderUserProfile(OrganizationData organizationData);
 
-        
+
 
 
         /// <MetaDataID>{3ee61f46-f60e-47a1-a9f5-33ef4e7d2f52}</MetaDataID>
@@ -58,11 +65,7 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{8427508a-0738-4f55-b42b-1938a56817d7}</MetaDataID>
         //string GetMessage(string name, int age, IOrganization pok, out string message);
-        string GetMessage(string name, int age, IOrganization pok );
-        IUser SignIn(UserData.RoleType roleType);
+        string GetMessage(string name, int age, IOrganization pok);
 
-        IUser SignUp(UserData userData, UserData.RoleType roleType);
-
-        void UpdateUserProfile(UserData userData, UserData.RoleType roleType);
     }
 }

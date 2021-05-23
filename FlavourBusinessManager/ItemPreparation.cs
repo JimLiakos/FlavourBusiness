@@ -211,14 +211,15 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-#if !FlavourBusinessDevice
+//#if !FlavourBusinessDevice
 
+//        /// <MetaDataID>{85d453b1-7f6e-4097-bd7b-151d6cbe28f9}</MetaDataID>
+//        public IMenuItem MenuItem { get => _MenuItem; }
+//#else
+        [JsonIgnore]
         /// <MetaDataID>{85d453b1-7f6e-4097-bd7b-151d6cbe28f9}</MetaDataID>
         public IMenuItem MenuItem { get => _MenuItem; }
-#else
-        [JsonIgnore]
-        public IMenuItem MenuItem { get => _MenuItem; }
-#endif
+//#endif
 
         /// <MetaDataID>{da441ccb-5f5b-4ee2-8c2b-1ce95b5a5b19}</MetaDataID>
         public IMenuItem LoadMenuItem()

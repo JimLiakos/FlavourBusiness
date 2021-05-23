@@ -54,10 +54,18 @@ namespace DontWaitApp
 
 
                 url = "http://192.168.2.4/DontWaitWeb/#/";
-                url = "http://192.168.2.9:4300/#/";
+                url = "http://192.168.2.4:4300/#/";
                 //url = "http://10.0.0.14:4300/#/";
 
+                //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+
+
+               //var AssemblyMetaObject =OOAdvantech.DotNetMetaDataRepository.Assembly.GetComponent(typeof(ApplicationSettings).GetMetaData().Assembly);
+               // long count = AssemblyMetaObject.Residents.Count;
+
+
                 FlavoursOrderServer.MenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+                
 
 
 
@@ -90,6 +98,7 @@ namespace DontWaitApp
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            MyLabel.Text = "Liakos";
 
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -166,7 +175,7 @@ namespace DontWaitApp
                 FlavoursOrderServer.Initialize();
 
             }
-
+            MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
 
         }
 

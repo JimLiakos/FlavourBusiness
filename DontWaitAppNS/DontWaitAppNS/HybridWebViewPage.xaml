@@ -4,7 +4,15 @@
     xmlns:local="clr-namespace:OOAdvantech.Web;assembly=OOAdvantech"
     NavigationPage.HasNavigationBar="False"
     x:Class="DontWaitApp.HybridWebViewPage">
-	<ContentPage.Content>
-        <local:HybridWebView x:Name="hybridWebView" EnableRestApi="True"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="MyLabel" Text="Xamarin"></Label>
+            <local:HybridWebView Grid.Row="1" x:Name="hybridWebView" EnableRestApi="True"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -15,7 +15,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         System.Collections.Generic.IList<IFoodServiceClientSession> PartialClientSessions { get; }
         [Association("ServicePointSesions", Roles.RoleB, "08fdaee2-f871-4200-9856-8d2cc9754909")]
         [RoleBMultiplicityRange(1, 1)]
-        IServicePoint ServicePoint { get;set; }
+        IServicePoint ServicePoint { get; set; }
 
 
         /// <MetaDataID>{45ae4db3-87ca-4a6e-b867-bb5f33886b05}</MetaDataID>
@@ -43,8 +43,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
     public enum SessionState
     {
         Conversation = 0,
-        PromptsUserToDecide = 1,
-        MealMonitoring=2
-
+        UrgesToDecide = 1,
+        MealValidationDelay = 2,
+        MealMonitoring = 3
     }
 }

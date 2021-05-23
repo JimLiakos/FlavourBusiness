@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlavourBusinessManager.RoomService;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 
 namespace MenuItemsEditor.ViewModel
@@ -13,7 +14,7 @@ namespace MenuItemsEditor.ViewModel
 
     public delegate void CultureChangeHandle(string newLanguage);
 
-    public delegate void PreparationItemChangedHandle(ItemPreparation preparationItem);
+    public delegate void PreparationItemChangedHandle(ItemPreparation preparationItem, MenuModel.IMenuItem MenuItem);
 
     /// <MetaDataID>{b87abe4e-a090-4874-9b02-80faa27f979f}</MetaDataID>
     [OOAdvantech.MetaDataRepository.HttpVisible]
@@ -30,6 +31,7 @@ namespace MenuItemsEditor.ViewModel
 
         string CurrentLanguage { get; }
 
+        MenuModel.IMenuItem MenuItem { get; }
 
     }
 
@@ -90,13 +92,16 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
+        public IMenuItem MenuItem => new ItemPreparation(MenuItemViewModel.MenuItem).MenuItem;
+
         public event CultureChangeHandle CultureChange;
 
         public event PreparationItemChangedHandle PreparationItemChanged;
 
         internal void ItemChanged()
         {
-            PreparationItemChanged?.Invoke(new ItemPreparation(MenuItemViewModel.MenuItem));
+            var itemPreparation = new ItemPreparation(MenuItemViewModel.MenuItem);
+            PreparationItemChanged?.Invoke(itemPreparation, itemPreparation.MenuItem);
         }
     }
 }

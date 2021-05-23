@@ -48,7 +48,7 @@ namespace DontWaitApp
         {
             get
             {
-              return  _LastServicePoinMenuData;
+                return _LastServicePoinMenuData;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace DontWaitApp
                         //OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)
                         foreach (ItemPreparation itemPreparation in _LastServicePoinMenuData.OrderItems)
                         {
-                            if (!value.OrderItems.Contains(itemPreparation))
+                            if (value.OrderItems!=null&&!value.OrderItems.Contains(itemPreparation))
                                 ObjectStorage.DeleteObject(itemPreparation);
                         }
 
@@ -249,7 +249,12 @@ namespace DontWaitApp
                         if (_Current == null)
                         {
                             _Current = new ApplicationSettings();
+                           // _Current.FriendlyName = "FriendlyName 1";
                             AppSettingsStorage.CommitTransientObjectState(_Current);
+                        }
+                        else
+                        {
+                            //_Current.FriendlyName = "FriendlyName 2";
                         }
                         stateTransition.Consistent = true;
                     }

@@ -57,7 +57,8 @@ namespace DontWaitApp
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true); 
 
             Browser.Navigated += Browser_Navigated;
-            FlavoursOrderServer.MenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            
+            
 
             if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.Path) && FlavoursOrderServer.Path.Split('/').Length > 0)
             {

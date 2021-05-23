@@ -12,6 +12,10 @@
     <DefineConstants>TRACE;DeviceDotNet;DontWaitApp;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;DeviceDotNet;DontWaitApp;FlavourBusinessDevice</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="MainPage.xaml.cs" />
     <Compile Remove="MainPage_p.xaml.cs" />

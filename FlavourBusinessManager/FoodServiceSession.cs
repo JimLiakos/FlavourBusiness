@@ -8,6 +8,7 @@ using OOAdvantech.Transactions;
 using System.Linq;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -117,7 +118,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     stateTransition.Consistent = true;
                 }
                 partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
-                PromptsUserToDecideSessionStateCheck();
+                StateMachineMonitoring();
             }
 
         }
@@ -126,26 +127,40 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void PartialSession_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IFoodServiceClientSession.SessionState))
-                PromptsUserToDecideSessionStateCheck();
+                StateMachineMonitoring();
         }
 
+        object StateMachineLock = new object();
+
         /// <MetaDataID>{dd202b7b-1e56-45fe-a4a9-f3f26dcc645a}</MetaDataID>
-        private void PromptsUserToDecideSessionStateCheck()
+        private void StateMachineMonitoring()
         {
+
             var partialClientSessions = PartialClientSessions;
             if (partialClientSessions.Count > 0)
             {
-                if (SessionState == SessionState.Conversation && partialClientSessions.Where(x => x.SessionState == ClientSessionState.Conversation).Count() > 0 && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() > 0)
-                    SessionState = SessionState.PromptsUserToDecide;
-                if (SessionState == SessionState.PromptsUserToDecide && partialClientSessions.Where(x => x.SessionState == ClientSessionState.Conversation).Count() == partialClientSessions.Count)
-                    SessionState = SessionState.Conversation;
-                if (SessionState == SessionState.PromptsUserToDecide && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() == partialClientSessions.Count)
+                //One of the messmates commits event
+                if (SessionState == SessionState.Conversation && partialClientSessions.Where(
+                    x => x.SessionState == ClientSessionState.Conversation || x.SessionState == ClientSessionState.ConversationStandy || x.SessionState == ClientSessionState.UrgesToDecide).Count() > 0
+                    && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() > 0)
                 {
-                    if (partialClientSessions.OrderBy(x => x.ModificationTime).Last().IsWaiterSession || (DateTime.UtcNow - partialClientSessions.OrderBy(x => x.ModificationTime).Last().ModificationTime > TimeSpan.FromSeconds(ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan)))
-                    {
-                        SessionState = SessionState.MealMonitoring;
-                        CreateAndInitMeal();
-                    }
+                    SessionState = SessionState.UrgesToDecide;
+                    //UrgesToDecideStateRun();
+                }
+
+                if (SessionState == SessionState.MealValidationDelay&& partialClientSessions.Where(x => x.SessionState != ClientSessionState.ItemsCommited).Count() >0)
+                    SessionState = SessionState.UrgesToDecide;
+
+                //There aren't messmates in the ItemsCommit state
+                if (SessionState == SessionState.UrgesToDecide && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() == 0)
+                    SessionState = SessionState.Conversation;
+
+
+                //All messmates are in committed state for specific timespan event
+                if ( partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited|| x.SessionState == ClientSessionState.Inactive).Count() == partialClientSessions.Count)
+                {
+                    SessionState = SessionState.MealValidationDelay;
+                    MealValidationDelayRun();
                 }
             }
             else
@@ -153,10 +168,77 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        private void MealValidationDelayRun()
+        {
+            Task.Run(() => 
+            {
+                var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
+
+                while (allMessmetesCommitedTimeSpanInSeconds > 0)
+                {
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                    allMessmetesCommitedTimeSpanInSeconds--;
+                    if (SessionState != SessionState.MealValidationDelay)
+                        return;
+                }
+
+                if (SessionState == SessionState.MealValidationDelay)
+                {
+                    SessionState = SessionState.MealMonitoring;
+                    CreateAndInitMeal();
+                }
+            });
+        }
+
+        private void UrgesToDecideStateRun()
+        {
+            //Task.Run(() =>
+            //{
+            //    while (SessionState == SessionState.UrgesToDecide)
+            //    {
+            //        var items = (from partialSession in PartialClientSessions
+            //                     from itemPreparation in partialSession.FlavourItems
+            //                     select itemPreparation).ToList();
+
+            //        var serivcePoint = (from clientSession in this.PartialClientSessions
+            //                            select clientSession.ServicePoint).FirstOrDefault();
+
+            //        #region items conversations monitoring
+            //        //items In Conversation
+            //        var itemsInConversation = items.Where(x => x.State == FlavourBusinessFacade.RoomService.ItemPreparationState.New).ToList();
+            //        var commitedItems = items.Where(x => x.State == ItemPreparationState.Committed).ToList();
+
+            //        var itemsInConversationSessions = itemsInConversation.Select(x => x.ClientSession).Distinct().ToList();
+            //        var commitedItemsSessions = commitedItems.Where(x => !itemsInConversationSessions.Contains(x.ClientSession)).Select(x => x.ClientSession).Distinct().ToList();
+            //        //commitedItemsSessions defines the sessions which has not items in conversation
+            //        if (commitedItemsSessions.Count > 0)
+            //        {
+            //            //
+            //            foreach (var conversationSession in itemsInConversationSessions.OfType<FoodServiceClientSession>())
+            //                conversationSession.YouMustDecide(commitedItemsSessions);
+            //        }
+            //        else
+            //        {
+            //            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //            {
+            //                foreach (var conversationSession in itemsInConversationSessions.OfType<FoodServiceClientSession>())
+            //                    conversationSession.YouMustDecideMessagesNumber = 0;
+
+            //                stateTransition.Consistent = true;
+            //            }
+            //        }
+
+            //        System.Threading.Thread.Sleep(5000);
+
+            //        #endregion
+            //    }
+            //});
+        }
+
         /// <MetaDataID>{1b995301-4937-4889-a8b1-be54049ff16e}</MetaDataID>
         private void CreateAndInitMeal()
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <MetaDataID>{f7125663-4378-4d70-868d-4c90af7c98fd}</MetaDataID>
@@ -228,7 +310,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PartialClientSessions.Remove(partialSession);
                 stateTransition.Consistent = true;
             }
-            PromptsUserToDecideSessionStateCheck();
+            StateMachineMonitoring();
             partialSession.ObjectChangeState -= PartialSession_ObjectChangeState;
         }
         /// <MetaDataID>{9c60f720-9c83-4a06-b80d-687ff2517dc1}</MetaDataID>
@@ -245,44 +327,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         public void MonitorTick()
         {
 
-            var items = (from partialSession in PartialClientSessions
-                         from itemPreparation in partialSession.FlavourItems
-                         select itemPreparation).ToList();
 
-            var serivcePoint = (from clientSession in this.PartialClientSessions
-                                select clientSession.ServicePoint).FirstOrDefault();
-
-            #region items conversations monitoring
-            //items In Conversation
-            var itemsInConversation = items.Where(x => x.State == FlavourBusinessFacade.RoomService.ItemPreparationState.New).ToList();
-            var commitedItems = items.Where(x => x.State == ItemPreparationState.Committed).ToList();
-            AssignToMealCourse(commitedItems);
-
-
-            var itemsInConversationSessions = itemsInConversation.Select(x => x.ClientSession).Distinct().ToList();
-            var commitedItemsSessions = commitedItems.Where(x => !itemsInConversationSessions.Contains(x.ClientSession)).Select(x => x.ClientSession).Distinct().ToList();
-            //commitedItemsSessions defines the sessions which has not items in conversation
-            if (commitedItemsSessions.Count > 0)
-            {
-                //
-                foreach (var conversationSession in itemsInConversationSessions.OfType<FoodServiceClientSession>())
-                    conversationSession.YouMustDecide(commitedItemsSessions);
-            }
-            else
-            {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    foreach (var conversationSession in itemsInConversationSessions.OfType<FoodServiceClientSession>())
-                        conversationSession.YouMustDecideMessagesNumber = 0;
-
-                    stateTransition.Consistent = true;
-                }
-            }
-
-            #endregion
         }
 
-       
+
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>

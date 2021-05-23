@@ -15,6 +15,7 @@ using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 using System.Globalization;
 using FlavourBusinessFacade.HumanResources;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -279,27 +280,247 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{b448d9b4-451c-4d2c-a064-71a9b59a635a}</MetaDataID>
         int DeviceConnectionStatusChecksNumber;
         /// <MetaDataID>{b80540b1-2b19-4fbd-887f-58039a11d111}</MetaDataID>
-        void CheckDeviceConnectionStatus()
+        void StartDeviceConnectionStatusCheck()
         {
-            if (DeviceAppState == DeviceAppLifecycle.InUse && ObjectChangeState == null)
+            Task.Run(() =>
             {
-                if (DeviceConnectionStatusChecksNumber > 5)
+                ClientSessionState sessionState;
+
+                lock (StateMachineLock)
                 {
-                    DeviceSleep();
-                    DeviceConnectionStatusChecksNumber = 0;
+                    sessionState = SessionState;
                 }
-                else
-                    DeviceConnectionStatusChecksNumber++;
-            }
-            else
-                DeviceConnectionStatusChecksNumber = 0;
+
+                while (sessionState != ClientSessionState.Closed)
+                {
+                    try
+                    {
+                        #region DeviceAppLifecycle
+                        if (DeviceAppState == DeviceAppLifecycle.InUse && _MessageReceived == null)
+                        {
+                            //with _MessageReceived system knows indirectly when there is active connection with client device
+                            //when communication session with client device closed the server session part drops all event consumers
+                            if (DeviceConnectionStatusChecksNumber > 5)
+                            {
+                                DeviceSleep();
+                                DeviceConnectionStatusChecksNumber = 0;
+                            }
+                            else
+                                DeviceConnectionStatusChecksNumber++;
+                        }
+                        else
+                            DeviceConnectionStatusChecksNumber = 0;
+                        #endregion
+
+                        CatchStateEvents();
+
+
+                        lock (StateMachineLock)
+                        {
+                            sessionState = SessionState;
+                        }
+
+                        if (sessionState == ClientSessionState.UrgesToDecide)
+                            UrgesToDecideRun();
+
+                    }
+                    catch (Exception error)
+                    {
+
+
+                    }
+                    System.Threading.Thread.Sleep(5000);
+                }
+            });
         }
+
+        object StateMachineLock = new object();
+        private void CatchStateEvents()
+        {
+            lock (StateMachineLock)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    var flavourItems = FlavourItems;
+                    bool allItemsCommitted = flavourItems.Count != 0 && flavourItems.Where(x => x.State == ItemPreparationState.New).Count() == 0;
+
+                    //state machine must be run out of transaction scoop
+
+                    #region ClientSessionState.Conversation
+                    if (SessionState == ClientSessionState.Conversation && DeviceAppState == DeviceAppLifecycle.InUse && allItemsCommitted)
+                    {
+                        //Commit items  event
+                        SessionState = ClientSessionState.ItemsCommited;
+                    }
+
+                    if (SessionState == ClientSessionState.Conversation && DeviceAppState != DeviceAppLifecycle.InUse)
+                    {
+                        if (this.FlavourItems.Count > 0)
+                        {
+                            //Device standby event
+                            SessionState = ClientSessionState.ConversationStandy;
+                        }
+                        else
+                        {
+                            SessionState = ClientSessionState.Inactive;
+                        }
+                    }
+
+                    if (SessionState == ClientSessionState.Conversation && MainSession != null &&
+                                    MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
+                                    DeviceAppState != DeviceAppLifecycle.InUse)
+                    {
+                        //Standby on partial commit meal event
+                        SessionState = ClientSessionState.UrgesToDecide;
+                        //StandbyOnPartialCommitMeal();
+                    }
+                    #endregion
+
+
+                    #region  ClientSessionState.ConversationStandy
+                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null &&
+                      MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
+                      DeviceAppState != DeviceAppLifecycle.InUse)
+                    {
+                        //One of the messmates commits event
+                        SessionState = ClientSessionState.UrgesToDecide;
+                        //StandbyOnPartialCommitMeal();
+                    }
+
+                    if (SessionState == ClientSessionState.ConversationStandy && DeviceAppState == DeviceAppLifecycle.InUse)
+                    {
+                        //Device resume event
+                        SessionState = ClientSessionState.Conversation;
+                        //StandbyOnPartialCommitMeal();
+                    }
+
+                    #endregion
+
+                    #region  ClientSessionState.UrgesToDecide
+
+                    if (SessionState == ClientSessionState.UrgesToDecide && DeviceAppState == DeviceAppLifecycle.InUse)
+                    {
+                        //Device resume event
+                        SessionState = ClientSessionState.Conversation;
+                    }
+
+                    if (SessionState == ClientSessionState.UrgesToDecide &&
+                         MainSession != null && MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
+                         DeviceAppState != DeviceAppLifecycle.InUse)
+                    {
+                        //Device resume event
+                        SessionState = ClientSessionState.ConversationStandy;
+
+                    }
+                    #endregion
+
+                    if (SessionState == ClientSessionState.Inactive && DeviceAppState == DeviceAppLifecycle.InUse)
+                    {
+                        //Device resume event
+                        SessionState = ClientSessionState.Conversation;
+                        //StandbyOnPartialCommitMeal();
+                    }
+
+
+                    if (SessionState == ClientSessionState.ItemsCommited && !allItemsCommitted)
+                    {
+                        //Item change event
+                        SessionState = ClientSessionState.Conversation;
+                    }
+
+                }
+
+
+
+            }
+
+
+
+        }
+
+        internal void UrgesToDecideRun()
+        {
+
+            if (SessionState == ClientSessionState.UrgesToDecide)
+            {
+                List<IFoodServiceClientSession> commitedItemsSessions = new List<IFoodServiceClientSession>();
+
+                if (MainSession != null)
+                    commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).ToList();
+
+                if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
+                    return;
+
+                double fromFirstCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                                orderby session.ModificationTime
+                                                                                select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
+
+                double fromLastCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                               orderby session.ModificationTime
+                                                                               select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
+
+                double fromDeviceSleep = 0;
+                if (DeviceAppState != DeviceAppLifecycle.InUse)
+                    fromDeviceSleep = (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()).TotalMinutes;
+
+                double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
+
+                bool fromLastCommitedItemsSessionExpired = fromLastCommitedItemsSessionInMin > 3;
+                bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
+
+                TimeSpan mealConversetionTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
+                TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
+                TimeSpan fromLastRequest = DateTime.UtcNow - DateTimeOfLastRequest.ToUniversalTime();
+
+                if (fromLastCommitedItemsSessionExpired && fromDeviceSleepExpired)
+                {
+
+                    if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 2)
+                    {
+
+                        var clientMessage = Messages.Where(x => ((ClientMessages)(int)x.Data["ClientMessageType"]) == ClientMessages.YouMustDecide).FirstOrDefault();
+
+
+                        if (clientMessage == null)
+                        {
+                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                            {
+
+                                clientMessage = new Message();
+                                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(clientMessage);
+                                clientMessage.Data["ClientMessageType"] = ClientMessages.YouMustDecide;
+                                clientMessage.Data["ClientSessionID"] = SessionID;
+                                clientMessage.Notification = new Notification() { Title = "Don't wait the waiter", Body = "You must press send button to send order" };
+                                PushMessage(clientMessage);
+                                if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                                    YouMustDecideMessagesNumber += 1;
+                                stateTransition.Consistent = true;
+                            }
+
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                                YouMustDecideMessagesNumber += 1;
+                        }
+                        if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                            CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                        _MessageReceived?.Invoke(this);
+                        PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
+
+                    }
+                }
+            }
+
+        }
+
 
         /// <MetaDataID>{2a6c5a7e-109b-4483-8e38-87ef7843ad5a}</MetaDataID>
         internal void YouMustDecide(List<IFoodServiceClientSession> commitedItemsSessions)
         {
 
-            CheckDeviceConnectionStatus();
+
 
 
 
@@ -644,6 +865,11 @@ namespace FlavourBusinessManager.EndUsers
                 System.Diagnostics.Debug.WriteLine("******************************* add MessageReceived **************************************");
 
                 _MessageReceived += value;
+
+                //with _MessageReceived system knows indirectly when there is active connection with client device
+                //when communication session with client device closed the server session part drops all event consumers
+
+                DeviceResume();
             }
             remove
             {
@@ -919,13 +1145,15 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{7c6021ec-9897-4ba8-834b-78a4000f0e21}</MetaDataID>
         void IObjectStateEventsConsumer.OnActivate()
         {
+            if (SessionState != ClientSessionState.Closed)
+                StartDeviceConnectionStatusCheck();
         }
 
         /// <MetaDataID>{35842787-d9d9-428e-b02b-4c1c668082b3}</MetaDataID>
         void IObjectStateEventsConsumer.OnDeleting()
         {
         }
-
+        //Personal access tokens github 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
         /// <MetaDataID>{9e4705b6-b564-4c69-bf7a-aa4a668ee624}</MetaDataID>
         void IObjectStateEventsConsumer.LinkedObjectAdded(object linkedObject, AssociationEnd associationEnd)
         {
@@ -979,7 +1207,7 @@ namespace FlavourBusinessManager.EndUsers
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }
-
+                CatchStateEvents();
 
                 if (MainSession != null && flavourItem.SharedInSessions.Count != 0)
                 {
@@ -997,6 +1225,7 @@ namespace FlavourBusinessManager.EndUsers
                     foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                         preparationStation.OnPreparationItemChangeState(flavourItem);
                 }
+                ObjectChangeState?.Invoke(this, nameof(FlavourItems));
 
             }
 
@@ -1040,7 +1269,7 @@ namespace FlavourBusinessManager.EndUsers
                     {
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                         if (_FlavourItems.Where(x => x.State == ItemPreparationState.New).Count() > 0)
-                                ItemUndoCommitment();
+                            CatchStateEvents();
 
                         foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                             preparationStation.OnPreparationItemChangeState(existingItem);
@@ -1069,7 +1298,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
-       
+
 
 
         /// <MetaDataID>{6f3aecf2-dbfb-4493-a33a-88a5f34578f4}</MetaDataID>
@@ -1102,11 +1331,11 @@ namespace FlavourBusinessManager.EndUsers
                     _FlavourItems.Add(item);
                     (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                     ModificationTime = DateTime.UtcNow;
-
                     MealCourse.AssignMealCourseToItem(flavourItem);
-
                     stateTransition.Consistent = true;
                 }
+
+                CatchStateEvents();
 
                 foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
                     preparationStation.OnPreparationItemChangeState(flavourItem);
@@ -1123,8 +1352,10 @@ namespace FlavourBusinessManager.EndUsers
                     RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
                     //ObjectChangeState?.Invoke(this, nameof(FlavourItems));
                 }
-
+                ObjectChangeState?.Invoke(this, nameof(FlavourItems));
             }
+
+
         }
 
 
@@ -1409,7 +1640,7 @@ namespace FlavourBusinessManager.EndUsers
                     }
                 }
                 AllItemsCommited();
-          
+
                 stateTransition.Consistent = true;
             }
 
@@ -1425,15 +1656,11 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{9db073fb-148b-4efe-99c6-2cb6f4e68f42}</MetaDataID>
         private void AllItemsCommited()
         {
-            if (_SessionState == ClientSessionState.Conversation)
-                _SessionState = ClientSessionState.ItemsCommited;
+            if (SessionState == ClientSessionState.Conversation)
+                SessionState = ClientSessionState.ItemsCommited;
         }
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
-        private void ItemUndoCommitment()
-        {
-            if (_SessionState == ClientSessionState.ItemsCommited)
-                _SessionState = ClientSessionState.Conversation;
-        }
+
     }
 
 

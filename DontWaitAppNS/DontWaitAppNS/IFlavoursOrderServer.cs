@@ -239,6 +239,7 @@ namespace DontWaitApp
         //    this.ClientSessionID = null;
         //}
 
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<ItemPreparation> _OrderItems;
 
@@ -294,6 +295,13 @@ namespace DontWaitApp
         ///// <MetaDataID>{bc390286-df9f-4e1a-9a37-6dcc0b32a7ad}</MetaDataID>
         //public List<ItemPreparation> OrderItems;
 
+        List<ItemPreparation> GetOrderItems()
+        {
+            if (_OrderItems == null)
+                return new List<ItemPreparation>();
+            else
+                return _OrderItems.ToList();
+        }
 
         /// <MetaDataID>{f77fbc5a-f8dd-4e39-89d8-37c5f078062c}</MetaDataID>
         public static bool operator ==(MenuData left, MenuData right)
@@ -302,12 +310,12 @@ namespace DontWaitApp
                 left.MenuFile == right.MenuFile &&
                 left.MenuRoot == right.MenuRoot &&
                 left.ClientSessionID == right.ClientSessionID &&
-                left.OrderItems.Count == right.OrderItems.Count;
+                left.GetOrderItems().Count == right.GetOrderItems().Count;
             if (!equal)
                 return false;
-            foreach (var item in left.OrderItems)
+            foreach (var item in left.GetOrderItems())
             {
-                if (!right.OrderItems.Contains(item))
+                if (!right.GetOrderItems().Contains(item))
                     return false;
             }
             return true;
