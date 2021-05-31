@@ -97,7 +97,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 RestaurantMenu.AddAvailableHeading(foodItemsHeading);
                 var headingPresentation = new ListMenuHeadingPresentation(RestaurantMenu, foodItemsHeading);
                 headingPresentation.EditMode();
-                _Headings.Add(headingPresentation);
+                _Headings.Insert(0,headingPresentation);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
             });
 

@@ -29,7 +29,7 @@ namespace ServiceContextManagerApp.WPF
             DataContext = new ManagerPresentation();
 
             string url = @"http://192.168.2.8:4304/";//org
-            url = @"http://192.168.2.4:4304/";//Braxati
+            //url = @"http://192.168.2.4:4304/";//Braxati
             //url = @"http://10.0.0.8:4304/";//work
             url = @"https://localhost:4304/";
             //url = "https://angularhost.z16.web.core.windows.net/4304/";

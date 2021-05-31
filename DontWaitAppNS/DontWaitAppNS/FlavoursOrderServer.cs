@@ -485,8 +485,8 @@ namespace DontWaitApp
 
 
 
-        //static string AzureServerUrl = "http://192.168.2.8:8090/api/";//org
-        static string AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
+        static string AzureServerUrl = "http://192.168.2.8:8090/api/";//org
+        //static string AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
         //static string AzureServerUrl = "http://10.0.0.8:8090/api/";//work
 
 
