@@ -9,8 +9,10 @@ namespace MenuModel
     public class FixedMealType : MealType
     {
         /// <MetaDataID>{e5dff1b6-43c7-40df-8197-47effa1a0929}</MetaDataID>
-        public FixedMealType(string mealTypeDefaultName):base(mealTypeDefaultName)
+        public FixedMealType(string mealTypeDefaultName, System.Collections.Generic.List<IMealCourseType> mealCourses) : base(mealTypeDefaultName)
         {
+            foreach (var mealCourse in mealCourses)
+                _Courses.Add(mealCourse);
         }
         protected FixedMealType()
         {
