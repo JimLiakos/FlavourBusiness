@@ -50,7 +50,7 @@ namespace DontWaitApp
             
 
             string url = @"http://192.168.2.8:4303/";//org
-            url = @"http://192.168.2.4:4300/";//Braxati
+            //url = @"http://192.168.2.4:4300/";//Braxati
             //url = @"http://10.0.0.8:4300/";//work
             url = @"http://localhost:4300/";
 

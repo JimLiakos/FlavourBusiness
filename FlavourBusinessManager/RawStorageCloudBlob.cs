@@ -12,8 +12,8 @@ namespace FlavourBusinessManager
         //static string AzureStorageUrl = "http://192.168.2.5";
         //static string AzureStorageUrl = "http://192.168.2.5";
 
-        //static string AzureStorageUrl = "http://192.168.2.8";//org
-        static string AzureStorageUrl = "http://192.168.2.4";//Braxati
+        static string AzureStorageUrl = "http://192.168.2.8";//org
+        //static string AzureStorageUrl = "http://192.168.2.4";//Braxati
         //static string AzureStorageUrl = "http://10.0.0.8";//work
 
 

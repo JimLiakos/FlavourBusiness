@@ -16,7 +16,10 @@ namespace MenuPresentationModel.MenuCanvas
     public class FoodItemsHeading : MarshalByRefObject, IMenuCanvasHeading, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
 
+        public FoodItemsHeading()
+        {
 
+        }
         /// <exclude>Excluded</exclude>
         MultilingualMember<IMenuCanvasColumn> _Column = new OOAdvantech.MultilingualMember<IMenuCanvasColumn>();
 
@@ -939,7 +942,7 @@ namespace MenuPresentationModel.MenuCanvas
             {
                 if (CustomHeadingAccent != null)
                 {
-                    if (_MenuCanvasAccent.Value!=null&&_MenuCanvasAccent.Value.Accent != CustomHeadingAccent)
+                    if (_MenuCanvasAccent.Value != null && _MenuCanvasAccent.Value.Accent != CustomHeadingAccent)
                     {
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
