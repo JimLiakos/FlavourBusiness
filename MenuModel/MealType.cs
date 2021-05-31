@@ -81,7 +81,7 @@ namespace MenuModel
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     _Courses.Remove(mealCourseType);
-                    if(mealCourseType.IsDefault)
+                    if (mealCourseType.IsDefault)
                     {
                         var firstMealCourseType = _Courses.OfType<MealCourseType>().FirstOrDefault();
                         if (firstMealCourseType != null)
@@ -112,7 +112,7 @@ namespace MenuModel
         object CoursesLock = new object();
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<IMealCourseType> _Courses = new OOAdvantech.Collections.Generic.Set<IMealCourseType>();
+        protected OOAdvantech.Collections.Generic.Set<IMealCourseType> _Courses = new OOAdvantech.Collections.Generic.Set<IMealCourseType>();
         /// <MetaDataID>{42d87915-6995-487a-b79b-140a9aa86819}</MetaDataID>
         [PersistentMember(nameof(_Courses))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
@@ -162,73 +162,57 @@ namespace MenuModel
             {
                 if (twoCourseMealType == null)
                 {
-                    twoCourseMealType = new FixedMealType(Properties.Resources.TwoCourseMealTypeName);
+                    List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
+                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    twoCourseMealType = new FixedMealType(Properties.Resources.TwoCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(twoCourseMealType);
 
-                    MenuModel.IMealCourseType mealCourse = twoCourseMealType.NewMealCourseType();// new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    mealCourse.Name = Properties.Resources.AppetizerMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();// new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    mealCourse.Name = Properties.Resources.MainMealCourseName;
                 }
 
                 if (threeCourseMealType == null)
                 {
-                    threeCourseMealType = new FixedMealType(Properties.Resources.ThreeCourseMealTypeName);
+
+                    List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
+                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+
+                    threeCourseMealType = new FixedMealType(Properties.Resources.ThreeCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(threeCourseMealType);
 
-
-                    MenuModel.IMealCourseType mealCourse = twoCourseMealType.NewMealCourseType();// new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    mealCourse.Name = Properties.Resources.AppetizerMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();
-                    mealCourse.Name = Properties.Resources.MainMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();
-                    mealCourse.Name = Properties.Resources.DessertMealCourseName;
-
-                    //MenuModel.MealCourseType mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //threeCourseMealType.AddMealCourseType(mealCourse);
-
-                    //mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //threeCourseMealType.AddMealCourseType(mealCourse);
-
-
-                    //mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //threeCourseMealType.AddMealCourseType(mealCourse);
                 }
 
                 if (fourCourseMealType == null)
                 {
-                    fourCourseMealType = new FixedMealType(Properties.Resources.FourCourseMealTypeName);
+
+                    List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
+                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.HorsDOeuvreMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    fourCourseMealType = new FixedMealType(Properties.Resources.FourCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(fourCourseMealType);
 
-                    MenuModel.IMealCourseType mealCourse = twoCourseMealType.NewMealCourseType();// new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    mealCourse.Name = Properties.Resources.HorsDOeuvreMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();
-                    mealCourse.Name = Properties.Resources.AppetizerMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();
-                    mealCourse.Name = Properties.Resources.MainMealCourseName;
-                    mealCourse = twoCourseMealType.NewMealCourseType();
-                    mealCourse.Name = Properties.Resources.DessertMealCourseName;
 
-
-                    //MenuModel.MealCourseType mealCourse = new MealCourseType(Properties.Resources.HorsDOeuvreMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //fourCourseMealType.AddMealCourseType(mealCourse);
-
-                    //mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //fourCourseMealType.AddMealCourseType(mealCourse);
-
-                    //mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //fourCourseMealType.AddMealCourseType(mealCourse);
-
-
-                    //mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
-                    //objectStorage.CommitTransientObjectState(mealCourse);
-                    //fourCourseMealType.AddMealCourseType(mealCourse);
                 }
 
 
