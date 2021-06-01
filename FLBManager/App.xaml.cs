@@ -64,7 +64,7 @@ namespace FLBManager
             EventManager.RegisterClassHandler(typeof(UIElement), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
 
              //Backup(@"F:\NewPc\Azure blob storage\Backup");
-            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
+            //Restore(@"F:\AzureData\Backup", "DevStorage", "", "");
 
             // Restore(@"C:\Projects\Azure blob storage\Backup", "DevStorage", "", "");
 

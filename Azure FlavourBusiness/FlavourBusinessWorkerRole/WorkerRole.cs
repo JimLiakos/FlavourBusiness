@@ -70,8 +70,8 @@ namespace FlavourBusinessWorkerRole
         //static string _AzureServerUrl = "http://192.168.2.7:8090/api/";
 
         //static string _AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
-        static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
-        //static string _AzureServerUrl = "http://10.0.0.8:8090/api/";//work
+        //static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
+        static string _AzureServerUrl = "http://10.0.0.13:8090/api/";//work
 
 
 
@@ -397,6 +397,10 @@ namespace FlavourBusinessWorkerRole
                 string address = (from endPoint in ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(request.InternalChannelUri).CommunicationEndpoints
                                   where endPoint.Name == "httpInternal"
                                   select endPoint.Address + ":" + endPoint.Port).FirstOrDefault();
+                if(string.IsNullOrWhiteSpace(address))
+                {
+
+                }
                 roleInstanceServerUrl = string.Format("ws://{0}/api/", address);
 
 

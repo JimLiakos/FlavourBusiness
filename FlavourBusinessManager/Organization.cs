@@ -826,11 +826,19 @@ namespace FlavourBusinessManager
                 string urlRoot = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
                 foreach (var fbStorage in fbstorages)
                 {
-                    var storageUrl = urlRoot + fbStorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    try
+                    {
+                        var storageUrl = urlRoot + fbStorage.Url;
+                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
 
-                    OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
-                    graphicMenusStorages.Add(storageRef);
+                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
+                        graphicMenusStorages.Add(storageRef);
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
+                    }
                 }
 
                 return graphicMenusStorages;
