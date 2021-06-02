@@ -33,7 +33,7 @@ namespace PreparationStationDevice.WPF
             DataContext = new FlavoursPreparationStation();
             string url = @"http://192.168.2.8:4301/";//org
             //url = @"http://192.168.2.4:4301/";//Braxati
-            //url = @"http://10.0.0.13:4301/";//work
+            url = @"http://10.0.0.13:4301/";//work
 
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);

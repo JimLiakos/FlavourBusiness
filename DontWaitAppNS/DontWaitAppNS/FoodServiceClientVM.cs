@@ -115,12 +115,12 @@ namespace DontWaitApp
         //static string AzureServerUrl = "http://192.168.2.8:8090/api/";
         //static string AzureServerUrl = "http://192.168.2.13:8090/api/";
         //static string AzureServerUrl = "http://localhost:8090/api/";
-        //static string AzureServerUrl = "http://10.0.0.8:8090/api/";//work
+        //static string AzureServerUrl = "http://10.0.0.13:8090/api/";//work
 
 
-        static string AzureServerUrl = "http://192.168.2.8:8090/api/";//org
+        //static string AzureServerUrl = "http://192.168.2.8:8090/api/";//org
         //static string AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
-        //static string AzureServerUrl = "http://10.0.0.8:8090/api/";//work
+        static string AzureServerUrl = "http://10.0.0.13:8090/api/";//work
 
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
