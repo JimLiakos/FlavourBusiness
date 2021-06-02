@@ -97,7 +97,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         {
             get
             {
-                return _SelectedAccent.AccentType == AccentViewModel.AccentViewModelType.Image;
+                if (_SelectedAccent != null)
+                    return _SelectedAccent.AccentType == AccentViewModel.AccentViewModelType.Image;
+                else
+                    return false;
+
             }
             set
             {
@@ -105,7 +109,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 if (!_AccentColorize)
                 {
                     _AccentSelectedColor = Colors.LightGray;
-                    SelectedAccent.Accent.AccentColor = null;
+                    if(SelectedAccent!=null)
+                        SelectedAccent.Accent.AccentColor = null;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccentSelectedColor)));
                 }
             }

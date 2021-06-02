@@ -91,7 +91,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     (MenuStylesheet.Styles["price-options"] as MenuPresentationModel.MenuStyles.PriceStyle).ObjectChangeState += BookViewModel_PropertyChanged;
 
                 PagePresenttion.UpdateCanvasItems(RealObject.Pages.OfType<MenuPage>().ToArray()[0]);
-            
+
 
             }
             else
@@ -423,9 +423,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         {
             if (menuPage.MoveCanvasItemUp(menuCanvasItem))
             {
-               
 
-                    MenuItemMoveOnPage(menuPage, menuCanvasItem);
+
+                MenuItemMoveOnPage(menuPage, menuCanvasItem);
             }
         }
 
@@ -600,7 +600,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             {
                 int firstItemPos = RestaurantMenu.MenuCanvasItems.IndexOf(firstMenuCanvasItem);
                 var listoFItems = RestaurantMenu.MenuCanvasItems.ToList();
-                menuCanvasItems=listoFItems.GetRange(firstItemPos, listoFItems.Count- firstItemPos);
+                menuCanvasItems = listoFItems.GetRange(firstItemPos, listoFItems.Count - firstItemPos);
             }
 
 
@@ -685,7 +685,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
             //}
 
-            
+
 
             if (RebuildAlreadRuns == 0)
             {
@@ -708,6 +708,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                                      lock (this)
                                      {
                                          var menuCanvasItems = RestaurantMenu.MenuCanvasItems.ToList();
+                                         var sitems = RestaurantMenu.MenuCanvasItems.Select(x => new { x, x.Description, id = OOAdvantech.PersistenceLayer.StorageInstanceRef.GetStorageInstanceRef(x)?.PersistentObjectID?.ToString() }).ToArray();
                                          var itemsMultiplePriceHeadings = (from MenuCanvasFoodItem foodItem in menuCanvasItems.OfType<MenuCanvasFoodItem>()
                                                                            where foodItem.MultiPriceHeading != null
                                                                            select foodItem.MultiPriceHeading).Distinct().ToList();
@@ -2115,7 +2116,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             MenuPresentationModel.RestaurantMenu restaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
                                                                    select menu).FirstOrDefault();
 
-            
+
             //using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
             //{
 
