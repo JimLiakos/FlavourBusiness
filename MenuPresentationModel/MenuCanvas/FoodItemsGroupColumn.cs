@@ -369,6 +369,7 @@ namespace MenuPresentationModel.MenuCanvas
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+               //var asd = _MenuCanvasItems.ToArray();
                 _MenuCanvasItems.Remove(menuCanvasItem);
 
                 stateTransition.Consistent = true;
