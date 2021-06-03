@@ -709,6 +709,14 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                                      {
                                          var menuCanvasItems = RestaurantMenu.MenuCanvasItems.ToList();
                                          var sitems = RestaurantMenu.MenuCanvasItems.Select(x => new { x, x.Description, id = OOAdvantech.PersistenceLayer.StorageInstanceRef.GetStorageInstanceRef(x)?.PersistentObjectID?.ToString() }).ToArray();
+
+                                         foreach (var s in sitems)
+                                         {
+                                             System.Diagnostics.Debug.WriteLine(s.id + "," + s.Description);
+
+                                         }
+                                         RestaurantMenu.CheckMenuCanvasItemsIndexes();
+
                                          var itemsMultiplePriceHeadings = (from MenuCanvasFoodItem foodItem in menuCanvasItems.OfType<MenuCanvasFoodItem>()
                                                                            where foodItem.MultiPriceHeading != null
                                                                            select foodItem.MultiPriceHeading).Distinct().ToList();

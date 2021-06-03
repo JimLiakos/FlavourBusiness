@@ -416,8 +416,14 @@ namespace MenuPresentationModel
         {
             get
             {
+                
                 return _MenuCanvasItems.AsReadOnly();
             }
+        }
+
+        public void CheckMenuCanvasItemsIndexes()
+        {
+            _MenuCanvasItems.CheckIndexes();
         }
 
 

@@ -404,6 +404,13 @@ namespace MenuPresentationModel.MenuCanvas
                                     else
                                         break;
                                 }
+
+                                foreach(var menuCanvasItem in foodItemsGroop.GroupedItems.OfType<IMenuCanvasFoodItem>().ToList())
+                                {
+                                    if ((menuCanvasItem as IMenuCanvasFoodItem).HostingArea != null)
+                                        (menuCanvasItem as IMenuCanvasFoodItem).HostingArea.RemoveGroupedItem((menuCanvasItem as IMenuCanvasFoodItem));
+                                }
+
                                 #endregion
 
                                 //renders grouped items that can fit in food items group area

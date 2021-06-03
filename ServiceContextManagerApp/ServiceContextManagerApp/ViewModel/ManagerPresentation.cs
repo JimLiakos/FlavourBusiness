@@ -204,9 +204,9 @@ namespace ServiceContextManagerApp
 
 
 
-        //static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
+        static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
         //static string _AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
-        static string _AzureServerUrl = "http://10.0.0.13:8090/api/";//work
+        //static string _AzureServerUrl = "http://10.0.0.13:8090/api/";//work
 
 
         static string AzureServerUrl
