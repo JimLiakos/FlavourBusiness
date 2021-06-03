@@ -91,6 +91,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     (MenuStylesheet.Styles["price-options"] as MenuPresentationModel.MenuStyles.PriceStyle).ObjectChangeState += BookViewModel_PropertyChanged;
 
                 PagePresenttion.UpdateCanvasItems(RealObject.Pages.OfType<MenuPage>().ToArray()[0]);
+                CheckMenuItems();
 
 
             }
@@ -646,8 +647,34 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             RestaurantMenu.RemoveBlankPages();
             if (refreshSelected)
                 PagePresenttion.UpdateCanvasItems(SeletedMenuPage);
+
+            CheckMenuItems();
+
         }
 
+        private void CheckMenuItems()
+        {
+            var menuItemsDes = (from page in AllPages
+                                from menuItem in page.MenuCanvasItems
+                                select menuItem.Description).ToArray();
+
+            var menuItemsDes2 = (from menuItem in this.RestaurantMenu.MenuCanvasItems
+                                 select menuItem.Description).ToArray();
+            int i = 0;
+            foreach (var menuItem in menuItemsDes)
+            {
+                if (menuItemsDes2.Length > i)
+                {
+                    if (menuItem != menuItemsDes2[i])
+                    {
+
+                    }
+                    System.Diagnostics.Debug.WriteLine(menuItem + " " + menuItemsDes2[i++]);
+                }
+                else
+                    System.Diagnostics.Debug.WriteLine(menuItem);
+            }
+        }
 
         public System.Globalization.CultureInfo SelectedPageCulture;
 
@@ -801,6 +828,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                                  {
                                      RebuildAlreadRuns--;
                                  }
+
+                                 CheckMenuItems();
+
                              }
                              while (RebuildAlreadRuns > 0);
                          }
@@ -1015,6 +1045,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                         }
                     }
                 }
+
                 return _Pages.ToList();
             }
         }

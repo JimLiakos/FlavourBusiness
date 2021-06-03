@@ -765,100 +765,124 @@ namespace MenuPresentationModel
                 up = true;
             down = true;
 
-            if (down)
+            try
             {
-                IMenuCanvasItem lastAfterOrOnPosDown = null;
-                foreach (var pageItem in MenuCanvasItems)
+                if (down)
                 {
-                    if (pageItem.Column == null) //Title Headings
-                        continue;
-
-                    if (point.X >= pageItem.Column.XPos && point.X <= pageItem.Column.XPos + pageItem.Column.Width)//mouse is in pageItem Column
+                    IMenuCanvasItem lastAfterOrOnPosDown = null;
+                    foreach (var pageItem in MenuCanvasItems)
                     {
+                        if (pageItem.Column == null) //Title Headings
+                            continue;
 
-                        ItemRelativePos relPos = pageItem.GetRelativePos(point);
-                        if (relPos == ItemRelativePos.After || relPos == ItemRelativePos.OnPosDown)
-                            lastAfterOrOnPosDown = pageItem;
-                        if (relPos == ItemRelativePos.OnPosUp)
+                        if (point.X >= pageItem.Column.XPos && point.X <= pageItem.Column.XPos + pageItem.Column.Width)//mouse is in pageItem Column
                         {
-                            int lastAfterOrOnPosDownIndex = MenuCanvasItems.IndexOf(pageItem) - 1;
-                            if (lastAfterOrOnPosDownIndex >= 0)
-                            {
-                                lastAfterOrOnPosDown = MenuCanvasItems[lastAfterOrOnPosDownIndex];
-                                if (lastAfterOrOnPosDown == movingMenuCanvasItem)
-                                    return false;
-                            }
 
+                            ItemRelativePos relPos = pageItem.GetRelativePos(point);
+                            if (relPos == ItemRelativePos.After || relPos == ItemRelativePos.OnPosDown)
+                                lastAfterOrOnPosDown = pageItem;
+                            if (relPos == ItemRelativePos.OnPosUp)
+                            {
+                                int lastAfterOrOnPosDownIndex = MenuCanvasItems.IndexOf(pageItem) - 1;
+                                if (lastAfterOrOnPosDownIndex >= 0)
+                                {
+                                    lastAfterOrOnPosDown = MenuCanvasItems[lastAfterOrOnPosDownIndex];
+                                    if (lastAfterOrOnPosDown == movingMenuCanvasItem)
+                                        return false;
+                                }
+
+                            }
                         }
                     }
-                }
-                //lastAfterOrOnPosDown = null;
-                //if (lastAfterOrOnPosDown == null)
-                //    return false;
-                if (lastAfterOrOnPosDown != null)
-                {
-
-                    int pageItemIndex = MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
-                    if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) != pageItemIndex)
+                    //lastAfterOrOnPosDown = null;
+                    //if (lastAfterOrOnPosDown == null)
+                    //    return false;
+                    if (lastAfterOrOnPosDown != null)
                     {
-                        if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) > pageItemIndex)
+
+                        int pageItemIndex = MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
+                        if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) != pageItemIndex)
                         {
-                            MoveMenuItem(movingMenuCanvasItem, pageItemIndex + 1);
-                            int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
-                            (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex + 1);
-                            return true;
+                            if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) > pageItemIndex)
+                            {
+                                MoveMenuItem(movingMenuCanvasItem, pageItemIndex + 1);
+                                int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
+                                (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex + 1);
+                                return true;
+                            }
+                            else
+                            {
+                                MoveMenuItem(movingMenuCanvasItem, pageItemIndex);
+                                int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
+                                (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex);
+                                return true;
+                            }
                         }
-                        else
+                    }
+                    else
+                    {
+                        var pageFirstItem = MenuCanvasItems[0];
+                        if (pageFirstItem is IMenuCanvasHeading && (pageFirstItem as IMenuCanvasHeading).HeadingType == HeadingType.Title)
+                            return false;
+
+                        MoveMenuItem(movingMenuCanvasItem, 0);
+                        int menuItemIndex = Menu.MenuCanvasItems.IndexOf(pageFirstItem);
+                        (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex);
+                        return true;
+                    }
+                }
+                if (up)
+                {
+                    IMenuCanvasItem lastBeforOrOnPosUp = null;
+                    foreach (var pageItem in MenuCanvasItems.Reverse())
+                    {
+                        if (pageItem.Column == null) //Title Headings
+                            continue;
+
+                        if (movingMenuCanvasItem != pageItem)
+                        {
+                            if (point.X >= pageItem.Column.XPos && point.X <= pageItem.Column.XPos + pageItem.Column.Width)//mouse is in pageItem Column
+                            {
+                                ItemRelativePos relPos = pageItem.GetRelativePos(point);
+                                if (relPos == ItemRelativePos.Before || relPos == ItemRelativePos.OnPosUp)
+                                    lastBeforOrOnPosUp = pageItem;
+                            }
+                        }
+                    }
+                    //lastBeforOrOnPosUp = null;
+                    if (lastBeforOrOnPosUp != null)
+                    {
+                        int pageItemIndex = MenuCanvasItems.IndexOf(lastBeforOrOnPosUp);
+                        if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) != pageItemIndex)
                         {
                             MoveMenuItem(movingMenuCanvasItem, pageItemIndex);
-                            int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastAfterOrOnPosDown);
+                            int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastBeforOrOnPosUp);
                             (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex);
                             return true;
                         }
                     }
                 }
-                else
-                {
-                    var pageFirstItem = MenuCanvasItems[0];
-                    if (pageFirstItem is IMenuCanvasHeading && (pageFirstItem as IMenuCanvasHeading).HeadingType == HeadingType.Title)
-                        return false;
-
-                    MoveMenuItem(movingMenuCanvasItem, 0);
-                    int menuItemIndex = Menu.MenuCanvasItems.IndexOf(pageFirstItem);
-                    (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex);
-                    return true;
-                }
             }
-            if (up)
+            finally
             {
-                IMenuCanvasItem lastBeforOrOnPosUp = null;
-                foreach (var pageItem in MenuCanvasItems.Reverse())
-                {
-                    if (pageItem.Column == null) //Title Headings
-                        continue;
+                int i = 0;
 
-                    if (movingMenuCanvasItem != pageItem)
-                    {
-                        if (point.X >= pageItem.Column.XPos && point.X <= pageItem.Column.XPos + pageItem.Column.Width)//mouse is in pageItem Column
-                        {
-                            ItemRelativePos relPos = pageItem.GetRelativePos(point);
-                            if (relPos == ItemRelativePos.Before || relPos == ItemRelativePos.OnPosUp)
-                                lastBeforOrOnPosUp = pageItem;
-                        }
-                    }
-                }
-                //lastBeforOrOnPosUp = null;
-                if (lastBeforOrOnPosUp != null)
+                var menuItemsDes = (from page in this.Menu.Pages
+                                    from menuItem in page.MenuCanvasItems
+                                    select menuItem.Description).ToArray();
+
+                var menuItemsDes2 = (from menuItem in this.Menu.MenuCanvasItems
+                                     select menuItem.Description).ToArray();
+                foreach (var menuItem in menuItemsDes)
                 {
-                    int pageItemIndex = MenuCanvasItems.IndexOf(lastBeforOrOnPosUp);
-                    if (MenuCanvasItems.IndexOf(movingMenuCanvasItem) != pageItemIndex)
-                    {
-                        MoveMenuItem(movingMenuCanvasItem, pageItemIndex);
-                        int menuItemIndex = Menu.MenuCanvasItems.IndexOf(lastBeforOrOnPosUp);
-                        (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex);
-                        return true;
-                    }
+                    if (menuItemsDes2.Length > i)
+                        System.Diagnostics.Debug.WriteLine(menuItem + " " + menuItemsDes2[i++]);
+                    else
+                        System.Diagnostics.Debug.WriteLine(menuItem);
+
+
                 }
+
             }
             //int movingItemIndex = MenuCanvasItems.IndexOf(movingMenuCanvasItem);
             //foreach (var pageItem in MenuCanvasItems)
@@ -902,6 +926,9 @@ namespace MenuPresentationModel
             //        }
             //    }
             //}
+
+
+
             return false;
         }
 

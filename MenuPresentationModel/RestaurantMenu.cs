@@ -349,6 +349,8 @@ namespace MenuPresentationModel
         /// <MetaDataID>{bf114fea-b6d5-48e2-b78d-7350de076798}</MetaDataID>
         public void MoveMenuItem(MenuPresentationModel.MenuCanvas.IMenuCanvasItem manuCanvasItem, int newpos)
         {
+
+
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 var tmp = _MenuCanvasItems.ToArray();
