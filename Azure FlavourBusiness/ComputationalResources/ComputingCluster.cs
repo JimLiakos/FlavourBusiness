@@ -14,6 +14,7 @@ namespace ComputationalResources
     public class ComputingCluster : IComputingCluster
     {
 
+
         /// <MetaDataID>{fd787641-adab-4b4b-be6b-27bafc74b926}</MetaDataID>
         [Association("ClusterResourceAllocator", Roles.RoleA, "d6984cc2-c3fe-4eb7-98f9-038b984c2e2a")]
         [OOAdvantech.MetaDataRepository.RoleAMultiplicityRange(1, 1)]

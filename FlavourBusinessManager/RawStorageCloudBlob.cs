@@ -14,10 +14,12 @@ namespace FlavourBusinessManager
 
         //static string AzureStorageUrl = "http://192.168.2.8";//org
         //static string AzureStorageUrl = "http://192.168.2.4";//Braxati
-        static string AzureStorageUrl = "http://10.0.0.13";//work
+        //static string AzureStorageUrl = "http://10.0.0.13";//work
+        static string AzureStorageUrl = string.Format("http://{0}", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
 
-        
+
+
 
         public static string RootUri
         {
