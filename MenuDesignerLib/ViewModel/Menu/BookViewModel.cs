@@ -503,9 +503,41 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         /// </param>
         internal void MenuItemMoveOnPage(MenuPage menuPage, IMenuCanvasItem menuCanvasItem)
         {
+            //Takes the item in middle of page
+            //The page of this item must be current - selected after pages rebuild 
+
+            var pageMenuCanvasItems = SeletedMenuPage.MenuCanvasItems.ToList();
+            if (pageMenuCanvasItems.Contains(menuCanvasItem))
+                pageMenuCanvasItems.Remove(menuCanvasItem);
+
+            int middleMenuItemIndex = pageMenuCanvasItems.Count / 2;
+            var middleMenuItem = pageMenuCanvasItems[middleMenuItemIndex];
+
             if (menuPage.MenuCanvasItems.IndexOf(menuCanvasItem) == 0 && AllPages.IndexOf(menuPage) > 0)//First item in page 
                 menuPage = AllPages[AllPages.IndexOf(menuPage) - 1];
             RebuildPageAndAllToTherRight(menuPage);
+
+            if (middleMenuItem.Page != SeletedMenuPage)
+            {
+                SeletedMenuPage = middleMenuItem.Page as MenuPage;
+                if (PreviousPageMenuCommand != null)
+                    PreviousPageMenuCommand.Header = PreviousPages;
+                if (NextPageMenuCommand != null)
+                    NextPageMenuCommand.Header = NextPages;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NextPages)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PreviousPages)));
+
+                Transaction.RunAsynch(new Action(() =>
+                {
+                    lock (this)
+                    {
+                        PagePresenttion.UpdateCanvasItems(SeletedMenuPage);
+                    }
+                }));
+            }
+
         }
 
         //private void RebuildPage(MenuPage menuPage)
@@ -609,8 +641,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             npos = AllPages.IndexOf(menuPage);
             for (; npos < allPages.Count; npos++)
             {
+                //rebuilds all pages until reach to the page which has no changes, but always must be rebuilt the current page
                 int numOfPageMenuCanvasItems = allPages[npos].MenuCanvasItems.Count;
-                if (menuCanvasItems.Count == 0 && AllPages.Count > 1)
+                if (menuCanvasItems.Count == 0 && allPages.Count > 1)
                 {
                     if (SeletedMenuPage == allPages[npos])
                     {
@@ -630,8 +663,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     if (allPages[npos] == SeletedMenuPage)
                         refreshSelected = true;
 
-                    if (allPages[npos].MenuCanvasItems.Count == numOfPageMenuCanvasItems)
-                        break;
+                    if (allPages[npos].MenuCanvasItems.Count == numOfPageMenuCanvasItems) //there are not  changes in this page 
+                    {
+                        if (allPages.IndexOf(this.SeletedMenuPage) <= npos) //always must be rebuilt the current page
+                            break;
+                    }
 
                     while (npos == allPages.Count - 1 && menuCanvasItems.Count > 0)
                     {
