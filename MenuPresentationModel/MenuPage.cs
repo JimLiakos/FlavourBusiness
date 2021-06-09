@@ -93,7 +93,7 @@ namespace MenuPresentationModel
         /// <MetaDataID>{a5404bb4-bc8d-44ef-b51a-ef67d41551ef}</MetaDataID>
         [PersistentMember(nameof(_MenuCanvasItems))]
         [BackwardCompatibilityID("+2")]
-        public System.Collections.Generic.IList<MenuCanvas.IMenuCanvasItem> MenuCanvasItems
+        public IList<IMenuCanvasItem> MenuCanvasItems
         {
             get
             {
@@ -742,9 +742,8 @@ namespace MenuPresentationModel
                 (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex + 1);
                 return true;
             }
-            else if ((Menu as RestaurantMenu).MenuCanvasItems.Last() != this)
+            else if ((Menu as RestaurantMenu).MenuCanvasItems.Last() != movingMenuCanvasItem)
             {
-
                 int menuItemIndex = Menu.MenuCanvasItems.IndexOf(movingMenuCanvasItem);
                 (Menu as RestaurantMenu).MoveMenuItem(movingMenuCanvasItem, menuItemIndex + 1);
                 return true;

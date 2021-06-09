@@ -72,7 +72,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(BeforeSpacing));
+                            _ObjectChangeState?.Invoke(this, nameof(BeforeSpacing));
                         }
                     }));
                 }
@@ -116,7 +116,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(CustomSpacing));
+                            _ObjectChangeState?.Invoke(this, nameof(CustomSpacing));
                         }
                     }));
 
@@ -158,7 +158,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(AfterSpacing));
+                            _ObjectChangeState?.Invoke(this, nameof(AfterSpacing));
                         }
                     }));
                 }
@@ -200,7 +200,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(BeforeSpacing));
+                            _ObjectChangeState?.Invoke(this, nameof(BeforeSpacing));
                         }
                     }));
 
@@ -322,7 +322,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(CustomSpacing));
+                            _ObjectChangeState?.Invoke(this, nameof(CustomSpacing));
                         }
                     }));
                 }
@@ -353,7 +353,7 @@ namespace MenuPresentationModel.MenuCanvas
                     }
                     OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
                     {
-                        ObjectChangeState?.Invoke(this, nameof(NextColumnOrPage));
+                        _ObjectChangeState?.Invoke(this, nameof(NextColumnOrPage));
                     }));
                 }
             }
@@ -361,7 +361,18 @@ namespace MenuPresentationModel.MenuCanvas
 
 
 
-        public event ObjectChangeStateHandle ObjectChangeState;
+        event ObjectChangeStateHandle _ObjectChangeState;
+        public event ObjectChangeStateHandle ObjectChangeState
+        {
+            add
+            {
+                _ObjectChangeState += value;
+            }
+            remove
+            {
+                _ObjectChangeState -= value;
+            }
+        }
 
         /// <MetaDataID>{365c8134-21f1-4b7b-803f-48a7fadbbeb0}</MetaDataID>
         public void AlignOnBaseline(IMenuCanvasItem foodItemLineText)
@@ -452,13 +463,13 @@ namespace MenuPresentationModel.MenuCanvas
         public void LinkedObjectAdded(object linkedObject, AssociationEnd associationEnd)
         {
 
-            ObjectChangeState?.Invoke(this, nameof(Page));
+            _ObjectChangeState?.Invoke(this, nameof(Page));
         }
 
         /// <MetaDataID>{86e0a1a0-21f4-43f2-81e7-62e1e4debde8}</MetaDataID>
         public void LinkedObjectRemoved(object linkedObject, AssociationEnd associationEnd)
         {
-            ObjectChangeState?.Invoke(this, nameof(Page));
+            _ObjectChangeState?.Invoke(this, nameof(Page));
         }
 
         /// <exclude>Excluded</exclude>
@@ -497,7 +508,7 @@ namespace MenuPresentationModel.MenuCanvas
                     {
                         using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
                         {
-                            ObjectChangeState?.Invoke(this, nameof(Description));
+                            _ObjectChangeState?.Invoke(this, nameof(Description));
                         }
                     }));
                 }

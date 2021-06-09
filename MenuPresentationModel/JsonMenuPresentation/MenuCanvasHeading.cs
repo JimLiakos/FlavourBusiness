@@ -235,7 +235,9 @@ namespace MenuPresentationModel.JsonMenuPresentation
         /// <MetaDataID>{16c6e209-0333-44a5-82ec-bb916c0a2143}</MetaDataID>
         public IMenuCanvasAccent MenuCanvasAccent { get; set; }
 
+
         public event ObjectChangeStateHandle ObjectChangeState;
+        
 
         /// <MetaDataID>{bbda705d-00a2-4897-8ffc-bdf174d24e7e}</MetaDataID>
         public void AddHostingArea(IMenuCanvasFoodItemsGroup hostingArea)

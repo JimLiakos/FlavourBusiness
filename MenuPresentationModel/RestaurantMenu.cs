@@ -394,7 +394,7 @@ namespace MenuPresentationModel
                 var itemsDescription = _MenuCanvasItems.Select(x => x.Description).ToArray();
                 stateTransition.Consistent = true;
             }
-            manuCanvasitem.ObjectChangeState += ManuCanvasItemChangeState;
+            newManuCanvasitem.ObjectChangeState += ManuCanvasItemChangeState;
         }
 
         /// <MetaDataID>{c87bcefb-ae4d-468c-8628-0d1ec0034b4c}</MetaDataID>
