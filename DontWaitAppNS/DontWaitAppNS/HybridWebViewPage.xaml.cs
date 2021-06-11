@@ -55,7 +55,7 @@ namespace DontWaitApp
 
                 url = "http://192.168.2.4/DontWaitWeb/#/";
                 url = "http://192.168.2.4:4300/#/";
-                //url = "http://10.0.0.14:4300/#/";
+                url = "http://10.0.0.13:4300/#/";
 
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
 

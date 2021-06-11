@@ -235,10 +235,24 @@ namespace FlavourBusinessManager.ServicesContextResources
             //});
         }
 
+        MenuModel.MealType MealType
+        {
+            get
+            {
+
+            }
+        }
+
         /// <MetaDataID>{1b995301-4937-4889-a8b1-be54049ff16e}</MetaDataID>
         private void CreateAndInitMeal()
         {
+
             
+            var itemsToPrepare = (from clientSession in PartialClientSessions
+                                  from itemPreparation in clientSession.FlavourItems
+                                  select itemPreparation).ToList();
+
+
         }
 
         /// <MetaDataID>{f7125663-4378-4d70-868d-4c90af7c98fd}</MetaDataID>
