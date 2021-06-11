@@ -93,7 +93,7 @@ namespace MenuItemsEditor.Views
                 string sourcePath = String.Format(@"{0}\MenuItemsEditorHtml", curDir);
                 string destinationPath = String.Format(@"{0}\MenuItemsEditorHtml", internetCache);
 
-                Copy(sourcePath, destinationPath);
+                //Copy(sourcePath, destinationPath);
 
                 // WebBrowser.DataContext = new ViewModel.MenuItemTSViewModel(this.GetDataContextObject<MenuItemsEditor.ViewModel.MenuItemViewModel>());
 
