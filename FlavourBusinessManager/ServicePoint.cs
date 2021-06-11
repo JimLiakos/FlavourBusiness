@@ -9,6 +9,7 @@ using System.Linq;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessFacade.HumanResources;
+using MenuModel;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -398,7 +399,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             return fsClientSession;
         }
 
+        /// <MetaDataID>{aed44a3c-a2db-4548-bf09-9975a69848fe}</MetaDataID>
         ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;
+        /// <MetaDataID>{54737567-c31c-42ab-8d40-8334f928483a}</MetaDataID>
         ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime
         {
             get
@@ -412,6 +415,38 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IMealType> _ServesMealTypes = new OOAdvantech.Collections.Generic.Set<IMealType>();
+
+        /// <MetaDataID>{686cd5b3-a352-4230-9143-a6cf92b45210}</MetaDataID>
+        [PersistentMember(nameof(_ServesMealTypes))]
+        [BackwardCompatibilityID("+8")]
+        public IList<IMealType> ServesMealTypes => _ServesMealTypes.ToThreadSafeList();
+
+        public void AddMealType(IMealType mealType)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ServesMealTypes.Add(mealType); 
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+        public void RemoveMealType(IMealType mealType)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ServesMealTypes.Remove(mealType); 
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+        /// <MetaDataID>{c7d46722-ff23-48b3-a51e-3a7e3bbe7e3a}</MetaDataID>
         private void ChangeServicePointState(ServicePointState newState)
         {
             if (State != newState)
@@ -423,7 +458,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     case ServicePointState.Laying:
                         {
 
-                          this.ServicesContextRunTime.ServicePointChangeState(this,oldState,newState);
+                            this.ServicesContextRunTime.ServicePointChangeState(this, oldState, newState);
                             break;
                         }
                     default:
@@ -448,10 +483,13 @@ namespace FlavourBusinessManager.ServicesContextResources
             return collection.OfType<IFoodServiceClientSession>().ToList();
         }
 
-        internal bool IsAssignedTo(IWaiter waiter,IShiftWork shiftWork)
+        /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
+        internal bool IsAssignedTo(IWaiter waiter, IShiftWork shiftWork)
         {
             return true;
         }
+
+    
     }
 
 

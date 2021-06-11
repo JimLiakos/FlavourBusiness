@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FlavourBusinessFacade.EndUsers;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -9,6 +10,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IServicePoint
     {
+        [Association("ServicePointMealType", Roles.RoleA, true, "1c10159e-488c-45bd-bd93-af7013cb1ce5")]
+        IList<IMealType> ServesMealTypes { get; }
+
+        void AddMealType(IMealType mealType);
+
+        /// <MetaDataID>{9fd93ae8-9978-40b8-9c69-f879bd3eb10d}</MetaDataID>
+        void RemoveMealType(IMealType mealType);
+
+
+
         /// <MetaDataID>{3c93b655-a409-4bf7-867d-2d4ce126e2bf}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         [CachingDataOnClientSide]

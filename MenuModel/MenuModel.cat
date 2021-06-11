@@ -13296,7 +13296,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	1041
+	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::MealCourseType" @214
@@ -13456,7 +13456,7 @@
 		    height     	350
 		    annotation 	8)
 		(object AssociationViewNew "$UNNAMED$11" @218
-		    location   	(2317, 273)
+		    location   	(2317, 291)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13473,7 +13473,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "MealCourseType" @219
 			    Parent_View 	@218
-			    location   	(875, -7)
+			    location   	(875, 11)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13486,7 +13486,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @220
 				Parent_View 	@219
-				location   	(2821, 232)
+				location   	(2821, 250)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13512,11 +13512,11 @@
 			    client     	@218
 			    supplier   	@217
 			    line_style 	3
-			    origin_attachment 	(2317, 273)
-			    terminal_attachment 	(2956, 292)
+			    origin_attachment 	(2317, 291)
+			    terminal_attachment 	(2947, 291)
 			    label      	(object SegLabel @221
 				Parent_View 	@219
-				location   	(2883, 327)
+				location   	(2883, 345)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13538,15 +13538,15 @@
 				orientation 	1))
 			(object RoleView "$UNNAMED$12" @222
 			    Parent_View 	@218
-			    location   	(875, -7)
+			    location   	(875, 11)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"60757933008B"
 			    client     	@218
 			    supplier   	@215
 			    line_style 	3
-			    origin_attachment 	(2317, 273)
-			    terminal_attachment 	(1688, 273))))
+			    origin_attachment 	(2317, 291)
+			    terminal_attachment 	(1688, 291))))
 		(object ClassView "Class" "Logical View::MenuModel::IMealType" @223
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(2185, 667)

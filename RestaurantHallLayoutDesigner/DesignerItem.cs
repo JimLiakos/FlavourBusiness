@@ -18,6 +18,8 @@ using FloorLayoutDesigner.ViewModel;
 using FlavourBusinessFacade.ServicesContextResources;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
+using MenuModel;
+using MenuItemsEditor.ViewModel;
 
 namespace FloorLayoutDesigner
 {
@@ -781,6 +783,7 @@ namespace FloorLayoutDesigner
             }
             set
             {
+                MealTypeViewModel rr = null;
                 _Seats = value;
                 this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
                 {
@@ -788,6 +791,17 @@ namespace FloorLayoutDesigner
                 }));
             }
         }
+
+        public List<MealTypeViewModel> MealTypes
+        {
+            get
+            {
+                return null;
+            }
+
+        }
+
+
         bool _ServicePointsPopupIsOpen;
         public bool ServicePointsPopupIsOpen
         {

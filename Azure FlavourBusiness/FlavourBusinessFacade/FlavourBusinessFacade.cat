@@ -3675,9 +3675,47 @@
 			    quid       	"5FA83C4A0114"
 			    parameters 	(list Parameters
 				(object Parameter "hallServicesPoints"
-				    quid       	"5FA83C4A0139"
+				    quid       	"60C2D94F03AB"
 				    type       	"System.Collections.Generic.List<string>"))
-			    result     	"System.Collections.Generic.List`1[[FlavourBusinessFacade.ServicesContextResources.IServicePoint,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    result     	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IServicePoint>"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddMealType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{86f446ae-4501-441d-b102-0d702c53651e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60C2D95000CA"))
+			    quid       	"60C2D95000CA"
+			    parameters 	(list Parameters
+				(object Parameter "mealType"
+				    quid       	"60C2D95000E3"
+				    type       	"MenuModel.IMealType"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveMealType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bf64d7fd-1493-411e-af4c-178a8704fa85}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60C2D950010C"))
+			    quid       	"60C2D950010C"
+			    parameters 	(list Parameters
+				(object Parameter "mealType"
+				    quid       	"60C2D9500126"
+				    type       	"MenuModel.IMealType"))
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -3994,6 +4032,44 @@
 				    quid       	"5F3175CD0170"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.EndUsers.IFoodServiceClientSession,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddMealType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9e8053e5-fd62-47c8-83ca-2e5444aa3a28}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60C2D96303AC"))
+			    quid       	"60C2D96303AC"
+			    parameters 	(list Parameters
+				(object Parameter "mealType"
+				    quid       	"60C2D96303CB"
+				    type       	"MenuModel.IMealType"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveMealType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9fd93ae8-9978-40b8-9c69-f879bd3eb10d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60C2DA0103D5"))
+			    quid       	"60C2DA0103D5"
+			    parameters 	(list Parameters
+				(object Parameter "mealType"
+				    quid       	"60C2DA02000A"
+				    type       	"MenuModel.IMealType"))
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -5820,7 +5896,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	16
+				nlines     	18
 				max_width  	2459)
 			    width      	706
 			    height     	394
@@ -6086,7 +6162,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	7
+				nlines     	9
 				max_width  	621)
 			    width      	594
 			    height     	319
@@ -9401,6 +9477,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@69
+				location   	(1550, 2121)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	18
+				max_width  	0)
 			    width      	825
 			    height     	438
 			    annotation 	8)
@@ -12234,24 +12328,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@156
-				location   	(25, 1062)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	1528)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -12283,24 +12359,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@157
-				location   	(1413, 1174)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	32
-				max_width  	1321)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -17248,6 +17306,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B1600111"
+		    compartment 	(object Compartment
+			Parent_View 	@326
+			location   	(1514, 642)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	19
+			max_width  	2062)
 		    width      	475
 		    height     	231
 		    annotation 	8)
@@ -17477,6 +17553,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B208CEF0007"
+		    compartment 	(object Compartment
+			Parent_View 	@336
+			location   	(2781, 1269)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	346)
 		    width      	569
 		    height     	262
 		    annotation 	8)
@@ -17508,6 +17602,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B68E02DD"
+		    compartment 	(object Compartment
+			Parent_View 	@337
+			location   	(2589, 651)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	637)
 		    width      	675
 		    height     	487
 		    annotation 	8)
@@ -18075,6 +18187,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5BB21F630373"
+		    compartment 	(object Compartment
+			Parent_View 	@364
+			location   	(2715, 1989)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	634)
 		    width      	926
 		    height     	343
 		    annotation 	8)
@@ -18183,6 +18313,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AB1F3B60227"
+		    compartment 	(object Compartment
+			Parent_View 	@368
+			location   	(1008, 2488)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	1128)
 		    width      	588
 		    height     	287
 		    annotation 	8)
@@ -18213,6 +18361,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F72C0B3018D"
+		    compartment 	(object Compartment
+			Parent_View 	@369
+			location   	(1974, 2403)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	1625)
 		    width      	757
 		    height     	350
 		    annotation 	8)

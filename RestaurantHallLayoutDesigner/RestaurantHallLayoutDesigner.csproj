@@ -274,6 +274,14 @@
       <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
       <Name>FlavourBusinessUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MenuItemsEditor\MenuItemsEditor.csproj">
+      <Project>{615B9B02-7115-4A3C-B218-4732958801C8}</Project>
+      <Name>MenuItemsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModel.csproj">
+      <Project>{3BD146EA-5976-40DB-8D3A-68B7C20054C5}</Project>
+      <Name>MenuModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MenuPresentationModel\MenuPresentationModel.csproj">
       <Project>{5C51FA19-E5E2-493D-84C8-2CD88567F908}</Project>
       <Name>MenuPresentationModel</Name>

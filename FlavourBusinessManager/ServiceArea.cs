@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.ServicesContextResources;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -100,6 +101,31 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return _ServicePoints.ToThreadSafeList();
             }
         }
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IMealType> _ServesMealTypes = new OOAdvantech.Collections.Generic.Set<IMealType>();
+
+        public void AddMealType(IMealType mealType)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ServesMealTypes.Add(mealType);
+                stateTransition.Consistent = true;
+            }
+        }
+
+        public void RemoveMealType(IMealType mealType)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ServesMealTypes.Remove(mealType);
+                stateTransition.Consistent = true;
+            }
+        }
+
+        /// <MetaDataID>{b6136504-398d-4f72-8a67-d9018931d582}</MetaDataID>
+        [PersistentMember(nameof(_ServesMealTypes))]
+        [BackwardCompatibilityID("+5")]
+        public IList<IMealType> ServesMealTypes => _ServesMealTypes.ToThreadSafeList();
 
         /// <MetaDataID>{fbed765d-b818-45e3-81d9-64ce055ccaea}</MetaDataID>
         public void AddServicePoint(IServicePoint servicePoint)
@@ -145,10 +171,13 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{7473939f-0ecb-4949-ada5-0715c0d50926}</MetaDataID>
         public List<IServicePoint> GetUnassignedServicePoints(List<string> hallServicesPoints)
         {
 
             return ServicePoints.Where(x => !hallServicesPoints.Contains(x.ServicesPointIdentity)).ToList();
         }
+
+     
     }
 }

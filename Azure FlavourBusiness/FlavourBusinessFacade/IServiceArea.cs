@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 
 
@@ -10,6 +11,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IServiceArea
     {
+        [Association("ServiceAreaMealType", Roles.RoleA, true, "e184cdc3-8ed3-49a3-82ae-b169da1c1efd")]
+        [RoleAMultiplicityRange(1)]
+        IList<IMealType> ServesMealTypes { get; }
+
+
+        /// <MetaDataID>{86f446ae-4501-441d-b102-0d702c53651e}</MetaDataID>
+        void AddMealType(IMealType mealType);
+
+        /// <MetaDataID>{bf64d7fd-1493-411e-af4c-178a8704fa85}</MetaDataID>
+        void RemoveMealType(IMealType mealType);
+
+
         /// <MetaDataID>{86fcf48a-56e6-4faf-ae9d-8221c07d7fa9}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         string ServicesContextIdentity { get; set; }
