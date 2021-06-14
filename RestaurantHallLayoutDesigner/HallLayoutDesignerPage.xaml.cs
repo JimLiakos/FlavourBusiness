@@ -19,7 +19,8 @@ namespace FloorLayoutDesigner
     /// <summary>
     /// Interaction logic for HallLayoutDesignerPage.xaml
     /// </summary>
-    public partial class HallLayoutDesignerPage : PageDialogViewEmulator 
+    /// <MetaDataID>{a6eafaa1-fa5f-47bb-95c6-af1ead671882}</MetaDataID>
+    public partial class HallLayoutDesignerPage : PageDialogViewEmulator
     {
         public HallLayoutDesignerPage()
         {

@@ -700,7 +700,10 @@ namespace FloorLayoutDesigner
             HallLayoutViewModel = hallLayoutViewModel;
             var servicePointPresentation = hallLayoutViewModel.ServiceAreaViewModel.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == shape.ServicesPointIdentity).FirstOrDefault();
             if (servicePointPresentation != null)
+            {
                 _Seats = servicePointPresentation.ServicePoint.Seats;
+               _MealTypes= HallLayoutViewModel.ServiceAreaViewModel.GetMealTypes(Shape.ServicesPointIdentity);
+            }
 
 
             Width = shape.Width;
@@ -773,7 +776,7 @@ namespace FloorLayoutDesigner
             }
         }
 
-
+        /// <exclude>Excluded</exclude>
         int  _Seats;
         public int Seats
         {
@@ -792,11 +795,14 @@ namespace FloorLayoutDesigner
             }
         }
 
-        public List<MealTypeViewModel> MealTypes
+
+        /// <exclude>Excluded</exclude>
+        List<AssignedMealTypeViewMode> _MealTypes=new List<AssignedMealTypeViewMode>();
+        public List<AssignedMealTypeViewMode> MealTypes
         {
             get
             {
-                return null;
+                return HallLayoutViewModel.ServiceAreaViewModel.GetMealTypes(Shape.ServicesPointIdentity);
             }
 
         }

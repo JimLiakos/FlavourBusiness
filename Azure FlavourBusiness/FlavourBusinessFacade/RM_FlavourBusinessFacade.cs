@@ -2731,6 +2731,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IServiceArea ServiceArea
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "get_ServiceArea", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServiceArea>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<MenuModel.IMealType> ServesMealTypes
         {
             get

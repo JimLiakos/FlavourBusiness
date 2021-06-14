@@ -19,7 +19,7 @@ using WPFUIElementObjectBind;
 using FLBAuthentication.ViewModel;
 using MenuDesigner.ViewModel;
 using System.Windows.Media.Imaging;
-
+using OOAdvantech.PersistenceLayer;
 
 namespace FLBManager.ViewModel
 {
@@ -242,6 +242,12 @@ namespace FLBManager.ViewModel
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(RestaurantMenus.Menus[0]));
+
+              var  mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                             select mealType).ToList();
+
+                serviceAreaPresentation.MealTypes = mealTypes;
 
                 var hallLayout = new HallLayoutViewModel(serviceAreaPresentation);
 

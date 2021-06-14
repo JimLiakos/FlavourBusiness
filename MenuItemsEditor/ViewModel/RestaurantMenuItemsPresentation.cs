@@ -15,7 +15,7 @@ namespace MenuItemsEditor.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         MenuModel.IMenu Menu;
 
-        MenuItemsEditor.ViewModel.ItemsCategoryViewModel RootCategory;
+        ItemsCategoryViewModel RootCategory;
         public RestaurantMenuItemsPresentation(MenuModel.IMenu menu)
         {
             Menu = menu;

@@ -251,10 +251,11 @@ namespace FloorLayoutDesigner.ViewModel
                 return ServiceAreaViewModel.ServiceArea.Description;
             }
         }
-
+        //internal readonly MenuModel.IMenu RestaurantMenuData;
         internal readonly IServiceAreaViewModel ServiceAreaViewModel;
-        public HallLayoutViewModel(IServiceAreaViewModel serviceAreaViewModel)
+        public HallLayoutViewModel(IServiceAreaViewModel serviceAreaViewModel)//, MenuModel.IMenu menu)
         {
+            //RestaurantMenuData = menu;
             CutCommand = new WPFUIElementObjectBind.RoutedCommand(new List<InputGesture>() { new KeyGesture(Key.X, ModifierKeys.Control) }, (object sender) => DesignerCanvas.Cut_Executed(sender, null), (object sender) => DesignerCanvas.CutEnabled());
             CopyCommand = new WPFUIElementObjectBind.RoutedCommand(new List<InputGesture>() { new KeyGesture(Key.C, ModifierKeys.Control) }, (object sender) => DesignerCanvas.Copy_Executed(sender, null), (object sender) => DesignerCanvas.CopyEnabled());
             PasteCommand = new WPFUIElementObjectBind.RoutedCommand(new List<InputGesture>() { new KeyGesture(Key.V, ModifierKeys.Control) }, (object sender) => DesignerCanvas.Paste_Executed(sender, null), (object sender) => DesignerCanvas.PasteEnabled());
@@ -295,7 +296,7 @@ namespace FloorLayoutDesigner.ViewModel
 
             SelectedPaperSize = PaperSizes.Where(x => x.PaperType == PaperType.A4).FirstOrDefault();
             Landscape = true;
-            _FontPresantation = new FontPresantation() { Font = _HallLayout.Font, TitlebarText= Properties.Resources.ShapeLabelFontsTitlebarText };
+            _FontPresantation = new FontPresantation() { Font = _HallLayout.Font, TitlebarText = Properties.Resources.ShapeLabelFontsTitlebarText };
             _FontPresantation.PropertyChanged += _FontPresantation_PropertyChanged;
 
             _LabelBkColor = (Color)ColorConverter.ConvertFromString(_HallLayout.LabelBkColor);
@@ -1346,6 +1347,7 @@ namespace FloorLayoutDesigner.ViewModel
         IServiceArea ServiceArea { get; }
         HallLayout RestaurantHallLayout { get; }
 
+        List<AssignedMealTypeViewMode> GetMealTypes(string servicesPointIdentity);
         Task<IServicePointViewModel> NewServicePoint();
         void SetServicePointName(string servicesPointIdentity, string label);
         void SetServicePointSeats(string servicesPointIdentity, int seats);

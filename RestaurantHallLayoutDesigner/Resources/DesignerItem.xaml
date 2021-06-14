@@ -267,12 +267,21 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition></RowDefinition>
                                                 <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Label Content="Description:" VerticalAlignment="Center"></Label>
                                             <TextBox Margin="0,4,0,4" Grid.Column="1"   x:Name="FocusedElement"  VerticalContentAlignment="Center"  Text="{Binding Label, Mode=TwoWay}" Width="100" ></TextBox>
                                             <Label  Grid.Row="1" Content="Seats:" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
                                             <Controls:TextBoxNumberWithUnit Number="{Binding Seats,UpdateSourceTrigger=LostFocus,Mode=TwoWay}"  Margin="0,4,0,4" Grid.Row="1" Grid.Column="1" Width="100" VerticalContentAlignment="Center"></Controls:TextBoxNumberWithUnit>
-                                           
+                                            <ItemsControl Grid.ColumnSpan="2" Grid.Row="2" ItemsSource="{Binding MealTypes}" >
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
                                             <!--<Contrοls:TextBoxNumberWithUnit  VerticalContentAlignment="Center" Number="{Binding Seats,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" Unit="" Margin="0,4,0,4"/>-->
                                             <!--<TextBox Margin="0,4,0,4" Grid.Row="1" Grid.Column="1"  Text="{Binding Seats, Mode=TwoWay}"  VerticalContentAlignment="Center"   Width="100" ></TextBox>-->
 

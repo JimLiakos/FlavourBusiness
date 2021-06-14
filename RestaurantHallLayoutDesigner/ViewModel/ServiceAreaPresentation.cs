@@ -14,6 +14,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessToolKit;
 using FLBManager.ViewModel;
 using FloorLayoutDesigner.ViewModel;
+using MenuModel;
 using OOAdvantech.Transactions;
 using RestaurantHallLayoutModel;
 using WPFUIElementObjectBind;
@@ -376,6 +377,8 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
+        public List<IMealType> MealTypes { get; set; }
+
         /// <MetaDataID>{32c8cf5b-2b92-43f8-b76f-e4a23e31b26c}</MetaDataID>
         public void DragEnter(object sender, DragEventArgs e)
         {
@@ -410,6 +413,17 @@ namespace FloorLayoutDesigner.ViewModel
         /// <MetaDataID>{b0f65f54-bf51-4ee5-9f40-c4b29211e6ee}</MetaDataID>
         public override void SelectionChange()
         {
+
+        }
+
+        public List<AssignedMealTypeViewMode> GetMealTypes(string servicesPointIdentity)
+        {
+
+            ServicePointPresentation servicePointPresentation = this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
+
+
+            return (from mealType in MealTypes
+                    select new AssignedMealTypeViewMode(mealType, servicePointPresentation.ServicePoint)).ToList();
 
         }
     }

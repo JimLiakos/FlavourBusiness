@@ -10911,7 +10911,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@98
-			location   	(2906, 1524)
+			location   	(2906, 1519)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	538
@@ -10919,7 +10919,7 @@
 			label      	"SelectionType")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@98
-			location   	(2906, 1474)
+			location   	(2906, 1473)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -12039,7 +12039,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@153
-			location   	(56, 2338)
+			location   	(56, 2333)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	526
@@ -12047,7 +12047,7 @@
 			label      	"FixedScaleTypes")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@153
-			location   	(56, 2288)
+			location   	(56, 2287)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -13384,7 +13384,7 @@
 		    quidu      	"5721EC2D00C7"
 		    compartment 	(object Compartment
 			Parent_View 	@216
-			location   	(365, 633)
+			location   	(365, 629)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -13433,7 +13433,7 @@
 		    quidu      	"6075144803C3"
 		    compartment 	(object Compartment
 			Parent_View 	@217
-			location   	(2956, 289)
+			location   	(2956, 285)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"

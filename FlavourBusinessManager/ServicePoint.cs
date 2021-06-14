@@ -424,23 +424,34 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+8")]
         public IList<IMealType> ServesMealTypes => _ServesMealTypes.ToThreadSafeList();
 
+
+        OOAdvantech.Member<IServiceArea> _ServiceArea = new OOAdvantech.Member<IServiceArea>();
+
+
+        /// <MetaDataID>{7e5c81f0-c1d2-4ea7-931a-1f6884181a3c}</MetaDataID>
+        [PersistentMember(nameof(_ServiceArea))]
+        [BackwardCompatibilityID("+9")]
+        public IServiceArea ServiceArea => _ServiceArea.Value;
+
+        /// <MetaDataID>{181eef1f-e954-4ca8-a85a-088ceab9c8f9}</MetaDataID>
         public void AddMealType(IMealType mealType)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _ServesMealTypes.Add(mealType); 
+                _ServesMealTypes.Add(mealType);
                 stateTransition.Consistent = true;
             }
 
         }
 
+        /// <MetaDataID>{c08357c9-1a0e-4edd-b5d8-0f31c8459f2c}</MetaDataID>
         public void RemoveMealType(IMealType mealType)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _ServesMealTypes.Remove(mealType); 
+                _ServesMealTypes.Remove(mealType);
                 stateTransition.Consistent = true;
             }
 

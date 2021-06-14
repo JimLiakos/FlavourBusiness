@@ -18,14 +18,15 @@ namespace FloorLayoutDesigner.Views
     /// <summary>
     /// Interaction logic for HallLayoutWindow.xaml
     /// </summary>
-    public partial class HallLayoutWindow :StyleableWindow.Window
+    /// <MetaDataID>{231bb59b-c53a-4442-8564-b1386a753e02}</MetaDataID>
+    public partial class HallLayoutWindow : StyleableWindow.Window
     {
         public HallLayoutWindow()
         {
             InitializeComponent();
         }
 
-    
+
 
 
 

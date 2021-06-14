@@ -116,7 +116,7 @@ namespace FloorLayoutDesigner
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/font16.png"));
                     menuItem.Header = Properties.Resources.HallLayoutLabelFontMenuItemHeader;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                   // menuItem.Command = LabelFontCommand;
+                    // menuItem.Command = LabelFontCommand;
                     _ContextMenuItems.Add(menuItem);
                     menuItem = new MenuCommand(); ;
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/textBackground16.png"));
@@ -136,7 +136,7 @@ namespace FloorLayoutDesigner
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServicePoint.png"));
                     menuItem.Header = "Cut";
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                  //  menuItem.Command = CutCommand;
+                    //  menuItem.Command = CutCommand;
                     _ContextMenuItems.Add(menuItem);
                 }
                 return _ContextMenuItems;
@@ -259,6 +259,8 @@ namespace FloorLayoutDesigner
             }));
         }
 
+        List<MenuModel.IMealType> MealTypes;
+
         /// <MetaDataID>{33b03057-f4cf-45cf-af5e-8e55c5df8a3b}</MetaDataID>
         ViewModel.HallLayoutViewModel HallLayoutPresentation;
         /// <MetaDataID>{4ebf64bd-f547-4e7e-b801-0332dc8e2ff3}</MetaDataID>
@@ -274,6 +276,8 @@ namespace FloorLayoutDesigner
 
             HallLayoutPresentation = hallLayoutPresentation;
             HallLayoutPresentation.HallLayoutSizeChanged += HallLayoutSizeChanged;
+
+       
 
 
             Width = hallLayout.Width;

@@ -111,6 +111,7 @@
     <Compile Include="ToolboxItem.cs" />
     <Compile Include="UndoRedoCommand.cs" />
     <Compile Include="UndoRedoManager.cs" />
+    <Compile Include="ViewModel\AssignedMealTypeViewModel.cs" />
     <Compile Include="ViewModel\HallLayoutDesignerHost.cs" />
     <Compile Include="ViewModel\HallLayoutViewModel.cs" />
     <Compile Include="ViewModel\ServiceAreaPresentation.cs" />
@@ -281,6 +282,10 @@
     <ProjectReference Include="..\MenuModel\MenuModel.csproj">
       <Project>{3BD146EA-5976-40DB-8D3A-68B7C20054C5}</Project>
       <Name>MenuModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
+      <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
+      <Name>MenuModelFacade</Name>
     </ProjectReference>
     <ProjectReference Include="..\MenuPresentationModel\MenuPresentationModel.csproj">
       <Project>{5C51FA19-E5E2-493D-84C8-2CD88567F908}</Project>
