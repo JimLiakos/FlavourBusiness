@@ -315,7 +315,10 @@ namespace FloorLayoutDesigner
 
             MealTypeSelectCommand = new RelayCommand((object sender) =>
             {
-
+                MealTypesViewExpanded = false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MealTypesViewExpanded)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DefaultMealType)));
+                
             });
 
         }
@@ -811,11 +814,38 @@ namespace FloorLayoutDesigner
                 return _DefaultMealType;
 
             }
-            set => _DefaultMealType = value;
+            set
+            {
+                _DefaultMealType = value;
+                if (_DefaultMealType != null)
+                    _DefaultMealType.Assigned = true;
+            }
         }
 
-        public bool MealTypesViewExpanded { get; set; }
+        bool _MealTypesViewExpanded;
+        public bool MealTypesViewExpanded
+        {
+            get => _MealTypesViewExpanded;
+            set
+            {
+                _MealTypesViewExpanded = value;
+                if (!value)
+                {
+                    if (_DefaultMealType != null)
+                        _DefaultMealType.Assigned = true;
+                }
+            }
+        }
 
+        public IServicePointViewModel ServicePoint
+        {
+            get
+            {
+                var hallLayoutViewModel = this.GetObjectContext().CrossSessionValue as HallLayoutViewModel;
+                var servicePoint= hallLayoutViewModel.ServiceAreaViewModel.GetServicePoint(Shape.ServicesPointIdentity);
+                return servicePoint;
+            }
+        }
 
         public RelayCommand MealTypeSelectCommand { get; set; }
 
@@ -825,9 +855,9 @@ namespace FloorLayoutDesigner
         {
             get
             {
+                
                 return HallLayoutViewModel.ServiceAreaViewModel.GetMealTypes(Shape.ServicesPointIdentity);
             }
-
         }
 
 

@@ -302,9 +302,9 @@
                                                     </Grid.ColumnDefinitions>
                                                     <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="Meal Type" />
 
-                                                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,10,0"  Text="{Binding DefaultMealType.Name}" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,10,0"  Text="{Binding ServicePoint.DefaultMealType.Name}" TextTrimming="CharacterEllipsis"/>
                                                 </Grid>
-                                                <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="MealTypesToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding MealTypesViewExpanded, Mode=TwoWay}" />
+                                                <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="MealTypesToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding ServicePoint.MealTypesViewExpanded, Mode=TwoWay}" />
 
                                                 <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=MealTypesToggle }" IsOpen="{Binding Path=IsChecked , ElementName=MealTypesToggle }"   Panel.ZIndex="10"  >
                                                     <Border >
@@ -313,7 +313,7 @@
                                                                 <RowDefinition Height="*"/>
                                                                 <RowDefinition Height="auto"/>
                                                             </Grid.RowDefinitions>
-                                                            <ListBox MinHeight="80" ItemsSource="{Binding MealTypes}" SelectedItem="{Binding DefaultMealType}">
+                                                            <ListBox MinHeight="80" ItemsSource="{Binding ServicePoint.MealTypes}" SelectedItem="{Binding ServicePoint.DefaultMealType}">
                                                                 <ListBox.ItemTemplate>
                                                                     <DataTemplate>
                                                                         <Grid>
@@ -323,8 +323,8 @@
                                                                             </Grid.ColumnDefinitions>
                                                                             <TextBlock Grid.Column="0"  Text="{Binding Name}">
                                                                                     <i:Interaction.Triggers>
-                                                                                        <i:EventTrigger EventName="">
-                                                                                            <i:InvokeCommandAction Command="{Binding ElementName=MealTypesToggle, Path=DataContext.MealTypeSelectCommand}"/>
+                                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                                            <i:InvokeCommandAction Command="{Binding ElementName=MealTypesToggle, Path=DataContext.ServicePoint.MealTypeSelectCommand}"/>
                                                                                         </i:EventTrigger>
                                                                                     </i:Interaction.Triggers>
 

@@ -4,17 +4,95 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FloorLayoutDesigner"
-             xmlns:Resx="clr-namespace:FloorLayoutDesigner.Properties"
+             xmlns:ViewModel="clr-namespace:FloorLayoutDesigner.ViewModel"
+             xmlns:Resx="clr-namespace:FloorLayoutDesigner.Properties" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="450">
     <UserControl.Resources>
+        <ViewModel:HallLayoutViewModel x:Key="DHallLayoutViewModel"></ViewModel:HallLayoutViewModel>
         <Style x:Key="DesignItemLabel" TargetType="{x:Type Label}" 
        BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="Foreground" Value="Red"/>
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid d:DataContext="{StaticResource DHallLayoutViewModel}">
+
+        <Popup Placement="Mouse" StaysOpen="False"   IsOpen="{Binding EditPopupIsOpen}"  AllowsTransparency="True"  >
+            <ContentControl Style="{StaticResource PopupContentStyle}" FocusManager.FocusedElement="{Binding ElementName=FocusedElement}" >
+
+                <Grid  Background="White" >
+                    <Border Margin="5" Background="{StaticResource PopupBackgroundBrush}" BorderBrush="{StaticResource PopupBorderBrush}" BorderThickness="1"   Padding="5">
+                        <Grid  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="110"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Content="Description:" VerticalAlignment="Center" HorizontalAlignment="Right" ></Label>
+                            <TextBox Margin="0,4,0,4" Grid.Column="1"   x:Name="FocusedElement"  VerticalContentAlignment="Center"  Text="{Binding HallLayout.Name, Mode=TwoWay}" Width="100" ></TextBox>
+
+                            <Grid Grid.Row="8" Margin="0,10,0,10" Grid.ColumnSpan="2">
+
+                                <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="Meal Type" />
+
+                                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,10,0"  Text="{Binding DefaultMealType.Name}" TextTrimming="CharacterEllipsis"/>
+                                </Grid>
+                                <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="MealTypesToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding MealTypesViewExpanded, Mode=TwoWay}" />
+
+                                <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=MealTypesToggle }" IsOpen="{Binding Path=IsChecked , ElementName=MealTypesToggle }"   Panel.ZIndex="10"  >
+                                    <Border >
+                                        <Grid MaxHeight="100"  >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <ListBox MinHeight="80" ItemsSource="{Binding MealTypes}" SelectedItem="{Binding DefaultMealType}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0"  Text="{Binding Name}">
+                                                                                    <i:Interaction.Triggers>
+                                                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                                            <i:InvokeCommandAction Command="{Binding ElementName=MealTypesToggle, Path=DataContext.MealTypeSelectCommand}"/>
+                                                                                        </i:EventTrigger>
+                                                                                    </i:Interaction.Triggers>
+
+                                                            </TextBlock>
+                                                            <CheckBox Grid.Column="1" HorizontalAlignment="Right" IsChecked="{Binding Assigned}" ></CheckBox>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </Grid>
+                                    </Border>
+                                </Popup>
+
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ContentControl>
+        </Popup>
+
+
+
         <ScrollViewer x:Name="HallScrollViewer"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
             <Grid MouseWheel="ViewBoxHost_MouseWheel">
@@ -51,6 +129,11 @@
                                     <MenuItem Header="Hall page setup" Command="{Binding HallLayoutPageSetupCommand}">
                                         <MenuItem.Icon>
                                             <Image Source="Resources/Images/Metro/HallLayoutSize16.png" Width="16"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static Resx:Resources.HallLayoutMore}" Command="{Binding HallLayoutEditCommand}">
+                                        <MenuItem.Icon>
+                                            <Image Source="Resources/Images/Metro/Edit16.png" Width="16"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem Header="Cut" Command="{Binding HallLayoutCutCommand}">

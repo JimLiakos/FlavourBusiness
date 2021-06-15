@@ -416,14 +416,29 @@ namespace FloorLayoutDesigner.ViewModel
 
         }
 
+        public IServicePointViewModel GetServicePoint(string servicesPointIdentity)
+        {
+            return  this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
+        }
+
         public List<AssignedMealTypeViewMode> GetMealTypes(string servicesPointIdentity)
         {
 
+            if(string.IsNullOrWhiteSpace(servicesPointIdentity))
+                return (from mealType in MealTypes
+                        select new AssignedMealTypeViewMode(mealType, this.ServiceArea)).ToList();
+
             ServicePointPresentation servicePointPresentation = this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
-
-
-            return (from mealType in MealTypes
-                    select new AssignedMealTypeViewMode(mealType, servicePointPresentation.ServicePoint)).ToList();
+            if (servicePointPresentation != null)
+            {
+                return (from mealType in MealTypes
+                        select new AssignedMealTypeViewMode(mealType, servicePointPresentation.ServicePoint)).ToList();
+            }
+            else
+            {
+                return (from mealType in MealTypes
+                        select new AssignedMealTypeViewMode(mealType,this.ServiceArea )).ToList();
+            }
 
         }
     }

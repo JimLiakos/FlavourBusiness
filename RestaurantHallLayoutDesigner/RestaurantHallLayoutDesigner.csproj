@@ -402,5 +402,8 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\SendBackward.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Edit16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

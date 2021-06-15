@@ -36,6 +36,54 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
+        AssignedMealTypeViewMode _DefaultMealType;
+        public AssignedMealTypeViewMode DefaultMealType
+        {
+            get
+            {
+                if (_DefaultMealType == null)
+                    _DefaultMealType = MealTypes.FirstOrDefault();
+                return _DefaultMealType;
+
+            }
+            set
+            {
+                _DefaultMealType = value;
+                if (_DefaultMealType != null)
+                    _DefaultMealType.Assigned = true;
+            }
+        }
+
+
+        bool _MealTypesViewExpanded;
+        public bool MealTypesViewExpanded { 
+            get=> _MealTypesViewExpanded; 
+            set
+            {
+                _MealTypesViewExpanded = value;
+                if(!value)
+                {
+                    if (_DefaultMealType != null)
+                        _DefaultMealType.Assigned = true;
+                }
+
+            }
+        }
+
+
+        public RelayCommand MealTypeSelectCommand { get; set; }
+
+
+        /// <exclude>Excluded</exclude>
+        List<AssignedMealTypeViewMode> _MealTypes = new List<AssignedMealTypeViewMode>();
+        public List<AssignedMealTypeViewMode> MealTypes
+        {
+            get
+            {
+                return ServiceAreaViewModel.GetMealTypes(null);
+            }
+
+        }
 
         public List<MenuCommand> MenuItems
         {
@@ -107,7 +155,7 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
-
+        public bool EditPopupIsOpen { get; set; }
 
         /// <exclude>Excluded</exclude>
         MenuCommand _FontsMenu;
@@ -252,7 +300,7 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
         //internal readonly MenuModel.IMenu RestaurantMenuData;
-        internal readonly IServiceAreaViewModel ServiceAreaViewModel;
+        internal IServiceAreaViewModel ServiceAreaViewModel { get; }
         public HallLayoutViewModel(IServiceAreaViewModel serviceAreaViewModel)//, MenuModel.IMenu menu)
         {
             //RestaurantMenuData = menu;
@@ -327,7 +375,14 @@ namespace FloorLayoutDesigner.ViewModel
                  if (designer != null)
                      designer.PageSetup_Executed(sender, null);
              });
-
+            HallLayoutEditCommand = new RelayCommand((object sender) =>
+            {
+                EditPopupIsOpen = true;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditPopupIsOpen)));
+                //DesignerCanvas designer = this.DesignerCanvas;
+                //if (designer != null)
+                //    designer.PageSetup_Executed(sender, null);
+            });
             HallLayoutCutCommand = new RelayCommand((object sender) =>
             {
                 DesignerCanvas designer = this.DesignerCanvas;
@@ -414,6 +469,15 @@ namespace FloorLayoutDesigner.ViewModel
                 return false;
 
             });
+
+            MealTypeSelectCommand = new RelayCommand((object sender) =>
+            {
+                MealTypesViewExpanded = false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MealTypesViewExpanded)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DefaultMealType)));
+
+            });
+
 
 
         }
@@ -1312,6 +1376,7 @@ namespace FloorLayoutDesigner.ViewModel
         public WPFUIElementObjectBind.RelayCommand HallLayoutShapeServicepointToggleCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand HallLayoutCutCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand HallLayoutPageSetupCommand { get; protected set; }
+        public WPFUIElementObjectBind.RelayCommand HallLayoutEditCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand HallLayoutCopyCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand HallLayoutPasteCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand HallLayoutDeleteCommand { get; protected set; }
@@ -1348,6 +1413,7 @@ namespace FloorLayoutDesigner.ViewModel
         HallLayout RestaurantHallLayout { get; }
 
         List<AssignedMealTypeViewMode> GetMealTypes(string servicesPointIdentity);
+        IServicePointViewModel GetServicePoint(string servicesPointIdentity);
         Task<IServicePointViewModel> NewServicePoint();
         void SetServicePointName(string servicesPointIdentity, string label);
         void SetServicePointSeats(string servicesPointIdentity, int seats);

@@ -163,6 +163,9 @@
     <value>Labels Font</value>
     <comment>Hall designer label font</comment>
   </data>
+  <data name="HallLayoutMore" xml:space="preserve">
+    <value>More</value>
+  </data>
   <data name="LoadingPrompt" xml:space="preserve">
     <value>Loadding...</value>
   </data>

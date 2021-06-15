@@ -14,20 +14,78 @@ using WPFUIElementObjectBind;
 namespace FloorLayoutDesigner.ViewModel
 {
     /// <MetaDataID>{0cedc37f-b933-45e3-958f-1f8ec3dec749}</MetaDataID>
-    public class ServicePointPresentation :  FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServicePointViewModel
+    public class ServicePointPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServicePointViewModel
     {
+        public List<AssignedMealTypeViewMode> MealTypes
+        {
+            get
+            {
+                return (from mealType in ServiceAreaPresentation.MealTypes
+                        select new AssignedMealTypeViewMode(mealType, ServicePoint)).ToList();
+            }
+        }
+
+        AssignedMealTypeViewMode _DefaultMealType;
+        public AssignedMealTypeViewMode DefaultMealType
+        {
+            get
+            {
+                if (_DefaultMealType == null)
+                    _DefaultMealType = MealTypes.FirstOrDefault();
+                return _DefaultMealType;
+
+            }
+            set
+            {
+                _DefaultMealType = value;
+                if (_DefaultMealType != null)
+                    _DefaultMealType.Assigned = true;
+            }
+        }
+
+        bool _MealTypesViewExpanded;
+        public bool MealTypesViewExpanded
+        {
+            get => _MealTypesViewExpanded;
+            set
+            {
+                _MealTypesViewExpanded = value;
+                if (!value)
+                {
+                    if (_DefaultMealType != null)
+                        _DefaultMealType.Assigned = true;
+                }
+            }
+        }
+
+
+        public RelayCommand MealTypeSelectCommand { get; set; }
+
 
         public override bool IsEditable => true;
 
+        private readonly ServiceAreaPresentation ServiceAreaPresentation;
+
         public IServicePoint ServicePoint { get; private set; }
+
+
         public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent) : base(parent)
         {
+            ServiceAreaPresentation = parent as ServiceAreaPresentation;
             ServicePoint = servicePoint;
             _Name = Properties.Resources.LoadingPrompt;
             Task.Run(() =>
             {
                 _Name = servicePoint.Description;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+            });
+
+            MealTypeSelectCommand = new RelayCommand((object sender) =>
+            {
+                MealTypesViewExpanded = false;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MealTypesViewExpanded)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefaultMealType)));
+
             });
         }
 
@@ -71,7 +129,7 @@ namespace FloorLayoutDesigner.ViewModel
                         var shape = (Parent as ServiceAreaPresentation).RestaurantHallLayout.Shapes.Where(x => x.ServicesPointIdentity == ServicePoint.ServicesPointIdentity).FirstOrDefault();
                         shape.Label = value;
                     }
-                    
+
                     RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
                 }
             }
@@ -147,6 +205,6 @@ namespace FloorLayoutDesigner.ViewModel
     }
 
 
-  
+
 }
 
