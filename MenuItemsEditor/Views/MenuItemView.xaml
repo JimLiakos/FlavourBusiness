@@ -96,15 +96,15 @@
                                 <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="30"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="{x:Static resx:Resources.MealPartLabel}" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="{x:Static resx:Resources.MealPartLabel}" />
                                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding PartsOfMealText}" TextTrimming="CharacterEllipsis"/>
-                            </Grid>
-                            <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding PartsOfMealExpanded, Mode=TwoWay}" />
-                                
+                                </Grid>
+                                <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding PartsOfMealExpanded, Mode=TwoWay}" />
+
                                 <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" IsOpen="{Binding Path=IsChecked , ElementName=PartOfMealToggle }"   Panel.ZIndex="10"  >
                                     <Border >
                                         <Grid MaxHeight="100"  >
@@ -185,7 +185,6 @@
                                     </Border>
                                 </Popup>
 
-                                
                             </Grid>
 
                             <!--<sw:ComboBoxEx Grid.Row="9" DisplayMemberPath="Description" Text="sss" >
@@ -486,7 +485,7 @@
                                             ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedOptionHideShowCommand}">
                                                     <Image Width="16" Height="16" Source="{Binding Path=OptionShowImagePath}"></Image>
                                                 </Button>
-                                                
+
                                                 <Button  Command="{Binding Path=SetSelectedOptionCheckUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
                                             ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedScaleTypeLevelUncheckTooltip}">
                                                     <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>

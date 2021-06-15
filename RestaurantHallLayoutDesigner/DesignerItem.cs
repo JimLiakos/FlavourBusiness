@@ -312,6 +312,12 @@ namespace FloorLayoutDesigner
 
             InitContextMenuCommands();
 
+
+            MealTypeSelectCommand = new RelayCommand((object sender) =>
+            {
+
+            });
+
         }
 
         private void InitContextMenuCommands()
@@ -795,6 +801,23 @@ namespace FloorLayoutDesigner
             }
         }
 
+        AssignedMealTypeViewMode _DefaultMealType;
+        public AssignedMealTypeViewMode DefaultMealType
+        {
+            get
+            {
+                if (_DefaultMealType == null)
+                    _DefaultMealType = MealTypes.FirstOrDefault();
+                return _DefaultMealType;
+
+            }
+            set => _DefaultMealType = value;
+        }
+
+        public bool MealTypesViewExpanded { get; set; }
+
+
+        public RelayCommand MealTypeSelectCommand { get; set; }
 
         /// <exclude>Excluded</exclude>
         List<AssignedMealTypeViewMode> _MealTypes=new List<AssignedMealTypeViewMode>();

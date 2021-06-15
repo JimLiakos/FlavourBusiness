@@ -26,39 +26,42 @@ namespace FloorLayoutDesigner.ViewModel
         public string Name => MealType.Name;
 
 
+        bool _Assigned;
 
         public bool Assigned
         {
             get
             {
-                if (ServicePoint != null)
-                {
-                    if (ServicePoint.ServesMealTypes.Contains(MealType))
-                        return true;
-                    if (ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
-                        return true;
-                }
-                if (ServiceArea != null && ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
-                    return true;
+                return _Assigned;
+                //if (ServicePoint != null)
+                //{
+                //    if (ServicePoint.ServesMealTypes.Contains(MealType))
+                //        return true;
+                //    if (ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
+                //        return true;
+                //}
+                //if (ServiceArea != null && ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
+                //    return true;
 
-                return false;
+                //return false;
             }
             set
             {
-                if (value)
-                {
-                    if (ServiceArea != null)
-                        ServiceArea.AddMealType(MealType);
-                    if (ServicePoint != null)
-                        ServicePoint.AddMealType(MealType);
-                }
-                else
-                {
-                    if (ServiceArea != null)
-                        ServiceArea.RemoveMealType(MealType);
-                    if (ServicePoint != null)
-                        ServicePoint.RemoveMealType(MealType);
-                }
+                _Assigned = value;
+                //if (value)
+                //{
+                //    if (ServiceArea != null)
+                //        ServiceArea.AddMealType(MealType);
+                //    if (ServicePoint != null)
+                //        ServicePoint.AddMealType(MealType);
+                //}
+                //else
+                //{
+                //    if (ServiceArea != null)
+                //        ServiceArea.RemoveMealType(MealType);
+                //    if (ServicePoint != null)
+                //        ServicePoint.RemoveMealType(MealType);
+                //}
 
             }
         }
