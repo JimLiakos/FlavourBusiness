@@ -15,13 +15,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [RoleAMultiplicityRange(1)]
         IList<IMealType> ServesMealTypes { get; }
 
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+        [CachingDataOnClientSide]
+        IList<string> ServesMealTypesUris { get; }
 
         /// <MetaDataID>{86f446ae-4501-441d-b102-0d702c53651e}</MetaDataID>
-        void AddMealType(IMealType mealType);
+        void AddMealType(string mealTypeUri);
 
         /// <MetaDataID>{bf64d7fd-1493-411e-af4c-178a8704fa85}</MetaDataID>
-        void RemoveMealType(IMealType mealType);
+        void RemoveMealType(string mealTypeUri);
 
+        bool MealTypeAssigned(string mealTypeUri);
 
         /// <MetaDataID>{86fcf48a-56e6-4faf-ae9d-8221c07d7fa9}</MetaDataID>
         [BackwardCompatibilityID("+2")]

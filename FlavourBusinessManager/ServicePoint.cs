@@ -10,6 +10,7 @@ using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessFacade.HumanResources;
 using MenuModel;
+using OOAdvantech;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -367,8 +368,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     lock (ServicePointLock)
                     {
-                        
-                        if (_ActiveFoodServiceClientSessions.Where(x => !x.IsWaiterSession).Count() == 0&&!fsClientSession.IsWaiterSession)
+
+                        if (_ActiveFoodServiceClientSessions.Where(x => !x.IsWaiterSession).Count() == 0 && !fsClientSession.IsWaiterSession)
                             ChangeServicePointState(ServicePointState.Laying);
 
 
@@ -399,7 +400,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return fsClientSession;
         }
 
-        /// <MetaDataID>{aed44a3c-a2db-4548-bf09-9975a69848fe}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;
         /// <MetaDataID>{54737567-c31c-42ab-8d40-8334f928483a}</MetaDataID>
         ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime
@@ -416,16 +417,33 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{dacf638f-ca24-4200-907a-9633288ccc3f}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+10")]
+        private string MealTypesUris;
+
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<IMealType> _ServesMealTypes = new OOAdvantech.Collections.Generic.Set<IMealType>();
+        List<IMealType> _ServesMealTypes;
 
         /// <MetaDataID>{686cd5b3-a352-4230-9143-a6cf92b45210}</MetaDataID>
-        [PersistentMember(nameof(_ServesMealTypes))]
         [BackwardCompatibilityID("+8")]
-        public IList<IMealType> ServesMealTypes => _ServesMealTypes.ToThreadSafeList();
+        public IList<IMealType> ServesMealTypes
+        {
+            get
+            {
+
+                if (_ServesMealTypes == null)
+                    _ServesMealTypes = (from mealTypeUri in ServesMealTypesUris
+                                        select ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType).Where(x => x != null).ToList();
+                return _ServesMealTypes.ToList();
+            }
+        }
 
 
+        /// <exclude>Excluded</exclude>
         OOAdvantech.Member<IServiceArea> _ServiceArea = new OOAdvantech.Member<IServiceArea>();
+
+        public event ObjectChangeStateHandle ObjectChangeState;
 
 
         /// <MetaDataID>{7e5c81f0-c1d2-4ea7-931a-1f6884181a3c}</MetaDataID>
@@ -433,28 +451,62 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+9")]
         public IServiceArea ServiceArea => _ServiceArea.Value;
 
-        /// <MetaDataID>{181eef1f-e954-4ca8-a85a-088ceab9c8f9}</MetaDataID>
-        public void AddMealType(IMealType mealType)
+        public IList<string> ServesMealTypesUris
         {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(MealTypesUris))
+                    return new List<string>();
+                return MealTypesUris.Split(' ');
+            }
+        }
+
+        /// <MetaDataID>{181eef1f-e954-4ca8-a85a-088ceab9c8f9}</MetaDataID>
+        public void AddMealType(string mealTypeUri)
+        {
+
+            int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+
+                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                if (mealType == null)
+                    throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Add(mealType);
+                MealTypesUris = null;
+                foreach (var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                {
+                    if (MealTypesUris != null)
+                        MealTypesUris += " ";
+                    MealTypesUris += uri;
+                }
                 stateTransition.Consistent = true;
             }
 
+            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
         }
 
         /// <MetaDataID>{c08357c9-1a0e-4edd-b5d8-0f31c8459f2c}</MetaDataID>
-        public void RemoveMealType(IMealType mealType)
+        public void RemoveMealType(string mealTypeUri)
         {
-
+            int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                if (mealType == null)
+                    throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Remove(mealType);
+                MealTypesUris = null;
+                foreach (var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                {
+                    if (MealTypesUris != null)
+                        MealTypesUris += " ";
+                    MealTypesUris += uri;
+                }
                 stateTransition.Consistent = true;
             }
-
+            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
         }
 
         /// <MetaDataID>{c7d46722-ff23-48b3-a51e-3a7e3bbe7e3a}</MetaDataID>
@@ -500,7 +552,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return true;
         }
 
-    
+
     }
 
 

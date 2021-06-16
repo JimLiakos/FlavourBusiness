@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -14,6 +15,11 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class ServiceArea :MarshalByRefObject, IServiceArea,OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <MetaDataID>{b3f32e8c-f23e-4338-8fa3-2d57ba439202}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+6")]
+        private string MealTypesUris;
+
 
 
 
@@ -101,35 +107,87 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return _ServicePoints.ToThreadSafeList();
             }
         }
-        /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<IMealType> _ServesMealTypes = new OOAdvantech.Collections.Generic.Set<IMealType>();
 
-        public void AddMealType(IMealType mealType)
+        /// <MetaDataID>{4576e681-bde6-4cbb-ad87-b4dd9c44dcc9}</MetaDataID>
+        public void AddMealType(string mealTypeUri)
         {
+
+            int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+
+                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                if (mealType == null)
+                    throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Add(mealType);
+                MealTypesUris = null;
+                foreach ( var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                {
+                    if (MealTypesUris != null)
+                        MealTypesUris += " ";
+                    MealTypesUris += uri;
+                }
                 stateTransition.Consistent = true;
             }
+
+            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
         }
 
-        public void RemoveMealType(IMealType mealType)
+        /// <MetaDataID>{0cc34eba-d947-45f6-bf50-d183f4bc89cd}</MetaDataID>
+        public void RemoveMealType(string mealTypeUri)
         {
+            int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                if (mealType == null)
+                    throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Remove(mealType);
+                MealTypesUris = null;
+                foreach (var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                {
+                    if (MealTypesUris != null)
+                        MealTypesUris += " ";
+                    MealTypesUris += uri;
+                }
                 stateTransition.Consistent = true;
             }
+            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
         }
+
+        /// <exclude>Excluded</exclude>
+        List<IMealType> _ServesMealTypes = null;
+
+        public event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{b6136504-398d-4f72-8a67-d9018931d582}</MetaDataID>
-        [PersistentMember(nameof(_ServesMealTypes))]
         [BackwardCompatibilityID("+5")]
-        public IList<IMealType> ServesMealTypes => _ServesMealTypes.ToThreadSafeList();
+        public IList<IMealType> ServesMealTypes
+        {
+            get
+            {
+                if (_ServesMealTypes == null)
+                    _ServesMealTypes = (from mealTypeUri in ServesMealTypesUris
+                                        select ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType).Where(x => x != null).ToList();
+                return _ServesMealTypes.ToList();
+            }
+        }
+
+        public IList<string> ServesMealTypesUris
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(MealTypesUris))
+                    return new List<string>();
+               return MealTypesUris.Split(' ');
+            }
+        }
+
 
         /// <MetaDataID>{fbed765d-b818-45e3-81d9-64ce055ccaea}</MetaDataID>
         public void AddServicePoint(IServicePoint servicePoint)
         {
+
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
@@ -178,6 +236,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             return ServicePoints.Where(x => !hallServicesPoints.Contains(x.ServicesPointIdentity)).ToList();
         }
 
-     
+        public bool MealTypeAssigned(string mealTypeUri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

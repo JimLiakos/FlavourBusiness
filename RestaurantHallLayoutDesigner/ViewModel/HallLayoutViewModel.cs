@@ -300,7 +300,7 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
         //internal readonly MenuModel.IMenu RestaurantMenuData;
-        internal IServiceAreaViewModel ServiceAreaViewModel { get; }
+        public IServiceAreaViewModel ServiceAreaViewModel { get; }
         public HallLayoutViewModel(IServiceAreaViewModel serviceAreaViewModel)//, MenuModel.IMenu menu)
         {
             //RestaurantMenuData = menu;

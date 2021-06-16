@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.PersistenceLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,12 +51,12 @@ namespace FloorLayoutDesigner.ViewModel
                 //return _Assigned;
                 if (ServicePoint != null)
                 {
-                    if (ServicePoint.ServesMealTypes.Contains(MealType))
+                    if (ServicePoint.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
                         return true;
-                    if (ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
+                    if (ServicePoint.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject( MealType).GetPersistentObjectUri(MealType)))
                         return true;
                 }
-                if (ServiceArea != null && ServicePoint.ServiceArea.ServesMealTypes.Contains(MealType))
+                if (ServiceArea != null && ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
                     return true;
 
                 return false;
@@ -66,16 +67,16 @@ namespace FloorLayoutDesigner.ViewModel
                 if (value)
                 {
                     if (ServiceArea != null)
-                        ServiceArea.AddMealType(MealType);
+                        ServiceArea.AddMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
                     if (ServicePoint != null)
-                        ServicePoint.AddMealType(MealType);
+                        ServicePoint.AddMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
                 }
                 else
                 {
                     if (ServiceArea != null)
-                        ServiceArea.RemoveMealType(MealType);
+                        ServiceArea.RemoveMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)); 
                     if (ServicePoint != null)
-                        ServicePoint.RemoveMealType(MealType);
+                        ServicePoint.RemoveMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
                 }
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));

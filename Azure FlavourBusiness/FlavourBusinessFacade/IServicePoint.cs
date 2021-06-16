@@ -10,6 +10,13 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IServicePoint
     {
+
+
+        [CachingDataOnClientSide]
+        IList<string> ServesMealTypesUris { get; }
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
         [Association("AreaServicePoints", Roles.RoleB, "27b5c804-1630-41b4-975e-cf64dc1969a0")]
         [RoleBMultiplicityRange(1, 1)]
         IServiceArea ServiceArea { get; }
@@ -17,10 +24,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         IList<IMealType> ServesMealTypes { get; }
 
         /// <MetaDataID>{25afee87-8ad0-4abc-9cb0-971aa8a03924}</MetaDataID>
-        void AddMealType(IMealType mealType);
+        void AddMealType(string mealTypeUri);
 
         /// <MetaDataID>{9fd93ae8-9978-40b8-9c69-f879bd3eb10d}</MetaDataID>
-        void RemoveMealType(IMealType mealType);
+        void RemoveMealType(string mealTypeUri);
 
 
 
