@@ -19,12 +19,19 @@ namespace FloorLayoutDesigner.ViewModel
         {
             MealType = mealType;
             ServicePoint = servicePoint;
+            ServicePoint.ObjectChangeState += ServicePoint_ObjectChangeState;
             MealTypeSelectCommand = new RelayCommand((object sender) =>
             {
                 System.Diagnostics.Debug.WriteLine("sss");
             });
 
         }
+
+        private void ServicePoint_ObjectChangeState(object _object, string member)
+        {
+            var sdsd = ServicePoint.ServesMealTypesUris;
+        }
+
         public AssignedMealTypeViewMode(MenuModel.IMealType mealType, IServiceArea serviceArea)
         {
             MealType = mealType;
@@ -40,7 +47,7 @@ namespace FloorLayoutDesigner.ViewModel
         public string Name => MealType.Name;
 
 
-        bool _Assigned;
+        bool? _Assigned;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,35 +58,68 @@ namespace FloorLayoutDesigner.ViewModel
                 //return _Assigned;
                 if (ServicePoint != null)
                 {
-                    if (ServicePoint.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
-                        return true;
-                    if (ServicePoint.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject( MealType).GetPersistentObjectUri(MealType)))
-                        return true;
-                }
-                if (ServiceArea != null && ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
-                    return true;
 
-                return false;
+                    if (ServicePoint.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                        _Assigned = true;
+                    else
+                    if (ServicePoint.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                        _Assigned = true;
+                }
+                else
+                if (ServiceArea != null && ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                    _Assigned = true;
+                if (_Assigned != null)
+                    return _Assigned.Value;
+                else
+                    return false;
             }
             set
             {
-                _Assigned = value;
-                if (value)
+                if (_Assigned != value)
                 {
-                    if (ServiceArea != null)
-                        ServiceArea.AddMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
-                    if (ServicePoint != null)
-                        ServicePoint.AddMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
-                }
-                else
-                {
-                    if (ServiceArea != null)
-                        ServiceArea.RemoveMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)); 
-                    if (ServicePoint != null)
-                        ServicePoint.RemoveMealType(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType));
+                    _Assigned = value;
+                    if (value)
+                    {
+                        string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+                        if (ServiceArea != null)
+                        {
+                            ServiceArea.AddMealType(mealTypeUri);
+                            var sdsd = ServicePoint.ServesMealTypesUris;
+                            //OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
+
+                        }
+                        if (ServicePoint != null)
+                        {
+                            ServicePoint.AddMealType(mealTypeUri);
+                            var sdsd = ServicePoint.ServesMealTypesUris;
+                            //OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
+
+                        }
+                    }
+                    else
+                    {
+                        string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+
+                        if (ServiceArea != null)
+                        {
+                            ServiceArea.RemoveMealType(mealTypeUri);
+                            OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
+                            
+                        }
+                        if (ServicePoint != null)
+                        {
+                            ServicePoint.RemoveMealType(mealTypeUri);
+                            OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
+                            
+                        }
+                    }
+                    Task.Run(() =>
+                    {
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
+                    });
                 }
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
+
             }
         }
     }

@@ -250,6 +250,10 @@
       <Project>{83492998-8E8B-44A9-BCC8-9A6E979E3EB6}</Project>
       <Name>OOAdvantech - VS10</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\RestApiRemoting\RestApiRemoting.csproj">
+      <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
+      <Name>RestApiRemoting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
       <Project>{E0E5873E-E5E4-46F6-94F1-731C172CC1C6}</Project>
       <Name>UserInterface - VS10</Name>

@@ -113,10 +113,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
+            if (ServesMealTypesUris.Contains(mealTypeUri))
+                return;
+
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
 
-                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                IMealType mealType = ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType;
                 if (mealType == null)
                     throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Add(mealType);
@@ -130,16 +133,19 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
-            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
+            ObjectChangeState?.Invoke(this, nameof(ServesMealTypesUris));
         }
 
         /// <MetaDataID>{0cc34eba-d947-45f6-bf50-d183f4bc89cd}</MetaDataID>
         public void RemoveMealType(string mealTypeUri)
         {
+            if (!ServesMealTypesUris.Contains(mealTypeUri))
+                return;
+
             int mealTypesCount = ServesMealTypes.Count;//force system to load mealTypes;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                IMealType mealType = ObjectStorage.GetStorageFromUri(mealTypeUri) as IMealType;
+                IMealType mealType = ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType;
                 if (mealType == null)
                     throw new System.Exception("Invalid meal type uri");
                 _ServesMealTypes.Remove(mealType);
@@ -152,7 +158,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(MealTypesUris));
+            ObjectChangeState?.Invoke(this, nameof(ServesMealTypesUris));
         }
 
         /// <exclude>Excluded</exclude>
