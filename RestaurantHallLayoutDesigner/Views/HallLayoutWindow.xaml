@@ -20,7 +20,7 @@
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:HallLayoutViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
     <Grid>
-        <sw:DialogContentControl  Style="{StaticResource ModalDialog}">
+        <sw:DialogContentControl >
             
 
             <Grid  DataContext="{Binding Value, Mode=OneWay}" VerticalAlignment="Top" Margin="24,40,24,0">

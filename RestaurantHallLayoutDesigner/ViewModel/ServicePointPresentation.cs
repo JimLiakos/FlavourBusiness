@@ -68,7 +68,7 @@ namespace FloorLayoutDesigner.ViewModel
 
         public IServicePoint ServicePoint { get; private set; }
 
-
+        public System.Windows.Visibility CheckBoxVisibility{get; set;} = Visibility.Collapsed;
         public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent) : base(parent)
         {
             ServiceAreaPresentation = parent as ServiceAreaPresentation;

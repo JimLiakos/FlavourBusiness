@@ -15,6 +15,7 @@ using FlavourBusinessToolKit;
 using FLBManager.ViewModel;
 using FloorLayoutDesigner.ViewModel;
 using MenuModel;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using RestaurantHallLayoutModel;
 using WPFUIElementObjectBind;
@@ -24,6 +25,17 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{2346d8c4-3061-4757-9e0e-9c039aaf0e89}</MetaDataID>
     public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel
     {
+        List<FBResourceTreeNode> _TreeItems;
+        public List<FBResourceTreeNode> TreeItems
+        {
+            get
+            {
+                if(_TreeItems==null)
+                    _TreeItems =new List<FBResourceTreeNode>() { new ServiceAreaPresentation(ServiceArea, MealTypes) };
+                return _TreeItems;
+                
+            }
+        }
 
         /// <MetaDataID>{29a52b78-bc3a-499f-ae69-8ad80e0a014a}</MetaDataID>
         public IServiceArea ServiceArea { get; private set; }
@@ -36,6 +48,9 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
+        public ServiceAreaPresentation():base(null)
+        {
+        }
 
         /// <MetaDataID>{5b2b393c-dfb3-4d1c-987c-4d493d07adec}</MetaDataID>
         Dictionary<IServicePoint, ServicePointPresentation> _ServicePoints = new Dictionary<IServicePoint, ServicePointPresentation>();
@@ -72,6 +87,10 @@ namespace FloorLayoutDesigner.ViewModel
                  ShowHallLayoutDesigner();
              });
 
+            ServedMealsCommand = new RelayCommand((object sender) =>
+            {
+                ShowServedMealTypesPage();
+            });
             Task.Run(() =>
             {
                 foreach (var servicePoint in ServiceArea.ServicePoints)
@@ -80,6 +99,53 @@ namespace FloorLayoutDesigner.ViewModel
 
             });
         }
+
+        public ServiceAreaPresentation(IServiceArea serviceArea, List<IMealType> mealTypes):base(null)
+        {
+            _Name = serviceArea.Description;
+            ServiceArea = serviceArea;
+            MealTypes = mealTypes;
+          
+            _Members=new List<FBResourceTreeNode>() { new MealTypesTreeNode(mealTypes, this)};
+
+            Task.Run(() =>
+            {
+                foreach (var servicePoint in ServiceArea.ServicePoints)
+                    _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this));
+                _Members.AddRange(_ServicePoints.Values.OrderBy(x => x.Name).OfType<FBResourceTreeNode>().ToList());
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+            });
+
+            CheckBoxVisibility = Visibility.Collapsed;
+        }
+
+        public System.Windows.Visibility CheckBoxVisibility
+        {
+            get; set;
+        }
+
+        private void ShowServedMealTypesPage()
+        {
+            System.Windows.Window win = System.Windows.Window.GetWindow(ServedMealsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+            var pageDialogFrame = WPFUIElementObjectBind.ObjectContext.FindChilds<StyleableWindow.PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+            {
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(HallLayoutDesignerHost.Current.RestaurantMenus.Menus[0]));
+
+                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                                 select mealType).ToList();
+                MealTypes = mealTypes;
+                var hallLayoutDesignerPage = new Views.HallMealTypesPage();
+                hallLayoutDesignerPage.GetObjectContext().SetContextInstance(this);
+                pageDialogFrame.ShowDialogPage(hallLayoutDesignerPage);
+                stateTransition.Consistent = true;
+            }
+
+        }
+
         public HallLayout RestaurantHallLayout { get; private set; }
 
         /// <MetaDataID>{0730b610-b04b-49cf-a180-77a6d3a63c42}</MetaDataID>
@@ -258,6 +324,7 @@ namespace FloorLayoutDesigner.ViewModel
 
         /// <MetaDataID>{b58058b5-272d-42b5-aa75-a0c0bb4698e9}</MetaDataID>
         public RelayCommand DesigneCommand { get; protected set; }
+        public RelayCommand ServedMealsCommand { get; protected set; }
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
@@ -300,6 +367,14 @@ namespace FloorLayoutDesigner.ViewModel
                     menuItem.Command = DesigneCommand;
                     _ContextMenuItems.Add(menuItem);
 
+                    menuItem = new MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/serve16.png"));
+                    menuItem.Header = Properties.Resources.ServedMealTypesMenuContextHeader;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = ServedMealsCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+
                     _ContextMenuItems.Add(null);
 
                     menuItem = new MenuCommand();
@@ -322,14 +397,15 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
+        List<FBResourceTreeNode> _Members;
 
         /// <MetaDataID>{3930a9a5-c95b-4528-a912-885e71b3686c}</MetaDataID>
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                var members = _ServicePoints.Values.OrderBy(x => x.Name).OfType<FBResourceTreeNode>().ToList();
-                return members;
+                
+                return _Members;
             }
         }
         /// <exclude>Excluded</exclude>

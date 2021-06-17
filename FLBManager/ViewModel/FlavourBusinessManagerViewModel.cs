@@ -20,6 +20,7 @@ using FLBAuthentication.ViewModel;
 using MenuDesigner.ViewModel;
 using System.Windows.Media.Imaging;
 using OOAdvantech.PersistenceLayer;
+using MenuItemsEditor;
 
 namespace FLBManager.ViewModel
 {
@@ -244,8 +245,8 @@ namespace FLBManager.ViewModel
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(RestaurantMenus.Menus[0]));
 
-              var  mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
-                             select mealType).ToList();
+                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                                 select mealType).ToList();
 
                 serviceAreaPresentation.MealTypes = mealTypes;
 
@@ -837,6 +838,9 @@ namespace FLBManager.ViewModel
                 FlavourBusinessManagerViewModel = flavourBusinessManagerViewModel;
                 FloorLayoutDesigner.HallLayoutDesignerHost.Current = this;
             }
+
+            public override RestaurantMenus RestaurantMenus => FlavourBusinessManagerViewModel.RestaurantMenus;
+
             public override void ShowHallLayout(ServiceAreaPresentation serviceAreaPresentation)
             {
                 FlavourBusinessManagerViewModel.ShowHallLayout(serviceAreaPresentation);

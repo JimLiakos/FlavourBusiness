@@ -179,6 +179,9 @@
     <value>Remove Service Area</value>
     <comment>Defines the ContextMenu MenuItem Header to remove service Area tree node</comment>
   </data>
+  <data name="ServedMealTypesMenuContextHeader" xml:space="preserve">
+    <value>Served meal types</value>
+  </data>
   <data name="ShapeLabelBackgroundTitlebarText" xml:space="preserve">
     <value>Shapes label background</value>
   </data>

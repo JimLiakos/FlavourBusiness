@@ -15,5 +15,7 @@ namespace FloorLayoutDesigner
         public HallLayoutViewModel HallLayout { get; internal set; }
 
         public abstract void ShowHallLayout(ServiceAreaPresentation serviceAreaPresentation);
+
+        public abstract MenuItemsEditor.RestaurantMenus RestaurantMenus { get; }
     }
 }

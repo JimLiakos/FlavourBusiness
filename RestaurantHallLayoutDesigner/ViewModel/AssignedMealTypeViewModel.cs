@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel;
 using OOAdvantech.PersistenceLayer;
 using System;
 using System.Collections.Generic;
@@ -6,16 +7,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WPFUIElementObjectBind;
 
 namespace FloorLayoutDesigner.ViewModel
 {
-    public class AssignedMealTypeViewMode : MarshalByRefObject, INotifyPropertyChanged
+    public class AssignedMealTypeViewMode : FBResourceTreeNode,  INotifyPropertyChanged
     {
         MenuModel.IMealType MealType;
         IServicePoint ServicePoint;
         IServiceArea ServiceArea;
-        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, IServicePoint servicePoint)
+        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, IServicePoint servicePoint, FLBManager.ViewModel.FBResourceTreeNode parent =null):base(parent)
         {
             MealType = mealType;
             ServicePoint = servicePoint;
@@ -32,7 +34,12 @@ namespace FloorLayoutDesigner.ViewModel
             var sdsd = ServicePoint.ServesMealTypesUris;
         }
 
-        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, IServiceArea serviceArea)
+        public override void SelectionChange()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, IServiceArea serviceArea, FLBManager.ViewModel.FBResourceTreeNode parent = null) : base(parent)
         {
             MealType = mealType;
             ServiceArea = serviceArea;
@@ -44,7 +51,7 @@ namespace FloorLayoutDesigner.ViewModel
         }
 
         public WPFUIElementObjectBind.RelayCommand MealTypeSelectCommand { get; set; }
-        public string Name => MealType.Name;
+        
 
 
         bool? _Assigned;
@@ -82,45 +89,42 @@ namespace FloorLayoutDesigner.ViewModel
                     {
                         string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
                         if (ServiceArea != null)
-                        {
                             ServiceArea.AddMealType(mealTypeUri);
-                            var sdsd = ServicePoint.ServesMealTypesUris;
-                            //OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
-
-                        }
                         if (ServicePoint != null)
-                        {
                             ServicePoint.AddMealType(mealTypeUri);
-                            var sdsd = ServicePoint.ServesMealTypesUris;
-                            //OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
-
-                        }
                     }
                     else
                     {
                         string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
-
                         if (ServiceArea != null)
-                        {
                             ServiceArea.RemoveMealType(mealTypeUri);
-                            OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
-                            
-                        }
                         if (ServicePoint != null)
-                        {
                             ServicePoint.RemoveMealType(mealTypeUri);
-                            OOAdvantech.Remoting.RestApi.RemotingServices.RefreshCacheData(ServicePoint as MarshalByRefObject);
-                            
-                        }
                     }
-                    Task.Run(() =>
-                    {
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
-                    });
+                    //Task.Run(() =>
+                    //{
+                    //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
+                    //});
                 }
 
 
             }
         }
+
+        public override string Name { get => MealType.Name; set { } }
+
+        public override ImageSource TreeImage
+        {
+            get
+            {
+                return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/MealCoursesClock16.png"));
+            }
+        }
+
+        public override List<FBResourceTreeNode> Members =>new List<FBResourceTreeNode>();
+
+        public override List<MenuCommand> ContextMenuItems => new List<MenuCommand>();
+
+        public override List<MenuCommand> SelectedItemContextMenuItems => throw new NotImplementedException();
     }
 }

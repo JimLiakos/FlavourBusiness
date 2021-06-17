@@ -223,6 +223,15 @@ namespace FloorLayoutDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Served meal types.
+        /// </summary>
+        public static string ServedMealTypesMenuContextHeader {
+            get {
+                return ResourceManager.GetString("ServedMealTypesMenuContextHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shapes label background.
         /// </summary>
         public static string ShapeLabelBackgroundTitlebarText {

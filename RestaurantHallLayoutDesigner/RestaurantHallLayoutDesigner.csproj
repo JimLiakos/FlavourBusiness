@@ -117,6 +117,7 @@
     <Compile Include="ViewModel\AssignedMealTypeViewModel.cs" />
     <Compile Include="ViewModel\HallLayoutDesignerHost.cs" />
     <Compile Include="ViewModel\HallLayoutViewModel.cs" />
+    <Compile Include="ViewModel\MealTypesTreeNode.cs" />
     <Compile Include="ViewModel\ServiceAreaPresentation.cs" />
     <Compile Include="ViewModel\ServicePointPresentation.cs" />
     <Compile Include="Views\HallLayoutDesignerToolBar.xaml.cs">
@@ -124,6 +125,9 @@
     </Compile>
     <Compile Include="Views\HallLayoutWindow.xaml.cs">
       <DependentUpon>HallLayoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HallMealTypesPage.xaml.cs">
+      <DependentUpon>HallMealTypesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShapeLabelBackgroundWindow.xaml.cs">
       <DependentUpon>ShapeLabelBackgroundWindow.xaml</DependentUpon>
@@ -206,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HallLayoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HallMealTypesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -408,6 +416,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\Edit16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\serve16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\MealCoursesClock16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
