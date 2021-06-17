@@ -1423,5 +1423,7 @@ namespace FloorLayoutDesigner.ViewModel
     public interface IServicePointViewModel
     {
         IServicePoint ServicePoint { get; }
+
+        void RefreshMealTypes();
     }
 }

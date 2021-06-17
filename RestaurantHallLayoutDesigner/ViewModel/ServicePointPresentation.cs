@@ -9,6 +9,7 @@ using System.Windows.Media;
 using FlavourBusinessFacade.ServicesContextResources;
 using FLBManager.ViewModel;
 using FloorLayoutDesigner.ViewModel;
+using MenuModel;
 using WPFUIElementObjectBind;
 
 namespace FloorLayoutDesigner.ViewModel
@@ -16,12 +17,16 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{0cedc37f-b933-45e3-958f-1f8ec3dec749}</MetaDataID>
     public class ServicePointPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServicePointViewModel
     {
+        List<AssignedMealTypeViewMode> _MealTypes;
         public List<AssignedMealTypeViewMode> MealTypes
         {
             get
             {
-                return (from mealType in ServiceAreaPresentation.MealTypes
-                        select new AssignedMealTypeViewMode(mealType, ServicePoint)).ToList();
+                if (_MealTypes == null)
+                    _MealTypes = (from mealType in ServiceAreaPresentation.MealTypes
+                                  select new AssignedMealTypeViewMode(mealType, this)).ToList();
+
+                return _MealTypes;
             }
         }
 
@@ -68,7 +73,7 @@ namespace FloorLayoutDesigner.ViewModel
 
         public IServicePoint ServicePoint { get; private set; }
 
-        public System.Windows.Visibility CheckBoxVisibility{get; set;} = Visibility.Collapsed;
+        public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
         public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent) : base(parent)
         {
             ServiceAreaPresentation = parent as ServiceAreaPresentation;
@@ -87,6 +92,15 @@ namespace FloorLayoutDesigner.ViewModel
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefaultMealType)));
 
             });
+
+
+        }
+
+        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent, List<IMealType> mealTypes) : this(servicePoint, parent)
+        {
+            _MealTypes = mealTypes.Select(x => new AssignedMealTypeViewMode(x, this)).ToList();
+            _Members = _MealTypes.OfType<FBResourceTreeNode>().ToList();
+
         }
 
         public override List<MenuCommand> ContextMenuItems
@@ -97,17 +111,19 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
+        List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                return new List<FBResourceTreeNode>();
+                return _Members;
             }
         }
 
 
         /// <exclude>Excluded</exclude>
         string _Name;
+
 
         public override string Name
         {
@@ -201,6 +217,12 @@ namespace FloorLayoutDesigner.ViewModel
 
         public override void SelectionChange()
         {
+        }
+
+        public void RefreshMealTypes()
+        {
+            foreach (var mealTypeAssignment in _MealTypes)
+                mealTypeAssignment.RefreshMealType();
         }
     }
 

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPFUIElementObjectBind;
@@ -16,6 +17,8 @@ namespace FloorLayoutDesigner.ViewModel
     public class MealTypesTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
 
+        public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
+
         ServiceAreaPresentation ServiceAreaPresentation;
         List<IMealType> MealTypes;
         public MealTypesTreeNode(List<IMealType> mealTypes, ServiceAreaPresentation parent) : base(parent)
@@ -24,7 +27,7 @@ namespace FloorLayoutDesigner.ViewModel
             MealTypes = mealTypes;
             Name = "MealTypes";
 
-            _Members = mealTypes.Select(x => new AssignedMealTypeViewMode(x, ServiceAreaPresentation.ServiceArea, this)).OfType<FBResourceTreeNode>().ToList();
+            _Members = mealTypes.Select(x => new AssignedMealTypeViewMode(x, ServiceAreaPresentation, this)).OfType<FBResourceTreeNode>().ToList();
 
         }
 

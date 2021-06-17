@@ -107,17 +107,23 @@ namespace FloorLayoutDesigner.ViewModel
             MealTypes = mealTypes;
           
             _Members=new List<FBResourceTreeNode>() { new MealTypesTreeNode(mealTypes, this)};
-
+            IsNodeExpanded = true;
             Task.Run(() =>
             {
                 foreach (var servicePoint in ServiceArea.ServicePoints)
-                    _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this));
+                    _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this, mealTypes));
                 _Members.AddRange(_ServicePoints.Values.OrderBy(x => x.Name).OfType<FBResourceTreeNode>().ToList());
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
             });
 
             CheckBoxVisibility = Visibility.Collapsed;
+        }
+
+        internal void RefreshMealTypes()
+        {
+            foreach (var servicePoint in ServicePoints)
+                servicePoint.RefreshMealTypes();
         }
 
         public System.Windows.Visibility CheckBoxVisibility
@@ -502,18 +508,18 @@ namespace FloorLayoutDesigner.ViewModel
 
             if(string.IsNullOrWhiteSpace(servicesPointIdentity))
                 return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType, this.ServiceArea)).ToList();
+                        select new AssignedMealTypeViewMode(mealType, this)).ToList();
 
             ServicePointPresentation servicePointPresentation = this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
             if (servicePointPresentation != null)
             {
                 return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType, servicePointPresentation.ServicePoint)).ToList();
+                        select new AssignedMealTypeViewMode(mealType, servicePointPresentation)).ToList();
             }
             else
             {
                 return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType,this.ServiceArea )).ToList();
+                        select new AssignedMealTypeViewMode(mealType,this )).ToList();
             }
 
         }
