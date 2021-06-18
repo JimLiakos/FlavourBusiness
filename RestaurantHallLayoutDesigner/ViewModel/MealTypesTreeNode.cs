@@ -20,14 +20,22 @@ namespace FloorLayoutDesigner.ViewModel
         public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
 
         ServiceAreaPresentation ServiceAreaPresentation;
-        List<IMealType> MealTypes;
+        List<AssignedMealTypeViewMode> MealTypes;
         public MealTypesTreeNode(List<IMealType> mealTypes, ServiceAreaPresentation parent) : base(parent)
         {
             ServiceAreaPresentation = parent;
-            MealTypes = mealTypes;
+            MealTypes = mealTypes.Select(x => new AssignedMealTypeViewMode(x, ServiceAreaPresentation, this)).ToList(); ;
             Name = "MealTypes";
 
-            _Members = mealTypes.Select(x => new AssignedMealTypeViewMode(x, ServiceAreaPresentation, this)).OfType<FBResourceTreeNode>().ToList();
+            _Members = MealTypes.OfType<FBResourceTreeNode>().ToList();
+            var _default = _Members.OfType<AssignedMealTypeViewMode>().Where(x => x.Assigned && x.Default).FirstOrDefault();
+            if (_default != null)
+            {
+                _Members.Remove(_default);
+                _Members.Insert(0, _default);
+                _Members = _Members.ToList();
+            }
+            IsNodeExpanded = true;
 
         }
 
@@ -53,7 +61,26 @@ namespace FloorLayoutDesigner.ViewModel
 
         public override void SelectionChange()
         {
-            
+
+        }
+
+        internal void RefreshMealTypes()
+        {
+
+            _Members = MealTypes.OfType<FBResourceTreeNode>().ToList();
+            foreach (var assignedMealTypeViewMode in MealTypes)
+                assignedMealTypeViewMode.RefreshMealType();
+
+            var _default = _Members.OfType<AssignedMealTypeViewMode>().Where(x => x.Default).FirstOrDefault();
+            if (_default != null)
+            {
+                _Members.Remove(_default);
+                _Members.Insert(0, _default);
+                _Members = _Members.ToList();
+            }
+
+
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
     }
 }

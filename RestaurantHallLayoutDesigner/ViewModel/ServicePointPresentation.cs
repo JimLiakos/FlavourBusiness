@@ -100,6 +100,13 @@ namespace FloorLayoutDesigner.ViewModel
         {
             _MealTypes = mealTypes.Select(x => new AssignedMealTypeViewMode(x, this)).ToList();
             _Members = _MealTypes.OfType<FBResourceTreeNode>().ToList();
+            var _default = _Members.OfType<AssignedMealTypeViewMode>().Where(x => x.Assigned && x.Default).FirstOrDefault();
+            if (_default != null)
+            {
+                _Members.Remove(_default);
+                _Members.Insert(0, _default);
+                _Members = _Members.ToList();
+            }
 
         }
 
@@ -223,6 +230,23 @@ namespace FloorLayoutDesigner.ViewModel
         {
             foreach (var mealTypeAssignment in _MealTypes)
                 mealTypeAssignment.RefreshMealType();
+
+            _Members = _MealTypes.OfType<FBResourceTreeNode>().ToList();
+
+
+            var _default = _Members.OfType<AssignedMealTypeViewMode>().Where(x => x.Default).FirstOrDefault();
+            if (_default != null)
+            {
+                _Members.Remove(_default);
+                _Members.Insert(0, _default);
+                _Members = _Members.ToList();
+            }
+
+
+
+
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefaultMealType)));
         }
     }
 

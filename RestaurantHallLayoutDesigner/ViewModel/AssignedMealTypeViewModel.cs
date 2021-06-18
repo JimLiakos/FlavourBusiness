@@ -12,16 +12,16 @@ using WPFUIElementObjectBind;
 
 namespace FloorLayoutDesigner.ViewModel
 {
-    public class AssignedMealTypeViewMode : FBResourceTreeNode,  INotifyPropertyChanged
+    public class AssignedMealTypeViewMode : FBResourceTreeNode
     {
         MenuModel.IMealType MealType;
         ServicePointPresentation ServicePoint;
         ServiceAreaPresentation ServiceArea;
-        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, ServicePointPresentation servicePoint, FLBManager.ViewModel.FBResourceTreeNode parent =null):base(parent)
+        public AssignedMealTypeViewMode(MenuModel.IMealType mealType, ServicePointPresentation servicePoint, FLBManager.ViewModel.FBResourceTreeNode parent = null) : base(parent)
         {
             MealType = mealType;
             ServicePoint = servicePoint;
-            
+
             MealTypeSelectCommand = new RelayCommand((object sender) =>
             {
                 System.Diagnostics.Debug.WriteLine("sss");
@@ -29,11 +29,11 @@ namespace FloorLayoutDesigner.ViewModel
 
         }
 
-    
+
 
         public override void SelectionChange()
         {
-            
+
         }
 
         public AssignedMealTypeViewMode(MenuModel.IMealType mealType, ServiceAreaPresentation serviceArea, FLBManager.ViewModel.FBResourceTreeNode parent = null) : base(parent)
@@ -48,30 +48,44 @@ namespace FloorLayoutDesigner.ViewModel
         }
 
         public WPFUIElementObjectBind.RelayCommand MealTypeSelectCommand { get; set; }
-        
 
+
+
+
+        public bool Default { get; set; }
 
         bool? _Assigned;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public bool Assigned
         {
             get
             {
                 //return _Assigned;
+                if (_Assigned != null)
+                    return _Assigned.Value;
+
+                Default = false;
                 if (ServicePoint != null)
                 {
 
                     if (ServicePoint.ServicePoint.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                    {
+                        Default = ServicePoint.ServicePoint.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
                         _Assigned = true;
+                    }
                     else
                     if (ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                    {
+                        if(ServicePoint.ServicePoint.ServesMealTypesUris.Count==0)
+                            Default = ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
                         _Assigned = true;
+                    }
                 }
                 else
                 if (ServiceArea != null && ServiceArea.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                {
+                    Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
                     _Assigned = true;
+                }
                 if (_Assigned != null)
                     return _Assigned.Value;
                 else
@@ -88,7 +102,7 @@ namespace FloorLayoutDesigner.ViewModel
                         if (ServiceArea != null)
                         {
                             ServiceArea.ServiceArea.AddMealType(mealTypeUri);
-                            ServiceArea.RefreshMealTypes();
+
                         }
                         if (ServicePoint != null)
                             ServicePoint.ServicePoint.AddMealType(mealTypeUri);
@@ -99,22 +113,45 @@ namespace FloorLayoutDesigner.ViewModel
                         if (ServiceArea != null)
                         {
                             ServiceArea.ServiceArea.RemoveMealType(mealTypeUri);
-                            ServiceArea.RefreshMealTypes();
+
                         }
                         if (ServicePoint != null)
                             ServicePoint.ServicePoint.RemoveMealType(mealTypeUri);
                     }
-                    //Task.Run(() =>
-                    //{
-                    //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
-                    //});
+                    if (_Assigned != null && ServiceArea != null)
+                    {
+                        Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
+                    }
+
+                    if (ServicePoint != null)
+                        ServicePoint.RefreshMealTypes();
+
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+                    if (ServiceArea != null)
+                    {
+                        Task.Run(() =>
+                        {
+                            ServiceArea.RefreshMealTypes();
+                        });
+                    }
+
                 }
 
 
             }
         }
 
-        public override string Name { get => MealType.Name; set { } }
+        public override string Name
+        {
+            get
+            {
+                var name = MealType.Name;
+                if (Default)
+                    name = name + " (default)";
+                return name;
+            }
+            set { }
+        }
 
         public override ImageSource TreeImage
         {
@@ -124,7 +161,7 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
-        public override List<FBResourceTreeNode> Members =>new List<FBResourceTreeNode>();
+        public override List<FBResourceTreeNode> Members => new List<FBResourceTreeNode>();
 
         public override List<MenuCommand> ContextMenuItems => new List<MenuCommand>();
 
@@ -133,7 +170,9 @@ namespace FloorLayoutDesigner.ViewModel
         internal void RefreshMealType()
         {
             _Assigned = null;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Assigned)));
+            var assigned = Assigned;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Assigned)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
         }
     }
 }

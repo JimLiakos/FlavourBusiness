@@ -100,13 +100,14 @@ namespace FloorLayoutDesigner.ViewModel
             });
         }
 
+        MealTypesTreeNode MealTypesTreeNode;
         public ServiceAreaPresentation(IServiceArea serviceArea, List<IMealType> mealTypes):base(null)
         {
             _Name = serviceArea.Description;
             ServiceArea = serviceArea;
             MealTypes = mealTypes;
-          
-            _Members=new List<FBResourceTreeNode>() { new MealTypesTreeNode(mealTypes, this)};
+            MealTypesTreeNode = new MealTypesTreeNode(mealTypes, this);
+              _Members =new List<FBResourceTreeNode>() { MealTypesTreeNode };
             IsNodeExpanded = true;
             Task.Run(() =>
             {
@@ -122,8 +123,11 @@ namespace FloorLayoutDesigner.ViewModel
 
         internal void RefreshMealTypes()
         {
+            MealTypesTreeNode.RefreshMealTypes();
             foreach (var servicePoint in ServicePoints)
                 servicePoint.RefreshMealTypes();
+
+
         }
 
         public System.Windows.Visibility CheckBoxVisibility
