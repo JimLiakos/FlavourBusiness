@@ -19,6 +19,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         [Association("AreaServicePoints", Roles.RoleB, "27b5c804-1630-41b4-975e-cf64dc1969a0")]
         [RoleBMultiplicityRange(1, 1)]
+        [CachingDataOnClientSide]
         IServiceArea ServiceArea { get; }
         [Association("ServicePointMealType", Roles.RoleA, true, "1c10159e-488c-45bd-bd93-af7013cb1ce5")]
         IList<IMealType> ServesMealTypes { get; }

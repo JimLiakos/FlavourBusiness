@@ -182,6 +182,9 @@
   <data name="ServedMealTypesMenuContextHeader" xml:space="preserve">
     <value>Served meal types</value>
   </data>
+  <data name="ServiceAreaMealTypesTitle" xml:space="preserve">
+    <value>Define service area meal type</value>
+  </data>
   <data name="ShapeLabelBackgroundTitlebarText" xml:space="preserve">
     <value>Shapes label background</value>
   </data>

@@ -6,7 +6,7 @@
                              xmlns:ViewModel="clr-namespace:FloorLayoutDesigner.ViewModel"
                              xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
                              xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
-                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
+                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:FloorLayoutDesigner.Properties"
                              mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HallMealTypesPage">
@@ -18,8 +18,9 @@
         <ViewModel:ServiceAreaPresentation x:Key="DServiceAreaPresentation"></ViewModel:ServiceAreaPresentation>
     </Page.Resources>
 
+    
     <Grid>
-        <sw:DialogContentControl Buttons="OnlyBack" InitialHeight="650" InitialWidth="850"     Title="Meal types which served"  d:DataContext="{StaticResource DServiceAreaPresentation}"  >
+        <sw:DialogContentControl Buttons="OnlyBack" InitialHeight="650" InitialWidth="850"  Icon="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/serve16.png"    Title="{x:Static resx:Resources.ServiceAreaMealTypesTitle}"  d:DataContext="{StaticResource DServiceAreaPresentation}"  >
             <Grid  DataContext="{Binding Value, Mode=OneWay}" VerticalAlignment="Stretch" Margin="24,24,24,24">
                 <TreeView   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding TreeItems}"  >
                     <!--<TreeView.Resources>

@@ -888,6 +888,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 serviceArea.Description = Properties.Resources.DefaultServiceAreaDescription;
                 serviceArea.ServicesContextIdentity = this.ServicesContextIdentity;
+               
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu));
+                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
+                                 select mealType).ToList();
+                var twoCourseMealType = mealTypes.Where(x => x.Courses.Count() == 2).FirstOrDefault();
+                serviceArea.AddMealType(ObjectStorage.GetStorageOfObject(twoCourseMealType).GetPersistentObjectUri(twoCourseMealType));
+
+
                 objectStorage.CommitTransientObjectState(serviceArea);
 
                 stateTransition.Consistent = true;

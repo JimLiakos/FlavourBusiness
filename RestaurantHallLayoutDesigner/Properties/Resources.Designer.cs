@@ -232,6 +232,15 @@ namespace FloorLayoutDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Define service area meal type.
+        /// </summary>
+        public static string ServiceAreaMealTypesTitle {
+            get {
+                return ResourceManager.GetString("ServiceAreaMealTypesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shapes label background.
         /// </summary>
         public static string ShapeLabelBackgroundTitlebarText {
