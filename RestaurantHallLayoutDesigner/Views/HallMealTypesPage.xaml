@@ -9,7 +9,7 @@
                              xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:FloorLayoutDesigner.Properties"
                              mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="HallMealTypesPage">
+      Title="{x:Static resx:Resources.ServiceAreaMealTypesTitle}">
     <Page.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:ServiceAreaPresentation}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
     </Page.DataContext>
@@ -20,7 +20,7 @@
 
     
     <Grid>
-        <sw:DialogContentControl Buttons="OnlyBack" InitialHeight="650" InitialWidth="850"  Icon="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/serve16.png"    Title="{x:Static resx:Resources.ServiceAreaMealTypesTitle}"  d:DataContext="{StaticResource DServiceAreaPresentation}"  >
+        <sw:DialogContentControl Buttons="OnlyBack" InitialHeight="650" InitialWidth="850"  Icon="/RestaurantHallLayoutDesigner;component/Resources/Images/Metro/serve16.png"    Title="{Binding Value.Name}"  d:DataContext="{StaticResource DServiceAreaPresentation}"  >
             <Grid  DataContext="{Binding Value, Mode=OneWay}" VerticalAlignment="Stretch" Margin="24,24,24,24">
                 <TreeView   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding TreeItems}"  >
                     <!--<TreeView.Resources>

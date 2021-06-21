@@ -1299,13 +1299,13 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveGraphicMenu", args, argsTypes);
         }
         
-        public void GraphicMenuStorageUpdated(FlavourBusinessFacade.OrganizationStorageRef graphicMenuStorageRef)
+        public void GraphicMenuStorageMetaDataUpdated(FlavourBusinessFacade.OrganizationStorageRef graphicMenuStorageRef)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = graphicMenuStorageRef;
             argsTypes[0] = typeof(FlavourBusinessFacade.OrganizationStorageRef);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GraphicMenuStorageUpdated", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GraphicMenuStorageMetaDataUpdated", args, argsTypes);
         }
         
         public void OperativeRestaurantMenuDataUpdated(FlavourBusinessFacade.OrganizationStorageRef restaurantMenusDataStorageRef)

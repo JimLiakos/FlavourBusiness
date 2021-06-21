@@ -323,6 +323,7 @@ namespace FlavourBusinessManager
             }
         }
 
+    
         private bool UploadPermissionsGranted(AuthUser authUser, OrganizationStorageRef storageRef)
         {
 
@@ -779,7 +780,7 @@ namespace FlavourBusinessManager
 
 
                     foreach (var servicesContext in ServicesContexts)
-                        servicesContext.GetRunTime().GraphicMenuStorageUpdated(storageRef);
+                        servicesContext.GetRunTime().GraphicMenuStorageMetaDataUpdated(storageRef);
 
 
 
@@ -1116,7 +1117,7 @@ namespace FlavourBusinessManager
 
             foreach (var servicesContext in ServicesContexts)
             {
-                servicesContext.GetRunTime().GraphicMenuStorageUpdated(storageRef);
+                servicesContext.GetRunTime().GraphicMenuStorageMetaDataUpdated(storageRef);
                 servicesContext.GetRunTime().OperativeRestaurantMenuDataUpdated(operativeMenuItemsStorageRef);
 
             }

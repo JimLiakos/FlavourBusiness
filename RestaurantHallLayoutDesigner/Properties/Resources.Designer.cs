@@ -232,7 +232,7 @@ namespace FloorLayoutDesigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Define service area meal type.
+        ///   Looks up a localized string similar to Define hall meal types.
         /// </summary>
         public static string ServiceAreaMealTypesTitle {
             get {

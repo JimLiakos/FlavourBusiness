@@ -1036,7 +1036,7 @@ namespace FloorLayoutDesigner.ViewModel
 
 
         /// <exclude>Excluded</exclude>
-        bool _Portrait = true;
+        bool _Portrait = false;
         public bool Portrait
         {
             get
@@ -1065,7 +1065,7 @@ namespace FloorLayoutDesigner.ViewModel
         }
 
         /// <exclude>Excluded</exclude>
-        bool _Landscape;
+        bool _Landscape=true;
 
         public bool Landscape
         {

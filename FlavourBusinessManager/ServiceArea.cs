@@ -13,7 +13,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{9b6776e7-0c74-4bb0-80d3-66f13ed99260}</MetaDataID>
     [BackwardCompatibilityID("{9b6776e7-0c74-4bb0-80d3-66f13ed99260}")]
     [Persistent()]
-    public class ServiceArea :MarshalByRefObject, IServiceArea,OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ServiceArea : MarshalByRefObject, IServiceArea, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
         /// <MetaDataID>{b3f32e8c-f23e-4338-8fa3-2d57ba439202}</MetaDataID>
         [PersistentMember()]
@@ -75,7 +75,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         string _ServicesContextIdentity;
         /// <MetaDataID>{2d69bfb6-e6f7-46b4-89bf-32fc44e3c3ce}</MetaDataID>
-        [PersistentMember(300,nameof(_ServicesContextIdentity))]
+        [PersistentMember(300, nameof(_ServicesContextIdentity))]
         [BackwardCompatibilityID("+3")]
         public string ServicesContextIdentity
         {
@@ -120,11 +120,15 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
 
                 IMealType mealType = ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType;
-                if (mealType == null)
-                    throw new System.Exception("Invalid meal type uri");
-                _ServesMealTypes.Add(mealType);
+                if (mealType != null)
+                    _ServesMealTypes.Add(mealType);
+
+                var servesMealTypesUris = ServesMealTypesUris;
+                if (!servesMealTypesUris.Contains(mealTypeUri))
+                    servesMealTypesUris.Add(mealTypeUri);
+
                 MealTypesUris = null;
-                foreach ( var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                foreach (var uri in servesMealTypesUris)
                 {
                     if (MealTypesUris != null)
                         MealTypesUris += " ";
@@ -146,11 +150,15 @@ namespace FlavourBusinessManager.ServicesContextResources
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 IMealType mealType = ObjectStorage.GetObjectFromUri(mealTypeUri) as IMealType;
-                if (mealType == null)
-                    throw new System.Exception("Invalid meal type uri");
-                _ServesMealTypes.Remove(mealType);
+                if (mealType != null)
+                    _ServesMealTypes.Remove(mealType);
+
+                var servesMealTypesUris = ServesMealTypesUris;
+                if (servesMealTypesUris.Contains(mealTypeUri))
+                    servesMealTypesUris.Remove(mealTypeUri);
+
                 MealTypesUris = null;
-                foreach (var uri in _ServesMealTypes.Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)))
+                foreach (var uri in servesMealTypesUris)
                 {
                     if (MealTypesUris != null)
                         MealTypesUris += " ";
@@ -185,7 +193,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 if (string.IsNullOrWhiteSpace(MealTypesUris))
                     return new List<string>();
-               return MealTypesUris.Split(' ');
+                return MealTypesUris.Split(' ').ToList();
             }
         }
 
@@ -197,7 +205,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _ServicePoints.Add(servicePoint); 
+                _ServicePoints.Add(servicePoint);
                 stateTransition.Consistent = true;
             }
 
@@ -209,7 +217,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _ServicePoints.Remove(servicePoint); 
+                _ServicePoints.Remove(servicePoint);
                 stateTransition.Consistent = true;
             }
 
@@ -227,7 +235,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 servicePoint.Description = Properties.Resources.DefaultServicePointDescription;
                 servicePoint.ServicesPointIdentity = Guid.NewGuid().ToString("N");
                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(servicePoint);
-                _ServicePoints.Add(servicePoint); 
+                _ServicePoints.Add(servicePoint);
                 stateTransition.Consistent = true;
                 return servicePoint;
 

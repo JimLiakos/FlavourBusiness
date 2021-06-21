@@ -23,8 +23,8 @@ namespace FloorLayoutDesigner.ViewModel
             get
             {
                 if (_MealTypes == null)
-                    _MealTypes = (from mealType in ServiceAreaPresentation.MealTypes
-                                  select new AssignedMealTypeViewMode(mealType, this)).ToList();
+                    _MealTypes = (from mealTypeViewModel in ServiceAreaPresentation.MealTypesViewModel.MealTypes
+                                  select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this)).ToList();
 
                 return _MealTypes;
             }
@@ -74,7 +74,7 @@ namespace FloorLayoutDesigner.ViewModel
         public IServicePoint ServicePoint { get; private set; }
 
         public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
-        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent) : base(parent)
+        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent ) : base(parent)
         {
             ServiceAreaPresentation = parent as ServiceAreaPresentation;
             ServicePoint = servicePoint;
@@ -96,9 +96,10 @@ namespace FloorLayoutDesigner.ViewModel
 
         }
 
-        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent, List<IMealType> mealTypes) : this(servicePoint, parent)
+        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) : this(servicePoint, parent)
         {
-            _MealTypes = mealTypes.Select(x => new AssignedMealTypeViewMode(x, this)).ToList();
+            ServiceAreaPresentation = parent as ServiceAreaPresentation;
+            _MealTypes = mealTypesViewModel.MealTypes.Select(x => new AssignedMealTypeViewMode(x.MealType, this)).ToList();
             _Members = _MealTypes.OfType<FBResourceTreeNode>().ToList();
             var _default = _Members.OfType<AssignedMealTypeViewMode>().Where(x => x.Assigned && x.Default).FirstOrDefault();
             if (_default != null)
@@ -228,6 +229,23 @@ namespace FloorLayoutDesigner.ViewModel
 
         public void RefreshMealTypes()
         {
+
+            foreach (var mealType in ServiceAreaPresentation.MealTypesViewModel.MealTypes)
+            {
+                if (MealTypes.Where(x => x.MealType == mealType.MealType).FirstOrDefault() == null)
+                    MealTypes.Add(new AssignedMealTypeViewMode(mealType.MealType, ServiceAreaPresentation, this));
+            }
+            foreach (var assignedMealType in MealTypes.ToList())
+            {
+                if (ServiceAreaPresentation.MealTypesViewModel.MealTypes.Where(x => x.MealType == assignedMealType.MealType).FirstOrDefault() == null)
+                {
+                    if (assignedMealType.Assigned)
+                        assignedMealType.Assigned = false;
+                    MealTypes.Remove(assignedMealType);
+                }
+            }
+
+
             foreach (var mealTypeAssignment in _MealTypes)
                 mealTypeAssignment.RefreshMealType();
 

@@ -31,7 +31,7 @@ namespace FloorLayoutDesigner.ViewModel
             get
             {
                 if(_TreeItems==null)
-                    _TreeItems =new List<FBResourceTreeNode>() { new ServiceAreaPresentation(ServiceArea, MealTypes) };
+                    _TreeItems =new List<FBResourceTreeNode>() { new ServiceAreaPresentation(ServiceArea, MealTypesViewModel) };
                 return _TreeItems;
                 
             }
@@ -91,28 +91,31 @@ namespace FloorLayoutDesigner.ViewModel
             {
                 ShowServedMealTypesPage();
             });
+            _Members = new List<FBResourceTreeNode>();
             Task.Run(() =>
             {
                 foreach (var servicePoint in ServiceArea.ServicePoints)
                     _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this));
+
+                _Members.AddRange(_ServicePoints.Values.OrderBy(x => x.Name).OfType<FBResourceTreeNode>().ToList());
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
             });
         }
 
         MealTypesTreeNode MealTypesTreeNode;
-        public ServiceAreaPresentation(IServiceArea serviceArea, List<IMealType> mealTypes):base(null)
+        public ServiceAreaPresentation(IServiceArea serviceArea, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) :base(null)
         {
             _Name = serviceArea.Description;
             ServiceArea = serviceArea;
-            MealTypes = mealTypes;
-            MealTypesTreeNode = new MealTypesTreeNode(mealTypes, this);
+            MealTypesViewModel = mealTypesViewModel;
+            MealTypesTreeNode = new MealTypesTreeNode( this);
               _Members =new List<FBResourceTreeNode>() { MealTypesTreeNode };
             IsNodeExpanded = true;
             Task.Run(() =>
             {
                 foreach (var servicePoint in ServiceArea.ServicePoints)
-                    _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this, mealTypes));
+                    _ServicePoints.Add(servicePoint, new ServicePointPresentation(servicePoint, this, MealTypesViewModel));
                 _Members.AddRange(_ServicePoints.Values.OrderBy(x => x.Name).OfType<FBResourceTreeNode>().ToList());
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
@@ -143,11 +146,7 @@ namespace FloorLayoutDesigner.ViewModel
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(HallLayoutDesignerHost.Current.RestaurantMenus.Menus[0]));
-
-                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
-                                 select mealType).ToList();
-                MealTypes = mealTypes;
+                MealTypesViewModel = new MenuItemsEditor.ViewModel.MealTypesViewModel(ObjectStorage.GetStorageOfObject(HallLayoutDesignerHost.Current.RestaurantMenus.Menus[0]));
                 var hallLayoutDesignerPage = new Views.HallMealTypesPage();
                 hallLayoutDesignerPage.GetObjectContext().SetContextInstance(this);
                 pageDialogFrame.ShowDialogPage(hallLayoutDesignerPage);
@@ -463,7 +462,8 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
-        public List<IMealType> MealTypes { get; set; }
+        public MenuItemsEditor.ViewModel.MealTypesViewModel MealTypesViewModel { get; set; }
+        
 
         /// <MetaDataID>{32c8cf5b-2b92-43f8-b76f-e4a23e31b26c}</MetaDataID>
         public void DragEnter(object sender, DragEventArgs e)
@@ -511,19 +511,19 @@ namespace FloorLayoutDesigner.ViewModel
         {
 
             if(string.IsNullOrWhiteSpace(servicesPointIdentity))
-                return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType, this)).ToList();
+                return (from mealTypeViewModel in MealTypesViewModel.MealTypes
+                        select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this)).ToList();
 
             ServicePointPresentation servicePointPresentation = this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
             if (servicePointPresentation != null)
             {
-                return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType, servicePointPresentation)).ToList();
+                return (from mealTypeViewModel in MealTypesViewModel.MealTypes
+                        select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, servicePointPresentation)).ToList();
             }
             else
             {
-                return (from mealType in MealTypes
-                        select new AssignedMealTypeViewMode(mealType,this )).ToList();
+                return (from mealTypeViewModel in MealTypesViewModel.MealTypes
+                        select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this )).ToList();
             }
 
         }

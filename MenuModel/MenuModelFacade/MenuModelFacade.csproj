@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FixedMealType.cs" />
     <Compile Include="IClass.cs" />
     <Compile Include="IClassified.cs" />
     <Compile Include="IItemCustomazedPrice.cs" />
@@ -60,11 +61,26 @@
     <Compile Include="IPreparationScaledOption.cs" />
     <Compile Include="IPricingContext.cs" />
     <Compile Include="IScaleType.cs" />
+    <Compile Include="MealCourseType.cs" />
+    <Compile Include="MealType.cs" />
     <Compile Include="Multilingual.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SelectionType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
+      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
+      <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{F20E4565-5DDB-4E1E-A343-369927C01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
       <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
       <Name>OOAdvantechFacade -VS10</Name>
@@ -84,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

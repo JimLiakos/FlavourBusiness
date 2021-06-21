@@ -1,5 +1,7 @@
 ﻿using FLBManager.ViewModel;
+using MenuItemsEditor.ViewModel;
 using MenuModel;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,10 +23,10 @@ namespace FloorLayoutDesigner.ViewModel
 
         ServiceAreaPresentation ServiceAreaPresentation;
         List<AssignedMealTypeViewMode> MealTypes;
-        public MealTypesTreeNode(List<IMealType> mealTypes, ServiceAreaPresentation parent) : base(parent)
+        public MealTypesTreeNode(ServiceAreaPresentation parent) : base(parent)
         {
             ServiceAreaPresentation = parent;
-            MealTypes = mealTypes.Select(x => new AssignedMealTypeViewMode(x, ServiceAreaPresentation, this)).ToList(); ;
+            MealTypes = ServiceAreaPresentation.MealTypesViewModel.MealTypes.Select(x => new AssignedMealTypeViewMode(x.MealType, ServiceAreaPresentation, this)).ToList(); ;
             Name = "MealTypes";
 
             _Members = MealTypes.OfType<FBResourceTreeNode>().ToList();
@@ -36,8 +38,45 @@ namespace FloorLayoutDesigner.ViewModel
                 _Members = _Members.ToList();
             }
             IsNodeExpanded = true;
+            EditCommand = new RelayCommand((object sender) =>
+            {
+
+
+                System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                MenuItemsEditor.Views.MealTypesWindow window = new MenuItemsEditor.Views.MealTypesWindow();
+                window.Owner = win;
+
+
+               // using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    window.GetObjectContext().SetContextInstance(this.ServiceAreaPresentation.MealTypesViewModel);
+                    window.ShowDialog(); 
+                 //   stateTransition.Consistent = true;
+                }
+
+
+                foreach (var mealType in ServiceAreaPresentation.MealTypesViewModel.MealTypes)
+                {
+                    if (MealTypes.Where(x => x.MealType == mealType.MealType).FirstOrDefault() == null)
+                        MealTypes.Add(new AssignedMealTypeViewMode(mealType.MealType, ServiceAreaPresentation, this));
+                }
+                foreach (var assignedMealType in MealTypes.ToList())
+                {
+                    if (ServiceAreaPresentation.MealTypesViewModel.MealTypes.Where(x => x.MealType == assignedMealType.MealType).FirstOrDefault() == null)
+                    {
+                        if (assignedMealType.Assigned)
+                            assignedMealType.Assigned = false;
+                        MealTypes.Remove(assignedMealType);
+                    }
+                }
+                ServiceAreaPresentation.RefreshMealTypes();
+            });
 
         }
+
+
+
+        public RelayCommand EditCommand { get; protected set; }
 
         public override string Name { get; set; }
 
@@ -55,7 +94,41 @@ namespace FloorLayoutDesigner.ViewModel
             get => _Members;
         }
 
-        public override List<MenuCommand> ContextMenuItems => new List<MenuCommand>();
+        /// <MetaDataID>{1f33bb95-2a33-4301-a821-22345003de4e}</MetaDataID>
+        List<MenuCommand> _ContextMenuItems;
+        /// <MetaDataID>{bc156757-a5f1-4ba9-b825-84e1bc92c46e}</MetaDataID>
+        public override List<MenuCommand> ContextMenuItems
+        {
+            get
+            {
+                if (_ContextMenuItems == null)
+                {
+
+                    _ContextMenuItems = new List<MenuCommand>();
+
+                    var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Empty.png"));
+                    var emptyImage = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+
+
+
+
+                    MenuCommand menuItem = new MenuCommand(); ;
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/MealCoursesClock16.png")); ;
+                    menuItem.Header = Properties.Resources.EditLabelMenuItemHeader;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = EditCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+
+
+                }
+
+                return _ContextMenuItems;
+            }
+        }
+
+
+        public override bool HasContextMenu => true;
 
         public override List<MenuCommand> SelectedItemContextMenuItems => new List<MenuCommand>();
 

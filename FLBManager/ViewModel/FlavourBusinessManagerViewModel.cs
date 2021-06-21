@@ -243,12 +243,16 @@ namespace FLBManager.ViewModel
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(RestaurantMenus.Menus[0]));
 
-                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
-                                 select mealType).ToList();
+                MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel = new MenuItemsEditor.ViewModel.MealTypesViewModel(ObjectStorage.GetStorageOfObject(RestaurantMenus.Menus[0]));
 
-                serviceAreaPresentation.MealTypes = mealTypes;
+                //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(RestaurantMenus.Menus[0]));
+
+                //var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                //                 select mealType).ToList();
+
+
+                serviceAreaPresentation.MealTypesViewModel = mealTypesViewModel;
 
                 var hallLayout = new HallLayoutViewModel(serviceAreaPresentation);
 

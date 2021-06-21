@@ -111,7 +111,7 @@ namespace FlavourBusinessFacade
 
 
         /// <MetaDataID>{875524bb-8d42-4f6a-8286-98a1aaf524df}</MetaDataID>
-        void GraphicMenuStorageUpdated(OrganizationStorageRef graphicMenuStorageRef);
+        void GraphicMenuStorageMetaDataUpdated(OrganizationStorageRef graphicMenuStorageRef);
 
         /// <MetaDataID>{8e7c1368-77d0-408a-9854-b31b76758af9}</MetaDataID>
         void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef);
@@ -136,5 +136,9 @@ namespace FlavourBusinessFacade
         IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey, string signUpUserIdentity, string userName);
         /// <MetaDataID>{0ce43403-4320-4054-9d8d-80422791c490}</MetaDataID>
         IWaiter AssignWaiterUser(string waiterAssignKey, string signUpUserIdentity, string userName);
+
+
+        
+
     }
 }

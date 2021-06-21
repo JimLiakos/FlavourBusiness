@@ -14,12 +14,17 @@ namespace FloorLayoutDesigner.ViewModel
 {
     public class AssignedMealTypeViewMode : FBResourceTreeNode
     {
-        MenuModel.IMealType MealType;
+       public readonly  MenuModel.IMealType MealType;
+       public readonly string MealTypeUri;
+
         ServicePointPresentation ServicePoint;
         ServiceAreaPresentation ServiceArea;
         public AssignedMealTypeViewMode(MenuModel.IMealType mealType, ServicePointPresentation servicePoint, FLBManager.ViewModel.FBResourceTreeNode parent = null) : base(parent)
         {
             MealType = mealType;
+
+            MealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+
             ServicePoint = servicePoint;
 
             MealTypeSelectCommand = new RelayCommand((object sender) =>
@@ -39,6 +44,8 @@ namespace FloorLayoutDesigner.ViewModel
         public AssignedMealTypeViewMode(MenuModel.IMealType mealType, ServiceAreaPresentation serviceArea, FLBManager.ViewModel.FBResourceTreeNode parent = null) : base(parent)
         {
             MealType = mealType;
+            MealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+
             ServiceArea = serviceArea;
             MealTypeSelectCommand = new RelayCommand((object sender) =>
             {
@@ -67,23 +74,23 @@ namespace FloorLayoutDesigner.ViewModel
                 if (ServicePoint != null)
                 {
 
-                    if (ServicePoint.ServicePoint.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                    if (ServicePoint.ServicePoint.ServesMealTypesUris.Contains(MealTypeUri))
                     {
                         Default = ServicePoint.ServicePoint.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
                         _Assigned = true;
                     }
                     else
-                    if (ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                    if (ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.Contains(MealTypeUri))
                     {
                         if(ServicePoint.ServicePoint.ServesMealTypesUris.Count==0)
-                            Default = ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
+                            Default = ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.IndexOf(MealTypeUri) == 0;
                         _Assigned = true;
                     }
                 }
                 else
-                if (ServiceArea != null && ServiceArea.ServiceArea.ServesMealTypesUris.Contains(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)))
+                if (ServiceArea != null && ServiceArea.ServiceArea.ServesMealTypesUris.Contains(MealTypeUri))
                 {
-                    Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
+                    Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(MealTypeUri) == 0;
                     _Assigned = true;
                 }
                 if (_Assigned != null)
@@ -98,29 +105,27 @@ namespace FloorLayoutDesigner.ViewModel
                     _Assigned = value;
                     if (value)
                     {
-                        string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+                        
                         if (ServiceArea != null)
                         {
-                            ServiceArea.ServiceArea.AddMealType(mealTypeUri);
-
+                            ServiceArea.ServiceArea.AddMealType(MealTypeUri);
                         }
                         if (ServicePoint != null)
-                            ServicePoint.ServicePoint.AddMealType(mealTypeUri);
+                            ServicePoint.ServicePoint.AddMealType(MealTypeUri);
                     }
                     else
                     {
-                        string mealTypeUri = ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType);
+                        
                         if (ServiceArea != null)
                         {
-                            ServiceArea.ServiceArea.RemoveMealType(mealTypeUri);
-
+                            ServiceArea.ServiceArea.RemoveMealType(MealTypeUri);
                         }
                         if (ServicePoint != null)
-                            ServicePoint.ServicePoint.RemoveMealType(mealTypeUri);
+                            ServicePoint.ServicePoint.RemoveMealType(MealTypeUri);
                     }
                     if (_Assigned != null && ServiceArea != null)
                     {
-                        Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(ObjectStorage.GetStorageOfObject(MealType).GetPersistentObjectUri(MealType)) == 0;
+                        Default = ServiceArea.ServiceArea.ServesMealTypesUris.IndexOf(MealTypeUri) == 0;
                     }
 
                     if (ServicePoint != null)

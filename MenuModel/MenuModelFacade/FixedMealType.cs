@@ -1,5 +1,8 @@
+using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using System;
+using System.Collections.Generic;
 
 namespace MenuModel
 {
@@ -14,7 +17,13 @@ namespace MenuModel
             foreach (var mealCourse in mealCourses)
                 _Courses.Add(mealCourse);
         }
-        protected FixedMealType()
+        public FixedMealType()
+        {
+
+        }
+
+        [JsonConstructor]
+        public FixedMealType(Multilingual multilingualName, List<IMealCourseType> courses, string mealTypeUri) :base(multilingualName,courses, mealTypeUri)
         {
 
         }

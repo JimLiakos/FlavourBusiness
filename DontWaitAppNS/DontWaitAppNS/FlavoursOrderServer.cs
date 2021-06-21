@@ -281,6 +281,7 @@ namespace DontWaitApp
 
 
 
+
         /// <MetaDataID>{94695399-7052-4246-a471-e57eab60ecf3}</MetaDataID>
         public async void WebViewAttached()
         {
@@ -597,7 +598,9 @@ namespace DontWaitApp
                     ClientSessionID = FoodServiceClientSession.SessionID,
                     ServicePointIdentity = clientSessionData.ServicePointIdentity,
                     ServicesPointName = clientSessionData.ServicesPointName,
-                    ServicesContextLogo = clientSessionData.ServicesContextLogo
+                    ServicesContextLogo = clientSessionData.ServicesContextLogo,
+                    DefaultMealType = clientSessionData.DefaultMealType,
+                    ServedMealTypes = clientSessionData.ServedMealTypes
 
                 };
                 menuData.OrderItems = OrderItems.ToList();

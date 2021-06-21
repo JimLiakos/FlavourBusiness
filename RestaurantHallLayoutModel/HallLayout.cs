@@ -179,7 +179,7 @@ namespace RestaurantHallLayoutModel
             set
             {
 
-                if (_Height != value)
+                if ((int)_Height != (int)value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
@@ -207,8 +207,9 @@ namespace RestaurantHallLayoutModel
             set
             {
 
-                if (_Width != value)
+                if ((int)_Width != (int)value)
                 {
+                 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _Width = value;

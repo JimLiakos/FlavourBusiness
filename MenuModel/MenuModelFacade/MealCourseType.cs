@@ -8,7 +8,7 @@ namespace MenuModel
     /// <MetaDataID>{100393e9-4e48-4662-a167-91ee8b96e484}</MetaDataID>
     [BackwardCompatibilityID("{100393e9-4e48-4662-a167-91ee8b96e484}")]
     [Persistent()]
-    public class MealCourseType :MarshalByRefObject, IMealCourseType
+    public class MealCourseType : IMealCourseType
     {
       
 
@@ -41,7 +41,7 @@ namespace MenuModel
 
     
         /// <MetaDataID>{ba2d7888-3e6e-45a4-9d61-aebe9c1007e0}</MetaDataID>
-        protected MealCourseType()
+        public MealCourseType()
         {
 
         }

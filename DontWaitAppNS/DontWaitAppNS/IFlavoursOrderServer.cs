@@ -32,6 +32,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using System.IO;
 using System.Drawing.Imaging;
 using System;
+using MenuModel;
 #endif
 
 #if FlavourBusinessDevice
@@ -256,6 +257,9 @@ namespace DontWaitApp
             }
             set => _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>(value);
         }
+
+        public IMealType DefaultMealType { get; internal set; }
+        public List<IMealType> ServedMealTypes { get; internal set; }
 
         /// <MetaDataID>{dc96cae9-9570-4397-96dc-219cf7d056d5}</MetaDataID>
         [PersistentMember()]

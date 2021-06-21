@@ -117,148 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddServicePointHeader" xml:space="preserve">
-    <value>New Table</value>
-    <comment>Defines the ContextMenu MenuItem Header to add service point tree node</comment>
+  <data name="AppetizerMealCourseName" xml:space="preserve">
+    <value>Appetizer</value>
   </data>
-  <data name="AssignServicePointMenuItemHeader" xml:space="preserve">
-    <value>Assign service point</value>
-    <comment>Hall designer assigne service point menuitem header</comment>
+  <data name="DessertMealCourseName" xml:space="preserve">
+    <value>Dessert</value>
   </data>
-  <data name="CopyMenuItemHeader" xml:space="preserve">
-    <value>Copy</value>
+  <data name="FourCourseMealTypeName" xml:space="preserve">
+    <value>4 Course Meal</value>
   </data>
-  <data name="CutMenuItemHeader" xml:space="preserve">
-    <value>Cut</value>
+  <data name="HorsDOeuvreMealCourseName" xml:space="preserve">
+    <value>Hors d'oeuvre</value>
   </data>
-  <data name="DeassignServicePointMenuItemHeader" xml:space="preserve">
-    <value>Deassign service point</value>
-    <comment>Hall designer deassigne service point menuitem header</comment>
+  <data name="MainMealCourseName" xml:space="preserve">
+    <value>Main course</value>
   </data>
-  <data name="DefaultServicePointDescription" xml:space="preserve">
-    <value>Table</value>
-    <comment>Specifies the description of the 'service point' when it is created.</comment>
+  <data name="NewMealCourseName" xml:space="preserve">
+    <value>Meal course</value>
+    <comment>Defines the name for new MealCourseType instance</comment>
   </data>
-  <data name="DeleteMenuItemHeader" xml:space="preserve">
-    <value>Delete</value>
+  <data name="PreparationOptionsGroupDefaultName" xml:space="preserve">
+    <value>Options group</value>
+    <comment>Defines the default name of PreparationOptionsGroupclass instances</comment>
   </data>
-  <data name="DesignServiceAreaMenuContextHeader" xml:space="preserve">
-    <value>Design Hall Layout</value>
+  <data name="ThreeCourseMealTypeName" xml:space="preserve">
+    <value>3 Course Meal</value>
   </data>
-  <data name="EditLabelMenuItemHeader" xml:space="preserve">
-    <value>Edit</value>
-    <comment>Hall designer Edit label </comment>
-  </data>
-  <data name="EditMenuItemHeader" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="FontsMenuItemHeader" xml:space="preserve">
-    <value>Fonts</value>
-  </data>
-  <data name="HallLayoutLabelBkMenuItemHeader" xml:space="preserve">
-    <value>Label background</value>
-    <comment>Hall designer label background</comment>
-  </data>
-  <data name="HallLayoutLabelFontMenuItemHeader" xml:space="preserve">
-    <value>Labels Font</value>
-    <comment>Hall designer label font</comment>
-  </data>
-  <data name="HallLayoutMore" xml:space="preserve">
-    <value>More</value>
-  </data>
-  <data name="LoadingPrompt" xml:space="preserve">
-    <value>Loadding...</value>
-  </data>
-  <data name="PasteMenuItemHeader" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="RedoMenuItemHeader" xml:space="preserve">
-    <value>Redo</value>
-  </data>
-  <data name="RemoveServiceAreaHeader" xml:space="preserve">
-    <value>Remove Service Area</value>
-    <comment>Defines the ContextMenu MenuItem Header to remove service Area tree node</comment>
-  </data>
-  <data name="ServedMealTypesMenuContextHeader" xml:space="preserve">
-    <value>Served meal types</value>
-  </data>
-  <data name="ServiceAreaMealTypesTitle" xml:space="preserve">
-    <value>Define hall meal types</value>
-  </data>
-  <data name="ShapeLabelBackgroundTitlebarText" xml:space="preserve">
-    <value>Shapes label background</value>
-  </data>
-  <data name="ShapeLabelFontsTitlebarText" xml:space="preserve">
-    <value>Shapes label fonts</value>
-  </data>
-  <data name="ToolTipAlignBottoms" xml:space="preserve">
-    <value>Align Bottoms</value>
-  </data>
-  <data name="ToolTipAlignLefts" xml:space="preserve">
-    <value>Align Lefts</value>
-  </data>
-  <data name="ToolTipAlignRights" xml:space="preserve">
-    <value>Align Rights</value>
-  </data>
-  <data name="ToolTipAlignTops" xml:space="preserve">
-    <value>Align Tops</value>
-  </data>
-  <data name="ToolTipBringFront" xml:space="preserve">
-    <value>Bring to Front</value>
-  </data>
-  <data name="ToolTipCenterHorizontally" xml:space="preserve">
-    <value>Center Horizontally</value>
-  </data>
-  <data name="ToolTipCenterVertically" xml:space="preserve">
-    <value>Center Vertically</value>
-  </data>
-  <data name="ToolTipCopy" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="ToolTipCut" xml:space="preserve">
-    <value>Cut</value>
-  </data>
-  <data name="ToolTipDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ToolTipGroupObjects" xml:space="preserve">
-    <value>Group Objects</value>
-  </data>
-  <data name="ToolTipHorizontalSpacingEqual" xml:space="preserve">
-    <value>Make Horizontal Spacing Equal</value>
-  </data>
-  <data name="ToolTipMakeSameHeight" xml:space="preserve">
-    <value>Make Same Height</value>
-  </data>
-  <data name="ToolTipMakeSameSize" xml:space="preserve">
-    <value>Make Same Size</value>
-  </data>
-  <data name="ToolTipMakeSameWidth" xml:space="preserve">
-    <value>Make Same Width</value>
-  </data>
-  <data name="ToolTipPaste" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="ToolTipRedo" xml:space="preserve">
-    <value>Redo</value>
-  </data>
-  <data name="ToolTipSendBack" xml:space="preserve">
-    <value>Send to Back</value>
-  </data>
-  <data name="ToolTipUndo" xml:space="preserve">
-    <value>Undo</value>
-  </data>
-  <data name="ToolTipUngroupObjects" xml:space="preserve">
-    <value>Ungroup Objects</value>
-  </data>
-  <data name="ToolTipVerticalSpacingEqual" xml:space="preserve">
-    <value>Make Vertical Spacing Equal</value>
-  </data>
-  <data name="TreeNodeRenameMenuItemHeader" xml:space="preserve">
-    <value>Rename</value>
-    <comment>Defines the ContextMenu MenuItem Header to rename tree node text</comment>
-  </data>
-  <data name="UndoMenuItemHeader" xml:space="preserve">
-    <value>Undo</value>
+  <data name="TwoCourseMealTypeName" xml:space="preserve">
+    <value>2 Course Meal</value>
   </data>
 </root>

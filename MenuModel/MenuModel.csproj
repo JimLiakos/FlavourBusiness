@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomazedPrice.cs" />
-    <Compile Include="FixedMealType.cs" />
     <Compile Include="FixedScaleType.cs" />
     <Compile Include="FixedScaleTypes.cs" />
     <Compile Include="ItemsCategory.cs" />
@@ -64,12 +63,11 @@
     <Compile Include="JsonViewModel\Option.cs" />
     <Compile Include="JsonViewModel\OptionGroup.cs" />
     <Compile Include="JsonViewModel\OptionMenuItemSpecific.cs" />
+    <Compile Include="JsonViewModel\PartofMeal.cs" />
     <Compile Include="JsonViewModel\TypedObject.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="ItemSelectorOption.cs" />
     <Compile Include="ItemSelectorOptionsGroup.cs" />
-    <Compile Include="MealCourseType.cs" />
-    <Compile Include="MealType.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemPrice.cs" />
@@ -91,6 +89,10 @@
     <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
       <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
       <Name>Linq - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{F20E4565-5DDB-4E1E-A343-369927C01277}</Project>
+      <Name>OOAdvantech.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
       <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>

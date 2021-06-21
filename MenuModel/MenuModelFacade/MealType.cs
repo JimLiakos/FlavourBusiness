@@ -5,13 +5,14 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using OOAdvantech;
+using OOAdvantech.Json;
 
 namespace MenuModel
 {
     /// <MetaDataID>{692b8238-03dd-48de-a7df-a734878d6791}</MetaDataID>
     [BackwardCompatibilityID("{692b8238-03dd-48de-a7df-a734878d6791}")]
     [Persistent()]
-    public class MealType : MarshalByRefObject, IMealType
+    public class MealType :  IMealType
     {
         /// <MetaDataID>{97478e3f-39d5-4caa-bae7-3114a53758ca}</MetaDataID>
         public void SetDefaultMealCourse(IMealCourseType mealCourseType)
@@ -39,11 +40,43 @@ namespace MenuModel
         }
 
         /// <MetaDataID>{5810ad84-2397-4473-8fb1-84fc190dea02}</MetaDataID>
-        protected MealType()
+        public MealType()
         {
-
+            //var dd= new MealType() { MultilingualName=new Multilingual(),Courses=null,}
         }
 
+        string _MealTypeUri;
+        public string MealTypeUri
+        {
+            get
+            {
+                if (_MealTypeUri == null)
+                {
+                    var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                    if (objectStorage != null)
+                        _MealTypeUri = objectStorage.GetPersistentObjectUri(this);
+                    else
+                        _MealTypeUri = "";
+                }
+                return _MealTypeUri;
+            }
+        }
+
+
+
+        [JsonConstructor]
+        public MealType(Multilingual multilingualName, List<IMealCourseType> courses, string mealTypeUri)
+        {
+            _MealTypeUri = mealTypeUri;
+            _Name = new MultilingualMember<string>(multilingualName.Values);
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this,TransactionOption.Suppress))
+            {
+                _Courses.AddRange(courses); 
+                stateTransition.Consistent = true;
+            }
+
+        }
         /// <MetaDataID>{07379802-01d0-4732-8c85-fe4a4bd4a0ab}</MetaDataID>
         public MealType(string mealTypeDefaultName)
         {
@@ -61,7 +94,7 @@ namespace MenuModel
                 MealCourseType mealCourseType;
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    mealCourseType = new MealCourseType(Properties.Resources.NewMealCourseName);
+                    mealCourseType = new MealCourseType(MenuModelFacade.Properties.Resources.NewMealCourseName);
                     if (_Courses.Where(x => x.IsDefault).Count() == 0)
                         mealCourseType.IsDefault = true;
 
@@ -125,6 +158,7 @@ namespace MenuModel
         /// <MetaDataID>{5e64b818-62ab-43f0-bfc1-f8b1182b5ae1}</MetaDataID>
         [PersistentMember(nameof(_Name))]
         [BackwardCompatibilityID("+1")]
+        [JsonIgnore]
         public string Name
         {
             get => _Name;
@@ -137,6 +171,7 @@ namespace MenuModel
                         _Name.Value = value;
                         stateTransition.Consistent = true;
                     }
+                    
                 }
             }
         }
@@ -163,13 +198,13 @@ namespace MenuModel
                 if (twoCourseMealType == null)
                 {
                     List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
-                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    var mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.AppetizerMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.MainMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    twoCourseMealType = new FixedMealType(Properties.Resources.TwoCourseMealTypeName, mealCourses);
+                    twoCourseMealType = new FixedMealType(MenuModelFacade.Properties.Resources.TwoCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(twoCourseMealType);
 
                 }
@@ -178,17 +213,17 @@ namespace MenuModel
                 {
 
                     List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
-                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    var mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.AppetizerMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.MainMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.DessertMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
 
-                    threeCourseMealType = new FixedMealType(Properties.Resources.ThreeCourseMealTypeName, mealCourses);
+                    threeCourseMealType = new FixedMealType(MenuModelFacade.Properties.Resources.ThreeCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(threeCourseMealType);
 
                 }
@@ -197,19 +232,19 @@ namespace MenuModel
                 {
 
                     List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
-                    var mealCourse = new MealCourseType(Properties.Resources.AppetizerMealCourseName);
+                    var mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.AppetizerMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.HorsDOeuvreMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.HorsDOeuvreMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.MainMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.MainMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    mealCourse = new MealCourseType(Properties.Resources.DessertMealCourseName);
+                    mealCourse = new MealCourseType(MenuModelFacade.Properties.Resources.DessertMealCourseName);
                     objectStorage.CommitTransientObjectState(mealCourse);
                     mealCourses.Add(mealCourse);
-                    fourCourseMealType = new FixedMealType(Properties.Resources.FourCourseMealTypeName, mealCourses);
+                    fourCourseMealType = new FixedMealType(MenuModelFacade.Properties.Resources.FourCourseMealTypeName, mealCourses);
                     objectStorage.CommitTransientObjectState(fourCourseMealType);
 
 

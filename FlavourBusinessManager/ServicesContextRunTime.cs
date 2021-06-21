@@ -806,11 +806,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{e57f4255-89a4-44e4-8b44-c9688dab616b}</MetaDataID>
-        public void GraphicMenuStorageUpdated(OrganizationStorageRef graphicMenuStorageRef)
+        public void GraphicMenuStorageMetaDataUpdated(OrganizationStorageRef graphicMenuStorageRef)
         {
-
-
-
             var fbstorage = (from storage in _Storages
                              where storage.StorageIdentity == graphicMenuStorageRef.StorageIdentity
                              select storage).FirstOrDefault();
@@ -1180,12 +1177,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                 }
             }
+            var defaultMealType = clientSession.ServicePoint.ServesMealTypes.FirstOrDefault();
+            var servedMealTypes = clientSession.ServicePoint.ServesMealTypes.ToList();
 
+            if (defaultMealType==null)
+            {
+                defaultMealType = clientSession.ServicePoint.ServiceArea.ServesMealTypes.FirstOrDefault();
+                servedMealTypes = clientSession.ServicePoint.ServiceArea.ServesMealTypes.ToList();
+            }
 
-            //(session as EndUsers.FoodServiceClientSession).Menu = GraphicMenus.FirstOrDefault();
-
-
-            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession };
+            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession,ServedMealTypes= servedMealTypes, DefaultMealType= defaultMealType };
         }
 
         /// <MetaDataID>{7be35e44-04e6-418d-b29e-100f9c6f71b0}</MetaDataID>
@@ -1356,6 +1357,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         }
+        public void StorageDataUpdated(string storageIdentity)
+        {
+            ObjectStorage.UpdateOperativeOperativeObjects(storageIdentity);
+        }
+
 
         /// <MetaDataID>{cc310316-0d1f-477a-a360-e7fdc5f55a79}</MetaDataID>
         public IHallLayout GetHallLayout(string servicePointIdentity)
