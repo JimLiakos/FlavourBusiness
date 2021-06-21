@@ -1,4 +1,5 @@
 ﻿using OOAdvantech.Json;
+using OOAdvantech.PersistenceLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace MenuModel.JsonViewModel
     {
         public PartofMeal(IMealType mealType, IMenuItem menuItem, IMealCourseType mealCourseType)
         {
-            MealType = mealType;
+            MealType = new MealType(mealType);
             MenuItem = menuItem;
-            _MealCourseType = mealCourseType;
+
+            var uri = ObjectStorage.GetStorageOfObject(mealCourseType)?.GetPersistentObjectUri(mealCourseType);
+            _MealCourseType = MealType.Courses.OfType<MealCourseType>().Where(x => x.Uri == uri).FirstOrDefault(); ;
         }
         public readonly IMealCourseType _MealCourseType;
         public IMealCourseType MealCourseType { get => _MealCourseType; set => throw new NotImplementedException(); }
@@ -22,6 +25,6 @@ namespace MenuModel.JsonViewModel
         public IMealType MealType { get; }
 
         [JsonIgnore]
-        public IMenuItem MenuItem {get;}
+        public IMenuItem MenuItem { get; }
     }
 }

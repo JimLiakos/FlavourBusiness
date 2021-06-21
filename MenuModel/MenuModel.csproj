@@ -54,12 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomazedPrice.cs" />
+    <Compile Include="FixedMealType.cs" />
     <Compile Include="FixedScaleType.cs" />
     <Compile Include="FixedScaleTypes.cs" />
     <Compile Include="ItemsCategory.cs" />
     <Compile Include="JsonViewModel\CustomazedPrice.cs" />
     <Compile Include="JsonViewModel\itemPreparation.cs" />
     <Compile Include="JsonViewModel\ItemSelectorOption.cs" />
+    <Compile Include="JsonViewModel\MealCourseType.cs" />
+    <Compile Include="JsonViewModel\MealType.cs" />
     <Compile Include="JsonViewModel\Option.cs" />
     <Compile Include="JsonViewModel\OptionGroup.cs" />
     <Compile Include="JsonViewModel\OptionMenuItemSpecific.cs" />
@@ -68,6 +71,8 @@
     <Compile Include="Level.cs" />
     <Compile Include="ItemSelectorOption.cs" />
     <Compile Include="ItemSelectorOptionsGroup.cs" />
+    <Compile Include="MealCourseType.cs" />
+    <Compile Include="MealType.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemPrice.cs" />
