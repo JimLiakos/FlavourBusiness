@@ -70,7 +70,27 @@ namespace MenuPresentationModel.JsonMenuPresentation
             _PageWidth = ((menu as MenuPresentationModel.RestaurantMenu).Style.Styles["page"] as MenuStyles.PageStyle).PageWidth;
             _PageHeight = ((menu as MenuPresentationModel.RestaurantMenu).Style.Styles["page"] as MenuStyles.PageStyle).PageHeight;
             Type = GetType().Name;
+
+            MenuModel.IMenuItem menuItem = mappedObject.Keys.Where(x => x is MenuModel.IMenuItem).OfType<MenuModel.IMenuItem>().FirstOrDefault();
+            MealTypes = new List<MenuModel.IMealType>();
+            if (menuItem!=null)
+            {
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem));
+                foreach(var mealType in (from a_mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                 select a_mealType))
+                {
+                    MenuModel.IMealType jsonMealType = null;
+                    if (mappedObject.ContainsKey(mealType))
+                        jsonMealType = mappedObject[mealType] as MenuModel.IMealType;
+                    else
+                        jsonMealType = new MenuModel.JsonViewModel.MealType(mealType, mappedObject) as MenuModel.IMealType;
+                    MealTypes.Add(jsonMealType);
+                }
+            }
         }
+
+        public List<MenuModel.IMealType> MealTypes { get; set; }
+
         public List<FontData> MenuFonts { get; set; } = new List<FontData>();
         internal int GetFontID(FontData font)
         {

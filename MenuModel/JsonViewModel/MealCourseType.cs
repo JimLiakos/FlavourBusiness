@@ -10,8 +10,9 @@ namespace MenuModel.JsonViewModel
 {
     public class MealCourseType:IMealCourseType
     {
-        public MealCourseType(IMealCourseType mealCourseType)
+        public MealCourseType(IMealCourseType mealCourseType, Dictionary<object, object> mappedObject)
         {
+            mappedObject[mealCourseType] = this;
             _Name =new Multilingual(mealCourseType.MultilingualName);
             IsDefault = mealCourseType.IsDefault;
             DurationInMinutes = mealCourseType.DurationInMinutes;

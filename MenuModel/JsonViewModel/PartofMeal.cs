@@ -11,15 +11,19 @@ namespace MenuModel.JsonViewModel
     /// <MetaDataID>{92e66ca3-9998-4bbb-b241-9ded05b52f43}</MetaDataID>
     public class PartofMeal : IPartofMeal
     {
-        public PartofMeal(IMealType mealType, IMenuItem menuItem, IMealCourseType mealCourseType)
+        public PartofMeal(IPartofMeal partofMeal, Dictionary<object, object> mappedObject)
         {
-            MealType = new MealType(mealType);
-            MenuItem = menuItem;
+            mappedObject[partofMeal] = this;
+            if (mappedObject.ContainsKey(partofMeal.MealType))
+                MealType = mappedObject[partofMeal.MealType] as IMealType;
+            else
+                MealType = new MealType(partofMeal.MealType, mappedObject);
 
-            var uri = ObjectStorage.GetStorageOfObject(mealCourseType)?.GetPersistentObjectUri(mealCourseType);
+            MenuItem = mappedObject[partofMeal.MenuItem] as IMenuItem;
+            var uri = ObjectStorage.GetStorageOfObject(partofMeal.MealCourseType)?.GetPersistentObjectUri(partofMeal.MealCourseType);
             _MealCourseType = MealType.Courses.OfType<MealCourseType>().Where(x => x.Uri == uri).FirstOrDefault(); ;
         }
-        public readonly IMealCourseType _MealCourseType;
+        readonly IMealCourseType _MealCourseType;
         public IMealCourseType MealCourseType { get => _MealCourseType; set => throw new NotImplementedException(); }
 
         public IMealType MealType { get; }

@@ -70,7 +70,7 @@ namespace MenuModel.JsonViewModel
                 }
             }
 
-            PartofMeals = (from partOfMeal in menuItem.PartofMeals select new PartofMeal(partOfMeal.MealType, partOfMeal.MenuItem, partOfMeal.MealCourseType)).OfType<IPartofMeal>().ToList();
+            PartofMeals = (from partOfMeal in menuItem.PartofMeals select new PartofMeal(partOfMeal, mappedObject)).OfType<IPartofMeal>().ToList();
 
         }
 #endif

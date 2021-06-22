@@ -11,11 +11,13 @@ namespace MenuModel.JsonViewModel
     public class MealType : IMealType
     {
 
-        public MealType(IMealType mealType)
+        public MealType(IMealType mealType, Dictionary<object, object> mappedObject)
         {
+            mappedObject[mealType] = this;
             _Name = new Multilingual(mealType.MultilingualName);
             _Courses = (from mealCourseType in mealType.Courses
-                        select new MealCourseType(mealCourseType)).OfType<IMealCourseType>().ToList();
+                        select new MealCourseType(mealCourseType, mappedObject)).OfType<IMealCourseType>().ToList();
+
             Uri = ObjectStorage.GetStorageOfObject(mealType)?.GetPersistentObjectUri(mealType);
         }
 
