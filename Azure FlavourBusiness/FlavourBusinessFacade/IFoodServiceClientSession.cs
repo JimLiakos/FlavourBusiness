@@ -225,8 +225,8 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{61d96939-76a9-4eac-9a22-1dd3c521ce07}</MetaDataID>
         public string ServicesPointName;
 
-        public MenuModel.IMealType DefaultMealType;
-        public List<MenuModel.IMealType> ServedMealTypes;
+        public string DefaultMealTypeUri;
+        public List<string> ServedMealTypesUris;
     }
 
 }

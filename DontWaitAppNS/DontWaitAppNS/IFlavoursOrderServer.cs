@@ -224,8 +224,8 @@ namespace DontWaitApp
 
     public delegate void WebViewLoadedHandle();
 
-    /// <MetaDataID>{dcf0d40a-e2ed-4711-aa96-8ee72a121740}</MetaDataID>
-     /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>
+
+    /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>
     [BackwardCompatibilityID("{5718fadd-9a57-4d87-a6ea-ba669ab3388a}")]
     [Persistent()]
     public struct MenuData
@@ -258,8 +258,37 @@ namespace DontWaitApp
             set => _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>(value);
         }
 
-        public IMealType DefaultMealType { get; internal set; }
-        public List<IMealType> ServedMealTypes { get; internal set; }
+        [PersistentMember()]
+        [BackwardCompatibilityID("+9")]
+        string ServedMealTypesUrisStream;
+
+        public List<string> ServedMealTypesUris
+        {
+            get
+            {
+                if (ServedMealTypesUrisStream == null)
+                    return new List<string>();
+
+                return ServedMealTypesUrisStream.Split(';').ToList();
+            }
+            internal set
+            {
+                ServedMealTypesUrisStream = "";
+                foreach (var uri in value )
+                {
+                    if (string.IsNullOrWhiteSpace(ServedMealTypesUrisStream))
+                        ServedMealTypesUrisStream = uri;
+                    else
+                        ServedMealTypesUrisStream += ";" + uri;
+
+                }
+            }
+        }
+
+        [PersistentMember()]
+        [BackwardCompatibilityID("+8")]
+        public string DefaultMealTypeUri;
+
 
         /// <MetaDataID>{dc96cae9-9570-4397-96dc-219cf7d056d5}</MetaDataID>
         [PersistentMember()]

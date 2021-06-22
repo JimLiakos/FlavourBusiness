@@ -599,8 +599,8 @@ namespace DontWaitApp
                     ServicePointIdentity = clientSessionData.ServicePointIdentity,
                     ServicesPointName = clientSessionData.ServicesPointName,
                     ServicesContextLogo = clientSessionData.ServicesContextLogo,
-                    DefaultMealType = clientSessionData.DefaultMealType,
-                    ServedMealTypes = clientSessionData.ServedMealTypes
+                    DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
+                    ServedMealTypesUris = clientSessionData.ServedMealTypesUris
 
                 };
                 menuData.OrderItems = OrderItems.ToList();
@@ -760,7 +760,9 @@ namespace DontWaitApp
                             MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                             MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                             ClientSessionID = FoodServiceClientSession.SessionID,
-                            ServicePointIdentity = clientSessionData.ServicePointIdentity
+                            ServicePointIdentity = clientSessionData.ServicePointIdentity,
+                            DefaultMealTypeUri=clientSessionData.DefaultMealTypeUri,
+                            ServedMealTypesUris = clientSessionData.ServedMealTypesUris
 
                         };
                         menuData.OrderItems = OrderItems.ToList();

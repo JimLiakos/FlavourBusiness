@@ -1177,16 +1177,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                 }
             }
-            var defaultMealType = clientSession.ServicePoint.ServesMealTypes.FirstOrDefault();
-            var servedMealTypes = clientSession.ServicePoint.ServesMealTypes.ToList();
+            var defaultMealTypeUri = clientSession.ServicePoint.ServesMealTypesUris.FirstOrDefault();
+            var servedMealTypesUris = clientSession.ServicePoint.ServesMealTypesUris.ToList();
 
-            if (defaultMealType==null)
+            if (defaultMealTypeUri==null)
             {
-                defaultMealType = clientSession.ServicePoint.ServiceArea.ServesMealTypes.FirstOrDefault();
-                servedMealTypes = clientSession.ServicePoint.ServiceArea.ServesMealTypes.ToList();
+                defaultMealTypeUri = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
+                servedMealTypesUris = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
             }
 
-            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession,ServedMealTypes= servedMealTypes, DefaultMealType= defaultMealType };
+            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession,ServedMealTypesUris= servedMealTypesUris, DefaultMealTypeUri= defaultMealTypeUri };
         }
 
         /// <MetaDataID>{7be35e44-04e6-418d-b29e-100f9c6f71b0}</MetaDataID>
