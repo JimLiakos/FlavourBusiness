@@ -8,6 +8,10 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{6d81b0c8-acd5-4b40-b2e4-dd29ff3dbc8c}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        string SelectedMealCourseTypeUri { get; set; }
+
         [Association("ServiceSectionFoodItems", Roles.RoleB, "170a4e1d-1241-4efd-a037-01a2c2a3456b")]
         [RoleBMultiplicityRange(1, 1)]
         FlavourBusinessFacade.RoomService.IMealCourse MealCourse { get; set; }

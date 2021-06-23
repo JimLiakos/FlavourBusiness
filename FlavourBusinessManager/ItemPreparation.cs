@@ -19,6 +19,28 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+        /// <exclude>Excluded</exclude>
+        string _SelectedMealCourseTypeUri;
+
+        /// <MetaDataID>{46568c98-10d1-4979-9ea1-9736b02f692c}</MetaDataID>
+        [PersistentMember(nameof(_SelectedMealCourseTypeUri))]
+        [BackwardCompatibilityID("+17")]
+        public string SelectedMealCourseTypeUri
+        {
+            get => _SelectedMealCourseTypeUri;
+            set
+            {
+
+                if (_SelectedMealCourseTypeUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SelectedMealCourseTypeUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -67,6 +89,7 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
         }
+
 
         /// <exclude>Excluded</exclude>
         ItemPreparationState _State;
@@ -211,15 +234,16 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-//#if !FlavourBusinessDevice
+        //#if !FlavourBusinessDevice
 
-//        /// <MetaDataID>{85d453b1-7f6e-4097-bd7b-151d6cbe28f9}</MetaDataID>
-//        public IMenuItem MenuItem { get => _MenuItem; }
-//#else
+        //        /// <MetaDataID>{85d453b1-7f6e-4097-bd7b-151d6cbe28f9}</MetaDataID>
+        //        public IMenuItem MenuItem { get => _MenuItem; }
+        //#else
+        /// <MetaDataID>{17b276e1-5002-494a-8b82-13c417ef80af}</MetaDataID>
         [JsonIgnore]
         /// <MetaDataID>{85d453b1-7f6e-4097-bd7b-151d6cbe28f9}</MetaDataID>
         public IMenuItem MenuItem { get => _MenuItem; }
-//#endif
+        //#endif
 
         /// <MetaDataID>{da441ccb-5f5b-4ee2-8c2b-1ce95b5a5b19}</MetaDataID>
         public IMenuItem LoadMenuItem()
@@ -526,6 +550,7 @@ namespace FlavourBusinessManager.RoomService
                 _IsShared = item.IsShared;
                 _NumberOfShares = item.NumberOfShares;
                 _CustomItemEnabled = item.CustomItemEnabled;
+                _SelectedMealCourseTypeUri = item.SelectedMealCourseTypeUri;
 
                 List<OptionChange> removedOptions = new List<OptionChange>(_OptionsChanges.OfType<OptionChange>());
 

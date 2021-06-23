@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MenuModel.JsonViewModel
 {
+    /// <MetaDataID>{26ec7ce3-afd5-4867-a4de-b5407c088a62}</MetaDataID>
     public class MealType : IMealType
     {
 
@@ -21,8 +22,8 @@ namespace MenuModel.JsonViewModel
             Uri = ObjectStorage.GetStorageOfObject(mealType)?.GetPersistentObjectUri(mealType);
         }
 
-        public string Uri { get; set;}
-        
+        public string Uri { get; set; }
+
 
         public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
 
