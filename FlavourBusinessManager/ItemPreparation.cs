@@ -540,10 +540,11 @@ namespace FlavourBusinessManager.RoomService
             bool changed;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                changed = (_Price != item.Price ||
+                                                                                                                                                                                                                                            changed = (_Price != item.Price ||
                 _Quantity != item.Quantity ||
                 _IsShared != item.IsShared ||
-                _NumberOfShares != item.NumberOfShares);
+                _NumberOfShares != item.NumberOfShares||
+                _SelectedMealCourseTypeUri!= item.SelectedMealCourseTypeUri);
 
                 _Price = item.Price;
                 _Quantity = item.Quantity;
