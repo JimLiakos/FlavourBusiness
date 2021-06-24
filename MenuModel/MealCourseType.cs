@@ -10,7 +10,7 @@ namespace MenuModel
     [Persistent()]
     public class MealCourseType : IMealCourseType
     {
-      
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -39,7 +39,7 @@ namespace MenuModel
             }
         }
 
-    
+
         /// <MetaDataID>{ba2d7888-3e6e-45a4-9d61-aebe9c1007e0}</MetaDataID>
         public MealCourseType()
         {
@@ -78,7 +78,7 @@ namespace MenuModel
 
 
         /// <exclude>Excluded</exclude>
-        private  bool _IsDefault;
+        private bool _IsDefault;
 
         /// <MetaDataID>{dab697e1-e1c9-4cd9-a5d4-7362440f8373}</MetaDataID>
         [PersistentMember(nameof(_IsDefault))]
@@ -86,7 +86,7 @@ namespace MenuModel
         public bool IsDefault
         {
             get => _IsDefault;
-            internal set
+            set
             {
 
                 if (_IsDefault != value)

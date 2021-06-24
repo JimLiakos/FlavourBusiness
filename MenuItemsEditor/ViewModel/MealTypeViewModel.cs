@@ -26,6 +26,10 @@ namespace MenuItemsEditor.ViewModel
         /// <MetaDataID>{0eab4458-3979-48b8-95f1-2d85c78cdefb}</MetaDataID>
         public RelayCommand MoveUpSelectedMealCourseTypeCommand { get; protected set; }
 
+        public RelayCommand MakeSelectedSelectedMealCourseTypeDefaultCommand { get; protected set; }
+
+
+
 
         /// <MetaDataID>{0636cadc-a418-479f-bd1a-dcc2799eb723}</MetaDataID>
         public RelayCommand MoveDownSelectedMealCourseTypeCommand { get; protected set; }
@@ -44,6 +48,25 @@ namespace MenuItemsEditor.ViewModel
         {
             MealType = mealType;
 
+            MakeSelectedSelectedMealCourseTypeDefaultCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+             {
+                 if (MealType != null)
+                 {
+                     foreach (MealCourseTypeViewModel mealCourseTypeViewModel in Courses)
+                         mealCourseTypeViewModel.IsDefault = false;
+                 }
+                 SelectedCourse.IsDefault = true;
+
+
+                 //int pos = MealType.Courses.IndexOf(SelectedCourse.MealCourseType);
+                 //if (pos > 0)
+                 //    MealType.MoveMealCourseType(SelectedCourse.MealCourseType, pos - 1);
+
+                 //_Courses = null;
+                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
+
+             }, (object sender) => IsSelectedMealCourseDefault);
+
 
             MoveUpSelectedMealCourseTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
              {
@@ -59,7 +82,7 @@ namespace MenuItemsEditor.ViewModel
             MoveDownSelectedMealCourseTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 int pos = MealType.Courses.IndexOf(SelectedCourse.MealCourseType);
-                if (pos < MealType.Courses.Count-2)
+                if (pos < MealType.Courses.Count - 2)
                     MealType.MoveMealCourseType(SelectedCourse.MealCourseType, pos + 1);
 
                 _Courses = null;
@@ -69,6 +92,17 @@ namespace MenuItemsEditor.ViewModel
 
             DeleteSelectedMealCourseTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
              {
+                 if (mealType is FixedMealType)
+                     return;
+                 if (SelectedCourse != null)
+                 {
+                     _Courses.Remove(SelectedCourse);
+                     mealType.RemoveMealCourseType(SelectedCourse.MealCourseType);
+                     foreach (var mealCourse in Courses)
+                         mealCourse.IsDefault = mealCourse.MealCourseType.IsDefault;
+
+                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
+                 }
 
              }, (object sender) => !(MealType is MenuModel.FixedMealType));
 
@@ -87,8 +121,8 @@ namespace MenuItemsEditor.ViewModel
 
             RenameSelectedMealCourseTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-              SelectedCourse.Edit = true;
-            }, (object sender) => SelectedCourse!=null);
+                SelectedCourse.Edit = true;
+            }, (object sender) => SelectedCourse != null);
 
         }
 
@@ -107,6 +141,27 @@ namespace MenuItemsEditor.ViewModel
                 return true;
             }
         }
+
+
+        public bool IsSelectedMealCourseDefault
+        {
+            get
+            {
+                if (SelectedCourse == null)
+                    return false;
+                if (this.MealType == null)
+                    return false;
+                int pos = this.MealType.Courses.IndexOf(SelectedCourse.MealCourseType);
+                if (pos == -1)
+                    return false;
+
+                if (SelectedCourse.MealCourseType.IsDefault)
+                    return false;
+
+                return true;
+            }
+        }
+
         /// <MetaDataID>{58b2afd3-66a9-44bf-bf68-62054eef1434}</MetaDataID>
         bool CanBeSelectedMealCourseTypeMoveDown
         {

@@ -40,6 +40,6 @@ namespace MenuModel.JsonViewModel
                 _Name.SetValue<string>(value);
             }
         }
-        public bool IsDefault { get; }
+        public bool IsDefault { get; set; }
     }
 }

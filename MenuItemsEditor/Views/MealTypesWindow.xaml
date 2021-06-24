@@ -93,11 +93,11 @@
                                 <DataTemplate>
                                     <Grid  Margin="0,0,5,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="28"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="55"/>
                                         </Grid.ColumnDefinitions>
-                                        <Image Width="12" Height="12" Source="{Binding Image}" Margin="0,0,5,0"></Image>
+                                        <Image Width="24" Height="24" Source="{Binding Image}" Margin="0,0,5,0"></Image>
                                         <ControlsEx:EditableTextBlock  UnTranslated="{Binding UnTranslatedName}" Translator="{Binding Translator}"  Grid.Column="1"  IsInEditMode="{Binding  Path=Edit,Mode=TwoWay}" Text="{Binding Path=Name,Mode=TwoWay}" Margin="0,0,5,0"/>
                                         <Grid Grid.Column="2" ToolTip="{x:Static resx:Resources.MealCourseDurationPrompt}">
                                             <Grid.ColumnDefinitions>
@@ -132,6 +132,10 @@
                                             ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SelectedMealType.SetSelectedMealTypeLevelUncheckTooltip}">
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/unchecked16.png"></Image>
                                         </Button>-->
+                                        <Button  Command="{Binding Path=SelectedMealType.MakeSelectedSelectedMealCourseTypeDefaultCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedScaleTypeLevelUncheckTooltip}">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
+                                        </Button>
                                         <Button Command="{Binding Path=SelectedMealType.MoveUpSelectedMealCourseTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
                                         </Button>

@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel
@@ -62,7 +64,7 @@ namespace MenuItemsEditor.ViewModel
                 string name = Name;
                 using (OOAdvantech.CultureContext cultureContext = new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo, false))
                 {
-                    return string.IsNullOrWhiteSpace( Name);
+                    return string.IsNullOrWhiteSpace(Name);
                 }
             }
         }
@@ -72,14 +74,47 @@ namespace MenuItemsEditor.ViewModel
 
         public bool Edit
         {
+
+
             get
             {
+
                 return _Edit;
             }
             set
             {
                 _Edit = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
+            }
+        }
+
+        public ImageSource Image
+        {
+            get
+            {
+                if (MealCourseType.IsDefault)
+                {
+                    return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/DefaultMealCourse24.png"));
+                }
+                else
+                {
+                    return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Empty.png"));
+                }
+
+            }
+        }
+
+        public bool IsDefault
+        {
+            get
+            {
+                return MealCourseType.IsDefault;
+            }
+            internal set
+            {
+                MealCourseType.IsDefault = value;
+
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
             }
         }
     }
