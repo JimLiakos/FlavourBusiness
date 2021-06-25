@@ -102,6 +102,8 @@
     <Compile Include="ServiceContextResources.cs" />
     <Compile Include="ServicePointPreparationItems.cs" />
     <Compile Include="WorkerData.cs" />
+    <None Include="Room Service\Meal Preparation Users Stories.docx" />
+    <None Include="Room Service\Meal Users Stories.docx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">

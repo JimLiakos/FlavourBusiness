@@ -16627,7 +16627,7 @@
 				    line_style 	0
 				    label      	(object SegLabel @303
 					Parent_View 	@301
-					location   	(2751, 840)
+					location   	(2770, 794)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -16644,8 +16644,8 @@
 					max_width  	15
 					justify    	0
 					label      	"1"
-					pctDist    	0.900000
-					height     	54
+					pctDist    	0.669204
+					height     	40
 					orientation 	0))))
 			(object AssociationViewNew "MealCourses" @304
 			    location   	(2112, 959)

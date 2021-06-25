@@ -11143,7 +11143,11 @@
 	    quid       	"5D024DCB0038"
 	    external_docs 	(list external_doc_list
 		(object external_doc
-		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Meal Users Stories.docx"))
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Meal Users Stories.docx")
+		(object external_doc
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Meal Preparation Users Stories.docx")
+		(object external_doc
+		    external_doc_url 	"https://medium.com/zomato-technology/the-deep-tech-behind-estimating-food-preparation-time-e5068807acb0"))
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "IItemPreparation"
@@ -12169,6 +12173,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@157
+				location   	(25, 1062)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	1528)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -12200,6 +12222,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@158
+				location   	(1413, 1174)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	32
+				max_width  	1321)
 			    width      	719
 			    height     	431
 			    annotation 	8)
