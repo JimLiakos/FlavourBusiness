@@ -174,12 +174,15 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (messmateClientSesion.MainSession != null)
                     {
-                        _MainSession.Value = messmateClientSesion.MainSession;
+                        // _MainSession.Value = messmateClientSesion.MainSession;
+                        messmateClientSesion.MainSession.AddPartialSession(this);
                     }
                     else
                     {
-                        _MainSession.Value = ServicePoint.NewFoodServiceSession();
-                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_MainSession.Value);
+                        var foodServiceSession = ServicePoint.NewFoodServiceSession();
+                        foodServiceSession.AddPartialSession(this);
+                        //_MainSession.Value = ServicePoint.NewFoodServiceSession();
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
                 }
@@ -1639,6 +1642,14 @@ namespace FlavourBusinessManager.EndUsers
                         changeStateFlavourItems.Add(item);
                     }
                 }
+
+                if (_MainSession.Value == null)
+                {
+                    var foodServiceSession = ServicePoint.NewFoodServiceSession();
+                    foodServiceSession.AddPartialSession(this);
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                }
+
                 AllItemsCommited();
 
                 stateTransition.Consistent = true;

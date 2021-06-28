@@ -130,6 +130,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 StateMachineMonitoring();
         }
 
+        /// <MetaDataID>{fbe827bb-85e5-4ac5-a527-028149b7e116}</MetaDataID>
         object StateMachineLock = new object();
 
         /// <MetaDataID>{dd202b7b-1e56-45fe-a4a9-f3f26dcc645a}</MetaDataID>
@@ -148,7 +149,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     //UrgesToDecideStateRun();
                 }
 
-                if (SessionState == SessionState.MealValidationDelay&& partialClientSessions.Where(x => x.SessionState != ClientSessionState.ItemsCommited).Count() >0)
+                if (SessionState == SessionState.MealValidationDelay && partialClientSessions.Where(x => x.SessionState != ClientSessionState.ItemsCommited).Count() > 0)
                     SessionState = SessionState.UrgesToDecide;
 
                 //There aren't messmates in the ItemsCommit state
@@ -157,7 +158,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
                 //All messmates are in committed state for specific timespan event
-                if ( partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited|| x.SessionState == ClientSessionState.Inactive).Count() == partialClientSessions.Count)
+                if (partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited || x.SessionState == ClientSessionState.Inactive).Count() == partialClientSessions.Count)
                 {
                     SessionState = SessionState.MealValidationDelay;
                     MealValidationDelayRun();
@@ -168,9 +169,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{598f4be7-bfaf-40ae-b1e2-dc80d367a54f}</MetaDataID>
         private void MealValidationDelayRun()
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
 
@@ -190,6 +192,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             });
         }
 
+        /// <MetaDataID>{93093ff3-2928-40af-a748-5be7660d9f39}</MetaDataID>
         private void UrgesToDecideStateRun()
         {
             //Task.Run(() =>
@@ -235,6 +238,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //});
         }
 
+        /// <MetaDataID>{0d5343f3-0c56-4e22-b66d-e4357dbd8a75}</MetaDataID>
         MenuModel.MealType MealType
         {
             get
@@ -247,7 +251,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void CreateAndInitMeal()
         {
 
-            
+
             var itemsToPrepare = (from clientSession in PartialClientSessions
                                   from itemPreparation in clientSession.FlavourItems
                                   select itemPreparation).ToList();
@@ -312,6 +316,30 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        /// <exclude>Excluded</exclude>     
+        IMeal _Meal;
+
+        /// <MetaDataID>{8d538032-0365-42f6-a71a-176cf8a85f38}</MetaDataID>
+        [PersistentMember(nameof(_Meal))]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [BackwardCompatibilityID("+6")]
+        public IMeal Meal
+        {
+            get => _Meal; 
+            set
+            {
+                if (_Meal != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Meal = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
 
 

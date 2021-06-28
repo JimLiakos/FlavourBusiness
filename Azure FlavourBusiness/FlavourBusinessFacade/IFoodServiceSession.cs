@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         [Association("SessionMeal", Roles.RoleA, "b11e0deb-6ec0-4653-a06b-02610d68abcb")]
         [RoleAMultiplicityRange(1, 1)]
-        RoomService.IMeal Meal { get; }
+        RoomService.IMeal Meal { get; set; }
 
 
         [RoleAMultiplicityRange(0)]
