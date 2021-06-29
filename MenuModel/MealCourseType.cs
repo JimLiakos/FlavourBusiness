@@ -100,5 +100,14 @@ namespace MenuModel
 
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        Member<IMealType> _Meal = new Member<IMealType>();
+
+        /// <MetaDataID>{fdaa7b95-292a-45bd-9b85-9e29deedc0b6}</MetaDataID>
+        [PersistentMember(nameof(_Meal))]
+        [BackwardCompatibilityID("+4")]
+        public MenuModel.IMealType Meal => _Meal.Value;
     }
 }

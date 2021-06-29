@@ -6461,7 +6461,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4")
+		    value      	"5")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -6631,6 +6631,27 @@
 			    value      	"+3"))
 		    quid       	"60A208640131"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "Meal"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fdaa7b95-292a-45bd-9b85-9e29deedc0b6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"60DA9BEB01F3")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"60DA9BEB01F3"
+		    type       	"MenuModel.IMealType"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModel"
 	    quidu      	"5721E69F03B9"
@@ -8797,7 +8818,7 @@
 		    supplier   	"Logical View::MenuModel::IMealCourseType"
 		    quidu      	"6075144803C3"
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$13"
+		(object Role "Meal"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -8810,14 +8831,21 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"As Property"
-			    value      	FALSE)
+			    value      	TRUE)
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Indexer"
-			    value      	FALSE))
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
 		    quid       	"60757B080132"
+		    label      	"Meal"
 		    supplier   	"Logical View::MenuModel::IMealType"
-		    quidu      	"6075762C025B"))))
+		    quidu      	"6075762C025B"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Picing  Model"
 	    quid       	"57C2DB5D02CF"
@@ -10911,7 +10939,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@98
-			location   	(2906, 1519)
+			location   	(2906, 1524)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	538
@@ -10919,7 +10947,7 @@
 			label      	"SelectionType")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@98
-			location   	(2906, 1473)
+			location   	(2906, 1474)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -12039,7 +12067,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@153
-			location   	(56, 2333)
+			location   	(56, 2338)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	526
@@ -12047,7 +12075,7 @@
 			label      	"FixedScaleTypes")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@153
-			location   	(56, 2287)
+			location   	(56, 2288)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -13433,7 +13461,7 @@
 		    quidu      	"6075144803C3"
 		    compartment 	(object Compartment
 			Parent_View 	@217
-			location   	(2956, 285)
+			location   	(2956, 289)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -13775,16 +13803,70 @@
 			    client     	@231
 			    supplier   	@217
 			    line_style 	0)
-			(object RoleView "$UNNAMED$13" @235
+			(object RoleView "Meal" @235
 			    Parent_View 	@231
 			    location   	(496, -160)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @236
+				Parent_View 	@235
+				location   	(2430, 535)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	116
+				justify    	0
+				label      	"+Meal"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"60757B080132"
 			    client     	@231
 			    supplier   	@223
-			    line_style 	0)))
-		(object ClassView "Class" "Logical View::MenuModel::PartofMeal" @236
+			    line_style 	0
+			    label      	(object SegLabel @237
+				Parent_View 	@235
+				location   	(2435, 635)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::MenuModel::PartofMeal" @238
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(1592, 1178)
 		    font       	(object Font
@@ -13798,7 +13880,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@236
+			Parent_View 	@238
 			location   	(1355, 1090)
 			fill_color 	13434879
 			nlines     	1
@@ -13812,14 +13894,14 @@
 		    width      	493
 		    height     	200
 		    annotation 	8)
-		(object RealizeView "" @237
+		(object RealizeView "" @239
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"607591210288"
-		    client     	@236
+		    client     	@238
 		    supplier   	@215
 		    line_style 	0)
-		(object RealizeView "" @238
+		(object RealizeView "" @240
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"60751FA10007"
@@ -13828,7 +13910,7 @@
 		    line_style 	3
 		    origin_attachment 	(3141, 1065)
 		    terminal_attachment 	(3141, 477))
-		(object ClassView "Class" "Logical View::MenuModel::MealType" @239
+		(object ClassView "Class" "Logical View::MenuModel::MealType" @241
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(2203, 1187)
 		    font       	(object Font
@@ -13842,7 +13924,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@239
+			Parent_View 	@241
 			location   	(1978, 1093)
 			fill_color 	13434879
 			nlines     	1
@@ -13856,16 +13938,16 @@
 		    width      	469
 		    height     	212
 		    annotation 	8)
-		(object RealizeView "" @240
+		(object RealizeView "" @242
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"6075A0150330"
-		    client     	@239
+		    client     	@241
 		    supplier   	@223
 		    line_style 	3
 		    origin_attachment 	(2222, 1081)
 		    terminal_attachment 	(2222, 778))
-		(object ClassView "Class" "Logical View::MenuModel::FixedMealType" @241
+		(object ClassView "Class" "Logical View::MenuModel::FixedMealType" @243
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(2215, 1612)
 		    font       	(object Font
@@ -13879,7 +13961,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@241
+			Parent_View 	@243
 			location   	(1993, 1518)
 			fill_color 	13434879
 			nlines     	1
@@ -13893,12 +13975,12 @@
 		    width      	463
 		    height     	212
 		    annotation 	8)
-		(object InheritView "" @242
+		(object InheritView "" @244
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"60791B7F0136"
-		    client     	@241
-		    supplier   	@239
+		    client     	@243
+		    supplier   	@241
 		    line_style 	3
 		    origin_attachment 	(2219, 1506)
 		    terminal_attachment 	(2219, 1293))))))

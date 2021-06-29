@@ -1,4 +1,5 @@
 ﻿using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.PersistenceLayer;
 using System;
 using System.Collections.Generic;
@@ -41,5 +42,8 @@ namespace MenuModel.JsonViewModel
             }
         }
         public bool IsDefault { get; set; }
+
+        [JsonIgnore]
+        public IMealType Meal => throw new NotImplementedException();
     }
 }

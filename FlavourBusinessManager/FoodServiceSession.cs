@@ -249,13 +249,24 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{1b995301-4937-4889-a8b1-be54049ff16e}</MetaDataID>
         private void CreateAndInitMeal()
+        
         {
 
 
             var itemsToPrepare = (from clientSession in PartialClientSessions
                                   from itemPreparation in clientSession.FlavourItems
-                                  select itemPreparation).ToList();
+                                  select itemPreparation).OfType<ItemPreparation>().ToList();
 
+            var mealType= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal;
+
+
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Meal = new Meal(MealType, itemsToPrepare);
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal);
+                stateTransition.Consistent = true;
+            }
 
         }
 

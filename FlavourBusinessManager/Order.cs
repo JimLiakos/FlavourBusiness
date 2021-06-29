@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.RoomService;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -18,6 +19,11 @@ namespace FlavourBusinessManager.RoomService
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
    
+
+        protected MealCourse()
+        {
+
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _FoodItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();
@@ -56,6 +62,14 @@ namespace FlavourBusinessManager.RoomService
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        private MealCourseType mealCourseType;
+
+        public MealCourse(MealCourseType mealCourseType, List<ItemPreparation> itemPreparations)
+        {
+            this.mealCourseType = mealCourseType;
+            foreach (var itemPreparation in itemPreparations)
+                AddItem(itemPreparation);
+        }
 
 
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>

@@ -6,6 +6,10 @@ namespace MenuModel
     /// <MetaDataID>{b65a0463-e880-4cac-80f8-d26a16bee319}</MetaDataID>
     public interface IMealCourseType
     {
+        [Association("MealTypeCurses", Roles.RoleB, "4c25758e-e6d8-4771-9470-32e41c76a604")]
+        [RoleBMultiplicityRange(1, 1)]
+        IMealType Meal { get; }
+
         /// <MetaDataID>{befad4eb-20f1-4881-946a-3920f7be6414}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         Multilingual MultilingualName { get; }
