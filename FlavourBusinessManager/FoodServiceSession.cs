@@ -149,19 +149,38 @@ namespace FlavourBusinessManager.ServicesContextResources
                     //UrgesToDecideStateRun();
                 }
 
-                if (SessionState == SessionState.MealValidationDelay && partialClientSessions.Where(x => x.SessionState != ClientSessionState.ItemsCommited).Count() > 0)
-                    SessionState = SessionState.UrgesToDecide;
+                lock (StateMachineLock)
+                {
+                    if (SessionState == SessionState.MealValidationDelay && partialClientSessions.Where(x => x.SessionState != ClientSessionState.ItemsCommited).Count() > 0)
+                        SessionState = SessionState.UrgesToDecide;
+                }
 
-                //There aren't messmates in the ItemsCommit state
-                if (SessionState == SessionState.UrgesToDecide && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() == 0)
-                    SessionState = SessionState.Conversation;
+                lock (StateMachineLock)
+                {
+                    //There aren't messmates in the ItemsCommit state
+                    if (SessionState == SessionState.UrgesToDecide && partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).Count() == 0)
+                        SessionState = SessionState.Conversation;
+                }
 
 
                 //All messmates are in committed state for specific timespan event
                 if (partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited || x.SessionState == ClientSessionState.Inactive).Count() == partialClientSessions.Count)
                 {
-                    SessionState = SessionState.MealValidationDelay;
-                    MealValidationDelayRun();
+                    bool mealValidationDelaySessionState = false;
+
+                    lock (StateMachineLock)
+                    {
+                        if (SessionState != SessionState.MealValidationDelay)
+                        {
+                            mealValidationDelaySessionState = true;
+                            SessionState = SessionState.MealValidationDelay;
+                        }
+                    }
+
+                    if(mealValidationDelaySessionState)
+                        MealValidationDelayRun();
+                    
+
                 }
             }
             else
@@ -257,13 +276,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                                   from itemPreparation in clientSession.FlavourItems
                                   select itemPreparation).OfType<ItemPreparation>().ToList();
 
-            var mealType= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal;
+            var mealType= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal as MenuModel.MealType;
 
 
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Meal = new Meal(MealType, itemsToPrepare);
+                _Meal = new Meal(mealType, itemsToPrepare);
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal);
                 stateTransition.Consistent = true;
             }

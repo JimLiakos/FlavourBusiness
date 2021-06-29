@@ -6,6 +6,10 @@ namespace FlavourBusinessFacade.RoomService
     /// <MetaDataID>{c8e552d4-3923-475d-9d77-71536de91ecf}</MetaDataID>
     public interface IMealCourse
     {
+        /// <MetaDataID>{77edf270-755d-4621-9ebe-2bbeb6f1f80f}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
+        string Name { get; set; }
+
         /// <MetaDataID>{e6ec52a4-8462-46d7-adea-493cf75c3a4a}</MetaDataID>
         void RemoveItem(IItemPreparation itemPreparation);
 

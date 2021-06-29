@@ -1146,6 +1146,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                 }
             }
+            if (clientSession == null)
+                return new ClientSessionData();
 
             string token = null;
             var graphicMenu = graphicMenus.FirstOrDefault();

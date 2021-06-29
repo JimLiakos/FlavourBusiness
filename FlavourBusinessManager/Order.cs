@@ -1,6 +1,7 @@
 using FlavourBusinessFacade.RoomService;
 using MenuModel;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,77 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
-   
 
+        /// <exclude>Excluded</exclude>
+        double _DurationInMinutes;
+
+        /// <MetaDataID>{73175278-0c8f-45cd-a78f-3c49557633cb}</MetaDataID>
+        [PersistentMember(nameof(_DurationInMinutes))]
+        [BackwardCompatibilityID("+7")]
+        public double DurationInMinutes
+        {
+            get => _DurationInMinutes;
+            set
+            {
+
+                if (_DurationInMinutes != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DurationInMinutes = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+        /// <exclude>Excluded</exclude>
+        string _MealCourseTypeUri;
+
+        /// <MetaDataID>{dbf7beba-2251-433e-80cc-9052b24a0189}</MetaDataID>
+        [PersistentMember(nameof(_MealCourseTypeUri))]
+        [BackwardCompatibilityID("+6")]
+        public string MealCourseTypeUri
+        {
+            get => _MealCourseTypeUri;
+            set
+            {
+
+                if (_MealCourseTypeUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MealCourseTypeUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _Name;
+
+        /// <MetaDataID>{8b2a7043-450a-4ff3-825a-f505a07ffd2d}</MetaDataID>
+        [PersistentMember(nameof(_Name))]
+        [BackwardCompatibilityID("+5")]
+        public string Name
+        {
+            get => _Name;
+            set
+            {
+                if (_Name != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Name = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{22f12ba9-4c26-4197-ad51-92b7981d601a}</MetaDataID>
         protected MealCourse()
         {
 
@@ -29,8 +99,9 @@ namespace FlavourBusinessManager.RoomService
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _FoodItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();
 
         /// <MetaDataID>{1f941000-ce6f-4ec6-85f6-736ad57cf9a6}</MetaDataID>
+        [PersistentMember(nameof(_FoodItems))]
         [BackwardCompatibilityID("+1")]
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
+        public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
 
         /// <exclude>Excluded</exclude>
@@ -62,11 +133,16 @@ namespace FlavourBusinessManager.RoomService
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        /// <MetaDataID>{7b6700b2-c8a4-4548-be19-657614416518}</MetaDataID>
         private MealCourseType mealCourseType;
 
+        /// <MetaDataID>{e6899983-8b85-4e28-84f4-8a8199511318}</MetaDataID>
         public MealCourse(MealCourseType mealCourseType, List<ItemPreparation> itemPreparations)
         {
             this.mealCourseType = mealCourseType;
+            _MealCourseTypeUri = ObjectStorage.GetStorageOfObject(mealCourseType).GetPersistentObjectUri(mealCourseType);
+            _DurationInMinutes = mealCourseType.DurationInMinutes;
+            _Name = mealCourseType.Name;
             foreach (var itemPreparation in itemPreparations)
                 AddItem(itemPreparation);
         }
