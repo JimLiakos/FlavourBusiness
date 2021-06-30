@@ -7,6 +7,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
     public interface IPreparationStation
     {
+        [RoleAMultiplicityRange(0)]
+        [Association("PreparationStationPrepareFor", Roles.RoleA, "d953fcd5-84d0-429b-a436-09c0bfa66a5a")]
+        List<IPrepareFortInfo1> PrepareFortInfos { get; }
+
         /// <MetaDataID>{71851174-e519-466b-a801-8fac2fa6501e}</MetaDataID>
         void RemovePreparationInfo(IItemsPreparationInfo itemsInfoObjectUri);
 

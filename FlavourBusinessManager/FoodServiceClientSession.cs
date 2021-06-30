@@ -1225,8 +1225,8 @@ namespace FlavourBusinessManager.EndUsers
                             clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
                     }
                     flavourItem.State = ItemPreparationState.Canceled;
-                    foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                        preparationStation.OnPreparationItemChangeState(flavourItem);
+                    //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                    //    preparationStation.OnPreparationItemChangeState(flavourItem);
                 }
                 ObjectChangeState?.Invoke(this, nameof(FlavourItems));
 
@@ -1274,8 +1274,8 @@ namespace FlavourBusinessManager.EndUsers
                         if (_FlavourItems.Where(x => x.State == ItemPreparationState.New).Count() > 0)
                             CatchStateEvents();
 
-                        foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                            preparationStation.OnPreparationItemChangeState(existingItem);
+                        //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                        //    preparationStation.OnPreparationItemChangeState(existingItem);
                     }
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
@@ -1340,8 +1340,8 @@ namespace FlavourBusinessManager.EndUsers
 
                 CatchStateEvents();
 
-                foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                    preparationStation.OnPreparationItemChangeState(flavourItem);
+                //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                //    preparationStation.OnPreparationItemChangeState(flavourItem);
 
 
 

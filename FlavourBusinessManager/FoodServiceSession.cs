@@ -272,7 +272,6 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{1b995301-4937-4889-a8b1-be54049ff16e}</MetaDataID>
         private void CreateAndInitMeal()
-        
         {
 
 

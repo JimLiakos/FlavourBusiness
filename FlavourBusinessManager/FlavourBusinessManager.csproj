@@ -291,6 +291,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="PreparationStationRuntime.cs" />
+    <Compile Include="PrepareFortInfo.cs" />
     <Compile Include="PrepartionStation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -106,9 +106,6 @@ namespace FlavourBusinessManager.RoomService
 
                 stateTransition.Consistent = true;
             }
-
-
-
         }
         /// <MetaDataID>{4a767f54-cf13-46d7-8efd-7763ffcd80af}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]

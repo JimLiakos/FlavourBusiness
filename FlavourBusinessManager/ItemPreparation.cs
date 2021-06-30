@@ -123,6 +123,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
         /// <MetaDataID>{b1d5d07f-80ed-4028-9238-bed638d7dd1f}</MetaDataID>
         public ItemPreparation()
         {

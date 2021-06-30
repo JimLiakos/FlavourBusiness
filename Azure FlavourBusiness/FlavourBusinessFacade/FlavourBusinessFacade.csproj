@@ -64,6 +64,8 @@
     <Compile Include="IMessageConsumer.cs" />
     <Compile Include="HumanResources\IServiceContextSupervisor.cs" />
     <Compile Include="IParty.cs" />
+    <Compile Include="IPrepareFortInfo.cs" />
+    <Compile Include="IPrepartionStation.cs" />
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />
     <Compile Include="IUser.cs" />
@@ -88,7 +90,6 @@
     <Compile Include="IOptionChange.cs" />
     <Compile Include="IOrganization.cs" />
     <Compile Include="IPreparationStationRuntime.cs" />
-    <Compile Include="IPrepartionStation.cs" />
     <Compile Include="IServiceArea.cs" />
     <Compile Include="IServicePoint.cs" />
     <Compile Include="ISignUpUser.cs" />

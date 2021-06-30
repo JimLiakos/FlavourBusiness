@@ -50,18 +50,18 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(701, 762)
+			location   	(695, 762)
 			fill_color 	13434879
 			anchor_loc 	3
 			nlines     	2
-			max_width  	230
+			max_width  	255
 			label      	"FlavourBusinessManager")
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5A71E29001B9"
-		    width      	416
-		    width      	416
+		    width      	462
+		    width      	462
 		    height     	162)
 		(object InterfaceView "Logical View::FlavourBusinessFacade::IOrganization" @2
 		    location   	(839, 213)
