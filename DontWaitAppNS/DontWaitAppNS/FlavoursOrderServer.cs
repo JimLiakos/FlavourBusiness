@@ -1630,7 +1630,7 @@ namespace DontWaitApp
             Dictionary<string, ItemPreparationState> itemsNewState = null;
 
             //if (!WaiterView)
-                itemsNewState = this.FoodServiceClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            itemsNewState = this.FoodServiceClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
             //else
             //    itemsNewState = this.FoodServiceClientSession.Prepare(OrderItems.OfType<IItemPreparation>().ToList());
 
@@ -1639,7 +1639,7 @@ namespace DontWaitApp
                 var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
                 item.State = item.State;
             }
-            return false;
+            return true;
         }
 
         /// <MetaDataID>{11b11a15-ce5b-4d4f-aaaf-ff6e6427b9f1}</MetaDataID>

@@ -179,8 +179,6 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     if(mealValidationDelaySessionState)
                         MealValidationDelayRun();
-                    
-
                 }
             }
             else
@@ -205,8 +203,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 if (SessionState == SessionState.MealValidationDelay)
                 {
-                    SessionState = SessionState.MealMonitoring;
-                    CreateAndInitMeal();
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        SessionState = SessionState.MealMonitoring;
+                        CreateAndInitMeal(); 
+                        stateTransition.Consistent = true;
+                    }
+
                 }
             });
         }
@@ -392,6 +396,13 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var partialSession in PartialClientSessions)
                 partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
+
+            if (this.SessionState == SessionState.MealValidationDelay)
+                MealValidationDelayRun();
+            else
+                StateMachineMonitoring();
+
+           
 
         }
 
