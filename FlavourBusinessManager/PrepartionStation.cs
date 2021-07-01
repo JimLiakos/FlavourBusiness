@@ -159,7 +159,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-
+        public List<IPreparationForInfo> PreparationForInfos => throw new NotImplementedException();
 
         public event ObjectChangeStateHandle ObjectChangeState;
         ///// <MetaDataID>{bbe32c62-0fef-4c53-b119-7a88a70c3277}</MetaDataID>
@@ -310,6 +310,16 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
+        }
+
+        public void RemovePreparationForInfo(IPreparationForInfo PreparationForInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPreparationForInfo NewPreparationForInfo(string servicePointsInfoObjectUri, PreparationForInfoType PreparationForInfoType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

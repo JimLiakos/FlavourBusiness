@@ -131,9 +131,11 @@ namespace FLBManager.ViewModel
 
                     foreach (var serviceArea in ServiceContextResources.ServiceAreas)
                         ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this,this));
-
+                    while (this.Company.RestaurantMenus == null)
+                    {
+                        System.Threading.Thread.Sleep(1000);
+                    }
                     InfrastructureTreeNode = new InfrastructureTreeNode(this);
-
                     StaffTreeNode = new StaffTreeNode(this);
 
                     //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));

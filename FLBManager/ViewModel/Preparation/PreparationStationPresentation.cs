@@ -30,8 +30,8 @@ namespace FLBManager.ViewModel.Preparation
                                          }).ToList();
 
             var itemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                                where itemsInfoEntry.@object == itemsCategory && (itemsInfoEntry.ItemsPreparationInfo.Included() || itemsInfoEntry.ItemsPreparationInfo.PreparationTime())
-                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+                                        where itemsInfoEntry.@object == itemsCategory && (itemsInfoEntry.ItemsPreparationInfo.Included() || itemsInfoEntry.ItemsPreparationInfo.PreparationTime())
+                                        select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
 
             if (itemsPreparationInfo != null)
             {
@@ -70,8 +70,8 @@ namespace FLBManager.ViewModel.Preparation
                                          }).ToList();
 
             var itemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                                where itemsInfoEntry.@object == menuItem 
-                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+                                        where itemsInfoEntry.@object == menuItem
+                                        select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
 
             if (itemsPreparationInfo != null)
             {
@@ -283,7 +283,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (excludedItemsPreparationInfo.PreparationTime())
                 {
                     excludedItemsPreparationInfo.ItemsPreparationInfoType = ItemsPreparationInfoType.PreparationTime;
-                    if(!StationPrepareItem(menuItem))
+                    if (!StationPrepareItem(menuItem))
                         excludedItemsPreparationInfo.ItemsPreparationInfoType = ItemsPreparationInfoType.Include | ItemsPreparationInfoType.PreparationTime;
                 }
                 else
@@ -311,7 +311,7 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
 
-    
+
         }
 
         public void ExcludeItems(MenuModel.IItemsCategory itemsCategory)
@@ -388,7 +388,7 @@ namespace FLBManager.ViewModel.Preparation
                                              }).ToList();
 
                 var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                                    where itemsInfoEntry.@object == menuItem 
+                                                    where itemsInfoEntry.@object == menuItem
                                                     select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
 
                 if (includedItemsPreparationInfo != null)
@@ -396,7 +396,7 @@ namespace FLBManager.ViewModel.Preparation
                     this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
                     ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
                 }
-                if(StationPrepareItem(menuItem))
+                if (StationPrepareItem(menuItem))
                 {
 
                     string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
@@ -506,7 +506,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
-        public bool StationPrepareForServicePoint(MenuModel.IMenuItem menuItem)
+        public bool StationPrepareForServicePoint(IServicePoint menuItem)
         {
 
             var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
@@ -559,45 +559,18 @@ namespace FLBManager.ViewModel.Preparation
         {
 
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-                                         select new
-                                         {
-                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsPreparationInfo = itemsInfo
-                                         }).ToList();
-
-            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            foreach (var servicePointsPreparationInfoEntry in ServicePointsPreparationInfos)
             {
-                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+                if (servicePointsPreparationInfoEntry.ServiceArea == serviceArea)
                 {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                    if (servicePointsPreparationInfoEntry.Included())
                         return true;
                     else
                         return false;
 
                 }
             }
-
-
-
-            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
-            {
-                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-                var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
-                if (@object is MenuModel.IItemsCategory)
-                {
-                    var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
-                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
-                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
-
-                    if (itemsCategoryOrParent == itemsPreparationInfoCategory)
-                        return true;
-
-                }
-            }
             return false;
-
         }
 
 
@@ -610,7 +583,7 @@ namespace FLBManager.ViewModel.Preparation
             PreparationSations = parent;
             PreparationStation = preparationStation;
             ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
-            
+
 
 
             RenameCommand = new RelayCommand((object sender) =>
@@ -689,7 +662,7 @@ namespace FLBManager.ViewModel.Preparation
                 var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
                 Views.Preparation.PreparationStationItemsPage preparationStationItemsPage = new Views.Preparation.PreparationStationItemsPage();
                 preparationStationItemsPage.GetObjectContext().SetContextInstance(this);
-                
+
                 frame.ShowDialogPage(preparationStationItemsPage);
                 stateTransition.Consistent = true;
             }
@@ -872,8 +845,8 @@ namespace FLBManager.ViewModel.Preparation
                     PreparationStationItems = new ItemsPreparationInfoPresentation(this, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), false);
                     PreparationStationItems.IsNodeExpanded = true;
                     PreparationStationItems.CheckBoxVisibility = Visibility.Collapsed;
-                    
-                    
+
+
                 }
 
                 return PreparationStationItems.Members;
@@ -992,198 +965,20 @@ namespace FLBManager.ViewModel.Preparation
 
     }
 
-    //class mms
-    //{
-    //    public void ExcludeServicePoints(IServiceArea serviceArea)
-    //    {
 
+    static class ServicePointsPreparationInfoPresentationTypeExtension
+    {
 
-    //        if (StationPrepareItems(itemsCategory))
-    //        {
+        public static bool Included(this IPreparationForInfo preparationForInfo)
+        {
+            return (preparationForInfo.PreparationForInfoType & PreparationForInfoType.Include) == PreparationForInfoType.Include;
+        }
 
+        public static bool Excluded(this IPreparationForInfo preparationForInfo)
+        {
+            return (preparationForInfo.PreparationForInfoType & PreparationForInfoType.Exclude) == PreparationForInfoType.Exclude;
 
-    //            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-    //                                         select new
-    //                                         {
-    //                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-    //                                             ItemsPreparationInfo = itemsInfo
-    //                                         }).ToList();
+        }
 
-    //            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-    //                                                where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPreparationInfo.Included()
-    //                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
-
-    //            if (includedItemsPreparationInfo != null)
-    //            {
-    //                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
-    //                ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
-    //            }
-    //            else
-    //            {
-
-    //                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-    //                var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
-
-    //                ItemsPreparationInfos.Add(itemsPreparationInfo);
-    //                //var sdd = itemsPreparationInfo.Exclude;
-    //            }
-
-    //            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-    //                itemsPreparationInfoPresentation.Refresh();
-
-    //        }
-    //        else
-    //        {
-    //            List<IItemsPreparationInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsPreparationInfos(itemsCategory);
-    //            if (uselessDescendantItemsPreparationInfos.Count > 0)
-    //            {
-    //                // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
-    //                PreparationStation.RemovePreparationInfos(uselessDescendantItemsPreparationInfos);
-    //                ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
-    //            }
-    //            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-    //                itemsPreparationInfoPresentation.Refresh();
-
-
-    //        }
-
-    //        if (PreparationStationItems != null)
-    //            PreparationStationItems.Refresh();
-    //        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-    //        //foreach (var member in _Members.OfType<ItemsPreparationInfoPresentation>())
-    //        //    member.Refresh();
-    //    }
-    //    public void ExcludeServicePoint(IServicePoint servicePoint)
-    //    {
-
-    //        if (StationPrepareItem(menuItem))
-    //        {
-
-
-    //            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-    //                                         select new
-    //                                         {
-    //                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-    //                                             ItemsPreparationInfo = itemsInfo
-    //                                         }).ToList();
-
-    //            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-    //                                                where itemsInfoEntry.@object == menuItem
-    //                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
-
-    //            if (includedItemsPreparationInfo != null)
-    //            {
-    //                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
-    //                ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
-    //            }
-    //            if (StationPrepareItem(menuItem))
-    //            {
-
-    //                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-    //                var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
-    //                this.ItemsPreparationInfos.Add(itemsPreparationInfo);
-    //            }
-
-    //            if (PreparationStationItems != null)
-    //                PreparationStationItems.Refresh();
-    //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-    //        }
-    //    }
-
-    //    public bool StationPrepareForServicePonts(IServiceArea serviceArea)
-    //    {
-
-
-    //        var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-    //                                     select new
-    //                                     {
-    //                                         ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-    //                                         @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-    //                                         ItemsPreparationInfo = itemsInfo
-    //                                     }).ToList();
-
-    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
-    //        {
-    //            if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
-    //            {
-    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
-    //                    return true;
-    //                else
-    //                    return false;
-
-    //            }
-    //        }
-
-
-
-    //        foreach (var itemsPreparationInfo in ItemsPreparationInfos)
-    //        {
-    //            MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-    //            var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
-    //            if (@object is MenuModel.IItemsCategory)
-    //            {
-    //                var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
-    //                while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
-    //                    itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
-
-    //                if (itemsCategoryOrParent == itemsPreparationInfoCategory)
-    //                    return true;
-
-    //            }
-    //        }
-    //        return false;
-
-    //    }
-
-    //    public  bool StationPrepareForServicePont(IServicePoint  servicePoint)
-
-    //    {
-
-    //        var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-    //                                     select new
-    //                                     {
-    //                                         @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-    //                                         ItemsPreparationInfo = itemsInfo
-    //                                     }).ToList();
-
-    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
-    //        {
-    //            if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
-    //            {
-    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
-    //                    return true;
-    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
-    //                    return false;
-
-    //            }
-    //        }
-
-    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
-    //        {
-    //            if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
-    //            {
-    //                MenuModel.IItemsCategory itemsCategory = null;
-    //                var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
-    //                if (menuItem is MenuModel.IClassified)
-    //                {
-    //                    itemsCategory = (menuItem as MenuModel.IClassified).Class as MenuModel.ItemsCategory;
-
-    //                    if (StationPrepareItems(itemsCategory))
-    //                        return true;
-    //                    else
-    //                        return false;
-
-    //                    //while (itemsCategory != null && itemsCategory != itemsPreparationInfoCategory)
-    //                    //    itemsCategory = itemsCategory.Class as MenuModel.IItemsCategory;
-
-    //                    //if (itemsCategory == itemsPreparationInfoCategory)
-    //                    //    return true;
-    //                }
-    //            }
-    //        }
-    //        return false;
-
-    //    }
-
-    //}
+    }
 }

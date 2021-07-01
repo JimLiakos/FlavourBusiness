@@ -5,6 +5,9 @@ using System.Linq;
 using FlavourBusinessFacade.ServicesContextResources;
 using System.Text;
 using System.Threading.Tasks;
+using WPFUIElementObjectBind;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace FLBManager.ViewModel.Preparation
 {
@@ -14,7 +17,8 @@ namespace FLBManager.ViewModel.Preparation
         public readonly IPreparationForInfo ServicePointsPreparationInfo;
         PreparationStationPresentation PreparationStationPresentation;
         //ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
-        IServicePoint MenuItem;
+        internal IServiceArea ServiceArea;
+        IServicePoint ServicePoint;
 
 
         public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
@@ -22,8 +26,7 @@ namespace FLBManager.ViewModel.Preparation
             SelectionCheckBox = selectionCheckBox;
             ServicePointsPreparationInfo = servicePointsPreparationInfo;
             PreparationStationPresentation = parent;
-            var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
-            ItemsCategory = @object as MenuModel.IItemsCategory;
+            ServiceArea = servicePointsPreparationInfo.ServiceArea;
 
             DeleteCommand = new RelayCommand((object sender) =>
             {
@@ -34,61 +37,35 @@ namespace FLBManager.ViewModel.Preparation
         }
 
         bool SelectionCheckBox;
-        public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IItemsCategory itemsCategory, bool selectionCheckBox) : base(parent)
-        {
-            SelectionCheckBox = selectionCheckBox;
-            PreparationStationPresentation = preparationStationPresentation;
-
-            ItemsPreparationInfoTreeNode = parent;
-            ItemsCategory = itemsCategory;
-
-            DeleteCommand = new RelayCommand((object sender) =>
-            {
-                Delete();
-            });
-
-            CheckBoxVisibility = System.Windows.Visibility.Visible;
-        }
-
-        public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IMenuItem menuItem, bool selectionCheckBox) : base(parent)
-        {
-            SelectionCheckBox = selectionCheckBox;
-            PreparationStationPresentation = preparationStationPresentation;
-            ItemsPreparationInfoTreeNode = parent;
-            MenuItem = menuItem;
-
-            DeleteCommand = new RelayCommand((object sender) =>
-            {
-                Delete();
-            });
-
-        }
-
-
-        ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation> SubCategories = new ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation>();
-        ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation> MenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation>();
-
-
-        ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation> MultiSelectSubCategories = new ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation>();
-        ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation> MultiSelectMenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation>();
 
 
 
-        public bool HasItemsToPrepared
+
+
+        ViewModelWrappers<IServicePoint,ServicePointsPreparationInfoPresentation> ServicePoints = new ViewModelWrappers<IServicePoint, ServicePointsPreparationInfoPresentation>();
+
+
+        
+        
+
+
+
+        public bool HasServicePoints
         {
             get
             {
-                if (this.ItemsCategory != null && this.PreparationStationPresentation.StationPrepareItems(this.ItemsCategory))
+                if (this.ServiceArea != null && this.PreparationStationPresentation.StationPrepareForServicePoints(this.ServiceArea))
                     return true;
-                else if (this.MenuItem != null && this.PreparationStationPresentation.StationPrepareItem(this.MenuItem))
+                else if (this.ServicePoint != null && this.PreparationStationPresentation.StationPrepareForServicePoint(this.ServicePoint))
                     return true;
                 else
                 {
-                    if (ItemsCategory != null)
+                    if (ServiceArea != null)
                     {
-                        var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
+                        var itemsPreparationInfosPresentations = (from subCategory in ServiceArea.ServicePoints
+
                                                                   select MultiSelectSubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, SelectionCheckBox)).Union(
-                             (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
+                             (from menuItem in ServiceArea.ClassifiedItems.OfType<MenuModel.MenuItem>()
                               select MultiSelectMenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
                         var members = (from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
@@ -110,8 +87,8 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
 
-                if (this.ItemsCategory != null)
-                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory);
+                if (this.ServiceArea != null)
+                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ServiceArea);
 
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
@@ -122,8 +99,8 @@ namespace FLBManager.ViewModel.Preparation
             set
             {
 
-                if (this.ItemsCategory != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
+                if (this.ServiceArea != null)
+                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ServiceArea, value);
 
                 if (this.MenuItem != null)
                     this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
@@ -134,7 +111,7 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                if (this.ItemsCategory != null && this.PreparationStationPresentation.StationPrepareItems(this.ItemsCategory))
+                if (this.ServiceArea != null && this.PreparationStationPresentation.StationPrepareItems(this.ServiceArea))
                     return true;
                 else if (this.MenuItem != null && this.PreparationStationPresentation.StationPrepareItem(this.MenuItem))
                     return true;
@@ -143,11 +120,11 @@ namespace FLBManager.ViewModel.Preparation
             }
             set
             {
-                if (value && ItemsCategory != null)
-                    this.PreparationStationPresentation.IncludeItems(ItemsCategory);
+                if (value && ServiceArea != null)
+                    this.PreparationStationPresentation.IncludeItems(ServiceArea);
 
-                if (!value && ItemsCategory != null)
-                    this.PreparationStationPresentation.ExcludeItems(ItemsCategory);
+                if (!value && ServiceArea != null)
+                    this.PreparationStationPresentation.ExcludeItems(ServiceArea);
 
 
                 if (value && MenuItem != null)
@@ -168,24 +145,24 @@ namespace FLBManager.ViewModel.Preparation
         }
         private void Delete()
         {
-            if (ItemsCategory != null)
-                PreparationStationPresentation.ExcludeServicePoints(ItemsCategory);
+            if (ServiceArea != null)
+                PreparationStationPresentation.ExcludeServicePoints(ServiceArea);
 
-            if (this.MenuItem != null)
-                PreparationStationPresentation.ExcludeServicePoint(MenuItem);
+            if (this.ServicePoint != null)
+                PreparationStationPresentation.ExcludeServicePoint(ServicePoint);
 
         }
 
-        internal IServiceArea ItemsCategory;
+        
 
         public override string Name
         {
             get
             {
-                if (ItemsCategory != null)
-                    return ItemsCategory.Name;
-                else if (this.MenuItem != null)
-                    return this.MenuItem.Name;
+                if (ServiceArea != null)
+                    return ServiceArea.Description;
+                else if (this.ServicePoint != null)
+                    return this.ServicePoint.Description;
                 else
                     return "";
             }
@@ -200,7 +177,7 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                if (ItemsCategory != null)
+                if (ServiceArea != null)
                     return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/category16.png"));
                 else if (this.MenuItem != null)
                     return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/MenuItem16.png"));
@@ -214,14 +191,14 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
 
-                if (ItemsCategory != null)
+                if (ServiceArea != null)
                 {
 
                     if (SelectionCheckBox)
                     {
-                        var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
+                        var itemsPreparationInfosPresentations = (from subCategory in ServiceArea.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
                                                                   select MultiSelectSubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, SelectionCheckBox)).Union(
-                           (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
+                           (from menuItem in ServiceArea.ClassifiedItems.OfType<MenuModel.MenuItem>()
                             select MultiSelectMenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
                         var members = (from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
@@ -230,9 +207,9 @@ namespace FLBManager.ViewModel.Preparation
                     }
                     else
                     {
-                        var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
+                        var itemsPreparationInfosPresentations = (from subCategory in ServiceArea.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
                                                                   select SubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, SelectionCheckBox)).Union(
-                           (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
+                           (from menuItem in ServiceArea.ClassifiedItems.OfType<MenuModel.MenuItem>()
                             select MenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
                         var members = (from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations

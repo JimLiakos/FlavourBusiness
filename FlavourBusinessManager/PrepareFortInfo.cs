@@ -86,5 +86,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+
+        public IServicePoint ServicePoint { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public IServiceArea ServiceArea { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }
