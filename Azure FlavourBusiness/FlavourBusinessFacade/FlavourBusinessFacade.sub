@@ -172,7 +172,7 @@
 		    quidu      	"609FE471004D")
 		(object Realize_Relationship
 		    quid       	"60DC7D22027D"
-		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo"
+		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo"
 		    quidu      	"60DC7AAC016A"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
@@ -1578,7 +1578,7 @@
 		    client     	@1
 		    supplier   	@78
 		    line_style 	0)
-		(object InterfaceView "Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo" @80
+		(object InterfaceView "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo" @80
 		    location   	(1919, 2553)
 		    font       	(object Font
 			size       	10
@@ -1597,7 +1597,7 @@
 			nlines     	2
 			max_width  	225
 			justify    	0
-			label      	"IPrepareFortInfo")
+			label      	"IPreparationForInfo")
 		    icon       	"Interface"
 		    icon_style 	"Icon"
 		    line_color 	3342489

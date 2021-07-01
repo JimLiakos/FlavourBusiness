@@ -4616,11 +4616,11 @@
 			    quid       	"5D8050E500CD"
 			    parameters 	(list Parameters
 				(object Parameter "itemsInfoObjectUri"
-				    quid       	"5D8050E500DF"
+				    quid       	"60DD39E801B6"
 				    type       	"string")
-				(object Parameter "exclude"
-				    quid       	"5D8050E500F1"
-				    type       	"bool"))
+				(object Parameter "itemsPreparationInfoType"
+				    quid       	"60DD39E801DF"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.ItemsPreparationInfoType"))
 			    result     	"FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -4638,7 +4638,7 @@
 			    quid       	"5D8050E50170"
 			    parameters 	(list Parameters
 				(object Parameter "itemsPreparationInfos"
-				    quid       	"5F4A4271026A"
+				    quid       	"60DD39E80221"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -4660,6 +4660,47 @@
 				    quid       	"5F4A42720028"
 				    type       	"MenuModel.IMenuItem"))
 			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemovePreparationForInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e20e36c9-34e7-4d91-8e5e-85399c0566ed}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60DD39E8039E"))
+			    quid       	"60DD39E8039E"
+			    parameters 	(list Parameters
+				(object Parameter "PreparationForInfo"
+				    quid       	"60DD39E803C5"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "NewPreparationForInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{883ddfc5-8927-47fd-b38a-1c9e38e5b6d2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60DD39E90051"))
+			    quid       	"60DD39E90051"
+			    parameters 	(list Parameters
+				(object Parameter "servicePointsInfoObjectUri"
+				    quid       	"60DD3A2500B6"
+				    type       	"string")
+				(object Parameter "PreparationForInfoType"
+				    quid       	"60DD3A2500E2"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.PreparationForInfoType"))
+			    result     	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -5220,7 +5261,7 @@
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
-		(object Class "IPrepareFortInfo"
+		(object Class "IPreparationForInfo"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -5274,40 +5315,7 @@
 			    quid       	"60DC7C1603AD"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "ServicePointsInfoObjectUri"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{aa2ebf0f-9572-4ddb-bd49-96d35396fae3}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"60DC7C1603B2")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+2"))
-			    quid       	"60DC7C1603B2"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "PrepareFortInfoType"
+			(object ClassAttribute "PreparationForInfoType"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -5338,7 +5346,57 @@
 				    name       	"Identity"
 				    value      	"+3"))
 			    quid       	"60DC86FC0117"
-			    type       	"PrepareFortInfoType"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.PreparationForInfoType"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicePoint"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cce994cf-adec-4111-9eb8-574bedf97071}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60DD444E0202")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"60DD444E0202"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServiceArea"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{932ddd16-664e-4493-85c6-5c658cf71011}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60DD444E025F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"60DD444E025F"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.IServiceArea"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -6748,7 +6806,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	9
+				nlines     	11
 				max_width  	662)
 			    width      	675
 			    height     	325
@@ -7429,7 +7487,7 @@
 			    width      	712
 			    height     	287
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo" @66
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo" @66
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3437, 731)
 			    font       	(object Font
@@ -7449,7 +7507,7 @@
 				nlines     	1
 				max_width  	632
 				justify    	0
-				label      	"IPrepareFortInfo")
+				label      	"IPreparationForInfo")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
@@ -9373,7 +9431,7 @@
 				    supplier   	"$UNNAMED$14"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, string, FlavourBusinessFacade.IUser, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+					(object Message "GetClientSession(          )"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -9395,7 +9453,7 @@
 				    supplier   	"$UNNAMED$13"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+					(object Message "GetClientSession(       )"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -9417,7 +9475,7 @@
 				    supplier   	"$UNNAMED$15"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+					(object Message "GetFoodServiceClientSession(       )"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -9448,7 +9506,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+					(object Message "MealInvitation( )"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -10820,7 +10878,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, string, FlavourBusinessFacade.IUser, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+				label      	"GetClientSession(          )"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -10907,7 +10965,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+				label      	"GetClientSession(       )"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -10994,7 +11052,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+				label      	"GetFoodServiceClientSession(       )"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -11289,7 +11347,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+				label      	"MealInvitation( )"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)

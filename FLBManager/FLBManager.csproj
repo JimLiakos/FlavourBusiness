@@ -178,6 +178,7 @@
     <Compile Include="ViewModel\Preparation\PreparationSattionsTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\PreparationStationPresentation.cs" />
     <Compile Include="ViewModel\Infrastructure\TreasuryTreeNode.cs" />
+    <Compile Include="ViewModel\Preparation\ServicePointsPreparationInfoPresentation.cs" />
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>
     </Compile>

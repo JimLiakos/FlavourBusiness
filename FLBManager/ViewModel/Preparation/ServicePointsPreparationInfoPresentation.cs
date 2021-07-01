@@ -2,31 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using FlavourBusinessFacade.ServicesContextResources;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using FlavourBusinessFacade.ServicesContextResources;
-using MenuModel;
-using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.Preparation
 {
-    /// <MetaDataID>{6cb20dd9-745b-4737-82d2-f6b4f1bff1ce}</MetaDataID>
-    public class ItemsPreparationInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
+    public class ServicePointsPreparationInfoPresentation: FBResourceTreeNode, INotifyPropertyChanged
     {
-        
 
-        public readonly IItemsPreparationInfo ItemsPreparationInfo;
+        public readonly IPreparationForInfo ServicePointsPreparationInfo;
         PreparationStationPresentation PreparationStationPresentation;
-        ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
-        IMenuItem MenuItem;
+        //ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
+        IServicePoint MenuItem;
 
 
-        public ItemsPreparationInfoPresentation(PreparationStationPresentation parent, IItemsPreparationInfo itemsPreparationInfo, bool selectionCheckBox) : base(parent)
+        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
-            ItemsPreparationInfo = itemsPreparationInfo;
+            ServicePointsPreparationInfo = servicePointsPreparationInfo;
             PreparationStationPresentation = parent;
             var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
             ItemsCategory = @object as MenuModel.IItemsCategory;
@@ -116,8 +110,8 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
 
-                if (this.ItemsCategory !=null)
-                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory) ;
+                if (this.ItemsCategory != null)
+                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory);
 
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
@@ -125,14 +119,14 @@ namespace FLBManager.ViewModel.Preparation
                 return 1;
 
             }
-            set 
+            set
             {
 
                 if (this.ItemsCategory != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory,value);
+                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
 
                 if (this.MenuItem != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem,value);
+                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
             }
         }
 
@@ -175,14 +169,14 @@ namespace FLBManager.ViewModel.Preparation
         private void Delete()
         {
             if (ItemsCategory != null)
-                PreparationStationPresentation.ExcludeItems(ItemsCategory);
+                PreparationStationPresentation.ExcludeServicePoints(ItemsCategory);
 
             if (this.MenuItem != null)
-                PreparationStationPresentation.ExcludeItem(MenuItem);
+                PreparationStationPresentation.ExcludeServicePoint(MenuItem);
 
         }
 
-        internal MenuModel.IItemsCategory ItemsCategory;
+        internal IServiceArea ItemsCategory;
 
         public override string Name
         {

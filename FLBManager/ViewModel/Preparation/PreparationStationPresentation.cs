@@ -504,6 +504,103 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+
+
+        public bool StationPrepareForServicePoint(MenuModel.IMenuItem menuItem)
+        {
+
+            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
+                {
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                        return true;
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                        return false;
+
+                }
+            }
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
+                {
+                    MenuModel.IItemsCategory itemsCategory = null;
+                    var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
+                    if (menuItem is MenuModel.IClassified)
+                    {
+                        itemsCategory = (menuItem as MenuModel.IClassified).Class as MenuModel.ItemsCategory;
+
+                        if (StationPrepareItems(itemsCategory))
+                            return true;
+                        else
+                            return false;
+
+                        //while (itemsCategory != null && itemsCategory != itemsPreparationInfoCategory)
+                        //    itemsCategory = itemsCategory.Class as MenuModel.IItemsCategory;
+
+                        //if (itemsCategory == itemsPreparationInfoCategory)
+                        //    return true;
+                    }
+                }
+            }
+            return false;
+
+        }
+
+        public bool StationPrepareForServicePoints(IServiceArea serviceArea)
+        {
+
+
+            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+                                         select new
+                                         {
+                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+                {
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                        return true;
+                    else
+                        return false;
+
+                }
+            }
+
+
+
+            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
+            {
+                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
+                var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
+                if (@object is MenuModel.IItemsCategory)
+                {
+                    var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
+                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
+                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
+
+                    if (itemsCategoryOrParent == itemsPreparationInfoCategory)
+                        return true;
+
+                }
+            }
+            return false;
+
+        }
+
+
         public readonly MenuViewModel MenuViewModel;
         public readonly IPreparationStation PreparationStation;
         PreparationSationsTreeNode PreparationSations;
@@ -538,6 +635,8 @@ namespace FLBManager.ViewModel.Preparation
         }
 
         List<IItemsPreparationInfo> ItemsPreparationInfos;
+
+        List<IPreparationForInfo> ServicePointsPreparationInfos;
 
 
         MenuModel.IMenu Menu;
@@ -892,4 +991,199 @@ namespace FLBManager.ViewModel.Preparation
 
 
     }
+
+    //class mms
+    //{
+    //    public void ExcludeServicePoints(IServiceArea serviceArea)
+    //    {
+
+
+    //        if (StationPrepareItems(itemsCategory))
+    //        {
+
+
+    //            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+    //                                         select new
+    //                                         {
+    //                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+    //                                             ItemsPreparationInfo = itemsInfo
+    //                                         }).ToList();
+
+    //            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+    //                                                where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPreparationInfo.Included()
+    //                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+    //            if (includedItemsPreparationInfo != null)
+    //            {
+    //                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
+    //                ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
+    //            }
+    //            else
+    //            {
+
+    //                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+    //                var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
+
+    //                ItemsPreparationInfos.Add(itemsPreparationInfo);
+    //                //var sdd = itemsPreparationInfo.Exclude;
+    //            }
+
+    //            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+    //                itemsPreparationInfoPresentation.Refresh();
+
+    //        }
+    //        else
+    //        {
+    //            List<IItemsPreparationInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsPreparationInfos(itemsCategory);
+    //            if (uselessDescendantItemsPreparationInfos.Count > 0)
+    //            {
+    //                // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
+    //                PreparationStation.RemovePreparationInfos(uselessDescendantItemsPreparationInfos);
+    //                ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
+    //            }
+    //            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+    //                itemsPreparationInfoPresentation.Refresh();
+
+
+    //        }
+
+    //        if (PreparationStationItems != null)
+    //            PreparationStationItems.Refresh();
+    //        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+    //        //foreach (var member in _Members.OfType<ItemsPreparationInfoPresentation>())
+    //        //    member.Refresh();
+    //    }
+    //    public void ExcludeServicePoint(IServicePoint servicePoint)
+    //    {
+
+    //        if (StationPrepareItem(menuItem))
+    //        {
+
+
+    //            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+    //                                         select new
+    //                                         {
+    //                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+    //                                             ItemsPreparationInfo = itemsInfo
+    //                                         }).ToList();
+
+    //            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+    //                                                where itemsInfoEntry.@object == menuItem
+    //                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+    //            if (includedItemsPreparationInfo != null)
+    //            {
+    //                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
+    //                ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
+    //            }
+    //            if (StationPrepareItem(menuItem))
+    //            {
+
+    //                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+    //                var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
+    //                this.ItemsPreparationInfos.Add(itemsPreparationInfo);
+    //            }
+
+    //            if (PreparationStationItems != null)
+    //                PreparationStationItems.Refresh();
+    //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+    //        }
+    //    }
+
+    //    public bool StationPrepareForServicePonts(IServiceArea serviceArea)
+    //    {
+
+
+    //        var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+    //                                     select new
+    //                                     {
+    //                                         ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+    //                                         @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+    //                                         ItemsPreparationInfo = itemsInfo
+    //                                     }).ToList();
+
+    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+    //        {
+    //            if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+    //            {
+    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+    //                    return true;
+    //                else
+    //                    return false;
+
+    //            }
+    //        }
+
+
+
+    //        foreach (var itemsPreparationInfo in ItemsPreparationInfos)
+    //        {
+    //            MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
+    //            var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
+    //            if (@object is MenuModel.IItemsCategory)
+    //            {
+    //                var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
+    //                while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
+    //                    itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
+
+    //                if (itemsCategoryOrParent == itemsPreparationInfoCategory)
+    //                    return true;
+
+    //            }
+    //        }
+    //        return false;
+
+    //    }
+
+    //    public  bool StationPrepareForServicePont(IServicePoint  servicePoint)
+
+    //    {
+
+    //        var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+    //                                     select new
+    //                                     {
+    //                                         @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+    //                                         ItemsPreparationInfo = itemsInfo
+    //                                     }).ToList();
+
+    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+    //        {
+    //            if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
+    //            {
+    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+    //                    return true;
+    //                if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+    //                    return false;
+
+    //            }
+    //        }
+
+    //        foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+    //        {
+    //            if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
+    //            {
+    //                MenuModel.IItemsCategory itemsCategory = null;
+    //                var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
+    //                if (menuItem is MenuModel.IClassified)
+    //                {
+    //                    itemsCategory = (menuItem as MenuModel.IClassified).Class as MenuModel.ItemsCategory;
+
+    //                    if (StationPrepareItems(itemsCategory))
+    //                        return true;
+    //                    else
+    //                        return false;
+
+    //                    //while (itemsCategory != null && itemsCategory != itemsPreparationInfoCategory)
+    //                    //    itemsCategory = itemsCategory.Class as MenuModel.IItemsCategory;
+
+    //                    //if (itemsCategory == itemsPreparationInfoCategory)
+    //                    //    return true;
+    //                }
+    //            }
+    //        }
+    //        return false;
+
+    //    }
+
+    //}
 }

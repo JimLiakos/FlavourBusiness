@@ -3,11 +3,9 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{c288b0d9-f317-4c09-9b94-1b7de9a43353}</MetaDataID>
-    public interface IPrepareFortInfo
+    public interface IPreparationForInfo
     {
-        /// <MetaDataID>{aa2ebf0f-9572-4ddb-bd49-96d35396fae3}</MetaDataID>
-        [BackwardCompatibilityID("+2")]
-        string ServicePointsInfoObjectUri { get; set; }
+
 
         /// <MetaDataID>{711b696b-9832-4c87-824b-8e4ab45ccf4b}</MetaDataID>
         [BackwardCompatibilityID("+1")]
@@ -16,12 +14,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{3821d45d-204b-4279-b1ef-bedaa77a1105}</MetaDataID>
         [BackwardCompatibilityID("+3")]
-        PrepareFortInfoType PrepareFortInfoType { get; set; }
+        PreparationForInfoType PreparationForInfoType { get; set; }
+
+        /// <MetaDataID>{cce994cf-adec-4111-9eb8-574bedf97071}</MetaDataID>
+        IServicePoint ServicePoint { get; set; }
+
+        /// <MetaDataID>{932ddd16-664e-4493-85c6-5c658cf71011}</MetaDataID>
+        IServiceArea ServiceArea { get; set; }
 
     }
 
     /// <MetaDataID>{2475ef23-7f27-403f-b42b-e05683421dd1}</MetaDataID>
-    public enum PrepareFortInfoType
+    public enum PreparationForInfoType
     {
         Include = 1,
         Exclude = 2

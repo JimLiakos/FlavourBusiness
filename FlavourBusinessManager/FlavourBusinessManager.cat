@@ -7162,8 +7162,24 @@
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
 			    quid       	"60DC88B40122"
-			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo"
+			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo"
 			    quidu      	"60DC7AAC016A"))
+		    operations 	(list Operations
+			(object Operation "PrepareFortInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ceca1c79-04a4-4df9-ab43-e17bc52de5e3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60DD39D8002D"))
+			    quid       	"60DD39D8002D"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "ServicePointsInfoObjectUri"
 			    attributes 	(list Attribute_Set
@@ -7452,7 +7468,7 @@
 			    value      	"d953fcd5-84d0-429b-a436-09c0bfa66a5a"))
 		    quid       	"60DC7B6601E0"
 		    roles      	(list role_list
-			(object Role "PrepareFortInfos"
+			(object Role "PreparationForInfos"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -7461,10 +7477,26 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{b3f4acd2-18b4-48d2-ac0a-fae87ea93790}"))
+				    value      	"{b3f4acd2-18b4-48d2-ac0a-fae87ea93790}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"ContainerClass"
+				    value      	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo>")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"60DC7B6701B2"
-			    label      	"PrepareFortInfos"
-			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo"
+			    label      	"PreparationForInfos"
+			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo"
 			    quidu      	"60DC7AAC016A"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
@@ -7477,7 +7509,15 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{521b5fec-76e5-470b-863f-1848df3b1278}"))
+				    value      	"{521b5fec-76e5-470b-863f-1848df3b1278}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"60DC7B6701B4"
 			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStation"
 			    quidu      	"5D56D11C002D"))))
@@ -9592,7 +9632,7 @@
 			    line_style 	3
 			    origin_attachment 	(3950, 1439)
 			    terminal_attachment 	(3950, 654))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPrepareFortInfo" @133
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationForInfo" @133
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3062, 1025)
 			    font       	(object Font
@@ -9612,7 +9652,7 @@
 				nlines     	2
 				max_width  	632
 				justify    	0
-				label      	"IPrepareFortInfo")
+				label      	"IPreparationForInfo")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
@@ -9665,7 +9705,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	9
+				nlines     	11
 				max_width  	662)
 			    width      	819
 			    height     	425
@@ -10010,7 +10050,7 @@
 			    line_color 	3342489
 			    quidu      	"60DC7B6601E0"
 			    roleview_list 	(list RoleViews
-				(object RoleView "PrepareFortInfos" @152
+				(object RoleView "PreparationForInfos" @152
 				    Parent_View 	@150
 				    location   	(716, 308)
 				    font       	(object Font
@@ -10039,9 +10079,9 @@
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
-					max_width  	337
+					max_width  	385
 					justify    	0
-					label      	"+PrepareFortInfos"
+					label      	"+PreparationForInfos"
 					pctDist    	0.921640
 					height     	118
 					orientation 	0)

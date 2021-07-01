@@ -9,7 +9,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         [RoleAMultiplicityRange(0)]
         [Association("PreparationStationPrepareFor", Roles.RoleA, "d953fcd5-84d0-429b-a436-09c0bfa66a5a")]
-        List<IPrepareFortInfo1> PrepareFortInfos { get; }
+        List<IPreparationForInfo> PreparationForInfos { get; }
 
         /// <MetaDataID>{71851174-e519-466b-a801-8fac2fa6501e}</MetaDataID>
         void RemovePreparationInfo(IItemsPreparationInfo itemsInfoObjectUri);
@@ -37,8 +37,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{0798d4b0-01fc-4cc2-abc5-e63de3dec97d}</MetaDataID>
         IItemsPreparationInfo NewPreparationInfo(string itemsInfoObjectUri, ItemsPreparationInfoType itemsPreparationInfoType);
+        /// <MetaDataID>{e20e36c9-34e7-4d91-8e5e-85399c0566ed}</MetaDataID>
+        void RemovePreparationForInfo(IPreparationForInfo PreparationForInfo);
+
         /// <MetaDataID>{fbea817c-1e40-45d0-a939-deae8a96af4b}</MetaDataID>
         void RemovePreparationInfos(List<IItemsPreparationInfo> itemsPreparationInfos);
+
+        /// <MetaDataID>{883ddfc5-8927-47fd-b38a-1c9e38e5b6d2}</MetaDataID>
+        IPreparationForInfo NewPreparationForInfo(string servicePointsInfoObjectUri, PreparationForInfoType PreparationForInfoType);
 
 
 #if !FlavourBusinessDevice
