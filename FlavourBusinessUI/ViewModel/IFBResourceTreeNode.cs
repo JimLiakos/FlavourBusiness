@@ -11,6 +11,7 @@ namespace FLBManager.ViewModel
     public abstract class FBResourceTreeNode : MarshalByRefObject, INotifyPropertyChanged
     {
 
+        /// <MetaDataID>{db5cf529-d7e1-4ac7-a73c-f2a063b71ee2}</MetaDataID>
         public Dictionary<string, List<FBResourceTreeNode>> FBResourceTreeNodesDictionary = new Dictionary<string, List<FBResourceTreeNode>>();
 
         /// <MetaDataID>{cbaca0ae-61da-4dac-b2b0-6b6361243943}</MetaDataID>

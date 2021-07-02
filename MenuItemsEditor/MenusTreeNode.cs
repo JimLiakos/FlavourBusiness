@@ -11,57 +11,68 @@ namespace MenuItemsEditor
     public interface IMenusTreeNode
     {
 
+        /// <MetaDataID>{0e0b24ab-14bc-4931-9243-a4150f4b6c5c}</MetaDataID>
         IMenusTreeNode Parent { set; get; }
 
+        /// <MetaDataID>{f0291a2d-7418-4b27-89ae-c465f77273ed}</MetaDataID>
         string Name
         {
             get;
             set;
         }
 
+        /// <MetaDataID>{86f26e0e-b4a0-4356-b51c-84cc5dd61498}</MetaDataID>
         bool IsEditable
         {
             get;
         }
 
 
+        /// <MetaDataID>{70879150-6d69-4d7f-a3ef-34a680e8f81c}</MetaDataID>
         bool IsNodeExpanded
         {
             get; set;
         }
 
+        /// <MetaDataID>{d9765d9e-d718-40a7-bc42-9bca31e65341}</MetaDataID>
         System.Windows.Media.ImageSource TreeImage
         {
             get;
         }
 
+        /// <MetaDataID>{c74adff8-12b9-4340-8703-50081db7aa0b}</MetaDataID>
         List<IMenusTreeNode> Members
         {
             get;
         }
 
+        /// <MetaDataID>{1d5d6578-1eca-45cb-8edf-bc1e099716b8}</MetaDataID>
         bool Edit
         {
             get;
             set;
-            
+
         }
 
+        /// <MetaDataID>{7678808c-cc89-4df3-a7b2-6872ef77d61d}</MetaDataID>
         bool IsSelected
         {
-            get;set;
+            get; set;
         }
+        /// <MetaDataID>{4feba61c-ef76-4417-a2c6-236a9689ef16}</MetaDataID>
         bool HasContextMenu
         {
             get;
         }
 
 
+        /// <MetaDataID>{6c7e1203-a053-4ec8-b914-e82ed50d7dab}</MetaDataID>
         List<MenuCommand> ContextMenuItems
         {
             get;
         }
 
+        /// <MetaDataID>{573cbb11-5231-4b31-a732-2b6984e6084a}</MetaDataID>
         List<MenuCommand> SelectedItemContextMenuItems
         {
             get;

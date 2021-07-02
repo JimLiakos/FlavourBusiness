@@ -20,6 +20,7 @@ namespace FLBManager.ViewModel.Preparation
     {
 
 
+        /// <MetaDataID>{6b9f91bf-5517-41e8-917f-d69e56fda1ce}</MetaDataID>
         public void SetPreparationTimeSpanInMin(MenuModel.IItemsCategory itemsCategory, double timeSpanInMinutes)
         {
             var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
@@ -59,6 +60,9 @@ namespace FLBManager.ViewModel.Preparation
 
 
         }
+
+
+        /// <MetaDataID>{006e4e7a-323a-4fe4-a482-2686e3161a60}</MetaDataID>
         public void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
         {
 
@@ -98,6 +102,91 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        internal void ExcludeServicePoint(IServicePoint servicePoint)
+        {
+
+            if (StationPrepareForServicePoint(servicePoint))
+            {
+
+                var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
+                                                    where preparationForInfo.ServicePoint== servicePoint
+                                                    select preparationForInfo).FirstOrDefault();
+
+                if (includedPreparationForInfo != null)
+                {
+                    this.PreparationStation.RemovePreparationForInfo(includedPreparationForInfo);
+                    PreparationForInfos.Remove(includedPreparationForInfo);
+                }
+                if (StationPrepareForServicePoint(servicePoint))
+                {
+
+                    var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint,PreparationForInfoType.Exclude);
+                    this.PreparationForInfos.Add(preparationForInfo);
+                }
+
+                if (PreparationStationItems != null)
+                    PreparationStationItems.Refresh();
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
+        }
+
+        internal void IncludeServicePoint(IServicePoint servicePoint)
+        {
+
+            var excludedpreparationForInfo = (from preparationForInfo in this.PreparationForInfos
+                                                where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude
+                                                select preparationForInfo).FirstOrDefault();
+
+            if (excludedpreparationForInfo != null)
+            {
+                PreparationStation.RemovePreparationForInfo(excludedpreparationForInfo);
+                PreparationForInfos.Remove(excludedpreparationForInfo);
+            }
+
+            if (!StationPrepareForServicePoint(servicePoint))
+            {
+                var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint, PreparationForInfoType.Include);
+                this.PreparationForInfos.Add(preparationForInfo);
+            }
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        }
+
+        internal void ExcludeServicePoints(IServiceArea serviceArea)
+        {
+            var preparationForInfo = (from a_preparationForInfo in this.PreparationForInfos
+                                              where a_preparationForInfo.ServiceArea == serviceArea 
+                                              select a_preparationForInfo).FirstOrDefault();
+            if(preparationForInfo!=null)
+            {
+                PreparationStation.RemovePreparationForInfo(preparationForInfo);
+                PreparationForInfos.Remove(preparationForInfo);
+            }
+        }
+
+        internal void IncludeServicePoints(IServiceArea serviceArea)
+        {
+            var preparationForInfo = (from a_preparationForInfo in this.PreparationForInfos
+                                      where a_preparationForInfo.ServiceArea == serviceArea
+                                      select a_preparationForInfo).FirstOrDefault();
+            if (preparationForInfo != null)
+            {
+                PreparationStation.RemovePreparationForInfo(preparationForInfo);
+                PreparationForInfos.Remove(preparationForInfo);
+            }
+            PreparationStation.NewPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+        }
+
+        internal bool StationPreparesForServicePoint(IServicePoint servicePoint)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool StationPreparesForServicePoints(IServiceArea serviceArea)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{a517dbc7-ab28-48cd-b5a0-a837abed283f}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
             var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
@@ -130,6 +219,7 @@ namespace FLBManager.ViewModel.Preparation
             return 1;
         }
 
+        /// <MetaDataID>{220670a2-1825-44a5-9f02-4e7606ca5cad}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IItemsCategory itemsCategory)
         {
 
@@ -166,6 +256,7 @@ namespace FLBManager.ViewModel.Preparation
             return 1;
         }
 
+        /// <MetaDataID>{c7fd45e3-9319-4c1d-b527-681c49be5379}</MetaDataID>
         public void IncludeItems(MenuModel.IItemsCategory itemsCategory)
         {
 
@@ -212,6 +303,7 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
+        /// <MetaDataID>{15d22889-37d7-4007-b556-ecee6bbf7a82}</MetaDataID>
         private List<IItemsPreparationInfo> GetUselessDescendantItemsPreparationInfos(IItemsCategory itemsCategory)
         {
 
@@ -247,6 +339,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{dcb357c6-c1a2-44fe-a69d-68bc06b726c1}</MetaDataID>
         private bool IsDescendantOfCategory(IItemsCategory itemsCategory, IItemsCategory descendantItemsCategory)
         {
             //if (itemsCategory != null && itemsCategory == descendantItemsCategory)
@@ -264,6 +357,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
+        /// <MetaDataID>{63377565-81e0-438c-b990-1c3924b9c7c4}</MetaDataID>
         public void IncludeItem(MenuModel.IMenuItem menuItem)
         {
 
@@ -314,6 +408,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        /// <MetaDataID>{0f93a279-93d6-41e3-99e9-b629a96b1c39}</MetaDataID>
         public void ExcludeItems(MenuModel.IItemsCategory itemsCategory)
         {
 
@@ -373,6 +468,7 @@ namespace FLBManager.ViewModel.Preparation
             //foreach (var member in _Members.OfType<ItemsPreparationInfoPresentation>())
             //    member.Refresh();
         }
+        /// <MetaDataID>{b2e31bfa-a809-496e-9613-d0b3c166183f}</MetaDataID>
         public void ExcludeItem(MenuModel.IMenuItem menuItem)
         {
 
@@ -410,6 +506,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{112fd3c1-e25f-4e72-9fef-db94ea560622}</MetaDataID>
         public bool StationPrepareItems(MenuModel.IItemsCategory itemsCategory)
         {
 
@@ -455,6 +552,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        /// <MetaDataID>{63fd57ce-f588-45fe-86fd-7625ad1ead3e}</MetaDataID>
         public bool StationPrepareItem(MenuModel.IMenuItem menuItem)
         {
 
@@ -506,77 +604,45 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
-        public bool StationPrepareForServicePoint(IServicePoint menuItem)
+
+        internal bool StationPrepareForServicePoint(IServicePoint servicePoint)
         {
+            var preparationForInfo = PreparationForInfos.Where(x => x.ServicePoint == servicePoint).FirstOrDefault();
+            if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include)
+                return true;
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-                                         select new
-                                         {
-                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsPreparationInfo = itemsInfo
-                                         }).ToList();
+            if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude)
+                return false;
 
-            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
-            {
-                if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
-                {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
-                        return true;
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
-                        return false;
+            preparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == servicePoint.ServiceArea).FirstOrDefault();
 
-                }
-            }
+            if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include)
+                return true;
 
-            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
-            {
-                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
-                {
-                    MenuModel.IItemsCategory itemsCategory = null;
-                    var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
-                    if (menuItem is MenuModel.IClassified)
-                    {
-                        itemsCategory = (menuItem as MenuModel.IClassified).Class as MenuModel.ItemsCategory;
-
-                        if (StationPrepareItems(itemsCategory))
-                            return true;
-                        else
-                            return false;
-
-                        //while (itemsCategory != null && itemsCategory != itemsPreparationInfoCategory)
-                        //    itemsCategory = itemsCategory.Class as MenuModel.IItemsCategory;
-
-                        //if (itemsCategory == itemsPreparationInfoCategory)
-                        //    return true;
-                    }
-                }
-            }
             return false;
+
+
 
         }
 
-        public bool StationPrepareForServicePoints(IServiceArea serviceArea)
+        internal bool StationPrepareForServicePoints(IServiceArea serviceArea)
         {
+            var preparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
 
+            if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include)
+                return true;
 
-            foreach (var servicePointsPreparationInfoEntry in ServicePointsPreparationInfos)
-            {
-                if (servicePointsPreparationInfoEntry.ServiceArea == serviceArea)
-                {
-                    if (servicePointsPreparationInfoEntry.Included())
-                        return true;
-                    else
-                        return false;
-
-                }
-            }
             return false;
         }
 
 
+        /// <MetaDataID>{d7142fdf-dab1-499f-915a-c7ba090641d4}</MetaDataID>
         public readonly MenuViewModel MenuViewModel;
+        /// <MetaDataID>{5ba1cb84-f93d-4d8f-926d-6555579f1880}</MetaDataID>
         public readonly IPreparationStation PreparationStation;
+        /// <MetaDataID>{bbc45666-8ce6-4082-aa83-15c6ee71d3a3}</MetaDataID>
         PreparationSationsTreeNode PreparationSations;
+        /// <MetaDataID>{79641c07-48c0-4b20-a96c-c8d526e6703c}</MetaDataID>
         public PreparationStationPresentation(PreparationSationsTreeNode parent, IPreparationStation preparationStation, MenuViewModel menuViewModel) : base(parent)
         {
             MenuViewModel = menuViewModel;
@@ -602,35 +668,44 @@ namespace FLBManager.ViewModel.Preparation
             });
         }
 
+        /// <MetaDataID>{1d7a52a8-e26d-4a22-8fd0-61ae0d1ddb1f}</MetaDataID>
         public PreparationStationPresentation() : base(null)
         {
 
         }
 
+        /// <MetaDataID>{fa4e0f57-1adf-4fd1-bb36-9186da361586}</MetaDataID>
         List<IItemsPreparationInfo> ItemsPreparationInfos;
 
-        List<IPreparationForInfo> ServicePointsPreparationInfos;
 
-
+        /// <MetaDataID>{8249fed5-f9d5-4737-89b9-02369059d24e}</MetaDataID>
         MenuModel.IMenu Menu;
+
+        public List<IPreparationForInfo> PreparationForInfos;
+
+        /// <MetaDataID>{708a550f-aa89-45c5-86e6-90ca5c37f0ff}</MetaDataID>
         public PreparationStationPresentation(IPreparationStation preparationStation, MenuModel.IMenu menu, MenuViewModel menuViewModel) : base(null)
         {
             MenuViewModel = menuViewModel;
             PreparationStation = preparationStation;
             Menu = menu;
+            PreparationForInfos = preparationStation.PreparationForInfos.ToList();
             ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
+
             CheckBoxVisibility = Visibility.Collapsed;
             this.IsNodeExpanded = true;
         }
 
 
 
+        /// <MetaDataID>{7cf76e87-7a21-44ea-b315-37547c7d9d00}</MetaDataID>
         public System.Windows.Visibility CheckBoxVisibility
         {
             get; set;
         }
 
 
+        /// <MetaDataID>{b9e2a72a-299d-4b15-9236-349d077b4122}</MetaDataID>
         private void EditMenuItem(System.Windows.Window owner)
         {
             //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
@@ -671,7 +746,9 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
         }
 
+        /// <MetaDataID>{25d5dfb4-441e-425c-bfb6-e3c610ba2b76}</MetaDataID>
         List<FBResourceTreeNode> _ItemsToChoose;
+        /// <MetaDataID>{81287596-6671-46ba-80fa-133bd488c72c}</MetaDataID>
         public List<FBResourceTreeNode> ItemsToChoose
         {
             get
@@ -686,11 +763,13 @@ namespace FLBManager.ViewModel.Preparation
                 return _ItemsToChoose;
             }
         }
+        /// <MetaDataID>{dbeb311b-b63f-4ef4-8c4a-3fcb07045b5e}</MetaDataID>
         private void Delete()
         {
             PreparationSations.RemovePreparationStation(this);
         }
 
+        /// <MetaDataID>{cc8b09bf-a57c-4cf6-a491-f56c3a1bc04f}</MetaDataID>
         public void EditMode()
         {
             if (_Edit == true)
@@ -704,12 +783,16 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
+        /// <MetaDataID>{f775d80c-3dd3-4f40-b49b-aaf62b8cbbf3}</MetaDataID>
         public RelayCommand RenameCommand { get; protected set; }
+        /// <MetaDataID>{cd56dd83-901c-45a2-8ccb-24e491b60183}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
+        /// <MetaDataID>{60131975-e7b1-429f-86fe-891130a696a1}</MetaDataID>
         public RelayCommand EditCommand { get; protected set; }
 
 
 
+        /// <MetaDataID>{e22a5a95-2eae-455b-88f0-4912a07901e4}</MetaDataID>
         public override string Name
         {
             get
@@ -722,6 +805,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{8c4b8fea-bd90-4f18-b84b-55c15686d403}</MetaDataID>
         public string PreparationStationIdentity
         {
             get
@@ -731,6 +815,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{8396eac2-f2bf-4877-acd5-bc137079a59b}</MetaDataID>
         public override bool HasContextMenu
         {
             get
@@ -739,6 +824,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{b6ada176-8f1e-4e6b-9ccb-3524976614a2}</MetaDataID>
         public override bool IsEditable
         {
             get
@@ -747,8 +833,10 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{ab86324e-b227-4c12-9630-0c039ecfd11a}</MetaDataID>
         List<MenuCommand> _ContextMenuItems;
 
+        /// <MetaDataID>{79a073ac-d9a3-4924-85a3-06056a95be73}</MetaDataID>
         public override List<MenuCommand> ContextMenuItems
         {
             get
@@ -800,6 +888,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{bd5502e0-4d23-4970-a90e-1beda9d85362}</MetaDataID>
         public override List<MenuCommand> SelectedItemContextMenuItems
         {
             get
@@ -819,6 +908,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{820c406d-3493-459e-acca-29221edecf2b}</MetaDataID>
         public override ImageSource TreeImage
         {
             get
@@ -827,14 +917,17 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{ae0e7b6d-4bd4-442e-935d-37b2c8eae0ae}</MetaDataID>
         public override void SelectionChange()
         {
 
         }
 
+        /// <MetaDataID>{985e3e73-ed89-406f-a16c-a5118542ed05}</MetaDataID>
         ItemsPreparationInfoPresentation PreparationStationItems;
 
         //List<FBResourceTreeNode> _Members;// = new List<FBResourceTreeNode>();
+        /// <MetaDataID>{0d6d1423-673b-4642-a7eb-568cbdeb6dd1}</MetaDataID>
         public override List<FBResourceTreeNode> Members
         {
             get
@@ -845,22 +938,24 @@ namespace FLBManager.ViewModel.Preparation
                     PreparationStationItems = new ItemsPreparationInfoPresentation(this, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), false);
                     PreparationStationItems.IsNodeExpanded = true;
                     PreparationStationItems.CheckBoxVisibility = Visibility.Collapsed;
-
-
                 }
 
                 return PreparationStationItems.Members;
             }
         }
 
+        /// <MetaDataID>{04ff4178-ea70-46f9-8885-1fee68e2d2d9}</MetaDataID>
         bool _PreparationTimeVisible;
+        /// <MetaDataID>{e4b0b586-d269-42d3-8c3d-52a2ee580ff0}</MetaDataID>
         public bool PreparationTimeIsVisible
         {
             get => _PreparationTimeVisible;
             set => _PreparationTimeVisible = value;
         }
 
+        /// <MetaDataID>{b26cc531-aaf0-49de-bb75-0302332678b5}</MetaDataID>
         DateTime DragEnterStartTime;
+        /// <MetaDataID>{f8441639-29c4-462d-993e-502d7e85de10}</MetaDataID>
         public void DragEnter(object sender, DragEventArgs e)
         {
             DragEnterStartTime = DateTime.Now;
@@ -877,6 +972,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        /// <MetaDataID>{731d5dce-49e0-4e5a-84ac-f87c81082721}</MetaDataID>
         public void DragLeave(object sender, DragEventArgs e)
         {
 
@@ -889,7 +985,9 @@ namespace FLBManager.ViewModel.Preparation
             e.Effects = DragDropEffects.None;
         }
 
+        /// <MetaDataID>{3b365351-d715-4958-b722-6428142c9a01}</MetaDataID>
         bool SelectedOnDragOver = false;
+        /// <MetaDataID>{64ae17e5-bdb3-4371-a6c0-87a44bf46595}</MetaDataID>
         public void DragOver(object sender, DragEventArgs e)
         {
 
@@ -912,6 +1010,7 @@ namespace FLBManager.ViewModel.Preparation
             System.Diagnostics.Debug.WriteLine("DragOver InfrastructureTreeNode");
         }
 
+        /// <MetaDataID>{f1e896f8-2f1f-4ffe-8d76-44dea97a7546}</MetaDataID>
         public void Drop(object sender, DragEventArgs e)
         {
             DragItemsCategory dragItemsCategory = e.Data.GetData(typeof(DragItemsCategory)) as DragItemsCategory;
@@ -947,38 +1046,24 @@ namespace FLBManager.ViewModel.Preparation
 
     static class ItemsPreparationInfoTypeExtension
     {
+        /// <MetaDataID>{9d6be088-acf3-4837-838d-54d95cc7c501}</MetaDataID>
         public static bool Included(this IItemsPreparationInfo itemsPreparationInfo)
         {
             return (itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Include) == ItemsPreparationInfoType.Include;
         }
 
+        /// <MetaDataID>{4c2454fe-eade-4cf3-8857-c0fe7704dadd}</MetaDataID>
         public static bool Excluded(this IItemsPreparationInfo itemsPreparationInfo)
         {
             return (itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude;
         }
 
+        /// <MetaDataID>{c9bea570-5248-4ec6-9850-19487fc65bef}</MetaDataID>
         public static bool PreparationTime(this IItemsPreparationInfo itemsPreparationInfo)
         {
             return (itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.PreparationTime) == ItemsPreparationInfoType.PreparationTime;
         }
 
-
-    }
-
-
-    static class ServicePointsPreparationInfoPresentationTypeExtension
-    {
-
-        public static bool Included(this IPreparationForInfo preparationForInfo)
-        {
-            return (preparationForInfo.PreparationForInfoType & PreparationForInfoType.Include) == PreparationForInfoType.Include;
-        }
-
-        public static bool Excluded(this IPreparationForInfo preparationForInfo)
-        {
-            return (preparationForInfo.PreparationForInfoType & PreparationForInfoType.Exclude) == PreparationForInfoType.Exclude;
-
-        }
 
     }
 }

@@ -12,10 +12,11 @@ using WPFUIElementObjectBind;
 
 namespace FloorLayoutDesigner.ViewModel
 {
+    /// <MetaDataID>{bc5c09c5-ff0e-4b11-b814-486aa4401af5}</MetaDataID>
     public class AssignedMealTypeViewMode : FBResourceTreeNode
     {
-       public readonly  MenuModel.IMealType MealType;
-       public readonly string MealTypeUri;
+        public readonly MenuModel.IMealType MealType;
+        public readonly string MealTypeUri;
 
         ServicePointPresentation ServicePoint;
         ServiceAreaPresentation ServiceArea;
@@ -82,7 +83,7 @@ namespace FloorLayoutDesigner.ViewModel
                     else
                     if (ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.Contains(MealTypeUri))
                     {
-                        if(ServicePoint.ServicePoint.ServesMealTypesUris.Count==0)
+                        if (ServicePoint.ServicePoint.ServesMealTypesUris.Count == 0)
                             Default = ServicePoint.ServicePoint.ServiceArea.ServesMealTypesUris.IndexOf(MealTypeUri) == 0;
                         _Assigned = true;
                     }
@@ -105,7 +106,7 @@ namespace FloorLayoutDesigner.ViewModel
                     _Assigned = value;
                     if (value)
                     {
-                        
+
                         if (ServiceArea != null)
                         {
                             ServiceArea.ServiceArea.AddMealType(MealTypeUri);
@@ -115,7 +116,7 @@ namespace FloorLayoutDesigner.ViewModel
                     }
                     else
                     {
-                        
+
                         if (ServiceArea != null)
                         {
                             ServiceArea.ServiceArea.RemoveMealType(MealTypeUri);

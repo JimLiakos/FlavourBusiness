@@ -19,6 +19,7 @@ namespace FLBManager.Views.Preparation
     /// <summary>
     /// Interaction logic for PreparationStationItemsPage.xaml
     /// </summary>
+    /// <MetaDataID>{80537e5b-c0f9-48a8-be8b-3a6fe3d4b672}</MetaDataID>
     public partial class PreparationStationItemsPage : PageDialogViewEmulator
     {
         public PreparationStationItemsPage()

@@ -15,14 +15,19 @@ namespace FLBManager.ViewModel.Preparation
     /// <MetaDataID>{6cb20dd9-745b-4737-82d2-f6b4f1bff1ce}</MetaDataID>
     public class ItemsPreparationInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
-        
 
+
+        /// <MetaDataID>{017f504b-513b-4fc4-af42-c0c2ae4641b9}</MetaDataID>
         public readonly IItemsPreparationInfo ItemsPreparationInfo;
+        /// <MetaDataID>{b369fbe0-d83b-467f-ba71-050afe49452e}</MetaDataID>
         PreparationStationPresentation PreparationStationPresentation;
+        /// <MetaDataID>{20c119a0-5431-48fd-a824-18518c222158}</MetaDataID>
         ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
+        /// <MetaDataID>{4e50a2ba-e4a7-498e-a316-aa888e4692bd}</MetaDataID>
         IMenuItem MenuItem;
 
 
+        /// <MetaDataID>{6d5912d3-dbd6-431c-b216-d6a4732da003}</MetaDataID>
         public ItemsPreparationInfoPresentation(PreparationStationPresentation parent, IItemsPreparationInfo itemsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
@@ -39,7 +44,9 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        /// <MetaDataID>{27d5229c-bc53-42bd-9d47-6ceea9487d1f}</MetaDataID>
         bool SelectionCheckBox;
+        /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IItemsCategory itemsCategory, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
@@ -56,6 +63,7 @@ namespace FLBManager.ViewModel.Preparation
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
 
+        /// <MetaDataID>{f76f2725-c4bc-48db-b680-cf20f594f218}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IMenuItem menuItem, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
@@ -71,15 +79,20 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{2a48dd97-5dfd-4f46-aabb-a776aa182436}</MetaDataID>
         ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation> SubCategories = new ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation>();
+        /// <MetaDataID>{760c0787-688d-4974-8c42-a58092d27c33}</MetaDataID>
         ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation> MenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation>();
 
 
+        /// <MetaDataID>{1ca3d486-6b70-49d2-bfaf-b311b29f1f5d}</MetaDataID>
         ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation> MultiSelectSubCategories = new ViewModelWrappers<MenuModel.IItemsCategory, ItemsPreparationInfoPresentation>();
+        /// <MetaDataID>{a9216788-5f5a-4f64-b84b-b9b1ccfe46df}</MetaDataID>
         ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation> MultiSelectMenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation>();
 
 
 
+        /// <MetaDataID>{5166e975-649f-47b1-b98e-5f1abf42f3ad}</MetaDataID>
         public bool HasItemsToPrepared
         {
             get
@@ -111,13 +124,14 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{d37fedec-1f49-40c2-ad20-88b25bbaea54}</MetaDataID>
         public double PreparationTimeSpanInMin
         {
             get
             {
 
-                if (this.ItemsCategory !=null)
-                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory) ;
+                if (this.ItemsCategory != null)
+                    return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory);
 
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
@@ -125,17 +139,18 @@ namespace FLBManager.ViewModel.Preparation
                 return 1;
 
             }
-            set 
+            set
             {
 
                 if (this.ItemsCategory != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory,value);
+                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
 
                 if (this.MenuItem != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem,value);
+                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
             }
         }
 
+        /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
         public bool CanPrepared
         {
             get
@@ -168,10 +183,12 @@ namespace FLBManager.ViewModel.Preparation
 
             }
         }
+        /// <MetaDataID>{fad3761a-9049-4cf1-8c5e-ffe25141ee69}</MetaDataID>
         public System.Windows.Visibility CheckBoxVisibility
         {
             get; set;
         }
+        /// <MetaDataID>{469e6645-b25e-49b6-8eaa-e3ce412bbf93}</MetaDataID>
         private void Delete()
         {
             if (ItemsCategory != null)
@@ -182,8 +199,10 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        /// <MetaDataID>{a777298f-cf21-4ccb-848d-38596df908f3}</MetaDataID>
         internal MenuModel.IItemsCategory ItemsCategory;
 
+        /// <MetaDataID>{99fd2858-5fca-4b23-8d02-7eca8f7106c5}</MetaDataID>
         public override string Name
         {
             get
@@ -202,6 +221,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
+        /// <MetaDataID>{5b29545c-fe12-4953-ae37-58f532044a8c}</MetaDataID>
         public override ImageSource TreeImage
         {
             get
@@ -215,6 +235,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{d2401e62-1e30-4557-9b75-142a3f9c4690}</MetaDataID>
         public override List<FBResourceTreeNode> Members
         {
             get
@@ -252,11 +273,13 @@ namespace FLBManager.ViewModel.Preparation
                     return new List<FBResourceTreeNode>();
             }
         }
+        /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
 
+        /// <MetaDataID>{83dcd867-12dc-4c2f-97d7-2a9d26a10471}</MetaDataID>
         public override List<MenuCommand> ContextMenuItems
         {
             get
@@ -285,6 +308,7 @@ namespace FLBManager.ViewModel.Preparation
                 return _ContextMenuItems;
             }
         }
+        /// <MetaDataID>{64de1643-b464-40c2-b4cf-ab00dea48227}</MetaDataID>
         public override bool HasContextMenu
         {
             get
@@ -293,6 +317,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{1229ec0a-0597-483d-93c5-828187c7cd0e}</MetaDataID>
         public override List<MenuCommand> SelectedItemContextMenuItems
         {
             get
@@ -310,11 +335,13 @@ namespace FLBManager.ViewModel.Preparation
                 return null;
             }
         }
+        /// <MetaDataID>{05929148-020e-4a78-b9d4-9e153c7929bd}</MetaDataID>
         public override void SelectionChange()
         {
         }
 
 
+        /// <MetaDataID>{9bbe65bf-458f-4f70-9218-4a3e24f9823d}</MetaDataID>
         public void Refresh()
         {
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));

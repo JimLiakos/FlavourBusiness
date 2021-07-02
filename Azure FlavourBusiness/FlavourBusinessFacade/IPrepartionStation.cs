@@ -44,7 +44,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
         void RemovePreparationInfos(List<IItemsPreparationInfo> itemsPreparationInfos);
 
         /// <MetaDataID>{883ddfc5-8927-47fd-b38a-1c9e38e5b6d2}</MetaDataID>
-        IPreparationForInfo NewPreparationForInfo(string servicePointsInfoObjectUri, PreparationForInfoType PreparationForInfoType);
+        IPreparationForInfo NewPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType PreparationForInfoType);
+
+
+        /// <MetaDataID>{7c1c1517-a551-4e9e-8a6f-0320fd0692ad}</MetaDataID>
+        IPreparationForInfo NewPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType PreparationForInfoType);
 
 
 #if !FlavourBusinessDevice

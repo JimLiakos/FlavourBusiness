@@ -158,8 +158,13 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IPreparationForInfo> _PreparationForInfos = new OOAdvantech.Collections.Generic.Set<IPreparationForInfo>();
 
-        public List<IPreparationForInfo> PreparationForInfos => throw new NotImplementedException();
+        /// <MetaDataID>{2f99ee50-7744-4e5a-85cc-0e57d1c949fa}</MetaDataID>
+        [PersistentMember(nameof(_PreparationForInfos))]
+        [BackwardCompatibilityID("+5")]
+        public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 
         public event ObjectChangeStateHandle ObjectChangeState;
         ///// <MetaDataID>{bbe32c62-0fef-4c53-b119-7a88a70c3277}</MetaDataID>
@@ -312,14 +317,56 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-        public void RemovePreparationForInfo(IPreparationForInfo PreparationForInfo)
+        /// <MetaDataID>{5dd31a9b-d087-4ba9-be06-b2272f4fe231}</MetaDataID>
+        public void RemovePreparationForInfo(IPreparationForInfo preparationForInfo)
         {
-            throw new NotImplementedException();
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _PreparationForInfos.Remove(preparationForInfo); 
+                stateTransition.Consistent = true;
+            }
         }
 
-        public IPreparationForInfo NewPreparationForInfo(string servicePointsInfoObjectUri, PreparationForInfoType PreparationForInfoType)
+        /// <MetaDataID>{624df837-5606-4bbe-b471-5735642e9fec}</MetaDataID>
+        public IPreparationForInfo NewPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType preparationForInfoType)
         {
-            throw new NotImplementedException();
+            var existPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
+            if (existPreparationForInfo != null)
+            {
+                existPreparationForInfo.PreparationForInfoType = preparationForInfoType;
+                return existPreparationForInfo;
+            }
+            
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var preparationForInfo = new PreparationForInfo() { ServiceArea = serviceArea, PreparationForInfoType = preparationForInfoType };
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(preparationForInfo);
+                this._PreparationForInfos.Add(preparationForInfo);
+                stateTransition.Consistent = true;
+                return preparationForInfo;
+            }
+            
+        }
+
+        /// <MetaDataID>{cc7b3a81-4bea-4a90-aace-5f019c0adbba}</MetaDataID>
+        public IPreparationForInfo NewPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType preparationForInfoType)
+        {
+            var existPreparationForInfo = PreparationForInfos.Where(x => x.ServicePoint == servicePoint).FirstOrDefault();
+            if (existPreparationForInfo != null)
+            {
+                existPreparationForInfo.PreparationForInfoType = preparationForInfoType;
+                return existPreparationForInfo;
+            }
+            
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var preparationForInfo = new PreparationForInfo() { ServicePoint = servicePoint, PreparationForInfoType = preparationForInfoType };
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(preparationForInfo);
+                this._PreparationForInfos.Add(preparationForInfo);
+                stateTransition.Consistent = true;
+                return preparationForInfo;
+            }
+            
         }
     }
 }

@@ -18,6 +18,7 @@ namespace FLBManager.Views.Preparation
     /// <summary>
     /// Interaction logic for PreparationStationItemsView.xaml
     /// </summary>
+    /// <MetaDataID>{e120e8a6-1e10-4dd7-ba73-8da0943ff7bf}</MetaDataID>
     public partial class PreparationStationItemsView : UserControl
     {
         public PreparationStationItemsView()

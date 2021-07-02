@@ -181,6 +181,7 @@ namespace MenuDesigner.ViewModel
 
 
 
+    /// <MetaDataID>{cfbb910e-8e6b-451b-a4a0-f713a33c9da1}</MetaDataID>
     public interface IGraphicMenusOwner
     {
         void AssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode);
