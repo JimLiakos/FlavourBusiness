@@ -1,13 +1,14 @@
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{5a7f0187-b1e8-4b95-9fe8-e79da0833aff}</MetaDataID>
     [BackwardCompatibilityID("{5a7f0187-b1e8-4b95-9fe8-e79da0833aff}")]
     [Persistent()]
-    public class PreparationForInfo :System.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo
+    public class PreparationForInfo : System.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo
     {
 
         /// <exclude>Excluded</exclude>
@@ -87,7 +88,52 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        public IServicePoint ServicePoint { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public IServiceArea ServiceArea { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        /// <exclude>Excluded</exclude>
+        IServicePoint _ServicePoint;
+
+
+        /// <exclude>Excluded</exclude>
+        IServiceArea _ServiceArea;
+
+
+
+        public IServicePoint ServicePoint
+        {
+            get
+            {
+                return _ServicePoint;
+            }
+            set
+            {
+                _ServicePoint = value;
+                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServiceArea)?.GetPersistentObjectUri(_ServicePoint);
+            }
+        }
+        public IServiceArea ServiceArea
+        {
+            get
+            {
+                if (_ServiceArea == null && _ServicePoint == null)
+                    LoadServicePointsInfo();
+
+                return _ServiceArea;
+            }
+            set
+            {
+                _ServiceArea = value;
+                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServiceArea)?.GetPersistentObjectUri(_ServiceArea);
+
+            }
+        }
+
+        private void LoadServicePointsInfo()
+        {
+            var servicPointsObjects= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ServicePointsInfoObjectUri);
+            if (servicPointsObjects is IServicePoint)
+                _ServicePoint = servicPointsObjects as IServicePoint;
+            if (servicPointsObjects is IServiceArea)
+                _ServiceArea = servicPointsObjects as IServiceArea;
+
+        }
     }
 }

@@ -11,7 +11,8 @@ using System.Windows.Media.Imaging;
 
 namespace FLBManager.ViewModel.Preparation
 {
-    public class ServicePointsPreparationInfoPresentation: FBResourceTreeNode, INotifyPropertyChanged
+    /// <MetaDataID>{38127261-e172-4d32-a9f9-7e052af99294}</MetaDataID>
+    public class ServicePointsPreparationInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
 
         public readonly IPreparationForInfo ServicePointsPreparationInfo;
@@ -21,7 +22,7 @@ namespace FLBManager.ViewModel.Preparation
         IServicePoint ServicePoint;
 
 
-        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
+        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo,, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
             ServicePointsPreparationInfo = servicePointsPreparationInfo;
@@ -36,14 +37,15 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        bool SelectionCheckBox;
+   
+            bool SelectionCheckBox;
 
 
 
 
 
-        
-        
+
+
 
 
 
@@ -56,11 +58,11 @@ namespace FLBManager.ViewModel.Preparation
                 else if (this.ServicePoint != null && this.PreparationStationPresentation.StationPrepareForServicePoint(this.ServicePoint))
                     return true;
                 return false;
-  
+
             }
         }
 
- 
+
         public bool CanPrepared
         {
             get
@@ -107,7 +109,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        
+
 
         public override string Name
         {
@@ -157,7 +159,7 @@ namespace FLBManager.ViewModel.Preparation
                     if (SelectionCheckBox)
                     {
                         var servicePointsPreparationInfoPresentations = (from servicePoint in ServiceArea.ServicePoints
-                            select MultiSelectServicePoints.GetViewModelFor(servicePoint, this, PreparationStationPresentation, servicePoint, SelectionCheckBox));
+                                                                         select MultiSelectServicePoints.GetViewModelFor(servicePoint, this, PreparationStationPresentation, servicePoint, SelectionCheckBox));
 
                         var members = (from servicePointsPreparationInfoPresentation in servicePointsPreparationInfoPresentations
                                        select servicePointsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList();
@@ -171,7 +173,7 @@ namespace FLBManager.ViewModel.Preparation
                         var members = (from servicePointsPreparationInfoPresentation in servicePointsPreparationInfoPresentations
                                        where servicePointsPreparationInfoPresentation.HasServicePoints
                                        select servicePointsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList();
-                   
+
                         return members;
 
                     }
@@ -180,6 +182,12 @@ namespace FLBManager.ViewModel.Preparation
                     return new List<FBResourceTreeNode>();
             }
         }
+
+        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent,  PreparationStationPresentation preparationStationPresentation, IPreparationForInfo servicePointsPreparationInfo,, bool selectionCheckBox) : base(parent)
+        {
+            PreparationStationPresentation = preparationStationPresentation;
+        }
+
         public RelayCommand DeleteCommand { get; protected set; }
 
         /// <exclude>Excluded</exclude>
@@ -246,7 +254,7 @@ namespace FLBManager.ViewModel.Preparation
         public void Refresh()
         {
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
-     
+
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
                 itemsPreparationInfoPresentation.Refresh();

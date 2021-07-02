@@ -65,12 +65,11 @@ namespace FLBManager.Views
             
             var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
+            {
                 dragDropTarget.DragEnter(sender, e);
+            }
             else
                 e.Effects = DragDropEffects.None;
-
-
-
         }
 
         private void TreeNode_DragLeave(object sender, DragEventArgs e)
@@ -107,5 +106,24 @@ namespace FLBManager.Views
 
         }
 
+        private void DragMenuItemObject(object sender)
+        {
+
+            var serviceAreaViewModel = (sender as FrameworkElement).GetDataContextObject<FloorLayoutDesigner.ViewModel.ServiceAreaPresentation>();
+
+
+            //var treeBlankItemViewModel = (sender as FrameworkElement).GetDataContextObject<ViewModel.MenuCanvas.TreeBlankItemViewModel>();
+            //var itemsCategoryViewModel = (sender as FrameworkElement).GetDataContextObject<ViewModel.MenuCanvas.ItemsCategoryViewModel>();
+
+            if (serviceAreaViewModel != null)
+                DragDrop.DoDragDrop(this, serviceAreaViewModel, DragDropEffects.Copy);
+            
+            //if (treeBlankItemViewModel != null)
+            //    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
+
+
+            //if (itemsCategoryViewModel != null)
+            //    DragDrop.DoDragDrop(this, new MenuItemsEditor.ViewModel.DragItemsCategory(itemsCategoryViewModel.ItemsCategory), DragDropEffects.Copy);
+        }
     }
 }

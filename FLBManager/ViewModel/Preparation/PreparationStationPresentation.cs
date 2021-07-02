@@ -109,8 +109,8 @@ namespace FLBManager.ViewModel.Preparation
             {
 
                 var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
-                                                    where preparationForInfo.ServicePoint== servicePoint
-                                                    select preparationForInfo).FirstOrDefault();
+                                                  where preparationForInfo.ServicePoint == servicePoint
+                                                  select preparationForInfo).FirstOrDefault();
 
                 if (includedPreparationForInfo != null)
                 {
@@ -120,7 +120,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (StationPrepareForServicePoint(servicePoint))
                 {
 
-                    var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint,PreparationForInfoType.Exclude);
+                    var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint, PreparationForInfoType.Exclude);
                     this.PreparationForInfos.Add(preparationForInfo);
                 }
 
@@ -134,8 +134,8 @@ namespace FLBManager.ViewModel.Preparation
         {
 
             var excludedpreparationForInfo = (from preparationForInfo in this.PreparationForInfos
-                                                where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude
-                                                select preparationForInfo).FirstOrDefault();
+                                              where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude
+                                              select preparationForInfo).FirstOrDefault();
 
             if (excludedpreparationForInfo != null)
             {
@@ -154,9 +154,9 @@ namespace FLBManager.ViewModel.Preparation
         internal void ExcludeServicePoints(IServiceArea serviceArea)
         {
             var preparationForInfo = (from a_preparationForInfo in this.PreparationForInfos
-                                              where a_preparationForInfo.ServiceArea == serviceArea 
-                                              select a_preparationForInfo).FirstOrDefault();
-            if(preparationForInfo!=null)
+                                      where a_preparationForInfo.ServiceArea == serviceArea
+                                      select a_preparationForInfo).FirstOrDefault();
+            if (preparationForInfo != null)
             {
                 PreparationStation.RemovePreparationForInfo(preparationForInfo);
                 PreparationForInfos.Remove(preparationForInfo);
@@ -649,6 +649,7 @@ namespace FLBManager.ViewModel.Preparation
             PreparationSations = parent;
             PreparationStation = preparationStation;
             ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
+            PreparationForInfos = preparationStation.PreparationForInfos.ToList();
 
 
 
@@ -761,6 +762,23 @@ namespace FLBManager.ViewModel.Preparation
                     _ItemsToChoose = new List<FBResourceTreeNode>() { rootCategory };
                 }
                 return _ItemsToChoose;
+            }
+        }
+        /// <exclude>Excluded</exclude> 
+        List<FBResourceTreeNode> _PreparationStationSubjects;
+        public List<FBResourceTreeNode> PreparationStationSubjects
+        {
+            get
+            {
+                if (_PreparationStationSubjects == null)
+                {
+                    _PreparationStationSubjects = ItemsToChoose.ToList();
+
+                    _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+                }
+
+                
+                return _PreparationStationSubjects;
             }
         }
         /// <MetaDataID>{dbeb311b-b63f-4ef4-8c4a-3fcb07045b5e}</MetaDataID>
@@ -961,7 +979,15 @@ namespace FLBManager.ViewModel.Preparation
             DragEnterStartTime = DateTime.Now;
 
             DragItemsCategory dragItemsCategory = e.Data.GetData(typeof(DragItemsCategory)) as DragItemsCategory;
+
+            FloorLayoutDesigner.ViewModel.ServiceAreaPresentation serviceAreaPresentation = e.Data.GetData(typeof(FloorLayoutDesigner.ViewModel.ServiceAreaPresentation)) as FloorLayoutDesigner.ViewModel.ServiceAreaPresentation;
+
             if (dragItemsCategory != null)
+            {
+                e.Effects = DragDropEffects.Copy;
+                DragEnterStartTime = DateTime.Now;
+            }
+            else if (serviceAreaPresentation != null)
             {
                 e.Effects = DragDropEffects.Copy;
                 DragEnterStartTime = DateTime.Now;
@@ -992,6 +1018,8 @@ namespace FLBManager.ViewModel.Preparation
         {
 
             DragItemsCategory dragItemsCategory = e.Data.GetData(typeof(DragItemsCategory)) as DragItemsCategory;
+            FloorLayoutDesigner.ViewModel.ServiceAreaPresentation serviceAreaPresentation = e.Data.GetData(typeof(FloorLayoutDesigner.ViewModel.ServiceAreaPresentation)) as FloorLayoutDesigner.ViewModel.ServiceAreaPresentation;
+
             if (dragItemsCategory != null)
             {
                 if (!IsSelected)
@@ -1004,16 +1032,21 @@ namespace FLBManager.ViewModel.Preparation
                     RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
                 }
             }
+            else if (serviceAreaPresentation != null)
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
             else
                 e.Effects = DragDropEffects.None;
 
-            System.Diagnostics.Debug.WriteLine("DragOver InfrastructureTreeNode");
+
         }
 
         /// <MetaDataID>{f1e896f8-2f1f-4ffe-8d76-44dea97a7546}</MetaDataID>
         public void Drop(object sender, DragEventArgs e)
         {
             DragItemsCategory dragItemsCategory = e.Data.GetData(typeof(DragItemsCategory)) as DragItemsCategory;
+            FloorLayoutDesigner.ViewModel.ServiceAreaPresentation serviceAreaPresentation = e.Data.GetData(typeof(FloorLayoutDesigner.ViewModel.ServiceAreaPresentation)) as FloorLayoutDesigner.ViewModel.ServiceAreaPresentation;
             if (dragItemsCategory != null)
             {
 
@@ -1028,7 +1061,21 @@ namespace FLBManager.ViewModel.Preparation
                 //IsNodeExpanded = true;
                 //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
             }
+            if (serviceAreaPresentation != null)
+                IncludeServiceArea(serviceAreaPresentation.ServiceArea);
             //DragItemsCategory
+
+        }
+
+        private void IncludeServiceArea(IServiceArea serviceArea)
+        {
+            var serviceAreaPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
+
+            if(serviceAreaPreparationForInfo==null)
+            {
+                serviceAreaPreparationForInfo=this.PreparationStation.NewPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+                PreparationForInfos.Add(serviceAreaPreparationForInfo);
+            }
 
         }
 
@@ -1044,6 +1091,7 @@ namespace FLBManager.ViewModel.Preparation
 
     //Extension
 
+    /// <MetaDataID>{15225b5f-29c1-422f-a877-130c45aa7ce7}</MetaDataID>
     static class ItemsPreparationInfoTypeExtension
     {
         /// <MetaDataID>{9d6be088-acf3-4837-838d-54d95cc7c501}</MetaDataID>

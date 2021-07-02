@@ -22,7 +22,7 @@ using System.Windows.Media.Imaging;
 
 namespace FloorLayoutDesigner
 {
-    /// <MetaDataID>{1b149981-2bf1-4a10-9f15-3a0465ea545a}</MetaDataID>
+    /// <MetaDataID>FloorLayoutDesigner.DesignerCanvas</MetaDataID>
     public partial class DesignerCanvas : Canvas, ICommandTargetObject, INotifyPropertyChanged
     {
         /// <MetaDataID>{a654e6b3-fd0b-4527-8924-382c879092f0}</MetaDataID>
@@ -277,7 +277,7 @@ namespace FloorLayoutDesigner
             HallLayoutPresentation = hallLayoutPresentation;
             HallLayoutPresentation.HallLayoutSizeChanged += HallLayoutSizeChanged;
 
-       
+
 
 
             Width = hallLayout.Width;

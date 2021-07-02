@@ -22,6 +22,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 
 namespace FloorLayoutDesigner
 {
+    /// <MetaDataID>FloorLayoutDesigner.DesignerCanvas</MetaDataID>
     public partial class DesignerCanvas : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -80,7 +81,7 @@ namespace FloorLayoutDesigner
         /// <MetaDataID>{1240f832-3bae-444a-aeda-9069a10317a8}</MetaDataID>
         public DesignerCanvas()
         {
-           // this.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
+            // this.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
             //this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, Open_Executed));
             //this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, Save_Executed));
             //this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Print, Print_Executed));
@@ -106,7 +107,7 @@ namespace FloorLayoutDesigner
             //this.CommandBindings.Add(new CommandBinding(DesignerCanvas.AlignRight, AlignRight_Executed, Align_Enabled));
             //this.CommandBindings.Add(new CommandBinding(DesignerCanvas.DistributeHorizontal, DistributeHorizontal_Executed, Distribute_Enabled));
             //this.CommandBindings.Add(new CommandBinding(DesignerCanvas.DistributeVertical, DistributeVertical_Executed, Distribute_Enabled));
-            
+
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.SelectAll, SelectAll_Executed));
             SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
 
@@ -136,7 +137,7 @@ namespace FloorLayoutDesigner
             PageSetup = new WPFUIElementObjectBind.RelayCommand((object sender) =>
          {
              PageSetup_Executed(sender, null);
-          
+
 
          }, (object sender) =>
          {
@@ -488,7 +489,7 @@ namespace FloorLayoutDesigner
             Width = this.HallLayoutPresentation.HallLayout.Width;
             Height = this.HallLayoutPresentation.HallLayout.Height;
         }
-        
+
         public void LabelFont_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var win = Window.GetWindow(this);
@@ -836,7 +837,7 @@ namespace FloorLayoutDesigner
             UpdateHallLayout();
 
         }
-       public  bool Order_Enabled()
+        public bool Order_Enabled()
         {
             return SelectionService.CurrentSelection.Count() > 0;
         }

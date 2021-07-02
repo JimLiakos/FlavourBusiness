@@ -25,5 +25,58 @@ namespace FLBManager.Views.Preparation
         {
             InitializeComponent();
         }
+
+        private void DragEnter(object sender, DragEventArgs e)
+        {
+
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.DragEnter(sender, e);
+            }
+            else
+                e.Effects = DragDropEffects.None;
+
+            System.Diagnostics.Debug.WriteLine("DragEnter " + e.Effects.ToString());
+
+        }
+
+        private void Drop(object sender, DragEventArgs e)
+        {
+
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+                dragDropTarget.Drop(sender, e);
+            else
+                e.Effects = DragDropEffects.None;
+
+        }
+
+        private void DragLeave(object sender, DragEventArgs e)
+        {
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.DragLeave(sender, e);
+            }
+            else
+                e.Effects = DragDropEffects.None;
+            
+        }
+
+        private void DragOver(object sender, DragEventArgs e)
+        {
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.DragOver(sender, e);
+            }
+            else
+                e.Effects = DragDropEffects.None;
+
+            
+        }
+
+       
     }
 }
