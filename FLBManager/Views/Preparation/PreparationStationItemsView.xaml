@@ -104,8 +104,8 @@
                                 <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                                 <ControlsEx:EditableTextBlock IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
 
-                                <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=CanPrepared, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                                <TextBlock Grid.Column="1"  Visibility="{Binding Path=CanPrepared, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+                                <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
 
 
                             </StackPanel>

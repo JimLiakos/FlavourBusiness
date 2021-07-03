@@ -150,6 +150,15 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+
+        public bool PreparationTimeIsVisible
+        {
+            get
+            {
+                return CanPrepared;
+            }
+        }
+
         /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
         public bool CanPrepared
         {

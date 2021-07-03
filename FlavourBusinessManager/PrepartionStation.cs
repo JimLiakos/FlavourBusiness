@@ -328,7 +328,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{624df837-5606-4bbe-b471-5735642e9fec}</MetaDataID>
-        public IPreparationForInfo NewPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType preparationForInfoType)
+        public IPreparationForInfo NewServiceAreaPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType preparationForInfoType)
         {
             var existPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
             if (existPreparationForInfo != null)
@@ -349,7 +349,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{cc7b3a81-4bea-4a90-aace-5f019c0adbba}</MetaDataID>
-        public IPreparationForInfo NewPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType preparationForInfoType)
+        public IPreparationForInfo NewServicePointPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType preparationForInfoType)
         {
             var existPreparationForInfo = PreparationForInfos.Where(x => x.ServicePoint == servicePoint).FirstOrDefault();
             if (existPreparationForInfo != null)

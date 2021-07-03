@@ -105,7 +105,7 @@ namespace FLBManager.ViewModel.Preparation
         internal void ExcludeServicePoint(IServicePoint servicePoint)
         {
 
-            if (StationPrepareForServicePoint(servicePoint))
+            if (StationPreparesForServicePoint(servicePoint))
             {
 
                 var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
@@ -117,10 +117,10 @@ namespace FLBManager.ViewModel.Preparation
                     this.PreparationStation.RemovePreparationForInfo(includedPreparationForInfo);
                     PreparationForInfos.Remove(includedPreparationForInfo);
                 }
-                if (StationPrepareForServicePoint(servicePoint))
+                if (StationPreparesForServicePoint(servicePoint))
                 {
 
-                    var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint, PreparationForInfoType.Exclude);
+                    var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Exclude);
                     this.PreparationForInfos.Add(preparationForInfo);
                 }
 
@@ -143,9 +143,9 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationForInfos.Remove(excludedpreparationForInfo);
             }
 
-            if (!StationPrepareForServicePoint(servicePoint))
+            if (!StationPreparesForServicePoint(servicePoint))
             {
-                var preparationForInfo = this.PreparationStation.NewPreparationForInfo(servicePoint, PreparationForInfoType.Include);
+                var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Include);
                 this.PreparationForInfos.Add(preparationForInfo);
             }
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
@@ -173,19 +173,10 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationStation.RemovePreparationForInfo(preparationForInfo);
                 PreparationForInfos.Remove(preparationForInfo);
             }
-            PreparationStation.NewPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+            PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
         }
 
-        internal bool StationPreparesForServicePoint(IServicePoint servicePoint)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal bool StationPreparesForServicePoints(IServiceArea serviceArea)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         /// <MetaDataID>{a517dbc7-ab28-48cd-b5a0-a837abed283f}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
@@ -605,7 +596,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
-        internal bool StationPrepareForServicePoint(IServicePoint servicePoint)
+        internal bool StationPreparesForServicePoint(IServicePoint servicePoint)
         {
             var preparationForInfo = PreparationForInfos.Where(x => x.ServicePoint == servicePoint).FirstOrDefault();
             if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include)
@@ -625,7 +616,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        internal bool StationPrepareForServicePoints(IServiceArea serviceArea)
+        internal bool StationPreparesForServicePoints(IServiceArea serviceArea)
         {
             var preparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
 
@@ -1073,7 +1064,7 @@ namespace FLBManager.ViewModel.Preparation
 
             if(serviceAreaPreparationForInfo==null)
             {
-                serviceAreaPreparationForInfo=this.PreparationStation.NewPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+                serviceAreaPreparationForInfo=this.PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
                 PreparationForInfos.Add(serviceAreaPreparationForInfo);
             }
 

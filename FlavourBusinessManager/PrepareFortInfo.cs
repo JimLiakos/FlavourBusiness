@@ -106,7 +106,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             set
             {
                 _ServicePoint = value;
-                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServiceArea)?.GetPersistentObjectUri(_ServicePoint);
+                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServicePoint)?.GetPersistentObjectUri(_ServicePoint);
             }
         }
         public IServiceArea ServiceArea

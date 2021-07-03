@@ -145,6 +145,8 @@ namespace FlavourBusinessManager.RoomService
             _Name = mealCourseType.Name;
             foreach (var itemPreparation in itemPreparations)
                 AddItem(itemPreparation);
+
+            
         }
 
 

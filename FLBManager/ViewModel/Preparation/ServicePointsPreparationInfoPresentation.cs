@@ -17,12 +17,15 @@ namespace FLBManager.ViewModel.Preparation
 
         public readonly IPreparationForInfo ServicePointsPreparationInfo;
         PreparationStationPresentation PreparationStationPresentation;
+
+        public ServicePointsPreparationInfoPresentation ServicePointsPreparationInfoTreeNode { get; }
+
         //ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
         internal IServiceArea ServiceArea;
         IServicePoint ServicePoint;
 
-
-        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo,, bool selectionCheckBox) : base(parent)
+        //this, PreparationStationPresentation, servicePoint, SelectionCheckBox)
+        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent,  IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
             ServicePointsPreparationInfo = servicePointsPreparationInfo;
@@ -53,16 +56,19 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                if (this.ServiceArea != null && this.PreparationStationPresentation.StationPrepareForServicePoints(this.ServiceArea))
+                if (this.ServiceArea != null && this.PreparationStationPresentation.StationPreparesForServicePoints(this.ServiceArea))
                     return true;
-                else if (this.ServicePoint != null && this.PreparationStationPresentation.StationPrepareForServicePoint(this.ServicePoint))
+                else if (this.ServicePoint != null && this.PreparationStationPresentation.StationPreparesForServicePoint(this.ServicePoint))
                     return true;
                 return false;
 
             }
         }
 
-
+        public bool PreparationTimeIsVisible
+        {
+            get => false;
+        }
         public bool CanPrepared
         {
             get
@@ -134,9 +140,9 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
                 if (ServiceArea != null)
-                    return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/category16.png"));
+                    return new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServiceArea.png"));
                 else if (this.ServicePoint != null)
-                    return new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/MenuItem16.png"));
+                    return new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServicePoint.png"));
                 else
                     return null;
             }
@@ -183,10 +189,40 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
-        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent,  PreparationStationPresentation preparationStationPresentation, IPreparationForInfo servicePointsPreparationInfo,, bool selectionCheckBox) : base(parent)
+        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent,  PreparationStationPresentation preparationStationPresentation, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             PreparationStationPresentation = preparationStationPresentation;
         }
+
+        //public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, IServiceArea serviceArea, bool selectionCheckBox) : base(parent)
+        //{
+        //    SelectionCheckBox = selectionCheckBox;
+        //    PreparationStationPresentation = preparationStationPresentation;
+
+        //    ServicePointsPreparationInfoPresentation = parent;
+        //    ServiceArea = serviceArea;
+
+        //    DeleteCommand = new RelayCommand((object sender) =>
+        //    {
+        //        Delete();
+        //    });
+        //    CheckBoxVisibility = System.Windows.Visibility.Visible;
+        //}
+
+        
+        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, IServicePoint servicePoint, bool selectionCheckBox) : base(parent)
+        {
+            SelectionCheckBox = selectionCheckBox;
+            PreparationStationPresentation = preparationStationPresentation;
+            ServicePointsPreparationInfoTreeNode = parent;
+            ServicePoint = servicePoint;
+            DeleteCommand = new RelayCommand((object sender) =>
+            {
+                Delete();
+            });
+        }
+
+
 
         public RelayCommand DeleteCommand { get; protected set; }
 
