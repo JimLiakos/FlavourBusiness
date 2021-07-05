@@ -649,7 +649,7 @@ namespace DontWaitApp
                             return true;
                         else
                         {
-                            ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems=new List<ItemPreparation>()};
+                            ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems = new List<ItemPreparation>() };
                             ApplicationSettings.Current.LastClientSessionID = "";
                             Path = "";
 
@@ -708,7 +708,7 @@ namespace DontWaitApp
                         if (ApplicationSettings.Current.LastClientSessionID != SessionID)
                             OrderItems.Clear(); //Clear cache for new session
 
-                        
+
 
                         ApplicationSettings.Current.LastClientSessionID = SessionID;
 
@@ -722,13 +722,13 @@ namespace DontWaitApp
                             OrderItems.Add(flavourItem as ItemPreparation);
                         }
                         var cou = FoodServiceClientSession.FlavourItems.Count;
-                        foreach (var orderItem in OrderItems.Where(x=>x.SessionID== SessionID))
+                        foreach (var orderItem in OrderItems.Where(x => x.SessionID == SessionID))
                         {
                             var flavourItem = FoodServiceClientSession.FlavourItems.Where(x => x.uid == orderItem.uid).FirstOrDefault();
                             if (flavourItem == null)
                                 FoodServiceClientSession.AddItem(orderItem);
                         }
-                        
+
                         cou = FoodServiceClientSession.FlavourItems.Count;
 
                         foreach (var flavourItem in FoodServiceClientSession.SharedItems)
@@ -761,7 +761,7 @@ namespace DontWaitApp
                             MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                             ClientSessionID = FoodServiceClientSession.SessionID,
                             ServicePointIdentity = clientSessionData.ServicePointIdentity,
-                            DefaultMealTypeUri=clientSessionData.DefaultMealTypeUri,
+                            DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
                             ServedMealTypesUris = clientSessionData.ServedMealTypesUris
 
                         };
@@ -1244,7 +1244,7 @@ namespace DontWaitApp
         /// <MetaDataID>{7872a80f-383a-4e7e-a7c0-c81c99c9573a}</MetaDataID>
         public IList<Messmate> GetCandidateMessmates()
         {
-            if (CandidateMessmates.Count == 0 && Messmates.Count == 0)
+            if (!MessmatesLoaded)
                 GetMessmatesFromServer().Wait(2);
             return CandidateMessmates;
             //return Task<MenuData>.Run(async () =>
@@ -1596,7 +1596,7 @@ namespace DontWaitApp
         {
             ApplicationSettings.Current.FriendlyName = friendlyName;
 
-            if (this.FoodServiceClientSession != null&& this.FoodServiceClientSession.ClientName!= friendlyName)
+            if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
             {
                 #region Sets client name of active session a sync for unstable connection 
                 SerializeTaskScheduler.AddTask(async () =>
@@ -1619,10 +1619,10 @@ namespace DontWaitApp
                           }
                       }
                       return true;
-                  }); 
+                  });
                 #endregion
             }
-            
+
         }
         /// <MetaDataID>{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}</MetaDataID>
         public async Task<bool> SendItemForPreparation()
@@ -1804,7 +1804,7 @@ namespace DontWaitApp
                 foreach (var orderItem in OrderItems)
                     orderItemsDictionary[orderItem.uid] = orderItem;
                 return orderItemsDictionary;
-                    //OrderItems.ToDictionary(x => x.uid);
+                //OrderItems.ToDictionary(x => x.uid);
             }
         }
 
@@ -2026,7 +2026,7 @@ namespace DontWaitApp
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
         internal async void Initialize()
         {
-            if(MenuData.OrderItems!=null)
+            if (MenuData.OrderItems != null)
                 OrderItems = MenuData.OrderItems.ToList();
             if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity))
             {
@@ -2044,7 +2044,7 @@ namespace DontWaitApp
                 {
 
                     _ObjectChangeState?.Invoke(this, nameof(FoodServiceClientSession));
-                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems = new List<ItemPreparation>() }; 
+                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems = new List<ItemPreparation>() };
                     ApplicationSettings.Current.LastClientSessionID = "";
                     Path = "";
 

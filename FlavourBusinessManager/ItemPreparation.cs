@@ -23,12 +23,12 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <exclude>Excluded</exclude> 
-        DateTime _PreparedAt;
+        DateTime? _PreparedAt;
 
         /// <MetaDataID>{ff683fa2-0ccd-42c5-af39-aa072d8fee05}</MetaDataID>
         [PersistentMember(nameof(_PreparedAt))]
         [BackwardCompatibilityID("+20")]
-        public DateTime PreparedAt
+        public DateTime? PreparedAt
         {
             get => _PreparedAt; 
             set
@@ -45,12 +45,12 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <exclude>Excluded</exclude>
-        DateTime _PreparedAtForecast;
+        DateTime? _PreparedAtForecast;
 
         /// <MetaDataID>{005db153-7c66-451b-aae7-165d02d8a42c}</MetaDataID>
         [PersistentMember(nameof(_PreparedAtForecast))]
         [BackwardCompatibilityID("+21")]
-        public DateTime PreparedAtForecast
+        public DateTime? PreparedAtForecast
         {
             get => _PreparedAtForecast;
             set

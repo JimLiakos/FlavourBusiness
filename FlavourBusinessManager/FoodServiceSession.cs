@@ -177,7 +177,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         }
                     }
 
-                    if(mealValidationDelaySessionState)
+                    if (mealValidationDelaySessionState)
                         MealValidationDelayRun();
                 }
             }
@@ -213,9 +213,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                          {
                              SessionState = SessionState.MealMonitoring;
                              CreateAndInitMeal();
-                             _Meal.MonitoringRun();
                              stateTransition.Consistent = true;
                          }
+                         _Meal.Value.MonitoringRun();
                      }
                  });
             }
@@ -285,14 +285,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                                   from itemPreparation in clientSession.FlavourItems
                                   select itemPreparation).OfType<ItemPreparation>().ToList();
 
-            var mealType= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal as MenuModel.MealType;
+            var mealType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal as MenuModel.MealType;
 
 
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Meal = new Meal(mealType, itemsToPrepare);
-                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal);
+                _Meal.Value = new Meal(mealType, itemsToPrepare);
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal.Value);
                 stateTransition.Consistent = true;
             }
 
@@ -357,7 +357,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>     
-        Meal _Meal;
+        OOAdvantech.Member<Meal> _Meal = new OOAdvantech.Member<Meal>();
 
         /// <MetaDataID>{8d538032-0365-42f6-a71a-176cf8a85f38}</MetaDataID>
         [PersistentMember(nameof(_Meal))]
@@ -365,8 +365,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+6")]
         public IMeal Meal
         {
-            get => _Meal; 
-           
+            get => _Meal.Value;
+
         }
 
 
@@ -395,11 +395,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (this.SessionState == SessionState.MealValidationDelay)
                 MealValidationDelayRun();
             if (this.SessionState == SessionState.MealMonitoring)
-                _Meal.MonitoringRun();
+                _Meal.Value.MonitoringRun();
             else
                 StateMachineMonitoring();
 
-           
+
 
         }
 

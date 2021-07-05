@@ -11,11 +11,11 @@ namespace FlavourBusinessFacade.RoomService
     {
         /// <MetaDataID>{6e004433-34de-46b4-9264-e4c052bca0f1}</MetaDataID>
         [BackwardCompatibilityID("+13")]
-        DateTime PreparedAtForecast { get; }
+        DateTime? PreparedAtForecast { get; }
 
         /// <MetaDataID>{1f985a50-1044-4821-bcef-1e24a8f8eda1}</MetaDataID>
         [BackwardCompatibilityID("+12")]
-        DateTime PreparedAt { get; }
+        DateTime? PreparedAt { get; }
 
         /// <MetaDataID>{3ee58a43-e219-491d-aa71-f7531bd96a29}</MetaDataID>
         [BackwardCompatibilityID("+9")]
