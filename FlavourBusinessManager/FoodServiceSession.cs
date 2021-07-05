@@ -186,33 +186,39 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        Task MealValidationDelayTask;
         /// <MetaDataID>{598f4be7-bfaf-40ae-b1e2-dc80d367a54f}</MetaDataID>
         private void MealValidationDelayRun()
         {
-            Task.Run(() =>
+            lock (StateMachineLock)
             {
-                var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
+                if (MealValidationDelayTask != null && !MealValidationDelayTask.IsCompleted)
+                    return;
+                MealValidationDelayTask = Task.Run(() =>
+                 {
+                     var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
 
-                while (allMessmetesCommitedTimeSpanInSeconds > 0)
-                {
-                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-                    allMessmetesCommitedTimeSpanInSeconds--;
-                    if (SessionState != SessionState.MealValidationDelay)
-                        return;
-                }
+                     while (allMessmetesCommitedTimeSpanInSeconds > 0)
+                     {
+                         System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                         allMessmetesCommitedTimeSpanInSeconds--;
+                         if (SessionState != SessionState.MealValidationDelay)
+                             return;
+                     }
 
-                if (SessionState == SessionState.MealValidationDelay)
-                {
+                     if (SessionState == SessionState.MealValidationDelay)
+                     {
 
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        SessionState = SessionState.MealMonitoring;
-                        CreateAndInitMeal(); 
-                        stateTransition.Consistent = true;
-                    }
-
-                }
-            });
+                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                         {
+                             SessionState = SessionState.MealMonitoring;
+                             CreateAndInitMeal();
+                             _Meal.MonitoringRun();
+                             stateTransition.Consistent = true;
+                         }
+                     }
+                 });
+            }
         }
 
         /// <MetaDataID>{93093ff3-2928-40af-a748-5be7660d9f39}</MetaDataID>
@@ -351,7 +357,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>     
-        IMeal _Meal;
+        Meal _Meal;
 
         /// <MetaDataID>{8d538032-0365-42f6-a71a-176cf8a85f38}</MetaDataID>
         [PersistentMember(nameof(_Meal))]
@@ -360,17 +366,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IMeal Meal
         {
             get => _Meal; 
-            set
-            {
-                if (_Meal != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _Meal = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
+           
         }
 
 
@@ -398,6 +394,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (this.SessionState == SessionState.MealValidationDelay)
                 MealValidationDelayRun();
+            if (this.SessionState == SessionState.MealMonitoring)
+                _Meal.MonitoringRun();
             else
                 StateMachineMonitoring();
 

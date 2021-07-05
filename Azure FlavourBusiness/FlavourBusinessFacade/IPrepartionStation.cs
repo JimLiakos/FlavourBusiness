@@ -54,6 +54,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
 #if !FlavourBusinessDevice
         /// <MetaDataID>{7b6f9f61-6a17-4fd3-b90e-5a89e46238d1}</MetaDataID>
         bool CanPrepareItem(MenuModel.IMenuItem menuItem);
+        
+        bool CanPrepareItemFor(MenuModel.IMenuItem menuItem,IServicePoint servicePoint);
 #endif
 
     }

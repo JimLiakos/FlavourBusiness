@@ -6,10 +6,12 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{0cf4bde3-81c2-4685-b35d-ea231ae11540}</MetaDataID>
-    public interface IPreparationStationRuntime 
+    public interface IPreparationStationRuntime
     {
+
+
         /// <MetaDataID>{c819f9e6-21ed-4c0d-9c72-a240fbd8728d}</MetaDataID>
-      //  List<MenuModel.IMenuItem> GetNewerRestaurandMenuData(DateTime newerFromDate);
+        //  List<MenuModel.IMenuItem> GetNewerRestaurandMenuData(DateTime newerFromDate);
 
         [Association("PreparationStationController", Roles.RoleA, "89c04438-c0da-4df4-98d1-fad38f28844d")]
         [RoleAMultiplicityRange(1, 1)]

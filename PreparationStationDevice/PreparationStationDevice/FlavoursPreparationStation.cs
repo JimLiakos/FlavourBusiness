@@ -41,7 +41,7 @@ namespace PreparationStationDevice
                 {
                     if (_PreparationStation is ITransparentProxy)
                         (_PreparationStation as ITransparentProxy).Reconnected -= PreparationStation_Reconnected;
-                    
+
                     _PreparationStation = value;
 
                     if (_PreparationStation is ITransparentProxy)
@@ -89,13 +89,13 @@ namespace PreparationStationDevice
                 return preparationItemsPerServicePoint;
             });
         }
-        
+
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public string Title
         {
-            
+
             get => ApplicationSettings.Current.PreparationStationTitle;
-            set => ApplicationSettings.Current.PreparationStationTitle = value; 
+            set => ApplicationSettings.Current.PreparationStationTitle = value;
         }
 
 
@@ -106,7 +106,7 @@ namespace PreparationStationDevice
 
 
 
-        [OOAdvantech.MetaDataRepository.HttpVisible]
+        [HttpVisible]
         public string CommunicationCredentialKey
         {
             get
@@ -117,6 +117,46 @@ namespace PreparationStationDevice
             {
                 ApplicationSettings.Current.CommunicationCredentialKey = value;
             }
+        }
+
+        [HttpVisible]
+        public Task<bool> AssignCommunicationCredentialKey(string credentialKey)
+        {
+            if (CommunicationCredentialKey != credentialKey)
+            {
+                CommunicationCredentialKey = credentialKey;
+                PreparationStation = null;
+                return Task<bool>.Run(() =>
+                {
+                    if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
+                    {
+
+                        string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                        string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                        string serverUrl = AzureServerUrl;
+                        IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                        PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                        if (PreparationStation != null)
+                        {
+                            Title = PreparationStation.Description;
+                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
+                            return true;
+                        }
+                        else
+                        {
+                            Title = "";
+                            return false;
+                        }
+
+
+                        //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
+                    }
+                    return false;
+
+                });
+
+            }
+            return Task<bool>.FromResult(true);
         }
     }
 

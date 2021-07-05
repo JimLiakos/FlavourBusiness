@@ -8,6 +8,7 @@ using MenuModel;
 using FlavourBusinessFacade.EndUsers;
 using System;
 using OOAdvantech.Json;
+using FlavourBusinessFacade.ServicesContextResources;
 #if !FlavourBusinessDevice
 using FlavourBusinessManager.ServicePointRunTime;
 #endif
@@ -19,6 +20,76 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+
+
+        /// <exclude>Excluded</exclude> 
+        DateTime _PreparedAt;
+
+        /// <MetaDataID>{ff683fa2-0ccd-42c5-af39-aa072d8fee05}</MetaDataID>
+        [PersistentMember(nameof(_PreparedAt))]
+        [BackwardCompatibilityID("+20")]
+        public DateTime PreparedAt
+        {
+            get => _PreparedAt; 
+            set
+            {
+                if (_PreparedAt != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparedAt = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        DateTime _PreparedAtForecast;
+
+        /// <MetaDataID>{005db153-7c66-451b-aae7-165d02d8a42c}</MetaDataID>
+        [PersistentMember(nameof(_PreparedAtForecast))]
+        [BackwardCompatibilityID("+21")]
+        public DateTime PreparedAtForecast
+        {
+            get => _PreparedAtForecast;
+            set
+            {
+                if (_PreparedAtForecast != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparedAtForecast = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        string _Comments;
+
+        /// <MetaDataID>{166ef5d3-57c2-4b7e-8aa5-8ca9c5c2d4be}</MetaDataID>
+        [PersistentMember(nameof(_Comments))]
+        [BackwardCompatibilityID("+19")]
+        public string Comments
+        {
+            get => _Comments;
+            set
+            {
+                if (_Comments != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Comments = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         string _SelectedMealCourseTypeUri;
 
@@ -513,7 +584,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Member<IFoodServiceClientSession> _ClientSession=new OOAdvantech.Member<IFoodServiceClientSession>();
+        OOAdvantech.Member<IFoodServiceClientSession> _ClientSession = new OOAdvantech.Member<IFoodServiceClientSession>();
 
         /// <MetaDataID>{837efcf4-421f-42a2-be0b-a2d6c911a92a}</MetaDataID>
         [PersistentMember(nameof(_ClientSession))]
@@ -542,11 +613,11 @@ namespace FlavourBusinessManager.RoomService
             bool changed;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                                                                                                                                                                                                                                            changed = (_Price != item.Price ||
-                _Quantity != item.Quantity ||
-                _IsShared != item.IsShared ||
-                _NumberOfShares != item.NumberOfShares||
-                _SelectedMealCourseTypeUri!= item.SelectedMealCourseTypeUri);
+                changed = (_Price != item.Price ||
+_Quantity != item.Quantity ||
+_IsShared != item.IsShared ||
+_NumberOfShares != item.NumberOfShares ||
+_SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
 
                 _Price = item.Price;
                 _Quantity = item.Quantity;
@@ -622,6 +693,31 @@ namespace FlavourBusinessManager.RoomService
                         stateTransition.Consistent = true;
                     }
                 }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        IPreparationStation _PreparationStation;
+
+        /// <MetaDataID>{f8b1250c-e750-4254-80d6-b3dba382d14d}</MetaDataID>
+        [PersistentMember(nameof(_PreparationStation))]
+        [BackwardCompatibilityID("+18")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        public IPreparationStation PreparationStation
+        {
+            get => _PreparationStation;
+            set
+            {
+
+                if (_PreparationStation != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparationStation = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
             }
         }
 

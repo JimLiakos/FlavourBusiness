@@ -63,7 +63,9 @@ namespace FLBManager.ViewModel.Preparation
             var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
             var preparationStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewPreparationStation();
-            PreparationStations.Add(preparationStation, new PreparationStationPresentation(this, preparationStation, menuViewModel));
+            var preparationStationPresentation = new PreparationStationPresentation(this, preparationStation, menuViewModel);
+            preparationStationPresentation.Edit = true;
+            PreparationStations.Add(preparationStation, preparationStationPresentation);
 
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));

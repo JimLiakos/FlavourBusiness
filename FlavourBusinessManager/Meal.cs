@@ -3,8 +3,10 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -69,7 +71,7 @@ namespace FlavourBusinessManager.RoomService
         public List<IMealCourse> Courses => _Courses.ToThreadSafeList();
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Member< IFoodServiceSession> _Session=new OOAdvantech.Member<IFoodServiceSession>();
+        OOAdvantech.Member<IFoodServiceSession> _Session = new OOAdvantech.Member<IFoodServiceSession>();
 
         /// <MetaDataID>{df1bef38-aa51-450a-a6c2-bdb6b6f960a5}</MetaDataID>
         [PersistentMember(nameof(_Session))]
@@ -107,6 +109,85 @@ namespace FlavourBusinessManager.RoomService
                 stateTransition.Consistent = true;
             }
         }
+        /// <MetaDataID>{529127a8-8386-46da-a81b-1539bed5530b}</MetaDataID>
+        object MealLock = new object();
+
+        /// <MetaDataID>{340bccf9-c1ba-4185-851e-370a3286f0ee}</MetaDataID>
+        Task MonitoringTask;
+        /// <MetaDataID>{16c25ab9-e42f-4e19-b0de-7f0ea44de07c}</MetaDataID>
+        internal void MonitoringRun()
+        {
+            lock (MealLock)
+            {
+                if (MonitoringTask != null && !MonitoringTask.IsCompleted)
+                    return;
+                MonitoringTask = Task.Run(() =>
+                {
+                    var sesionState = Session.SessionState;
+                    while (sesionState == SessionState.MealMonitoring)
+                    {
+                        if (Courses[0].ServedAtForecast == System.DateTime.MinValue)
+                        {
+                            BuildMealTimePlan();
+                        }
+                        System.Threading.Thread.Sleep(1000);
+                        sesionState = Session.SessionState;
+                    }
+                });
+
+            }
+
+        }
+
+        /// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>
+        private void BuildMealTimePlan()
+        {
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                MealCourse headCourse = Courses[0] as MealCourse;
+                if (headCourse.ServedAtForecast == System.DateTime.MinValue)
+                {
+                    var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
+                    headCourse.ServedAtForecast = System.DateTime.Now + foodItemsPreparatioData[0].duration;
+                    foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
+                    {
+                        foodITem.State = ItemPreparationState.PreparationDelay;
+                        foodITem.PreparedAtForecast = headCourse.ServedAtForecast;
+                    }
+
+                }
+
+                foreach (MealCourse course in Courses)
+                {
+                    if (course== headCourse|| course.ServedAtForecast!=DateTime.MinValue)
+                        continue;
+                     
+                    var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
+
+                    DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
+
+
+
+                    course.ServedAtForecast = System.DateTime.Now + foodItemsPreparatioData[0].duration;
+                    if (course.ServedAtForecast < shouldnotServedBefore)
+                        course.ServedAtForecast = shouldnotServedBefore;
+
+                    foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
+                    {
+                        foodITem.State = ItemPreparationState.PreparationDelay;
+                        foodITem.PreparedAtForecast = course.ServedAtForecast;
+                    }
+
+                }
+                stateTransition.Consistent = true;
+            }
+
+
+        }
+
+
         /// <MetaDataID>{4a767f54-cf13-46d7-8efd-7763ffcd80af}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         protected void BeforeCommitObjectState()

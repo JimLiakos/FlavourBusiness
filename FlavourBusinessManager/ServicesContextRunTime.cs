@@ -480,7 +480,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                         select aPreparationStation))
                     {
                         var preparationStationRuntime = new PreparationStationRuntime(preparationStation);
-                        this.PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStationRuntime;
+                        this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStationRuntime;
                     }
                 }
                 return _PreparationStationRuntimes;
@@ -1196,6 +1196,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
+
+                if (PreparationStationRuntimes.ContainsKey(prepartionStation.PreparationStationIdentity))
+                    PreparationStationRuntimes.Remove(prepartionStation.PreparationStationIdentity);
+
+
+
+
                 ObjectStorage.DeleteObject(prepartionStation);
             }
             catch (Exception error)
@@ -1210,17 +1217,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            ServicesContextResources.PreparationStation prepartionStation = new ServicesContextResources.PreparationStation();
+            ServicesContextResources.PreparationStation preparationStation = new ServicesContextResources.PreparationStation();
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-
-                prepartionStation.Description = Properties.Resources.DefaultPreparationStationDescription;
-                prepartionStation.ServicesContextIdentity = this.ServicesContextIdentity;
-                objectStorage.CommitTransientObjectState(prepartionStation);
-
+                preparationStation.Description = Properties.Resources.DefaultPreparationStationDescription;
+                preparationStation.ServicesContextIdentity = this.ServicesContextIdentity;
+                objectStorage.CommitTransientObjectState(preparationStation);
                 stateTransition.Consistent = true;
             }
-            return prepartionStation;
+            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = new PreparationStationRuntime(preparationStation); 
+            return preparationStation;
         }
 
         /// <MetaDataID>{366a4260-e268-4f49-aa23-266acf219ce9}</MetaDataID>

@@ -8,12 +8,71 @@ using OOAdvantech.Remoting;
 using FlavourBusinessToolKit;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessFacade;
+using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
     /// <MetaDataID>{5a81aa2c-3c52-44e8-b1cd-103859bf22f5}</MetaDataID>
     public class PreparationStationRuntime : MarshalByRefObject, IExtMarshalByRefObject, IPreparationStationRuntime
     {
+
+
+        internal static PreparationData GetPreparationData(ItemPreparation itemPreparation)
+        {
+            itemPreparation.LoadMenuItem();
+            PreparationData preparationData = new PreparationData();
+            if(itemPreparation.PreparationStation!=null)
+            {
+                preparationData.ItemPreparation = itemPreparation;
+                preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStation(itemPreparation.PreparationStation.PreparationStationIdentity) as PreparationStationRuntime;
+                preparationData.Duration = TimeSpan.FromMinutes((itemPreparation.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                return preparationData;
+            }
+
+            foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.Where(x=>(x .PreparationStation as ServicesContextResources.PreparationStation).HasServicePointsPreparationInfos))
+            {
+                if (preparationStationRuntime.PreparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
+                {
+                    preparationData.PreparationStationRuntime = preparationStationRuntime;
+                    preparationData.Duration=TimeSpan.FromMinutes((preparationStationRuntime.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                    preparationData.ItemPreparation = itemPreparation;
+                }
+            }
+            if(preparationData.PreparationStationRuntime==null)
+            {
+                foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.Where(x => !(x.PreparationStation as ServicesContextResources.PreparationStation).HasServicePointsPreparationInfos))
+                {
+                    if (preparationStationRuntime.PreparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    {
+                        preparationData.PreparationStationRuntime = preparationStationRuntime;
+                        preparationData.Duration = TimeSpan.FromMinutes((preparationStationRuntime.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                        preparationData.ItemPreparation = itemPreparation;
+                    }
+                }
+            }
+            if (preparationData.PreparationStationRuntime == null)
+            {
+                foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values)
+                {
+                    if (preparationStationRuntime.PreparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    {
+                        preparationData.PreparationStationRuntime = preparationStationRuntime;
+                        preparationData.Duration = TimeSpan.FromMinutes((preparationStationRuntime.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                        preparationData.ItemPreparation = itemPreparation;
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+                return preparationData;
+        }
+
         /// <MetaDataID>{82bd512e-74e9-49f2-8aac-00681aa07e89}</MetaDataID>
         public List<MenuModel.IMenuItem> GetNewerRestaurandMenuData(DateTime newerFromDate)
         {
@@ -64,15 +123,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
-            //var test = (from itemPreparation in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-            //            where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-            //            group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
-            //            select ServicePointItems).ToList();
-
 
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-                                                          where item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
-                                                          select item.Fetching(item.ClientSession)).ToArray()
+                                                                                   where item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
+                                                                                   select item.Fetching(item.ClientSession)).ToArray()
                                                           group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
                                                           select ServicePointItems))
             {
@@ -129,5 +183,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
         }
+    }
+
+
+    /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
+    struct PreparationData
+    {
+        public ItemPreparation ItemPreparation;
+
+        public PreparationStationRuntime PreparationStationRuntime;
+
+        public TimeSpan Duration;
+
     }
 }

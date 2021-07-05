@@ -160,6 +160,28 @@ namespace FLBManager.ViewModel.Preparation
             {
                 PreparationStation.RemovePreparationForInfo(preparationForInfo);
                 PreparationForInfos.Remove(preparationForInfo);
+
+                if((from a_preparationForInfo in this.PreparationForInfos
+                 where a_preparationForInfo.PreparationForInfoType==PreparationForInfoType.Include
+                 select a_preparationForInfo).FirstOrDefault()==null)
+                {
+                    foreach(var servicePointpreparationForInfo in PreparationForInfos.ToList())
+                    {
+                        PreparationStation.RemovePreparationForInfo(servicePointpreparationForInfo);
+                        PreparationForInfos.Remove(servicePointpreparationForInfo);
+                    }
+                }
+
+                if (PreparationForInfos.Where(x => x.PreparationForInfoType == PreparationForInfoType.Include).FirstOrDefault() == null)
+                {
+                    var servicePointsPreparationInfoPresentation = _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>().Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
+                    if (servicePointsPreparationInfoPresentation != null)
+                    {
+                        _PreparationStationSubjects.Remove(servicePointsPreparationInfoPresentation);
+                        _PreparationStationSubjects = _PreparationStationSubjects.ToList();
+                        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+                    }
+                }
             }
         }
 
@@ -1066,6 +1088,9 @@ namespace FLBManager.ViewModel.Preparation
             {
                 serviceAreaPreparationForInfo=this.PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
                 PreparationForInfos.Add(serviceAreaPreparationForInfo);
+                _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+                _PreparationStationSubjects = _PreparationStationSubjects.ToList();
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
             }
 
         }

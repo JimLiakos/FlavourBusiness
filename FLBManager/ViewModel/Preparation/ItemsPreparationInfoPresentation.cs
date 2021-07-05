@@ -188,7 +188,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 if (!value && MenuItem != null)
                     this.PreparationStationPresentation.ExcludeItem(MenuItem);
-
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
 
             }
         }
@@ -361,6 +361,7 @@ namespace FLBManager.ViewModel.Preparation
                 itemsPreparationInfoPresentation.Refresh();
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
 
         }
     }

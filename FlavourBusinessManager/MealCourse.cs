@@ -43,6 +43,8 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+
         /// <exclude>Excluded</exclude>
         string _MealCourseTypeUri;
 
@@ -110,7 +112,44 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{963bb0ae-3234-4bf5-b7e4-9a313dcb9531}</MetaDataID>
         [PersistentMember(nameof(_StartsAt))]
         [BackwardCompatibilityID("+2")]
-        public System.DateTime StartsAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public System.DateTime StartsAt
+        {
+            get => _StartsAt;
+            set
+            {
+                if (_StartsAt != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _StartsAt = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        System.DateTime _ServedAtForecast;
+
+        /// <MetaDataID>{19242092-38cd-4f7d-b7dc-77abc4dfb56e}</MetaDataID>
+        [PersistentMember(nameof(_ServedAtForecast))]
+        [BackwardCompatibilityID("+8")]
+        public System.DateTime ServedAtForecast
+        {
+            get => _ServedAtForecast;
+            set
+            {
+                if (_ServedAtForecast != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServedAtForecast = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{2b29e1c8-9c66-4412-96f3-cf276f528e44}</MetaDataID>
@@ -119,7 +158,11 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{f5802cfc-5c51-4da8-891f-c48fa3abd3b3}</MetaDataID>
         [PersistentMember(nameof(_PreparedAt))]
         [BackwardCompatibilityID("+3")]
-        public System.DateTime ServedAt { get => _PreparedAt; set => throw new NotImplementedException(); }
+        public System.DateTime ServedAt
+        {
+            get => _PreparedAt;
+            set => throw new NotImplementedException();
+        }
 
 
 
@@ -129,7 +172,11 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{fdf1dea6-88ed-41fa-8302-6d5392ea0359}</MetaDataID>
         [PersistentMember(nameof(_PreparationState))]
         [BackwardCompatibilityID("+4")]
-        public ItemPreparationState PreparationState { get => _PreparationState; set => throw new NotImplementedException(); }
+        public ItemPreparationState PreparationState
+        {
+            get => _PreparationState;
+            set => throw new NotImplementedException();
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -143,12 +190,22 @@ namespace FlavourBusinessManager.RoomService
             _MealCourseTypeUri = ObjectStorage.GetStorageOfObject(mealCourseType).GetPersistentObjectUri(mealCourseType);
             _DurationInMinutes = mealCourseType.DurationInMinutes;
             _Name = mealCourseType.Name;
-            foreach (var itemPreparation in itemPreparations)
-                AddItem(itemPreparation);
+            foreach (var flavourItem in itemPreparations)
+            {
+                AddItem(flavourItem);
+                if (flavourItem.State == ItemPreparationState.Committed)
+                {
+                    if (flavourItem.MenuItem == null)
+                        flavourItem.LoadMenuItem();
 
-            
+                    var preparationData = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(flavourItem);
+                    flavourItem.PreparationStation = preparationData.PreparationStationRuntime.PreparationStation;
+                    flavourItem.State = ItemPreparationState.PreparationDelay;
+
+                }
+
+            }
         }
-
 
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)

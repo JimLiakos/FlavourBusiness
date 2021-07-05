@@ -33,6 +33,59 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             return false;
         }
+        public double GetPreparationTimeSpanInMin(IMenuItem menuItem)
+        {
+            string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+
+            var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
+            if (itemsPreparationInfo != null)
+            {
+                if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
+                    return 0;
+                else
+                    return itemsPreparationInfo.PreparationTimeSpanInMin;
+            }
+            if ((menuItem as MenuItem).Category != null)
+                return GetPreparationTimeSpanInMinForCategoryItems((menuItem as MenuItem).Category);
+
+            return 0;
+        }
+
+
+        public bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint)
+        {
+            if(CanPrepareItem(menuItem))
+            {
+                string servicePointObjectUri = ObjectStorage.GetStorageOfObject(servicePoint).GetPersistentObjectUri(servicePoint);
+                string serviceAreaObjectUri = ObjectStorage.GetStorageOfObject(servicePoint.ServiceArea).GetPersistentObjectUri(servicePoint.ServiceArea);
+                if (PreparationForInfos.OfType<PreparationForInfo>().Where(x => x.ServicePointsInfoObjectUri == servicePointObjectUri && x.PreparationForInfoType == PreparationForInfoType.Exclude).FirstOrDefault() != null)
+                    return false;
+
+                if (PreparationForInfos.OfType<PreparationForInfo>().Where(x => x.ServicePointsInfoObjectUri == servicePointObjectUri && x.PreparationForInfoType == PreparationForInfoType.Include).FirstOrDefault() != null)
+                    return true;
+                if (PreparationForInfos.OfType<PreparationForInfo>().Where(x => x.ServicePointsInfoObjectUri == serviceAreaObjectUri && x.PreparationForInfoType == PreparationForInfoType.Include).FirstOrDefault() != null)
+                    return true;
+            }
+            return false;
+
+        }
+
+        public double GetPreparationTimeSpanInMinForCategoryItems(IItemsCategory itemsCategory)
+        {
+            string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
+            if (itemsPreparationInfo != null)
+            {
+                if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
+                    return 0;
+                else
+                    return itemsPreparationInfo.PreparationTimeSpanInMin;
+            }
+            else if (itemsCategory.Parent != null)
+                return GetPreparationTimeSpanInMinForCategoryItems(itemsCategory.Parent);
+            else
+                return 0;
+        }
         /// <MetaDataID>{da579ee2-870e-4fd5-accd-08c2ca57fa4a}</MetaDataID>
         public bool CanPrepareItemsOfCategory(IItemsCategory itemsCategory)
         {
@@ -50,8 +103,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return CanPrepareItemsOfCategory(itemsCategory.Parent);
             else
                 return false;
-
-
         }
 
 
@@ -155,7 +206,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                         stateTransition.Consistent = true;
                     }
                 }
-
             }
         }
         /// <exclude>Excluded</exclude>
@@ -165,6 +215,17 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_PreparationForInfos))]
         [BackwardCompatibilityID("+5")]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
+
+        public bool HasServicePointsPreparationInfos
+        {
+            get
+            {
+                if (_PreparationForInfos.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
         public event ObjectChangeStateHandle ObjectChangeState;
         ///// <MetaDataID>{bbe32c62-0fef-4c53-b119-7a88a70c3277}</MetaDataID>
@@ -322,7 +383,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _PreparationForInfos.Remove(preparationForInfo); 
+                _PreparationForInfos.Remove(preparationForInfo);
+                ObjectStorage.DeleteObject(preparationForInfo);
                 stateTransition.Consistent = true;
             }
         }
