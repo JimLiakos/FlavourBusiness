@@ -395,7 +395,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (this.SessionState == SessionState.MealValidationDelay)
                 MealValidationDelayRun();
             if (this.SessionState == SessionState.MealMonitoring)
+            {
+                var sds = _Meal.Value.Courses;
                 _Meal.Value.MonitoringRun();
+            }
             else
                 StateMachineMonitoring();
 

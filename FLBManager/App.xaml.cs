@@ -63,10 +63,22 @@ namespace FLBManager
 
             EventManager.RegisterClassHandler(typeof(UIElement), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
 
-             //Backup(@"F:\NewPc\Azure blob storage\Backup");
+            //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Restore(@"F:\AzureData\Backup", "DevStorage", "", "");
 
-            // Restore(@"C:\Projects\Azure blob storage\Backup", "DevStorage", "", "");
+            //string storageName = "jimliakosgmailcom";
+            //string storageLocation = "DevStorage";
+            //string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+
+            //var storage = new OOAdvantech.Linq.Storage(ObjectStorage.OpenStorage(storageName,
+            //                                                storageLocation,
+            //                                                storageType));
+
+            //var m_meal = (from meal in storage.GetObjectCollection<FlavourBusinessManager.RoomService.Meal>()
+            //              select meal).FirstOrDefault();
+            //var sds = m_meal.Courses;
+
+
 
 
             base.OnStartup(e);
@@ -96,6 +108,7 @@ namespace FLBManager
             OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
             OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
+
         }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
@@ -322,6 +335,8 @@ namespace FLBManager
 
         private static void Backup(string backupFolder)
         {
+
+
             string storageName = "FlavourBusinesses";
             string storageLocation = "DevStorage";
             string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
