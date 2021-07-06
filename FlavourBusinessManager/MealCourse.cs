@@ -107,12 +107,12 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <exclude>Excluded</exclude>
-        DateTime _StartsAt;
+        DateTime? _StartsAt;
 
         /// <MetaDataID>{963bb0ae-3234-4bf5-b7e4-9a313dcb9531}</MetaDataID>
         [PersistentMember(nameof(_StartsAt))]
         [BackwardCompatibilityID("+2")]
-        public System.DateTime StartsAt
+        public System.DateTime? StartsAt
         {
             get => _StartsAt;
             set
@@ -130,12 +130,12 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <exclude>Excluded</exclude>
-        System.DateTime _ServedAtForecast;
+        System.DateTime? _ServedAtForecast;
 
         /// <MetaDataID>{19242092-38cd-4f7d-b7dc-77abc4dfb56e}</MetaDataID>
         [PersistentMember(nameof(_ServedAtForecast))]
         [BackwardCompatibilityID("+8")]
-        public System.DateTime ServedAtForecast
+        public System.DateTime? ServedAtForecast
         {
             get => _ServedAtForecast;
             set

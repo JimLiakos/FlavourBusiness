@@ -25,11 +25,11 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{3de93cf9-61ad-4dda-b02a-99d2e810f125}</MetaDataID>
         [BackwardCompatibilityID("+1")]
-        DateTime StartsAt { get; set; }
+        DateTime? StartsAt { get; set; }
 
         /// <MetaDataID>{ec3023f2-0cb5-4472-9a52-c171fdd905fe}</MetaDataID>
         [BackwardCompatibilityID("+2")]
-        DateTime ServedAtForecast { get; set; }
+        DateTime? ServedAtForecast { get; set; }
 
 
     }

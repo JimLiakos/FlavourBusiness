@@ -147,7 +147,7 @@ namespace FlavourBusinessManager.RoomService
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 MealCourse headCourse = Courses[0] as MealCourse;
-                if (headCourse.ServedAtForecast == System.DateTime.MinValue)
+                if (headCourse.ServedAtForecast == null)
                 {
                     var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
                     headCourse.ServedAtForecast = System.DateTime.Now + foodItemsPreparatioData[0].duration;
@@ -166,7 +166,7 @@ namespace FlavourBusinessManager.RoomService
                      
                     var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
 
-                    DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
+                    DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast.Value + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
 
 
 
