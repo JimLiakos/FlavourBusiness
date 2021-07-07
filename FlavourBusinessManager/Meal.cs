@@ -126,7 +126,7 @@ namespace FlavourBusinessManager.RoomService
                     var sesionState = Session.SessionState;
                     while (sesionState == SessionState.MealMonitoring)
                     {
-                        if (Courses[0].ServedAtForecast == System.DateTime.MinValue)
+                        if (Courses[0].ServedAtForecast == null)
                         {
                             BuildMealTimePlan();
                         }
@@ -161,7 +161,7 @@ namespace FlavourBusinessManager.RoomService
 
                 foreach (MealCourse course in Courses)
                 {
-                    if (course== headCourse|| course.ServedAtForecast!=DateTime.MinValue)
+                    if (course== headCourse|| course.ServedAtForecast!=null)
                         continue;
                      
                     var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
