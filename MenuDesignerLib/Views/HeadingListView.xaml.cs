@@ -63,7 +63,7 @@ namespace MenuDesigner.Views
                     {
                         try
                         {
-                            DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(heading), DragDropEffects.Copy);
+                            DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(heading), DragDropEffects.Copy);
                         }
                         catch (Exception error)
                         {
@@ -100,7 +100,7 @@ namespace MenuDesigner.Views
             {
                 try
                 {
-                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(heading), DragDropEffects.Copy);
+                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(heading), DragDropEffects.Copy);
                 }
                 catch (Exception error)
                 {

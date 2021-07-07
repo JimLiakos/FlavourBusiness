@@ -64,14 +64,19 @@ namespace MenuDesigner.Views
                 var itemsCategoryViewModel = (sender as FrameworkElement).GetDataContextObject<ViewModel.MenuCanvas.ItemsCategoryViewModel>();
 
                 if (treeFoodItemViewModel != null)
-                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
+                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
 
                 if (treeBlankItemViewModel != null)
-                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
-
+                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
 
                 if (itemsCategoryViewModel != null)
-                    DragDrop.DoDragDrop(this, new MenuItemsEditor.ViewModel.DragItemsCategory(itemsCategoryViewModel.ItemsCategory), DragDropEffects.Copy);
+                {
+                    var menuCanvasItems = (from foodItemViewModel in itemsCategoryViewModel.Members.OfType<ViewModel.MenuCanvas.TreeFoodItemViewModel>()
+                                           select foodItemViewModel.MenuCanvasFoodItem as MenuPresentationModel.MenuCanvas.IMenuCanvasItem).ToList();
+
+                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(menuCanvasItems), DragDropEffects.Copy);
+
+                }
 
             }
         }
@@ -84,14 +89,19 @@ namespace MenuDesigner.Views
             var itemsCategoryViewModel = (sender as FrameworkElement).GetDataContextObject<ViewModel.MenuCanvas.ItemsCategoryViewModel>();
 
             if (treeFoodItemViewModel != null)
-                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
+                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
 
             if (treeBlankItemViewModel != null)
-                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItem(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
+                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
 
 
             if (itemsCategoryViewModel != null)
-                DragDrop.DoDragDrop(this, new MenuItemsEditor.ViewModel.DragItemsCategory(itemsCategoryViewModel.ItemsCategory), DragDropEffects.Copy);
+            {
+                var menuCanvasItems = (from foodItemViewModel in itemsCategoryViewModel.Members.OfType<ViewModel.MenuCanvas.TreeFoodItemViewModel>()
+                                       select foodItemViewModel.MenuCanvasFoodItem as MenuPresentationModel.MenuCanvas.IMenuCanvasItem).ToList();
+                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(menuCanvasItems), DragDropEffects.Copy);
+            }
+
 
 
         }

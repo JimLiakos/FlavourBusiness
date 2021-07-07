@@ -13,6 +13,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Xml;
 using MenuDesigner.ViewModel.MenuCanvas;
+using MenuItemsEditor.ViewModel;
 using MenuPresentationModel.MenuCanvas;
 using OOAdvantech.Transactions;
 using SharpVectors.Converters;
@@ -184,7 +185,7 @@ namespace MenuDesigner.Views.MenuCanvas
                 e.Effects = DragDropEffects.None;
                 return;
             }
-            ViewModel.MenuCanvas.DragCanvasItem canvasItem = e.Data.GetData(typeof(ViewModel.MenuCanvas.DragCanvasItem)) as ViewModel.MenuCanvas.DragCanvasItem;
+            ViewModel.MenuCanvas.DragCanvasItems canvasItem = e.Data.GetData(typeof(ViewModel.MenuCanvas.DragCanvasItems)) as ViewModel.MenuCanvas.DragCanvasItems;
             if (canvasItem != null)
             {
                 this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
@@ -207,8 +208,8 @@ namespace MenuDesigner.Views.MenuCanvas
                         bookPageViewModel.DragDropArea.Opacity = 1;
                         bookPageViewModel.DragDropArea.Visibility = Visibility.Visible;
 
-                        if (bookPageViewModel.DragDropArea.MenuItem == null || bookPageViewModel.DragDropArea.MenuItem.MenuCanvasItem != canvasItem.MenuCanvasItem)
-                            bookPageViewModel.DragDropArea.MenuItem = new MenuCanvasItemTextViewModel(canvasItem.MenuCanvasItem);
+                        if (bookPageViewModel.DragDropArea.MenuItem == null || bookPageViewModel.DragDropArea.MenuItem.MenuCanvasItem != canvasItem.MenuCanvasItems[0])
+                            bookPageViewModel.DragDropArea.MenuItem = new MenuCanvasItemTextViewModel(canvasItem.MenuCanvasItems[0]);
 
                         bookPageViewModel.DragDropArea.Top = canvasPoint.Y;
                         bookPageViewModel.DragDropArea.Left = dropRectangle.X;
@@ -249,39 +250,47 @@ namespace MenuDesigner.Views.MenuCanvas
                     try
                     {
                         Point point = e.GetPosition(this);
-                        DragCanvasItem dragCanvasItem = e.Data.GetData(typeof(DragCanvasItem)) as DragCanvasItem;
-                         bookPageViewModel = this.GetDataContextObject<BookPageViewModel>();
+                        DragCanvasItems dragCanvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+                        DragCanvasItems dragCanvasItems = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
 
-                        if (dragCanvasItem.MenuCanvasItem.Page != null)
+                        bookPageViewModel = this.GetDataContextObject<BookPageViewModel>();
+
+                        
+
+                        if (dragCanvasItem.MenuCanvasItems.Where(x => x.Page != null).Count() > 0)
                             bookPageViewModel.BookViewModel.ShowPopUpMessage = true;
                         else
                         {
-                            if (dragCanvasItem.MenuCanvasItem is MenuPresentationModel.MenuCanvas.IMenuCanvasHeading)
-                                (dragCanvasItem.MenuCanvasItem as MenuPresentationModel.MenuCanvas.IMenuCanvasHeading).NextColumnOrPage = false;
-
-                            IMenuCanvasItem dropedMenuCanvasItem = dragCanvasItem.MenuCanvasItem;
-
-                            if (dropedMenuCanvasItem is IMenuCanvasFoodItem && (dropedMenuCanvasItem as IMenuCanvasFoodItem).MenuItem == null)
+                            foreach (var menuCanvasItem in dragCanvasItem.MenuCanvasItems)
                             {
-                                dropedMenuCanvasItem = new MenuCanvasFoodItem();
-                                dropedMenuCanvasItem.Description = "";
+                                if (menuCanvasItem is MenuPresentationModel.MenuCanvas.IMenuCanvasHeading)
+                                    (menuCanvasItem as MenuPresentationModel.MenuCanvas.IMenuCanvasHeading).NextColumnOrPage = false;
+
+                                IMenuCanvasItem dropedMenuCanvasItem = menuCanvasItem;
+
+                                if (dropedMenuCanvasItem is IMenuCanvasFoodItem && (dropedMenuCanvasItem as IMenuCanvasFoodItem).MenuItem == null)
+                                {
+                                    dropedMenuCanvasItem = new MenuCanvasFoodItem();
+                                    dropedMenuCanvasItem.Description = "";
+                                }
+
+
+
+
+                                bookPageViewModel.MenuPage.InsertCanvasItemTo(dropedMenuCanvasItem, point);
+
+                                var menuCanvasItems = (from page in bookPageViewModel.BookViewModel.RestaurantMenu.Pages
+                                                       from pageMenuCanvasItem in page.MenuCanvasItems
+                                                       select pageMenuCanvasItem).ToList();
+                                var indexofMenuCanvasItem = menuCanvasItems.IndexOf(dropedMenuCanvasItem);
+                                if (indexofMenuCanvasItem > 0)
+                                    bookPageViewModel.BookViewModel.RestaurantMenu.InsertMenuItemAfter(menuCanvasItems[indexofMenuCanvasItem - 1], dropedMenuCanvasItem);
+                                else
+                                    bookPageViewModel.BookViewModel.RestaurantMenu.InsertMenuItemAfter(null, dropedMenuCanvasItem);
+
+
+                                bookPageViewModel.BookViewModel.MenuItemDropOnPage(this.GetDataContextObject<BookPageViewModel>().MenuPage);
                             }
-
-                       
-                            
-                            bookPageViewModel.MenuPage.InsertCanvasItemTo(dropedMenuCanvasItem, point);
-
-                            var menuCanvasItems = (from page in bookPageViewModel.BookViewModel.RestaurantMenu.Pages
-                                                   from menuCanvasItem in page.MenuCanvasItems
-                                                   select menuCanvasItem).ToList();
-                            var indexofMenuCanvasItem = menuCanvasItems.IndexOf(dropedMenuCanvasItem);
-                            if (indexofMenuCanvasItem > 0)
-                                bookPageViewModel.BookViewModel.RestaurantMenu.InsertMenuItemAfter(menuCanvasItems[indexofMenuCanvasItem - 1], dropedMenuCanvasItem);
-                            else
-                                bookPageViewModel.BookViewModel.RestaurantMenu.InsertMenuItemAfter(null, dropedMenuCanvasItem);
-
-
-                            bookPageViewModel.BookViewModel.MenuItemDropOnPage(this.GetDataContextObject<BookPageViewModel>().MenuPage);
 
                             // this.GetDataContextObject<BookPageViewModel>().Refresh();
                         }
