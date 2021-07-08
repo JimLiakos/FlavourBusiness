@@ -93,9 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
-    <AndroidAsset Include="Assets\Content\assets\vssver.scc" />
-    <AndroidAsset Include="Assets\Content\assets\images\vssver.scc" />
-    <AndroidAsset Include="Assets\Content\assets\signInImages\vssver.scc" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

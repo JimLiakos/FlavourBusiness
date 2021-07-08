@@ -1,24 +1,68 @@
 <Project Sdk="Microsoft.NET.Sdk" ProjectGUID="0ea0edf8-8cf9-45c9-8001-07f56e7fd824">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>pdbonly</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
+			<Link>MenuModel\ILevel.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="MenuModel\IMealCourseType.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="MenuModel\IMealType.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItem.cs">
+			<Link>MenuModel\IMenuItem.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItemPrice.cs">
+			<Link>MenuModel\IMenuItemPrice.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItemType.cs">
+			<Link>MenuModel\IMenuItemType.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IOptionMenuItemSpecific.cs">
+			<Link>MenuModel\IOptionMenuItemSpecific.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPartofMeal.cs" Link="MenuModel\IPartofMeal.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationOption.cs">
+			<Link>MenuModel\IPreparationOption.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationOptionGroup.cs">
+			<Link>MenuModel\IPreparationOptionGroup.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationScaledOption.cs">
+			<Link>MenuModel\IPreparationScaledOption.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPricingContext.cs">
+			<Link>MenuModel\IPricingContext.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IScaleType.cs">
+			<Link>MenuModel\IScaleType.cs</Link>
+		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+		<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="App.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+		<None Update="MainPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="MenuModel\" />
+	</ItemGroup>
 </Project>

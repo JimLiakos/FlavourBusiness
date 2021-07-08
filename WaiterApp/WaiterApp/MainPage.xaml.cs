@@ -21,7 +21,7 @@ namespace WaiterApp
             {
                 string url = @"http://192.168.2.8:4303/";//org
                 url = @"http://192.168.2.5:4303/";//Braxati
-               // url = @"http://10.0.0.8:4303/";//work
+                url = @"http://10.0.0.13:4303/";//work
                 //url = "local://index.html";
 
                 hybridWebView.Uri = url;

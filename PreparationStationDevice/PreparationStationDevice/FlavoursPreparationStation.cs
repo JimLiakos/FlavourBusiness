@@ -6,7 +6,6 @@ using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using OOAdvantech.MetaDataRepository;
-using FlavourBusinessManager.RoomService;
 using OOAdvantech.Remoting.RestApi;
 
 namespace PreparationStationDevice
