@@ -17,16 +17,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
-		<Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs" Link="ViewModel\FoodServiceClientVM.cs" />
-		<Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs" Link="ViewModel\IFlavoursOrderServer.cs" />
-		<Compile Include="..\..\..\PersistenceLayer\Xamarin\DontWaitAppNS\DontWaitAppNS\Messmate.cs" Link="ViewModel\Messmate.cs" />
+		<Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
+		<Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs" Link="ViewModel\FoodServiceClientVM.cs" />
+		<Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs" Link="ViewModel\IFlavoursOrderServer.cs" />
+		<Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\Messmate.cs" Link="ViewModel\Messmate.cs" />
+		<Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs" Link="ViewModel\FlavoursOrderServer.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
 			<Link>MenuModel\ILevel.cs</Link>
 		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="MenuModel\IMealCourseType.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="MenuModel\IMealType.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItem.cs">
 			<Link>MenuModel\IMenuItem.cs</Link>
 		</Compile>
@@ -39,6 +42,7 @@
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IOptionMenuItemSpecific.cs">
 			<Link>MenuModel\IOptionMenuItemSpecific.cs</Link>
 		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\IPartofMeal.cs" Link="MenuModel\IPartofMeal.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationOption.cs">
 			<Link>MenuModel\IPreparationOption.cs</Link>
 		</Compile>
@@ -228,7 +232,7 @@
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
-		<ProjectReference Include="..\..\Xamarin\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
+		<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

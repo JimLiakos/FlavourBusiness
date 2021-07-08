@@ -25,6 +25,8 @@ namespace WaiterApp.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::OOAdvantech.NetStandard.Droid.Resource.String.app_name = global::WaiterApp.Droid.Resource.String.app_name;
+			global::OOAdvantech.NetStandard.Droid.Resource.String.hello = global::WaiterApp.Droid.Resource.String.hello;
 			global::Plugin.Permissions.Resource.Attribute.alpha = global::WaiterApp.Droid.Resource.Attribute.alpha;
 			global::Plugin.Permissions.Resource.Attribute.coordinatorLayoutStyle = global::WaiterApp.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Plugin.Permissions.Resource.Attribute.font = global::WaiterApp.Droid.Resource.Attribute.font;
@@ -10549,43 +10551,46 @@ namespace WaiterApp.Droid
 			public const int google_storage_bucket = 2131558488;
 			
 			// aapt resource value: 0x7F0D0059
-			public const int hide_bottom_view_on_scroll_behavior = 2131558489;
+			public const int hello = 2131558489;
 			
 			// aapt resource value: 0x7F0D005A
-			public const int library_name = 2131558490;
+			public const int hide_bottom_view_on_scroll_behavior = 2131558490;
 			
 			// aapt resource value: 0x7F0D005B
-			public const int messenger_send_button_text = 2131558491;
+			public const int library_name = 2131558491;
 			
 			// aapt resource value: 0x7F0D005C
-			public const int mtrl_chip_close_icon_content_description = 2131558492;
+			public const int messenger_send_button_text = 2131558492;
 			
 			// aapt resource value: 0x7F0D005D
-			public const int overflow_tab_title = 2131558493;
+			public const int mtrl_chip_close_icon_content_description = 2131558493;
 			
 			// aapt resource value: 0x7F0D005E
-			public const int password_toggle_content_description = 2131558494;
+			public const int overflow_tab_title = 2131558494;
 			
 			// aapt resource value: 0x7F0D005F
-			public const int path_password_eye = 2131558495;
+			public const int password_toggle_content_description = 2131558495;
 			
 			// aapt resource value: 0x7F0D0060
-			public const int path_password_eye_mask_strike_through = 2131558496;
+			public const int path_password_eye = 2131558496;
 			
 			// aapt resource value: 0x7F0D0061
-			public const int path_password_eye_mask_visible = 2131558497;
+			public const int path_password_eye_mask_strike_through = 2131558497;
 			
 			// aapt resource value: 0x7F0D0062
-			public const int path_password_strike_through = 2131558498;
+			public const int path_password_eye_mask_visible = 2131558498;
 			
 			// aapt resource value: 0x7F0D0063
-			public const int project_id = 2131558499;
+			public const int path_password_strike_through = 2131558499;
 			
 			// aapt resource value: 0x7F0D0064
-			public const int search_menu_title = 2131558500;
+			public const int project_id = 2131558500;
 			
 			// aapt resource value: 0x7F0D0065
-			public const int status_bar_notification_info_overflow = 2131558501;
+			public const int search_menu_title = 2131558501;
+			
+			// aapt resource value: 0x7F0D0066
+			public const int status_bar_notification_info_overflow = 2131558502;
 			
 			static String()
 			{

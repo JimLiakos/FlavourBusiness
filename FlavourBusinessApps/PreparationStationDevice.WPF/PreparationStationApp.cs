@@ -42,7 +42,8 @@ namespace PreparationStationDevice.WPF
             SerializationBinder.TypesNamesDictionary[typeof(PreparationStationDevice.Ingredient)] = "PreparationStationDevice.Ingredient";
 
 
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
+            string storageMetadataGetFullUrl = string.Format("http://{0}:8090/api/Storages", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl(storageMetadataGetFullUrl);
 
         }
     }

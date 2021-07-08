@@ -38,12 +38,14 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodServiceClientSession.cs" Link="IFoodServiceClientSession.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodServiceSession.cs" Link="IFoodServiceSession.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IItemPreparation.cs" Link="IItemPreparation.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMeal.cs" Link="IMeal.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMealCourse.cs" Link="IMealCourse.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMessageConsumer.cs" Link="IMessageConsumer.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IOptionChange.cs" Link="IOptionChange.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IOrganization.cs" Link="IOrganization.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IParty.cs" Link="IParty.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPreparationStationRuntime.cs" Link="IPreparationStationRuntime.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPrepareFortInfo.cs" Link="IPrepareFortInfo.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPrepartionStation.cs" Link="IPrepartionStation.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IServiceArea.cs" Link="IServiceArea.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IServiceContextSupervisor.cs" Link="IServiceContextSupervisor.cs" />
@@ -64,6 +66,8 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\UserData.cs" Link="UserData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\WorkerData.cs" Link="WorkerData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ΙHallLayout.cs" Link="ΙHallLayout.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="IMealCourseType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="IMealType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
