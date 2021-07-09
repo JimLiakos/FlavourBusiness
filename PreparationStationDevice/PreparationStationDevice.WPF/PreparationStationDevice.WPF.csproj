@@ -91,10 +91,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
-      <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
-      <Name>Linq - VS10</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
       <Project>{f20e4565-5ddb-4e1e-a343-369927c01277}</Project>
       <Name>OOAdvantech.Json</Name>

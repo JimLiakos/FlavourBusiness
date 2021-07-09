@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+#if !FlavourBusinessDevice
 using System.Windows.Controls;
+#endif
+
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech.MetaDataRepository;

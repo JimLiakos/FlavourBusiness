@@ -17,6 +17,17 @@ namespace PreparationStationDevice
         public MainPage()
         {
             InitializeComponent();
+
+
+            BindingContext = new FlavoursPreparationStation();
+
+            string url = @"http://192.168.2.8:4301/";//org
+            //url = @"http://192.168.2.5:4301/";//Braxati
+            //url = @"http://10.0.0.13:4301/";//work
+            //url = "local://index.html";
+
+            
+            hybridWebView.Uri = url;
         }
     }
 }
