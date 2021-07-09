@@ -132,6 +132,9 @@
     <value>Administration</value>
     <comment>Tree view node Name for Administration</comment>
   </data>
+  <data name="AssignPreparationDevicePrompt" xml:space="preserve">
+    <value>Assign  device</value>
+  </data>
   <data name="CompanyResourcesLabel" xml:space="preserve">
     <value>Company Resources</value>
   </data>

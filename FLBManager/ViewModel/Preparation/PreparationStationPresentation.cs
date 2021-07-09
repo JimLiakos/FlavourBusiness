@@ -161,11 +161,11 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationStation.RemovePreparationForInfo(preparationForInfo);
                 PreparationForInfos.Remove(preparationForInfo);
 
-                if((from a_preparationForInfo in this.PreparationForInfos
-                 where a_preparationForInfo.PreparationForInfoType==PreparationForInfoType.Include
-                 select a_preparationForInfo).FirstOrDefault()==null)
+                if ((from a_preparationForInfo in this.PreparationForInfos
+                     where a_preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include
+                     select a_preparationForInfo).FirstOrDefault() == null)
                 {
-                    foreach(var servicePointpreparationForInfo in PreparationForInfos.ToList())
+                    foreach (var servicePointpreparationForInfo in PreparationForInfos.ToList())
                     {
                         PreparationStation.RemovePreparationForInfo(servicePointpreparationForInfo);
                         PreparationForInfos.Remove(servicePointpreparationForInfo);
@@ -198,7 +198,7 @@ namespace FLBManager.ViewModel.Preparation
             PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
         }
 
-     
+
         /// <MetaDataID>{a517dbc7-ab28-48cd-b5a0-a837abed283f}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
@@ -680,6 +680,15 @@ namespace FLBManager.ViewModel.Preparation
                 System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 EditMenuItem(win);
             });
+
+            AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Preparation Station", "Scan to register as preparation station") { CodeValue = this.PreparationStationIdentity };
+                QRCodePopup.Owner = win;
+                QRCodePopup.ShowDialog();
+
+            });
         }
 
         /// <MetaDataID>{1d7a52a8-e26d-4a22-8fd0-61ae0d1ddb1f}</MetaDataID>
@@ -790,7 +799,7 @@ namespace FLBManager.ViewModel.Preparation
                     _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
                 }
 
-                
+
                 return _PreparationStationSubjects;
             }
         }
@@ -816,6 +825,10 @@ namespace FLBManager.ViewModel.Preparation
 
         /// <MetaDataID>{f775d80c-3dd3-4f40-b49b-aaf62b8cbbf3}</MetaDataID>
         public RelayCommand RenameCommand { get; protected set; }
+
+
+        public RelayCommand AssignCommand { get; protected set; }
+
         /// <MetaDataID>{cd56dd83-901c-45a2-8ccb-24e491b60183}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
         /// <MetaDataID>{60131975-e7b1-429f-86fe-891130a696a1}</MetaDataID>
@@ -906,6 +919,17 @@ namespace FLBManager.ViewModel.Preparation
                     menuItem.Command = EditCommand;
 
                     _ContextMenuItems.Add(menuItem);
+
+                    _ContextMenuItems.Add(null);
+                    menuItem = new MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/Key16.png"));
+                    menuItem.Header = Properties.Resources.AssignPreparationDevicePrompt;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = AssignCommand;
+
+                    _ContextMenuItems.Add(menuItem);
+
+
 
 
 
@@ -1084,9 +1108,9 @@ namespace FLBManager.ViewModel.Preparation
         {
             var serviceAreaPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
 
-            if(serviceAreaPreparationForInfo==null)
+            if (serviceAreaPreparationForInfo == null)
             {
-                serviceAreaPreparationForInfo=this.PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+                serviceAreaPreparationForInfo = this.PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
                 PreparationForInfos.Add(serviceAreaPreparationForInfo);
                 _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
                 _PreparationStationSubjects = _PreparationStationSubjects.ToList();
