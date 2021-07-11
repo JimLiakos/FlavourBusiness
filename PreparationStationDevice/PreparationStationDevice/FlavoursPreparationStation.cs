@@ -10,6 +10,10 @@ using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessManager.RoomService;
 using System.Net.Http;
 
+#if DeviceDotNet
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+#endif
+
 namespace PreparationStationDevice
 {
     /// <MetaDataID>{293c7b92-a89a-4179-a8ff-616948355d82}</MetaDataID>
@@ -129,6 +133,48 @@ namespace PreparationStationDevice
                 ApplicationSettings.Current.CommunicationCredentialKey = value;
             }
         }
+#if DeviceDotNet
+        public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
+#endif
+        [HttpVisible]
+        public Task<bool> AssignPreparationStation()
+        {
+            return Task<bool>.Run(async() =>
+            {
+#if DeviceDotNet
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
+                communicationCredentialKey =result.Text;
+
+                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                string serverUrl = AzureServerUrl;
+                IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
+                if (PreparationStation != null)
+                {
+                    Title = PreparationStation.Description;
+                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
+                    CommunicationCredentialKey = communicationCredentialKey;
+                    return true;
+                }
+                else
+                {
+                    Title = "";
+                    return false;
+                }
+#else
+                return false;
+#endif
+
+
+
+            });
+        }
+
 
         [HttpVisible]
         public Task<bool> AssignCommunicationCredentialKey(string credentialKey)

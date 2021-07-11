@@ -6,6 +6,7 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{0cf4bde3-81c2-4685-b35d-ea231ae11540}</MetaDataID>
+    [GenerateFacadeProxy]
     public interface IPreparationStationRuntime
     {
 

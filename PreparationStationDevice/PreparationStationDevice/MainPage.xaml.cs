@@ -17,6 +17,26 @@ namespace PreparationStationDevice
         public MainPage()
         {
             InitializeComponent();
+
+
+            BindingContext = new FlavoursPreparationStation();
+
+            string url = @"http://192.168.2.8:4301/";//org
+            //url = @"http://192.168.2.5:4301/";//Braxati
+            url = @"http://10.0.0.13:4301/";//work
+            //url = "local://index.html";
+
+            
+            hybridWebView.Uri = url;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var cameraPermission = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.Camera>();
+            if (cameraPermission != Xamarin.Essentials.PermissionStatus.Granted)
+                cameraPermission = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Camera>();
+
         }
     }
 }

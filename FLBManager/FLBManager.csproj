@@ -611,6 +611,10 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\graphic-designer24.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\key16.png" />
+    <Resource Include="Resources\Images\Metro\key24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

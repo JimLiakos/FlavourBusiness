@@ -8,8 +8,10 @@
 		<DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
+		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
+		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\IHtmlView.cs" Link="UIBaseEx\IHtmlView.cs" />
+		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
-		<Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
@@ -46,14 +48,19 @@
 			<Link>MenuModel\IScaleType.cs</Link>
 		</Compile>
 		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
+		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs" Link="RestaurantHallLayoutModel\HallLayout.cs" />
+		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs" Link="RestaurantHallLayoutModel\HallLayoutShape.cs" />
+		<Compile Include="..\..\RestaurantHallLayoutModel\ServicPointShape.cs" Link="RestaurantHallLayoutModel\ServicPointShape.cs" />
+		<Compile Include="..\..\RestaurantHallLayoutModel\ShapesGroup.cs" Link="RestaurantHallLayoutModel\ShapesGroup.cs" />
 
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
 		<PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+		<PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+		<PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
 		<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
 	</ItemGroup>
@@ -67,6 +74,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="MenuModel\" />
+		<Folder Include="RestaurantHallLayoutModel\" />
+		<Folder Include="UIBaseEx\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Include="..\..\menumodel\jsonviewmodel\CustomazedPrice.cs" Link="MenuModel\CustomazedPrice.cs" />

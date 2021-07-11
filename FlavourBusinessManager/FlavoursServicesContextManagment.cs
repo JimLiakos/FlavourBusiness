@@ -196,6 +196,8 @@ namespace FlavourBusinessManager
             string preparationStationIdentity = preparationStationCredentialKey.Substring(preparationStationCredentialKey.IndexOf("_") + 1);
 
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            if (flavoursServicesContext == null)
+                return null;
 
             var graphicMenus = (flavoursServicesContext.Owner as Organization).UnSafeGraphicMenus;
 

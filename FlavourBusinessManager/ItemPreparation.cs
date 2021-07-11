@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MenuModel.JsonViewModel;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System.Linq;
@@ -10,6 +10,7 @@ using System;
 using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 #if !FlavourBusinessDevice
+using MenuModel.JsonViewModel;
 using FlavourBusinessManager.ServicePointRunTime;
 #endif
 
