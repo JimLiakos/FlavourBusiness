@@ -99,10 +99,6 @@
       <Project>{ceb65441-0a94-444a-af99-5e4850ae623c}</Project>
       <Name>OOAdvantech.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
-      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
-      <Name>OOAdvantechFacade -VS10</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
       <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
       <Name>OOAdvantech - VS10</Name>

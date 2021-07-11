@@ -5,13 +5,14 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DebugType>pdbonly</DebugType>
 		<DebugSymbols>true</DebugSymbols>
-		<DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>
+		<DefineConstants>TRACE;FlavourBusinessDevice;DeviceDotNet</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
 		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\IHtmlView.cs" Link="UIBaseEx\IHtmlView.cs" />
 		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
+		<Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
@@ -61,6 +62,8 @@
 		<PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
 		<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
 	</ItemGroup>

@@ -3158,6 +3158,18 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemChang
             }
         }
         
+        // The Width property for the object.
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_RestaurantMenuDataSharedUri", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
