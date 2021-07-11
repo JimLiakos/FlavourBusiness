@@ -12,7 +12,14 @@ namespace MenuModel.JsonViewModel
     {
 
 
-        public Multilingual MultilingualName { get => _Name; set { } }
+        public Multilingual MultilingualName
+        {
+            get => _Name; 
+            set
+            {
+                _Name = value;
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();
@@ -61,12 +68,12 @@ namespace MenuModel.JsonViewModel
 
         public IMenuItemType MenuItemType => null;
 
-        public OptionGroup StepGroup { get;set;}
+        public OptionGroup StepGroup { get; set; }
 
 #if !FlavourBusinessDevice
 
 
-    internal OptionGroup Init(IPreparationOptionsGroup optionGroup, Dictionary<object, object> mappedObject)
+        internal OptionGroup Init(IPreparationOptionsGroup optionGroup, Dictionary<object, object> mappedObject)
         {
 
             Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(optionGroup).GetPersistentObjectUri(optionGroup);
@@ -74,18 +81,18 @@ namespace MenuModel.JsonViewModel
             CheckUncheck = optionGroup.SelectionType != MenuModel.SelectionType.SimpleGroup;
 
             _Name = new Multilingual(optionGroup.MultilingualName);
-             mappedObject[optionGroup] = this;
+            mappedObject[optionGroup] = this;
             if (optionGroup is PreparationOptionsGroup && (optionGroup as PreparationOptionsGroup).Stepper != null)
                 this.StepGroup = mappedObject[(optionGroup as PreparationOptionsGroup).Stepper] as OptionGroup;
             HideName = optionGroup.HideName;
-            
-            if(optionGroup is MenuModel.StepperOptionsGroup)
+
+            if (optionGroup is MenuModel.StepperOptionsGroup)
             {
                 IsStepOptionsGroups = true;
                 NestedOptionsGroups = (from nestedOptionGroup in (optionGroup as MenuModel.StepperOptionsGroup).NestedOptionsGroups
-                                              select new JsonViewModel.OptionGroup().Init(nestedOptionGroup, mappedObject)).ToList();
+                                       select new JsonViewModel.OptionGroup().Init(nestedOptionGroup, mappedObject)).ToList();
 
-                
+
             }
 
 
@@ -98,7 +105,7 @@ namespace MenuModel.JsonViewModel
             return this;
         }
 
-        internal OptionGroup Init(List< IPreparationScaledOption> unGroupedOtions, Dictionary<object, object> mappedObject)
+        internal OptionGroup Init(List<IPreparationScaledOption> unGroupedOtions, Dictionary<object, object> mappedObject)
         {
             Uri = "";
 
@@ -109,7 +116,7 @@ namespace MenuModel.JsonViewModel
             return this;
         }
 
-      
+
 #endif
         public IPreparationScaledOption NewPreparationOption()
         {

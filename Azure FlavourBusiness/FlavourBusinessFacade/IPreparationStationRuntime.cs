@@ -25,6 +25,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{806c57e3-5317-4955-9622-97b56e045b98}</MetaDataID>
         IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice);
 
+        string RestaurantMenuDataSharedUri { get; }
+
+
 
         event PreparationItemChangeStateHandled PreparationItemChangeState;
     }

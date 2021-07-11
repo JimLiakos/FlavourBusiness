@@ -125,7 +125,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-                                                                                   where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
+                                                                                   //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
                                                                                    select item.Fetching(item.ClientSession)).ToArray()
                                                           group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
                                                           select ServicePointItems))
@@ -165,7 +165,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             return ServicePointsPreparationItems;
         }
-
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                return ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
+            }
+        }
         /// <MetaDataID>{bb127f36-590c-4b69-af44-4ce09c3a91ef}</MetaDataID>
         internal void OnPreparationItemChangeState(ItemPreparation flavourItem)
         {

@@ -138,7 +138,9 @@ namespace FlavourBusinessFacade
         IWaiter AssignWaiterUser(string waiterAssignKey, string signUpUserIdentity, string userName);
 
 
-        
+
+        string RestaurantMenuDataSharedUri { get; }
+
 
     }
 }

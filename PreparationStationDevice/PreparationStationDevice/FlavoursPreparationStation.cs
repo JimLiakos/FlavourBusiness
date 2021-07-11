@@ -7,6 +7,8 @@ using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
+using FlavourBusinessManager.RoomService;
+using System.Net.Http;
 
 namespace PreparationStationDevice
 {
@@ -54,6 +56,7 @@ namespace PreparationStationDevice
 
 
         }
+        Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> MenuItems;
 
         List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
@@ -71,6 +74,15 @@ namespace PreparationStationDevice
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
                     PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                    HttpClient httpClient = new HttpClient();
+                    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                    getJsonTask.Wait();
+                    var json = getJsonTask.Result;
+                    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x=>x.Uri);
+
+                    // servicesContextManagment.
                     Title = PreparationStation.Description;
 
                     ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
@@ -83,7 +95,7 @@ namespace PreparationStationDevice
                                                            Description = servicePointItems.ServicePoint.Description,
                                                            ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                            ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
-                                                           PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems)).ToList()
+                                                           PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()
                                                        }).ToList();
                 return preparationItemsPerServicePoint;
             });

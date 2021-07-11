@@ -21,7 +21,9 @@ namespace MenuModel.JsonViewModel
 
             Uri = ObjectStorage.GetStorageOfObject(mealType)?.GetPersistentObjectUri(mealType);
         }
-
+        public MealType()
+        {
+        }
         public string Uri { get; set; }
 
 

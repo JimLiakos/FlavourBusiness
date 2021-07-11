@@ -171,6 +171,13 @@ namespace MenuModel.JsonViewModel
             {
                 return _OptionsMenuItemSpecifics;
             }
+            set
+            {
+                if (value == null)
+                    _OptionsMenuItemSpecifics = null;
+                else
+                    _OptionsMenuItemSpecifics = value.ToList();
+            }
         }
 
 
@@ -201,7 +208,7 @@ namespace MenuModel.JsonViewModel
         public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { } }
 
         public bool Stepper { get; set; }
-   
+
         public IList<IPartofMeal> PartofMeals { get; set; }
 
 

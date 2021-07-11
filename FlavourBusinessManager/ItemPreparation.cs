@@ -30,7 +30,7 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+20")]
         public DateTime? PreparedAt
         {
-            get => _PreparedAt; 
+            get => _PreparedAt;
             set
             {
                 if (_PreparedAt != value)
@@ -43,6 +43,8 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
         }
+
+
 
         /// <exclude>Excluded</exclude>
         DateTime? _PreparedAtForecast;
@@ -325,9 +327,15 @@ namespace FlavourBusinessManager.RoomService
                 _MenuItem = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(_MenuItemUri) as IMenuItem;
 
             return _MenuItem;
-
         }
 
+        public IMenuItem LoadMenuItem(Dictionary<string, MenuFoodItem> menuItems)
+        {
+            if (_MenuItem == null && !string.IsNullOrWhiteSpace(_MenuItemUri))
+                _MenuItem = menuItems[_MenuItemUri] as IMenuItem;
+
+            return _MenuItem;
+        }
         /// <MetaDataID>{b4056bc7-a1f1-485f-adc1-22386bdc8e34}</MetaDataID>
         [CommitObjectStateInStorageCall]
         void CommitObjectState()

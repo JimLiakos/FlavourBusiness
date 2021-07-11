@@ -665,21 +665,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-
+        object RestaurantMenusDataLock = new object();
         /// <MetaDataID>{dd6fcb7a-0ce2-46cd-b11e-d205f516854b}</MetaDataID>
         public void SetRestaurantMenusData(OrganizationStorageRef restaurantMenusDataStorageRef)
         {
-            bool publishRestaurantMenuData = false;
-            var fbstorage = (from storage in _Storages
-                             where storage.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu
-                             select storage).FirstOrDefault();
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            lock (RestaurantMenusDataLock)
             {
+                bool publishRestaurantMenuData = false;
+                var fbstorage = (from storage in _Storages
+                                 where storage.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu
+                                 select storage).FirstOrDefault();
+
                 if (fbstorage == null)
                 {
-                    fbstorage = new FlavourBusinessStorage();
-                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(fbstorage);
-                    _Storages.Add(fbstorage);
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        fbstorage = new FlavourBusinessStorage();
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(fbstorage);
+                        _Storages.Add(fbstorage);
+                        stateTransition.Consistent = true;
+                    }
                 }
                 fbstorage.FlavourStorageType = OrganizationStorages.OperativeRestaurantMenu;
                 fbstorage.StorageIdentity = restaurantMenusDataStorageRef.StorageIdentity;
@@ -689,17 +694,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     fbstorage.Url = restaurantMenusDataStorageRef.StorageUrl.Substring(npos);
                 else
                     fbstorage.Url = restaurantMenusDataStorageRef.StorageUrl;
-
                 publishRestaurantMenuData = RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
 
                 string restaurantMenusDataStorageUrl = restaurantMenusDataStorageRef.StorageUrl;
                 RestaurantMenuDataLastModified = restaurantMenusDataStorageRef.TimeStamp;
                 RestaurantMenuDataUri = restaurantMenusDataStorageUrl;
-                stateTransition.Consistent = true;
-            }
 
-            //if (publishRestaurantMenuData)
-            //    PublishMenuRestaurantMenuData();
+
+                if (publishRestaurantMenuData)
+                    PublishMenuRestaurantMenuData();
+            }
         }
 
         /// <MetaDataID>{86ae372e-b324-43c2-a142-debc7505971f}</MetaDataID>
@@ -733,7 +737,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 fileManager.GetBlobInfo(jsonFileName).DeleteIfExists();
             }
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+            using (SystemStateTransition stateTransition = new SystemStateTransition())
             {
                 restaurantMenusData.Version = version;
                 stateTransition.Consistent = true;
@@ -784,7 +788,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             else
                 versionSuffix = "/";
 
-            string serverStorageFolder = string.Format("usersfolder/{0}{1}", OrganizationIdentity, versionSuffix);
+            string serverStorageFolder = string.Format("usersfolder/{0}/{1}{2}", OrganizationIdentity, this.ServicesContextIdentity, versionSuffix);
             return serverStorageFolder;
         }
 
@@ -838,7 +842,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             SetRestaurantMenusData(restaurantMenusDataStorageRef);
             ObjectStorage.UpdateOperativeOperativeObjects(restaurantMenusDataStorageRef.StorageIdentity);
-            PublishMenuRestaurantMenuData();
+            //PublishMenuRestaurantMenuData();
 
         }
 
@@ -885,7 +889,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 serviceArea.Description = Properties.Resources.DefaultServiceAreaDescription;
                 serviceArea.ServicesContextIdentity = this.ServicesContextIdentity;
-               
+
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu));
                 var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
                                  select mealType).ToList();
@@ -1026,7 +1030,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         /// <exclude>Excluded</exclude>
-        int _AllMessmetesCommitedTimeSpan=120;//3min
+        int _AllMessmetesCommitedTimeSpan = 120;//3min
 
         /// <summary>
         /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 
@@ -1047,6 +1051,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         stateTransition.Consistent = true;
                     }
                 }
+            }
+        }
+
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                lock (RestaurantMenusDataLock)
+                {
+                    var restaurantMenusData = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
+                    string version = restaurantMenusData.Version;
+                    string serverStorageFolder = GetVersionFolder(version);
+                    string jsonFileName = serverStorageFolder + restaurantMenusData.Name + ".json";
+                    return RawStorageCloudBlob.RootUri + "/"+jsonFileName;
+                }
+
             }
         }
 
@@ -1182,13 +1202,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var defaultMealTypeUri = clientSession.ServicePoint.ServesMealTypesUris.FirstOrDefault();
             var servedMealTypesUris = clientSession.ServicePoint.ServesMealTypesUris.ToList();
 
-            if (defaultMealTypeUri==null)
+            if (defaultMealTypeUri == null)
             {
                 defaultMealTypeUri = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
                 servedMealTypesUris = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
             }
 
-            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession,ServedMealTypesUris= servedMealTypesUris, DefaultMealTypeUri= defaultMealTypeUri };
+            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri };
         }
 
         /// <MetaDataID>{7be35e44-04e6-418d-b29e-100f9c6f71b0}</MetaDataID>
@@ -1225,7 +1245,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 objectStorage.CommitTransientObjectState(preparationStation);
                 stateTransition.Consistent = true;
             }
-            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = new PreparationStationRuntime(preparationStation); 
+            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = new PreparationStationRuntime(preparationStation);
             return preparationStation;
         }
 

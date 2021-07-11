@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if !FlavourBusinessDevice
 using System.Windows.Controls;
+#endif
+
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech.MetaDataRepository;
@@ -17,20 +20,30 @@ namespace PreparationStationDevice
         public ItemPreparation ItemPreparation;
 
         public ServicePointPreparationItems ServicePointPreparationItems;
-        public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems)
+        public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
         {
             ItemPreparation = itemPreparation;
 
 
             if (ItemPreparation.MenuItem == null)
-                ItemPreparation.LoadMenuItem();
+                ItemPreparation.LoadMenuItem(menuItems);
 
 
-            Ingredients = (from itemType in this.ItemPreparation.MenuItem.Types
-                           from optionGroup in itemType.Options.OfType<MenuModel.IPreparationOptionsGroup>()
+            Ingredients = (from optionGroup in (this.ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
                            from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
-                           where option.IsRecipeIngredient&& option.InitialInRecipe(ItemPreparation.MenuItem)
-                           select new Ingredient( option)).ToList();
+                           where option.IsRecipeIngredient && option.InitialInRecipe(ItemPreparation.MenuItem)
+                           select new Ingredient(option)).ToList();
+
+
+            //if (ItemPreparation.MenuItem == null)
+            //    ItemPreparation.LoadMenuItem();
+
+
+            //Ingredients = (from itemType in this.ItemPreparation.MenuItem.Types
+            //               from optionGroup in itemType.Options.OfType<MenuModel.IPreparationOptionsGroup>()
+            //               from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
+            //               where option.IsRecipeIngredient && option.InitialInRecipe(ItemPreparation.MenuItem)
+            //               select new Ingredient(option)).ToList();
 
             //foreach (var option in options.ToList())
             //{

@@ -20,6 +20,10 @@ namespace MenuModel.JsonViewModel
             DurationInMinutes = mealCourseType.DurationInMinutes;
             Uri = ObjectStorage.GetStorageOfObject(mealCourseType)?.GetPersistentObjectUri(mealCourseType);
         }
+        public MealCourseType()
+        {
+
+        }
 
         public string Uri { get; set; }
 

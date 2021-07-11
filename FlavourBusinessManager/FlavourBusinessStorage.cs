@@ -79,11 +79,15 @@ namespace FlavourBusinessManager
             }
             set
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+
+
+                if (_Owner != value)
                 {
-                    if (_Owner != value)
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
                         _Owner = value;
-                    stateTransition.Consistent = true;
+                        stateTransition.Consistent = true;
+                    }
                 }
             }
         }
@@ -126,11 +130,16 @@ namespace FlavourBusinessManager
             }
             set
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+
+                if (_StorageIdentity != value)
                 {
-                    _StorageIdentity = value;
-                    stateTransition.Consistent = true;
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _StorageIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
                 }
+
             }
         }
 
@@ -148,11 +157,18 @@ namespace FlavourBusinessManager
             }
             set
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+
+
+                if (_Name != value)
                 {
-                    _Name = value;
-                    stateTransition.Consistent = true;
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Name = value;
+                        stateTransition.Consistent = true;
+                    }
                 }
+
+                
             }
         }
         /// <exclude>Excluded</exclude>
@@ -168,10 +184,13 @@ namespace FlavourBusinessManager
             }
             set
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                if (_FlavourStorageType != value)
                 {
-                    _FlavourStorageType = value;
-                    stateTransition.Consistent = true;
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FlavourStorageType = value;
+                        stateTransition.Consistent = true;
+                    }
                 }
             }
         }

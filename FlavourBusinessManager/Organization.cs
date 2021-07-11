@@ -17,6 +17,7 @@ using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
+using System.IO;
 
 //using FlavourBusinessToolKit;
 
@@ -323,7 +324,7 @@ namespace FlavourBusinessManager
             }
         }
 
-    
+
         private bool UploadPermissionsGranted(AuthUser authUser, OrganizationStorageRef storageRef)
         {
 
@@ -563,7 +564,7 @@ namespace FlavourBusinessManager
                     var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
 
-                    storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                    storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
                 }
                 else
@@ -593,7 +594,7 @@ namespace FlavourBusinessManager
                     var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
 
-                    storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                    storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
                     System.Threading.Tasks.Task.Run(async () =>
                    {
@@ -608,7 +609,7 @@ namespace FlavourBusinessManager
                 var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
                 var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
 
-                storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
             }
 
@@ -1115,11 +1116,17 @@ namespace FlavourBusinessManager
             menuItemsStorageRef.UploadService = null;
             operativeMenuItemsStorageRef.UploadService = null;
 
+
+            //PublishMenuRestaurantMenuData(operativeMenuItemsStorageRef);
+
+
+
             foreach (var servicesContext in ServicesContexts)
             {
                 servicesContext.GetRunTime().GraphicMenuStorageMetaDataUpdated(storageRef);
+                var RestaurantMenuDataSharedUri = servicesContext.GetRunTime().RestaurantMenuDataSharedUri;
                 servicesContext.GetRunTime().OperativeRestaurantMenuDataUpdated(operativeMenuItemsStorageRef);
-
+                RestaurantMenuDataSharedUri = servicesContext.GetRunTime().RestaurantMenuDataSharedUri;
             }
 
 
@@ -1127,7 +1134,86 @@ namespace FlavourBusinessManager
 
         #endregion
 
+        #region Code for menu data publish
+        ///// <MetaDataID>{e316c772-4861-4a2a-8183-e656ff7a011a}</MetaDataID>
+        //private void PublishMenuRestaurantMenuData(OrganizationStorageRef restaurantMenuDataStorageRef)
+        //{
+        //    var organizationStorage = (from fbStorage in Storages
+        //                               where fbStorage.StorageIdentity == restaurantMenuDataStorageRef.StorageIdentity
+        //                               select fbStorage).FirstOrDefault();
 
+        //    IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
+        //    string version = "";
+        //    string oldVersion = restaurantMenuDataStorageRef.Version;
+        //    if (string.IsNullOrWhiteSpace(oldVersion))
+        //    {
+        //        version = "v1";
+        //    }
+        //    else
+        //    {
+        //        int v = int.Parse(oldVersion.Replace("v", ""));
+        //        v++;
+        //        version = "v" + v.ToString();
+        //    }
+
+        //    string previousVersionServerStorageFolder = GetVersionFolder(oldVersion);
+
+        //    string serverStorageFolder = GetVersionFolder(version);
+        //    string jsonFileName = serverStorageFolder + restaurantMenuDataStorageRef.Name + ".json";
+        //    WritePublicRestaurantMenuData(restaurantMenuDataStorageRef, jsonFileName);
+
+        //    if (fileManager != null)
+        //    {
+        //        jsonFileName = previousVersionServerStorageFolder + restaurantMenuDataStorageRef.Name + ".json";
+        //        fileManager.GetBlobInfo(jsonFileName).DeleteIfExists();
+        //    }
+
+        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+        //    {
+        //        organizationStorage.Version = version;
+        //        stateTransition.Consistent = true;
+        //    }
+
+
+
+        //}
+
+        ///// <MetaDataID>{5643d261-95ed-4c57-a6ee-9bb4994f3b1c}</MetaDataID>
+        //private static void WritePublicRestaurantMenuData(OrganizationStorageRef restaurantMenuDataStorageRef, string jsonFileName)
+        //{
+        //    IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
+
+        //    RawStorageData rawStorageData = new RawStorageData(restaurantMenuDataStorageRef, null);
+
+        //    OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+        //    Dictionary<object, object> mappedObject = new Dictionary<object, object>();
+        //    List<MenuModel.IMenuItem> menuFoodItems = (from menuItem in restMenusData.GetObjectCollection<MenuModel.IMenuItem>()
+        //                                               select menuItem).ToList().Select(x => new MenuModel.JsonViewModel.MenuFoodItem(x, mappedObject)).OfType<MenuModel.IMenuItem>().ToList();
+
+        //    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings;
+        //    string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(menuFoodItems, jSetttings);
+        //    MemoryStream jsonRestaurantMenuStream = new MemoryStream();
+        //    byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(jsonEx);
+        //    jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
+        //    jsonRestaurantMenuStream.Position = 0;
+
+        //    if (fileManager != null)
+        //        fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
+        //}
+
+        //private string GetVersionFolder(string version)
+        //{
+        //    string versionSuffix = "";
+        //    if (!string.IsNullOrWhiteSpace(version))
+        //        versionSuffix = "/" + version + "/";
+        //    else
+        //        versionSuffix = "/";
+
+        //    string serverStorageFolder = string.Format("usersfolder/{0}{1}", this.Identity, versionSuffix);
+        //    return serverStorageFolder;
+        //}
+
+        #endregion
         /// <MetaDataID>{9bfa1150-7dfa-466f-b9f1-4a66d8ad6ffd}</MetaDataID>
         public IFlavoursServicesContext NewFlavoursServicesContext()
         {

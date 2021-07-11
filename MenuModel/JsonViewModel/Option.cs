@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MenuModel;
 using OOAdvantech;
-
+using OOAdvantech.Json;
 
 namespace MenuModel.JsonViewModel
 {
@@ -46,7 +46,16 @@ namespace MenuModel.JsonViewModel
         {
             get
             {
-                return _FullName.GetValue<string>();
+                if (this.AutoGenFullName)
+                    return this.OptionGroup.Name + " " + this.Name;
+
+
+                if (this.MultilingualFullName.GetValue<string>() != null)
+                    return this.MultilingualFullName.GetValue<string>();
+
+                return this.Name;
+
+
             }
             set
             {
@@ -96,12 +105,22 @@ namespace MenuModel.JsonViewModel
         public IPreparationOptionsGroup OptionGroup { get; set; }
 
 
+
         /// <MetaDataID>{0016f43d-4e55-4f35-91e5-60cab26e4864}</MetaDataID>
-        IScaleType IPreparationScaledOption.LevelType { get; set; }
+        IScaleType IPreparationScaledOption.LevelType { get => this.LevelType; set => this.LevelType = value as ScaleType; }
 
 
         /// <MetaDataID>{65eedb29-3847-489a-84d0-af08d65bd652}</MetaDataID>
-        public ILevel Initial { get; set; }
+        public ILevel Initial
+        {
+            get
+            {
+                return LevelType.Levels[InitialLevelIndex];
+            }
+            set
+            {
+            }
+        }
 
 
         /// <MetaDataID>{c01963e7-a5cc-4190-ad2a-aa3a21934dda}</MetaDataID>
@@ -113,7 +132,7 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{651a67ee-b6d4-42fb-b895-17310c10916e}</MetaDataID>
         public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
 
-        public Multilingual MultilingualFullName { get => new Multilingual(_FullName); set { } }
+        public Multilingual MultilingualFullName { get => new Multilingual(_FullName); set { _FullName = value; } }
 
         /// <MetaDataID>{93085f95-6a95-4064-aaaf-95037afa97d2}</MetaDataID>
         public bool IsRecipeIngredient { get; set; }
@@ -219,13 +238,20 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{4f31586f-46c9-4cc0-9295-bf46a5efa3e2}</MetaDataID>
         public IOptionMenuItemSpecific GetMenuItemSpecific(IMenuItem menuItem)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <MetaDataID>{e1fba8ba-8592-4e58-8382-e3f9b6b2c5e0}</MetaDataID>
         public ILevel GetInitialFor(IMenuItem menuItem)
         {
-            throw new NotImplementedException();
+            if (menuItem != null)
+            {
+                var optionsMenuItemSpecific = menuItem.OptionsMenuItemSpecifics.Where(x => x.Option == this).FirstOrDefault();
+                if (optionsMenuItemSpecific != null)
+                    return optionsMenuItemSpecific.InitialLevel;
+                return Initial;
+            }
+            return Initial;
         }
 
         /// <MetaDataID>{3d564627-92cb-462f-b506-6cf382838c23}</MetaDataID>
@@ -255,7 +281,7 @@ namespace MenuModel.JsonViewModel
 
 
     /// <MetaDataID>{a84587dd-3413-410a-af29-73797fda7dd7}</MetaDataID>
-    public class ScaleType
+    public class ScaleType : IScaleType
     {
         /// <MetaDataID>{276bfbdf-2b7d-4384-8e94-93a601b3a0db}</MetaDataID>
         public string Name { get; set; }
@@ -268,16 +294,32 @@ namespace MenuModel.JsonViewModel
         {
             Levels = new List<Level>();
         }
+
+
+        [JsonConstructor]
+        public ScaleType(string name, string uri, List<Level> levels, bool zeroLevelScaleType)
+        {
+            Name = name;
+            Uri = uri;
+            Levels = levels;
+            ZeroLevelScaleType = zeroLevelScaleType;
+            foreach (var level in Levels)
+                level.DeclaringType = this;
+        }
         /// <MetaDataID>{5ffef0da-8b59-4475-a47e-4c318f07a7e9}</MetaDataID>
         public ScaleType(MenuModel.IScaleType scaleType)
         {
             Levels = (from level in scaleType.Levels select new Level(level)).ToList();
             Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(scaleType).GetPersistentObjectUri(scaleType);
+            ZeroLevelScaleType = scaleType.ZeroLevelScaleType;
         }
         /// <MetaDataID>{35980699-9af5-4f30-be75-c3626799c741}</MetaDataID>
         public List<Level> Levels { get; set; }// = new List<Level>();
         /// <MetaDataID>{c1b82140-b937-4ce1-b040-6e738581a045}</MetaDataID>
         public string Uri { get; set; }
+        public bool ZeroLevelScaleType { get; set; }
+
+        IList<ILevel> IScaleType.Levels => this.Levels.OfType<ILevel>().ToList();
 
         /// <MetaDataID>{dbb658eb-e0a2-4eb3-bc64-d4194db6d8c4}</MetaDataID>
         internal static ScaleType GetScaleTypeFor(MenuModel.IScaleType scaleType)
@@ -306,10 +348,30 @@ namespace MenuModel.JsonViewModel
                 return mappedObject[scaleType] as ScaleType;
 
         }
+
+        public void InsertLevel(int index, ILevel level)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MoveLevel(ILevel level, int newpos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddLevel(ILevel level)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveLevel(ILevel level)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <MetaDataID>{07988325-98d9-4392-9135-01a0aee1af00}</MetaDataID>
-    public class Level
+    public class Level : ILevel
     {
 
         public Level(ILevel level)
@@ -319,6 +381,9 @@ namespace MenuModel.JsonViewModel
             PriceFactor = level.PriceFactor;
             Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(level).GetPersistentObjectUri(level);
 
+        }
+        public Level()
+        {
         }
         public double PriceFactor { get; set; }
         public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
@@ -344,5 +409,7 @@ namespace MenuModel.JsonViewModel
         public bool UncheckOption { get; set; }
         /// <MetaDataID>{c96e920d-19bf-4397-9485-ca425fea1488}</MetaDataID>
         public string Uri { get; set; }
+
+        public IScaleType DeclaringType { get; set; }
     }
 }

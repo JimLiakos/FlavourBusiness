@@ -5,9 +5,11 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DebugType>pdbonly</DebugType>
 		<DebugSymbols>true</DebugSymbols>
+		<DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
+		<Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
@@ -51,6 +53,7 @@
 		<PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
 		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
 		<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
 	</ItemGroup>
@@ -64,5 +67,14 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="MenuModel\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Include="..\..\menumodel\jsonviewmodel\CustomazedPrice.cs" Link="MenuModel\CustomazedPrice.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\itemPreparation.cs" Link="MenuModel\itemPreparation.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\ItemSelectorOption.cs" Link="MenuModel\ItemSelectorOption.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\Option.cs" Link="MenuModel\Option.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\OptionGroup.cs" Link="MenuModel\OptionGroup.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\OptionMenuItemSpecific.cs" Link="MenuModel\OptionMenuItemSpecific.cs" />
+	  <Compile Include="..\..\menumodel\jsonviewmodel\TypedObject.cs" Link="MenuModel\TypedObject.cs" />
 	</ItemGroup>
 </Project>

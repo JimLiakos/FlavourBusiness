@@ -10,7 +10,17 @@ namespace MenuModel.JsonViewModel
     {
         public bool Hide { get; set; }
 
-        public ILevel InitialLevel { get; set; }
+        public ILevel InitialLevel
+        {
+            get
+            {
+                return Option?.LevelType.Levels[InitialLevelIndex];
+            }
+            set
+            {
+
+            }
+        }
         public int InitialLevelIndex { get; set; }
 
 

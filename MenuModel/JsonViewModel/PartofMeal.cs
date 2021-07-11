@@ -21,8 +21,16 @@ namespace MenuModel.JsonViewModel
 
             MenuItem = mappedObject[partofMeal.MenuItem] as IMenuItem;
             var uri = ObjectStorage.GetStorageOfObject(partofMeal.MealCourseType)?.GetPersistentObjectUri(partofMeal.MealCourseType);
-            _MealCourseType = MealType.Courses.OfType<MealCourseType>().Where(x => x.Uri == uri).FirstOrDefault(); ;
+            _MealCourseType = MealType.Courses.OfType<MealCourseType>().Where(x => x.Uri == uri).FirstOrDefault(); 
         }
+
+        [JsonConstructor]
+        public PartofMeal(IMealType mealType, IMealCourseType mealCourseType)
+        {
+            MealType = mealType;
+            _MealCourseType = mealCourseType;
+        }
+
         readonly IMealCourseType _MealCourseType;
         public IMealCourseType MealCourseType { get => _MealCourseType; set => throw new NotImplementedException(); }
 

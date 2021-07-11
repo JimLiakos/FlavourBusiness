@@ -267,19 +267,7 @@ namespace FlavourBusinessManager
                 var storageMetaData = task.Result;
                 if (storageMetaData == null || storageMetaData.StorageIdentity == null)
                     storagesClient.PostAsync(objectStorage.StorageMetaData, true);
-                //{
-                //    storageMetaData = new OOAdvantech.MetaDataRepository.StorageMetaData()
-                //    {
-                //        StorageName = objectStorage.StorageMetaData.StorageName,
-                //        StorageLocation = objectStorage.StorageMetaData.StorageLocation,
-                //        StorageType = objectStorage.StorageMetaData.StorageType,
-                //        StorageIdentity = objectStorage.StorageMetaData.StorageIdentity,
-                //        MultipleObjectContext = true
-                //    };
-                //    storagesClient.PostAsync(storageMetaData);
-
-                //}
-
+         
 
 
 
@@ -309,11 +297,11 @@ namespace FlavourBusinessManager
                 else
                 {
 
-                    bool publishRestaurantMenuData = false;
+                   // bool publishRestaurantMenuData = false;
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         
-                        publishRestaurantMenuData = servicesContextRunTime.RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
+                        //publishRestaurantMenuData = servicesContextRunTime.RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
 
@@ -326,7 +314,7 @@ namespace FlavourBusinessManager
                     //    PublishMenuRestaurantMenuData(servicesContextRunTime);
                     //else
                     //{
-                    //    var restaurantMenusData = servicesContextRunTime.Storages.Where(x => x.FlavourStorageType == OrganizationStorages.RestaurantMenus).FirstOrDefault();
+                    //    var restaurantMenusData = servicesContextRunTime.Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
                     //    string serverStorageFolder = GetVersionFolder(servicesContextRunTime, restaurantMenusData.Version);
                     //    string jsonFileName = serverStorageFolder + restaurantMenusData.Name + ".json";
                     //    IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
@@ -345,16 +333,6 @@ namespace FlavourBusinessManager
                     System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
 
 
-                    //storagesClient.PostAsync(objectStorage.StorageMetaData, true);
-                    //OOAdvantech.MetaDataRepository.StorageMetaData storageMetaData = new OOAdvantech.MetaDataRepository.StorageMetaData()
-                    //{
-                    //    StorageIdentity = objectStorage.StorageMetaData.StorageIdentity,
-                    //    StorageLocation = objectStorage.StorageMetaData.StorageLocation,
-                    //    StorageType = objectStorage.StorageMetaData.StorageType,
-                    //    StorageName = objectStorage.StorageMetaData.StorageName,
-                    //    NativeStorageID = objectStorage.StorageMetaData.NativeStorageID,
-                    //    MultipleObjectContext = true
-                    //};
                     string serverUrl = OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.Substring(0, OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.IndexOf("/api"));
                     System.Threading.Tasks.Task.Run(async () =>
                     {
@@ -394,12 +372,12 @@ namespace FlavourBusinessManager
                 }
                 else
                 {
-                    bool publishRestaurantMenuData = false;
+                    //bool publishRestaurantMenuData = false;
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
 
-                        publishRestaurantMenuData = servicesContextRunTime.RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
+                        //publishRestaurantMenuData = servicesContextRunTime.RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
 
                         if (servicesContextRunTime.OrganizationIdentity != organizationIdentity)
                             servicesContextRunTime.OrganizationIdentity = organizationIdentity;
@@ -513,18 +491,18 @@ namespace FlavourBusinessManager
 
         //}
 
-        /// <MetaDataID>{a6d225d5-a273-4988-bbc2-d773cbd1ecb9}</MetaDataID>
-        private static string GetVersionFolder(ServicesContextRunTime servicesContextRunTime, string version)
-        {
-            string versionSuffix = "";
-            if (!string.IsNullOrWhiteSpace(version))
-                versionSuffix = "/" + version + "/";
-            else
-                versionSuffix = "/";
+        ///// <MetaDataID>{a6d225d5-a273-4988-bbc2-d773cbd1ecb9}</MetaDataID>
+        //private static string GetVersionFolder(ServicesContextRunTime servicesContextRunTime, string version)
+        //{
+        //    string versionSuffix = "";
+        //    if (!string.IsNullOrWhiteSpace(version))
+        //        versionSuffix = "/" + version + "/";
+        //    else
+        //        versionSuffix = "/";
 
-            string serverStorageFolder = string.Format("usersfolder/{0}{1}", servicesContextRunTime.OrganizationIdentity, versionSuffix);
-            return serverStorageFolder;
-        }
+        //    string serverStorageFolder = string.Format("usersfolder/{0}{1}", servicesContextRunTime.OrganizationIdentity, versionSuffix);
+        //    return serverStorageFolder;
+        //}
 
 
     }
