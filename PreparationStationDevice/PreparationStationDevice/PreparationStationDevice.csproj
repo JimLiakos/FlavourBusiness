@@ -13,6 +13,9 @@
 		<Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
 		<Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
+		<Compile Include="..\..\MenuModel\JsonViewModel\MealCourseType.cs" Link="MenuModel\MealCourseType.cs" />
+		<Compile Include="..\..\MenuModel\JsonViewModel\MealType.cs" Link="MenuModel\MealType.cs" />
+		<Compile Include="..\..\MenuModel\JsonViewModel\PartofMeal.cs" Link="MenuModel\PartofMeal.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">

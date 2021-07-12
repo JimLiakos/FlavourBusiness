@@ -2579,6 +2579,96 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
+    public sealed class Pr_IPreparationStationRuntime : FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled PreparationItemChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "add_PreparationItemChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "remove_PreparationItemChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled)});
+                }
+            }
+        
+        public Pr_IPreparationStationRuntime(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IPreparationStation PreparationStation
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_PreparationStation", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPreparationStation>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Description
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_Description", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_RestaurantMenuDataSharedUri", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems> GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemsOnDevice;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "GetPreparationItems", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>>(retValue);
+        }
+    }
+    
     public sealed class Pr_IServiceArea : FlavourBusinessFacade.ServicesContextResources.IServiceArea, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         

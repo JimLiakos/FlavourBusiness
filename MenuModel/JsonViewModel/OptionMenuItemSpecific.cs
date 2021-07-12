@@ -14,6 +14,8 @@ namespace MenuModel.JsonViewModel
         {
             get
             {
+                if (InitialLevelIndex == -1)
+                    return null;
                 return Option?.LevelType.Levels[InitialLevelIndex];
             }
             set
