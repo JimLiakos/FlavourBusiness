@@ -127,9 +127,7 @@ namespace FlavourBusinessManager.RoomService
                     while (sesionState == SessionState.MealMonitoring)
                     {
                         if (Courses[0].ServedAtForecast == null)
-                        {
                             BuildMealTimePlan();
-                        }
                         System.Threading.Thread.Sleep(1000);
                         sesionState = Session.SessionState;
                     }
@@ -179,7 +177,6 @@ namespace FlavourBusinessManager.RoomService
                         foodITem.State = ItemPreparationState.PreparationDelay;
                         foodITem.PreparedAtForecast = course.ServedAtForecast;
                     }
-
                 }
                 stateTransition.Consistent = true;
             }
