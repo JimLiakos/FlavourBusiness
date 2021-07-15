@@ -203,6 +203,8 @@ namespace FlavourBusinessManager.HumanResources
                 if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
                 {
                     IHallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as IHallLayout;
+                    if (hallLayout == null)
+                        continue;
                     halls.Add(hallLayout);
                 }
             }

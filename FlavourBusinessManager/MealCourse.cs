@@ -199,8 +199,10 @@ namespace FlavourBusinessManager.RoomService
                         flavourItem.LoadMenuItem();
 
                     var preparationData = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(flavourItem);
-                    flavourItem.PreparationStation = preparationData.PreparationStationRuntime.PreparationStation;
                     flavourItem.State = ItemPreparationState.PreparationDelay;
+                    preparationData.PreparationStationRuntime.AssignItemPreparation(flavourItem);
+                    
+                    
 
                 }
 

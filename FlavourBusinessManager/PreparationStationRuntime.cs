@@ -147,6 +147,20 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
 
         }
+
+        internal void AssignItemPreparation(ItemPreparation flavourItem)
+        {
+
+            flavourItem.PreparationStation = PreparationStation;
+            var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+            if (servicePointPreparationItems == null)
+                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
+            else
+                servicePointPreparationItems.PreparationItems.Add(flavourItem);
+
+            PreparationItemChangeState?.Invoke()
+        }
+
         /// <MetaDataID>{a66e6690-f78e-4a01-9df8-8dee98b2e386}</MetaDataID>
         public string Description { get => _PreparationStation.Description; }
 
