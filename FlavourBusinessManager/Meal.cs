@@ -194,7 +194,6 @@ namespace FlavourBusinessManager.RoomService
                         foodITem.State = ItemPreparationState.PreparationDelay;
                         foodITem.PreparedAtForecast = course.ServedAtForecast;
                     }
-
                 }
                 stateTransition.Consistent = true;
             }
