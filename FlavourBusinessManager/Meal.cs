@@ -127,9 +127,24 @@ namespace FlavourBusinessManager.RoomService
                     while (sesionState == SessionState.MealMonitoring)
                     {
                         if (Courses[0].ServedAtForecast == null)
-                        {
                             BuildMealTimePlan();
+
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var preparationItem in (from course in Courses
+                                                             from foodItem in course.FoodItems.OfType<ItemPreparation>()
+                                                             where foodItem.State == ItemPreparationState.PreparationDelay
+                                                             select foodItem))
+                            {
+                                var preparationData = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(preparationItem);
+                                if (DateTime.UtcNow + preparationData.Duration > preparationItem.PreparedAtForecast)
+                                    preparationItem.State = ItemPreparationState.PendingPreparation;
+                            }
+
+                            stateTransition.Consistent = true;
                         }
+
                         System.Threading.Thread.Sleep(1000);
                         sesionState = Session.SessionState;
                     }
@@ -150,7 +165,7 @@ namespace FlavourBusinessManager.RoomService
                 if (headCourse.ServedAtForecast == null)
                 {
                     var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
-                    headCourse.ServedAtForecast = System.DateTime.Now + foodItemsPreparatioData[0].duration;
+                    headCourse.ServedAtForecast = System.DateTime.UtcNow+ foodItemsPreparatioData[0].duration;
                     foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
                     {
                         foodITem.State = ItemPreparationState.PreparationDelay;
@@ -161,16 +176,16 @@ namespace FlavourBusinessManager.RoomService
 
                 foreach (MealCourse course in Courses)
                 {
-                    if (course== headCourse|| course.ServedAtForecast!=null)
+                    if (course == headCourse || course.ServedAtForecast != null)
                         continue;
-                     
+
                     var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
 
                     DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast.Value + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
 
 
 
-                    course.ServedAtForecast = System.DateTime.Now + foodItemsPreparatioData[0].duration;
+                    course.ServedAtForecast = System.DateTime.UtcNow + foodItemsPreparatioData[0].duration;
                     if (course.ServedAtForecast < shouldnotServedBefore)
                         course.ServedAtForecast = shouldnotServedBefore;
 
