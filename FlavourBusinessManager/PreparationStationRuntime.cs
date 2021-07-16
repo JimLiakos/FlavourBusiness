@@ -9,6 +9,8 @@ using FlavourBusinessToolKit;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessFacade;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Transactions;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -16,12 +18,27 @@ namespace FlavourBusinessManager.ServicePointRunTime
     public class PreparationStationRuntime : MarshalByRefObject, IExtMarshalByRefObject, IPreparationStationRuntime
     {
 
+        /// <summary>
+        /// Device update mechanism operates asynchronously
+        /// When the state of preparation station change the change marked as timestamp
+        /// The device update mechanism raise event after 3 seconds.
+        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+        /// the PreparationStationRuntime clear DeviceUpdateEtag 
+        /// </summary>
+        /// <MetaDataID>{978fed9e-e558-47e1-9711-f0c6b569a59a}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+2")]
+        string DeviceUpdateEtag;
 
+
+
+
+        /// <MetaDataID>{eafe182a-025b-4a0c-8b6a-6ca41812cb8e}</MetaDataID>
         internal static PreparationData GetPreparationData(ItemPreparation itemPreparation)
         {
             itemPreparation.LoadMenuItem();
             PreparationData preparationData = new PreparationData();
-            if(itemPreparation.PreparationStation!=null)
+            if (itemPreparation.PreparationStation != null)
             {
                 preparationData.ItemPreparation = itemPreparation;
                 preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStation(itemPreparation.PreparationStation.PreparationStationIdentity) as PreparationStationRuntime;
@@ -29,16 +46,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return preparationData;
             }
 
-            foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.Where(x=>(x .PreparationStation as ServicesContextResources.PreparationStation).HasServicePointsPreparationInfos))
+            foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.Where(x => (x.PreparationStation as ServicesContextResources.PreparationStation).HasServicePointsPreparationInfos))
             {
                 if (preparationStationRuntime.PreparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
                 {
                     preparationData.PreparationStationRuntime = preparationStationRuntime;
-                    preparationData.Duration=TimeSpan.FromMinutes((preparationStationRuntime.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                    preparationData.Duration = TimeSpan.FromMinutes((preparationStationRuntime.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
                     preparationData.ItemPreparation = itemPreparation;
                 }
             }
-            if(preparationData.PreparationStationRuntime==null)
+            if (preparationData.PreparationStationRuntime == null)
             {
                 foreach (var preparationStationRuntime in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.Where(x => !(x.PreparationStation as ServicesContextResources.PreparationStation).HasServicePointsPreparationInfos))
                 {
@@ -70,7 +87,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
-                return preparationData;
+            return preparationData;
         }
 
         /// <MetaDataID>{82bd512e-74e9-49f2-8aac-00681aa07e89}</MetaDataID>
@@ -125,7 +142,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-                                                                                   //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
+                                                                                       //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
                                                                                    select item.Fetching(item.ClientSession)).ToArray()
                                                           group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
                                                           select ServicePointItems))
@@ -146,19 +163,50 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
             }
 
+            Task.Run(() =>
+            {
+
+                while (true)
+                {
+                    lock (DeviceUpdateLock)
+                    {
+                        if (DeviceUpdateEtag != null)
+                        {
+                            long numberOfTicks = 0;
+                            if(long.TryParse(DeviceUpdateEtag,out numberOfTicks))
+                            {
+                                DateTime myDate = new DateTime(numberOfTicks);
+                                if((DateTime.Now-myDate).TotalSeconds>3)
+                                    PreparationItemsChangeState?.Invoke(this);
+                            }
+                        }
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+            });
+
         }
 
+        public object DeviceUpdateLock = new object();
+        /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
         internal void AssignItemPreparation(ItemPreparation flavourItem)
         {
 
-            flavourItem.PreparationStation = PreparationStation;
-            var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
-            if (servicePointPreparationItems == null)
-                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
-            else
-                servicePointPreparationItems.PreparationItems.Add(flavourItem);
+            lock (DeviceUpdateLock)
+            {
+                flavourItem.PreparationStation = PreparationStation;
+                var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                if (servicePointPreparationItems == null)
+                    ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
+                else
+                    servicePointPreparationItems.PreparationItems.Add(flavourItem);
 
-            PreparationItemChangeState?.Invoke()
+                if (DeviceUpdateEtag == null)
+                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
+            }
+
         }
 
         /// <MetaDataID>{a66e6690-f78e-4a01-9df8-8dee98b2e386}</MetaDataID>
@@ -168,17 +216,29 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         IPreparationStation _PreparationStation;
 
-        public event PreparationItemChangeStateHandled PreparationItemChangeState;
+        public event PreparationItemsChangeStateHandled PreparationItemsChangeState;
 
         /// <MetaDataID>{bb6dcfe6-6b71-4c90-a652-da5190c5a413}</MetaDataID>
         public IPreparationStation PreparationStation => _PreparationStation;
 
 
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
-        public IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice)
+        public IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
+            if (deviceUpdateEtag == this.DeviceUpdateEtag)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+
+                    deviceUpdateEtag = null;
+                    stateTransition.Consistent = true;
+                }
+
+            }
             return ServicePointsPreparationItems;
         }
+        /// <MetaDataID>{eff630b5-4530-4f7c-8b74-f05999ef96ad}</MetaDataID>
         public string RestaurantMenuDataSharedUri
         {
             get
@@ -209,10 +269,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
     /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
     struct PreparationData
     {
+        /// <MetaDataID>{a3a3dd1c-2b8f-494e-a91b-7662e37b40b8}</MetaDataID>
         public ItemPreparation ItemPreparation;
 
+        /// <MetaDataID>{12f62d94-bd1a-4c95-8bdb-4e58145b4469}</MetaDataID>
         public PreparationStationRuntime PreparationStationRuntime;
 
+        /// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
         public TimeSpan Duration;
 
     }

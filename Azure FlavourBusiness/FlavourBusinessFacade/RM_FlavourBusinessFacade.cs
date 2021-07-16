@@ -2597,15 +2597,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
-public event FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled PreparationItemChangeState
+public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled PreparationItemsChangeState
             {
                 add
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "add_PreparationItemChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "add_PreparationItemsChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled)});
                 }
                 remove
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "remove_PreparationItemChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemChangeStateHandled)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "remove_PreparationItemsChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled)});
                 }
             }
         
@@ -2658,12 +2658,14 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemChang
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems> GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice)
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems> GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
             args[0] = itemsOnDevice;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
+            args[1] = deviceUpdateEtag;
+            argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "GetPreparationItems", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>>(retValue);
         }

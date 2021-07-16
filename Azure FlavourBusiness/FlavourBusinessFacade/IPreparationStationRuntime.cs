@@ -24,16 +24,17 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string Description { get; }
 
         /// <MetaDataID>{806c57e3-5317-4955-9622-97b56e045b98}</MetaDataID>
-        IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice);
+        IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag);
 
+        /// <MetaDataID>{734c631d-41d1-4cbc-bf4c-037cc82dbade}</MetaDataID>
         string RestaurantMenuDataSharedUri { get; }
 
 
 
-        event PreparationItemChangeStateHandled PreparationItemChangeState;
+        event PreparationItemsChangeStateHandled PreparationItemsChangeState;
     }
 
-    public delegate void PreparationItemChangeStateHandled(IPreparationStationRuntime sender, IItemPreparation itemPreparation, ItemPreparationState itemState);
+    public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);
 
 
 }

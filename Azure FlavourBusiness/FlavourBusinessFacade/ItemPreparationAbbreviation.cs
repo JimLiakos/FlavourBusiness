@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade
 
         public string uid;
 
-        DateTime StateTimestamp;
+        public DateTime StateTimestamp;
 
 
     }

@@ -78,18 +78,22 @@ namespace PreparationStationDevice
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
                     PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
-                    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
-                    HttpClient httpClient = new HttpClient();
-                    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
-                    getJsonTask.Wait();
-                    var json = getJsonTask.Result;
-                    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x=>x.Uri);
+                    if (PreparationStation != null)
+                    {
+                        var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                        HttpClient httpClient = new HttpClient();
+                        var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                        getJsonTask.Wait();
+                        var json = getJsonTask.Result;
+                        var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                        MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
-                    // servicesContextManagment.
-                    Title = PreparationStation.Description;
+                        // servicesContextManagment.
+                        Title = PreparationStation.Description;
 
-                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
+                        PreparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
+                        ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                    }
 
                     //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                 }
@@ -103,6 +107,15 @@ namespace PreparationStationDevice
                                                        }).ToList();
                 return preparationItemsPerServicePoint;
             });
+        }
+
+        private void PreparationStation_PreparationItemsChangeState(IPreparationStationRuntime sender, string deviceUpdateEtag)
+        {
+            var itemsOnDevice = (from servicePointPreparationItems in ServicePointsPreparationItems
+                             from preparationItem in servicePointPreparationItems.PreparationItems
+                             select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
+
+            sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag);
         }
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
