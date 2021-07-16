@@ -197,7 +197,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 MealValidationDelayTask = Task.Run(() =>
                  {
                      var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
-
+                     allMessmetesCommitedTimeSpanInSeconds = 8;
                      while (allMessmetesCommitedTimeSpanInSeconds > 0)
                      {
                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));

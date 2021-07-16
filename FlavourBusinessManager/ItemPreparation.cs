@@ -185,12 +185,13 @@ namespace FlavourBusinessManager.RoomService
                         _State = value;
                         stateTransition.Consistent = true;
                     }
+                    ObjectChangeState?.Invoke(this, nameof(State));
 #if !FlavourBusinessDevice
-                    if (ClientSession is EndUsers.FoodServiceClientSession)
-                    {
-                        foreach (var preparationStation in (ClientSession as EndUsers.FoodServiceClientSession).ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                            preparationStation.OnPreparationItemChangeState(this);
-                    }
+                    //if (ClientSession is EndUsers.FoodServiceClientSession)
+                    //{
+                    //    foreach (var preparationStation in (ClientSession as EndUsers.FoodServiceClientSession).ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                    //        preparationStation.OnPreparationItemChangeState(this);
+                    //}
 #endif
 
 

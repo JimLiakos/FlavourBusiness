@@ -208,6 +208,7 @@ namespace FlavourBusinessManager.HumanResources
                     halls.Add(hallLayout);
                 }
             }
+            //Παπαλουκά
             return halls;
         }
 

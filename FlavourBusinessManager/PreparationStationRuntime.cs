@@ -18,18 +18,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
     public class PreparationStationRuntime : MarshalByRefObject, IExtMarshalByRefObject, IPreparationStationRuntime
     {
 
-        /// <summary>
-        /// Device update mechanism operates asynchronously
-        /// When the state of preparation station change the change marked as timestamp
-        /// The device update mechanism raise event after 3 seconds.
-        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
-        /// the PreparationStationRuntime clear DeviceUpdateEtag 
-        /// </summary>
-        /// <MetaDataID>{978fed9e-e558-47e1-9711-f0c6b569a59a}</MetaDataID>
-        [PersistentMember()]
-        [BackwardCompatibilityID("+2")]
-        string DeviceUpdateEtag;
-
+      
 
 
 
@@ -134,7 +123,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             _PreparationStation = preparationStation;
 
-
+            string nn = preparationStation.Description;
 
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(preparationStation));
 
@@ -170,14 +159,20 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 {
                     lock (DeviceUpdateLock)
                     {
-                        if (DeviceUpdateEtag != null)
+                        if ((PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag != null)
                         {
                             long numberOfTicks = 0;
-                            if(long.TryParse(DeviceUpdateEtag,out numberOfTicks))
+                            if(long.TryParse((PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag,out numberOfTicks))
                             {
                                 DateTime myDate = new DateTime(numberOfTicks);
-                                if((DateTime.Now-myDate).TotalSeconds>3)
-                                    PreparationItemsChangeState?.Invoke(this);
+                                if ((DateTime.Now - myDate).TotalSeconds > 3)
+                                {
+                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
+                                    {
+                                        _PreparationItemsChangeState?.Invoke(this, (PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag);
+                                        RaiseEventTimeStamp = DateTime.UtcNow;
+                                    }
+                                }
                             }
                         }
                     }
@@ -188,6 +183,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        DateTime? RaiseEventTimeStamp;
+
         public object DeviceUpdateLock = new object();
         /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
         internal void AssignItemPreparation(ItemPreparation flavourItem)
@@ -195,18 +192,32 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             lock (DeviceUpdateLock)
             {
-                flavourItem.PreparationStation = PreparationStation;
-                var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
-                if (servicePointPreparationItems == null)
-                    ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
-                else
-                    servicePointPreparationItems.PreparationItems.Add(flavourItem);
+                if (flavourItem.PreparationStation != PreparationStation)
+                {
+                    flavourItem.PreparationStation = PreparationStation;
+                    flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
-                if (DeviceUpdateEtag == null)
-                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                    if (servicePointPreparationItems == null)
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
+                    else
+                        servicePointPreparationItems.PreparationItems.Add(flavourItem);
+
+                    if ((PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag == null)
+                        (PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                }
 
             }
 
+        }
+
+        /// <MetaDataID>{19ecb02a-c2c6-4f65-88c9-55af858d8473}</MetaDataID>
+        private void FlavourItem_ObjectChangeState(object _object, string member)
+        {
+            lock (DeviceUpdateLock)
+            {
+                (PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            }
         }
 
         /// <MetaDataID>{a66e6690-f78e-4a01-9df8-8dee98b2e386}</MetaDataID>
@@ -216,25 +227,37 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         IPreparationStation _PreparationStation;
 
-        public event PreparationItemsChangeStateHandled PreparationItemsChangeState;
+        public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
+
+        public event PreparationItemsChangeStateHandled PreparationItemsChangeState
+        {
+            add
+            {
+                _PreparationItemsChangeState += value;
+            }
+            remove
+            {
+                _PreparationItemsChangeState -= value;
+            }
+        }
 
         /// <MetaDataID>{bb6dcfe6-6b71-4c90-a652-da5190c5a413}</MetaDataID>
-        public IPreparationStation PreparationStation => _PreparationStation;
+        public IPreparationStation PreparationStation =>  _PreparationStation;
 
 
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
         public IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
-            if (deviceUpdateEtag == this.DeviceUpdateEtag)
+            if (deviceUpdateEtag == (PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag)
             {
 
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                lock (DeviceUpdateLock)
                 {
+                    (PreparationStation as ServicesContextResources.PreparationStation).DeviceUpdateEtag = null;
+                    RaiseEventTimeStamp = null;
 
-                    deviceUpdateEtag = null;
-                    stateTransition.Consistent = true;
                 }
-
+                
             }
             return ServicePointsPreparationItems;
         }

@@ -80,6 +80,7 @@ namespace PreparationStationDevice
                     PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
                     if (PreparationStation != null)
                     {
+                        
                         var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                         HttpClient httpClient = new HttpClient();
                         var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
@@ -115,7 +116,9 @@ namespace PreparationStationDevice
                              from preparationItem in servicePointPreparationItems.PreparationItems
                              select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
-            sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag);
+            ServicePointsPreparationItems= sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
+
+            PreparationItemsLoaded?.Invoke(this);
         }
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
@@ -128,9 +131,9 @@ namespace PreparationStationDevice
 
 
 
-
+        [HttpVisible]
         [GenerateEventConsumerProxy]
-        event PreparationItemsLoadedHandle PreparationItemsLoaded;
+        public event PreparationItemsLoadedHandle PreparationItemsLoaded;
 
 
 
@@ -209,7 +212,7 @@ namespace PreparationStationDevice
                         if (PreparationStation != null)
                         {
                             Title = PreparationStation.Description;
-                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
+                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(),null).ToList();
                             return true;
                         }
                         else

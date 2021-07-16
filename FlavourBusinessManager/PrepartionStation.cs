@@ -7,6 +7,7 @@ using OOAdvantech.Transactions;
 using OOAdvantech;
 using MenuModel;
 using OOAdvantech.PersistenceLayer;
+using FlavourBusinessManager.ServicePointRunTime;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -15,6 +16,45 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation
     {
+        protected PreparationStation()
+        {
+
+        }
+
+        public PreparationStation(ServicesContextRunTime servicesContextRunTime)
+        {
+
+            _PreparationStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
+        }
+        /// <exclude>Excluded</exclude>
+        string _DeviceUpdateEtag;
+        /// <MetaDataID>{c78c2bbe-02f2-4094-9f11-6b1660e1f47c}</MetaDataID>
+        /// <summary>
+        /// Device update mechanism operates asynchronously
+        /// When the state of preparation station change the change marked as timestamp
+        /// The device update mechanism raise event after 3 seconds.
+        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+        /// the PreparationStationRuntime clear DeviceUpdateEtag 
+        /// </summary>
+        [PersistentMember(nameof(_DeviceUpdateEtag))]
+        [BackwardCompatibilityID("+6")]
+        public string DeviceUpdateEtag
+        {
+            get => _DeviceUpdateEtag;
+            set
+            {
+                if (_DeviceUpdateEtag != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceUpdateEtag = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <MetaDataID>{3f1486ad-b5f2-4a14-bd2a-d96245b1df97}</MetaDataID>
         public bool CanPrepareItem(IMenuItem menuItem)
         {
@@ -33,6 +73,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             return false;
         }
+        /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
         public double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
             string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
@@ -52,9 +93,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{73462d69-7cf4-431d-aaec-49a611ad4f35}</MetaDataID>
         public bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint)
         {
-            if(CanPrepareItem(menuItem))
+            if (CanPrepareItem(menuItem))
             {
                 string servicePointObjectUri = ObjectStorage.GetStorageOfObject(servicePoint).GetPersistentObjectUri(servicePoint);
                 string serviceAreaObjectUri = ObjectStorage.GetStorageOfObject(servicePoint.ServiceArea).GetPersistentObjectUri(servicePoint.ServiceArea);
@@ -70,6 +112,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{fdf4d688-7439-48b0-b7d7-87df67b6c965}</MetaDataID>
         public double GetPreparationTimeSpanInMinForCategoryItems(IItemsCategory itemsCategory)
         {
             string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
@@ -183,7 +226,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _PreparationStationIdentity = Guid.NewGuid().ToString("N");
+        string _PreparationStationIdentity ;
 
         /// <MetaDataID>{22bf5e56-fdf2-4553-ad43-fbf63146eb70}</MetaDataID>
         [PersistentMember(nameof(_PreparationStationIdentity))]
@@ -193,20 +236,20 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
 
-                return _ServicesContextIdentity + "_" + _PreparationStationIdentity;
+                return  _PreparationStationIdentity;
             }
-            private set
-            {
+            //private set
+            //{
 
-                if (_PreparationStationIdentity != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _PreparationStationIdentity = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
+            //    if (_PreparationStationIdentity != value)
+            //    {
+            //        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            //        {
+            //            _PreparationStationIdentity = value;
+            //            stateTransition.Consistent = true;
+            //        }
+            //    }
+            //}
         }
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IPreparationForInfo> _PreparationForInfos = new OOAdvantech.Collections.Generic.Set<IPreparationForInfo>();
@@ -216,6 +259,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+5")]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 
+        /// <MetaDataID>{0bc40c3c-0676-4b92-a7c2-71921ac5dced}</MetaDataID>
         public bool HasServicePointsPreparationInfos
         {
             get

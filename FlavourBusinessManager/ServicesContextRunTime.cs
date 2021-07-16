@@ -1237,7 +1237,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            ServicesContextResources.PreparationStation preparationStation = new ServicesContextResources.PreparationStation();
+            ServicesContextResources.PreparationStation preparationStation = new ServicesContextResources.PreparationStation(this);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 preparationStation.Description = Properties.Resources.DefaultPreparationStationDescription;
