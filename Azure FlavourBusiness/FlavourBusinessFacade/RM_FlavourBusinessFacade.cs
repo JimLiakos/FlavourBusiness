@@ -2615,18 +2615,6 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.ServicesContextResources.IPreparationStation PreparationStation
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_PreparationStation", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPreparationStation>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
         public string Description
         {
             get

@@ -198,9 +198,9 @@ namespace FlavourBusinessManager.RoomService
                     if (flavourItem.MenuItem == null)
                         flavourItem.LoadMenuItem();
 
-                    var preparationData = ServicePointRunTime.PreparationStationRuntime.GetPreparationData(flavourItem);
+                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
                     flavourItem.State = ItemPreparationState.PreparationDelay;
-                    preparationData.PreparationStationRuntime.AssignItemPreparation(flavourItem);
+                    (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
                     
                     
 

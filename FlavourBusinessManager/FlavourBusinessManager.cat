@@ -4359,8 +4359,16 @@
 				    name       	"Persistent"
 				    value      	TRUE))
 			    quid       	"60F0FCF801C1"
-			    type       	"string"
-			    exportControl 	"Public"))
+			    documentation 	
+|
+|Device update mechanism operates asynchronously
+|When the state of preparation station change the change marked as timestamp
+|The device update mechanism raise event after 3 seconds.
+|The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+|the PreparationStationRuntime clear DeviceUpdateEtag 
+|
+			    
+			    type       	"string"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#")
@@ -4713,7 +4721,7 @@
 			    terminal_attachment 	(2309, 428))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStation" @4
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1739, 1575)
+			    location   	(1739, 1574)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -4726,7 +4734,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@4
-				location   	(1434, 1516)
+				location   	(1434, 1515)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	610
@@ -4741,7 +4749,7 @@
 			    height     	318
 			    annotation 	8)
 			(object AssociationViewNew "ServiceContextPreparationStation" @5
-			    location   	(1213, 1101)
+			    location   	(1213, 1100)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -4754,7 +4762,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @6
 				Parent_View 	@5
-				location   	(1213, 1042)
+				location   	(1213, 1041)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4780,7 +4788,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "" @7
 				    Parent_View 	@5
-				    location   	(-412, -706)
+				    location   	(-412, -707)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -4793,7 +4801,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @8
 					Parent_View 	@7
-					location   	(908, 881)
+					location   	(908, 880)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -4822,7 +4830,7 @@
 				    line_style 	0)
 				(object RoleView "PreparationStations" @9
 				    Parent_View 	@5
-				    location   	(-412, -706)
+				    location   	(-412, -707)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -4835,7 +4843,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @10
 					Parent_View 	@9
-					location   	(1464, 1382)
+					location   	(1464, 1381)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -4863,7 +4871,7 @@
 				    line_style 	0
 				    label      	(object SegLabel @11
 					Parent_View 	@9
-					location   	(1562, 1344)
+					location   	(1562, 1343)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -5108,7 +5116,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServiceRunTime::PreparationStationRuntime" @21
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(459, 2093)
+			    location   	(453, 2087)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -5121,7 +5129,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@21
-				location   	(90, 1965)
+				location   	(84, 1959)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	738
@@ -5313,7 +5321,7 @@
 			    origin_attachment 	(2715, 934)
 			    terminal_attachment 	(2715, 699))
 			(object AssociationViewNew "ContextPreparationStationRuntime" @31
-			    location   	(2125, 2085)
+			    location   	(2118, 2077)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -5326,7 +5334,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @32
 				Parent_View 	@31
-				location   	(2117, 1962)
+				location   	(2110, 1954)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5352,7 +5360,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "PreparationStationRuntimes" @33
 				    Parent_View 	@31
-				    location   	(-529, 1720)
+				    location   	(-536, 1712)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -5365,7 +5373,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @34
 					Parent_View 	@33
-					location   	(1323, 1956)
+					location   	(1315, 1948)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -5391,11 +5399,11 @@
 				    client     	@31
 				    supplier   	@21
 				    line_style 	3
-				    origin_attachment 	(2125, 2085)
-				    terminal_attachment 	(837, 2085)
+				    origin_attachment 	(2118, 2077)
+				    terminal_attachment 	(831, 2077)
 				    label      	(object SegLabel @35
 					Parent_View 	@33
-					location   	(963, 2003)
+					location   	(957, 1995)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -5417,7 +5425,7 @@
 					orientation 	1)
 				    label      	(object SegLabel @36
 					Parent_View 	@33
-					location   	(1146, 2085)
+					location   	(1140, 2077)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -5439,7 +5447,7 @@
 					orientation 	1))
 				(object RoleView "$UNNAMED$2" @37
 				    Parent_View 	@31
-				    location   	(-529, 1720)
+				    location   	(-536, 1712)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -5456,11 +5464,11 @@
 				    client     	@31
 				    supplier   	@23
 				    vertices   	(list Points
-					(2125, 2085)
-					(2656, 2085)
+					(2118, 2077)
+					(2656, 2077)
 					(2656, 1328))
 				    line_style 	3
-				    origin_attachment 	(2125, 2085)
+				    origin_attachment 	(2118, 2077)
 				    terminal_attachment 	(2656, 1328))))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::ItemPreparationAbbreviation" @38
 			    ShowCompartmentStereotypes 	TRUE
@@ -6862,7 +6870,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"6"))
+			    value      	"7"))
 		    quid       	"5D57B5C30236"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
@@ -7169,6 +7177,52 @@
 				    value      	"+5"))
 			    quid       	"60DEABBB03E7"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo>"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceUpdateEtag"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c78c2bbe-02f2-4094-9f11-6b1660e1f47c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"60F13ABA0388")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"60F13ABA0388"
+			    documentation 	
+|
+|Device update mechanism operates asynchronously
+|When the state of preparation station change the change marked as timestamp
+|The device update mechanism raise event after 3 seconds.
+|The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+|the PreparationStationRuntime clear DeviceUpdateEtag 
+|
+			    
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -7861,6 +7915,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
+			    compartment 	(object Compartment
+				Parent_View 	@39
+				location   	(1321, 1248)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	1646)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -7947,6 +8019,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
+			    compartment 	(object Compartment
+				Parent_View 	@42
+				location   	(2843, 2102)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	7
+				max_width  	1284)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -8007,6 +8097,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
+			    compartment 	(object Compartment
+				Parent_View 	@44
+				location   	(52, 457)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	19
+				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -8047,6 +8155,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
+			    compartment 	(object Compartment
+				Parent_View 	@46
+				location   	(1333, 515)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -8435,6 +8561,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@65
+				location   	(2986, 583)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	18
+				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -9965,6 +10109,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@133
+				location   	(1355, 554)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	11
+				max_width  	0)
 			    width      	819
 			    height     	425
 			    annotation 	8)

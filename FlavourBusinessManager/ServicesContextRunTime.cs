@@ -462,25 +462,25 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <exclude>Excluded</exclude>
-        Dictionary<string, PreparationStationRuntime> _PreparationStationRuntimes;
+        Dictionary<string, IPreparationStationRuntime> _PreparationStationRuntimes;
         [Association("ContextPreparationStationRuntime", Roles.RoleA, "471493c1-dcec-41bb-a354-e0dc03ea7101")]
-        public Dictionary<string, PreparationStationRuntime> PreparationStationRuntimes
+        public Dictionary<string, IPreparationStationRuntime> PreparationStationRuntimes
         {
             get
             {
                 if (_PreparationStationRuntimes == null)
                 {
-                    _PreparationStationRuntimes = new Dictionary<string, PreparationStationRuntime>();
+                    _PreparationStationRuntimes = new Dictionary<string, IPreparationStationRuntime>();
                     var objectStorage = ObjectStorage.GetStorageOfObject(this);
                     OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                     var servicesContextIdentity = ServicesContextIdentity;
-                    foreach (var preparationStation in (from aPreparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
+                    foreach (var preparationStation in (from aPreparationStation in servicesContextStorage.GetObjectCollection<PreparationStation>()
                                                         where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
                                                         select aPreparationStation))
                     {
-                        var preparationStationRuntime = new PreparationStationRuntime(preparationStation);
-                        this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStationRuntime;
+                        
+                        this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
                     }
                 }
                 return _PreparationStationRuntimes;
@@ -1237,7 +1237,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            ServicesContextResources.PreparationStation preparationStation = new ServicesContextResources.PreparationStation();
+            ServicesContextResources.PreparationStation preparationStation = new ServicesContextResources.PreparationStation(this);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 preparationStation.Description = Properties.Resources.DefaultPreparationStationDescription;
@@ -1245,7 +1245,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 objectStorage.CommitTransientObjectState(preparationStation);
                 stateTransition.Consistent = true;
             }
-            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = new PreparationStationRuntime(preparationStation);
+            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
             return preparationStation;
         }
 
@@ -1257,9 +1257,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>
-        public IPreparationStationRuntime GetPreparationStation(string preparationStationIdentity)
+        public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)
         {
-            PreparationStationRuntime preparationStationRuntime = null;
+            IPreparationStationRuntime preparationStationRuntime = null;
 
             if (!this.PreparationStationRuntimes.TryGetValue(preparationStationIdentity, out preparationStationRuntime))
             {
@@ -1268,13 +1268,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                 var servicesContextIdentity = ServicesContextIdentity;
-                var preparationStation = (from aPreparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
+                var preparationStation = (from aPreparationStation in servicesContextStorage.GetObjectCollection<PreparationStation>()
                                           where aPreparationStation.PreparationStationIdentity == preparationStationIdentity && aPreparationStation.ServicesContextIdentity == servicesContextIdentity
                                           select aPreparationStation).FirstOrDefault();
                 if (preparationStation != null)
                 {
-                    preparationStationRuntime = new PreparationStationRuntime(preparationStation);
-                    this.PreparationStationRuntimes[preparationStationIdentity] = preparationStationRuntime;
+                    
+                    this.PreparationStationRuntimes[preparationStationIdentity] = preparationStation;
                 }
             }
 

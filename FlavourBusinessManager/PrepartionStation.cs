@@ -10,6 +10,8 @@ using OOAdvantech.PersistenceLayer;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.RoomService;
 using System.Threading.Tasks;
+using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessManager.RoomService;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -18,6 +20,45 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+        protected PreparationStation()
+        {
+
+        }
+
+        public PreparationStation(ServicesContextRunTime servicesContextRunTime)
+        {
+
+            _PreparationStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
+        }
+        /// <exclude>Excluded</exclude>
+        string _DeviceUpdateEtag;
+        /// <MetaDataID>{c78c2bbe-02f2-4094-9f11-6b1660e1f47c}</MetaDataID>
+        /// <summary>
+        /// Device update mechanism operates asynchronously
+        /// When the state of preparation station change the change marked as timestamp
+        /// The device update mechanism raise event after 3 seconds.
+        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+        /// the PreparationStationRuntime clear DeviceUpdateEtag 
+        /// </summary>
+        [PersistentMember(nameof(_DeviceUpdateEtag))]
+        [BackwardCompatibilityID("+6")]
+        public string DeviceUpdateEtag
+        {
+            get => _DeviceUpdateEtag;
+            set
+            {
+                if (_DeviceUpdateEtag != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceUpdateEtag = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <MetaDataID>{3f1486ad-b5f2-4a14-bd2a-d96245b1df97}</MetaDataID>
         public bool CanPrepareItem(IMenuItem menuItem)
         {
@@ -36,6 +77,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             return false;
         }
+        /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
         public double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
             string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
@@ -55,6 +97,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{73462d69-7cf4-431d-aaec-49a611ad4f35}</MetaDataID>
         public bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint)
         {
             if (CanPrepareItem(menuItem))
@@ -73,6 +116,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{fdf4d688-7439-48b0-b7d7-87df67b6c965}</MetaDataID>
         public double GetPreparationTimeSpanInMinForCategoryItems(IItemsCategory itemsCategory)
         {
             string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
@@ -186,7 +230,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _PreparationStationIdentity = Guid.NewGuid().ToString("N");
+        string _PreparationStationIdentity ;
 
         /// <MetaDataID>{22bf5e56-fdf2-4553-ad43-fbf63146eb70}</MetaDataID>
         [PersistentMember(nameof(_PreparationStationIdentity))]
@@ -196,20 +240,20 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
 
-                return _ServicesContextIdentity + "_" + _PreparationStationIdentity;
+                return  _PreparationStationIdentity;
             }
-            private set
-            {
+            //private set
+            //{
 
-                if (_PreparationStationIdentity != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _PreparationStationIdentity = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
+            //    if (_PreparationStationIdentity != value)
+            //    {
+            //        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            //        {
+            //            _PreparationStationIdentity = value;
+            //            stateTransition.Consistent = true;
+            //        }
+            //    }
+            //}
         }
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IPreparationForInfo> _PreparationForInfos = new OOAdvantech.Collections.Generic.Set<IPreparationForInfo>();
@@ -219,6 +263,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+5")]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 
+        /// <MetaDataID>{0bc40c3c-0676-4b92-a7c2-71921ac5dced}</MetaDataID>
         public bool HasServicePointsPreparationInfos
         {
             get
@@ -234,7 +279,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public string RestaurantMenuDataSharedUri => ServicePointRunTime.ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
 
         public event ObjectChangeStateHandle ObjectChangeState;
-        public event PreparationItemsChangeStateHandled PreparationItemsChangeState;
+        
 
 
 
@@ -363,14 +408,15 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        public object DeviceUpdateLock = new object();
 
         List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
         [ObjectActivationCall]
         void ObjectActivation()
         {
-
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+
 
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
                                                                                        //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
@@ -408,7 +454,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                             {
                                 DateTime myDate = new DateTime(numberOfTicks);
                                 if ((DateTime.Now - myDate).TotalSeconds > 3)
-                                    PreparationItemsChangeState?.Invoke(this);
+                                {
+                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
+                                    {
+                                        _PreparationItemsChangeState?.Invoke(this,DeviceUpdateEtag);
+                                        RaiseEventTimeStamp = DateTime.UtcNow;
+                                    }
+                                }
                             }
                         }
                     }
@@ -416,13 +468,144 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
 
             });
+
         }
 
+        public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
 
+        public event PreparationItemsChangeStateHandled PreparationItemsChangeState
+        {
+            add
+            {
+                _PreparationItemsChangeState += value;
+            }
+            remove
+            {
+                _PreparationItemsChangeState -= value;
+            }
+        }
 
+        DateTime? RaiseEventTimeStamp;
+
+        /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
         public IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
-            throw new NotImplementedException();
+            if (deviceUpdateEtag == DeviceUpdateEtag)
+            {
+                lock (DeviceUpdateLock)
+                {
+                    DeviceUpdateEtag = null;
+                    RaiseEventTimeStamp = null;
+                }
+            }
+            return ServicePointsPreparationItems;
         }
+
+        /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
+        internal void AssignItemPreparation(ItemPreparation flavourItem)
+        {
+
+            lock (DeviceUpdateLock)
+            {
+                if (flavourItem.PreparationStation != this)
+                {
+                    flavourItem.PreparationStation = this;
+                    flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+
+                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                    if (servicePointPreparationItems == null)
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
+                    else
+                        servicePointPreparationItems.PreparationItems.Add(flavourItem);
+
+                    if (DeviceUpdateEtag == null)
+                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                }
+
+            }
+
+        }
+
+
+        internal static PreparationData GetPreparationData(ItemPreparation itemPreparation)
+        {
+            itemPreparation.LoadMenuItem();
+            PreparationData preparationData = new PreparationData();
+            if (itemPreparation.PreparationStation != null)
+            {
+                preparationData.ItemPreparation = itemPreparation;
+                preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity) ;
+                preparationData.Duration = TimeSpan.FromMinutes((itemPreparation.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                return preparationData;
+            }
+
+            foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x .HasServicePointsPreparationInfos))
+            {
+                if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
+                {
+                    preparationData.PreparationStationRuntime = preparationStation;
+                    preparationData.Duration = TimeSpan.FromMinutes((preparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                    preparationData.ItemPreparation = itemPreparation;
+                }
+            }
+            if (preparationData.PreparationStationRuntime == null)
+            {
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
+                {
+                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    {
+                        preparationData.PreparationStationRuntime = preparationStation;
+                        preparationData.Duration = TimeSpan.FromMinutes((preparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                        preparationData.ItemPreparation = itemPreparation;
+                    }
+                }
+            }
+            if (preparationData.PreparationStationRuntime == null)
+            {
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>())
+                {
+                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    {
+                        preparationData.PreparationStationRuntime = preparationStation;
+                        preparationData.Duration = TimeSpan.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                        preparationData.ItemPreparation = itemPreparation;
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+            return preparationData;
+        }
+
+
+        private void FlavourItem_ObjectChangeState(object _object, string member)
+        {
+            lock (DeviceUpdateLock)
+            {
+                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            }
+        }
+
+
+    }
+
+    /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
+    struct PreparationData
+    {
+        /// <MetaDataID>{a3a3dd1c-2b8f-494e-a91b-7662e37b40b8}</MetaDataID>
+        public ItemPreparation ItemPreparation;
+
+        /// <MetaDataID>{12f62d94-bd1a-4c95-8bdb-4e58145b4469}</MetaDataID>
+        public IPreparationStationRuntime PreparationStationRuntime;
+
+        /// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
+        public TimeSpan Duration;
+
     }
 }

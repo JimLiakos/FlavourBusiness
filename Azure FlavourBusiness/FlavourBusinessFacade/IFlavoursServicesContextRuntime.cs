@@ -64,7 +64,7 @@ namespace FlavourBusinessFacade
 
 
         /// <MetaDataID>{d11922ee-a931-4230-a131-023440ea52f7}</MetaDataID>
-        IPreparationStationRuntime GetPreparationStation(string preparationStationIdentity);
+        IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity);
 
 
         /// <MetaDataID>{4d1c49d1-745a-4b4f-a934-0476332e894e}</MetaDataID>

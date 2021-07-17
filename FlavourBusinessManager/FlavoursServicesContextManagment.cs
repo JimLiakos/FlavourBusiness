@@ -205,7 +205,7 @@ namespace FlavourBusinessManager
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
-            var preparationStation = flavoursServicesContextRunTime.GetPreparationStation(preparationStationIdentity);//, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, orgIdentity, graphicMenus);
+            var preparationStation = flavoursServicesContextRunTime.GetPreparationStationRuntime(preparationStationCredentialKey);//, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, orgIdentity, graphicMenus);
 
             return preparationStation;
 

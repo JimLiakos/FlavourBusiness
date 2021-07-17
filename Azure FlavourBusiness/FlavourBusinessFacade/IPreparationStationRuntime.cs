@@ -14,10 +14,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{c819f9e6-21ed-4c0d-9c72-a240fbd8728d}</MetaDataID>
         //  List<MenuModel.IMenuItem> GetNewerRestaurandMenuData(DateTime newerFromDate);
 
-        [Association("PreparationStationController", Roles.RoleA, "89c04438-c0da-4df4-98d1-fad38f28844d")]
-        [RoleAMultiplicityRange(1, 1)]
-        [RoleBMultiplicityRange(1, 1)]
-        IPreparationStation PreparationStation { get; }
+        //[Association("PreparationStationController", Roles.RoleA, "89c04438-c0da-4df4-98d1-fad38f28844d")]
+        //[RoleAMultiplicityRange(1, 1)]
+        //[RoleBMultiplicityRange(1, 1)]
+        //IPreparationStation PreparationStation { get; }
 
         /// <MetaDataID>{65760984-aeca-473a-8bc5-4ed68ead3080}</MetaDataID>
         [BackwardCompatibilityID("+1")]
