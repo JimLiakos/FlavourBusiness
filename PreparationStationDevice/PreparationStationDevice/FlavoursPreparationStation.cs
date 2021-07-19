@@ -119,7 +119,7 @@ namespace PreparationStationDevice
                 var preparationItemsPerServicePoint = (from servicePointItems in ServicePointsPreparationItems
                                                        select new PreparationItemsPerServicePoint()
                                                        {
-                                                           Description = servicePointItems.ServicePoint.Description,
+                                                           Description = servicePointItems.Description,
                                                            ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                            ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
                                                            PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()

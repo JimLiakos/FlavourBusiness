@@ -8,13 +8,15 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
 
 
-        public ServicePointPreparationItems(IServicePoint servicePoint,  System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
+        /// <MetaDataID>{0f0aafc5-6824-4bf8-b2f1-787b2175f9fd}</MetaDataID>
+        public ServicePointPreparationItems(IServicePoint servicePoint, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
         {
             ServicePoint = servicePoint;
-         
-
             PreparationItems = preparationItems;
+            Description = servicePoint.ServiceArea.Description + " / " + servicePoint.Description;
         }
+        /// <exclude>Excluded</exclude>
+        public string Description;
 
 
         [Association("ServicePointItems", Roles.RoleA, "1b18cbff-1a92-4751-b00e-9fba52c6d00a")]
