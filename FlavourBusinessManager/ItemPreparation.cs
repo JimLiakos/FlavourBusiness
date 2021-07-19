@@ -689,6 +689,7 @@ _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
         IMealCourse _MealCourse;
 
         /// <MetaDataID>{3733d472-f996-4129-a609-2571974cec56}</MetaDataID>
+        [JsonIgnore]
         [PersistentMember(nameof(_MealCourse))]
         [BackwardCompatibilityID("+16")]
         public FlavourBusinessFacade.RoomService.IMealCourse MealCourse
@@ -711,6 +712,7 @@ _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
         IPreparationStation _PreparationStation;
 
         /// <MetaDataID>{f8b1250c-e750-4254-80d6-b3dba382d14d}</MetaDataID>
+        [JsonIgnore]
         [PersistentMember(nameof(_PreparationStation))]
         [BackwardCompatibilityID("+18")]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]

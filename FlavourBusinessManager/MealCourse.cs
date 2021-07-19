@@ -4,6 +4,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace FlavourBusinessManager.RoomService
@@ -193,6 +194,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var flavourItem in itemPreparations)
             {
                 AddItem(flavourItem);
+                flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                 if (flavourItem.State == ItemPreparationState.Committed)
                 {
                     if (flavourItem.MenuItem == null)
@@ -201,12 +203,17 @@ namespace FlavourBusinessManager.RoomService
                     var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
                     flavourItem.State = ItemPreparationState.PreparationDelay;
                     (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
-                    
-                    
+
+
 
                 }
 
             }
+        }
+
+        private void FlavourItem_ObjectChangeState(object _object, string member)
+        {
+
         }
 
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
@@ -225,9 +232,22 @@ namespace FlavourBusinessManager.RoomService
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _FoodItems.Remove(itemPreparation);
+                (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
                 stateTransition.Consistent = true;
             }
         }
+        [ObjectActivationCall]
+        void ObjectActivation()
+        {
+
+            foreach(var foodItem in _FoodItems.OfType<ItemPreparation>())
+            {
+                foodItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+            }
+
+        }
+
+    
 
         /// <MetaDataID>{72860a38-cffd-4a68-807b-4c2ece8cddc5}</MetaDataID>
         internal static void AssignMealCourseToItem(ItemPreparation flavourItem)

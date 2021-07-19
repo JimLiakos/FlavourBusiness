@@ -230,7 +230,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _PreparationStationIdentity ;
+        string _PreparationStationIdentity;
 
         /// <MetaDataID>{22bf5e56-fdf2-4553-ad43-fbf63146eb70}</MetaDataID>
         [PersistentMember(nameof(_PreparationStationIdentity))]
@@ -240,7 +240,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
 
-                return  _PreparationStationIdentity;
+                return _PreparationStationIdentity;
             }
             //private set
             //{
@@ -279,7 +279,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public string RestaurantMenuDataSharedUri => ServicePointRunTime.ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
 
         public event ObjectChangeStateHandle ObjectChangeState;
-        
+
 
 
 
@@ -432,9 +432,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     if (CanPrepareItem(item.MenuItem))
                     {
-                        RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
-                        itemPreparation.Update(item);
-                        preparationItems.Add(itemPreparation);
+                        //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
+                        //itemPreparation.Update(item);
+                        preparationItems.Add(item);
                     }
                 }
                 ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
@@ -457,7 +457,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 {
                                     if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
                                     {
-                                        _PreparationItemsChangeState?.Invoke(this,DeviceUpdateEtag);
+                                        _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
                                         RaiseEventTimeStamp = DateTime.UtcNow;
                                     }
                                 }
@@ -534,12 +534,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (itemPreparation.PreparationStation != null)
             {
                 preparationData.ItemPreparation = itemPreparation;
-                preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity) ;
+                preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity);
                 preparationData.Duration = TimeSpan.FromMinutes((itemPreparation.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
                 return preparationData;
             }
 
-            foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x .HasServicePointsPreparationInfos))
+            foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
             {
                 if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
                 {
@@ -592,8 +592,49 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public void Items…nPreparation(List<string> itemPreparationUris)
+        {
+            var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from itemPreparation in servicePointPreparationItems.PreparationItems
+                                              where itemPreparationUris.Contains(itemPreparation.uid)
+                                              group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                              select new { clientSession = ClientSessionItems.Key, ClientSessionItems=ClientSessionItems.ToList() }).ToList();
 
+            foreach(var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.Items…nPreparation(clientSessionItems.ClientSessionItems);
+
+              
+        }
+        public void ItemsPrepared(List<string> itemPreparationUris)
+        {
+            var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where itemPreparationUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+
+            foreach (var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.ItemsPrepared(clientSessionItems.ClientSessionItems);
+
+
+        }
+        public void CancelLastPreparationStep(List<string> itemPreparationUris)
+        {
+            var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where itemPreparationUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+
+            foreach (var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.CancelLastPreparationStep(clientSessionItems.ClientSessionItems);
+
+        }
     }
+
+
+
+    
 
     /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
     struct PreparationData

@@ -1300,9 +1300,81 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
+        public void CancelLastPreparationStep(List<IItemPreparation> flavourItems)
+        {
+            CatchStateEvents();
+            var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
 
 
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var flavourItem in clientSessionItems)
+                {
+                    if(flavourItem.State == ItemPreparationState.…nPreparation)
+                        flavourItem.State = ItemPreparationState.PendingPreparation;
 
+                    if (flavourItem.State == ItemPreparationState.Prepared)
+                        flavourItem.State = ItemPreparationState.…nPreparation;
+
+                }
+
+                stateTransition.Consistent = true;
+            }
+
+            foreach (var clientSession in MainSession.PartialClientSessions)
+                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+
+        }
+
+        
+
+        public void Items…nPreparation(List<IItemPreparation> flavourItems)
+        {
+            CatchStateEvents();
+            var clientSessionItems = flavourItems.Select(x=>GetSessionItem(x));
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var flavourItem in clientSessionItems)
+                    flavourItem.State = ItemPreparationState.…nPreparation;
+
+                stateTransition.Consistent = true;
+            }
+
+            foreach (var clientSession in MainSession.PartialClientSessions)
+                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+
+        }
+
+        public void ItemsPrepared(List<IItemPreparation> flavourItems)
+        {
+            CatchStateEvents();
+            var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var flavourItem in clientSessionItems)
+                    flavourItem.State = ItemPreparationState.Prepared;
+
+                stateTransition.Consistent = true;
+            }
+
+            foreach (var clientSession in MainSession.PartialClientSessions)
+                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+
+        }
+
+        private ItemPreparation GetSessionItem(IItemPreparation item)
+        {
+            ItemPreparation existingItem;
+            if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
+                existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+            else
+                existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+            return existingItem;
+        }
 
         /// <MetaDataID>{6f3aecf2-dbfb-4493-a33a-88a5f34578f4}</MetaDataID>
         public void AddItem(IItemPreparation item)
@@ -1552,47 +1624,47 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
-        /// <MetaDataID>{fc8a4f16-49d7-43d7-af13-fe9049a196a7}</MetaDataID>
-        public Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations)
-        {
+        ///// <MetaDataID>{fc8a4f16-49d7-43d7-af13-fe9049a196a7}</MetaDataID>
+        //public Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations)
+        //{
 
 
-            var itemsNewState = new Dictionary<string, ItemPreparationState>();
+        //    var itemsNewState = new Dictionary<string, ItemPreparationState>();
 
-            var itemsIDS = itemPreparations.Select(x => x.uid).ToList();
-            var flavourItems = (from storedItem in _FlavourItems.OfType<RoomService.ItemPreparation>()
-                                where itemsIDS.Contains(storedItem.uid)
-                                select storedItem).ToList();
+        //    var itemsIDS = itemPreparations.Select(x => x.uid).ToList();
+        //    var flavourItems = (from storedItem in _FlavourItems.OfType<RoomService.ItemPreparation>()
+        //                        where itemsIDS.Contains(storedItem.uid)
+        //                        select storedItem).ToList();
 
-            List<RoomService.ItemPreparation> changeStateFlavourItems = new List<RoomService.ItemPreparation>();
-
-
-
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-            {
-                foreach (var item in flavourItems)
-                {
-                    if (item.State == ItemPreparationState.New || item.State == ItemPreparationState.Committed)
-                    {
-                        item.State = ItemPreparationState.PendingPreparation;
-                        itemsNewState[item.uid] = item.State;
-                        changeStateFlavourItems.Add(item);
-                    }
-                }
-                stateTransition.Consistent = true;
-            }
+        //    List<RoomService.ItemPreparation> changeStateFlavourItems = new List<RoomService.ItemPreparation>();
 
 
 
+        //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //    {
+        //        foreach (var item in flavourItems)
+        //        {
+        //            if (item.State == ItemPreparationState.New || item.State == ItemPreparationState.Committed)
+        //            {
+        //                item.State = ItemPreparationState.PendingPreparation;
+        //                itemsNewState[item.uid] = item.State;
+        //                changeStateFlavourItems.Add(item);
+        //            }
+        //        }
+        //        stateTransition.Consistent = true;
+        //    }
 
-            if (MainSession != null)
-            {
-                foreach (var clientSession in MainSession.PartialClientSessions)
-                    clientSession.RaiseItemsStateChanged(changeStateFlavourItems.ToDictionary(x => x.uid, x => x.State));
-            }
 
-            return itemsNewState;
-        }
+
+
+        //    if (MainSession != null)
+        //    {
+        //        foreach (var clientSession in MainSession.PartialClientSessions)
+        //            clientSession.RaiseItemsStateChanged(changeStateFlavourItems.ToDictionary(x => x.uid, x => x.State));
+        //    }
+
+        //    return itemsNewState;
+        //}
 
         /// <MetaDataID>{239c856f-008a-4e7e-9b1c-fdf7899ea5d6}</MetaDataID>
         public void DeviceResume()
@@ -1670,6 +1742,9 @@ namespace FlavourBusinessManager.EndUsers
             if (SessionState == ClientSessionState.Conversation)
                 SessionState = ClientSessionState.ItemsCommited;
         }
+
+       
+
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
 
     }

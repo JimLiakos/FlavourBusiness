@@ -98,7 +98,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// The item is under preparation
         /// </summary>
-        OnPreparation=4,
+        ÉnPreparation=4,
         /// <summary>
         /// The item is prepared
         /// </summary>

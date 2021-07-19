@@ -32,6 +32,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         event PreparationItemsChangeStateHandled PreparationItemsChangeState;
+
+        void Items…nPreparation(List<string> itemPreparationUris);
+
+        void ItemsPrepared(List<string> itemPreparationUris);
+        
+
+        void CancelLastPreparationStep(List<string> itemPreparationUris);
+        
     }
 
     public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);

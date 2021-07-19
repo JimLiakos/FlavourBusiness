@@ -12,8 +12,8 @@ namespace FlavourBusinessFacade.EndUsers
     public interface IFoodServiceClientSession: IMessageConsumer
     {
 
-        /// <MetaDataID>{4a6cfe26-2795-4345-85e5-f518c066e86c}</MetaDataID>
-        Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations);
+        ///// <MetaDataID>{4a6cfe26-2795-4345-85e5-f518c066e86c}</MetaDataID>
+        //Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations);
 
 
 
@@ -178,7 +178,9 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
         ClientSessionState SessionState { get; set; }
 
-
+        void Items…nPreparation(List<IItemPreparation> clientSessionItems);
+        void CancelLastPreparationStep(List<IItemPreparation> clientSessionItems);
+        void ItemsPrepared(List<IItemPreparation> clientSessionItems);
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>

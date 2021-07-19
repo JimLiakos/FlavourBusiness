@@ -9,6 +9,8 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessManager.RoomService;
 using System.Net.Http;
+using FlavourBusinessFacade.RoomService;
+using OOAdvantech;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -24,6 +26,8 @@ namespace PreparationStationDevice
             var communicationCredentialKey = this.CommunicationCredentialKey;
         }
 
+
+
         //static string AzureServerUrl = "http://localhost:8090/api/";
         //static string AzureServerUrl = "http://192.168.2.5:8090/api/";
         //static strinb AzureServerUrl = "http://192.168.2.10:8090/api/";
@@ -32,6 +36,20 @@ namespace PreparationStationDevice
         //static string AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
         //static string AzureServerUrl = "http://10.0.0.13:8090/api/";//work
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
+        {
+            get
+            {
+#if DeviceDotNet
+                return (Application.Current as IAppLifeTime).SerializeTaskScheduler;
+#else
+                return (System.Windows.Application.Current as IAppLifeTime).SerializeTaskScheduler;
+
+#endif
+            }
+        }
 
 
 
@@ -64,7 +82,7 @@ namespace PreparationStationDevice
 
         List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
-        [OOAdvantech.MetaDataRepository.HttpVisible]
+        [HttpVisible]
         public Task<List<PreparationItemsPerServicePoint>> WebUIAttached()
         {
 
@@ -80,7 +98,7 @@ namespace PreparationStationDevice
                     PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
                     if (PreparationStation != null)
                     {
-                        
+
                         var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                         HttpClient httpClient = new HttpClient();
                         var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
@@ -110,13 +128,113 @@ namespace PreparationStationDevice
             });
         }
 
+        [HttpVisible]
+        public void CancelLastPreparationStep(List<ItemPreparation> itemPreparations)
+        {
+            var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from preparationStationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                              select preparationStationItem).ToDictionary(x => x.uid);
+
+            foreach (var itemPreparation in itemPreparations)
+                itemPreparationsDictionary[itemPreparation.uid].Update(itemPreparation);
+
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
+                        break;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+
+            });
+
+        }
+        [HttpVisible]
+        public void ItemsPrepared(List<ItemPreparation> itemPreparations)
+        {
+            var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from preparationStationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                              select preparationStationItem).ToDictionary(x => x.uid);
+            foreach (var itemPreparation in itemPreparations)
+                itemPreparationsDictionary[itemPreparation.uid].Update(itemPreparation);
+
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
+                        break;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+        }
+
+        [HttpVisible]
+        public void ItemsΙnPreparation(List<ItemPreparation> itemPreparations)
+        {
+            var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from preparationStationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                              select preparationStationItem).ToDictionary(x => x.uid);
+            foreach (var itemPreparation in itemPreparations)
+                itemPreparationsDictionary[itemPreparation.uid].Update(itemPreparation);
+
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        break;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+        }
+
+
+
         private void PreparationStation_PreparationItemsChangeState(IPreparationStationRuntime sender, string deviceUpdateEtag)
         {
             var itemsOnDevice = (from servicePointPreparationItems in ServicePointsPreparationItems
-                             from preparationItem in servicePointPreparationItems.PreparationItems
-                             select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
+                                 from preparationItem in servicePointPreparationItems.PreparationItems
+                                 select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
-            ServicePointsPreparationItems= sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
+            ServicePointsPreparationItems = sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
 
             PreparationItemsLoaded?.Invoke(this);
         }
@@ -155,7 +273,7 @@ namespace PreparationStationDevice
         [HttpVisible]
         public Task<bool> AssignPreparationStation()
         {
-            return Task<bool>.Run(async() =>
+            return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
                 var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
@@ -212,7 +330,7 @@ namespace PreparationStationDevice
                         if (PreparationStation != null)
                         {
                             Title = PreparationStation.Description;
-                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(),null).ToList();
+                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
                             return true;
                         }
                         else

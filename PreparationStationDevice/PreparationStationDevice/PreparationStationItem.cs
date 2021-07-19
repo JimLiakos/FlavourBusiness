@@ -24,6 +24,7 @@ namespace PreparationStationDevice
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
         {
             ItemPreparation = itemPreparation;
+            
 
 
             if (ItemPreparation.MenuItem == null)
@@ -63,6 +64,8 @@ namespace PreparationStationDevice
 
             ServicePointPreparationItems = servicePointPreparationItems;
         }
+
+
     }
 
 
