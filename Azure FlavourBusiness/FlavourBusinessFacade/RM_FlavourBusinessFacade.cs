@@ -3196,6 +3196,31 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>>(retValue);
         }
     }
+    
+    public sealed class CNSPr_IPreparationStationRuntime_PreparationItemsChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime sender, string deviceUpdateEtag)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = sender;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime);
+            args[1] = deviceUpdateEtag;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled(this.Invoke));
+        }
+    }
 }
 namespace FlavourBusinessFacade.HumanResources.Proxies
 {

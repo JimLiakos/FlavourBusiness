@@ -1,4 +1,5 @@
-﻿using OOAdvantech.Remoting.RestApi.Serialization;
+﻿using OOAdvantech;
+using OOAdvantech.Remoting.RestApi.Serialization;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -6,8 +7,16 @@ using Xamarin.Forms.Xaml;
 namespace PreparationStationDevice
 {
     /// <MetaDataID>{84775fa1-2535-4ec3-a93d-cb1200930bfc}</MetaDataID>
-    public partial class App : Application
+    public partial class App : Application, IAppLifeTime
     {
+
+        public event EventHandler ApplicationResuming;
+        public event EventHandler ApplicationSleeping;
+        SerializeTaskScheduler IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
+
+
         public App()
         {
             InitializeComponent();
@@ -78,16 +87,36 @@ namespace PreparationStationDevice
 
         protected override void OnStart()
         {
+            SerializeTaskScheduler.RunAsync();
             // Handle when your app starts
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+
+            try
+            {
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                device.IsinSleepMode = true;
+                ApplicationSleeping?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception error)
+            {
+            }
         }
 
         protected override void OnResume()
         {
+            try
+            {
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                device.IsinSleepMode = false;
+                ApplicationResuming?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception error)
+            {
+            }
             // Handle when your app resumes
         }
     }

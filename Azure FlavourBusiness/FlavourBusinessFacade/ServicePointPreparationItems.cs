@@ -13,6 +13,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         {
             ServicePoint = servicePoint;
             PreparationItems = preparationItems;
+            var dfd = servicePoint.ServiceArea;
             Description = servicePoint.ServiceArea.Description + " / " + servicePoint.Description;
         }
         /// <exclude>Excluded</exclude>

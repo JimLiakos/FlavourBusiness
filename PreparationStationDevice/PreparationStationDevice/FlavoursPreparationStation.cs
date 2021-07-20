@@ -11,6 +11,7 @@ using FlavourBusinessManager.RoomService;
 using System.Net.Http;
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech;
+using Xamarin.Forms;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -291,7 +292,15 @@ namespace PreparationStationDevice
                 if (PreparationStation != null)
                 {
                     Title = PreparationStation.Description;
-                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>()).ToList();
+                    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                    HttpClient httpClient = new HttpClient();
+                    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                    getJsonTask.Wait();
+                    var json = getJsonTask.Result;
+                    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+
+                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(),null).ToList();
                     CommunicationCredentialKey = communicationCredentialKey;
                     return true;
                 }
@@ -330,6 +339,14 @@ namespace PreparationStationDevice
                         if (PreparationStation != null)
                         {
                             Title = PreparationStation.Description;
+                            var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                            HttpClient httpClient = new HttpClient();
+                            var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                            getJsonTask.Wait();
+                            var json = getJsonTask.Result;
+                            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                            MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+
                             ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
                             return true;
                         }

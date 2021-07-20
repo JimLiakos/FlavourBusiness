@@ -30,7 +30,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string RestaurantMenuDataSharedUri { get; }
 
 
-
+        [GenerateEventConsumerProxy]
         event PreparationItemsChangeStateHandled PreparationItemsChangeState;
 
         void Items…nPreparation(List<string> itemPreparationUris);
