@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FlavourBusinessFacade.RoomService;
+using MenuModel;
+using MenuModel.JsonViewModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -126,6 +129,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        
+
 
 
         /// <exclude>Excluded</exclude>
@@ -203,6 +208,9 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
         }
+
+        [JsonIgnore]
+        public IOptionMenuItemSpecific itemSpecificOtion { get; internal set; }
 
         /// <MetaDataID>{e44bc19d-1563-4b43-ab0e-5e4c37707d55}</MetaDataID>
         internal bool Update(OptionChange optionChange)

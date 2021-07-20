@@ -335,7 +335,28 @@ namespace FlavourBusinessManager.RoomService
         public IMenuItem LoadMenuItem(Dictionary<string, MenuFoodItem> menuItems)
         {
             if (_MenuItem == null && !string.IsNullOrWhiteSpace(_MenuItemUri))
+            {
                 _MenuItem = menuItems[_MenuItemUri] as IMenuItem;
+                var optionsDictionary = (from options in (_MenuItem as MenuFoodItem).ItemOptions
+                                         from option in options.Options
+                                         select option).ToDictionary(x => x.Uri);
+
+
+                foreach (var optionChange in OptionsChanges.OfType<OptionChange>())
+                {
+                    Option option = null;
+                    if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
+                    {
+                        var itemSpecific = new MenuModel.JsonViewModel.OptionMenuItemSpecific();
+                        itemSpecific.Option = option;
+                        itemSpecific.InitialLevel = option.Initial;
+                        optionChange.itemSpecificOtion = itemSpecific;
+                    }
+                    //optionChange.OptionUri
+                }
+
+
+            }
 
             return _MenuItem;
         }

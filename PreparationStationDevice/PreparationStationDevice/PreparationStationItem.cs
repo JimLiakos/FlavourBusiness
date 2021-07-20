@@ -29,7 +29,7 @@ namespace PreparationStationDevice
 
             if (ItemPreparation.MenuItem == null)
                 ItemPreparation.LoadMenuItem(menuItems);
-
+           
 
             Ingredients = (from optionGroup in (this.ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
                            from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()

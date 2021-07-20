@@ -277,12 +277,12 @@ namespace PreparationStationDevice
             return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                //var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
 
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return false;
+                //if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                //    return false;
                 string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
-                communicationCredentialKey =result.Text;
+                //communicationCredentialKey =result.Text;
 
                 string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                 string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
