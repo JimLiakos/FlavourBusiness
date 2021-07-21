@@ -105,6 +105,18 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        [JsonIgnore]
+        public ILevel NewLevel
+        {
+            get
+            {
+                if (itemSpecificOption != null)
+                    return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.JsonViewModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                else
+                    return null;
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         string _OptionUri;
 
@@ -210,7 +222,11 @@ namespace FlavourBusinessManager.RoomService
         }
 
         [JsonIgnore]
-        public IOptionMenuItemSpecific itemSpecificOtion { get; internal set; }
+        public IOptionMenuItemSpecific itemSpecificOption { get; internal set; }
+
+        public bool Without{ get; internal set; }
+
+
 
         /// <MetaDataID>{e44bc19d-1563-4b43-ab0e-5e4c37707d55}</MetaDataID>
         internal bool Update(OptionChange optionChange)

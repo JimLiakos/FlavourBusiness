@@ -350,7 +350,9 @@ namespace FlavourBusinessManager.RoomService
                         var itemSpecific = new MenuModel.JsonViewModel.OptionMenuItemSpecific();
                         itemSpecific.Option = option;
                         itemSpecific.InitialLevel = option.Initial;
-                        optionChange.itemSpecificOtion = itemSpecific;
+                        optionChange.itemSpecificOption = itemSpecific;
+                        //optionChange.itemSpecificOption.Option.LevelType.ZeroLevelScaleType
+                        
                     }
                     //optionChange.OptionUri
                 }
