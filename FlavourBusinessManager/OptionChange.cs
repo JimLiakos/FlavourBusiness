@@ -17,7 +17,31 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class OptionChange : IOptionChange
     {
+        /// <exclude>Excluded</exclude>
+        bool _Without;
 
+        /// <MetaDataID>{7fb6d78d-8331-44c3-ba48-1c6f37a2911a}</MetaDataID>
+        [PersistentMember(nameof(_Without))]
+        [BackwardCompatibilityID("+8")]
+        public bool Without
+        {
+            get => _Without;
+            set
+            {
+
+                if (_Without != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Without = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         string _OptionFullName;
         /// <MetaDataID>{41c1849e-9c38-4efa-9007-129ba107505d}</MetaDataID>
         [PersistentMember(nameof(_OptionFullName))]
@@ -105,6 +129,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{0c607f35-f658-46a2-86b5-87c81de8a7da}</MetaDataID>
         [JsonIgnore]
         public ILevel NewLevel
         {
@@ -221,11 +246,11 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{fdc79eae-d68d-4fbe-aff7-253d9306e198}</MetaDataID>
         [JsonIgnore]
         public IOptionMenuItemSpecific itemSpecificOption { get; internal set; }
 
-        public bool Without{ get; internal set; }
-
+     
 
 
         /// <MetaDataID>{e44bc19d-1563-4b43-ab0e-5e4c37707d55}</MetaDataID>
@@ -237,10 +262,17 @@ namespace FlavourBusinessManager.RoomService
                 _OptionPrice != optionChange.OptionPrice ||
                 _PriceDif != optionChange.PriceDif);
 
-            _NewLevelUri = optionChange.NewLevelUri;
-            _OptionName = optionChange.OptionName;
-            _OptionPrice = optionChange.OptionPrice;
-            _PriceDif = optionChange.PriceDif;
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _NewLevelUri = optionChange.NewLevelUri;
+                _OptionName = optionChange.OptionName;
+                _OptionPrice = optionChange.OptionPrice;
+                _PriceDif = optionChange.PriceDif;
+                _Without = optionChange.Without; 
+                stateTransition.Consistent = true;
+            }
+
             return changed;
 
         }

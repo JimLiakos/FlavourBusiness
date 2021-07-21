@@ -351,6 +351,8 @@ namespace FlavourBusinessManager.RoomService
                         itemSpecific.Option = option;
                         itemSpecific.InitialLevel = option.Initial;
                         optionChange.itemSpecificOption = itemSpecific;
+
+                      
                         //optionChange.itemSpecificOption.Option.LevelType.ZeroLevelScaleType
                         
                     }
