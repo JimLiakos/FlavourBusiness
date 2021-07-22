@@ -10,5 +10,9 @@ namespace FlavourBusinessFacade.RoomService
         [Association("ItemPreparationOptionsChange", Roles.RoleB, "8e564693-11c5-445c-8cb3-1f9505a2f2d2")]
         [RoleBMultiplicityRange(1, 1)]
         IItemPreparation ItemPreparation { get; set; }
+
+        MenuModel.IOptionMenuItemSpecific itemSpecificOption { get; }
+        
+        bool Without { get; }
     }
 }

@@ -37,6 +37,14 @@ namespace PreparationStationDevice
                            select new Ingredient(option)).ToList();
 
 
+            foreach(var optionChange in itemPreparation.OptionsChanges)
+            {
+                Ingredient ingredient = Ingredients.Where(x => x.PreparationScaledOption == optionChange.itemSpecificOption.Option).First();
+
+                ingredient.Without = optionChange.Without;
+            }
+
+
             //if (ItemPreparation.MenuItem == null)
             //    ItemPreparation.LoadMenuItem();
 
