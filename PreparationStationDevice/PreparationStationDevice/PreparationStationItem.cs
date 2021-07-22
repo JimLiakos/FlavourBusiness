@@ -37,11 +37,14 @@ namespace PreparationStationDevice
                            select new Ingredient(option)).ToList();
 
 
-            foreach(var optionChange in itemPreparation.OptionsChanges)
+            foreach(var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
             {
-                Ingredient ingredient = Ingredients.Where(x => x.PreparationScaledOption == optionChange.itemSpecificOption.Option).First();
+                Ingredient ingredient = Ingredients.Where(x => x.PreparationScaledOption == optionChange.itemSpecificOption.Option).FirstOrDefault();
+                if (ingredient != null)
+                    ingredient.Without = optionChange.Without;
+                else
+                    Ingredients.Add(new Ingredient(optionChange) { IsExtra = true });
 
-                ingredient.Without = optionChange.Without;
             }
 
 

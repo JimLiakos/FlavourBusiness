@@ -22,7 +22,7 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{7fb6d78d-8331-44c3-ba48-1c6f37a2911a}</MetaDataID>
         [PersistentMember(nameof(_Without))]
-        [BackwardCompatibilityID("+8")]
+        [BackwardCompatibilityID("+9")]
         public bool Without
         {
             get => _Without;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FlavourBusinessManager.RoomService;
 using MenuModel;
+using OOAdvantech.Json;
 
 namespace PreparationStationDevice
 {
@@ -9,14 +11,52 @@ namespace PreparationStationDevice
     public class Ingredient
     {
         public readonly IPreparationScaledOption PreparationScaledOption;
+
+        public readonly OOAdvantech.Multilingual MultilingualFullName;
+        public readonly OOAdvantech.Multilingual MultilingualName;
+        public OOAdvantech.Multilingual MultilingualNewLevelName;
+
         public Ingredient(IPreparationScaledOption preparationScaledOption)
         {
             PreparationScaledOption = preparationScaledOption;
-            Name = preparationScaledOption.FullName;
+            MultilingualName = preparationScaledOption.MultilingualName;
+            MultilingualFullName = preparationScaledOption.MultilingualFullName;
         }
+
+
+
+        public Ingredient(OptionChange optionChange)
+        {
+            OptionChange = optionChange;
+            PreparationScaledOption = optionChange.itemSpecificOption.Option;
+            MultilingualName = PreparationScaledOption.MultilingualName;
+            MultilingualFullName = PreparationScaledOption.MultilingualFullName;
+            MultilingualNewLevelName = optionChange.NewLevel.MultilingualName;
+
+        }
+
         public String Name { get; set; }
 
         public bool Without { get; set; }
 
+        public bool IsExtra { get; set; }
+
+        [JsonIgnore]
+        OptionChange _OptionChange;
+
+        [JsonIgnore]
+        public OptionChange OptionChange
+        {
+            get
+            {
+
+                return _OptionChange;
+            }
+            set
+            {
+                _OptionChange = value;
+                MultilingualNewLevelName = _OptionChange.NewLevel.MultilingualName;
+            }
+        }
     }
 }
