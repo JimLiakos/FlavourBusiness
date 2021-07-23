@@ -47,6 +47,25 @@ namespace PreparationStationDevice
 
             }
 
+            foreach(var ingredient in Ingredients.ToList() )
+            {
+                if(ingredient.Without&& (ingredient.PreparationScaledOption.OptionGroup.SelectionType&MenuModel.SelectionType.SingleSelection)!=0)
+                {
+                    var optionChangeIgredient = Ingredients.Where(x => x.PreparationScaledOption.OptionGroup == ingredient.PreparationScaledOption.OptionGroup&& x.IsExtra).FirstOrDefault();
+                    if(optionChangeIgredient!=null)
+                    {
+                        int pos = Ingredients.IndexOf(ingredient);
+                        Ingredients.Remove(ingredient);
+                        Ingredients.Remove(optionChangeIgredient);
+                        Ingredients.Insert(pos, optionChangeIgredient);
+                        optionChangeIgredient.IsExtra = false;
+
+                    }
+                }
+            }
+
+            var names= Ingredients.Select(x => x.Name).ToList();
+
 
             //if (ItemPreparation.MenuItem == null)
             //    ItemPreparation.LoadMenuItem();

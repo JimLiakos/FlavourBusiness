@@ -12,15 +12,16 @@ namespace PreparationStationDevice
     {
         public readonly IPreparationScaledOption PreparationScaledOption;
 
-        public readonly OOAdvantech.Multilingual MultilingualFullName;
-        public readonly OOAdvantech.Multilingual MultilingualName;
+        public OOAdvantech.Multilingual MultilingualFullName;
+        public OOAdvantech.Multilingual MultilingualName;
         public OOAdvantech.Multilingual MultilingualNewLevelName;
 
         public Ingredient(IPreparationScaledOption preparationScaledOption)
         {
             PreparationScaledOption = preparationScaledOption;
             MultilingualName = preparationScaledOption.MultilingualName;
-            MultilingualFullName = preparationScaledOption.MultilingualFullName;
+            GetMultilingualFullName();
+            //MultilingualFullName = preparationScaledOption.MultilingualFullName;
         }
 
 
@@ -30,16 +31,58 @@ namespace PreparationStationDevice
             OptionChange = optionChange;
             PreparationScaledOption = optionChange.itemSpecificOption.Option;
             MultilingualName = PreparationScaledOption.MultilingualName;
-            MultilingualFullName = PreparationScaledOption.MultilingualFullName;
+            GetMultilingualFullName();
             MultilingualNewLevelName = optionChange.NewLevel.MultilingualName;
 
         }
 
-        public String Name { get; set; }
+        public void GetMultilingualFullName()
+        {
+            MultilingualFullName = new OOAdvantech.Multilingual();
+            MultilingualFullName.Def = MultilingualName.Def;
+            foreach (var entry in MultilingualName.Values)
+            {
+
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(entry.Key), true))
+                {
+                    if (PreparationScaledOption.MultilingualFullName.Values.ContainsKey(entry.Key))
+                        MultilingualFullName.SetValue(PreparationScaledOption.MultilingualFullName.GetValue<string>());
+                    else
+                    {
+                        if (PreparationScaledOption.AutoGenFullName)
+                            MultilingualFullName.SetValue(PreparationScaledOption.OptionGroup.MultilingualName.GetValue<string>() + " " + entry.Value);
+                        else
+                            MultilingualFullName.SetValue(entry.Value);
+                    }
+                }
+            }
+        }
+
+
+        public String Name
+        {
+            get
+            {
+                if (IsExtra && this.PreparationScaledOption.OptionGroup.SelectionType == SelectionType.SimpleGroup)
+                    return MultilingualNewLevelName.GetValue<string>() + " " + MultilingualFullName.GetValue<string>();
+                return MultilingualFullName.GetValue<string>();
+            }
+            set
+            {
+            }
+        }
 
         public bool Without { get; set; }
 
         public bool IsExtra { get; set; }
+
+        public bool IsCheckBoxOption
+        {
+            get => this.PreparationScaledOption.OptionGroup.SelectionType != SelectionType.SimpleGroup;
+            set
+            {
+            }
+        }
 
         [JsonIgnore]
         OptionChange _OptionChange;
