@@ -13,6 +13,6 @@ namespace PreparationStationDevice
         public string Description { get; set; }
 
         public List<PreparationStationItem> PreparationItems { get; set; }
-
+        public string Uri { get;  set; }
     }
 }

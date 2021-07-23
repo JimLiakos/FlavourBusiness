@@ -9,13 +9,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         /// <MetaDataID>{0f0aafc5-6824-4bf8-b2f1-787b2175f9fd}</MetaDataID>
-        public ServicePointPreparationItems(IServicePoint servicePoint, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
+        public ServicePointPreparationItems(IFoodServiceSession serviceSession , System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
         {
-            ServicePoint = servicePoint;
+            ServicePoint = serviceSession.ServicePoint;
             PreparationItems = preparationItems;
-            var dfd = servicePoint.ServiceArea;
-            Description = servicePoint.ServiceArea.Description + " / " + servicePoint.Description;
+            Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+            Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(serviceSession).GetPersistentObjectUri(serviceSession);
+
         }
+
+        public string Uri;
+
+
         /// <exclude>Excluded</exclude>
         public string Description;
 

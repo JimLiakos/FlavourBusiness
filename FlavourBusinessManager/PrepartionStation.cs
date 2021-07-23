@@ -421,7 +421,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
                                                                                        //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
                                                                                    select item.Fetching(item.ClientSession)).ToArray()
-                                                          group itemPreparation by itemPreparation.ClientSession.ServicePoint into ServicePointItems
+                                                          group itemPreparation by itemPreparation.ClientSession.MainSession into ServicePointItems
                                                           select ServicePointItems))
             {
                 var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
@@ -435,6 +435,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
                         //itemPreparation.Update(item);
                         preparationItems.Add(item);
+                        item.ObjectChangeState += FlavourItem_ObjectChangeState;
                     }
                 }
                 ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
@@ -470,6 +471,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             });
 
         }
+
+
 
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
 
@@ -590,6 +593,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
             }
+            if(member==null)
+                _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
 
         public void Items…nPreparation(List<string> itemPreparationUris)

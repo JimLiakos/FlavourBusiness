@@ -691,7 +691,7 @@ _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
                 if (_MenuItemPriceUri != item.MenuItemPriceUri)
                     changed = true;
                 _MenuItemPriceUri = item.MenuItemPriceUri;
-
+                ObjectChangeState?.Invoke(this, null);
                 stateTransition.Consistent = true;
             }
             return changed;

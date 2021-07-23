@@ -41,7 +41,17 @@ namespace PreparationStationDevice
             {
                 Ingredient ingredient = Ingredients.Where(x => x.PreparationScaledOption == optionChange.itemSpecificOption.Option).FirstOrDefault();
                 if (ingredient != null)
+                {
                     ingredient.Without = optionChange.Without;
+                    if (!ingredient.Without)
+                    {
+                        ingredient.IsExtra = true;
+                        ingredient.OptionChange = optionChange;
+                        ingredient.GetMultilingualFullName();
+                    }
+
+
+                }
                 else
                     Ingredients.Add(new Ingredient(optionChange) { IsExtra = true });
 
