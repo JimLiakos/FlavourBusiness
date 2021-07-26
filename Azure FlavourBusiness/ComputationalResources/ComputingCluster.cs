@@ -145,6 +145,11 @@ namespace ComputationalResources
             return null;
         }
 
+        public static void WriteOnEventLog(string source, string message, EventLogEntryType error)
+        {
+
+        }
+
 
 
         /// <MetaDataID>{823631bf-fbae-4c22-b66f-076b37540ac2}</MetaDataID>

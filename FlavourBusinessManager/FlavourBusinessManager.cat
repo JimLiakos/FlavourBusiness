@@ -17070,7 +17070,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	2640
+		    origin_x   	162
 		    origin_y   	756
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @264
@@ -24742,7 +24742,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@461
-			location   	(56, 184)
+			location   	(56, 179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -24750,7 +24750,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@461
-			location   	(56, 134)
+			location   	(56, 133)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

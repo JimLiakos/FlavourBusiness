@@ -479,7 +479,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                         where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
                                                         select aPreparationStation))
                     {
-                        
+
                         this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
                     }
                 }
@@ -1064,7 +1064,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     string version = restaurantMenusData.Version;
                     string serverStorageFolder = GetVersionFolder(version);
                     string jsonFileName = serverStorageFolder + restaurantMenusData.Name + ".json";
-                    return RawStorageCloudBlob.RootUri + "/"+jsonFileName;
+                    return RawStorageCloudBlob.RootUri + "/" + jsonFileName;
                 }
 
             }
@@ -1245,6 +1245,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 objectStorage.CommitTransientObjectState(preparationStation);
                 stateTransition.Consistent = true;
             }
+            var count = PreparationStationRuntimes.Count;
             _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
             return preparationStation;
         }
@@ -1267,17 +1268,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 var objectStorage = ObjectStorage.GetStorageOfObject(this);
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
-                var servicesContextIdentity = ServicesContextIdentity;
                 var preparationStation = (from aPreparationStation in servicesContextStorage.GetObjectCollection<PreparationStation>()
-                                          where aPreparationStation.PreparationStationIdentity == preparationStationIdentity && aPreparationStation.ServicesContextIdentity == servicesContextIdentity
-                                          select aPreparationStation).FirstOrDefault();
+                                          where aPreparationStation.PreparationStationIdentity == preparationStationIdentity
+                                          select aPreparationStation).ToList().FirstOrDefault();
                 if (preparationStation != null)
                 {
-                    
+
                     this.PreparationStationRuntimes[preparationStationIdentity] = preparationStation;
                 }
             }
-
+            //7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad
             return this.PreparationStationRuntimes[preparationStationIdentity];
         }
 

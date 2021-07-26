@@ -58,6 +58,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
+                if(_ServicePoint==null)
+                    _ServicePoint = _PartialClientSessions.FirstOrDefault()?.ServicePoint;
                 return _ServicePoint;
             }
             set
@@ -170,7 +172,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     lock (StateMachineLock)
                     {
-                        if (SessionState != SessionState.MealValidationDelay)
+                        if (SessionState != SessionState.MealValidationDelay&& SessionState != SessionState.MealMonitoring)
                         {
                             mealValidationDelaySessionState = true;
                             SessionState = SessionState.MealValidationDelay;
@@ -280,6 +282,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void CreateAndInitMeal()
         {
 
+            if (_Meal.Value != null)
+                throw new Exception("Meal already exist");
 
             var itemsToPrepare = (from clientSession in PartialClientSessions
                                   from itemPreparation in clientSession.FlavourItems

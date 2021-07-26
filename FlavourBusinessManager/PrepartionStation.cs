@@ -504,6 +504,26 @@ namespace FlavourBusinessManager.ServicesContextResources
             return ServicePointsPreparationItems;
         }
 
+        internal void RemoveItemPreparation(ItemPreparation flavourItem)
+        {
+
+            lock (DeviceUpdateLock)
+            {
+                if (flavourItem.PreparationStation == this)
+                {
+                    flavourItem.PreparationStation = null;
+                    flavourItem.ObjectChangeState -= FlavourItem_ObjectChangeState;
+
+                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                    if (servicePointPreparationItems != null)
+                        servicePointPreparationItems.PreparationItems.Remove(flavourItem);
+
+                    if (DeviceUpdateEtag == null)
+                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                }
+
+            }
+        }
         /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
         internal void AssignItemPreparation(ItemPreparation flavourItem)
         {
@@ -517,7 +537,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.ServicePoint, new List<IItemPreparation>() { flavourItem }));
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.MainSession, new List<IItemPreparation>() { flavourItem }));
                     else
                         servicePointPreparationItems.PreparationItems.Add(flavourItem);
 
@@ -537,7 +557,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (itemPreparation.PreparationStation != null)
             {
                 preparationData.ItemPreparation = itemPreparation;
-                preparationData.PreparationStationRuntime = ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity);
+                preparationData.PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime;  //ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity);
                 preparationData.Duration = TimeSpan.FromMinutes((itemPreparation.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
                 return preparationData;
             }
@@ -590,25 +610,23 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
             lock (DeviceUpdateLock)
-            {
                 DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-            }
-            if(member==null)
+            if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
 
         public void Items…nPreparation(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
-                                              from itemPreparation in servicePointPreparationItems.PreparationItems
-                                              where itemPreparationUris.Contains(itemPreparation.uid)
-                                              group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
-                                              select new { clientSession = ClientSessionItems.Key, ClientSessionItems=ClientSessionItems.ToList() }).ToList();
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where itemPreparationUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
-            foreach(var clientSessionItems in clientSessionsItems)
+            foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.Items…nPreparation(clientSessionItems.ClientSessionItems);
 
-              
+
         }
         public void ItemsPrepared(List<string> itemPreparationUris)
         {
@@ -639,7 +657,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
-    
+
 
     /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
     struct PreparationData

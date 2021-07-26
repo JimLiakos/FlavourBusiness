@@ -1,3 +1,4 @@
+using ComputationalResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
@@ -145,6 +146,15 @@ namespace FlavourBusinessManager.RoomService
                             stateTransition.Consistent = true;
                         }
 
+                        try
+                        {
+                            CheckForNewItems();
+                        }
+                        catch (Exception error)
+                        {
+                            ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message +Environment.NewLine+ error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
+                        }
+
                         System.Threading.Thread.Sleep(1000);
                         sesionState = Session.SessionState;
                     }
@@ -152,6 +162,47 @@ namespace FlavourBusinessManager.RoomService
 
             }
 
+        }
+
+        private void CheckForNewItems()
+        {
+
+            var mealItems = (from foodServiceClientSession in Session.PartialClientSessions
+                             from itemPreparation in foodServiceClientSession.FlavourItems.OfType<ItemPreparation>()
+                             where itemPreparation.State == ItemPreparationState.Committed
+                             select itemPreparation).ToList();
+            if (mealItems.Count > 0)
+            {
+                MenuModel.MealType mealType = ObjectStorage.GetObjectFromUri<MenuModel.MealType>(_MealTypeUri);
+                foreach (var mealCourseItems in (from mealItem in mealItems
+                                                 group mealItem by mealItem.SelectedMealCourseTypeUri into mealCourseItems
+                                                 select mealCourseItems))
+                {
+                    var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
+
+
+                    MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
+                    if (mealCourse == null)
+                    {
+                        mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
+                        _Courses.Add(mealCourse);
+                    }
+                    else
+                    {
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var mealCourseItem in mealCourseItems)
+                            {
+                                mealCourse.AddItem(mealCourseItem);
+                                mealCourseItem.PreparedAtForecast = mealCourse.ServedAtForecast;
+                            }
+                            stateTransition.Consistent = true;
+                        }
+
+                    }
+                }
+            }
         }
 
         /// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>
@@ -165,7 +216,7 @@ namespace FlavourBusinessManager.RoomService
                 if (headCourse.ServedAtForecast == null)
                 {
                     var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
-                    headCourse.ServedAtForecast = System.DateTime.UtcNow+ foodItemsPreparatioData[0].duration;
+                    headCourse.ServedAtForecast = System.DateTime.UtcNow + foodItemsPreparatioData[0].duration;
                     foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
                     {
                         foodITem.State = ItemPreparationState.PreparationDelay;

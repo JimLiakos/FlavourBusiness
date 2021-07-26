@@ -291,15 +291,15 @@ namespace MenuPresentationModel
 
             try
             {
-                var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { ReferenceLoopHandling = OOAdvantech.Json.ReferenceLoopHandling.Serialize, TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, Binder = new OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder(OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Serialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ReferenceResolver = new OOAdvantech.Remoting.RestApi.Serialization.ReferenceResolver() };
-                jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
-                jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(jsonRestaurantMenu, jSetttings);
-                jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Deserialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization) };
-                jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
-                jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                jsonEx = System.IO.File.ReadAllText(@"C:\menu.txt");
-                var sss = OOAdvantech.Json.JsonConvert.DeserializeObject<MenuPresentationModel.JsonMenuPresentation.RestaurantMenu>(jsonEx, jSetttings);
+                //var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { ReferenceLoopHandling = OOAdvantech.Json.ReferenceLoopHandling.Serialize, TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, Binder = new OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder(OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Serialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ReferenceResolver = new OOAdvantech.Remoting.RestApi.Serialization.ReferenceResolver() };
+                //jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
+                //jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                //string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(jsonRestaurantMenu, jSetttings);
+                //jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Deserialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization) };
+                //jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
+                //jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                //jsonEx = System.IO.File.ReadAllText(@"C:\menu.txt");
+                //var sss = OOAdvantech.Json.JsonConvert.DeserializeObject<MenuPresentationModel.JsonMenuPresentation.RestaurantMenu>(jsonEx, jSetttings);
             }
             catch (Exception error)
             {

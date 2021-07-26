@@ -192,23 +192,8 @@ namespace FlavourBusinessManager.RoomService
             _DurationInMinutes = mealCourseType.DurationInMinutes;
             _Name = mealCourseType.Name;
             foreach (var flavourItem in itemPreparations)
-            {
                 AddItem(flavourItem);
-                flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
-                if (flavourItem.State == ItemPreparationState.Committed)
-                {
-                    if (flavourItem.MenuItem == null)
-                        flavourItem.LoadMenuItem();
-
-                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
-                    flavourItem.State = ItemPreparationState.PreparationDelay;
-                    (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
-
-
-
-                }
-
-            }
+               
         }
 
         private void FlavourItem_ObjectChangeState(object _object, string member)
@@ -219,10 +204,24 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            ItemPreparation flavourItem = itemPreparation as ItemPreparation;
+            if (!_FoodItems.Contains(flavourItem))
             {
-                _FoodItems.Add(itemPreparation);
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _FoodItems.Add(flavourItem);
+                    stateTransition.Consistent = true;
+                }
+                flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+                if (flavourItem.State == ItemPreparationState.Committed)
+                {
+                    if (flavourItem.MenuItem == null)
+                        flavourItem.LoadMenuItem();
+
+                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
+                    flavourItem.State = ItemPreparationState.PreparationDelay;
+                    (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
+                }
             }
         }
 

@@ -333,7 +333,7 @@ namespace WaiterApp.ViewModel
                         if (Waiter != null)
                             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
 
-                        Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
+                        //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
                         if (Waiter != null && Waiter.SignUpUserIdentity == authUser.User_ID)
                         {
                             AuthUser = authUser;
