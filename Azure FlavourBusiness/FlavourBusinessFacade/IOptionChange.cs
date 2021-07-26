@@ -12,6 +12,7 @@ namespace FlavourBusinessFacade.RoomService
         IItemPreparation ItemPreparation { get; set; }
 
         /// <MetaDataID>{5f676077-232b-45d5-a808-056e01ff65dc}</MetaDataID>
+        [OOAdvantech.Json.JsonIgnore]
         [BackwardCompatibilityID("+1")]
         MenuModel.IOptionMenuItemSpecific itemSpecificOption { get; }
 
