@@ -17,6 +17,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
+
         [Association("AreaServicePoints", Roles.RoleB, "27b5c804-1630-41b4-975e-cf64dc1969a0")]
         [RoleBMultiplicityRange(1, 1)]
         [CachingDataOnClientSide]
@@ -122,14 +123,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
 
+    
+
     /// <MetaDataID>{dd9d7ee9-ef6e-488b-b464-200ffd7c722d}</MetaDataID>
     public enum ServicePointState
     {
         Free = 0,
         Laying = 1,
-        Appetizer = 2,
-        MainDish = 3,
-        Dessert = 4,
+        Conversation = 2,
+        MealCoursePreparation = 3,
+        MealCourseOvertime = 4,
         TakeAway = 5,
         Delivery = 6
     }

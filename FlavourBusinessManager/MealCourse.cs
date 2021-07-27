@@ -154,12 +154,12 @@ namespace FlavourBusinessManager.RoomService
 
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{2b29e1c8-9c66-4412-96f3-cf276f528e44}</MetaDataID>
-        DateTime _PreparedAt;
+        DateTime? _PreparedAt;
 
         /// <MetaDataID>{f5802cfc-5c51-4da8-891f-c48fa3abd3b3}</MetaDataID>
         [PersistentMember(nameof(_PreparedAt))]
         [BackwardCompatibilityID("+3")]
-        public System.DateTime ServedAt
+        public System.DateTime? ServedAt
         {
             get => _PreparedAt;
             set => throw new NotImplementedException();

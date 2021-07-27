@@ -7,6 +7,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using RestaurantHallLayoutModel;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -25,7 +26,7 @@ namespace FlavourBusinessManager.HumanResources
 
         /// <exclude>Excluded</exclude>
         string _PhotoUrl;
-     
+
 
         /// <MetaDataID>{c9221896-e02e-402a-ad3f-c0b4cc2bba95}</MetaDataID>
         [PersistentMember(nameof(_PhotoUrl))]
@@ -105,7 +106,7 @@ namespace FlavourBusinessManager.HumanResources
         public Message PeekMessage()
         {
             var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
-            if(message!=null)
+            if (message != null)
                 message.MessageReaded = true;
             return message;
         }
@@ -151,7 +152,7 @@ namespace FlavourBusinessManager.HumanResources
         public void PushMessage(Message message)
         {
 
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this,TransactionOption.RequiresNew))
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
             {
                 message.MessageTimestamp = DateTime.UtcNow;
                 _Messages.Add(message);
@@ -202,13 +203,26 @@ namespace FlavourBusinessManager.HumanResources
             {
                 if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
                 {
-                    IHallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as IHallLayout;
+                    HallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as HallLayout;
+
+
                     if (hallLayout == null)
                         continue;
+
+                    hallLayout.ServiceArea = serviceArea;
+                    foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
+                    {
+                        var servicePoint= hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
+                        if (servicePoint != null)
+                        {
+                            servicePointShape.ServicesPointState = servicePoint.State;
+                            var ss = servicePoint.ActiveFoodServiceClientSessions;
+                        }
+                    }
+
                     halls.Add(hallLayout);
                 }
             }
-            //Παπαλουκά
             return halls;
         }
 
@@ -520,7 +534,7 @@ namespace FlavourBusinessManager.HumanResources
 
                     if (shiftWorks.Count > 0)
                     {
-                        
+
                     }
 
 

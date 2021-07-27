@@ -22,6 +22,20 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        [ObjectActivationCall]
+        internal void OnActivated()
+        {
+
+           foreach(var servicePoint in  ServicePoints)
+                servicePoint.ObjectChangeState += ServicePoint_ObjectChangeState;
+        }
+
+        private void ServicePoint_ObjectChangeState(object _object, string member)
+        {
+            
+        }
+
+
 
         /// <exclude>Excluded</exclude>
         string _HallLayoutUri;
@@ -173,6 +187,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         List<IMealType> _ServesMealTypes = null;
 
         public event ObjectChangeStateHandle ObjectChangeState;
+        public event ServicePointChangeStateHandle ServicePointChangeState;
 
         /// <MetaDataID>{b6136504-398d-4f72-8a67-d9018931d582}</MetaDataID>
         [BackwardCompatibilityID("+5")]
@@ -208,7 +223,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _ServicePoints.Add(servicePoint);
                 stateTransition.Consistent = true;
             }
-
+            servicePoint.ObjectChangeState += ServicePoint_ObjectChangeState;
         }
 
         /// <MetaDataID>{f046286f-6954-4a16-9a98-add0993a03e6}</MetaDataID>
@@ -220,6 +235,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _ServicePoints.Remove(servicePoint);
                 stateTransition.Consistent = true;
             }
+            servicePoint.ObjectChangeState -= ServicePoint_ObjectChangeState;
 
         }
 
@@ -236,6 +252,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 servicePoint.ServicesPointIdentity = Guid.NewGuid().ToString("N");
                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(servicePoint);
                 _ServicePoints.Add(servicePoint);
+                servicePoint.ObjectChangeState += ServicePoint_ObjectChangeState;
                 stateTransition.Consistent = true;
                 return servicePoint;
 

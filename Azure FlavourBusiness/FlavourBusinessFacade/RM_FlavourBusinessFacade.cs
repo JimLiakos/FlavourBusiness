@@ -2732,6 +2732,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
+public event FlavourBusinessFacade.ServicesContextResources.ServicePointChangeStateHandle ServicePointChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "add_ServicePointChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.ServicePointChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "remove_ServicePointChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.ServicesContextResources.ServicePointChangeStateHandle)});
+                }
+            }
         
         public Pr_IServiceArea(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {

@@ -338,12 +338,19 @@ namespace WaiterApp.ViewModel
                         {
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
+                            if(this._Halls!=null)
+                            {
+                                foreach (var hall in this._Halls)
+                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
+                            }
                             this._Halls = Waiter.GetServiceHalls();
                             this._Halls = this._Halls.Where(x => x != null).ToList();
                             foreach (var hall in this._Halls)
                             {
+                                
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                                (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
 
 
@@ -425,11 +432,19 @@ namespace WaiterApp.ViewModel
                             ActiveShiftWork = Waiter.ActiveShiftWork;
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                             ApplicationSettings.Current.FriendlyName = Waiter.FullName;
+                            if (this._Halls != null)
+                            {
+                                foreach (var hall in this._Halls)
+                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
+                            }
+
+
                             this._Halls = Waiter.GetServiceHalls();
                             foreach (var hall in this._Halls)
                             {
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                                (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
 
                             GetMessages();
@@ -479,6 +494,11 @@ namespace WaiterApp.ViewModel
 
             }
 
+        }
+
+        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
+        {
+            
         }
 
         async Task<bool> IOSPseudoSignIn()
@@ -550,11 +570,20 @@ namespace WaiterApp.ViewModel
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                                 ApplicationSettings.Current.FriendlyName = Waiter.FullName;
+
+                                if (this._Halls != null)
+                                {
+                                    foreach (var hall in this._Halls)
+                                        (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
+                                }
+
+
                                 this._Halls = Waiter.GetServiceHalls();
                                 foreach (var hall in this._Halls)
                                 {
                                     hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                     (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                                 }
 
                                 GetMessages();

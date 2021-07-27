@@ -143,6 +143,12 @@ namespace FlavourBusinessManager.RoomService
                                     preparationItem.State = ItemPreparationState.PendingPreparation;
                             }
 
+                            var mealCourse = Courses.OfType<MealCourse>().Where(x => x.StartsAt == null).FirstOrDefault();
+
+                            if (mealCourse.ServedAtForecast != null && mealCourse.ServedAtForecast < DateTime.UtcNow)
+                                this.Session.ServicePoint.State = ServicePointState.MealCourseOvertime;
+
+
                             stateTransition.Consistent = true;
                         }
 
@@ -155,6 +161,8 @@ namespace FlavourBusinessManager.RoomService
                             ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message +Environment.NewLine+ error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
                         }
 
+
+                         
                         System.Threading.Thread.Sleep(1000);
                         sesionState = Session.SessionState;
                     }
