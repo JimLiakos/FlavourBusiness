@@ -73,6 +73,9 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{d86f1b54-4295-4d9c-93f4-2e24e419542c}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         ItemPreparationState State { get; set; }
+        /// <MetaDataID>{d6f26cd4-5d10-4d71-a8f4-01a8b13bc9c2}</MetaDataID>
+        [BackwardCompatibilityID("+14")]
+        string CodeCard { get; set; }
     }
 
 

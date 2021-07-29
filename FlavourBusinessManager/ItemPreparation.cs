@@ -332,6 +332,7 @@ namespace FlavourBusinessManager.RoomService
             return _MenuItem;
         }
 
+        /// <MetaDataID>{08cd685b-2f14-4812-ab5f-af170874b642}</MetaDataID>
         public IMenuItem LoadMenuItem(Dictionary<string, MenuFoodItem> menuItems)
         {
             if (_MenuItem == null && !string.IsNullOrWhiteSpace(_MenuItemUri))
@@ -352,9 +353,9 @@ namespace FlavourBusinessManager.RoomService
                         itemSpecific.InitialLevel = option.Initial;
                         optionChange.itemSpecificOption = itemSpecific;
 
-                      
+
                         //optionChange.itemSpecificOption.Option.LevelType.ZeroLevelScaleType
-                        
+
                     }
                     //optionChange.OptionUri
                 }
@@ -756,6 +757,30 @@ _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
                     }
                 }
 
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _CodeCard;
+
+
+        /// <MetaDataID>{b45fbcc9-e058-4102-b596-0a3e617f669f}</MetaDataID>
+        [PersistentMember(nameof(_CodeCard))]
+        [BackwardCompatibilityID("+22")]
+        public string CodeCard
+        {
+            get => _CodeCard; 
+            set
+            {
+                if (_CodeCard != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CodeCard = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 

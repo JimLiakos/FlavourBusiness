@@ -11432,7 +11432,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"14")
+			    value      	"15")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Generate Backward ID"
@@ -11604,7 +11604,7 @@
 				    name       	"Identity"
 				    value      	"+5"))
 			    quid       	"5F49FF5B00A4"
-			    type       	"string"
+			    type       	"System.DateTime"
 			    exportControl 	"Public")
 			(object ClassAttribute "SelectedMealCourseTypeUri"
 			    attributes 	(list Attribute_Set
@@ -11732,7 +11732,7 @@
 				    name       	"Identity"
 				    value      	"+12"))
 			    quid       	"60E2864A017F"
-			    type       	"DateTime"
+			    type       	"System.Nullable<System.DateTime>"
 			    exportControl 	"Public")
 			(object ClassAttribute "PreparedAtForecast"
 			    attributes 	(list Attribute_Set
@@ -11761,7 +11761,73 @@
 				    name       	"Identity"
 				    value      	"+13"))
 			    quid       	"60E286720066"
-			    type       	"DateTime"
+			    type       	"System.Nullable<System.DateTime>"
+			    exportControl 	"Public")
+			(object ClassAttribute "CustomItemEnabled"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{537883cd-8a78-422f-b0b1-e62befeea88d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"610277D30353")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	(value Text "6")))
+			    quid       	"610277D30353"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "CodeCard"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d6f26cd4-5d10-4d71-a8f4-01a8b13bc9c2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"610277D403B6")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+14"))
+			    quid       	"610277D403B6"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -12683,7 +12749,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -12695,7 +12761,11 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{6171f9c7-3423-4d10-8208-adfbe093463a}"))
+				    value      	"{6171f9c7-3423-4d10-8208-adfbe093463a}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"60E0180C00EC"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
@@ -12721,7 +12791,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"60E0180C00FA"
 			    label      	"PreparationStation"
 			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStation"

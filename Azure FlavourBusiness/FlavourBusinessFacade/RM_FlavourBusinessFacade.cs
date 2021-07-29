@@ -2701,6 +2701,15 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "CancelLastPreparationStep", args, argsTypes);
         }
+        
+        public void AssignCodeCardsToSessions(System.Collections.Generic.List<string> codeCards)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = codeCards;
+            argsTypes[0] = typeof(System.Collections.Generic.List<string>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "AssignCodeCardsToSessions", args, argsTypes);
+        }
     }
     
     public sealed class Pr_IServiceArea : FlavourBusinessFacade.ServicesContextResources.IServiceArea, OOAdvantech.Remoting.RestApi.ITransparentProxy

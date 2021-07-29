@@ -12416,7 +12416,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"22")
+			    value      	"23")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -12547,6 +12547,25 @@
 				    name       	"UniqueID"
 				    value      	"6073D86301AE"))
 			    quid       	"6073D86301AE"
+			    result     	"MenuModel.IMenuItem"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "LoadMenuItem"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{08cd685b-2f14-4812-ab5f-af170874b642}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6102792A001B"))
+			    quid       	"6102792A001B"
+			    parameters 	(list Parameters
+				(object Parameter "menuItems"
+				    quid       	"6102792A003E"
+				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -13247,6 +13266,35 @@
 				    value      	"+21"))
 			    quid       	"60E2896701E0"
 			    type       	"DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "CodeCard"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b45fbcc9-e058-4102-b596-0a3e617f669f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6102792B017C")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+22"))
+			    quid       	"6102792B017C"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -24742,7 +24790,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@461
-			location   	(56, 179)
+			location   	(56, 184)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -24750,7 +24798,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@461
-			location   	(56, 133)
+			location   	(56, 134)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
