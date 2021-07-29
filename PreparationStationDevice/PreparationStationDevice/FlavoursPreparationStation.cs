@@ -123,7 +123,7 @@ namespace PreparationStationDevice
                                                            Description = servicePointItems.Description,
                                                            ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                            ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
-                                                           Uri= servicePointItems.Uri,
+                                                           Uri = servicePointItems.Uri,
                                                            PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()
                                                        }).ToList();
                 return preparationItemsPerServicePoint;
@@ -278,10 +278,10 @@ namespace PreparationStationDevice
             return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                //var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
 
-                //if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                //    return false;
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
                 string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
                 //communicationCredentialKey =result.Text;
 
@@ -318,6 +318,24 @@ namespace PreparationStationDevice
 
             });
         }
+
+
+
+        [HttpVisible]
+        public async void AssignCodeCardsToSessions()
+        {
+#if DeviceDotNet
+            var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+            if(PreparationStation!=null)
+            {
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return ;
+                PreparationStation.AssignCodeCardsToSessions(new List<string>() { result.Text });
+            }
+#endif
+
+        }
+
 
 
         [HttpVisible]

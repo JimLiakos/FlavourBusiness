@@ -653,6 +653,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSessionItems.clientSession.CancelLastPreparationStep(clientSessionItems.ClientSessionItems);
 
         }
+
+        public void AssignCodeCardsToSessions(List<string> codeCards)
+        {
+            foreach(var codeCard in codeCards)
+            {
+                foreach(var servicePointPreparationItems in ServicePointsPreparationItems)
+                {
+                    if(string.IsNullOrWhiteSpace(servicePointPreparationItems.CodeCard))
+                        servicePointPreparationItems.CodeCard = codeCard;
+                }
+            }
+        }
     }
 
 

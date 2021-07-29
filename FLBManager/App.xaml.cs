@@ -1,10 +1,12 @@
 ﻿using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -31,19 +33,19 @@ namespace FLBManager
             //System.Reflection.ConstructorInfo constructorInfo = type.GetConstructor(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, ParamTypes, null);
 
 
-           // string storageName = "jimliakosgmailcom";
-           // string storageLocation = "DevStorage";
-           // string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
-            
-           //var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            // string storageName = "jimliakosgmailcom";
+            // string storageLocation = "DevStorage";
+            // string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+
+            //var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
 
 
-           // OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
+            // OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
 
-           // List<FlavourBusinessFacade.RoomService.IItemPreparation> items = (from item in servicesContextStorage.GetObjectCollection<FlavourBusinessFacade.RoomService.IItemPreparation>()
-           //                                                                   select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
+            // List<FlavourBusinessFacade.RoomService.IItemPreparation> items = (from item in servicesContextStorage.GetObjectCollection<FlavourBusinessFacade.RoomService.IItemPreparation>()
+            //                                                                   select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
 
-           // var sds = items[0].ClientSession;
+            // var sds = items[0].ClientSession;
 
 
             LoadRestApiTypeNamesDictionary();
@@ -78,11 +80,69 @@ namespace FLBManager
             //              select meal).FirstOrDefault();
             //var sds = m_meal.Courses;
 
-
+            CreateQRCodeCards();
 
 
             base.OnStartup(e);
         }
+
+
+        void CreateQRCodeCards()
+        {
+
+            int code = 1001;
+            string color = HexConverter(Color.DeepPink);
+            string codeValue = code.ToString() + color.Replace("#", "_"); 
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            var qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+
+            qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+            
+            code = 1002;
+            color = HexConverter(Color.DarkOrange);
+            codeValue = code.ToString() + color.Replace("#","_");
+            qrGenerator = new QRCodeGenerator();
+            qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            qrCode = new QRCode(qrCodeData);
+            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
+
+            code = 1003;
+            color = HexConverter(Color.MediumBlue);
+            codeValue = code.ToString() + color.Replace("#", "_");
+            qrGenerator = new QRCodeGenerator();
+            qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            qrCode = new QRCode(qrCodeData);
+            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
+            code = 1004;
+            color = HexConverter(Color.Brown);
+            codeValue = code.ToString() + color.Replace("#", "_");
+            qrGenerator = new QRCodeGenerator();
+            qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            qrCode = new QRCode(qrCodeData);
+            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
+            code = 1005;
+            color = HexConverter(Color.Teal);
+            codeValue = code.ToString() + color.Replace("#", "_");
+            qrGenerator = new QRCodeGenerator();
+            qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            qrCode = new QRCode(qrCodeData);
+            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+        }
+        private static String HexConverter(System.Drawing.Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
+
         static bool HelpMode = false;
         static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -121,11 +181,11 @@ namespace FLBManager
             MessageBox.Show(e.Message + " " + e.StackTrace);
         }
 
-    
 
 
 
-    
+
+
         private static void LoadRestApiTypeNamesDictionary()
         {
             SerializationBinder.NamesTypesDictionary["Array"] = typeof(object[]);

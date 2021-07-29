@@ -44,7 +44,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
         public System.Collections.Generic.List<RoomService.IItemPreparation> PreparationItems;
 
-
-
+        public string CodeCard { get; set; }
     }
 }

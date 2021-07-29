@@ -39,7 +39,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         
 
         void CancelLastPreparationStep(List<string> itemPreparationUris);
-        
+        void AssignCodeCardsToSessions(List<string> codeCards);
     }
 
     public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);
