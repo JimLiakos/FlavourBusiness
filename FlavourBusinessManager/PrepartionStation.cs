@@ -656,14 +656,19 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         public void AssignCodeCardsToSessions(List<string> codeCards)
         {
-            foreach(var codeCard in codeCards)
+            foreach (var codeCard in codeCards)
             {
-                foreach(var servicePointPreparationItems in ServicePointsPreparationItems)
+                foreach (var servicePointPreparationItems in ServicePointsPreparationItems)
                 {
-                    if(string.IsNullOrWhiteSpace(servicePointPreparationItems.CodeCard))
+                    if (string.IsNullOrWhiteSpace(servicePointPreparationItems.CodeCard))
                         servicePointPreparationItems.CodeCard = codeCard;
                 }
             }
+
+            lock (DeviceUpdateLock)
+                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
+            _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
     }
 
