@@ -511,7 +511,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         private void InsertBefore(TreeFoodItemViewModel targetTreeFoodItemViewModel, TreeFoodItemViewModel movingMenuCanvasItem)
         {
-            var pos = ItemsCategory.MenuItems.IndexOf(targetTreeFoodItemViewModel.MenuItem);
+            var pos = ItemsCategory.ClassifiedItems.IndexOf(targetTreeFoodItemViewModel.MenuItem  as MenuModel.IClassified);
             ItemsCategory.InsertClassifiedItem(pos, movingMenuCanvasItem.MenuItem as MenuModel.IClassified);
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
