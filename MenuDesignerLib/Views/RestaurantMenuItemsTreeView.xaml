@@ -115,7 +115,8 @@
                     </Grid>
                 </Border>
             </Grid>
-            <TreeView BorderThickness="0"  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding RootCategory.Members}" >
+            <TreeView BorderThickness="0"  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding RootCategory.Members}" 
+                      ConnectableCtrl:DragDropExtension.ScrollOnDragDrop="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
                         <i:InvokeCommandAction Command="{Binding Path=SelectedCommand, Mode=OneWay}"/>
@@ -156,8 +157,8 @@
 
                         </HierarchicalDataTemplate.Resources>
 
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" Margin="4,4,8,4"  >
+                        <Grid AllowDrop="True" Background="Transparent" DragLeave="TreeNode_DragLeave" DragEnter="TreeNode_DragEnter" DragOver="TreeNode_DragOver" Drop="TreeNode_Drop">
+                            <StackPanel Orientation="Horizontal" Margin="4,4,8,4" >
                                 <StackPanel.Resources>
                                     <Style TargetType="{x:Type StackPanel}">
                                         <Style.Triggers>

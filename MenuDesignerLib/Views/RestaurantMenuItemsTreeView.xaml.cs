@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MenuDesigner.ViewModel.MenuCanvas;
+using MenuItemsEditor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -89,7 +91,7 @@ namespace MenuDesigner.Views
             var itemsCategoryViewModel = (sender as FrameworkElement).GetDataContextObject<ViewModel.MenuCanvas.ItemsCategoryViewModel>();
 
             if (treeFoodItemViewModel != null)
-                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
+                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeFoodItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy | DragDropEffects.Move);
 
             if (treeBlankItemViewModel != null)
                 DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(treeBlankItemViewModel.MenuCanvasFoodItem), DragDropEffects.Copy);
@@ -104,6 +106,66 @@ namespace MenuDesigner.Views
 
 
 
+        }
+
+
+
+        private void TreeNode_DragEnter(object sender, DragEventArgs e)
+        {
+            var ss = (sender as FrameworkElement).GetDataContextObject();
+
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.DragEnter(sender, e);
+            }
+            else
+            {
+                DragCanvasItems canvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+                if (canvasItem != null)
+                    e.Effects = DragDropEffects.Move;
+                else
+                    e.Effects = DragDropEffects.None;
+            }
+
+        }
+
+        private void TreeNode_DragOver(object sender, DragEventArgs e)
+        {
+            var ss = (sender as FrameworkElement).GetDataContextObject();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.DragOver(sender, e);
+            }
+            else
+            {
+                DragCanvasItems canvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+                if (canvasItem != null)
+                    e.Effects = DragDropEffects.Move;
+                else
+                    e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void TreeNode_Drop(object sender, DragEventArgs e)
+        {
+            var ss = (sender as FrameworkElement).GetDataContextObject();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+            {
+                dragDropTarget.Drop(sender, e);
+            }
+            else
+                e.Effects = DragDropEffects.None;
+
+        }
+
+        private void TreeNode_DragLeave(object sender, DragEventArgs e)
+        {
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            if (dragDropTarget != null)
+                dragDropTarget.DragLeave(sender, e);
         }
     }
 }

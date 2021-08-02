@@ -374,4 +374,13 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="MealCourseDurationPrompt" xml:space="preserve">
     <value>Meal course duration</value>
   </data>
+  <data name="QuantitativeCheckBoxLabel" xml:space="preserve">
+    <value>Quantitative</value>
+  </data>
+  <data name="QuantitativeCheckBoxToolTip" xml:space="preserve">
+    <value>In the quantitative option, the first scaling level defines the option absence.</value>
+  </data>
+  <data name="IngredientCheckBoxToolTip" xml:space="preserve">
+    <value>Option participate  as ingredient in recipe of product</value>
+  </data>
 </root>

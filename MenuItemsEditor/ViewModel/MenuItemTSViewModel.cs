@@ -33,6 +33,8 @@ namespace MenuItemsEditor.ViewModel
 
         MenuModel.IMenuItem MenuItem { get; }
 
+        MealType MealType { get; }
+
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
@@ -90,6 +92,10 @@ namespace MenuItemsEditor.ViewModel
                 else
                     return null;
             }
+        }
+        public MealType MealType 
+        {
+            get => MenuItemViewModel?.SelectedMealTypeViewModel?.MealType;
         }
 
         public IMenuItem MenuItem => new ItemPreparation(MenuItemViewModel.MenuItem).MenuItem;

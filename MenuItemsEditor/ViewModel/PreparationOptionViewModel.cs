@@ -24,6 +24,14 @@ namespace MenuItemsEditor.ViewModel
         {
             get => false;
         }
+
+        public bool IsSelected
+        {
+            get; set;
+        }
+
+     
+
         /// <MetaDataID>{eac8a25f-5bc6-4816-b8aa-7e46d763d194}</MetaDataID>
         public MenuItemViewModel MenuItemViewModel
         {
@@ -78,7 +86,7 @@ namespace MenuItemsEditor.ViewModel
 
         private void TranslateOptionName()
         {
-            Name= BingAPILibrary.Translator.TranslateString(Name, OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name);
+            Name = BingAPILibrary.Translator.TranslateString(Name, OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name);
             _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
             _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnTranslated)));
             //OOAdvantech.CultureContext
@@ -171,7 +179,7 @@ namespace MenuItemsEditor.ViewModel
             get
             {
                 string name = Name;
-                using(OOAdvantech.CultureContext cultureContext=new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo,false))
+                using (OOAdvantech.CultureContext cultureContext = new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo, false))
                 {
                     return name != Name;
                 }
@@ -224,7 +232,7 @@ namespace MenuItemsEditor.ViewModel
         /// <MetaDataID>{3cec9d5f-cdc5-4878-9c32-19132f8f66bd}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand MaximizeCommand { get; protected set; }
 
-        public WPFUIElementObjectBind.RelayCommand TranslateOptionNameCommand  { get; protected set; }
+        public WPFUIElementObjectBind.RelayCommand TranslateOptionNameCommand { get; protected set; }
 
 
 

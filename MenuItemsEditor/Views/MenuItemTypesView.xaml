@@ -69,7 +69,7 @@
                                 <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
                             </Button>
 
-                           
+
                         </StackPanel>
                         <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Command="{Binding RenameSelectedOptionsTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
@@ -89,15 +89,15 @@
 
             <Label Grid.Column="2" Content="{x:Static resx:Resources.OptionsLabel}" VerticalAlignment="Bottom" Margin="4,0,0,4"></Label>
 
-            <ListBox x:Name="List" Margin="4,0,0,0" SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  
+            <ListBox x:Name="List" Margin="4,0,0,0" SelectionMode="Extended"   SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  
                              ScrollViewer.CanContentScroll="False"
                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                              Grid.Column="2"
                              Grid.Row="1" 
                              ItemsSource="{Binding Path= SelectedMenuType.Options}"
-                             ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True">
+                             ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True"
+                     ConnectableCtrl:ListBoxBehavior.UnselectAllOnEmptyClick="True" >
                 <ListBox.ItemTemplate>
-
                     <DataTemplate>
 
                         <Grid  >
@@ -164,11 +164,16 @@
                             <Button Command="{Binding Path= SelectedMenuType.DeleteSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="10,1">
                                 <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
                             </Button>
-                          
+
                         </StackPanel>
 
 
                         <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                            <Button  Command="{Binding Path=SelectedMenuType.SetSelectedOptionCheckUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedScaleTypeLevelUncheckTooltip}">
+                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
+                            </Button>
 
                             <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=SelectedMenuType.MoveUpSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                 <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>

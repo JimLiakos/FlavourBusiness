@@ -283,7 +283,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="0" Content="Quantitative" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
+                                    <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="0" Content="{x:Static resx:Resources.QuantitativeCheckBoxLabel}" ToolTip="{x:Static resx:Resources.QuantitativeCheckBoxToolTip}" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
                                     <Grid  Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28" />
@@ -893,7 +893,7 @@
                                                                    TextWrapping="Wrap"/>
 
                         </Grid>
-                        <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="1" Content="Quantitative" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
+                        <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="1" Content="{x:Static resx:Resources.QuantitativeCheckBoxLabel}" ToolTip="{x:Static resx:Resources.QuantitativeCheckBoxToolTip}" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
                         <Grid  Grid.Row="2" Grid.Column="0" Margin="0,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="28" />
@@ -917,7 +917,7 @@
                             <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                   ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
                         </Grid>
-                        <CheckBox HorizontalAlignment="Left" Grid.Row="4" Margin="-2,5,5,5" IsChecked="{Binding IsRecipeIngredient}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"></CheckBox>
+                        <CheckBox HorizontalAlignment="Left" Grid.Row="4" Margin="-2,5,5,5" IsChecked="{Binding IsRecipeIngredient}"   ToolTip="{x:Static resx:Resources.IngredientCheckBoxToolTip}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"></CheckBox>
                     </Grid>
 
 

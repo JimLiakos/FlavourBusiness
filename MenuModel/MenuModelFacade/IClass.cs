@@ -6,7 +6,7 @@ namespace MenuModel
     /// <MetaDataID>{d4aba26f-6830-412c-ac44-ea922dfcaf36}</MetaDataID>
     public interface IClass
     {
-        [Association("ClassifiedItem", Roles.RoleA, "08c2a04a-ed64-4ffb-b460-ba544fbeda1b")]
+        [Association("ClassifiedItem", Roles.RoleA,true, "08c2a04a-ed64-4ffb-b460-ba544fbeda1b")]
         IList<MenuModel.IClassified> ClassifiedItems { get; }
 
         /// <MetaDataID>{70e6215a-4bf8-4ebe-8464-cc39d78ff8ea}</MetaDataID>
@@ -17,5 +17,7 @@ namespace MenuModel
 
         /// <MetaDataID>{ca42b958-2a74-4f3f-93cf-8eab6da7d648}</MetaDataID>
         void RemoveClassifiedItem(IClassified classifiedItem);
+
+        void InsertClassifiedItem(int index, IClassified classifiedItem);
     }
 }

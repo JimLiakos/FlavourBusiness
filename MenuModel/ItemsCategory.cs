@@ -119,6 +119,12 @@ namespace MenuModel
             }
         }
 
+        public void InsertClassifiedItem(int index, IClassified classifiedItem)
+        {
+            _ClassifiedItems.Insert(index, classifiedItem);
+
+        }
+
         /// <MetaDataID>{9511b9bc-79a3-440e-9822-8ec043fb3cdf}</MetaDataID>
         public void RemoveClassifiedItem(IClassified classifiedItem)
         {

@@ -65,7 +65,37 @@ namespace MenuModel
             _Name.Value = name;
         }
 
-      
+        public PreparationOptionsGroup(IPreparationOptionsGroup preparationOptionsGroup, IMenuItemType menuItemType)
+        {
+
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Name = new MultilingualMember<string>(preparationOptionsGroup.MultilingualName.Values);
+                _Owner = menuItemType;
+                _SelectionType = preparationOptionsGroup.SelectionType;
+                _HideName = preparationOptionsGroup.HideName;
+
+                if (preparationOptionsGroup is JsonViewModel.OptionGroup && (preparationOptionsGroup as JsonViewModel.OptionGroup).IsStepOptionsGroups)
+                {
+
+                }
+                foreach (var option in preparationOptionsGroup.GroupedOptions)
+                {
+                    if (option is MenuModel.IPreparationScaledOption)
+                    {
+                        MenuModel.PreparationScaledOption preparationScaledOption = new MenuModel.PreparationScaledOption(option as MenuModel.IPreparationScaledOption, menuItemType);
+                        AddPreparationOption(preparationScaledOption);
+                    }
+                }
+                OOAdvantech.PersistenceLayer.ObjectStorage objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItemType);
+                objectStorage.CommitTransientObjectState(this);
+
+                stateTransition.Consistent = true;
+            }
+
+
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

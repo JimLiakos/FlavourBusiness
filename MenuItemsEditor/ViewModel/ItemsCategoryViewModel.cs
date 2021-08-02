@@ -353,6 +353,8 @@ namespace MenuItemsEditor.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
         }
 
+
+
         ViewModelWrappers<MenuModel.IItemsCategory, ItemsCategoryViewModel> SubCategories = new ViewModelWrappers<MenuModel.IItemsCategory, ItemsCategoryViewModel>();
         ViewModelWrappers<MenuModel.IMenuItem, TreeViewMenuItemViewModel> MenuItems = new ViewModelWrappers<MenuModel.IMenuItem, TreeViewMenuItemViewModel>();
 

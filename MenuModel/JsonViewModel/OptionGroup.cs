@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OOAdvantech;
+using OOAdvantech.Json.Linq;
 
 namespace MenuModel.JsonViewModel
 {
@@ -23,6 +24,10 @@ namespace MenuModel.JsonViewModel
 
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();
+
+        //public OptionGroup(JObject jToken, Dictionary<string, object> mappedObject)
+        //{
+        //}
 
         public event ObjectChangeStateHandle ObjectChangeState;
 

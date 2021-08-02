@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.Json;
+using OOAdvantech.Json.Linq;
 
 namespace MenuModel.JsonViewModel
 {
@@ -37,6 +38,11 @@ namespace MenuModel.JsonViewModel
             IsRecipeIngredient = orgOption.IsRecipeIngredient;
             AutoGenFullName = orgOption.AutoGenFullName;
         }
+
+        //public Option(JObject jToken, Dictionary<string, object> mappedObject)
+        //{
+
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -140,6 +146,19 @@ namespace MenuModel.JsonViewModel
 
 
 #if MenuModel
+
+
+
+        public static IPreparationOption GetOption(MenuModel.IPreparationOption orgOption, Dictionary<object, object> mappedObject)
+        {
+            if (orgOption is IPreparationScaledOption)
+                return GetOption(orgOption as IPreparationScaledOption, mappedObject);
+
+            if (orgOption is IPreparationOptionsGroup)
+                return new JsonViewModel.OptionGroup().Init(orgOption as IPreparationOptionsGroup, mappedObject);
+
+            return null;
+        }
 
         /// <MetaDataID>{95ceda69-6d7b-4335-9623-e3b58ecd6b46}</MetaDataID>
         internal static Option GetOption(MenuModel.IPreparationScaledOption orgOption, Dictionary<object, object> mappedObject)//, IMenuItem menuItem)
@@ -277,6 +296,31 @@ namespace MenuModel.JsonViewModel
         {
             throw new NotImplementedException();
         }
+
+        //public static List<IPreparationOption> GetOptions(JArray jArray)
+        //{
+        //    Dictionary<string, object> mappedObject = new Dictionary<string, object>();
+        //    var options= new List<IPreparationOption>();
+        //    foreach (JObject jToken in jArray)
+        //    {
+        //        var typeName = jToken.Property("TypeName").Value.ToString();
+        //        switch(typeName)
+        //        {
+        //            case "OptionGroup":
+        //                {
+        //                    options.Add(new OptionGroup(jToken, mappedObject));
+
+        //                    break;
+        //                }
+        //            case "Option":
+        //                {
+        //                    options.Add(new Option(jToken, mappedObject));
+        //                    break;
+        //                }
+        //        }
+        //    }
+        //    return new List<IPreparationOption>();
+        //}
     }
 
 

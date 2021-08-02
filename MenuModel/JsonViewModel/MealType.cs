@@ -19,12 +19,12 @@ namespace MenuModel.JsonViewModel
             _Courses = (from mealCourseType in mealType.Courses
                         select new MealCourseType(mealCourseType, mappedObject)).OfType<IMealCourseType>().ToList();
 
-            Uri = ObjectStorage.GetStorageOfObject(mealType)?.GetPersistentObjectUri(mealType);
+            MealTypeUri = ObjectStorage.GetStorageOfObject(mealType)?.GetPersistentObjectUri(mealType);
         }
         public MealType()
         {
         }
-        public string Uri { get; set; }
+        public string MealTypeUri { get; set; }
 
 
         public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }

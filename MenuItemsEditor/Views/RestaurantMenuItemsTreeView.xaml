@@ -41,7 +41,9 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TreeView  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding MenuItems}" >
+            <TreeView  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  
+                       
+                       ItemsSource="{Binding MenuItems}" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
                         <i:InvokeCommandAction Command="{Binding Path=SelectedCommand, Mode=OneWay}"/>
@@ -79,7 +81,7 @@
 
                         </HierarchicalDataTemplate.Resources>
 
-                        <StackPanel Orientation="Horizontal" Margin="4,2,4,2"  >
+                        <StackPanel Orientation="Horizontal" Margin="4,2,4,2" >
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type StackPanel}">
                                     <Style.Triggers>

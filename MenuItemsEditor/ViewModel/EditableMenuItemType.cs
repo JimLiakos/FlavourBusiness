@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+//using OOAdvantech.Json;
+using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
@@ -165,7 +167,7 @@ namespace MenuItemsEditor.ViewModel
             RenameSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 SelectedOption.Edit = true;
-            }, (object sender) => SelectedOption != null);
+            }, (object sender) => SelectedOption != null && !MultipleSelection);
 
             EditSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
               {
@@ -178,7 +180,7 @@ namespace MenuItemsEditor.ViewModel
                   else
                       SelectedOption.Minimize();
 
-              }, (object sender) => SelectedOption != null);
+              }, (object sender) => SelectedOption != null && !MultipleSelection);
 
             DeleteSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
@@ -195,24 +197,61 @@ namespace MenuItemsEditor.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddOptionsGroupVisibility)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddStepperOptionsGroupVisibility)));
 
-            }, (object sender) => SelectedOption != null);
+            }, (object sender) => SelectedOption != null && !MultipleSelection);
 
             CopySelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
 
 
-                if (SelectedOption.PreparationOption is MenuModel.PreparationScaledOption)
+                Dictionary<object, object> mappedObjects = new Dictionary<object, object>();
+
+                if (SelectedOptions.Count > 0)
                 {
-                    var json = OOAdvantech.Json.JsonConvert.SerializeObject(new MenuModel.JsonViewModel.Option(SelectedOption.PreparationOption as MenuModel.IPreparationScaledOption));
+                    List<MenuModel.IPreparationOption> options = SelectedOptions.Select(x => MenuModel.JsonViewModel.Option.GetOption(x.PreparationOption, mappedObjects)).ToList();
+
+
+                    var jSetttings = new JsonSerializerSettings(JsonContractType.Serialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);// { TypeNameHandling = ServerSession.Web ? TypeNameHandling.None : TypeNameHandling.All, Binder = new OOAdvantech.Remoting.RestApi.SerializationBinder(Web), ContractResolver = new JsonContractResolver(JsonContractType.Serialize, ChannelUri, InternalChannelUri, ServerSession,Web) };
+                     var json = OOAdvantech.Json.JsonConvert.SerializeObject(options, jSetttings);
+
+                    //var json = JsonConvert.SerializeObject(options, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
+                    Clipboard.SetData("OptionsJson", json);
                 }
 
-
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Options)));
+                
             }, (object sender) => SelectedOption != null);
 
-            MoveUpSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { MoveUpSelectedOption(); }, (object sender) => SelectedOption != null);
-            MoveDownSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { MoveDownSelectedOption(); }, (object sender) => SelectedOption != null);
+            PasteOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+
+                Dictionary<object, object> mappedObjects = new Dictionary<object, object>();
+                var json = Clipboard.GetData("OptionsJson") as string;
+                var jSetttings = new JsonSerializerSettings(JsonContractType.Deserialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);
+                var options= OOAdvantech.Json.JsonConvert.DeserializeObject<object[]>(json, jSetttings).OfType<MenuModel.IPreparationOption>().ToList();
+
+                foreach (var option in options)
+                {
+                    if (option is MenuModel.IPreparationScaledOption)
+                    {
+                        MenuModel.PreparationScaledOption preparationScaledOption = new MenuModel.PreparationScaledOption(option as MenuModel.IPreparationScaledOption, RealObject);
+                        RealObject.AddPreparationOption(preparationScaledOption);
+                    }
+                    if (option is MenuModel.IPreparationOptionsGroup)
+                    {
+                        MenuModel.PreparationOptionsGroup preparationScaledOption = new MenuModel.PreparationOptionsGroup(option as MenuModel.IPreparationOptionsGroup, RealObject);
+                        RealObject.AddPreparationOption(preparationScaledOption);
+
+                    }
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Options)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddOptionVisibility)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddOptionsGroupVisibility)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddStepperOptionsGroupVisibility)));
+
+
+            }, (object sender) => Clipboard.ContainsData("OptionsJson"));
+
+            MoveUpSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { MoveUpSelectedOption(); }, (object sender) => SelectedOption != null && !MultipleSelection);
+            MoveDownSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { MoveDownSelectedOption(); }, (object sender) => SelectedOption != null && !MultipleSelection);
 
             SetSelectedOptionCheckUncheckCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionCheckUncheck(); }, (object sender) => SelectedScaledOption != null && SelectedScaledOption.Quantitative && !SelectedScaledOption.IsHidden);
             SetSelectedOptionHideShowCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionHideShow(); }, (object sender) => SelectedOption != null);
@@ -244,10 +283,13 @@ namespace MenuItemsEditor.ViewModel
 
         private void SetSelectedOptionCheckUncheck()
         {
-            if (SelectedScaledOption.PreparationScaledOption.Initial != null)
+            foreach (var selectedScaledOption in SelectedScaledOptions)
             {
-                SelectedScaledOption.ToggleUncheckOtption();
-                PreparationOptionChanged(SelectedOption);
+                if (selectedScaledOption.PreparationScaledOption.Initial != null)
+                {
+                    selectedScaledOption.ToggleUncheckOtption();
+                    PreparationOptionChanged(selectedScaledOption);
+                }
             }
         }
 
@@ -371,11 +413,35 @@ namespace MenuItemsEditor.ViewModel
 
             }
         }
+        public bool MultipleSelection
+        {
+            get
+            {
+                return this.Options.Where(x => x.IsSelected).Count() > 1;
+            }
+        }
+        public List<PreparationOptionViewModel> SelectedOptions
+        {
+            get
+            {
+                return this.Options.Where(x => x.IsSelected).ToList();
+            }
+        }
+
         public PreparationScaledOptionViewModel SelectedScaledOption
         {
             get
             {
                 return SelectedOption as PreparationScaledOptionViewModel;
+            }
+        }
+
+        public List<PreparationScaledOptionViewModel> SelectedScaledOptions
+        {
+            get
+            {
+                return SelectedOptions.OfType<PreparationScaledOptionViewModel>().ToList();
+
             }
         }
 
@@ -547,3 +613,13 @@ namespace MenuItemsEditor.ViewModel
 
 }
 
+
+
+//Severity Code	Description	Project	File	Line	Suppression State
+//Error		[A]Xceed.Wpf.Toolkit.WatermarkTextBox cannot be cast to [B]Xceed.Wpf.Toolkit.WatermarkTextBox.Type A originates from 
+//    'Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4' in the context 'LoadNeither' at location 
+//    'C:\Users\jimli\AppData\Local\Microsoft\VisualStudio\16.0_8c82261d\Designer\ShadowCache\re11xlhc.3wy\kvqugq3u.xuh\Xceed.Wpf.Toolkit.dll'. 
+//    Type B originates from 
+//    'Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4' in the context 'LoadNeither' at location 
+//    'C:\Users\jimli\AppData\Local\Microsoft\VisualStudio\16.0_8c82261d\Designer\ShadowCache\2endohll.w01\pytmz01q.ave\Xceed.Wpf.Toolkit.dll'.	
+//    MenuItemsEditor	F:\X - Drive\Source\OpenVersions\FlavourBusiness\MenuItemsEditor\Views\PreparationOptionView.xaml 885

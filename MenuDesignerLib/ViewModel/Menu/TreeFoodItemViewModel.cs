@@ -11,11 +11,12 @@ using OOAdvantech.Transactions;
 using System.Windows;
 using WPFUIElementObjectBind;
 using StyleableWindow;
+using FLBManager.ViewModel;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
     /// <MetaDataID>{2901bd92-e9cf-4e1f-b365-a560ab9eb08d}</MetaDataID>
-    public class TreeFoodItemViewModel : MarshalByRefObject, MenuItemsEditor.IMenusTreeNode, INotifyPropertyChanged
+    public class TreeFoodItemViewModel : MarshalByRefObject, MenuItemsEditor.IMenusTreeNode, IDragDropTarget, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,7 +41,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     MenuCanvasFoodItem = _GraphicMenu.MenuCanvasItems.OfType<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>().Where(x => x.MenuItem == MenuItem).FirstOrDefault();
 
                     //var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_GraphicMenu);
-                    
+
                     //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                     //MenuCanvasFoodItem = (from menuCanvasFoodItem in storage.GetObjectCollection<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>()
                     //                      where menuCanvasFoodItem.MenuItem == MenuItem
@@ -472,6 +473,52 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 }
                 return null;
             }
+        }
+        public void DragEnter(object sender, DragEventArgs e)
+        {
+            DragCanvasItems canvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+            if (canvasItem != null)
+            {
+
+                e.Effects = DragDropEffects.Move;
+                IsSelected = true;
+            }
+
+        }
+
+        public void DragLeave(object sender, DragEventArgs e)
+        {
+            IsSelected = false;
+        }
+
+        public void DragOver(object sender, DragEventArgs e)
+        {
+            DragCanvasItems canvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+            if (canvasItem != null)
+                e.Effects = DragDropEffects.Move;
+
+        }
+
+        public void Drop(object sender, DragEventArgs e)
+        {
+
+            DragCanvasItems canvasItem = e.Data.GetData(typeof(DragCanvasItems)) as DragCanvasItems;
+            MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem menuCanvasItem = canvasItem.MenuCanvasItems[0] as MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem;
+
+
+            ItemsCategoryViewModel root;
+            MenuItemsEditor.IMenusTreeNode parent = this.Parent;
+            while (parent.Parent != null)
+                parent = parent.Parent;
+            root = parent as ItemsCategoryViewModel;
+
+            if (root != null&& menuCanvasItem!=this.MenuCanvasFoodItem)
+                root.MoveItemTo(menuCanvasItem, this);
+
+            //(this.MenuItem as MenuModel.IClassified).Class.RemoveClassifiedItem()
+
+                //(this.MenuItem as MenuModel.IClassified).Class.InsertClassifiedItem
+
         }
     }
 }

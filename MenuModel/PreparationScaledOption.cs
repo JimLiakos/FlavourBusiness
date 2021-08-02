@@ -51,9 +51,9 @@ namespace MenuModel
         {
             get
             {
-                if(!_FullName.HasValue)
+                if (!_FullName.HasValue)
                 {
-                    if (OptionGroup != null&& _AutoGenFullName)
+                    if (OptionGroup != null && _AutoGenFullName)
                         return OptionGroup.Name + " " + Name;
                     else
                         return Name;
@@ -118,6 +118,34 @@ namespace MenuModel
         public PreparationScaledOption(string name)
         {
             _Name.Value = name;
+        }
+
+        public PreparationScaledOption(IPreparationScaledOption preparationScaledOption, IMenuItemType menuItemType)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                this._Name = new MultilingualMember<string>(preparationScaledOption.MultilingualName.Values);
+                this._FullName = new MultilingualMember<string>(preparationScaledOption.MultilingualFullName.Values);
+                this._AutoGenFullName = preparationScaledOption.AutoGenFullName;
+                this._IsRecipeIngredient = preparationScaledOption.IsRecipeIngredient;
+                //this._Owner = menuItemType;
+                this._Price = preparationScaledOption.Price;
+                this._Quantitative = preparationScaledOption.Quantitative;
+
+                OOAdvantech.PersistenceLayer.ObjectStorage objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItemType);
+                if (preparationScaledOption.LevelType is MenuModel.JsonViewModel.ScaleType)
+                {
+                    if ((preparationScaledOption.LevelType as MenuModel.JsonViewModel.ScaleType).Uri.IndexOf(objectStorage.StorageMetaData.StorageIdentity) == 0)
+                    {
+                        _LevelType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<IScaleType>((preparationScaledOption.LevelType as MenuModel.JsonViewModel.ScaleType).Uri);
+                        _Initial = _LevelType.Levels[preparationScaledOption.LevelType.Levels.IndexOf(preparationScaledOption.Initial)];
+                    }
+                }
+                objectStorage.CommitTransientObjectState(this);
+                stateTransition.Consistent = true;
+            }
+
         }
 
 
@@ -312,7 +340,7 @@ namespace MenuModel
         }
 
         /// <exclude>Excluded</exclude>
-        bool _Quantitative;
+        bool? _Quantitative;
 
         /// <MetaDataID>{c8db0158-5bf4-4bfc-976c-40894d7e9bc7}</MetaDataID>
         [PersistentMember(nameof(_Quantitative))]
@@ -321,7 +349,10 @@ namespace MenuModel
         {
             get
             {
-                return _Quantitative;
+                if (_Quantitative == null)
+                    _Quantitative = LevelType.ZeroLevelScaleType;
+
+                return _Quantitative.Value;
             }
 
             set
@@ -471,7 +502,7 @@ namespace MenuModel
             if (menuItem != null)
             {
                 IOptionMenuItemSpecific optionMenuItemSpecific = GetMenuItemSpecific(menuItem);
-                if (optionMenuItemSpecific == null&&value)
+                if (optionMenuItemSpecific == null && value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
@@ -481,10 +512,10 @@ namespace MenuModel
                         stateTransition.Consistent = true;
                     }
                 }
-                if (optionMenuItemSpecific!=null)
+                if (optionMenuItemSpecific != null)
                     optionMenuItemSpecific.Hide = value;
 
-                if(optionMenuItemSpecific!=null&& !optionMenuItemSpecific.Hide&& optionMenuItemSpecific.InitialLevel==null)
+                if (optionMenuItemSpecific != null && !optionMenuItemSpecific.Hide && optionMenuItemSpecific.InitialLevel == null)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {

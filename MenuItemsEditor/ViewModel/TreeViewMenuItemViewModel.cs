@@ -102,6 +102,8 @@ namespace MenuItemsEditor.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
         }
 
+   
+
         /// <exclude>Excluded</exclude>
         bool _IsSelected;
         public bool IsSelected

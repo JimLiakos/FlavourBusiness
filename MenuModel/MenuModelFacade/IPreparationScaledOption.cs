@@ -17,7 +17,7 @@ namespace MenuModel
 
         /// <MetaDataID>{089e7a6d-a78d-4769-9ba4-130ac3d42121}</MetaDataID>
         /// <summary>Defines scaling as quantitative.
-        /// When quantitative attribute is true the first scalling level defines the option absence</summary>
+        /// When quantitative attribute is true the first scaling level defines the option absence</summary>
         [BackwardCompatibilityID("+3")]
         bool Quantitative { get; set; }
 

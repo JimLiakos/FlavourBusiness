@@ -12,6 +12,7 @@ using System.Windows;
 using OOAdvantech.PersistenceLayer;
 using MenuItemsEditor;
 using StyleableWindow;
+using MenuPresentationModel.MenuCanvas;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -225,7 +226,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             if (Parent != null)
                 (Parent as ItemsCategoryViewModel).RemoveSubCategory(this);// .ItemsCategory.RemoveClassifiedItem(ItemsCategory)
 
-          
+
         }
 
         private void RemoveSubCategory(ItemsCategoryViewModel itemsCategoryViewModel)
@@ -405,7 +406,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 {
                     ItemsCategory.Name = value;
-                    suppressStateTransition.Consistent=true;
+                    suppressStateTransition.Consistent = true;
                 }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
             }
@@ -481,5 +482,51 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 return true;
             }
         }
+
+        internal void MoveItemTo(MenuCanvasFoodItem menuCanvasItem, TreeFoodItemViewModel targetTreeFoodItemViewModel)
+        {
+            //TreeFoodItemViewModel movingMenuCanvasItem= MenuItems.Where(x => x.Key == menuCanvasItem.MenuItem).Select(x => x.Value).FirstOrDefault();
+
+            TreeFoodItemViewModel movingMenuCanvasItem = GetTreeFoodItemViewModel(menuCanvasItem);
+
+
+
+            using (SystemStateTransition SuppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    (movingMenuCanvasItem.Parent as ItemsCategoryViewModel).ItemsCategory.RemoveClassifiedItem(movingMenuCanvasItem.MenuItem as MenuModel.IClassified);
+                    (targetTreeFoodItemViewModel.Parent as ItemsCategoryViewModel).InsertBefore(targetTreeFoodItemViewModel, movingMenuCanvasItem);
+
+                    stateTransition.Consistent = true;
+                } 
+                SuppressStateTransition.Consistent = true;
+            }
+
+
+            (movingMenuCanvasItem.Parent as ItemsCategoryViewModel).MenuItems.Remove(movingMenuCanvasItem.MenuItem);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
+
+        }
+
+        private void InsertBefore(TreeFoodItemViewModel targetTreeFoodItemViewModel, TreeFoodItemViewModel movingMenuCanvasItem)
+        {
+            var pos = ItemsCategory.MenuItems.IndexOf(targetTreeFoodItemViewModel.MenuItem);
+            ItemsCategory.InsertClassifiedItem(pos, movingMenuCanvasItem.MenuItem as MenuModel.IClassified);
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
+        }
+
+        TreeFoodItemViewModel GetTreeFoodItemViewModel(MenuCanvasFoodItem menuCanvasItem)
+        {
+            TreeFoodItemViewModel movingMenuCanvasItem = MenuItems.Where(x => x.Key == menuCanvasItem.MenuItem).Select(x => x.Value).FirstOrDefault();
+            if (movingMenuCanvasItem != null)
+                return movingMenuCanvasItem;
+
+            movingMenuCanvasItem = SubCategories.Values.Where(x => x.GetTreeFoodItemViewModel(menuCanvasItem) != null).Select(x => x.GetTreeFoodItemViewModel(menuCanvasItem)).FirstOrDefault();
+
+            return movingMenuCanvasItem;
+        }
+
     }
 }
