@@ -24,20 +24,20 @@ namespace PreparationStationDevice
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
         {
             ItemPreparation = itemPreparation;
-            
+
 
 
             if (ItemPreparation.MenuItem == null)
                 ItemPreparation.LoadMenuItem(menuItems);
-           
+
 
             Ingredients = (from optionGroup in (this.ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
                            from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
-                           where option.IsRecipeIngredient && option.InitialInRecipe(ItemPreparation.MenuItem)
+                           where option.InitialInRecipe(ItemPreparation.MenuItem)
                            select new Ingredient(option)).ToList();
 
 
-            foreach(var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
+            foreach (var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
             {
                 Ingredient ingredient = Ingredients.Where(x => x.PreparationScaledOption == optionChange.itemSpecificOption.Option).FirstOrDefault();
                 if (ingredient != null)
@@ -57,12 +57,12 @@ namespace PreparationStationDevice
 
             }
 
-            foreach(var ingredient in Ingredients.ToList() )
+            foreach (var ingredient in Ingredients.ToList())
             {
-                if(ingredient.Without&& (ingredient.PreparationScaledOption.OptionGroup.SelectionType&MenuModel.SelectionType.SingleSelection)!=0)
+                if (ingredient.Without && ingredient.PreparationScaledOption.OptionGroup != null && (ingredient.PreparationScaledOption.OptionGroup.SelectionType & MenuModel.SelectionType.SingleSelection) != 0)
                 {
-                    var optionChangeIgredient = Ingredients.Where(x => x.PreparationScaledOption.OptionGroup == ingredient.PreparationScaledOption.OptionGroup&& x.IsExtra).FirstOrDefault();
-                    if(optionChangeIgredient!=null)
+                    var optionChangeIgredient = Ingredients.Where(x => x.PreparationScaledOption.OptionGroup == ingredient.PreparationScaledOption.OptionGroup && x.IsExtra).FirstOrDefault();
+                    if (optionChangeIgredient != null)
                     {
                         int pos = Ingredients.IndexOf(ingredient);
                         Ingredients.Remove(ingredient);
@@ -74,7 +74,7 @@ namespace PreparationStationDevice
                 }
             }
 
-            var names= Ingredients.Select(x => x.Name).ToList();
+            var names = Ingredients.Select(x => x.Name).ToList();
 
 
             //if (ItemPreparation.MenuItem == null)

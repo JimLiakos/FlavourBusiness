@@ -63,7 +63,7 @@ namespace PreparationStationDevice
         {
             get
             {
-                if (IsExtra && this.PreparationScaledOption.OptionGroup.SelectionType == SelectionType.SimpleGroup)
+                if (IsExtra && (this.PreparationScaledOption.OptionGroup==null|| this.PreparationScaledOption.OptionGroup.SelectionType == SelectionType.SimpleGroup))
                     return MultilingualNewLevelName.GetValue<string>() + " " + MultilingualFullName.GetValue<string>();
                 return MultilingualFullName.GetValue<string>();
             }
@@ -78,7 +78,7 @@ namespace PreparationStationDevice
 
         public bool IsCheckBoxOption
         {
-            get => this.PreparationScaledOption.OptionGroup.SelectionType != SelectionType.SimpleGroup;
+            get => this.PreparationScaledOption.OptionGroup==null|| this.PreparationScaledOption.OptionGroup.SelectionType != SelectionType.SimpleGroup;
             set
             {
             }
