@@ -1,4 +1,5 @@
-﻿using OOAdvantech.PersistenceLayer;
+﻿using OOAdvantech.Json;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using QRCoder;
 using System;
@@ -168,6 +169,12 @@ namespace FLBManager
             OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
             OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
+
+
+            Dictionary<char, char> directory = new Dictionary<char,char> { { 'ά', 'α' }, { 'έ', 'ε' }, { 'ή', 'η' }, { 'ί', 'ι' }, { 'ό', 'ο' }, { 'ύ', 'υ' }, { 'ώ', 'ω' } };
+
+            var sds = JsonConvert.SerializeObject(directory);
+
 
         }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
