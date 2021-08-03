@@ -422,6 +422,10 @@
       <Project>{b5802b17-b3a0-4e40-a393-d1c57a53edcb}</Project>
       <Name>Linq - VS10</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{F20E4565-5DDB-4E1E-A343-369927C01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
       <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
       <Name>OOAdvantechFacade -VS10</Name>
