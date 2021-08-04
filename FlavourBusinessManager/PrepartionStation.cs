@@ -501,7 +501,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     RaiseEventTimeStamp = null;
                 }
             }
-            return ServicePointsPreparationItems;
+            return ServicePointsPreparationItems.Where(x=>x.PreparationItems!=null&& x.PreparationItems.Count>0).ToList();
         }
 
         internal void RemoveItemPreparation(ItemPreparation flavourItem)
