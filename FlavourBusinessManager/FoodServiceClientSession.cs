@@ -1208,6 +1208,7 @@ namespace FlavourBusinessManager.EndUsers
                     
                     if (flavourItem.PreparationStation != null)
                         (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
+
                     _FlavourItems.Remove(flavourItem);
                     flavourItem.SessionID = null;
                     ModificationTime = DateTime.UtcNow;

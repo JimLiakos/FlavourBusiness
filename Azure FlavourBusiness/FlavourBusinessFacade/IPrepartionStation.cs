@@ -56,6 +56,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         bool CanPrepareItem(MenuModel.IMenuItem menuItem);
         
         bool CanPrepareItemFor(MenuModel.IMenuItem menuItem,IServicePoint servicePoint);
+        
 #endif
 
     }
