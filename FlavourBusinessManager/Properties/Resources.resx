@@ -137,6 +137,10 @@
     <value>Table</value>
     <comment>Specifies the description of the 'service point' when it is created.</comment>
   </data>
+  <data name="DefaultSubPreparationStationDescription" xml:space="preserve">
+    <value>Equipment</value>
+    <comment>Specifies the description of the ' preparation station equipment' when it is created.</comment>
+  </data>
   <data name="DefaultSupervisorName" xml:space="preserve">
     <value>Supervisor</value>
     <comment>Specifies the name of the 'supervisor' when it is created.</comment>

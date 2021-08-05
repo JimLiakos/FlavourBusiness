@@ -232,6 +232,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add equipment.
+        /// </summary>
+        public static string NewSubPreparationStationHeader {
+            get {
+                return ResourceManager.GetString("NewSubPreparationStationHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Translator.
         /// </summary>
         public static string NewTranslatorMenuPrompt {

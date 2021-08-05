@@ -7,6 +7,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
     public interface IPreparationStation
     {
+        [Association("PreparationSubStation", Roles.RoleA, "cd533f23-6824-4431-b904-818421f4eb42")]
+        [RoleBMultiplicityRange(1, 1)]
+        List<IPreparationStation> SubStations { get; }
+
+
+        /// <MetaDataID>{a4bb2a23-cd26-445c-b582-b277e6100c83}</MetaDataID>
+        IPreparationStation NewSubStation();
+
+        /// <MetaDataID>{667002c2-bdaa-402d-bcc6-d869c4ad0704}</MetaDataID>
+        void RemoveSubStation(IPreparationStation preparationStation);
+
+
         [RoleAMultiplicityRange(0)]
         [Association("PreparationStationPrepareFor", Roles.RoleA, "d953fcd5-84d0-429b-a436-09c0bfa66a5a")]
         List<IPreparationForInfo> PreparationForInfos { get; }
@@ -54,9 +66,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
 #if !FlavourBusinessDevice
         /// <MetaDataID>{7b6f9f61-6a17-4fd3-b90e-5a89e46238d1}</MetaDataID>
         bool CanPrepareItem(MenuModel.IMenuItem menuItem);
-        
-        bool CanPrepareItemFor(MenuModel.IMenuItem menuItem,IServicePoint servicePoint);
-        
+
+        /// <MetaDataID>{6e3c9ec8-54b3-4b59-8c04-dd5095811769}</MetaDataID>
+        bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint);
+
 #endif
 
     }

@@ -179,6 +179,10 @@
   <data name="NewPreparationStationPrompt" xml:space="preserve">
     <value>New preparation station</value>
   </data>
+  <data name="NewSubPreparationStationHeader" xml:space="preserve">
+    <value>Add equipment</value>
+    <comment>Defines the ContextMenu MenuItem Header to add  preparation station equipment tree node</comment>
+  </data>
   <data name="NewTranslatorMenuPrompt" xml:space="preserve">
     <value>Add Translator</value>
   </data>

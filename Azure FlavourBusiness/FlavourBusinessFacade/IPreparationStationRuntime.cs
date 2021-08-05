@@ -33,12 +33,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [GenerateEventConsumerProxy]
         event PreparationItemsChangeStateHandled PreparationItemsChangeState;
 
+        /// <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
         void Items…nPreparation(List<string> itemPreparationUris);
 
+        /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
         void ItemsPrepared(List<string> itemPreparationUris);
-        
 
+
+        /// <MetaDataID>{99ef195b-b347-42d7-b70d-adbcfdb0c54e}</MetaDataID>
         void CancelLastPreparationStep(List<string> itemPreparationUris);
+        /// <MetaDataID>{2d9ccb0f-821d-4469-8f74-9087c2be669b}</MetaDataID>
         void AssignCodeCardsToSessions(List<string> codeCards);
     }
 

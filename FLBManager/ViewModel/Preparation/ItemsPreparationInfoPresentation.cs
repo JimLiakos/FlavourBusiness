@@ -41,7 +41,17 @@ namespace FLBManager.ViewModel.Preparation
                 Delete();
             });
 
+            NewSubPreparationStationCommand = new RelayCommand((object sender) =>
+            {
+                AddSubPreparationStation();
+            });
 
+
+        }
+
+        private void AddSubPreparationStation()
+        {
+            
         }
 
         /// <MetaDataID>{27d5229c-bc53-42bd-9d47-6ceea9487d1f}</MetaDataID>
@@ -285,6 +295,10 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
+        public RelayCommand NewSubPreparationStationCommand { get; protected set; }
+
+        
+
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
 
@@ -303,6 +317,18 @@ namespace FLBManager.ViewModel.Preparation
 
 
                     MenuCommand menuItem = new MenuCommand();
+
+
+
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/bbq16.png"));
+                    menuItem.Header = Properties.Resources.NewSubPreparationStationHeader;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = NewSubPreparationStationCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+                    _ContextMenuItems.Add(null);
+
+                    menuItem = new MenuCommand();
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
                     menuItem.Header = Properties.Resources.RemoveCallerIDServer;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };

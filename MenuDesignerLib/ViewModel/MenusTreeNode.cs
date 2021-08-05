@@ -134,7 +134,10 @@ namespace MenuDesigner.ViewModel
 
             GraphicMenuTreeNode graphicMenuTreeNode = e.Data.GetData(typeof(GraphicMenuTreeNode)) as GraphicMenuTreeNode;
             if (graphicMenuTreeNode == null)
+            {
                 e.Effects = DragDropEffects.None;
+                return;
+            }
 
             if (!GraphicMenusOwner.CanAssignGraphicMenu(graphicMenuTreeNode))
                 e.Effects = DragDropEffects.None;
