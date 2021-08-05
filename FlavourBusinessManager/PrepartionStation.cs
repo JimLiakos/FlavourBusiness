@@ -698,7 +698,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 preparationStation = new PreparationStation();
-                preparationStation.Description=
+                preparationStation.Description = Properties.Resources.DefaultSubPreparationStationDescription;
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(preparationStation);
                 _SubStations.Add(preparationStation);
                 stateTransition.Consistent = true;
             }

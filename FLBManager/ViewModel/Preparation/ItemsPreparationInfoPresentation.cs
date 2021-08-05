@@ -51,7 +51,14 @@ namespace FLBManager.ViewModel.Preparation
 
         private void AddSubPreparationStation()
         {
-            
+            if (PreparationStationPresentation != null)
+            {
+                var preparationStation = PreparationStationPresentation.PreparationStation.NewSubStation();
+
+
+
+
+            }
         }
 
         /// <MetaDataID>{27d5229c-bc53-42bd-9d47-6ceea9487d1f}</MetaDataID>
@@ -69,7 +76,10 @@ namespace FLBManager.ViewModel.Preparation
             {
                 Delete();
             });
-
+            NewSubPreparationStationCommand = new RelayCommand((object sender) =>
+            {
+                AddSubPreparationStation();
+            });
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
 
@@ -297,7 +307,7 @@ namespace FLBManager.ViewModel.Preparation
 
         public RelayCommand NewSubPreparationStationCommand { get; protected set; }
 
-        
+
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
