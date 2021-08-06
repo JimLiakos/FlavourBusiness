@@ -544,8 +544,6 @@ namespace FLBManager.ViewModel.Preparation
                 }
             }
 
-
-
             foreach (var itemsPreparationInfo in ItemsPreparationInfos)
             {
                 MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
@@ -565,6 +563,46 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+
+        public bool StationPrepareAllItems(MenuModel.IItemsCategory itemsCategory)
+        {
+
+
+            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+                                         select new
+                                         {
+                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+                {
+                    if (!itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                        return false;
+                }
+            }
+
+            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
+            {
+                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
+                var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
+                if (@object is MenuModel.IItemsCategory)
+                {
+                    var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
+                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
+                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
+
+                    if (itemsCategoryOrParent == itemsPreparationInfoCategory)
+                        return true;
+
+                }
+            }
+            return false;
+
+        }
         /// <MetaDataID>{63fd57ce-f588-45fe-86fd-7625ad1ead3e}</MetaDataID>
         public bool StationPrepareItem(MenuModel.IMenuItem menuItem)
         {

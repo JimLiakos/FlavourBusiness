@@ -207,6 +207,27 @@ namespace FLBManager.ViewModel.Preparation
                     this.PreparationStationPresentation.ExcludeItem(MenuItem);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
 
+
+
+                //if(EquipmentPresentaion!=null)
+                //{
+                //    foreach(var itemsPreparationInfoPresentation in EquipmentPresentaion.Parent.Members.OfType<ItemsPreparationInfoPresentation>())
+                //        itemsPreparationInfoPresentation.Refresh();
+
+                //    foreach (var itemsPreparationInfoPresentation in (from subPresentaionStation in EquipmentPresentaion.Parent.Members.OfType<PreparationStationPresentation>()
+                //                                                      where subPresentaionStation  != EquipmentPresentaion
+                //                                                      from itemsPreparationInfoPresentation in subPresentaionStation.Members.OfType<ItemsPreparationInfoPresentation>()
+                //                                                      select itemsPreparationInfoPresentation))
+                //    {
+                //        itemsPreparationInfoPresentation.Refresh();
+                //    }
+
+                //}
+                //else
+                //{
+
+                //}
+
             }
         }
         /// <MetaDataID>{fad3761a-9049-4cf1-8c5e-ffe25141ee69}</MetaDataID>
@@ -267,7 +288,7 @@ namespace FLBManager.ViewModel.Preparation
             {
 
                 var parent = Parent;
-                while (parent != null && !(parent is PreparationStationPresentation && parent.Parent is ItemsPreparationInfoPresentation))
+                while (parent != null && !(parent is PreparationStationPresentation))
                     parent = parent.Parent;
 
                 return parent as PreparationStationPresentation;
@@ -281,7 +302,10 @@ namespace FLBManager.ViewModel.Preparation
             {
                 var equipmentPresentaion = EquipmentPresentaion;
 
+                if(equipmentPresentaion.Name == "Grill")
+                {
 
+                }
                 List<FBResourceTreeNode> members = new List<FBResourceTreeNode>();
 
                 if (ItemsCategory != null)
@@ -293,10 +317,11 @@ namespace FLBManager.ViewModel.Preparation
                     if (SelectionCheckBox)
                     {
                         var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
-                                                                  where equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsCategoryAssigned(subCategory)
+                                                                  where PreparationStationPresentation.StationPrepareItems(subCategory) || (!PreparationStationPresentation.StationPrepareItems(subCategory) && !IsCategoryAssigned(subCategory))// equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsCategoryAssigned(subCategory)
                                                                   select MultiSelectSubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, SelectionCheckBox)).Union(
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
-                            where equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem)
+
+                            where PreparationStationPresentation.StationPrepareItem(menuItem) || (!PreparationStationPresentation.StationPrepareItem(menuItem) && !IsMenuItemAssigned(menuItem))//  equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem)
                             select MultiSelectMenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
                         members.AddRange((from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
@@ -324,13 +349,50 @@ namespace FLBManager.ViewModel.Preparation
 
         private bool IsMenuItemAssigned(MenuItem menuItem)
         {
-            return Members.Where(x => x is ItemsPreparationInfoPresentation &&
-            (((x as ItemsPreparationInfoPresentation).MenuItem == menuItem && (x as ItemsPreparationInfoPresentation).CanPrepared) || (x as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem))).FirstOrDefault() != null;
+            if (EquipmentPresentaion.Parent is ItemsPreparationInfoPresentation)
+            {
+                if ((EquipmentPresentaion.Parent as ItemsPreparationInfoPresentation).EquipmentPresentaion.StationPrepareItem(menuItem))
+                    return true;
+
+                foreach (var subPresentaionStation in EquipmentPresentaion.Parent.Members.OfType<PreparationStationPresentation>().Where(X => X != EquipmentPresentaion))
+                {
+                    if (subPresentaionStation.StationPrepareItem(menuItem))
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private bool IsCategoryAssigned(IItemsCategory itemCategory)
         {
-            return Members.Where(x => x is ItemsPreparationInfoPresentation && (((x as ItemsPreparationInfoPresentation).ItemsCategory == itemCategory && (x as ItemsPreparationInfoPresentation).AllInHierarchyCanPrepared) || (x as ItemsPreparationInfoPresentation).IsCategoryAssigned(itemCategory))).FirstOrDefault() != null;
+
+            if (EquipmentPresentaion.Parent is ItemsPreparationInfoPresentation)
+            {
+                if ((EquipmentPresentaion.Parent as ItemsPreparationInfoPresentation).EquipmentPresentaion.StationPrepareAllItems(itemCategory))
+                    return true;
+
+                foreach (var subPresentaionStation in EquipmentPresentaion.Parent.Members.OfType<PreparationStationPresentation>().Where(X => X != EquipmentPresentaion))
+                {
+                    if (subPresentaionStation.StationPrepareAllItems(itemCategory))
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                var menuItemsRoot= EquipmentPresentaion.PreparationStation.SubStations.Members.OfType<ItemsPreparationInfoPresentation>().FirstOrDefault();
+                foreach (var subPresentaionStation in menuItemsRoot.Members.OfType<PreparationStationPresentation>().Where(X => X != EquipmentPresentaion))
+                {
+                    if (subPresentaionStation.StationPrepareAllItems(itemCategory))
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
@@ -421,7 +483,7 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (!CanPrepared)
                     return false;
-                foreach(var itemsPreparationInfoPresentation in  Members.OfType<ItemsPreparationInfoPresentation>())
+                foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
                 {
                     if (!itemsPreparationInfoPresentation.AllInHierarchyCanPrepared)
                         return false;
