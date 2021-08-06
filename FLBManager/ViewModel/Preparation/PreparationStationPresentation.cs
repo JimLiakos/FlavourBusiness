@@ -702,16 +702,16 @@ namespace FLBManager.ViewModel.Preparation
 
 
         /// <MetaDataID>{8249fed5-f9d5-4737-89b9-02369059d24e}</MetaDataID>
-        MenuModel.IMenu Menu;
+        
 
         public List<IPreparationForInfo> PreparationForInfos;
 
         /// <MetaDataID>{708a550f-aa89-45c5-86e6-90ca5c37f0ff}</MetaDataID>
-        public PreparationStationPresentation(IPreparationStation preparationStation, MenuModel.IMenu menu, MenuViewModel menuViewModel) : base(null)
+        public PreparationStationPresentation(IPreparationStation preparationStation,  MenuViewModel menuViewModel) : base(null)
         {
             MenuViewModel = menuViewModel;
             PreparationStation = preparationStation;
-            Menu = menu;
+        
             PreparationForInfos = preparationStation.PreparationForInfos.ToList();
             ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
 
@@ -719,6 +719,20 @@ namespace FLBManager.ViewModel.Preparation
             this.IsNodeExpanded = true;
         }
 
+        bool SelectionCheckBox;
+
+        public PreparationStationPresentation(FBResourceTreeNode parent,IPreparationStation preparationStation, MenuViewModel menuViewModel) : base(parent)
+        {
+            SelectionCheckBox = true;
+            MenuViewModel = menuViewModel;
+            PreparationStation = preparationStation;
+
+            PreparationForInfos = preparationStation.PreparationForInfos.ToList();
+            ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
+
+            CheckBoxVisibility = Visibility.Collapsed;
+            this.IsNodeExpanded = true;
+        }
 
 
         /// <MetaDataID>{7cf76e87-7a21-44ea-b315-37547c7d9d00}</MetaDataID>
@@ -778,7 +792,8 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (_ItemsToChoose == null)
                 {
-                    var rootCategory = new ItemsPreparationInfoPresentation(this, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), true);
+                    
+                    var rootCategory = new ItemsPreparationInfoPresentation(this, this.PreparationStation.SubStations,new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), true);
                     rootCategory.CheckBoxVisibility = Visibility.Collapsed;
                     rootCategory.IsNodeExpanded = true;
                     _ItemsToChoose = new List<FBResourceTreeNode>() { rootCategory };
@@ -987,14 +1002,12 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-
                 if (PreparationStationItems == null)
                 {
-                    PreparationStationItems = new ItemsPreparationInfoPresentation(this, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), false);
+                    PreparationStationItems = new ItemsPreparationInfoPresentation(this, this.PreparationStation.SubStations, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), SelectionCheckBox);
                     PreparationStationItems.IsNodeExpanded = true;
                     PreparationStationItems.CheckBoxVisibility = Visibility.Collapsed;
                 }
-
                 return PreparationStationItems.Members;
             }
         }

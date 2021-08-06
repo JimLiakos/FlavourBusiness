@@ -25,11 +25,12 @@ namespace FLBManager.ViewModel.Preparation
         ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
         /// <MetaDataID>{4e50a2ba-e4a7-498e-a316-aa888e4692bd}</MetaDataID>
         IMenuItem MenuItem;
-
+        List<IPreparationStation> PreparationSubStations = new List<IPreparationStation>();
 
         /// <MetaDataID>{6d5912d3-dbd6-431c-b216-d6a4732da003}</MetaDataID>
-        public ItemsPreparationInfoPresentation(PreparationStationPresentation parent, IItemsPreparationInfo itemsPreparationInfo, bool selectionCheckBox) : base(parent)
+        public ItemsPreparationInfoPresentation(PreparationStationPresentation parent, List<IPreparationStation> preparationSubStations, IItemsPreparationInfo itemsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
+            PreparationSubStations = preparationSubStations;
             SelectionCheckBox = selectionCheckBox;
             ItemsPreparationInfo = itemsPreparationInfo;
             PreparationStationPresentation = parent;
@@ -54,10 +55,6 @@ namespace FLBManager.ViewModel.Preparation
             if (PreparationStationPresentation != null)
             {
                 var preparationStation = PreparationStationPresentation.PreparationStation.NewSubStation();
-
-
-
-
             }
         }
 
@@ -264,24 +261,46 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        PreparationStationPresentation EquipmentPresentaion
+        {
+            get
+            {
+
+                var parent = Parent;
+                while (parent != null && !(parent is PreparationStationPresentation && parent.Parent is ItemsPreparationInfoPresentation))
+                    parent = parent.Parent;
+
+                return parent as PreparationStationPresentation;
+
+            }
+        }
         /// <MetaDataID>{d2401e62-1e30-4557-9b75-142a3f9c4690}</MetaDataID>
         public override List<FBResourceTreeNode> Members
         {
             get
             {
+                var equipmentPresentaion = EquipmentPresentaion;
+
+
+                List<FBResourceTreeNode> members = new List<FBResourceTreeNode>();
 
                 if (ItemsCategory != null)
                 {
 
+                    members.AddRange((from subPreparationStation in this.PreparationSubStations
+                                      select new PreparationStationPresentation(this, subPreparationStation, PreparationStationPresentation.MenuViewModel)).OfType<FBResourceTreeNode>().ToList());
+
                     if (SelectionCheckBox)
                     {
                         var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
+                                                                  where equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsCategoryAssigned(subCategory)
                                                                   select MultiSelectSubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, SelectionCheckBox)).Union(
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
+                            where equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem)
                             select MultiSelectMenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
-                        var members = (from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
-                                       select itemsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList();
+                        members.AddRange((from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
+                                          select itemsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList());
                         return members;
                     }
                     else
@@ -291,9 +310,9 @@ namespace FLBManager.ViewModel.Preparation
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
                             select MenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, SelectionCheckBox)));
 
-                        var members = (from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
-                                       where itemsPreparationInfoPresentation.HasItemsToPrepared
-                                       select itemsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList();
+                        members.AddRange((from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
+                                          where itemsPreparationInfoPresentation.HasItemsToPrepared
+                                          select itemsPreparationInfoPresentation).OfType<FBResourceTreeNode>().ToList());
                         return members;
 
                     }
@@ -302,6 +321,18 @@ namespace FLBManager.ViewModel.Preparation
                     return new List<FBResourceTreeNode>();
             }
         }
+
+        private bool IsMenuItemAssigned(MenuItem menuItem)
+        {
+            return Members.Where(x => x is ItemsPreparationInfoPresentation &&
+            (((x as ItemsPreparationInfoPresentation).MenuItem == menuItem && (x as ItemsPreparationInfoPresentation).CanPrepared) || (x as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem))).FirstOrDefault() != null;
+        }
+
+        private bool IsCategoryAssigned(IItemsCategory itemCategory)
+        {
+            return Members.Where(x => x is ItemsPreparationInfoPresentation && (((x as ItemsPreparationInfoPresentation).ItemsCategory == itemCategory && (x as ItemsPreparationInfoPresentation).AllInHierarchyCanPrepared) || (x as ItemsPreparationInfoPresentation).IsCategoryAssigned(itemCategory))).FirstOrDefault() != null;
+        }
+
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
@@ -336,15 +367,18 @@ namespace FLBManager.ViewModel.Preparation
                     menuItem.Command = NewSubPreparationStationCommand;
                     _ContextMenuItems.Add(menuItem);
 
-                    _ContextMenuItems.Add(null);
+                    if (this.Parent is PreparationStationPresentation)
+                    {
+                        _ContextMenuItems.Add(null);
 
-                    menuItem = new MenuCommand();
-                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
-                    menuItem.Header = Properties.Resources.RemoveCallerIDServer;
-                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                    menuItem.Command = DeleteCommand;
+                        menuItem = new MenuCommand();
+                        imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
+                        menuItem.Header = Properties.Resources.RemoveCallerIDServer;
+                        menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                        menuItem.Command = DeleteCommand;
 
-                    _ContextMenuItems.Add(menuItem);
+                        _ContextMenuItems.Add(menuItem);
+                    }
 
 
 
@@ -380,6 +414,22 @@ namespace FLBManager.ViewModel.Preparation
                 return null;
             }
         }
+
+        public bool AllInHierarchyCanPrepared
+        {
+            get
+            {
+                if (!CanPrepared)
+                    return false;
+                foreach(var itemsPreparationInfoPresentation in  Members.OfType<ItemsPreparationInfoPresentation>())
+                {
+                    if (!itemsPreparationInfoPresentation.AllInHierarchyCanPrepared)
+                        return false;
+                }
+                return true;
+            }
+        }
+
         /// <MetaDataID>{05929148-020e-4a78-b9d4-9e153c7929bd}</MetaDataID>
         public override void SelectionChange()
         {

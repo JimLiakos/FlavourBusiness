@@ -33,7 +33,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         IList<IItemsPreparationInfo> ItemsPreparationInfos { get; }
 
         /// <MetaDataID>{bb9df3c1-7e4a-418f-a3f4-6d9c07bf3427}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+2")]
+        [BackwardCompatibilityID("+2")]
+        [CachingDataOnClientSide]
         string Description { get; set; }
 
         /// <MetaDataID>{0d8307bb-48a8-4fb3-a327-c09d64ee426d}</MetaDataID>

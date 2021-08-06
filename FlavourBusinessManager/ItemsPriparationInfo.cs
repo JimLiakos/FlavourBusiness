@@ -18,6 +18,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
         }
 
+
         /// <MetaDataID>{ceb67265-17de-4ac2-a22f-c9814cfa38b2}</MetaDataID>
         public ItemsPreparationInfo(IItemsCategory itemsCategory)
         {
