@@ -185,7 +185,7 @@ namespace FLBManager.ViewModel
         HallLayoutDesignerHost HallLayoutDesigner;
         public RelayCommand ClickPseudoCommand { get; protected set; }
 
-        string _DesignAreaHeader = Resources.GraphicMenuTitle;
+        string _DesignAreaHeader = Properties. Resources.GraphicMenuTitle;
         public string DesignAreaHeader
         {
             get

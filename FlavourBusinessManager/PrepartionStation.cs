@@ -160,6 +160,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{2b80a101-a22c-46c7-b8e0-509dd8acc4ee}</MetaDataID>
         [PersistentMember(nameof(_ItemsPreparationInfos))]
         [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
 
         public IList<IItemsPreparationInfo> ItemsPreparationInfos
         {
@@ -303,47 +304,54 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 stateTransition.Consistent = true;
             }
-
+            ObjectChangeState?.Invoke(this, null);
         }
 
         /// <MetaDataID>{5db58706-9b6c-4db0-bec6-fb3dc73bf6db}</MetaDataID>
         public IItemsPreparationInfo NewPreparationInfo(string itemsInfoObjectUri, ItemsPreparationInfoType itemsPreparationInfoType)
         {
-            var obj = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
-
-            if (obj is MenuModel.ItemsCategory)
+            try
             {
-                ItemsPreparationInfo itemsPreparationInfo = new ItemsPreparationInfo(obj as MenuModel.ItemsCategory);
+                var obj = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
 
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                if (obj is MenuModel.ItemsCategory)
                 {
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPreparationInfo);
-                    this._ItemsPreparationInfos.Add(itemsPreparationInfo);
-                    itemsPreparationInfo.ItemsPreparationInfoType = itemsPreparationInfoType;
-                    //if (exclude == false)
-                    //{
-                    //    RemoveDescendantItemsPreparationInfos(obj as MenuModel.ItemsCategory);
-                    //}
-                    stateTransition.Consistent = true;
+                    ItemsPreparationInfo itemsPreparationInfo = new ItemsPreparationInfo(obj as MenuModel.ItemsCategory);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPreparationInfo);
+                        this._ItemsPreparationInfos.Add(itemsPreparationInfo);
+                        itemsPreparationInfo.ItemsPreparationInfoType = itemsPreparationInfoType;
+                        //if (exclude == false)
+                        //{
+                        //    RemoveDescendantItemsPreparationInfos(obj as MenuModel.ItemsCategory);
+                        //}
+                        stateTransition.Consistent = true;
+                    }
+
+                    return itemsPreparationInfo;
                 }
 
-                return itemsPreparationInfo;
+                if (obj is MenuModel.IMenuItem)
+                {
+                    ItemsPreparationInfo itemsPreparationInfo = new ItemsPreparationInfo(obj as MenuModel.IMenuItem);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPreparationInfo);
+                        this._ItemsPreparationInfos.Add(itemsPreparationInfo);
+                        itemsPreparationInfo.ItemsPreparationInfoType = itemsPreparationInfoType;
+                        stateTransition.Consistent = true;
+                    }
+
+                    return itemsPreparationInfo;
+
+                }
             }
-
-            if (obj is MenuModel.IMenuItem)
+            finally
             {
-                ItemsPreparationInfo itemsPreparationInfo = new ItemsPreparationInfo(obj as MenuModel.IMenuItem);
-
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                {
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPreparationInfo);
-                    this._ItemsPreparationInfos.Add(itemsPreparationInfo);
-                    itemsPreparationInfo.ItemsPreparationInfoType = itemsPreparationInfoType;
-                    stateTransition.Consistent = true;
-                }
-
-                return itemsPreparationInfo;
-
+                ObjectChangeState?.Invoke(this, null);
             }
 
             return null;
@@ -360,7 +368,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     this._ItemsPreparationInfos.Remove(itemsPreparationInfo);
                 stateTransition.Consistent = true;
             }
-
+            ObjectChangeState?.Invoke(this, null);
         }
 
         /// <MetaDataID>{5dd31a9b-d087-4ba9-be06-b2272f4fe231}</MetaDataID>

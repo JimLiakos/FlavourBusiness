@@ -23,7 +23,7 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{6b9f91bf-5517-41e8-917f-d69e56fda1ce}</MetaDataID>
         public void SetPreparationTimeSpanInMin(MenuModel.IItemsCategory itemsCategory, double timeSpanInMinutes)
         {
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -46,7 +46,7 @@ namespace FLBManager.ViewModel.Preparation
                 string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
                 itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.PreparationTime);
                 itemsPreparationInfo.PreparationTimeSpanInMin = timeSpanInMinutes;
-                this.ItemsPreparationInfos.Add(itemsPreparationInfo);
+                //this.AddItemsPreparationInfos(itemsPreparationInfo);
             }
             foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
                 itemsPreparationInfoPresentation.Refresh();
@@ -61,12 +61,17 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        //private void AddItemsPreparationInfos(IItemsPreparationInfo itemsPreparationInfo)
+        //{
+        //    _ItemsPreparationInfos.Add(itemsPreparationInfo);
+        //}
+
 
         /// <MetaDataID>{006e4e7a-323a-4fe4-a482-2686e3161a60}</MetaDataID>
         public void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
         {
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -88,8 +93,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.PreparationTime);
                 itemsPreparationInfo.PreparationTimeSpanInMin = timeSpanInMinutes;
-                this.ItemsPreparationInfos.Add(itemsPreparationInfo);
-                //_Members.Add(new ItemsPreparationInfoPresentation(this, itemsPreparationInfo));
+                //this.AddItemsPreparationInfos(itemsPreparationInfo);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
                 foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
@@ -202,7 +206,7 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{a517dbc7-ab28-48cd-b5a0-a837abed283f}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -232,11 +236,27 @@ namespace FLBManager.ViewModel.Preparation
             return 1;
         }
 
+        //internal List<ItemsPreparationInfoPresentation> GetItemsCategoryPreparationInfos(IItemsCategory itemsCategory)
+        //{
+        //    List<ItemsPreparationInfoPresentation> ItemsPreparationInfoPresentations = new List<ItemsPreparationInfoPresentation>();
+        //    foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
+        //    {
+        //        if (itemsPreparationInfoPresentation.ItemsCategory == itemsCategory)
+        //            ItemsPreparationInfoPresentations.Add(itemsPreparationInfoPresentation);
+        //        else
+        //            ItemsPreparationInfoPresentations.AddRange(itemsPreparationInfoPresentation.GetItemsCategoryPreparationInfos(itemsCategory));
+        //    }
+        //    foreach (var itemsPreparationInfoPresentation in Members.OfType<PreparationStationPresentation>())
+        //        ItemsPreparationInfoPresentations.AddRange(itemsPreparationInfoPresentation.GetItemsCategoryPreparationInfos(itemsCategory));
+
+        //    return ItemsPreparationInfoPresentations;
+        //}
+
         /// <MetaDataID>{220670a2-1825-44a5-9f02-4e7606ca5cad}</MetaDataID>
         internal double GetPreparationTimeSpanInMin(IItemsCategory itemsCategory)
         {
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
@@ -253,7 +273,7 @@ namespace FLBManager.ViewModel.Preparation
                 }
             }
 
-            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
+            foreach (var itemsPreparationInfo in PreparationStation.ItemsPreparationInfos)
             {
                 MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
                 var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
@@ -273,7 +293,7 @@ namespace FLBManager.ViewModel.Preparation
         public void IncludeItems(MenuModel.IItemsCategory itemsCategory)
         {
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -286,7 +306,7 @@ namespace FLBManager.ViewModel.Preparation
             if (excludedItemsPreparationInfo != null)
             {
                 PreparationStation.RemovePreparationInfo(excludedItemsPreparationInfo);
-                ItemsPreparationInfos.Remove(excludedItemsPreparationInfo);
+                //RemoveItemsPreparationInfos(excludedItemsPreparationInfo);
 
             }
 
@@ -296,7 +316,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Include);
 
-                this.ItemsPreparationInfos = this.PreparationStation.ItemsPreparationInfos.ToList();
+               //this.ItemsPreparationInfos = this.PreparationStation.ItemsPreparationInfos.ToList();
             }
 
             List<IItemsPreparationInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsPreparationInfos(itemsCategory);
@@ -304,15 +324,17 @@ namespace FLBManager.ViewModel.Preparation
             {
                 // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
                 PreparationStation.RemovePreparationInfos(uselessDescendantItemsPreparationInfos);
-                ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
+                //ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
             }
-            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-                itemsPreparationInfoPresentation.Refresh();
+            //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+            //    itemsPreparationInfoPresentation.Refresh();
 
             // updates infrastacture vew 
 
-            if (PreparationStationItems != null)
-                PreparationStationItems.Refresh();
+            //if (PreparationStationItems != null)
+            //    PreparationStationItems.Refresh();
+
+
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
@@ -322,33 +344,89 @@ namespace FLBManager.ViewModel.Preparation
 
             List<IItemsPreparationInfo> itemsPreparationInfos = new List<IItemsPreparationInfo>();
 
-            var itemsPreparationInfosEntry = (from itemsInfo in ItemsPreparationInfos
+                //_Members.Add(new ItemsPreparationInfoPresentation(this, itemsPreparationInfo));
+            var itemsPreparationInfosEntry = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                               select new
                                               {
                                                   @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                                   ItemsPreparationInfo = itemsInfo
                                               }).ToList();
 
-            foreach (var itemsPreparationInfo in itemsPreparationInfosEntry)
-            {
-                if (itemsPreparationInfo.ItemsPreparationInfo.Included())
-                {
-                    if (itemsPreparationInfo.@object is IItemsCategory)
-                        if (IsDescendantOfCategory(itemsCategory, itemsPreparationInfo.@object as IItemsCategory))
-                        {
-                            itemsPreparationInfos.Add(itemsPreparationInfo.ItemsPreparationInfo);
-                        }
+            //foreach (var itemsPreparationInfo in itemsPreparationInfosEntry)
+            //{
+            //    if (itemsPreparationInfo.ItemsPreparationInfo.Included())
+            //    {
+            //        if (itemsPreparationInfo.@object is IItemsCategory)
+            //            if (IsDescendantOfCategory(itemsCategory, itemsPreparationInfo.@object as IItemsCategory))
+            //            {
+            //               // AddItemsPreparationInfos(itemsPreparationInfo.ItemsPreparationInfo);
+            //            }
 
-                    if (itemsPreparationInfo.@object is IMenuItem)
-                        if (((itemsPreparationInfo.@object as MenuItem).Class == itemsCategory ||
-                            IsDescendantOfCategory(itemsCategory, (itemsPreparationInfo.@object as MenuItem).Class as IItemsCategory)))
-                        {
-                            itemsPreparationInfos.Add(itemsPreparationInfo.ItemsPreparationInfo);
-                        }
+            //        if (itemsPreparationInfo.@object is IMenuItem)
+            //            if (((itemsPreparationInfo.@object as MenuItem).Class == itemsCategory ||
+            //                IsDescendantOfCategory(itemsCategory, (itemsPreparationInfo.@object as MenuItem).Class as IItemsCategory)))
+            //            {
+            //                //AddItemsPreparationInfos(itemsPreparationInfo.ItemsPreparationInfo);
+            //            }
+            //    }
+
+            //}
+            return itemsPreparationInfos;
+        }
+
+        internal bool IsMenuItemAssigned(MenuItem menuItem)
+        {
+            if (Parent is ItemsPreparationInfoPresentation)
+            {
+                if ((Parent as ItemsPreparationInfoPresentation).PreparationStationPresentation.StationPrepareItem(menuItem))
+                    return true;
+
+                foreach (var subPresentaionStation in Parent.Members.OfType<PreparationStationPresentation>().Where(X => X != this))
+                {
+                    if (subPresentaionStation.StationPrepareItem(menuItem))
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                List<PreparationStationPresentation> preparationSubStations = PreparationSubStations;
+                foreach (var subPresentaionStation in preparationSubStations.Where(X => X != this))
+                {
+                    if (subPresentaionStation.StationPrepareItem(menuItem))
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        internal bool IsCategoryAssigned(IItemsCategory itemCategory)
+        {
+            if (Parent is ItemsPreparationInfoPresentation)
+            {
+
+                if ((Parent as ItemsPreparationInfoPresentation).PreparationStationPresentation.StationPrepareAllItems(itemCategory))
+                    return true;
+
+                foreach (var subPresentaionStation in Parent.Members.OfType<PreparationStationPresentation>().Where(X => X != this))
+                {
+                    if (subPresentaionStation.StationPrepareAllItems(itemCategory))
+                        return true;
                 }
 
+                return false;
             }
-            return itemsPreparationInfos;
+            else
+            {
+
+                List<PreparationStationPresentation> preparationSubStations = PreparationSubStations;
+                foreach (var subPresentaionStation in preparationSubStations.Where(X => X != this))
+                {
+                    if (subPresentaionStation.StationPrepareAllItems(itemCategory))
+                        return true;
+                }
+                return false;
+            }
         }
 
 
@@ -374,7 +452,7 @@ namespace FLBManager.ViewModel.Preparation
         public void IncludeItem(MenuModel.IMenuItem menuItem)
         {
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -396,7 +474,7 @@ namespace FLBManager.ViewModel.Preparation
                 else
                 {
                     PreparationStation.RemovePreparationInfo(excludedItemsPreparationInfo);
-                    ItemsPreparationInfos.Remove(excludedItemsPreparationInfo);
+                    //RemoveItemsPreparationInfos(excludedItemsPreparationInfo);
                 }
             }
 
@@ -404,9 +482,9 @@ namespace FLBManager.ViewModel.Preparation
             if (!StationPrepareItem(menuItem))
             {
                 string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-
+                var dd = this.PreparationStation.ItemsPreparationInfos;
                 var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Include);
-                this.ItemsPreparationInfos.Add(itemsPreparationInfo);
+                //this.AddItemsPreparationInfos(itemsPreparationInfo);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
                 foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
@@ -430,7 +508,7 @@ namespace FLBManager.ViewModel.Preparation
             {
 
 
-                var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+                var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                              select new
                                              {
                                                  @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -444,7 +522,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (includedItemsPreparationInfo != null)
                 {
                     this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
-                    ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
+                    //RemoveItemsPreparationInfos(includedItemsPreparationInfo);
                 }
                 else
                 {
@@ -452,12 +530,12 @@ namespace FLBManager.ViewModel.Preparation
                     string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
                     var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
 
-                    ItemsPreparationInfos.Add(itemsPreparationInfo);
+                    //AddItemsPreparationInfos(itemsPreparationInfo);
                     //var sdd = itemsPreparationInfo.Exclude;
                 }
 
-                foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-                    itemsPreparationInfoPresentation.Refresh();
+                //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+                //    itemsPreparationInfoPresentation.Refresh();
 
             }
             else
@@ -467,20 +545,22 @@ namespace FLBManager.ViewModel.Preparation
                 {
                     // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
                     PreparationStation.RemovePreparationInfos(uselessDescendantItemsPreparationInfos);
-                    ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
+                    //ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
                 }
-                foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-                    itemsPreparationInfoPresentation.Refresh();
+                //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+                //    itemsPreparationInfoPresentation.Refresh();
 
 
             }
 
-            if (PreparationStationItems != null)
-                PreparationStationItems.Refresh();
+            //if (PreparationStationItems != null)
+            //    PreparationStationItems.Refresh();
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             //foreach (var member in _Members.OfType<ItemsPreparationInfoPresentation>())
             //    member.Refresh();
         }
+
+
         /// <MetaDataID>{b2e31bfa-a809-496e-9613-d0b3c166183f}</MetaDataID>
         public void ExcludeItem(MenuModel.IMenuItem menuItem)
         {
@@ -489,7 +569,7 @@ namespace FLBManager.ViewModel.Preparation
             {
 
 
-                var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+                var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                              select new
                                              {
                                                  @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -503,14 +583,14 @@ namespace FLBManager.ViewModel.Preparation
                 if (includedItemsPreparationInfo != null)
                 {
                     this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
-                    ItemsPreparationInfos.Remove(includedItemsPreparationInfo);
+                   // RemoveItemsPreparationInfos(includedItemsPreparationInfo);
                 }
                 if (StationPrepareItem(menuItem))
                 {
 
                     string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
                     var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.Exclude);
-                    this.ItemsPreparationInfos.Add(itemsPreparationInfo);
+                    //this.AddItemsPreparationInfos(itemsPreparationInfo);
                 }
 
                 if (PreparationStationItems != null)
@@ -524,7 +604,7 @@ namespace FLBManager.ViewModel.Preparation
         {
 
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
@@ -544,7 +624,7 @@ namespace FLBManager.ViewModel.Preparation
                 }
             }
 
-            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
+            foreach (var itemsPreparationInfo in PreparationStation.ItemsPreparationInfos)
             {
                 MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
                 var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
@@ -560,7 +640,6 @@ namespace FLBManager.ViewModel.Preparation
                 }
             }
             return false;
-
         }
 
 
@@ -568,46 +647,19 @@ namespace FLBManager.ViewModel.Preparation
         {
 
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
-                                         select new
-                                         {
-                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsPreparationInfo = itemsInfo
-                                         }).ToList();
-
-            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            var menuItems = itemsCategory.GetAllMenuItems();
+            foreach (var menuItem in menuItems)
             {
-                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
-                {
-                    if (!itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
-                        return false;
-                }
+                if (!StationPrepareItem(menuItem))
+                    return false;
             }
-
-            foreach (var itemsPreparationInfo in ItemsPreparationInfos)
-            {
-                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-                var @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
-                if (@object is MenuModel.IItemsCategory)
-                {
-                    var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
-                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsPreparationInfoCategory)
-                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
-
-                    if (itemsCategoryOrParent == itemsPreparationInfoCategory)
-                        return true;
-
-                }
-            }
-            return false;
-
+            return true;
         }
         /// <MetaDataID>{63fd57ce-f588-45fe-86fd-7625ad1ead3e}</MetaDataID>
         public bool StationPrepareItem(MenuModel.IMenuItem menuItem)
         {
 
-            var itemsPreparationInfos = (from itemsInfo in ItemsPreparationInfos
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
                                          select new
                                          {
                                              @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
@@ -699,7 +751,7 @@ namespace FLBManager.ViewModel.Preparation
             MenuViewModel = menuViewModel;
             PreparationSations = parent;
             PreparationStation = preparationStation;
-            ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
+            //ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
             PreparationForInfos = preparationStation.PreparationForInfos.ToList();
 
 
@@ -735,38 +787,42 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        /// <MetaDataID>{fa4e0f57-1adf-4fd1-bb36-9186da361586}</MetaDataID>
-        List<IItemsPreparationInfo> ItemsPreparationInfos;
 
 
         /// <MetaDataID>{8249fed5-f9d5-4737-89b9-02369059d24e}</MetaDataID>
-        
-
         public List<IPreparationForInfo> PreparationForInfos;
 
         /// <MetaDataID>{708a550f-aa89-45c5-86e6-90ca5c37f0ff}</MetaDataID>
-        public PreparationStationPresentation(IPreparationStation preparationStation,  MenuViewModel menuViewModel) : base(null)
+        public PreparationStationPresentation(IPreparationStation preparationStation, MenuViewModel menuViewModel) : base(null)
         {
             MenuViewModel = menuViewModel;
             PreparationStation = preparationStation;
-        
+
             PreparationForInfos = preparationStation.PreparationForInfos.ToList();
-            ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
 
             CheckBoxVisibility = Visibility.Collapsed;
             this.IsNodeExpanded = true;
         }
 
-        bool SelectionCheckBox;
-
-        public PreparationStationPresentation(FBResourceTreeNode parent,IPreparationStation preparationStation, MenuViewModel menuViewModel) : base(parent)
+        bool _SelectionCheckBox;
+        bool SelectionCheckBox
         {
-            SelectionCheckBox = true;
+            get
+            {
+                return _SelectionCheckBox;
+            }
+            set
+            {
+                _SelectionCheckBox = value;
+            }
+        }
+        public PreparationStationPresentation(FBResourceTreeNode parent, IPreparationStation preparationStation, MenuViewModel menuViewModel, bool selectionCheckBox) : base(parent)
+        {
+            SelectionCheckBox = selectionCheckBox;
             MenuViewModel = menuViewModel;
             PreparationStation = preparationStation;
 
             PreparationForInfos = preparationStation.PreparationForInfos.ToList();
-            ItemsPreparationInfos = preparationStation.ItemsPreparationInfos.ToList();
 
             CheckBoxVisibility = Visibility.Collapsed;
             this.IsNodeExpanded = true;
@@ -783,31 +839,8 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{b9e2a72a-299d-4b15-9236-349d077b4122}</MetaDataID>
         private void EditMenuItem(System.Windows.Window owner)
         {
-            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
-            //{
-            //    var SelectPreparationStationItemsWindow = new Views.Preparation.SelectPreparationStationItemsWindow();
-
-            //    SelectPreparationStationItemsWindow.Owner = owner;
-
-            //    SelectPreparationStationItemsWindow.GetObjectContext().RollbackOnExitWithoutAnswer = false;
-            //    SelectPreparationStationItemsWindow.GetObjectContext().RollbackOnNegativeAnswer = false;
-
-            //    SelectPreparationStationItemsWindow.GetObjectContext().SetContextInstance(this);
-
-            //    SelectPreparationStationItemsWindow.ShowDialog();
-            //    stateTransition.Consistent = true;
-            //}
-
-
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-
-                //System.Windows.Window owner = System.Windows.Window.GetWindow(EditOptionsTypesCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                //var menuItemWindow = new MenuItemsEditor.Views.CategoryMenuItemTypesWindow();
-                //menuItemWindow.Owner = owner;
-                //MenuItemsEditor.ViewModel.OptionsTypesViewModel optionsTypesViewModel = new MenuItemsEditor.ViewModel.OptionsTypesViewModel(ItemsCategory);
-                //menuItemWindow.GetObjectContext().SetContextInstance(optionsTypesViewModel);
-                //menuItemWindow.ShowDialog();
 
                 var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
                 Views.Preparation.PreparationStationItemsPage preparationStationItemsPage = new Views.Preparation.PreparationStationItemsPage();
@@ -816,8 +849,6 @@ namespace FLBManager.ViewModel.Preparation
                 frame.ShowDialogPage(preparationStationItemsPage);
                 stateTransition.Consistent = true;
             }
-
-
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
         }
 
@@ -830,8 +861,8 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (_ItemsToChoose == null)
                 {
-                    
-                    var rootCategory = new ItemsPreparationInfoPresentation(this, this.PreparationStation.SubStations,new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), true);
+
+                    var rootCategory = new ItemsPreparationInfoPresentation(this,  MenuViewModel.Menu, true);
                     rootCategory.CheckBoxVisibility = Visibility.Collapsed;
                     rootCategory.IsNodeExpanded = true;
                     _ItemsToChoose = new List<FBResourceTreeNode>() { rootCategory };
@@ -982,15 +1013,8 @@ namespace FLBManager.ViewModel.Preparation
 
                     _ContextMenuItems.Add(menuItem);
 
-
-
-
-
                 }
-                //if (_ContextMenuItems == null)
-                //{
-                //    _ContextMenuItems = new List<MenuComamnd>();
-                //}
+   
                 return _ContextMenuItems;
             }
         }
@@ -1042,7 +1066,7 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (PreparationStationItems == null)
                 {
-                    PreparationStationItems = new ItemsPreparationInfoPresentation(this, this.PreparationStation.SubStations, new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(MenuViewModel.Menu.RootCategory), SelectionCheckBox);
+                    PreparationStationItems = new ItemsPreparationInfoPresentation(this, MenuViewModel.Menu, SelectionCheckBox);
                     PreparationStationItems.IsNodeExpanded = true;
                     PreparationStationItems.CheckBoxVisibility = Visibility.Collapsed;
                 }
@@ -1057,6 +1081,13 @@ namespace FLBManager.ViewModel.Preparation
         {
             get => _PreparationTimeVisible;
             set => _PreparationTimeVisible = value;
+        }
+        public List<PreparationStationPresentation> PreparationSubStations
+        {
+            get
+            {
+                return ItemsToChoose.OfType<ItemsPreparationInfoPresentation>().First().PreparationSubStations.Values.ToList();
+            }
         }
 
         /// <MetaDataID>{b26cc531-aaf0-49de-bb75-0302332678b5}</MetaDataID>
@@ -1142,16 +1173,9 @@ namespace FLBManager.ViewModel.Preparation
                 IsNodeExpanded = true;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
 
-                //string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(dragItemsCategory.ItemsCategory).GetPersistentObjectUri(dragItemsCategory.ItemsCategory);
-                //var itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri);
-                //_Members.Add(new ItemsPreparationInfoPresentation(this, itemsPreparationInfo));
-                //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-                //IsNodeExpanded = true;
-                //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
             }
             if (serviceAreaPresentation != null)
                 IncludeServiceArea(serviceAreaPresentation.ServiceArea);
-            //DragItemsCategory
 
         }
 
@@ -1167,17 +1191,25 @@ namespace FLBManager.ViewModel.Preparation
                 _PreparationStationSubjects = _PreparationStationSubjects.ToList();
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
             }
-
         }
 
-        //public List<FBResourceTreeNode> PreparationItemsInfoSelections
-        //{
-        //    get
-        //    {
-        //        return _Members.ToList();
-        //    }
-        //}
+        public void Refresh(MenuItem menuItemWithChanges)
+        {
 
+            if (PreparationStationItems != null)
+                PreparationStationItems.Refresh(menuItemWithChanges);
+
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
+
+        }
+        public void Refresh(ItemsCategory itemsCategoryWithChanges)
+        {
+            if (PreparationStationItems != null)
+                PreparationStationItems.Refresh(itemsCategoryWithChanges);
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
+        }
     }
 
     //Extension
@@ -1203,6 +1235,50 @@ namespace FLBManager.ViewModel.Preparation
             return (itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.PreparationTime) == ItemsPreparationInfoType.PreparationTime;
         }
 
+    }
+
+
+    static class ItemsCategoryExtention
+    {
+        public static List<MenuItem> GetAllMenuItems(this IItemsCategory itemsCategory)
+        {
+            var menuItems = itemsCategory.ClassifiedItems.OfType<MenuItem>().ToList();
+
+            menuItems.AddRange((from subCutegory in itemsCategory.ClassifiedItems.OfType<IItemsCategory>()
+                                from subCutegoriesItem in subCutegory.GetAllMenuItems()
+                                select subCutegoriesItem));
+            return menuItems;
+
+        }
+
+        public static bool IsAncestor(this MenuItem menuItem, ItemsCategory itemsCategory)
+        {
+            var category = menuItem.Category;
+            while (category != null)
+            {
+                if (category == itemsCategory)
+                    return true;
+                category = category.Parent;
+            }
+            return false;
+
+        }
+
+        public static bool IsAncestor(this ItemsCategory thisItemsCategory, ItemsCategory itemsCategory)
+        {
+            var category = thisItemsCategory.Parent;
+            if (category == itemsCategory)
+                return true;
+            while (category != null)
+            {
+                if (category == itemsCategory)
+                    return true;
+                category = category.Parent;
+            }
+            return false;
+
+        }
+ 
 
     }
 }

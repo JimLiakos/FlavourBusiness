@@ -105,7 +105,7 @@
 
                                 </StackPanel.Resources>
 
-                                <CheckBox Visibility="{Binding CheckBoxVisibility}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
+                                <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
                                 <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                                 <ControlsEx:EditableTextBlock IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
 

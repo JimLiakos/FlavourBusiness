@@ -338,6 +338,18 @@ There are preaparation oprtions with wrang, scale type.</target>
           <source>Meal course duration</source>
           <target state="new">Meal course duration</target>
         </trans-unit>
+        <trans-unit id="QuantitativeCheckBoxLabel" translate="yes" xml:space="preserve">
+          <source>Quantitative</source>
+          <target state="new">Quantitative</target>
+        </trans-unit>
+        <trans-unit id="QuantitativeCheckBoxToolTip" translate="yes" xml:space="preserve">
+          <source>In the quantitative option, the first scaling level defines the option absence.</source>
+          <target state="new">In the quantitative option, the first scaling level defines the option absence.</target>
+        </trans-unit>
+        <trans-unit id="IngredientCheckBoxToolTip" translate="yes" xml:space="preserve">
+          <source>Option participate  as ingredient in recipe of product</source>
+          <target state="new">Option participate  as ingredient in recipe of product</target>
+        </trans-unit>
       </group>
     </body>
   </file>

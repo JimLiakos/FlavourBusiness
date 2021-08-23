@@ -81,34 +81,34 @@ namespace FLBManager
             //              select meal).FirstOrDefault();
             //var sds = m_meal.Courses;
 
-            CreateQRCodeCards();
-
+            //CreateQRCodeCards();
+           // PreparationTimeEstimator();
 
             base.OnStartup(e);
         }
 
-
+   
         void CreateQRCodeCards()
         {
 
             int code = 1001;
             string color = HexConverter(Color.DeepPink);
-            string codeValue = code.ToString() + color.Replace("#", "_"); 
+            string codeValue = code.ToString() + color.Replace("#", "_");
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-            var qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            var qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
 
             qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
-            
+
             code = 1002;
             color = HexConverter(Color.DarkOrange);
-            codeValue = code.ToString() + color.Replace("#","_");
+            codeValue = code.ToString() + color.Replace("#", "_");
             qrGenerator = new QRCodeGenerator();
             qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
             qrCode = new QRCode(qrCodeData);
-            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
             qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
 
 
@@ -118,7 +118,7 @@ namespace FLBManager
             qrGenerator = new QRCodeGenerator();
             qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
             qrCode = new QRCode(qrCodeData);
-            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
             qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
 
             code = 1004;
@@ -127,7 +127,7 @@ namespace FLBManager
             qrGenerator = new QRCodeGenerator();
             qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
             qrCode = new QRCode(qrCodeData);
-            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
             qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
 
             code = 1005;
@@ -136,7 +136,7 @@ namespace FLBManager
             qrGenerator = new QRCodeGenerator();
             qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
             qrCode = new QRCode(qrCodeData);
-            qrCodeImage = qrCode.GetGraphic(20,  color, "#FFFFFF", true);
+            qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
             qrCodeImage.Save(@"f:\qrImage" + code.ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
         }
         private static String HexConverter(System.Drawing.Color c)
@@ -171,7 +171,7 @@ namespace FLBManager
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
 
 
-            Dictionary<char, char> directory = new Dictionary<char,char> { { 'ά', 'α' }, { 'έ', 'ε' }, { 'ή', 'η' }, { 'ί', 'ι' }, { 'ό', 'ο' }, { 'ύ', 'υ' }, { 'ώ', 'ω' } };
+            Dictionary<char, char> directory = new Dictionary<char, char> { { 'ά', 'α' }, { 'έ', 'ε' }, { 'ή', 'η' }, { 'ί', 'ι' }, { 'ό', 'ο' }, { 'ύ', 'υ' }, { 'ώ', 'ω' } };
 
             var sds = JsonConvert.SerializeObject(directory);
 

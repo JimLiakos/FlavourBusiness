@@ -22,5 +22,6 @@ namespace MenuModel
 
         /// <MetaDataID>{4b6f0f11-a30f-4b42-8f5d-e60763869e92}</MetaDataID>
         IList<IMenuItem> MenuItems { get; }
+       
     }
 }
