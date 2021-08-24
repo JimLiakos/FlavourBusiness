@@ -28,6 +28,11 @@ namespace WaiterApp.iOS
             global::OOAdvantech.iOS.HybridWebViewRenderer.Init();
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
+            var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
+
+            string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
+            OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
