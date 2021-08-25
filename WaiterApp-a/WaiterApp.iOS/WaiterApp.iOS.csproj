@@ -14,7 +14,7 @@
     <AssemblyName>WaiterApp.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +48,7 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+
     <MtouchLink>None</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
   </PropertyGroup>
@@ -149,7 +150,7 @@
       <Name>OOAdvantech.NetStandard</Name>
     </ProjectReference>
     <ProjectReference Include="..\WaiterApp\WaiterApp.csproj">
-      <Project>{07735a31-46db-4af9-b207-e011e4c736ba}</Project>
+      <Project>{C9120090-C8B0-4830-957C-E2B88E066CC6}</Project>
       <Name>WaiterApp</Name>
     </ProjectReference>
   </ItemGroup>

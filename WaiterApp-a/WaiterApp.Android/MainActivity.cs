@@ -12,7 +12,6 @@ using Android.Gms.Common;
 using Android.Gms.Extensions;
 using Android.Support.V4.App;
 using Android.Content;
-using System.Threading.Tasks;
 
 namespace WaiterApp.Droid
 {
@@ -67,7 +66,7 @@ namespace WaiterApp.Droid
             var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
             notificationManager.CreateNotificationChannel(channel);
         }
-        protected  override async void OnCreate(Bundle savedInstanceState)
+        protected  override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -86,13 +85,7 @@ namespace WaiterApp.Droid
             IsPlayServicesAvailable();
             CreateNotificationChannel();
 
-            //  var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
-
-
-            var token = await Task<string>.Run(() =>
-            {
-                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            });
+            var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
 
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);

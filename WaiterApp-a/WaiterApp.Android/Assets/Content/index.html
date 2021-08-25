@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>WaiterWeb</title>
+  <!-- <base href="/"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style type="text/css">
+    * {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+    }
+  </style>
+  <script>
+
+    var NavigationButtonPress;
+    function SubscribeNavButtonPress(onNavButtonPress) {
+      NavigationButtonPress = onNavButtonPress;
+    }
+
+    // document.addEventListener('gesturestart', function (e) {
+    //   e.preventDefault();
+    // });
+
+    var BackButtonPress;
+    function SubscribeBackButtonPress(onBackButtonPress) {
+      BackButtonPress = onBackButtonPress;
+    }
+
+    var OnMessageFunction;
+    function RegisterOnMessage(OnMessage) {
+      OnMessageFunction = OnMessage;
+    }
+    function SendMessage(message) {
+
+      if (typeof OnMessageFunction === "function")
+        OnMessageFunction(message);
+
+    }
+
+
+    function csCodeCallDefined() {
+      if (typeof invokeCSharpAction === "function" || typeof cscallbackObj === "object") {
+        console.log("cs CodeCall Defined")
+        return true;
+      }
+      else {
+        console.log("csCodeCall not Defined")
+        return false;
+      }
+    }
+
+    function SendMessageToNativeCode(message) {
+
+      if (typeof invokeCSharpAction === "function") {
+
+        //CSCallBack(callID,"Hello C#");
+        invokeCSharpAction(message);
+      }
+      else {
+        var ret = cscallbackObj.notify(message);
+        return ret;
+      }
+    }
+
+  </script>
+
+<link rel="stylesheet" href="styles.96f64a1681f2509b8c9b.css"></head>
+
+<body>
+  <app-root></app-root>
+<script src="runtime.e227d1a0e31cbccbf8ec.js" defer></script><script src="polyfills.9e86b32c42185429d576.js" defer></script><script src="scripts.a73844de5f291be94c3b.js" defer></script><script src="main.bcb8fe30ce936ae5742d.js" defer></script></body>
+
+</html>

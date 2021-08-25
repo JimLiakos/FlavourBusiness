@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-//using Firebase.InstanceID;
+
 using Foundation;
 using UIKit;
 
@@ -29,25 +28,14 @@ namespace WaiterApp.iOS
             global::OOAdvantech.iOS.HybridWebViewRenderer.Init();
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
+            var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
 
-            //var token = await Task<string>.Run(() =>
-            //{
-            //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            //});
-            //Firebase.InstanceID.InstanceId.SharedInstance.GetToken("881594421690","FCM",default(Dictionary<object, object>),new InstanceIdTokenHandler(InstanceIdToken));
-            ////var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
-            //string token = "";
-            //string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
-            //OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase( token, webClientID);
+            string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
+            OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
 
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
-        }
-
-        void InstanceIdToken(string token, NSError error)
-        {
-
         }
     }
 }
