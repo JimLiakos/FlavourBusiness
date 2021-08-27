@@ -187,6 +187,23 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        string _Address;
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public string Address
+        {
+            get
+            {
+                return _Address;
+            }
+
+            set
+            {
+                _Address = value;
+            }
+        }
+ 
+
+
 
         /// <MetaDataID>{207007a7-cf74-4413-b852-e0e780f36ada}</MetaDataID>
         string _UserIdentity;
@@ -711,7 +728,7 @@ namespace WaiterApp.ViewModel
                     {
 
                     }
-                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber };
+                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber,Address=this.Address };
                     UserData = pAuthFlavourBusiness.SignUp(UserData);
 
                     if (UserData != null)

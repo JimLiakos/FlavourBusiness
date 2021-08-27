@@ -161,13 +161,15 @@ namespace FlavourBusinessManager
                 }
                 else
                 {
-                    if(authUser.Email!=authUserRef.Email|| authUser.Picture != authUserRef.PhotoUrl)
+                    if (authUserRef != null)
                     {
-                        authUserRef.Email = authUser.Email;
-                        authUserRef.PhotoUrl = authUser.Picture;
-
-                        TableOperation replaceOperation = TableOperation.Replace(authUserRef);
-                        var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                        if (authUser.Email != authUserRef.Email || authUser.Picture != authUserRef.PhotoUrl)
+                        {
+                            authUserRef.Email = authUser.Email;
+                            authUserRef.PhotoUrl = authUser.Picture;
+                            TableOperation replaceOperation = TableOperation.Replace(authUserRef);
+                            var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                        }
                     }
                 }
                 return authUserRef;
