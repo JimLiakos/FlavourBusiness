@@ -457,6 +457,8 @@ namespace FLBAuthentication.ViewModel
 
                          var user = pAuthFlavourBusines.SignIn(RoleType);
                          CurrentUser = user;
+                         UserName = user.UserName;
+                         FullName = user.FullName;
 
                          if (user != null)
                              _PhoneNumber = user.PhoneNumber;

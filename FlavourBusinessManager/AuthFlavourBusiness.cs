@@ -346,7 +346,8 @@ namespace FlavourBusinessManager
                 organization = (from _organization in storage.GetObjectCollection<Organization>()
                                 where _organization.SignUpUserIdentity == userId
                                 select _organization).FirstOrDefault();
-                authUserRef.AddRole(organization);
+                if(organization!=null)
+                    authUserRef.AddRole(organization);
 
             }
 

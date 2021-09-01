@@ -506,7 +506,13 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+
+            string userId = authUser.User_ID;
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+
+
+            if (authUser.User_ID != this.SignUpUserIdentity && authUserRef.GetRoleObject<Organization>() != this)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
             if (dataType == OrganizationStorages.StyleSheets)
@@ -807,6 +813,13 @@ namespace FlavourBusinessManager
             {
                 if (!(System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") is AuthUser authUser))
                     throw new AuthenticationException();
+
+                string userId = authUser.User_ID;
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+                if (authUserRef.GetRoleObject<Organization>() == this)
+                    return UnSafeGraphicMenus;
+
                 if (authUser.User_ID != this.SignUpUserIdentity)
                     throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
                 return UnSafeGraphicMenus;
