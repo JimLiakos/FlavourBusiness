@@ -202,20 +202,6 @@ namespace WaiterApp.ViewModel
             }
         }
 
-        string _Address;
-        [OOAdvantech.MetaDataRepository.HttpVisible]
-        public string Address
-        {
-            get
-            {
-                return _Address;
-            }
-
-            set
-            {
-                _Address = value;
-            }
-        }
  
 
 
