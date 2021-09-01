@@ -139,6 +139,21 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        string _Address;
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public string Address
+        {
+            get
+            {
+                return _Address;
+            }
+
+            set
+            {
+                _Address = value;
+            }
+        }
+
         /// <MetaDataID>{028887bc-c73a-433c-9cdb-fa58744c7321}</MetaDataID>
         string _Password;
         /// <MetaDataID>{bfc5b50d-9b83-4b4f-8a02-4d6cccb906cf}</MetaDataID>
@@ -425,6 +440,8 @@ namespace WaiterApp.ViewModel
                     UserData = pAuthFlavourBusiness.SignIn();
                     if (UserData != null)
                     {
+                        _FullName = UserData.FullName;
+                        _UserName = UserData.UserName;
                         var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter).FirstOrDefault();
                         if (role.RoleType == UserData.RoleType.Waiter)
                         {

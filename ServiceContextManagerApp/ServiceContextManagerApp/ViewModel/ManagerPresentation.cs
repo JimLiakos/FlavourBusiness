@@ -410,7 +410,7 @@ namespace ServiceContextManagerApp
                     {
 
                     }
-                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber};
+                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber,Address=this.Address};
                     UserData = pAuthFlavourBusiness.SignUp(UserData);
 
                     if (UserData != null)
@@ -636,6 +636,8 @@ namespace ServiceContextManagerApp
                     UserData = pAuthFlavourBusiness.SignIn();
                     if (UserData != null)
                     {
+                        _FullName = UserData.FullName;
+                        _UserName = UserData.UserName;
                         var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
                         if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
