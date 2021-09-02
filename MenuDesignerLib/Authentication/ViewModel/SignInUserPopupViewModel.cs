@@ -457,33 +457,23 @@ namespace FLBAuthentication.ViewModel
                              throw;
                          }
 
+                         IUser user = null; ;
 
-                         var user = pAuthFlavourBusines.SignIn(RoleType);
-                         CurrentUser = user;
-                         if (user != null)
+                         var userData = pAuthFlavourBusines.SignIn();
+                         if (userData != null)
                          {
-                             UserName = user.UserName;
-                             FullName = user.FullName;
+                             UserName = userData.UserName;
+                             FullName = userData.FullName;
+                             _PhoneNumber = userData.PhoneNumber;
+                             _Address = userData.Address;
+                             user = userData.GetRoleObject(RoleType);
+                             //var user = pAuthFlavourBusines.SignIn(RoleType);
                          }
-
-                         if (user != null)
-                             _PhoneNumber = user.PhoneNumber;
-                         if (user is Organization)
-                             _Address = (user as Organization).Address;
+                         CurrentUser = user;
                          OnSignIn = false;
 
                          if (user == null)
-                         {
-                             var task = Task.Run(() =>
-                             {
-                                 var dispatcher = Application.Current != null ? Application.Current.Dispatcher : null;
-                                 if (dispatcher == null || dispatcher.CheckAccess())
-                                     TogglePopupView();
-                                 else
-                                     dispatcher.Invoke(() => TogglePopupView());
-                             });
                              return false;
-                         }
 
                          SignedIn?.Invoke(this, user);
                          OnPageSizeChanged(_PopupWitdh, _PopupHeight);

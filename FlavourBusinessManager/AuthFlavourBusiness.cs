@@ -90,7 +90,7 @@ namespace FlavourBusinessManager
                 };
 
                 return SignUpFounder(organizationData);
-            } 
+            }
             else if (roleType == UserData.RoleType.MenuMaker)
             {
                 return SignUpMenuMaker(userData);
@@ -108,8 +108,8 @@ namespace FlavourBusinessManager
             string userId = authUser.User_ID;
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
             var menuMaker = (from _menuMaker in storage.GetObjectCollection<HumanResources.MenuMaker>()
-                                where _menuMaker.Identity == userId
-                                select _menuMaker).FirstOrDefault();
+                             where _menuMaker.Identity == userId
+                             select _menuMaker).FirstOrDefault();
 
             if (menuMaker == null)
             {
@@ -311,8 +311,8 @@ namespace FlavourBusinessManager
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                 menuMaker = (from _menuMaker in storage.GetObjectCollection<HumanResources.MenuMaker>()
-                                where _menuMaker.SignUpUserIdentity == userId
-                                select _menuMaker).FirstOrDefault();
+                             where _menuMaker.SignUpUserIdentity == userId
+                             select _menuMaker).FirstOrDefault();
             }
             return menuMaker;
         }
@@ -325,33 +325,34 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             ObjectStorage objectStorage = OpenFlavourBusinessesStorage();
             string userId = authUser.User_ID;
+            IOrganization organization = null;
+
+
 
             AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
-            if (authUserRef.Email == null || authUserRef.FullName == null)
+            if (authUserRef != null)
             {
-                if (authUserRef.Email == null)
-                    authUserRef.Email = authUser.Email;
-                if (authUserRef.FullName == null)
-                    authUserRef.FullName = authUser.Name;
+                if (authUserRef.Email == null || authUserRef.FullName == null)
+                {
+                    if (authUserRef.Email == null)
+                        authUserRef.Email = authUser.Email;
+                    if (authUserRef.FullName == null)
+                        authUserRef.FullName = authUser.Name;
 
-                authUserRef.Save();
+                    authUserRef.Save();
+                }
+                organization = authUserRef.GetRoleObject<Organization>();
             }
-
-
-            IOrganization organization = authUserRef.GetRoleObject<Organization>();
-
             if (organization == null)
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                 organization = (from _organization in storage.GetObjectCollection<Organization>()
                                 where _organization.SignUpUserIdentity == userId
                                 select _organization).FirstOrDefault();
-                if(organization!=null)
+                if (organization != null)
                     authUserRef.AddRole(organization);
 
             }
-
-
             return organization;
 
 
@@ -422,6 +423,7 @@ namespace FlavourBusinessManager
                     FullName = authUserRef.FullName,
                     PhoneNumber = authUserRef.PhoneNumber,
                     PhotoUrl = authUserRef.PhotoUrl,
+                    Address = authUserRef.Address,
                     Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                 };
 
@@ -463,6 +465,7 @@ namespace FlavourBusinessManager
                     FullName = authUserRef.FullName,
                     PhoneNumber = authUserRef.PhoneNumber,
                     PhotoUrl = authUserRef.PhotoUrl,
+                    Address = authUserRef.Address,
                     Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                 };
 
@@ -655,6 +658,7 @@ namespace FlavourBusinessManager
                 authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                 authUserRef.FullName = userData.FullName;
                 authUserRef.PhoneNumber = userData.PhoneNumber;
+                authUserRef.Address = authUserRef.Address;
                 authUserRef.Email = userData.Email;
                 authUserRef.Save();
             }
@@ -664,6 +668,7 @@ namespace FlavourBusinessManager
                 Email = authUserRef.Email,
                 FullName = authUserRef.FullName,
                 PhoneNumber = authUserRef.PhoneNumber,
+                Address = authUserRef.Address,
                 PhotoUrl = authUserRef.PhotoUrl,
                 Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
             };
@@ -683,6 +688,7 @@ namespace FlavourBusinessManager
                     Email = authUserRef.Email,
                     FullName = authUserRef.FullName,
                     PhoneNumber = authUserRef.PhoneNumber,
+                    Address = authUserRef.Address,
                     PhotoUrl = authUserRef.PhotoUrl,
                     Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                 };

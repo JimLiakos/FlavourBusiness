@@ -420,6 +420,7 @@ namespace FlavourBusinessManager
                                 Email = authUserRef.Email,
                                 FullName = authUserRef.FullName,
                                 PhoneNumber = authUserRef.PhoneNumber,
+                                Address = authUserRef.Address,
                                 PhotoUrl = authUserRef.PhotoUrl,
                                 Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                             };
