@@ -200,6 +200,9 @@ namespace FLBAuthentication.ViewModel
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void OnPageSizeChanged(double width, double height)
         {
+            if (Math.Abs(_PopupHeight - height) < 4 && Math.Abs(_PopupWitdh - width) < 4)
+                return;
+
             if (cancelResize)
                 return;
             Task.Run(() =>
@@ -457,8 +460,11 @@ namespace FLBAuthentication.ViewModel
 
                          var user = pAuthFlavourBusines.SignIn(RoleType);
                          CurrentUser = user;
-                         UserName = user.UserName;
-                         FullName = user.FullName;
+                         if (user != null)
+                         {
+                             UserName = user.UserName;
+                             FullName = user.FullName;
+                         }
 
                          if (user != null)
                              _PhoneNumber = user.PhoneNumber;
