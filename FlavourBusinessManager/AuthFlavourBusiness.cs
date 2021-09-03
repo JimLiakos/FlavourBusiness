@@ -480,6 +480,22 @@ namespace FlavourBusinessManager
         public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
         {
 
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException();
+            
+            string userId = authUser.User_ID;
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+            {
+                authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+                authUserRef.FullName = userData.FullName;
+                authUserRef.PhoneNumber = userData.PhoneNumber;
+                authUserRef.Address = userData.Address;
+                authUserRef.Email = userData.Email;
+                authUserRef.Save();
+            }
+
+
             if (roleType == UserData.RoleType.Organization)
             {
                 OrganizationData organizationData = new OrganizationData()
@@ -658,7 +674,7 @@ namespace FlavourBusinessManager
                 authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                 authUserRef.FullName = userData.FullName;
                 authUserRef.PhoneNumber = userData.PhoneNumber;
-                authUserRef.Address = authUserRef.Address;
+                authUserRef.Address = userData.Address;
                 authUserRef.Email = userData.Email;
                 authUserRef.Save();
             }
