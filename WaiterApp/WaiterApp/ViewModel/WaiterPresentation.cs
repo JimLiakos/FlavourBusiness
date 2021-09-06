@@ -40,9 +40,11 @@ namespace WaiterApp.ViewModel
 
 
         /// <MetaDataID>{a5bb9008-1509-44ac-961c-170a742ba163}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string SignInProvider { get; set; }
 
         /// <MetaDataID>{e3960766-524c-4b88-8e0e-a347501a87f1}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string UserIdentity { get; set; }
 
 
@@ -141,6 +143,7 @@ namespace WaiterApp.ViewModel
 
         string _Address;
         [OOAdvantech.MetaDataRepository.HttpVisible]
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         public string Address
         {
             get
@@ -274,6 +277,7 @@ namespace WaiterApp.ViewModel
 
         /// <MetaDataID>{fac71003-9d13-430a-880e-956874e37449}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         public string PhoneNumber
         {
             get
@@ -324,6 +328,7 @@ namespace WaiterApp.ViewModel
             if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
             {
                 GetMessages();
+                ObjectChangeState?.Invoke(this, null);
                 return true;
             }
 
@@ -428,6 +433,9 @@ namespace WaiterApp.ViewModel
                     {
                         _FullName = UserData.FullName;
                         _UserName = UserData.UserName;
+                        _PhoneNumber = UserData.PhoneNumber;
+                        _Address = UserData.Address;
+                        _UserIdentity = UserData.Identity;
                         var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter).FirstOrDefault();
                         if (role.RoleType == UserData.RoleType.Waiter)
                         {
@@ -490,6 +498,7 @@ namespace WaiterApp.ViewModel
                         //    _ServicesContexts = new List<IServicesContextPresentation>();
 
                         AuthUser = authUser;
+                        ObjectChangeState?.Invoke(this, null);
                         return true;
                     }
                     else

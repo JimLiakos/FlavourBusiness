@@ -97,8 +97,10 @@ namespace ServiceContextManagerApp
         }
         public bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation)
         {
+            
             var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation == administrator)
+
                 return false;
 
             return FlavoursServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
@@ -124,12 +126,13 @@ namespace ServiceContextManagerApp
         {
 
             AdministratorIdentity = "";
-            if(Administrator != null)
-                AdministratorIdentity = administrator.Identity;
+            Administrator = administrator;
+            if (Administrator != null)
+                AdministratorIdentity = Administrator.Identity;
 
             ServicesContext = servicesContext;
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
-            Administrator = administrator;
+            
 
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
 

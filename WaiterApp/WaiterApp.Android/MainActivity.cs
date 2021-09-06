@@ -124,7 +124,7 @@ namespace WaiterApp.Droid
         public override void OnBackPressed()
         {
             OOAdvantech.Droid.HybridWebViewRenderer.BackPressed();
-            base.OnBackPressed();
+            //base.OnBackPressed();
         }
     }
 }
