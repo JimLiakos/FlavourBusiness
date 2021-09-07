@@ -299,7 +299,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
         /// <MetaDataID>{843f5047-930f-4a7a-8287-885b16d56317}</MetaDataID>
-        List<FoodServiceSession> OpenSessions
+        internal List<FoodServiceSession> OpenSessions
         {
             get
             {
@@ -665,6 +665,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{4afc6793-f079-4341-b3ad-c3f196ae04df}</MetaDataID>
         object RestaurantMenusDataLock = new object();
         /// <MetaDataID>{dd6fcb7a-0ce2-46cd-b11e-d205f516854b}</MetaDataID>
         public void SetRestaurantMenusData(OrganizationStorageRef restaurantMenusDataStorageRef)
@@ -1054,6 +1055,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{379b7e7e-2f39-4d55-aa85-6ee85a88e9fd}</MetaDataID>
         public string RestaurantMenuDataSharedUri
         {
             get
@@ -1067,6 +1069,18 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     return RawStorageCloudBlob.RootUri + "/" + jsonFileName;
                 }
 
+            }
+        }
+        /// <MetaDataID>{dc4011b9-1738-4d0a-bdb1-d4666d7f2a17}</MetaDataID>
+        FlavourBusinessFacade.RoomService.IMealsController _MealsController;
+        /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
+        FlavourBusinessFacade.RoomService.IMealsController MealsController
+        {
+            get
+            {
+                if(_MealsController==null)
+                    _MealsController = new RoomService.MealsController(this);
+                return _MealsController;
             }
         }
 
@@ -1385,6 +1399,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         }
+        /// <MetaDataID>{cfaf6fae-af4a-4ceb-a682-c39bcef3ec8c}</MetaDataID>
         public void StorageDataUpdated(string storageIdentity)
         {
             ObjectStorage.UpdateOperativeOperativeObjects(storageIdentity);

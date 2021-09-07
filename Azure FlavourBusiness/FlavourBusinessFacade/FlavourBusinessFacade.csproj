@@ -58,6 +58,7 @@
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
     <Compile Include="IMeal.cs" />
+    <Compile Include="IMealController.cs" />
     <Compile Include="IMealCourse.cs" />
     <Compile Include="IMenuMaker.cs" />
     <Compile Include="IMenuDesignActivity.cs" />

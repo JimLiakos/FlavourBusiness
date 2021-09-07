@@ -286,6 +286,7 @@
     <Compile Include="ItemPreparation.cs" />
     <Compile Include="ItemsPriparationInfo.cs" />
     <Compile Include="Meal.cs" />
+    <Compile Include="MealsController.cs" />
     <Compile Include="MenuDesignActivity.cs" />
     <Compile Include="OptionChange.cs" />
     <Compile Include="MealCourse.cs" />

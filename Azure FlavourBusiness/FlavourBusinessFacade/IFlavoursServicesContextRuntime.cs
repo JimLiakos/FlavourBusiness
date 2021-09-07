@@ -139,7 +139,13 @@ namespace FlavourBusinessFacade
 
 
 
+        /// <MetaDataID>{bb9b4c11-c932-495d-ab49-31f5ad2e4241}</MetaDataID>
         string RestaurantMenuDataSharedUri { get; }
+
+
+
+        /// <MetaDataID>{18e6acdd-c608-4181-9a3b-64464d21dc8f}</MetaDataID>
+        RoomService.IMealsController MealsController { get; }
 
 
     }
