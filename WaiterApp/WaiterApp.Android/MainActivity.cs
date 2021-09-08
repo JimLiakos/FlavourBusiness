@@ -94,6 +94,9 @@ namespace WaiterApp.Droid
                 return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
             });
 
+            //Firebase / Authentication / sign-in method / Sign-in providers / Google:Web SDK configuration
+
+
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
