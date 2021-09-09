@@ -1106,18 +1106,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMealsController MealsController
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_MealsController", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealsController>(retValue);
-            }
-        }
-        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];

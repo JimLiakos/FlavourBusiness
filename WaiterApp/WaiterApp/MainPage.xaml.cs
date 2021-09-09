@@ -24,7 +24,7 @@ namespace WaiterApp
                 //url = @"http://10.0.0.13:4303/";//work
                 //url = "local://index.html";
 
-                url = string.Format(@"https://{0}:4303/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+                url = string.Format(@"http://{0}:4303/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
                 hybridWebView.Uri = url;
             }
