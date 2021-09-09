@@ -44,6 +44,8 @@ namespace ServiceContextManagerApp
 
                     //https://angularhost.z16.web.core.windows.net/4304/
 
+                    url = string.Format(@"http://{0}:4304/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
                     hybridWebView.Uri = url;
 
                     hybridWebView.Navigated += MainPage_Navigated;
