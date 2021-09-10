@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+
 using OOAdvantech.Remoting.RestApi.Serialization;
 
 namespace ServiceContextManagerApp.WPF
@@ -12,31 +13,27 @@ namespace ServiceContextManagerApp.WPF
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    /// <MetaDataID>{dd711854-5598-4817-8d0c-1d729c403638}</MetaDataID>
+    public partial class App : Application, OOAdvantech.IAppLifeTime
     {
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
+
+
+        public event EventHandler ApplicationResuming;
+        public event EventHandler ApplicationSleeping;
+        OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
 
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
-            //SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
-            //SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.OptionMenuItemSpecific"] = typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific);
-            //SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.Option"] = typeof(MenuModel.JsonViewModel.Option);
+            SerializeTaskScheduler.RunAsync();
 
-            //SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
-            //SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
+            FlavourBusinessApps.ServiceContextManagerApp.WPF.ServiceContextManagerApp.Startup();
 
-            //SerializationBinder.NamesTypesDictionary["PreparationStationDevice.PreparationStationItem"] = typeof(PreparationStationDevice.PreparationStationItem);
-            //SerializationBinder.NamesTypesDictionary["PreparationStationDevice.Ingredient"] = typeof(PreparationStationDevice.Ingredient);
+            ServiceContextManagerApp.WPF.MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
 
 
-            //SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
-            //SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
-
-            //SerializationBinder.TypesNamesDictionary[typeof(PreparationStationDevice.PreparationStationItem)] = "PreparationStationDevice.PreparationStationItem";
-            //SerializationBinder.TypesNamesDictionary[typeof(PreparationStationDevice.Ingredient)] = "PreparationStationDevice.Ingredient";
-
-            //OOAdvantech.PersistenceLayer.StorageServerInstanceLocator.AddStorageLocatorExtender(new StorageLocatorEx());
             base.OnStartup(e);
         }
 

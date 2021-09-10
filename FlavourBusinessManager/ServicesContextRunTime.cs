@@ -1071,8 +1071,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
         }
-        /// <MetaDataID>{dc4011b9-1738-4d0a-bdb1-d4666d7f2a17}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         FlavourBusinessFacade.RoomService.IMealsController _MealsController;
+
         /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
        public FlavourBusinessFacade.RoomService.IMealsController MealsController
         {

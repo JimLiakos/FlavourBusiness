@@ -104,6 +104,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1f941000-ce6f-4ec6-85f6-736ad57cf9a6}</MetaDataID>
         [PersistentMember(nameof(_FoodItems))]
         [BackwardCompatibilityID("+1")]
+        [CachingDataOnClientSide]
         public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
 
