@@ -837,6 +837,7 @@ namespace DontWaitApp
             {
                 try
                 {
+
                     var messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
                                      select new Messmate(clientSession, OrderItems)).ToList();
 
@@ -1287,8 +1288,10 @@ namespace DontWaitApp
                 {
                     if (WaiterView)
                     {
+                        
 
                         var messmates = (from clientSession in FoodServiceClientSession.GetServicePointParticipants()
+                                         where clientSession!=this._FoodServiceClientSession
                                          select new Messmate(clientSession, OrderItems)).ToList();
                         Messmates = messmates;
                         MessmatesLoaded = true;
@@ -1372,7 +1375,8 @@ namespace DontWaitApp
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-                    var foodServiceClientSession = servicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, null, CurrentUser, create);
+                    
+                    var foodServiceClientSession = servicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
 
 
                     //menuData.MenuRoot = "http://192.168.2.3/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/";

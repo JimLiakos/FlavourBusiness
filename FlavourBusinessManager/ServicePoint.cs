@@ -294,110 +294,123 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// return the client session
         /// </returns>
         /// <MetaDataID>{d9fdfbcc-661f-4f13-a29d-2c7e42a886aa}</MetaDataID>
-        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, FlavourBusinessFacade.IUser user, bool create = false)
+        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, bool create = false)
         {
+            AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
+            FlavourBusinessFacade.IUser user = null;
+            Waiter waiter = null;
+            if (authUserRef != null)
+                user = waiter = authUserRef.GetContextRoleObject<Waiter>();
+
+
             EndUsers.FoodServiceClientSession fsClientSession = null;
             EndUsers.FoodServiceClientSession messmateClientSesion = null;
-            if (string.IsNullOrWhiteSpace(clientIdentity))
-            {
-                var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+            if (user != null)
+            {
+                fsClientSession = (from session in ActiveFoodServiceClientSessions.OfType<EndUsers.FoodServiceClientSession>()
+                                   where session.ServicePoint == this && (session.ClientDeviceID == clientDeviceID || session.UserIdentity == user.Identity)
+                                   select session).FirstOrDefault();
+
+            }
+
+            if (fsClientSession == null)
                 fsClientSession = (from session in ActiveFoodServiceClientSessions.OfType<EndUsers.FoodServiceClientSession>()
                                    where session.ServicePoint == this && session.ClientDeviceID == clientDeviceID
                                    select session).FirstOrDefault();
 
-                if (string.IsNullOrWhiteSpace(clientName) && user != null)
-                    clientName = user.FullName;
+
+
+            if (string.IsNullOrWhiteSpace(clientName) && user != null)
+                clientName = user.FullName;
 
 
 
-                //fsClientSession = (from session in servicesContextStorage.GetObjectCollection<EndUsers.FoodServiceClientSession>()
-                //                   where session.ServicePoint == this && session.ClientDeviceID == clientDeviceID && session.SessionEnds > System.DateTime.UtcNow
-                //                   select session).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(mealInvitationSessionID))
+            if (!string.IsNullOrWhiteSpace(mealInvitationSessionID))
 
-                    messmateClientSesion = (from session in ActiveFoodServiceClientSessions.OfType<EndUsers.FoodServiceClientSession>()
-                                            where session.ServicePoint == this && session.SessionID == mealInvitationSessionID
-                                            select session).FirstOrDefault();
+                messmateClientSesion = (from session in ActiveFoodServiceClientSessions.OfType<EndUsers.FoodServiceClientSession>()
+                                        where session.ServicePoint == this && session.SessionID == mealInvitationSessionID
+                                        select session).FirstOrDefault();
 
 
-                //messmateClientSesion = (from session in servicesContextStorage.GetObjectCollection<EndUsers.FoodServiceClientSession>()
-                //                        where session.ServicePoint == this && session.SessionID == mealInvitationSessionID && session.SessionEnds > System.DateTime.UtcNow
-                //                        select session).FirstOrDefault();
-
-                if (fsClientSession == null && create)
+     
+            if (fsClientSession == null && create)
+            {
+                try
                 {
-                    try
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        fsClientSession = new EndUsers.FoodServiceClientSession();
+                        fsClientSession.ClientName = clientName;
+                        fsClientSession.ClientDeviceID = clientDeviceID;
+                        fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
+                        fsClientSession.SessionStarts = DateTime.UtcNow;
+                        fsClientSession.ModificationTime = DateTime.UtcNow;
+                        fsClientSession.PreviousYouMustDecideMessageTime = DateTime.UtcNow;
+
+                        if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
+                            fsClientSession.UserIdentity = user.Identity;
+
+                        if (waiter!=null)
                         {
-                            fsClientSession = new EndUsers.FoodServiceClientSession();
-                            fsClientSession.ClientName = clientName;
-                            fsClientSession.ClientDeviceID = clientDeviceID;
-                            fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
-                            fsClientSession.SessionStarts = DateTime.UtcNow;
-                            fsClientSession.ModificationTime = DateTime.UtcNow;
-                            fsClientSession.PreviousYouMustDecideMessageTime = DateTime.UtcNow;
-
-                            if (user is HumanResources.Waiter)
-                            {
-                                fsClientSession.IsWaiterSession = true;
-                                (user as HumanResources.Waiter).AddClientSession(fsClientSession);
-                            }
-
-
-
-                            fsClientSession.DateTimeOfLastRequest = DateTime.UtcNow;// DateTime.MinValue + TimeSpan.FromDays(28);
-                            objectStorage.CommitTransientObjectState(fsClientSession);
-                            fsClientSession.ServicePoint = this;
-
-                            if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
-                                messmateClientSesion.MakePartOfMeal(fsClientSession);
-
-
-
-                            stateTransition.Consistent = true;
+                            fsClientSession.IsWaiterSession = true;
+                            (user as HumanResources.Waiter).AddClientSession(fsClientSession);
                         }
-                    }
-                    catch (OOAdvantech.Transactions.TransactionException error)
-                    {
-                        throw;
-                    }
-                    catch (System.Exception error)
-                    {
-                        throw;
-                    }
-                    lock (ServicePointLock)
-                    {
-
-                        if (_ActiveFoodServiceClientSessions.Where(x => !x.IsWaiterSession).Count() == 0 && !fsClientSession.IsWaiterSession)
-                            ChangeServicePointState(ServicePointState.Laying);
 
 
-                        _ActiveFoodServiceClientSessions.Add(fsClientSession);
+
+                        fsClientSession.DateTimeOfLastRequest = DateTime.UtcNow;// DateTime.MinValue + TimeSpan.FromDays(28);
+                        objectStorage.CommitTransientObjectState(fsClientSession);
+                        fsClientSession.ServicePoint = this;
+
+                        if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
+                            messmateClientSesion.MakePartOfMeal(fsClientSession);
+
+
+
+                        stateTransition.Consistent = true;
                     }
                 }
-                else
+                catch (OOAdvantech.Transactions.TransactionException error)
                 {
-                    if (fsClientSession != null)
-                    {
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            if ((DateTime.UtcNow - fsClientSession.DateTimeOfLastRequest).TotalMinutes > 0.5)
-                                fsClientSession.DateTimeOfLastRequest = DateTime.UtcNow;
-                            fsClientSession.ClientName = clientName;
-                            if (fsClientSession.DeviceFirebaseToken != deviceFirebaseToken)
-                            {
+                    throw;
+                }
+                catch (System.Exception error)
+                {
+                    throw;
+                }
+                lock (ServicePointLock)
+                {
 
-                            }
-                            fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
-                            if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
-                                messmateClientSesion.MakePartOfMeal(fsClientSession);
-                            stateTransition.Consistent = true;
+                    if (_ActiveFoodServiceClientSessions.Where(x => !x.IsWaiterSession).Count() == 0 && !fsClientSession.IsWaiterSession)
+                        ChangeServicePointState(ServicePointState.Laying);
+
+
+                    _ActiveFoodServiceClientSessions.Add(fsClientSession);
+                }
+            }
+            else
+            {
+                if (fsClientSession != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        if ((DateTime.UtcNow - fsClientSession.DateTimeOfLastRequest).TotalMinutes > 0.5)
+                            fsClientSession.DateTimeOfLastRequest = DateTime.UtcNow;
+                        fsClientSession.ClientName = clientName;
+                        if (fsClientSession.DeviceFirebaseToken != deviceFirebaseToken)
+                        {
+
                         }
+                        fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
+                        if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
+                            messmateClientSesion.MakePartOfMeal(fsClientSession);
+                        stateTransition.Consistent = true;
                     }
                 }
             }
+
             return fsClientSession;
         }
 

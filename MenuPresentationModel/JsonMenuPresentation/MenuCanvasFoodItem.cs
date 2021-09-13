@@ -81,9 +81,16 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
 
             _Page.SetValue<IMenuPageCanvas>(page);
-            Description = menuCanvasFoodItem.Description;
-            Extras = menuCanvasFoodItem.Extras;
-            ExtraDescription = menuCanvasFoodItem.ExtraDescription;
+            
+            if (menuCanvasFoodItem.Description != null)
+                Description = menuCanvasFoodItem.Description;
+
+            if (menuCanvasFoodItem.Extras != null)
+                Extras = menuCanvasFoodItem.Extras;
+
+            if (menuCanvasFoodItem.ExtraDescription != null)
+                ExtraDescription = menuCanvasFoodItem.ExtraDescription;
+
             Font = menuCanvasFoodItem.Font;
             FontID = (menu as RestaurantMenu).GetFontID(Font);
             Height = menuCanvasFoodItem.Height;

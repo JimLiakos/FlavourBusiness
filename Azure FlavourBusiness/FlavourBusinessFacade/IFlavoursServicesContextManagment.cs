@@ -24,7 +24,7 @@ namespace FlavourBusinessFacade
         IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicePointIdentity, string organizationIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false);
 
         /// <MetaDataID>{2f1dea32-0587-40be-8b27-148c1962fcab}</MetaDataID>
-        EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID,string deviceFirebaseToken, string clientIdentity, IUser user, bool create);
+        EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID,string deviceFirebaseToken,  bool create);
         /// <MetaDataID>{918bd192-2efb-4ff5-adbe-ea6bbe041465}</MetaDataID>
         IHallLayout GetHallLayout(string servicePoint);
 

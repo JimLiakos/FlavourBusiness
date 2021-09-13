@@ -16,6 +16,9 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class Waiter : MarshalByRefObject, IWaiter, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+
+
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
 

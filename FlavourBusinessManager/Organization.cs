@@ -345,11 +345,13 @@ namespace FlavourBusinessManager
                     }
                 }
             }
-
-            if (authUser != null && SignUpUserIdentity == authUser.User_ID)
-                return true;
-            else
-                return false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    return true;
+            }
+            return false;
         }
 
         /// <exclude>Excluded</exclude>
@@ -508,11 +510,17 @@ namespace FlavourBusinessManager
                 throw new AuthenticationException();
 
             string userId = authUser.User_ID;
-            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+            //AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
 
 
-
-            if (authUser.User_ID != this.SignUpUserIdentity && authUserRef.GetRoleObject<Organization>() != this)
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity && authUserRef.GetContextRoleObject<Organization>() != this)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
             if (dataType == OrganizationStorages.StyleSheets)
@@ -723,7 +731,14 @@ namespace FlavourBusinessManager
                 AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
                 if (authUser == null)
                     throw new AuthenticationException();
-                if (authUser.User_ID != this.SignUpUserIdentity)
+                bool authorized = false;
+                if (authUser != null)
+                {
+                    AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                    if (authUserRef.GetContextRoleObject<Organization>() == this)
+                        authorized = true;
+                }
+                if (!authorized)
                     throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
 
@@ -817,10 +832,16 @@ namespace FlavourBusinessManager
                 string userId = authUser.User_ID;
                 AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
 
-                if (authUserRef.GetRoleObject<Organization>() == this)
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
                     return UnSafeGraphicMenus;
 
-                if (authUser.User_ID != this.SignUpUserIdentity)
+                bool authorized = false;
+
+                //AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+
+                if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                     throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
                 return UnSafeGraphicMenus;
             }
@@ -869,7 +890,15 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
             string graphicMenuName = Properties.Resources.DefaultGraphicMenuName;
@@ -995,7 +1024,14 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
 
@@ -1044,7 +1080,15 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
             RawStorageData rawStorageData = new RawStorageData(GetStorage(OrganizationStorages.RestaurantMenus), null);
@@ -1233,7 +1277,15 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
 
@@ -1255,19 +1307,19 @@ namespace FlavourBusinessManager
                 }
 
 
-                FlavoursServicesContext flavoursServicePoint = new FlavoursServicesContext();
-                flavoursServicePoint.ContextStorageName = instanceContextStorageName;
-                flavoursServicePoint.Description = Properties.Resources.FlavoursServicePointDefaultName;
-                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(flavoursServicePoint);
-                _ServicesContexts.Add(flavoursServicePoint);
-                flavoursServicePoint.ServicesContextIdentity = Guid.NewGuid().ToString("N");
+                FlavoursServicesContext flavoursServiceContext = new FlavoursServicesContext();
+                flavoursServiceContext.ContextStorageName = instanceContextStorageName;
+                flavoursServiceContext.Description = Properties.Resources.FlavoursServicePointDefaultName;
+                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(flavoursServiceContext);
+                _ServicesContexts.Add(flavoursServiceContext);
+                flavoursServiceContext.ServicesContextIdentity = Guid.NewGuid().ToString("N");
 
 
-                IIsolatedComputingContext isolatedComputingContext = ComputingCluster.CurrentComputingCluster.NewIsolatedComputingContext(flavoursServicePoint.ServicesContextIdentity, flavoursServicePoint.Description);
+                IIsolatedComputingContext isolatedComputingContext = ComputingCluster.CurrentComputingCluster.NewIsolatedComputingContext(flavoursServiceContext.ServicesContextIdentity, flavoursServiceContext.Description);
 
-                flavoursServicePoint.RunAtContext = isolatedComputingContext;
+                flavoursServiceContext.RunAtContext = isolatedComputingContext;
                 stateTransition.Consistent = true;
-                return flavoursServicePoint;
+                return flavoursServiceContext;
             }
         }
 
@@ -1307,7 +1359,14 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
             var servicesContext = ServicesContexts.Where(x => x.ServicesContextIdentity == servicesContextIdentity).FirstOrDefault();

@@ -422,7 +422,9 @@ namespace MenuPresentationModel.MenuCanvas
                 if (string.IsNullOrWhiteSpace(description))
                     description = MenuItem.Name;
                 if (string.IsNullOrWhiteSpace(description))
-                    description = "...";
+                {
+                    //description = "...";
+                }
                 return description;
             }
             set
@@ -517,7 +519,7 @@ namespace MenuPresentationModel.MenuCanvas
                         bool foodItemLineTextithPriceLider = (PriceLeaderWidth + foodItemLineText.Width + layoutStyle.NameIndent) < width;
                         foodItemPriceLeaderAtNewLine = !foodItemLineTextithPriceLider;
                         foodItemPriceAtNewLine = !foodItemLineTextWithPrice;
-                        foodItemPriceWidhtAtNewLine= ((foodItemPriceLeaderAtNewLine ? 1 : 0) * PriceLeaderWidth + (foodItemPriceAtNewLine ? 1 : 0) * FoodItemPricesWitdh); 
+                        foodItemPriceWidhtAtNewLine = ((foodItemPriceLeaderAtNewLine ? 1 : 0) * PriceLeaderWidth + (foodItemPriceAtNewLine ? 1 : 0) * FoodItemPricesWitdh);
                     }
                 }
                 double descriptionWidth;
@@ -559,7 +561,7 @@ namespace MenuPresentationModel.MenuCanvas
                                 if (MainPrice.Visisble)
                                     MainPrice.XPos -= subText.Width;
                             }
-                        } 
+                        }
                         #endregion
                     }
                     else
@@ -607,7 +609,7 @@ namespace MenuPresentationModel.MenuCanvas
 
                 var indentWidth = layoutStyle.DescLeftIndent;
                 //if (FoodItemAlignment == MenuStyles.Alignment.Right)
-                    indentWidth += layoutStyle.DescRightIndent;
+                indentWidth += layoutStyle.DescRightIndent;
 
                 if (FoodItemAlignment == MenuStyles.Alignment.Center)
                     return GetLinesText(extraDescription, width, priceLine, Style.DescriptionFont);
@@ -803,7 +805,7 @@ namespace MenuPresentationModel.MenuCanvas
         {
             get
             {
-               return  Style.Alignment;
+                return Style.Alignment;
             }
         }
 
@@ -838,6 +840,8 @@ namespace MenuPresentationModel.MenuCanvas
                 #region Create lines texts for Description
                 double lineSpacing = (layoutStyle.LineSpacing - 1) * 20;
                 string description = Description;
+                if (string.IsNullOrWhiteSpace(description))
+                    description = "...";
                 if (description != null)
                     description = description.Trim();
                 if (MenuItem == null)

@@ -636,14 +636,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_RunAtContext", args, argsTypes);
                 return this.Proxy.GetValue<ComputationalResources.IIsolatedComputingContext>(retValue);
             }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(ComputationalResources.IIsolatedComputingContext);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "set_RunAtContext", args, argsTypes);
-            }
         }
         
         // The Width property for the object.
@@ -850,10 +842,10 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
         }
         
-        public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, FlavourBusinessFacade.IUser user, bool create)
+        public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, string deviceFirebaseToken, bool create)
         {
-            object[] args = new object[7];
-            System.Type[] argsTypes = new System.Type[7];
+            object[] args = new object[5];
+            System.Type[] argsTypes = new System.Type[5];
             args[0] = servicePointIdentity;
             argsTypes[0] = typeof(string);
             args[1] = clientName;
@@ -862,12 +854,8 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[2] = typeof(string);
             args[3] = deviceFirebaseToken;
             argsTypes[3] = typeof(string);
-            args[4] = clientIdentity;
-            argsTypes[4] = typeof(string);
-            args[5] = user;
-            argsTypes[5] = typeof(FlavourBusinessFacade.IUser);
-            args[6] = create;
-            argsTypes[6] = typeof(bool);
+            args[4] = create;
+            argsTypes[4] = typeof(bool);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetClientSession", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.ClientSessionData>(retValue);
         }
@@ -1244,10 +1232,10 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime>(retValue);
         }
         
-        public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, FlavourBusinessFacade.IUser user, string organizationIdentity, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef> unSafeGraphicMenus, bool create)
+        public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef> unSafeGraphicMenus, bool create)
         {
-            object[] args = new object[10];
-            System.Type[] argsTypes = new System.Type[10];
+            object[] args = new object[8];
+            System.Type[] argsTypes = new System.Type[8];
             args[0] = servicePointIdentity;
             argsTypes[0] = typeof(string);
             args[1] = mealInvitationSessionID;
@@ -1258,16 +1246,12 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[3] = typeof(string);
             args[4] = deviceFirebaseToken;
             argsTypes[4] = typeof(string);
-            args[5] = clientIdentity;
+            args[5] = organizationIdentity;
             argsTypes[5] = typeof(string);
-            args[6] = user;
-            argsTypes[6] = typeof(FlavourBusinessFacade.IUser);
-            args[7] = organizationIdentity;
-            argsTypes[7] = typeof(string);
-            args[8] = unSafeGraphicMenus;
-            argsTypes[8] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>);
-            args[9] = create;
-            argsTypes[9] = typeof(bool);
+            args[6] = unSafeGraphicMenus;
+            argsTypes[6] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>);
+            args[7] = create;
+            argsTypes[7] = typeof(bool);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetClientSession", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.ClientSessionData>(retValue);
         }
@@ -3196,10 +3180,10 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
         
-        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, FlavourBusinessFacade.IUser user, bool create)
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, bool create)
         {
-            object[] args = new object[7];
-            System.Type[] argsTypes = new System.Type[7];
+            object[] args = new object[5];
+            System.Type[] argsTypes = new System.Type[5];
             args[0] = clientName;
             argsTypes[0] = typeof(string);
             args[1] = mealInvitationSessionID;
@@ -3208,12 +3192,8 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[2] = typeof(string);
             args[3] = deviceFirebaseToken;
             argsTypes[3] = typeof(string);
-            args[4] = clientIdentity;
-            argsTypes[4] = typeof(string);
-            args[5] = user;
-            argsTypes[5] = typeof(FlavourBusinessFacade.IUser);
-            args[6] = create;
-            argsTypes[6] = typeof(bool);
+            args[4] = create;
+            argsTypes[4] = typeof(bool);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "GetFoodServiceClientSession", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }

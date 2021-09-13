@@ -44,7 +44,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid  d:DataContext="{StaticResource SampleMenuItemViewModel}">
+    <Grid Margin="0,10,0,0"   d:DataContext="{StaticResource SampleMenuItemViewModel}">
 
         <sw:DialogContentControl x:Name="DialogContentControl"  BeforeTransactionCommit="{Binding BeforeSaveCommand}" Icon="/MenuItemsEditor;component/Image/MenuItem16.png" Title="Menu Item" InitialHeight="710" InitialWidth="1270" >
 
@@ -61,8 +61,8 @@
 
                     <Grid MinHeight="400" MinWidth="180" Grid.Column="1" Margin="5,0,5,10" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="190*"/>
                             <RowDefinition Height="200*"/>
+                            <RowDefinition Height="170*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>

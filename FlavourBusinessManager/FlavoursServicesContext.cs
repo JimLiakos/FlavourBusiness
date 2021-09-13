@@ -218,10 +218,13 @@ namespace FlavourBusinessManager
                 return _RunAtContext.Value;
             }
 
-            set
+            internal set
             {
                 if (_RunAtContext != value)
                 {
+                    if (_RunAtContext != null)
+                        throw new Exception("You can't change computing context");
+
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _RunAtContext.Value = value;
@@ -361,10 +364,10 @@ namespace FlavourBusinessManager
                 var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
                 var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
 
-                var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity,FlavourStorageType=fbstorage.FlavourStorageType,  Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
 
- 
+
                 if (ComputingCluster.CurrentComputingResource == ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(RunAtContext.ContextID))
                 {
 
@@ -382,7 +385,7 @@ namespace FlavourBusinessManager
                 else
                 {
                     string publicServerUrl = ComputingCluster.CurrentComputingCluster.GetRoleInstancePublicServerUrl(RunAtContext.ContextID);
-         
+
                     FlavoursServicesContextManagment flavoursServicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(publicServerUrl, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).FullName, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).Assembly.FullName) as FlavourBusinessManager.FlavoursServicesContextManagment;
 
 
@@ -425,7 +428,7 @@ namespace FlavourBusinessManager
                                 Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                             };
 
-                              
+
                             int tries = 4;
                             while (tries > 0)
                             {

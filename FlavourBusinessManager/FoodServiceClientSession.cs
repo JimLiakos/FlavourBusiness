@@ -689,10 +689,27 @@ namespace FlavourBusinessManager.EndUsers
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
+        /// <exclude>Excluded</exclude>
+        string _UserIdentity;
+
         /// <MetaDataID>{0daa969e-0db4-4687-94e3-814449b6a897}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.PersistentMember()]
+        [OOAdvantech.MetaDataRepository.PersistentMember("_UserIdentity")]
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
-        string ClientIdentity;
+        internal string UserIdentity
+        {
+            get => _UserIdentity;
+            set
+            {
+                if (_UserIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -704,11 +721,11 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(ClientIdentity) && _Client == null)
+                if (!string.IsNullOrWhiteSpace(UserIdentity) && _Client == null)
                 {
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
                     _Client = (from client in storage.GetObjectCollection<IFoodServiceClient>()
-                               where client.Identity == ClientIdentity
+                               where client.Identity == UserIdentity
                                select client).FirstOrDefault();
                 }
                 return _Client;
@@ -720,9 +737,9 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     _Client = value;
                     if (_Client != null)
-                        ClientIdentity = _Client.Identity;
+                        UserIdentity = _Client.Identity;
                     else
-                        ClientIdentity = null;
+                        UserIdentity = null;
                 }
             }
         }

@@ -92,7 +92,7 @@ namespace FlavourBusinessFacade
         [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.ReferentialIntegrity | PersistencyFlag.CascadeDelete)]
         [Association("ServicesContexComputing", Roles.RoleA, "b0aa7b24-cff2-46d0-9779-5b998754e85d")]
         [RoleAMultiplicityRange(1, 1)]
-        IIsolatedComputingContext RunAtContext { get; set; }
+        IIsolatedComputingContext RunAtContext { get; /*set;*/ }
 
 
 

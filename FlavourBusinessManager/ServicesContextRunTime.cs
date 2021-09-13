@@ -1153,7 +1153,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string clientIdentity, IUser user, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken,  string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -1169,7 +1169,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //                  where aServicePoint.ServicesPointIdentity == servicePointIdentity
             //                  select aServicePoint).FirstOrDefault();
 
-            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create);
+            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken,  create);
             if (create)
             {
                 lock (ObjLock)

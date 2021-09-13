@@ -275,8 +275,16 @@ namespace FlavourBusinessManager.HumanResources
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
-            if (authUser.User_ID != this.SignUpUserIdentity)
-                throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
+
+            bool authorized=false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<MenuMaker>() == this)
+                    authorized= true;
+            }
+            if (!authorized) //authUser.User_ID != this.SignUpUserIdentity)
+                throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as menu maker owner.");
 
             if (dataType == OrganizationStorages.StyleSheets)
                 return Organization.StyleSheets;

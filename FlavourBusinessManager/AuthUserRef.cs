@@ -177,6 +177,43 @@ namespace FlavourBusinessManager
         }
 
 
+        public static AuthUserRef GetCallContextAuthUserRef( bool create)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            lock (AuthUserRefsLock)
+            {
+                if (authUser == null)
+                    return null;
+
+                string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
+
+                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                                           where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
+                                           select authUserRefEntry).FirstOrDefault();
+
+                if (authUserRef == null && create)
+                {
+                    authUserRef = new AuthUserRef() { PartitionKey = partitionKey, RowKey = authUser.User_ID, Email = authUser.Email, PhotoUrl = authUser.Picture, RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(new List<string>()) };
+                    TableOperation insertOperation = TableOperation.Insert(authUserRef);
+                    var result = AuthUserRefCloudTable.Execute(insertOperation);
+                }
+                else
+                {
+                    if (authUserRef != null)
+                    {
+                        if (authUser.Email != authUserRef.Email || authUser.Picture != authUserRef.PhotoUrl)
+                        {
+                            authUserRef.Email = authUser.Email;
+                            authUserRef.PhotoUrl = authUser.Picture;
+                            TableOperation replaceOperation = TableOperation.Replace(authUserRef);
+                            var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                        }
+                    }
+                }
+                return authUserRef;
+            }
+        }
+
         /// <MetaDataID>{83d4c8f0-7004-4de0-a736-5330e5deddac}</MetaDataID>
         public static AuthUserRef GetAuthUserRef(string user_ID)
         {
@@ -336,6 +373,24 @@ namespace FlavourBusinessManager
             {
                 GetRoles();
                 Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName).FirstOrDefault();
+                if (role != null)
+                    return role.RoleObject as T;
+                else
+                    return default(T);
+            }
+        }
+        /// <summary>
+        /// Get role object which belong to the current computing context
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal T GetContextRoleObject<T>() where T : class
+        {
+            lock (rolesLock)
+            {
+                GetRoles();
+                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName&&x.ComputingContextID== ComputationalResources.IsolatedComputingContext.CurrentContextID).FirstOrDefault();
+                
                 if (role != null)
                     return role.RoleObject as T;
                 else

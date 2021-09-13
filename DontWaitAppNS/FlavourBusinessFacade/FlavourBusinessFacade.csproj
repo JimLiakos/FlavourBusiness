@@ -39,6 +39,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodServiceSession.cs" Link="IFoodServiceSession.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IItemPreparation.cs" Link="IItemPreparation.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMeal.cs" Link="IMeal.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMealController.cs" Link="IMealController.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMealCourse.cs" Link="IMealCourse.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IMessageConsumer.cs" Link="IMessageConsumer.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IOptionChange.cs" Link="IOptionChange.cs" />

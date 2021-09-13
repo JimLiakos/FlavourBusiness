@@ -359,6 +359,7 @@ namespace WaiterApp.ViewModel
                         //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
                         if (Waiter != null && Waiter.SignUpUserIdentity == authUser.User_ID)
                         {
+                            
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
                             if(this._Halls!=null)
