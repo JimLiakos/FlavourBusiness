@@ -15,8 +15,12 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{a44c2bf7-1fd4-4e5a-b831-f9f7a1c381ac}</MetaDataID>
     [BackwardCompatibilityID("{a44c2bf7-1fd4-4e5a-b831-f9f7a1c381ac}")]
     [Persistent()]
-    public class FoodServiceSession : IFoodServiceSession
+    public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
+        /// <MetaDataID>{cee5f973-18ba-4776-95d8-3ddd2915d3d1}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        [CachingDataOnClientSide]
+        public string Description => ServicePoint?.Description;
 
         /// <MetaDataID>{37452f52-1155-4bbb-87c5-f621b27c624c}</MetaDataID>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -54,6 +58,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{f1464bf3-fe2a-4468-b8b1-0cd936988636}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [CachingDataOnClientSide]
         public FlavourBusinessFacade.ServicesContextResources.IServicePoint ServicePoint
         {
             get
@@ -188,6 +193,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{7c0f023a-f58e-469b-be99-b65142dfc698}</MetaDataID>
         Task MealValidationDelayTask;
         /// <MetaDataID>{598f4be7-bfaf-40ae-b1e2-dc80d367a54f}</MetaDataID>
         private void MealValidationDelayRun()
@@ -373,6 +379,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+      
 
 
 

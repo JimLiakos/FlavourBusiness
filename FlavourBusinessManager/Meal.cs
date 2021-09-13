@@ -14,7 +14,7 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{2a2adf89-8607-46c7-844d-d075fcf5d18b}</MetaDataID>
     [BackwardCompatibilityID("{2a2adf89-8607-46c7-844d-d075fcf5d18b}")]
     [Persistent()]
-    public class Meal : IMeal
+    public class Meal :MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject,IMeal
     {
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{9dfc917f-c600-497d-a324-d1722058e811}</MetaDataID>
@@ -77,6 +77,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{df1bef38-aa51-450a-a6c2-bdb6b6f960a5}</MetaDataID>
         [PersistentMember(nameof(_Session))]
         [BackwardCompatibilityID("+1")]
+        [CachingDataOnClientSide]
         public IFoodServiceSession Session => _Session.Value;
 
         /// <exclude>Excluded</exclude>
@@ -172,6 +173,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{09ccf99d-b9a6-4d3a-b26a-3b1c931b682c}</MetaDataID>
         private void CheckForNewItems()
         {
 

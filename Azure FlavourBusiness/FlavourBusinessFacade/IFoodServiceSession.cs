@@ -10,6 +10,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        /// <MetaDataID>{799eb1a5-caba-4b2d-9ea1-96aab99665e0}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
+        string Description { get; }
         [Association("SessionMeal", Roles.RoleA, "b11e0deb-6ec0-4653-a06b-02610d68abcb")]
         [RoleAMultiplicityRange(1, 1)]
         RoomService.IMeal Meal { get;  }

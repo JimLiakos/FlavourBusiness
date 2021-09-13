@@ -181,6 +181,16 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <exclude>Excluded</exclude>
+        OOAdvantech.Member<IMeal> _Meal = new OOAdvantech.Member<IMeal>();
+
+
+        /// <MetaDataID>{65995fe0-c0a3-47e3-90a1-58523ea31b41}</MetaDataID>
+        [CachingDataOnClientSide]
+        [PersistentMember(nameof(_Meal))]
+        [BackwardCompatibilityID("+9")]
+        public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <MetaDataID>{7b6700b2-c8a4-4548-be19-657614416518}</MetaDataID>
         private MealCourseType mealCourseType;
@@ -197,6 +207,7 @@ namespace FlavourBusinessManager.RoomService
                
         }
 
+        /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
 
@@ -236,18 +247,19 @@ namespace FlavourBusinessManager.RoomService
                 stateTransition.Consistent = true;
             }
         }
+        /// <MetaDataID>{ce36f3b9-7c45-48df-b766-2f622eb00589}</MetaDataID>
         [ObjectActivationCall]
         void ObjectActivation()
         {
 
-            foreach(var foodItem in _FoodItems.OfType<ItemPreparation>())
+            foreach (var foodItem in _FoodItems.OfType<ItemPreparation>())
             {
                 foodItem.ObjectChangeState += FlavourItem_ObjectChangeState;
             }
 
         }
 
-    
+
 
         /// <MetaDataID>{72860a38-cffd-4a68-807b-4c2ece8cddc5}</MetaDataID>
         internal static void AssignMealCourseToItem(ItemPreparation flavourItem)

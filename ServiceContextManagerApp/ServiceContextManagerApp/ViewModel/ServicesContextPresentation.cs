@@ -141,9 +141,9 @@ namespace ServiceContextManagerApp
 
             MealsController = this.ServicesContextRuntime.MealsController;
 
-            var mealCoursesInProgress = MealsController.MealCoursesInProgress;
+            var mealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new ServiceContextManagerApp.ΜealCourse(x)); 
 
-            var mealCourceFoodItem = mealCoursesInProgress.FirstOrDefault()?.FoodItems;
+
 
         }
 

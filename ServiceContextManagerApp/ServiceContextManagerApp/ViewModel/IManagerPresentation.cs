@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ServiceContextManagerApp
 {
 
+    /// <MetaDataID>{bf7e3f02-1669-499b-97d4-b9c001d76fa4}</MetaDataID>
     [HttpVisible]
     interface IManagerPresentation
     {
@@ -16,7 +17,7 @@ namespace ServiceContextManagerApp
 
         NewSupervisorCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color);
 
-        
+
 
         string FlavoursServiceContextDescription { get; }
 
@@ -25,9 +26,10 @@ namespace ServiceContextManagerApp
 
         Task<bool> AssignSupervisor();
 
-        
+
     }
 
+    /// <MetaDataID>{8ec8c78a-0c9b-4abb-9340-5f1186361844}</MetaDataID>
     [HttpVisible]
     public class NewSupervisorCode
     {

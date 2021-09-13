@@ -11,9 +11,10 @@ using MarshalByRefObject = System.MarshalByRefObject;
 
 namespace ServiceContextManagerApp
 {
+    /// <MetaDataID>{7e25de00-a04d-4177-ad82-00eeb29302e2}</MetaDataID>
     public class SupervisorPresentation : MarshalByRefObject, INotifyPropertyChanged, ISupervisorPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-       internal IServiceContextSupervisor Supervisor;
+        internal IServiceContextSupervisor Supervisor;
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
         public SupervisorPresentation(IServiceContextSupervisor supervisor, IFlavoursServicesContextRuntime servicesContextRuntime)
@@ -23,7 +24,8 @@ namespace ServiceContextManagerApp
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string SupervisorIdentity { 
+        public string SupervisorIdentity
+        {
             get
             {
                 return Supervisor.Identity;
@@ -47,11 +49,11 @@ namespace ServiceContextManagerApp
 
             set
             {
-                
+
             }
         }
 
-     
+
         public string FullName
         {
             get
@@ -65,7 +67,7 @@ namespace ServiceContextManagerApp
         }
 
 
-     
+
         public string UserName
         {
             get

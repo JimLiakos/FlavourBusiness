@@ -98,6 +98,9 @@
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\WaiterPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\WaiterPresentation.cs</Link>
     </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ΜealCourse.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\ΜealCourse.cs</Link>
+    </Compile>
     <Compile Include="Apps.cs" />
     <Compile Include="PreparationStationDevice.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

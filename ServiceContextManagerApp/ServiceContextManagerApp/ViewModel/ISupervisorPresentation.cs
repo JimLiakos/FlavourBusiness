@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ServiceContextManagerApp
 {
+    /// <MetaDataID>{e508bdac-d089-4daa-9145-abc2fe318f38}</MetaDataID>
     [HttpVisible]
     public interface ISupervisorPresentation
     {

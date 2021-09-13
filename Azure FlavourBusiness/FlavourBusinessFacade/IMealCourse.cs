@@ -6,6 +6,10 @@ namespace FlavourBusinessFacade.RoomService
     /// <MetaDataID>{c8e552d4-3923-475d-9d77-71536de91ecf}</MetaDataID>
     public interface IMealCourse
     {
+        [Association("MealCourses", Roles.RoleB, "3c1213a5-f6e9-4d34-8802-72a4f051472b")]
+        [RoleBMultiplicityRange(1, 1)]
+        IMeal Meal { get; }
+
         /// <MetaDataID>{77edf270-755d-4621-9ebe-2bbeb6f1f80f}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         string Name { get; set; }
@@ -30,6 +34,8 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{ec3023f2-0cb5-4472-9a52-c171fdd905fe}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         DateTime? ServedAtForecast { get; set; }
+
+
 
 
     }
