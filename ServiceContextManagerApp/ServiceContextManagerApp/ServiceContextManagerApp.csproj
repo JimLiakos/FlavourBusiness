@@ -10,7 +10,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>TRACE;DeviceDotNet</DefineConstants>
+    <DefineConstants>TRACE;DeviceDotNet;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +28,41 @@
     <None Remove="Resources\Fonts\Lobster-Regular.ttf" />
     <None Remove="Resources\Fonts\vssver.scc" />
     <None Remove="ViewModel\vssver.scc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\IHtmlView.cs" Link="UIBaseEx\IHtmlView.cs" />
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs" Link="UIBaseEx\Margin.cs" />
+    <Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs" Link="ItemPreparation.cs" />
+    <Compile Include="..\..\FlavourBusinessManager\OptionChange.cs" Link="OptionChange.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\CustomazedPrice.cs" Link="MenuModel\CustomazedPrice.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\itemPreparation.cs" Link="MenuModel\itemPreparation.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\ItemSelectorOption.cs" Link="MenuModel\ItemSelectorOption.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\Option.cs" Link="MenuModel\Option.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\OptionGroup.cs" Link="MenuModel\OptionGroup.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\OptionMenuItemSpecific.cs" Link="MenuModel\OptionMenuItemSpecific.cs" />
+    <Compile Include="..\..\MenuModel\JsonViewModel\TypedObject.cs" Link="MenuModel\TypedObject.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs" Link="MenuModel\ILevel.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="MenuModel\IMealCourseType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="MenuModel\IMealType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItem.cs" Link="MenuModel\IMenuItem.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItemPrice.cs" Link="MenuModel\IMenuItemPrice.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IMenuItemType.cs" Link="MenuModel\IMenuItemType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IOptionMenuItemSpecific.cs" Link="MenuModel\IOptionMenuItemSpecific.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPartofMeal.cs" Link="MenuModel\IPartofMeal.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationOption.cs" Link="MenuModel\IPreparationOption.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationOptionGroup.cs" Link="MenuModel\IPreparationOptionGroup.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPreparationScaledOption.cs" Link="MenuModel\IPreparationScaledOption.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IPricingContext.cs" Link="MenuModel\IPricingContext.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\IScaleType.cs" Link="MenuModel\IScaleType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
+    <Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs" Link="RestaurantHallLayoutModel\HallLayout.cs" />
+    <Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs" Link="RestaurantHallLayoutModel\HallLayoutShape.cs" />
+    <Compile Include="..\..\RestaurantHallLayoutModel\ServicPointShape.cs" Link="RestaurantHallLayoutModel\ServicPointShape.cs" />
+    <Compile Include="..\..\RestaurantHallLayoutModel\ShapesGroup.cs" Link="RestaurantHallLayoutModel\ShapesGroup.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,5 +93,50 @@
   <ItemGroup>
     <Folder Include="Authentication\ViewModels\" />
     <Folder Include="Authentication\Views\" />
+    <Folder Include="MenuCanvas\" />
+    <Folder Include="MenuModel\" />
+    <Folder Include="RestaurantHallLayoutModel\" />
+    <Folder Include="UIBaseEx\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\MenuPresentationModel\IPriceHeading.cs" Link="MenuCanvas\IPriceHeading.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\HeadingAccent.cs" Link="MenuCanvas\HeadingAccent.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItem.cs" Link="MenuCanvas\MenuCanvasFoodItem.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItemPrice.cs" Link="MenuCanvas\MenuCanvasFoodItemPrice.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasFoodItemText.cs" Link="MenuCanvas\MenuCanvasFoodItemText.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasHeading.cs" Link="MenuCanvas\MenuCanvasHeading.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasHeadingAccent.cs" Link="MenuCanvas\MenuCanvasHeadingAccent.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasLine.cs" Link="MenuCanvas\MenuCanvasLine.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuCanvasPriceLeader.cs" Link="MenuCanvas\MenuCanvasPriceLeader.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuImage.cs" Link="MenuCanvas\MenuImage.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\MenuPageCanvas.cs" Link="MenuCanvas\MenuPageCanvas.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\PageImage.cs" Link="MenuCanvas\PageImage.cs" />
+    <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\RestaurantMenu.cs" Link="MenuCanvas\RestaurantMenu.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\HeadingType.cs" Link="MenuCanvas\HeadingType.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IFoodItemsGroupColumn.cs" Link="MenuCanvas\IFoodItemsGroupColumn.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IGroupedItem.cs" Link="MenuCanvas\IGroupedItem.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IItemMultiPriceHeading.cs" Link="MenuCanvas\IItemMultiPriceHeading.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasFoodItemPrice.cs" Link="MenuCanvas\IMenuCanvasFoodItemPrice.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasFoodItemText.cs" Link="MenuCanvas\IMenuCanvasFoodItemText.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasHeading.cs" Link="MenuCanvas\IMenuCanvasHeading.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasHeadingAccent.cs" Link="MenuCanvas\IMenuCanvasHeadingAccent.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasLine.cs" Link="MenuCanvas\IMenuCanvasLine.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IMenuCanvasPriceLeader.cs" Link="MenuCanvas\IMenuCanvasPriceLeader.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\IRestaurantMenu.cs" Link="MenuCanvas\IRestaurantMenu.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\Rect.cs" Link="MenuCanvas\Rect.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvas.cs" Link="MenuCanvas\ΙMenuCanvas.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasColumn.cs" Link="MenuCanvas\ΙMenuCanvasColumn.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasFoodItem.cs" Link="MenuCanvas\ΙMenuCanvasFoodItem.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasFoodItemsGroup.cs" Link="MenuCanvas\ΙMenuCanvasFoodItemsGroup.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuCanvas\ΙMenuCanvasItem.cs" Link="MenuCanvas\ΙMenuCanvasItem.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\FontData.cs" Link="MenuCanvas\FontData.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IAccentImage.cs" Link="MenuCanvas\IAccentImage.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IHeadingAccent.cs" Link="MenuCanvas\IHeadingAccent.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\IPageImage.cs" Link="MenuCanvas\IPageImage.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\LineType.cs" Link="MenuCanvas\LineType.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\Margin.cs" Link="MenuCanvas\Margin.cs" />
+    <None Include="..\..\MenuPresentationModel\MenuStyles\Resource.cs" Link="MenuCanvas\Resource.cs" />
+    <None Include="..\..\MenuPresentationModel\TransformOrigin.cs" Link="MenuCanvas\TransformOrigin.cs" />
   </ItemGroup>
 </Project>

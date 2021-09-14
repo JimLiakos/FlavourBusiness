@@ -80,7 +80,7 @@
 			<Link>MenuModel\TypedObject.cs</Link>
 		</Compile>
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
-		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="SelectionType.cs" />
+		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
 		<None Include="..\..\MenuPresentationModel\IPriceHeading.cs">
 			<Link>MenuCanvas\IPriceHeading.cs</Link>
 		</None>

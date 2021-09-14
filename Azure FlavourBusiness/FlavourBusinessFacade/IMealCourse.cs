@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace FlavourBusinessFacade.RoomService
 {
     /// <MetaDataID>{c8e552d4-3923-475d-9d77-71536de91ecf}</MetaDataID>
+    [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IMealCourse
     {
         [Association("MealCourses", Roles.RoleB, "3c1213a5-f6e9-4d34-8802-72a4f051472b")]
