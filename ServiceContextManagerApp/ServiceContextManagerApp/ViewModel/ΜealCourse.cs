@@ -16,18 +16,18 @@ namespace ServiceContextManagerApp
         [JsonIgnore]
         public IMealCourse ServerSideMealCourse { get; }
         
+
+
         public string Description { get; }
+        public IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
         public ΜealCourse(IMealCourse serverSideMealCourse)
         {
             ServerSideMealCourse = serverSideMealCourse;
-            Description = ServerSideMealCourse.Meal.Session.Description;
+            Description = ServerSideMealCourse.Meal.Session.Description+" - " +ServerSideMealCourse.Name;
 
-
-
-
-            ServerSideMealCourse.FoodItems.FirstOrDefault().PreparationStation
+            FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
         }
 
 

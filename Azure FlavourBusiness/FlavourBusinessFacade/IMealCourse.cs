@@ -1,5 +1,6 @@
 using OOAdvantech.MetaDataRepository;
 using System;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
@@ -36,6 +37,11 @@ namespace FlavourBusinessFacade.RoomService
         DateTime? ServedAtForecast { get; set; }
 
 
+        /// <summary>
+        /// Defines the meal course items grouped by state of items
+        /// </summary>
+        /// <MetaDataID>{b5f5344d-c7f5-4d9e-81a7-ed3559031101}</MetaDataID>
+        IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
 
     }
