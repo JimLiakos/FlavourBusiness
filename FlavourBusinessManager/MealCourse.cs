@@ -32,7 +32,6 @@ namespace FlavourBusinessManager.RoomService
             get => _DurationInMinutes;
             set
             {
-
                 if (_DurationInMinutes != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -185,10 +184,28 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <MetaDataID>{65995fe0-c0a3-47e3-90a1-58523ea31b41}</MetaDataID>
-        [CachingDataOnClientSide]
         [PersistentMember(nameof(_Meal))]
+        [CachingDataOnClientSide]
         [BackwardCompatibilityID("+9")]
         public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
+
+
+        [CachingDataOnClientSide]
+        public IList<ItemsPreparationContext> FoodItemsInProgress
+        {
+            get
+            {
+
+                List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
+                                                                     where itemPreparation.State == ItemPreparationState.PendingPreparation ||
+                                                                     itemPreparation.State == ItemPreparationState.PreparationDelay ||
+                                                                     itemPreparation.State == ItemPreparationState.ÉnPreparation
+                                                                     group itemPreparation by itemPreparation.PreparationStation into itemsUnderPreparation
+                                                                     select new ItemsPreparationContext(this, itemsUnderPreparation.Key, itemsUnderPreparation.ToList())).ToList();
+                return foodItemsInProgress;
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -204,7 +221,7 @@ namespace FlavourBusinessManager.RoomService
             _Name = mealCourseType.Name;
             foreach (var flavourItem in itemPreparations)
                 AddItem(flavourItem);
-               
+
         }
 
         /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>

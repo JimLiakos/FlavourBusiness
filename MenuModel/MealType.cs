@@ -45,6 +45,7 @@ namespace MenuModel
             //var dd= new MealType() { MultilingualName=new Multilingual(),Courses=null,}
         }
 
+        /// <MetaDataID>{b3800a3d-8285-4c95-a202-2a46a7c0e82c}</MetaDataID>
         string _MealTypeUri;
         public string MealTypeUri
         {

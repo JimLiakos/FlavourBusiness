@@ -91,6 +91,20 @@ namespace FlavourBusinessManager.RoomService
         {
 
         }
+        /// <exclude>Excluded</exclude>
+        [OOAdvantech.Json.JsonIgnore]
+        MenuModel.MealType _MealType;
+        [OOAdvantech.Json.JsonIgnore]
+        public MenuModel.MealType MealType
+        {
+            get
+            {
+                if(_MealType==null)
+                    _MealType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(_MealTypeUri) as MenuModel.MealType;
+                return _MealType;
+            }
+        }
+
         /// <MetaDataID>{1d0598fe-a193-451d-a1f4-38a330388d26}</MetaDataID>
         internal Meal(MenuModel.MealType mealType, List<ItemPreparation> mealItems)
         {
