@@ -407,7 +407,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 MealValidationDelayRun();
             if (this.SessionState == SessionState.MealMonitoring)
             {
-                var sds = _Meal.Value.Courses;
+                
                 _Meal.Value.MonitoringRun();
             }
             else
