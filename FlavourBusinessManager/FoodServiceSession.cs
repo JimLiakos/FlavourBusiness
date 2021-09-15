@@ -63,7 +63,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
-                if(_ServicePoint==null)
+                if (_ServicePoint == null)
                     _ServicePoint = _PartialClientSessions.FirstOrDefault()?.ServicePoint;
                 return _ServicePoint;
             }
@@ -177,7 +177,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     lock (StateMachineLock)
                     {
-                        if (SessionState != SessionState.MealValidationDelay&& SessionState != SessionState.MealMonitoring)
+                        if (SessionState != SessionState.MealValidationDelay && SessionState != SessionState.MealMonitoring)
                         {
                             mealValidationDelaySessionState = true;
                             SessionState = SessionState.MealValidationDelay;
@@ -379,7 +379,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-      
+
 
 
 
@@ -407,7 +407,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 MealValidationDelayRun();
             if (this.SessionState == SessionState.MealMonitoring)
             {
-                
+                var courses = _Meal.Value.Courses;
                 _Meal.Value.MonitoringRun();
             }
             else
