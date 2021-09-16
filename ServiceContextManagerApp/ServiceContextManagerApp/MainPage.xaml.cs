@@ -11,6 +11,7 @@ namespace ServiceContextManagerApp
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
+    /// <MetaDataID>{819d6d14-ecb8-4522-9b80-220d86c801cf}</MetaDataID>
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
@@ -20,7 +21,7 @@ namespace ServiceContextManagerApp
             InitializeComponent();
             try
             {
-                  var sdsd= GetType().GetMetaData().Assembly.GetType("FlavourBusinessFacade.Proxies.Pr_IFlavoursServicesContextRuntime");
+                var sdsd = GetType().GetMetaData().Assembly.GetType("FlavourBusinessFacade.Proxies.Pr_IFlavoursServicesContextRuntime");
 
 
                 BindingContext = new ManagerPresentation();
@@ -82,7 +83,25 @@ namespace ServiceContextManagerApp
             if (cameraPermission == Xamarin.Essentials.PermissionStatus.Denied)
                 cameraPermission = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Camera>();
 
+            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.KeyboordChangeState += Device_KeyboordChangeState;
 
+
+        }
+
+        private void Device_KeyboordChangeState(KeybordStatus keybordStatus)
+        {
+            
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.KeyboordChangeState -= Device_KeyboordChangeState;
         }
     }
 }

@@ -12,6 +12,9 @@ using Firebase;
 using Firebase.Auth;
 using Android.Gms.Tasks;
 using Android.Gms.Extensions;
+using Android.Views.InputMethods;
+
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace ServiceContextManagerApp.Droid
 {
@@ -25,16 +28,11 @@ namespace ServiceContextManagerApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            
+            Window.SetSoftInputMode(SoftInput.AdjustPan);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            //var options = new FirebaseOptions.Builder()
-            //      .SetProjectId("demomicroneme")
-            //      .SetApplicationId("1:881594421690:android:83178f67d29ec09d")
-            //      .SetApiKey("AIzaSyD8rMRJMQaDZob0bW4QFY2rOxW2s6D2a1Q")
-            //      .SetDatabaseUrl("https://demomicroneme.firebaseio.com")
-            //      .SetStorageBucket("demomicroneme.appspot.com")
-            //      .Build();
 
 
 
@@ -42,20 +40,7 @@ namespace ServiceContextManagerApp.Droid
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
 
-            //App.storage_path = System.IO.Path.Combine((string)global::Android.OS.Environment.ExternalStorageDirectory, "test.txt");
-            //try
-            //{
-            //    System.IO.File.Delete(App.storage_path);
-            //}
-            //catch (Exception error)
-            //{
 
-            //    //throw;
-            //}
-
-            //var instanceIdResultTask = FirebaseInstanceId.Instance.GetInstanceId().AsAsync<IInstanceIdResult>();
-            //instanceIdResultTask.Wait(3000);
-            //var token = instanceIdResultTask.Result.Token;
             var token = FirebaseInstanceId.Instance.Token;
 
             //OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
@@ -64,7 +49,9 @@ namespace ServiceContextManagerApp.Droid
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
 
 
+            //App.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
 
+            
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
