@@ -12,14 +12,20 @@ namespace FlavourBusinessFacade.RoomService
 
         public string Description { get; set; }
 
-        public string ServicePointDescription { get; }
+        public string ServicePointDescription { get; set; }
+
+        public string PreparationStationDescription { get; set; }
+
         public ItemsPreparationContext(IMealCourse mealCourse, IPreparationStation preparationStation, List<IItemPreparation> preparationItems)
         {
             //this.MealCourse = mealCourse;
             this.PreparationStationIdentity = preparationStation.PreparationStationIdentity;
+            PreparationStationDescription = preparationStation.Description;
+
             this.PreparationItems = preparationItems;
             Description = preparationStation.Description;
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
+            
         }
         public ItemsPreparationContext()
         {

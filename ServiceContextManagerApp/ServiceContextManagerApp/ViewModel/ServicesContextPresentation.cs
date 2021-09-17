@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.RoomService.ViewModel;
 
 
 
@@ -122,6 +123,7 @@ namespace ServiceContextManagerApp
 
         public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
         public IMealsController MealsController { get; }
+        public List<MealCourse> MealCoursesInProgress { get; private set; }
 
         string AdministratorIdentity;
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor administrator)
@@ -141,7 +143,7 @@ namespace ServiceContextManagerApp
 
             MealsController = this.ServicesContextRuntime.MealsController;
 
-            var mealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new ServiceContextManagerApp.ΜealCourse(x)).ToList(); 
+             MealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new  MealCourse(x)).ToList(); 
 
 
 
