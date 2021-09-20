@@ -951,6 +951,9 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+
+        
+
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
         public OrganizationStorageRef Menu { get; set; }
 

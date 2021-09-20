@@ -1201,6 +1201,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
                 (clientSession as EndUsers.FoodServiceClientSession).Menu = graphicMenu;
+                ((clientSession as EndUsers.FoodServiceClientSession).MainSession as FoodServiceSession).MenuStorageIdentity = graphicMenu.StorageIdentity;
 
             }
             lock (FoodServiceClientSessionsTokens)

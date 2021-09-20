@@ -9,6 +9,7 @@ using System.Linq;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
 using System.Threading.Tasks;
+using FlavourBusinessFacade;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -380,7 +381,28 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{a758a8bc-eb98-4fe9-9262-7b7d0e91ac35}</MetaDataID>
+        string _MenuStorageIdentity;
+        /// <MetaDataID>{6fa82f00-eaa4-41f5-a356-66a8b1862924}</MetaDataID>
+        [PersistentMember(nameof(_MenuStorageIdentity))]
+        [BackwardCompatibilityID("+8")]
+        internal string MenuStorageIdentity
+        {
+            get => _MenuStorageIdentity;
+            set
+            {
+                if (_MenuStorageIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MenuStorageIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
+        public OrganizationStorageRef Menu { get; internal set; }
 
 
         /// <MetaDataID>{ce6107e5-bd9c-4f9f-bc82-e2070d163bf6}</MetaDataID>

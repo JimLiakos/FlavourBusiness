@@ -6,6 +6,7 @@ using OOAdvantech.Transactions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using FlavourBusinessFacade;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -204,6 +205,25 @@ namespace FlavourBusinessManager.RoomService
                                                                      select new ItemsPreparationContext(this, itemsUnderPreparation.Key, itemsUnderPreparation.ToList())).ToList();
                 return foodItemsInProgress;
 
+            }
+        }
+
+        
+
+        [CachingDataOnClientSide]
+        public OrganizationStorageRef Menu
+        {
+            get
+            {
+                var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x=>x.StorageIdentity== (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
+                if (fbstorage != null && (Meal.Session as ServicesContextResources.FoodServiceSession).Menu == null)
+                {
+                    var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                    (Meal.Session as ServicesContextResources.FoodServiceSession).Menu = storageRef;
+                }
+                return (Meal.Session as ServicesContextResources.FoodServiceSession).Menu;
             }
         }
 

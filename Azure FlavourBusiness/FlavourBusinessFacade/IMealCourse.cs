@@ -45,5 +45,9 @@ namespace FlavourBusinessFacade.RoomService
         IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
 
+        OrganizationStorageRef Menu { get; }
+        
+
+
     }
 }
