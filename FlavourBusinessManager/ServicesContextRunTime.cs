@@ -609,6 +609,45 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        [CachingDataOnClientSide]
+        public IList<IHallLayout> Halls
+        {
+            get
+            {
+                List<IHallLayout> halls = new System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHallLayout>();
+
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
+
+                var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
+                                              where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
+                                              select theServicePointRun).FirstOrDefault();
+
+                foreach (var serviceArea in (from aServiceArea in storage.GetObjectCollection<ServicesContextResources.ServiceArea>()
+                                             select aServiceArea))
+                {
+                    if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
+                    {
+                        RestaurantHallLayoutModel.HallLayout hallLayout = ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as RestaurantHallLayoutModel.HallLayout;
+
+
+                        if (hallLayout == null)
+                            continue;
+
+                        hallLayout.ServiceArea = serviceArea;
+                        foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
+                        {
+                            var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
+                            if (servicePoint != null)
+                                servicePointShape.ServicesPointState = servicePoint.State;
+                        }
+
+                        halls.Add(hallLayout);
+                    }
+                }
+                return halls;
+            }
+        }
+
         /// <MetaDataID>{87b7a308-7a41-4dab-bb16-71548617adda}</MetaDataID>
         public List<OrganizationStorageRef> GraphicMenus
         {

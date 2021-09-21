@@ -81,6 +81,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{553a6bb9-bbb1-483b-9e4e-d00945788d1f}</MetaDataID>
         IHallLayout GetHallLayout(string servicePointIdentity);
 
+        IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls { get; }
+
         /// <MetaDataID>{fe9ebf62-b446-4fd0-9475-416c4ec2f2bd}</MetaDataID>
         System.Collections.Generic.List<OrganizationStorageRef> GraphicMenus { get; }
 
@@ -146,6 +148,9 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{18e6acdd-c608-4181-9a3b-64464d21dc8f}</MetaDataID>
         RoomService.IMealsController MealsController { get; }
+
+
+        
 
 
     }

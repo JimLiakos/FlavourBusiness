@@ -1003,6 +1003,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_Halls", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef> GraphicMenus
         {
             get

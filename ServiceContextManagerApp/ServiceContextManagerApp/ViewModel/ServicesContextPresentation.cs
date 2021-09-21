@@ -6,6 +6,7 @@ using System.Linq;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService.ViewModel;
+using FlavourBusinessFacade.ServicesContextResources;
 
 
 
@@ -80,23 +81,25 @@ namespace ServiceContextManagerApp
                     return _Supervisors;
                 else
                     return new List<ISupervisorPresentation>();
+
+
             }
         }
 
 
 
 
-        IFlavoursServicesContextRuntime _FlavoursServicesContextRuntime;
-        IFlavoursServicesContextRuntime FlavoursServicesContextRuntime
-        {
-            get
-            {
-                if (_FlavoursServicesContextRuntime == null)
-                    _FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+        //IFlavoursServicesContextRuntime _FlavoursServicesContextRuntime;
+        //IFlavoursServicesContextRuntime FlavoursServicesContextRuntime
+        //{
+        //    get
+        //    {
+        //        if (_FlavoursServicesContextRuntime == null)
+        //            _FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
 
-                return _FlavoursServicesContextRuntime;
-            }
-        }
+        //        return _FlavoursServicesContextRuntime;
+        //    }
+        //}
         public bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation)
         {
             
@@ -105,7 +108,7 @@ namespace ServiceContextManagerApp
 
                 return false;
 
-            return FlavoursServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
+            return ServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
 
 
         }
@@ -116,7 +119,7 @@ namespace ServiceContextManagerApp
         {
             var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation != administrator)
-                FlavoursServicesContextRuntime.MakeSupervisorActive((supervisorPresentation as SupervisorPresentation).Supervisor);
+                ServicesContextRuntime.MakeSupervisorActive((supervisorPresentation as SupervisorPresentation).Supervisor);
         }
 
         IServiceContextSupervisor Administrator;
@@ -144,12 +147,35 @@ namespace ServiceContextManagerApp
             MealsController = this.ServicesContextRuntime.MealsController;
             
 
+
              MealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new  MealCourse(x)).ToList(); 
+
+
 
 
 
         }
 
+        List<IHallLayout> _Halls;
+        public IList<IHallLayout> Halls
+        {
+            get
+            {
+                if (_Halls == null)
+                {
+
+                    _Halls = this.ServicesContextRuntime?.Halls.ToList();
+                    foreach (var hall in this._Halls)
+                    {
+                        hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
+                        (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                        //(hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
+                    }
+                }
+
+                return _Halls;
+            }
+        }
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
 
@@ -182,7 +208,7 @@ namespace ServiceContextManagerApp
         {
 
 
-            string codeValue = FlavoursServicesContextRuntime.NewWaiter();
+            string codeValue = ServicesContextRuntime.NewWaiter();
             string SigBase64 = "";
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()
