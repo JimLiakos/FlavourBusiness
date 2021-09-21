@@ -21,16 +21,18 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public string Description { get; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
-        DontWaitApp.MenuData MenuData { get; set; }
+        public DontWaitApp.MenuData MenuData { get; set; }
 
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
         public MealCourse(IMealCourse serverSideMealCourse)
         {
             ServerSideMealCourse = serverSideMealCourse;
+            
             Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
 
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
-            var storeRef = ServerSideMealCourse.Menu;
+            var sessionData = ServerSideMealCourse.SessionData;
+            var storeRef = sessionData.Menu;
 #if !DeviceDotNet
 
             storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
@@ -44,6 +46,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 MenuName = storeRef.Name,
                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
 
         }

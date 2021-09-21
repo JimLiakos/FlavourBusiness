@@ -211,19 +211,37 @@ namespace FlavourBusinessManager.RoomService
         
 
         [CachingDataOnClientSide]
-        public OrganizationStorageRef Menu
+        public FlavourBusinessFacade.EndUsers.SessionData SessionData
         {
             get
             {
                 var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x=>x.StorageIdentity== (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
                 if (fbstorage != null && (Meal.Session as ServicesContextResources.FoodServiceSession).Menu == null)
                 {
-                    var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity);
+                    string organizationIdentity = flavoursServicesContext.Owner.Identity;
+                    string versionSuffix = "";
+                    if (!string.IsNullOrWhiteSpace(fbstorage.Version))
+                        versionSuffix = "/" + fbstorage.Version;
+                    else
+                        versionSuffix = "";
+
+                    var storageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, fbstorage.StorageIdentity, fbstorage.Name, versionSuffix);
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url);
                     var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
                     (Meal.Session as ServicesContextResources.FoodServiceSession).Menu = storageRef;
                 }
-                return (Meal.Session as ServicesContextResources.FoodServiceSession).Menu;
+
+                var defaultMealTypeUri = Meal.Session.ServicePoint.ServesMealTypesUris.FirstOrDefault();
+                var servedMealTypesUris = Meal.Session.ServicePoint.ServesMealTypesUris.ToList();
+                if (defaultMealTypeUri == null)
+                {
+                    defaultMealTypeUri = Meal.Session.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
+                    servedMealTypesUris = Meal.Session.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
+                }
+
+                FlavourBusinessFacade.EndUsers.SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,Menu= (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };
+                return sessionData;
             }
         }
 

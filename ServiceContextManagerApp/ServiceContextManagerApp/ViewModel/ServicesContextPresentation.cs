@@ -142,6 +142,7 @@ namespace ServiceContextManagerApp
 
 
             MealsController = this.ServicesContextRuntime.MealsController;
+            
 
              MealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new  MealCourse(x)).ToList(); 
 
