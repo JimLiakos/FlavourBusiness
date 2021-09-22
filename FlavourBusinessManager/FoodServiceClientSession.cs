@@ -1387,6 +1387,8 @@ namespace FlavourBusinessManager.EndUsers
 
             foreach (var clientSession in MainSession.PartialClientSessions)
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+            foreach (var mealCourse in MainSession.Meal.Courses)
+                mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
         }
 

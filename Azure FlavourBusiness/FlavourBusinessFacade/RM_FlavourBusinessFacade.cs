@@ -2589,6 +2589,17 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
+public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+            }
         
         public Pr_IMealCourse(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
@@ -2747,6 +2758,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             args[0] = itemPreparation;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "AddItem", args, argsTypes);
+        }
+        
+        public void RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = newItemsState;
+            argsTypes[0] = typeof(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "RaiseItemsStateChanged", args, argsTypes);
         }
     }
 }

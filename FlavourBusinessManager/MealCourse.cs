@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using FlavourBusinessFacade;
+using FlavourBusinessFacade.EndUsers;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -268,6 +269,11 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ItemsStateChanged?.Invoke(newItemsState);
+        }
+        public event ItemsStateChangedHandle ItemsStateChanged;
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)
         {

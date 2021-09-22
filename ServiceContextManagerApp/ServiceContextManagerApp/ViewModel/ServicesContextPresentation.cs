@@ -42,7 +42,7 @@ namespace ServiceContextManagerApp
             {
                 if (_Waiters == null && ServicesContext != null)
                 {
-                    _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x,ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
+                    _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
 
                     //var administrator = _Waiters.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
                     //if (administrator != null)
@@ -85,6 +85,11 @@ namespace ServiceContextManagerApp
 
             }
         }
+        public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
+        internal void OnItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ItemsStateChanged?.Invoke(newItemsState);
+        }
 
 
 
@@ -102,7 +107,7 @@ namespace ServiceContextManagerApp
         //}
         public bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation)
         {
-            
+
             var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation == administrator)
 
@@ -126,8 +131,15 @@ namespace ServiceContextManagerApp
 
         public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
         public IMealsController MealsController { get; }
-        public List<MealCourse> MealCoursesInProgress { get; private set; }
+        public List<MealCourse> MealCoursesInProgress 
+        { 
+            get
+            {
+                return _MealCoursesInProgress.Values.ToList();
+            }
+        }
 
+        UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> _MealCoursesInProgress = new UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse>();
         string AdministratorIdentity;
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor administrator)
         {
@@ -139,20 +151,11 @@ namespace ServiceContextManagerApp
 
             ServicesContext = servicesContext;
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
-            
 
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
-
-
             MealsController = this.ServicesContextRuntime.MealsController;
-            
 
-
-             MealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new  MealCourse(x)).ToList(); 
-
-
-
-
+             MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x,this)).ToList();
 
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Json;
+using UIBaseEx;
 
 namespace FlavourBusinessManager.RoomService.ViewModel
 {
@@ -16,18 +17,22 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         [JsonIgnore]
         public IMealCourse ServerSideMealCourse { get; }
 
-
+        
 
         public string Description { get; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
         public DontWaitApp.MenuData MenuData { get; set; }
 
+        [JsonIgnore]
+        ServiceContextManagerApp.ServicesContextPresentation ServicesContextPresentation;
+
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
-        public MealCourse(IMealCourse serverSideMealCourse)
+        public MealCourse(IMealCourse serverSideMealCourse, ServiceContextManagerApp.ServicesContextPresentation servicesContextPresentation)
         {
             ServerSideMealCourse = serverSideMealCourse;
-            
+            ServicesContextPresentation = servicesContextPresentation;
+
             Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
 
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
@@ -49,8 +54,17 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
 
+            serverSideMealCourse.ItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
+
+
+
         }
 
+        private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ServicesContextPresentation.OnItemsStateChanged(newItemsState);
 
+
+        }
     }
 }

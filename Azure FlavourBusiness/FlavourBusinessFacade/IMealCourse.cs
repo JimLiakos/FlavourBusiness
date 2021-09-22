@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -46,8 +47,10 @@ namespace FlavourBusinessFacade.RoomService
 
 
         EndUsers.SessionData SessionData { get; }
-        
+
+        void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
 
 
+         event ItemsStateChangedHandle ItemsStateChanged;
     }
 }
