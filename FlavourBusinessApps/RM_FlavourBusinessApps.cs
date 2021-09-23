@@ -120,6 +120,29 @@ namespace ServiceContextManagerApp.Proxies
         }
     }
     
+    public sealed class CNSPr_IServicesContextPresentation_ItemsStateChanged : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = newItemsState;
+            argsTypes[0] = typeof(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>);
+            object retValue = this.Invoke(typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle(this.Invoke));
+        }
+    }
+    
     public sealed class CNSPr_ISecureUser_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         

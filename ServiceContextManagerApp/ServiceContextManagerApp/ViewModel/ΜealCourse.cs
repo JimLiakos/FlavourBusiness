@@ -63,6 +63,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             ServicesContextPresentation.OnItemsStateChanged(newItemsState);
+            
 
 
         }
