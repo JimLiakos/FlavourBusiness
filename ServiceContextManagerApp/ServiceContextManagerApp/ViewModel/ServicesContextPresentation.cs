@@ -156,7 +156,14 @@ namespace ServiceContextManagerApp
             MealsController = this.ServicesContextRuntime.MealsController;
 
              MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x,this)).ToList();
+            MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
 
+        }
+
+        private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
+        {
+            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
         }
 
         List<IHallLayout> _Halls;

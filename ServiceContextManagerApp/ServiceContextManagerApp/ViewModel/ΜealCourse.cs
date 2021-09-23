@@ -17,7 +17,8 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         [JsonIgnore]
         public IMealCourse ServerSideMealCourse { get; }
 
-        
+        public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType { get; set; }
+
 
         public string Description { get; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; }
@@ -34,6 +35,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             ServicesContextPresentation = servicesContextPresentation;
 
             Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
+            ServicePointType = serverSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
 
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
             var sessionData = ServerSideMealCourse.SessionData;

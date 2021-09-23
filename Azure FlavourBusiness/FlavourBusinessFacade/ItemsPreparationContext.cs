@@ -12,6 +12,8 @@ namespace FlavourBusinessFacade.RoomService
 
         public string Description { get; set; }
 
+        
+
         public string ServicePointDescription { get; set; }
 
         public string PreparationStationDescription { get; set; }

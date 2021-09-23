@@ -232,6 +232,7 @@ namespace FlavourBusinessFacade.EndUsers
     }
 
 
+    /// <MetaDataID>{c9dc0d06-0917-4e8a-b672-f8778c543835}</MetaDataID>
     public struct SessionData
     {
         /// <MetaDataID>{10c60dd6-a207-4c50-8adf-5e8aa3c65424}</MetaDataID>

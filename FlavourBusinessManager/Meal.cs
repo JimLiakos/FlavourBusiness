@@ -190,7 +190,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{09ccf99d-b9a6-4d3a-b26a-3b1c931b682c}</MetaDataID>
         private void CheckForNewItems()
         {
-
+            List<IMealCourse> newMealCourses = new List<IMealCourse>();
             var mealItems = (from foodServiceClientSession in Session.PartialClientSessions
                              from itemPreparation in foodServiceClientSession.FlavourItems.OfType<ItemPreparation>()
                              where itemPreparation.State == ItemPreparationState.Committed
@@ -209,7 +209,11 @@ namespace FlavourBusinessManager.RoomService
                     if (mealCourse == null)
                     {
                         mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
+                        newMealCourses.Add(mealCourse);
+                        
                         _Courses.Add(mealCourse);
+
+                        
                     }
                     else
                     {
@@ -227,6 +231,9 @@ namespace FlavourBusinessManager.RoomService
                     }
                 }
             }
+
+            if (newMealCourses.Count > 0)
+                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(newMealCourses);
         }
 
         /// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>
