@@ -1357,7 +1357,7 @@ namespace DontWaitApp
                 {
                     MenuData menuData = new MenuData();
                     string servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
-                    if (servicePointID.Split(';').Length > 2)
+                    if (servicePointID.Split(';').Length >1)
                         servicePoint = servicePointID;
 
                     //string servicePoint = "ca33b38f5c634fd49c50af60b042f910;8dedb45522ad479480e113c59d4bbdd0";

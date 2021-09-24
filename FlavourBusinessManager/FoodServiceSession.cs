@@ -307,6 +307,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
+            (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
+
         }
 
         /// <MetaDataID>{f7125663-4378-4d70-868d-4c90af7c98fd}</MetaDataID>
