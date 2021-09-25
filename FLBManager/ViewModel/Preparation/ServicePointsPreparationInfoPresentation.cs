@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WPFUIElementObjectBind;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using UIBaseEx;
 
 namespace FLBManager.ViewModel.Preparation
 {

@@ -12,6 +12,7 @@ using GenWebBrowser;
 using Newtonsoft.Json;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel

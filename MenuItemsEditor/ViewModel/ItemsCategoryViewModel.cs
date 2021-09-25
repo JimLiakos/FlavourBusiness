@@ -10,6 +10,7 @@ using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 using System.Windows;
 using OOAdvantech.PersistenceLayer;
+using UIBaseEx;
 
 namespace MenuItemsEditor.ViewModel
 {

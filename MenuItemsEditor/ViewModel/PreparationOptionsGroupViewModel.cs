@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using MenuModel;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel

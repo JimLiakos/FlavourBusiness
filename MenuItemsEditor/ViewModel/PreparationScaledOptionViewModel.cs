@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using MenuItemsEditor.Properties;
 using MenuModel;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel

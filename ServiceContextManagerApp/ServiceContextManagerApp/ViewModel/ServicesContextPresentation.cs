@@ -7,6 +7,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService.ViewModel;
 using FlavourBusinessFacade.ServicesContextResources;
+using System.Threading.Tasks;
 
 
 
@@ -131,8 +132,8 @@ namespace ServiceContextManagerApp
 
         public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
         public IMealsController MealsController { get; }
-        public List<MealCourse> MealCoursesInProgress 
-        { 
+        public List<MealCourse> MealCoursesInProgress
+        {
             get
             {
                 return _MealCoursesInProgress.Values.ToList();
@@ -155,8 +156,16 @@ namespace ServiceContextManagerApp
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
             MealsController = this.ServicesContextRuntime.MealsController;
 
-             MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x,this)).ToList();
+
             MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
+
+            Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(10000);
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+
+            });
 
         }
 
