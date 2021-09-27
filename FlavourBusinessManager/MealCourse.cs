@@ -266,7 +266,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-
+            ObjectChangeState?.Invoke(this, nameof(FoodItems));
         }
 
         public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
