@@ -233,7 +233,10 @@ namespace FlavourBusinessManager.RoomService
             }
 
             if (newMealCourses.Count > 0)
+            {
+                
                 (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(newMealCourses);
+            }
         }
 
         /// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>

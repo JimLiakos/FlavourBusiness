@@ -179,7 +179,9 @@ namespace FlavourBusinessManager.EndUsers
                     }
                     else
                     {
-                        var foodServiceSession = ServicePoint.NewFoodServiceSession();
+                        var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                        if(this.Menu!=null)
+                            foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
                         foodServiceSession.AddPartialSession(this);
                         //_MainSession.Value = ServicePoint.NewFoodServiceSession();
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
@@ -1230,6 +1232,15 @@ namespace FlavourBusinessManager.EndUsers
                         (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
 
                     _FlavourItems.Remove(flavourItem);
+                    if (MainSession != null && MainSession.Meal != null)
+                    {
+                        var flavourItemMealCourse = (from mealCourse in MainSession.Meal.Courses
+                                                     from mealCourseItem in mealCourse.FoodItems
+                                                     where mealCourseItem.uid == flavourItem.uid
+                                                     select mealCourse).FirstOrDefault();
+                        flavourItemMealCourse.RemoveItem(flavourItem);
+                    }
+                    
                     flavourItem.SessionID = null;
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
@@ -1751,8 +1762,11 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (_MainSession.Value == null)
                 {
-                    var foodServiceSession = ServicePoint.NewFoodServiceSession();
+                    var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
                     foodServiceSession.AddPartialSession(this);
+                    if (this.Menu != null)
+                        foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
+
                     ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
                 }
 

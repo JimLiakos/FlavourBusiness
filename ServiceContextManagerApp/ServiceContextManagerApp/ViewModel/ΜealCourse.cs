@@ -21,7 +21,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
 
         public string Description { get; }
-        public IList<ItemsPreparationContext> FoodItemsInProgress { get; }
+        public IList<ItemsPreparationContext> FoodItemsInProgress { get; set; }
 
         public DontWaitApp.MenuData MenuData { get; set; }
 
@@ -60,16 +60,24 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             };
 
             serverSideMealCourse.ItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
+            serverSideMealCourse.ObjectChangeState += ServerSideMealCourse_ObjectChangeState;
 
 
 
         }
 
+        private void ServerSideMealCourse_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IMealCourse.FoodItems))
+            {
+                FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
+                ServicesContextPresentation.OnMealCourseUpdated(this);
+            }
+        }
+
         private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             ServicesContextPresentation.OnItemsStateChanged(newItemsState);
-            
-
 
         }
     }

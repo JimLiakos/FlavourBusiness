@@ -224,6 +224,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                              CreateAndInitMeal();
                              stateTransition.Consistent = true;
                          }
+                         (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
                          _Meal.Value.MonitoringRun();
                      }
                  });
@@ -307,7 +308,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
-            (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
+            
 
         }
 

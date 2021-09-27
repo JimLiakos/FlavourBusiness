@@ -52,5 +52,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
          event ItemsStateChangedHandle ItemsStateChanged;
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }
 }

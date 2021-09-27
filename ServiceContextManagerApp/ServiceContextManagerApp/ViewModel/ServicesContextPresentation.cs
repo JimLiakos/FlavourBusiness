@@ -86,6 +86,13 @@ namespace ServiceContextManagerApp
 
             }
         }
+        public event MealCoursesUpdatedHandle MealCoursesUpdated;
+
+        internal void OnMealCourseUpdated(MealCourse mealCourse)
+        {
+            MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
+        }
+
         public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
         internal void OnItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
@@ -161,7 +168,7 @@ namespace ServiceContextManagerApp
 
             Task.Run(() =>
             {
-                System.Threading.Thread.Sleep(10000);
+                System.Threading.Thread.Sleep(5000);
                 MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 

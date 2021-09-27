@@ -274,6 +274,9 @@ namespace FlavourBusinessManager.RoomService
             ItemsStateChanged?.Invoke(newItemsState);
         }
         public event ItemsStateChangedHandle ItemsStateChanged;
+
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)
         {
@@ -295,18 +298,25 @@ namespace FlavourBusinessManager.RoomService
                     flavourItem.State = ItemPreparationState.PreparationDelay;
                     (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
                 }
+
+                ObjectChangeState?.Invoke(this, nameof(FoodItems));
             }
         }
 
         /// <MetaDataID>{9b5fa430-11c3-4ad7-98c5-749b4d06c186}</MetaDataID>
         public void RemoveItem(IItemPreparation itemPreparation)
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            if (_FoodItems.Contains(itemPreparation))
             {
-                _FoodItems.Remove(itemPreparation);
-                (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _FoodItems.Remove(itemPreparation);
+                    (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
+                    stateTransition.Consistent = true;
+                }
+                ObjectChangeState?.Invoke(this, nameof(FoodItems));
             }
+
         }
         /// <MetaDataID>{ce36f3b9-7c45-48df-b766-2f622eb00589}</MetaDataID>
         [ObjectActivationCall]
