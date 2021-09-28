@@ -182,7 +182,13 @@ namespace ServiceContextManagerApp
 
         private void MealsController_ObjectChangeState(object _object, string member)
         {
-            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+
+            if (member == nameof(IMealsController.MealCoursesInProgress))
+            {
+                _MealCoursesInProgress.Clear();
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
+            }
         }
 
         private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)

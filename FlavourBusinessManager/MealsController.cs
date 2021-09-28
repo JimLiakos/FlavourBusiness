@@ -50,7 +50,7 @@ namespace FlavourBusinessManager.RoomService
         internal void OnRemoveMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
-            NewMealCoursesInrogress?.Invoke(mealCourses);
+            
             //you have to  filter mealcourses by state.
         }
     }

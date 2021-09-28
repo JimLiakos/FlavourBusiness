@@ -180,7 +180,7 @@ namespace FlavourBusinessManager.EndUsers
                     else
                     {
                         var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
-                        if(this.Menu!=null)
+                        if (this.Menu != null)
                             foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
                         foodServiceSession.AddPartialSession(this);
                         //_MainSession.Value = ServicePoint.NewFoodServiceSession();
@@ -954,7 +954,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-        
+
 
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
         public OrganizationStorageRef Menu { get; set; }
@@ -1227,7 +1227,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    
+
                     if (flavourItem.PreparationStation != null)
                         (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
 
@@ -1238,11 +1238,12 @@ namespace FlavourBusinessManager.EndUsers
                                                      from mealCourseItem in mealCourse.FoodItems
                                                      where mealCourseItem.uid == flavourItem.uid
                                                      select mealCourse).FirstOrDefault();
-                        flavourItemMealCourse.RemoveItem(flavourItem);
+
+                        flavourItemMealCourse?.RemoveItem(flavourItem);
                         //if(flavourItemMealCourse.FoodItems.Count==0)
-                            
+
                     }
-                    
+
                     flavourItem.SessionID = null;
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
@@ -1347,7 +1348,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var flavourItem in clientSessionItems)
                 {
-                    if(flavourItem.State == ItemPreparationState.…nPreparation)
+                    if (flavourItem.State == ItemPreparationState.…nPreparation)
                         flavourItem.State = ItemPreparationState.PendingPreparation;
 
                     if (flavourItem.State == ItemPreparationState.Prepared)
@@ -1372,7 +1373,7 @@ namespace FlavourBusinessManager.EndUsers
         public void Items…nPreparation(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
-            var clientSessionItems = flavourItems.Select(x=>GetSessionItem(x));
+            var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
 
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -1793,7 +1794,7 @@ namespace FlavourBusinessManager.EndUsers
                 SessionState = ClientSessionState.ItemsCommited;
         }
 
-       
+
 
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
 

@@ -177,14 +177,21 @@ namespace FlavourBusinessManager.RoomService
                             {
                                 CheckForNewItems();
 
+                                List<IMealCourse>  removedMealCourses = new List<IMealCourse>();
 
                                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                                 {
                                     foreach (var mealCourse in Courses.Where(x => x.FoodItems.Count == 0).ToList())
+                                    {
                                         _Courses.Remove(mealCourse);
+                                        removedMealCourses.Add(mealCourse);
+                                    }
 
                                     stateTransition.Consistent = true;
                                 }
+
+                                if (removedMealCourses.Count > 0)
+                                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnRemoveMealCoursesInrogress(removedMealCourses);
 
 
                             }
