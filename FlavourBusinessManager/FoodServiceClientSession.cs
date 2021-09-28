@@ -1239,6 +1239,8 @@ namespace FlavourBusinessManager.EndUsers
                                                      where mealCourseItem.uid == flavourItem.uid
                                                      select mealCourse).FirstOrDefault();
                         flavourItemMealCourse.RemoveItem(flavourItem);
+                        //if(flavourItemMealCourse.FoodItems.Count==0)
+                            
                     }
                     
                     flavourItem.SessionID = null;

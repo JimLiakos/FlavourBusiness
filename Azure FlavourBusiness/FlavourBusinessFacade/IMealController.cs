@@ -17,5 +17,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
         event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }
 }

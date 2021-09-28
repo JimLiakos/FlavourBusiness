@@ -30,6 +30,7 @@ namespace FlavourBusinessManager.RoomService
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
 
         public event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
@@ -42,6 +43,13 @@ namespace FlavourBusinessManager.RoomService
 
         internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
+            NewMealCoursesInrogress?.Invoke(mealCourses);
+            //you have to  filter mealcourses by state.
+        }
+
+        internal void OnRemoveMealCoursesInrogress(List<IMealCourse> mealCourses)
+        {
+            ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
             NewMealCoursesInrogress?.Invoke(mealCourses);
             //you have to  filter mealcourses by state.
         }

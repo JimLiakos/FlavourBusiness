@@ -2555,6 +2555,17 @@ public event FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel New
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_NewMealCoursesInrogress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel)});
                 }
             }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
         
         public Pr_IMealsController(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {

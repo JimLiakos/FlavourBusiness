@@ -14,7 +14,7 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{2a2adf89-8607-46c7-844d-d075fcf5d18b}</MetaDataID>
     [BackwardCompatibilityID("{2a2adf89-8607-46c7-844d-d075fcf5d18b}")]
     [Persistent()]
-    public class Meal :MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject,IMeal
+    public class Meal : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IMeal
     {
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{9dfc917f-c600-497d-a324-d1722058e811}</MetaDataID>
@@ -69,6 +69,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{5f5f90f7-bfae-4b34-8dc6-c6aa57297db5}</MetaDataID>
         [PersistentMember(nameof(_Courses))]
         [BackwardCompatibilityID("+2")]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public List<IMealCourse> Courses => _Courses.ToThreadSafeList();
 
         /// <exclude>Excluded</exclude>
@@ -99,7 +100,7 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
-                if(_MealType==null)
+                if (_MealType == null)
                     _MealType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(_MealTypeUri) as MenuModel.MealType;
                 return _MealType;
             }
@@ -142,44 +143,66 @@ namespace FlavourBusinessManager.RoomService
                     var sesionState = Session.SessionState;
                     while (sesionState == SessionState.MealMonitoring)
                     {
-                        if (Courses[0].ServedAtForecast == null)
-                            BuildMealTimePlan();
-
-
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            foreach (var preparationItem in (from course in Courses
-                                                             from foodItem in course.FoodItems.OfType<ItemPreparation>()
-                                                             where foodItem.State == ItemPreparationState.PreparationDelay
-                                                             select foodItem))
-                            {
-                                var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(preparationItem);
-                                if (DateTime.UtcNow + preparationData.Duration > preparationItem.PreparedAtForecast)
-                                    preparationItem.State = ItemPreparationState.PendingPreparation;
-                            }
-
-                            var mealCourse = Courses.OfType<MealCourse>().Where(x => x.StartsAt == null).FirstOrDefault();
-
-                            if (mealCourse.ServedAtForecast != null && mealCourse.ServedAtForecast < DateTime.UtcNow)
-                                this.Session.ServicePoint.State = ServicePointState.MealCourseOvertime;
-
-
-                            stateTransition.Consistent = true;
-                        }
-
                         try
                         {
-                            CheckForNewItems();
+                            if (Courses.Count > 0 && Courses[0].ServedAtForecast == null)
+                                BuildMealTimePlan();
+
+
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                foreach (var preparationItem in (from course in Courses
+                                                                 from foodItem in course.FoodItems.OfType<ItemPreparation>()
+                                                                 where foodItem.State == ItemPreparationState.PreparationDelay
+                                                                 select foodItem))
+                                {
+                                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(preparationItem);
+                                    if (DateTime.UtcNow + preparationData.Duration > preparationItem.PreparedAtForecast)
+                                        preparationItem.State = ItemPreparationState.PendingPreparation;
+                                }
+
+                                var mealCourse = Courses.OfType<MealCourse>().Where(x => x.StartsAt == null).FirstOrDefault();
+
+                                if (mealCourse != null && mealCourse.ServedAtForecast != null && mealCourse.ServedAtForecast < DateTime.UtcNow)
+                                    this.Session.ServicePoint.State = ServicePointState.MealCourseOvertime;
+                                else if (this.Session.ServicePoint.State == ServicePointState.MealCourseOvertime)
+                                    this.Session.ServicePoint.State = ServicePointState.MealCoursePreparation;
+
+
+
+                                stateTransition.Consistent = true;
+                            }
+
+                            try
+                            {
+                                CheckForNewItems();
+
+
+                                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                                {
+                                    foreach (var mealCourse in Courses.Where(x => x.FoodItems.Count == 0).ToList())
+                                        _Courses.Remove(mealCourse);
+
+                                    stateTransition.Consistent = true;
+                                }
+
+
+                            }
+                            catch (Exception error)
+                            {
+                                ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message + Environment.NewLine + error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
+                            }
+
+
+
+                            System.Threading.Thread.Sleep(1000);
+                            sesionState = Session.SessionState;
                         }
                         catch (Exception error)
                         {
-                            ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message +Environment.NewLine+ error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
+
+                            throw;
                         }
-
-
-                         
-                        System.Threading.Thread.Sleep(1000);
-                        sesionState = Session.SessionState;
                     }
                 });
 
@@ -208,12 +231,18 @@ namespace FlavourBusinessManager.RoomService
                     MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
                     if (mealCourse == null)
                     {
-                        mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
-                        newMealCourses.Add(mealCourse);
-                        
-                        _Courses.Add(mealCourse);
 
-                        
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
+                            newMealCourses.Add(mealCourse);
+
+                            _Courses.Add(mealCourse); 
+                            stateTransition.Consistent = true;
+                        }
+
+
+
                     }
                     else
                     {
@@ -234,7 +263,7 @@ namespace FlavourBusinessManager.RoomService
 
             if (newMealCourses.Count > 0)
             {
-                
+
                 (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(newMealCourses);
             }
         }

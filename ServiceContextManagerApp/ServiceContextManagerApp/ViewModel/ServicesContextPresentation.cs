@@ -90,7 +90,10 @@ namespace ServiceContextManagerApp
 
         internal void OnMealCourseUpdated(MealCourse mealCourse)
         {
-            MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
+            if(mealCourse.FoodItemsInProgress.Count==0)
+                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+            else
+                MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
         }
 
         public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
@@ -165,6 +168,7 @@ namespace ServiceContextManagerApp
 
 
             MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
+            MealsController.ObjectChangeState += MealsController_ObjectChangeState;
 
             Task.Run(() =>
             {
@@ -174,6 +178,11 @@ namespace ServiceContextManagerApp
 
             });
 
+        }
+
+        private void MealsController_ObjectChangeState(object _object, string member)
+        {
+            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
         }
 
         private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
