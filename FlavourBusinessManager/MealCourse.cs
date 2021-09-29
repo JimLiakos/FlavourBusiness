@@ -297,9 +297,8 @@ namespace FlavourBusinessManager.RoomService
                     var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
                     
                     (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
-                    
+
                     flavourItem.State = ItemPreparationState.PreparationDelay;
-                    
                 }
 
                 ObjectChangeState?.Invoke(this, nameof(FoodItems));

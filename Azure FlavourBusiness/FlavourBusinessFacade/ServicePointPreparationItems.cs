@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech.MetaDataRepository;
+using System;
 using System.Linq;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -43,7 +44,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [Association("StationPreparationItems", Roles.RoleA, "f98b8c21-af79-4d47-861a-654378f15fc1")]
         [RoleAMultiplicityRange(1)]
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
-        public System.Collections.Generic.List<IItemPreparation> PreparationItems;
+        public System.Collections.Generic.IList<IItemPreparation> PreparationItems;
+
+        
 
         public string CodeCard
         {
@@ -56,6 +59,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
                 foreach(var preparationItem in PreparationItems)
                     preparationItem.CodeCard = value;
             }
+        }
+
+        public void AddPreparationItem(IItemPreparation flavourItem)
+        {
+            PreparationItems.Add(flavourItem);
+        }
+
+        public void RemovePreparationItem(IItemPreparation flavourItem)
+        {
+            PreparationItems.Remove(flavourItem);
         }
     }
 }

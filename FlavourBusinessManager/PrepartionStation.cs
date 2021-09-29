@@ -537,7 +537,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
                     if (servicePointPreparationItems != null)
-                        servicePointPreparationItems.PreparationItems.Remove(flavourItem);
+                        servicePointPreparationItems.RemovePreparationItem(flavourItem);
 
                     if (DeviceUpdateEtag == null)
                         DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
@@ -560,7 +560,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     if (servicePointPreparationItems == null)
                         ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.MainSession, new List<IItemPreparation>() { flavourItem }));
                     else
-                        servicePointPreparationItems.PreparationItems.Add(flavourItem);
+                        servicePointPreparationItems.AddPreparationItem(flavourItem);
 
                     if (DeviceUpdateEtag == null)
                         DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
