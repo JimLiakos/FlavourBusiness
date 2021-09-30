@@ -504,6 +504,7 @@ namespace DontWaitApp
         /// <MetaDataID>{47842b22-c95e-4a09-8f5b-a1eaaba8b014}</MetaDataID>
         public Task<bool> ConnectToServicePoint(string servicePointIdentity = "")
         {
+
 #if IOSEmulator
               return Task<MenuData>.Run(async () =>
            {
