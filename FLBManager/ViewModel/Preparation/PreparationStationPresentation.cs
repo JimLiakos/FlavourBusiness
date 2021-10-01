@@ -61,11 +61,6 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        //private void AddItemsPreparationInfos(IItemsPreparationInfo itemsPreparationInfo)
-        //{
-        //    _ItemsPreparationInfos.Add(itemsPreparationInfo);
-        //}
-
 
         /// <MetaDataID>{006e4e7a-323a-4fe4-a482-2686e3161a60}</MetaDataID>
         public void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)

@@ -1351,7 +1351,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (flavourItem.State == ItemPreparationState.ÉnPreparation)
                         flavourItem.State = ItemPreparationState.PendingPreparation;
 
-                    if (flavourItem.State == ItemPreparationState.Prepared)
+                    if (flavourItem.State == ItemPreparationState.IsPrepared)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
 
                 }
@@ -1402,7 +1402,7 @@ namespace FlavourBusinessManager.EndUsers
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var flavourItem in clientSessionItems)
-                    flavourItem.State = ItemPreparationState.Prepared;
+                    flavourItem.State = ItemPreparationState.IsPrepared;
 
                 stateTransition.Consistent = true;
             }

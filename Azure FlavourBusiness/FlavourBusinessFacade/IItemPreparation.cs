@@ -54,7 +54,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
         [Association("ItemPreparationOptionsChange", Roles.RoleA, "8e564693-11c5-445c-8cb3-1f9505a2f2d2")]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.CascadeDelete)]
         IList<IOptionChange> OptionsChanges { get; }
 
         /// <MetaDataID>{34ad6825-ed6f-48be-8624-22ff698ebdfa}</MetaDataID>
@@ -85,11 +85,11 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// Client temporary select item for order
         /// </summary>
-        New=0,
+        New = 0,
         /// <summary>
         /// Client committed to order this item
         /// </summary>
-        Committed=1,
+        Committed = 1,
         /// <summary>
         /// this item is slow to prepare for meal synchronization.
         /// </summary>
@@ -97,31 +97,37 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// The item is ready to prepared.
         /// </summary>
-        PendingPreparation =3,
+        PendingPreparation = 3,
         /// <summary>
         /// The item is under preparation
         /// </summary>
-        ÉnPreparation=4,
+        ÉnPreparation = 4,
+
+        /// <summary>
+        /// The item is cooked
+        /// </summary>
+        IsCooked = 5,
+
         /// <summary>
         /// The item is prepared
         /// </summary>
-        Prepared=5,
+        IsPrepared = 6,
         /// <summary>
         /// The item is on serving state
         /// </summary>
-        Serving=6,
+        Serving = 7,
         /// <summary>
         /// the item served
         /// </summary>
-        Served=7,
+        Served = 8,
         /// <summary>
         /// the item is on road to delivered 
         /// </summary>
-        OnRoad=8,
+        OnRoad = 9,
         /// <summary>
         /// the item is canceled
         /// </summary>
-        Canceled=9
+        Canceled = 10
     }
 
 }
