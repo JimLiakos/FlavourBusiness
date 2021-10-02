@@ -334,7 +334,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         select session).FirstOrDefault();
 
 
-     
+
             if (fsClientSession == null && create)
             {
                 try
@@ -352,7 +352,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
                             fsClientSession.UserIdentity = user.Identity;
 
-                        if (waiter!=null)
+                        if (waiter != null)
                         {
                             fsClientSession.IsWaiterSession = true;
                             (user as HumanResources.Waiter).AddClientSession(fsClientSession);
@@ -477,6 +477,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+9")]
         public IServiceArea ServiceArea => _ServiceArea.Value;
 
+        /// <MetaDataID>{9be98e3b-defe-473e-99a6-84d3e179f6e8}</MetaDataID>
         public IList<string> ServesMealTypesUris
         {
             get
@@ -484,6 +485,27 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (string.IsNullOrWhiteSpace(MealTypesUris))
                     return new List<string>();
                 return MealTypesUris.Split(';');
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        ServicePointType _ServicePointType=ServicePointType.HallServicePoint;
+        /// <MetaDataID>{95d60c6b-ecf6-42f4-b9fc-87c79c614974}</MetaDataID>
+        [PersistentMember(nameof(_ServicePointType))]
+        [BackwardCompatibilityID("+11")]
+        public ServicePointType ServicePointType
+        {
+            get => _ServicePointType;
+            set
+            {
+                if (_ServicePointType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicePointType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 

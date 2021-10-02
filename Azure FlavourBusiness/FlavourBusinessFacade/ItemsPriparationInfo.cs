@@ -37,7 +37,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         Include = 1,
         Exclude = 2,
-        PreparationTime = 4
+        PreparationTime = 4,
+        IsCooked=8
+
 
     }
 }

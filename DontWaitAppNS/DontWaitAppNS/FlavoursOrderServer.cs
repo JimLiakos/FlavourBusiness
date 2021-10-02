@@ -504,6 +504,12 @@ namespace DontWaitApp
         /// <MetaDataID>{47842b22-c95e-4a09-8f5b-a1eaaba8b014}</MetaDataID>
         public Task<bool> ConnectToServicePoint(string servicePointIdentity = "")
         {
+            if(servicePointIdentity!=DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity)
+            {
+                DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData = new MenuData();
+                OrderItems.Clear();
+            }
+            
 #if IOSEmulator
               return Task<MenuData>.Run(async () =>
            {
@@ -671,8 +677,16 @@ namespace DontWaitApp
         /// <MetaDataID>{f877c152-061c-4142-aed6-50cc431a1a05}</MetaDataID>
         public Task<bool> GetServicePointData(string servicePointIdentity)
         {
+           
             lock (ClientSessionLock)
             {
+                if (servicePointIdentity != DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity)
+                {
+                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData();
+                    OrderItems.Clear();
+                }
+
+
                 Task<bool> getServicePointDataTask = null;
                 GetServicePointDataTasks.TryGetValue(servicePointIdentity, out getServicePointDataTask);
                 if (getServicePointDataTask != null && !getServicePointDataTask.IsCompleted)
@@ -1357,7 +1371,7 @@ namespace DontWaitApp
                 {
                     MenuData menuData = new MenuData();
                     string servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
-                    if (servicePointID.Split(';').Length > 2)
+                    if (servicePointID.Split(';').Length >1)
                         servicePoint = servicePointID;
 
                     //string servicePoint = "ca33b38f5c634fd49c50af60b042f910;8dedb45522ad479480e113c59d4bbdd0";

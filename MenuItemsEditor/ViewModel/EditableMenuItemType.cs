@@ -7,6 +7,7 @@ using System.Windows;
 //using OOAdvantech.Json;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel

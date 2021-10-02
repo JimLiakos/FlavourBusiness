@@ -6,6 +6,8 @@ using OOAdvantech.Transactions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using FlavourBusinessFacade;
+using FlavourBusinessFacade.EndUsers;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -207,6 +209,43 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        
+
+        [CachingDataOnClientSide]
+        public FlavourBusinessFacade.EndUsers.SessionData SessionData
+        {
+            get
+            {
+                var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x=>x.StorageIdentity== (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
+                if (fbstorage != null && (Meal.Session as ServicesContextResources.FoodServiceSession).Menu == null)
+                {
+                    IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity);
+                    string organizationIdentity = flavoursServicesContext.Owner.Identity;
+                    string versionSuffix = "";
+                    if (!string.IsNullOrWhiteSpace(fbstorage.Version))
+                        versionSuffix = "/" + fbstorage.Version;
+                    else
+                        versionSuffix = "";
+
+                    var storageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, fbstorage.StorageIdentity, fbstorage.Name, versionSuffix);
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url);
+                    var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                    (Meal.Session as ServicesContextResources.FoodServiceSession).Menu = storageRef;
+                }
+
+                var defaultMealTypeUri = Meal.Session.ServicePoint.ServesMealTypesUris.FirstOrDefault();
+                var servedMealTypesUris = Meal.Session.ServicePoint.ServesMealTypesUris.ToList();
+                if (defaultMealTypeUri == null)
+                {
+                    defaultMealTypeUri = Meal.Session.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
+                    servedMealTypesUris = Meal.Session.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
+                }
+
+                FlavourBusinessFacade.EndUsers.SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,Menu= (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };
+                return sessionData;
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <MetaDataID>{7b6700b2-c8a4-4548-be19-657614416518}</MetaDataID>
@@ -227,8 +266,16 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-
+            ObjectChangeState?.Invoke(this, nameof(FoodItems));
         }
+
+        public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ItemsStateChanged?.Invoke(newItemsState);
+        }
+        public event ItemsStateChangedHandle ItemsStateChanged;
+
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)
@@ -248,21 +295,30 @@ namespace FlavourBusinessManager.RoomService
                         flavourItem.LoadMenuItem();
 
                     var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
-                    flavourItem.State = ItemPreparationState.PreparationDelay;
+                    
                     (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
+
+                    flavourItem.State = ItemPreparationState.PreparationDelay;
                 }
+
+                ObjectChangeState?.Invoke(this, nameof(FoodItems));
             }
         }
 
         /// <MetaDataID>{9b5fa430-11c3-4ad7-98c5-749b4d06c186}</MetaDataID>
         public void RemoveItem(IItemPreparation itemPreparation)
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            if (_FoodItems.Contains(itemPreparation))
             {
-                _FoodItems.Remove(itemPreparation);
-                (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _FoodItems.Remove(itemPreparation);
+                    (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
+                    stateTransition.Consistent = true;
+                }
+                ObjectChangeState?.Invoke(this, nameof(FoodItems));
             }
+
         }
         /// <MetaDataID>{ce36f3b9-7c45-48df-b766-2f622eb00589}</MetaDataID>
         [ObjectActivationCall]

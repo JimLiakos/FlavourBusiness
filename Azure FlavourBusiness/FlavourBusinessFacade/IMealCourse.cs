@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -45,5 +46,13 @@ namespace FlavourBusinessFacade.RoomService
         IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
 
+        EndUsers.SessionData SessionData { get; }
+
+        void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
+
+
+         event ItemsStateChangedHandle ItemsStateChanged;
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }
 }

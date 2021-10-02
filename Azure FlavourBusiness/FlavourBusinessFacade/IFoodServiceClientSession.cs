@@ -9,7 +9,7 @@ namespace FlavourBusinessFacade.EndUsers
     /// <MetaDataID>{0705a4fa-af2e-4a58-b666-e1bba0e07f2a}</MetaDataID>
     [BackwardCompatibilityID("{0705a4fa-af2e-4a58-b666-e1bba0e07f2a}")]
     [GenerateFacadeProxy]
-    public interface IFoodServiceClientSession: IMessageConsumer
+    public interface IFoodServiceClientSession : IMessageConsumer
     {
 
         ///// <MetaDataID>{4a6cfe26-2795-4345-85e5-f518c066e86c}</MetaDataID>
@@ -17,11 +17,11 @@ namespace FlavourBusinessFacade.EndUsers
 
 
 
-        
+
         /// <MetaDataID>{a8310e74-53f0-4f82-9400-63f5377dacae}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         bool IsWaiterSession { get; }
- 
+
         [Association("WaterServiceSession", Roles.RoleB, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
         HumanResources.IWaiter Waiter { get; }
 
@@ -59,7 +59,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{1558c42a-ea8c-44e5-8c15-83563c6468dc}</MetaDataID>
         void AddItem(IItemPreparation item);
 
-        
+
 
         event ItemStateChangedHandle ItemStateChanged;
 
@@ -68,7 +68,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
- 
+
 
         /// <MetaDataID>{fd43be80-69fc-44d3-8624-a95ed5810848}</MetaDataID>
         void DeviceResume();
@@ -188,10 +188,10 @@ namespace FlavourBusinessFacade.EndUsers
     {
         Conversation = 0,
         ItemsCommited = 1,
-        ConversationStandy=2,
-        UrgesToDecide=3,
-        Inactive =4,
-        Closed=100
+        ConversationStandy = 2,
+        UrgesToDecide = 3,
+        Inactive = 4,
+        Closed = 100
 
 
     }
@@ -202,10 +202,10 @@ namespace FlavourBusinessFacade.EndUsers
         YouMustDecide = 1,
         MenuItemProposal = 2,
         ShareItemHasChange = 3,
-        LaytheTable=4,
+        LaytheTable = 4,
     }
 
-  
+
     public delegate void ItemStateChangedHandle(string itemUid, string itemOwningSession, bool isShared, List<string> shareInSessions);
 
     public delegate void ItemsStateChangedHandle(Dictionary<string, ItemPreparationState> newItemsState);
@@ -229,6 +229,28 @@ namespace FlavourBusinessFacade.EndUsers
 
         public string DefaultMealTypeUri;
         public List<string> ServedMealTypesUris;
+    }
+
+
+    /// <MetaDataID>{c9dc0d06-0917-4e8a-b672-f8778c543835}</MetaDataID>
+    public struct SessionData
+    {
+        /// <MetaDataID>{10c60dd6-a207-4c50-8adf-5e8aa3c65424}</MetaDataID>
+        public string ServicePointIdentity;
+        /// <MetaDataID>{fc539f91-4ce9-4117-bb97-f4b033fb976f}</MetaDataID>
+        public string Token;
+        /// <MetaDataID>{575e68f6-b3ad-4ae7-9ca0-63d3f81d26ad}</MetaDataID>
+        public IFoodServiceSession FoodServiceSession;
+
+        /// <MetaDataID>{86cd02d5-d2d1-4fc4-b4d0-becbe44500c0}</MetaDataID>
+        public string ServicesContextLogo;
+
+        /// <MetaDataID>{61d96939-76a9-4eac-9a22-1dd3c521ce07}</MetaDataID>
+        public string ServicesPointName;
+
+        public string DefaultMealTypeUri;
+        public List<string> ServedMealTypesUris;
+        public OrganizationStorageRef Menu;
     }
 
 }

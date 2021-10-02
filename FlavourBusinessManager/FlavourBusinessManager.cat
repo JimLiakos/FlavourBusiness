@@ -5866,7 +5866,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"11")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -5895,7 +5895,7 @@
 			    quid       	"5BF91E320325"
 			    parameters 	(list Parameters
 				(object Parameter "foodServiceSession"
-				    quid       	"60C9746903D3"
+				    quid       	"614C55A70376"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -5914,7 +5914,7 @@
 			    quid       	"5BF91E32036B"
 			    parameters 	(list Parameters
 				(object Parameter "foodServiceSession"
-				    quid       	"60C9746A0008"
+				    quid       	"614C55A7038F"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -5948,7 +5948,7 @@
 			    quid       	"5CC89EEC015F"
 			    parameters 	(list Parameters
 				(object Parameter "FoodServiceClientSession"
-				    quid       	"60C9746A0032"
+				    quid       	"614C55A703B5"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -5967,7 +5967,7 @@
 			    quid       	"5CC89EEC019B"
 			    parameters 	(list Parameters
 				(object Parameter "FoodServiceClientSession"
-				    quid       	"60C9746A004B"
+				    quid       	"614C55A703CF"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -5986,10 +5986,10 @@
 			    quid       	"5CC89EEC01E4"
 			    parameters 	(list Parameters
 				(object Parameter "clientName"
-				    quid       	"60C9746A006D"
+				    quid       	"614C55A80001"
 				    type       	"string")
 				(object Parameter "clientDeviceID"
-				    quid       	"60C9746A007D"
+				    quid       	"614C55A80014"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"
 			    concurrency 	"Sequential"
@@ -6051,7 +6051,7 @@
 			    quid       	"5D3DAD45008B"
 			    parameters 	(list Parameters
 				(object Parameter "serviceClientSession"
-				    quid       	"60C9746A013E"
+				    quid       	"614C55A802BA"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.EndUsers.IFoodServiceClientSession,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
 			    concurrency 	"Sequential"
@@ -6160,7 +6160,7 @@
 			    quid       	"60C58242038D"
 			    parameters 	(list Parameters
 				(object Parameter "mealTypeUri"
-				    quid       	"60C9746A02BD"
+				    quid       	"614C55A80033"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -6179,7 +6179,7 @@
 			    quid       	"60C5824203D8"
 			    parameters 	(list Parameters
 				(object Parameter "mealTypeUri"
-				    quid       	"60C9746A02D7"
+				    quid       	"614C55A8004F"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -6514,7 +6514,61 @@
 				    name       	"Identity"
 				    value      	"+10"))
 			    quid       	"60C9746A0334"
-			    type       	"string"))
+			    type       	"string")
+			(object ClassAttribute "ServesMealTypesUris"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9be98e3b-defe-473e-99a6-84d3e179f6e8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"614C55AA0080")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"614C55AA0080"
+			    type       	"System.Collections.Generic.IList<string>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicePointType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{95d60c6b-ecf6-42f4-b9fc-87c79c614974}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"614C55AA00C1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
+			    quid       	"614C55AA00C1"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -8994,6 +9048,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@65
+				location   	(2986, 660)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	21
+				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -11518,7 +11590,7 @@
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @166
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(579, 2082)
+			    location   	(578, 2081)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11531,7 +11603,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@166
-				location   	(10, 1943)
+				location   	(9, 1942)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	1138
@@ -11639,8 +11711,8 @@
 			    client     	@166
 			    supplier   	@169
 			    line_style 	3
-			    origin_attachment 	(554, 1842)
-			    terminal_attachment 	(554, 1244))
+			    origin_attachment 	(553, 1840)
+			    terminal_attachment 	(553, 1245))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClient" @171
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeOperation 	TRUE
@@ -14521,7 +14593,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"7")
+			    value      	"9")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -14532,7 +14604,11 @@
 			(object Realize_Relationship
 			    quid       	"5BF92629017C"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"
-			    quidu      	"5BF913870050"))
+			    quidu      	"5BF913870050")
+			(object Realize_Relationship
+			    quid       	"614887760066"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
 		    operations 	(list Operations
 			(object Operation "AddPartialSession"
 			    attributes 	(list Attribute_Set
@@ -15016,7 +15092,69 @@
 				    value      	"+6"))
 			    quid       	"60D6AFCE0354"
 			    type       	"FlavourBusinessFacade.RoomService.IMeal"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cee5f973-18ba-4776-95d8-3ddd2915d3d1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6148878202AB"))
+			    quid       	"6148878202AB"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MenuStorageIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6fa82f00-eaa4-41f5-a356-66a8b1862924}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6148878301E2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"6148878301E2"
+			    type       	"string"
+			    exportControl 	"Implementation")
+			(object ClassAttribute "MealValidationDelayTask"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7c0f023a-f58e-469b-be99-b65142dfc698}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"614887830306")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"614887830306"
+			    type       	"System.Threading.Tasks.Task"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A0C6A40060"
 			states     	(list States
@@ -17939,6 +18077,10 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"60D5D03D037D"
 			    label      	"Meal"
@@ -17955,7 +18097,19 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{04abbea3-e599-4e45-ab1a-a37e21a54278}"))
+				    value      	"{04abbea3-e599-4e45-ab1a-a37e21a54278}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"60D5D03D0389"
 			    label      	"Session"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession"

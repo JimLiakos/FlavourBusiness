@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.Preparation

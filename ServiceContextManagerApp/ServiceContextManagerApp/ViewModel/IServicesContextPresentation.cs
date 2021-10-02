@@ -1,4 +1,5 @@
-﻿using FlavourBusinessManager.RoomService.ViewModel;
+﻿using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.RoomService.ViewModel;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,20 @@ namespace ServiceContextManagerApp
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
+        [GenerateEventConsumerProxy]
+        event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
+
+        [GenerateEventConsumerProxy]
+        event MealCoursesUpdatedHandle MealCoursesUpdated;
+
 
         /// <MetaDataID>{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}</MetaDataID>
         NewSupervisorCode GetNewWaiterQRCode(string color);
 
-
-
+        IList<IHallLayout> Halls { get; }
 
 
     }
+
+    public delegate void MealCoursesUpdatedHandle(IList<MealCourse> mealCourses);
 }

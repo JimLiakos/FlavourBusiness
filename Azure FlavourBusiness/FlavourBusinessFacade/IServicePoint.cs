@@ -12,8 +12,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
 
 
+        /// <MetaDataID>{c9005e2f-0975-4d5a-a543-4b58935fbd3e}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
         [CachingDataOnClientSide]
-        IList<string> ServesMealTypesUris { get; }
+        System.Collections.Generic.IList<string> ServesMealTypesUris { get; }
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
@@ -41,6 +43,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{d4a506ca-d55f-4e33-9354-85724e8630fc}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         ServicePointState State { get; set; }
+
+        /// <MetaDataID>{ffbbbbd1-7687-4c51-a022-b487f11ac0c0}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
+        [CachingDataOnClientSide]
+        ServicePointType ServicePointType { get; set; }
 
         /// <MetaDataID>{5660d599-1687-4185-a1e9-dfba216b6823}</MetaDataID>
         System.Collections.Generic.IList<IFoodServiceClientSession> ActiveFoodServiceClientSessions
@@ -135,6 +142,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
         MealCourseOvertime = 4,
         TakeAway = 5,
         Delivery = 6
+    }
+
+    /// <MetaDataID>{46658b97-1a57-4911-ab0e-ebd3235dcc5c}</MetaDataID>
+    public enum ServicePointType
+    {
+        HallServicePoint = 0,
+        TakeAway = 1,
+        Delivery = 2
     }
 
 }

@@ -219,7 +219,7 @@ namespace FlavourBusinessManager.HumanResources
                         if (servicePoint != null)
                         {
                             servicePointShape.ServicesPointState = servicePoint.State;
-                            var ss = servicePoint.ActiveFoodServiceClientSessions;
+                            
                         }
                     }
 

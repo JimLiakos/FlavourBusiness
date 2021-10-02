@@ -13,6 +13,7 @@ using OOAdvantech.PersistenceLayer;
 using MenuItemsEditor;
 using StyleableWindow;
 using MenuPresentationModel.MenuCanvas;
+using UIBaseEx;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {

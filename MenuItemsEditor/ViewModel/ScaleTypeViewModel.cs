@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel

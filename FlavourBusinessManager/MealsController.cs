@@ -15,8 +15,9 @@ namespace FlavourBusinessManager.RoomService
             {
                 var mealCourses = (from openSession in ServicesContextRunTime.OpenSessions
                                    from mealCource in openSession.Meal.Courses
-                                   orderby mealCource.Meal.Session.ServicePoint, (mealCource.Meal as Meal).Courses.IndexOf(mealCource)
+                                   orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource.Meal as Meal).Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
+                //you have to  filter mealcourses by state. 
 
 
 
@@ -27,6 +28,10 @@ namespace FlavourBusinessManager.RoomService
         }
 
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
+
+        public event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
             ServicesContextRunTime = servicesContextRunTime;
@@ -34,6 +39,19 @@ namespace FlavourBusinessManager.RoomService
         ~MealsController()
         {
             System.Diagnostics.Debug.WriteLine("MealsController");
+        }
+
+        internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
+        {
+            NewMealCoursesInrogress?.Invoke(mealCourses);
+            //you have to  filter mealcourses by state.
+        }
+
+        internal void OnRemoveMealCoursesInrogress(List<IMealCourse> mealCourses)
+        {
+            ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+            
+            //you have to  filter mealcourses by state.
         }
     }
 

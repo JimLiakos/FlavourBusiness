@@ -39,7 +39,7 @@ namespace ServiceContextManagerApp
 
         string UserIdentity { get; set; }
 
-        bool GoogleSign();
+        
     }
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
     public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, ISecureUser, OOAdvantech.Remoting.IExtMarshalByRefObject
@@ -191,18 +191,7 @@ namespace ServiceContextManagerApp
                 SignOut();
         }
 
-        public bool GoogleSign()
-        {
-#if DeviceDotNet
-            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            device.Signin(OOAdvantech.AuthProvider.Google);
-
-            return true;
-#else
-            return false;
-#endif
-        }
-
+     
 
 
 

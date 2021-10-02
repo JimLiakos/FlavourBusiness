@@ -6,6 +6,8 @@ using System.Linq;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService.ViewModel;
+using FlavourBusinessFacade.ServicesContextResources;
+using System.Threading.Tasks;
 
 
 
@@ -41,7 +43,7 @@ namespace ServiceContextManagerApp
             {
                 if (_Waiters == null && ServicesContext != null)
                 {
-                    _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x,ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
+                    _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
 
                     //var administrator = _Waiters.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
                     //if (administrator != null)
@@ -80,32 +82,49 @@ namespace ServiceContextManagerApp
                     return _Supervisors;
                 else
                     return new List<ISupervisorPresentation>();
+
+
             }
         }
+        public event MealCoursesUpdatedHandle MealCoursesUpdated;
 
-
-
-
-        IFlavoursServicesContextRuntime _FlavoursServicesContextRuntime;
-        IFlavoursServicesContextRuntime FlavoursServicesContextRuntime
+        internal void OnMealCourseUpdated(MealCourse mealCourse)
         {
-            get
-            {
-                if (_FlavoursServicesContextRuntime == null)
-                    _FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
-
-                return _FlavoursServicesContextRuntime;
-            }
+            if(mealCourse.FoodItemsInProgress.Count==0)
+                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+            else
+                MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
         }
+
+        public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
+        internal void OnItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ItemsStateChanged?.Invoke(newItemsState);
+        }
+
+
+
+
+        //IFlavoursServicesContextRuntime _FlavoursServicesContextRuntime;
+        //IFlavoursServicesContextRuntime FlavoursServicesContextRuntime
+        //{
+        //    get
+        //    {
+        //        if (_FlavoursServicesContextRuntime == null)
+        //            _FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+
+        //        return _FlavoursServicesContextRuntime;
+        //    }
+        //}
         public bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation)
         {
-            
+
             var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation == administrator)
 
                 return false;
 
-            return FlavoursServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
+            return ServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
 
 
         }
@@ -116,15 +135,22 @@ namespace ServiceContextManagerApp
         {
             var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation != administrator)
-                FlavoursServicesContextRuntime.MakeSupervisorActive((supervisorPresentation as SupervisorPresentation).Supervisor);
+                ServicesContextRuntime.MakeSupervisorActive((supervisorPresentation as SupervisorPresentation).Supervisor);
         }
 
         IServiceContextSupervisor Administrator;
 
         public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
         public IMealsController MealsController { get; }
-        public List<MealCourse> MealCoursesInProgress { get; private set; }
+        public List<MealCourse> MealCoursesInProgress
+        {
+            get
+            {
+                return _MealCoursesInProgress.Values.ToList();
+            }
+        }
 
+        UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> _MealCoursesInProgress = new UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse>();
         string AdministratorIdentity;
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor administrator)
         {
@@ -136,19 +162,61 @@ namespace ServiceContextManagerApp
 
             ServicesContext = servicesContext;
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
-            
 
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
-
-
             MealsController = this.ServicesContextRuntime.MealsController;
 
-             MealCoursesInProgress = MealsController.MealCoursesInProgress.Select(x=>new  MealCourse(x)).ToList(); 
 
+            MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
+            MealsController.ObjectChangeState += MealsController_ObjectChangeState;
 
+            Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(5000);
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+
+            });
 
         }
 
+        private void MealsController_ObjectChangeState(object _object, string member)
+        {
+
+            if (member == nameof(IMealsController.MealCoursesInProgress))
+            {
+                _MealCoursesInProgress.Clear();
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
+            }
+        }
+
+        private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
+        {
+            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+        }
+
+        List<IHallLayout> _Halls;
+        public IList<IHallLayout> Halls
+        {
+            get
+            {
+                if (_Halls == null)
+                {
+
+                    _Halls = this.ServicesContextRuntime?.Halls.ToList();
+                    foreach (var hall in this._Halls)
+                    {
+                        hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
+                        (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                        //(hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
+                    }
+                }
+
+                return _Halls;
+            }
+        }
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
 
@@ -181,7 +249,7 @@ namespace ServiceContextManagerApp
         {
 
 
-            string codeValue = FlavoursServicesContextRuntime.NewWaiter();
+            string codeValue = ServicesContextRuntime.NewWaiter();
             string SigBase64 = "";
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()

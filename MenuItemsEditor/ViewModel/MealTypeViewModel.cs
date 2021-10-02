@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel
