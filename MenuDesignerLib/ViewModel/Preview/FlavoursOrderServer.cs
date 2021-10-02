@@ -33,17 +33,7 @@ namespace MenuDesigner.ViewModel.Preview
         public string Language { get { return lan; } }
         public string FontsLink { get; set; } = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
 
-        public MenuData MenuData => new MenuData()
-        {
-            ServicesPointName = "",
-            ServicesContextLogo = "",
-            ServicePointIdentity = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7",
-            MenuName = "Marzano Phone",
-            MenuFile = "Marzano Phone.json",
-            MenuRoot = "customscheme://Menu/",
-            ClientSessionID = "6ac1ac9751274733a6554312621b09a591000000296"//,
-            //LocalPath=true
-        };
+        public MenuData MenuData { get; set; }
 
 
         public string Path { get => "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7"; set { } }

@@ -38,6 +38,29 @@ namespace MenuDesigner.Views
             this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
             {
                 GraphickMenuResources = new Dictionary<string, MemoryStream>();
+                
+                MenuModel.IMenuItem firstMenuItemOfGraphicMenu = BookViewModel.RestaurantMenu.MenuCanvasItems.OfType<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>().FirstOrDefault()?.MenuItem;
+                if(firstMenuItemOfGraphicMenu!=null)
+                {
+                    OOAdvantech.Linq.Storage storage =new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(firstMenuItemOfGraphicMenu));
+
+                    string defaultMealTypeUri=(from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
+                     select mealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault()?.MealTypeUri;
+
+                    FlavoursOrderServer.MenuData = new DontWaitApp.MenuData()
+                    {
+                        ServicesPointName = "",
+                        ServicesContextLogo = "",
+                        ServicePointIdentity = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7",
+                        MenuName = "Marzano Phone",
+                        MenuFile = "Marzano Phone.json",
+                        MenuRoot = "customscheme://Menu/",
+                        ClientSessionID = "6ac1ac9751274733a6554312621b09a591000000296",
+                        DefaultMealTypeUri = defaultMealTypeUri
+                    };
+                    //MenuModel.FixedMealType
+                }
+
                 BookViewModel.CreateMenuPreview(FlavoursOrderServer.MenuData.MenuRoot, FlavoursOrderServer.MenuData.MenuName, GraphickMenuResources);
 
             }));
