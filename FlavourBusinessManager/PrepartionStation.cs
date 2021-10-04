@@ -82,18 +82,27 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
         public double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
-            string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
 
-            var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
-            if (itemsPreparationInfo != null)
+            var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
-                if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
-                    return 0;
-                else
-                    return itemsPreparationInfo.PreparationTimeSpanInMin;
+                if (itemsPreparationInfo.IsCooked != null)
+                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
-            if ((menuItem as MenuItem).Category != null)
-                return GetPreparationTimeSpanInMinForCategoryItems((menuItem as MenuItem).Category);
+
+
+            //string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+
+            //var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
+            //if (itemsPreparationInfo != null)
+            //{
+            //    if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
+            //        return 0;
+            //    else
+            //        return itemsPreparationInfo.PreparationTimeSpanInMin;
+            //}
+            //if ((menuItem as MenuItem).Category != null)
+            //    return GetPreparationTimeSpanInMinForCategoryItems((menuItem as MenuItem).Category);
 
             return 0;
         }
@@ -121,18 +130,26 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{fdf4d688-7439-48b0-b7d7-87df67b6c965}</MetaDataID>
         public double GetPreparationTimeSpanInMinForCategoryItems(IItemsCategory itemsCategory)
         {
-            string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-            var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
-            if (itemsPreparationInfo != null)
+            var itemsPreparationInfos = this.GetItemsPreparationInfo(itemsCategory);
+
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
-                if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
-                    return 0;
-                else
-                    return itemsPreparationInfo.PreparationTimeSpanInMin;
+                if (itemsPreparationInfo.IsCooked != null)
+                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
-            else if (itemsCategory.Parent != null)
-                return GetPreparationTimeSpanInMinForCategoryItems(itemsCategory.Parent);
-            else
+
+            //string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            //var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
+            //if (itemsPreparationInfo != null)
+            //{
+            //    if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
+            //        return 0;
+            //    else
+            //        return itemsPreparationInfo.PreparationTimeSpanInMin;
+            //}
+            //else if (itemsCategory.Parent != null)
+            //    return GetPreparationTimeSpanInMinForCategoryItems(itemsCategory.Parent);
+            //else
                 return 0;
         }
         /// <MetaDataID>{da579ee2-870e-4fd5-accd-08c2ca57fa4a}</MetaDataID>

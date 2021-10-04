@@ -7914,7 +7914,7 @@
 				    name       	"Identity"
 				    value      	"+4"))
 			    quid       	"607E48FE0093"
-			    type       	"double"
+			    type       	"double?"
 			    exportControl 	"Public")
 			(object ClassAttribute "LearningCurveCount"
 			    attributes 	(list Attribute_Set
@@ -8013,7 +8013,7 @@
 				    name       	"Identity"
 				    value      	"+7"))
 			    quid       	"615A7E7303E0"
-			    type       	"bool"
+			    type       	"bool?"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -10377,7 +10377,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1728
+		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::FlavoursServicesContext" @126
@@ -10407,7 +10407,7 @@
 			    quidu      	"5B2CE9870228"
 			    compartment 	(object Compartment
 				Parent_View 	@126
-				location   	(50, 1043)
+				location   	(50, 1051)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -10581,7 +10581,7 @@
 			    quidu      	"5D58199403CF"
 			    compartment 	(object Compartment
 				Parent_View 	@132
-				location   	(3522, 483)
+				location   	(3522, 491)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -10596,7 +10596,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	8
-				max_width  	1868)
+				max_width  	1946)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -10677,7 +10677,7 @@
 			    quidu      	"5D56D11C002D"
 			    compartment 	(object Compartment
 				Parent_View 	@136
-				location   	(1355, 447)
+				location   	(1355, 455)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -10692,7 +10692,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	15
-				max_width  	703)
+				max_width  	715)
 			    width      	819
 			    height     	425
 			    annotation 	8)
@@ -26085,7 +26085,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@479
-			location   	(56, 179)
+			location   	(56, 184)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -26093,7 +26093,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@479
-			location   	(56, 133)
+			location   	(56, 134)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

@@ -18,7 +18,7 @@
         mc:Ignorable="d"
         WindowStartupLocation ="CenterScreen"
         Title="MainWindow" 
-        >
+       Height="900" Width="1700">
     <Window.DataContext >
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:FlavourBusinessManagerViewModel}"    Name="Connection" TransactionOption="Required" RollbackOnExitWithoutAnswer="True"/>
     </Window.DataContext>

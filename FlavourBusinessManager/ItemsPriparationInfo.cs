@@ -128,13 +128,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         //}
 
         /// <exclude>Excluded</exclude>
-        double _PreparationTimeSpanInMin = 1;
+        double? _PreparationTimeSpanInMin = 1;
 
         /// <MetaDataID>{e02a922b-99e0-470a-807e-41039b2e963d}</MetaDataID>
         [PersistentMember(nameof(_PreparationTimeSpanInMin))]
         [BackwardCompatibilityID("+4")]
         [CachingDataOnClientSide]
-        public double PreparationTimeSpanInMin
+        public double? PreparationTimeSpanInMin
         {
             get => _PreparationTimeSpanInMin;
             set
@@ -195,13 +195,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        bool _IsCooked;
+        bool? _IsCooked;
         /// <MetaDataID>{745b3dd4-59b8-409e-82e4-0dd1ed0e0ab4}</MetaDataID>
         [PersistentMember(nameof(_IsCooked))]
         [BackwardCompatibilityID("+7")]
-        public bool IsCooked
+        public bool? IsCooked
         {
-            get => _IsCooked; 
+            get => _IsCooked;
             set
             {
 

@@ -153,9 +153,9 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
 
-                if (ItemsCategory != null && PreparationStationPresentation.StationPrepareItems(this.ItemsCategory))
+                if (ItemsCategory != null && PreparationStationPresentation.PreparationStation.StationPrepareItems(this.ItemsCategory))
                     return true;
-                else if (this.MenuItem != null && PreparationStationPresentation.StationPrepareItem(this.MenuItem))
+                else if (this.MenuItem != null && PreparationStationPresentation.PreparationStation.StationPrepareItem(this.MenuItem))
                     return true;
                 else
                 {
@@ -250,9 +250,9 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                if (this.ItemsCategory != null && this.PreparationStationPresentation.StationPrepareItems(this.ItemsCategory))
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.PreparationStation.StationPrepareItems(this.ItemsCategory))
                     return true;
-                else if (this.MenuItem != null && this.PreparationStationPresentation.StationPrepareItem(this.MenuItem))
+                else if (this.MenuItem != null && this.PreparationStationPresentation.PreparationStation.StationPrepareItem(this.MenuItem))
                     return true;
                 else
                     return false;
@@ -398,11 +398,11 @@ namespace FLBManager.ViewModel.Preparation
                     if (EditMode)
                     {
                         var itemsPreparationInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
-                                                                  where PreparationStationPresentation.StationPrepareItems(subCategory) || (!PreparationStationPresentation.IsCategoryAssigned(subCategory))// equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsCategoryAssigned(subCategory)
+                                                                  where PreparationStationPresentation.PreparationStation.StationPrepareItems(subCategory) || (!PreparationStationPresentation.IsCategoryAssigned(subCategory))// equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsCategoryAssigned(subCategory)
                                                                   select SubCategories.GetViewModelFor(subCategory, this, PreparationStationPresentation, subCategory, EditMode)).Union(
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
 
-                            where PreparationStationPresentation.StationPrepareItem(menuItem) || (!PreparationStationPresentation.IsMenuItemAssigned(menuItem))//  equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem)
+                            where PreparationStationPresentation.PreparationStation.StationPrepareItem(menuItem) || (!PreparationStationPresentation.IsMenuItemAssigned(menuItem))//  equipmentPresentaion == null || !(equipmentPresentaion.Parent as ItemsPreparationInfoPresentation).IsMenuItemAssigned(menuItem)
                             select MenuItems.GetViewModelFor(menuItem, this, PreparationStationPresentation, menuItem, EditMode)));
 
                         members.AddRange((from itemsPreparationInfoPresentation in itemsPreparationInfosPresentations
@@ -562,7 +562,7 @@ namespace FLBManager.ViewModel.Preparation
                         {
                             foreach (var preparationStationPresentation in preparationStations)
                             {
-                                if (preparationStationPresentation.StationPrepareItem(menuItem))
+                                if (preparationStationPresentation.PreparationStation.StationPrepareItem(menuItem))
                                 {
                                     if (!categoryMenuItemsPreparationStations.Contains(preparationStationPresentation))
                                         categoryMenuItemsPreparationStations.Add(preparationStationPresentation);
@@ -647,6 +647,7 @@ namespace FLBManager.ViewModel.Preparation
         public void Refresh()
         {
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
 
 

@@ -126,8 +126,11 @@ namespace FLBManager.ViewModel
             }
             set
             {
-                _Edit = value;
-                _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
+                if (_Edit != value)
+                {
+                    _Edit = value;
+                    _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
+                }
             }
         }
 
