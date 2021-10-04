@@ -181,7 +181,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public ItemsPreparationInfoType ItemsPreparationInfoType
         {
             get => _ItemsPreparationInfoType;
-            set 
+            set
             {
                 if (_ItemsPreparationInfoType != value)
                 {
@@ -193,8 +193,31 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        bool _IsCooked;
+        /// <MetaDataID>{745b3dd4-59b8-409e-82e4-0dd1ed0e0ab4}</MetaDataID>
+        [PersistentMember(nameof(_IsCooked))]
+        [BackwardCompatibilityID("+7")]
+        public bool IsCooked
+        {
+            get => _IsCooked; 
+            set
+            {
+
+                if (_IsCooked != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsCooked = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
     }
 }
 
 
-   
+

@@ -7738,7 +7738,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"7")
+			    value      	"8")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -7980,7 +7980,40 @@
 				    name       	"Identity"
 				    value      	"+6"))
 			    quid       	"607EDAEB0284"
-			    type       	"ItemsPreparationInfoType"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.ItemsPreparationInfoType"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsCooked"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{745b3dd4-59b8-409e-82e4-0dd1ed0e0ab4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"615A7E7303E0")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+7"))
+			    quid       	"615A7E7303E0"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -9048,24 +9081,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@65
-				location   	(2986, 660)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	21
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -10362,7 +10377,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	1728
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::FlavoursServicesContext" @126
@@ -10392,7 +10407,7 @@
 			    quidu      	"5B2CE9870228"
 			    compartment 	(object Compartment
 				Parent_View 	@126
-				location   	(50, 1051)
+				location   	(50, 1043)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -10564,6 +10579,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
+			    compartment 	(object Compartment
+				Parent_View 	@132
+				location   	(3522, 483)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	1868)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -10642,6 +10675,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@136
+				location   	(1355, 447)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	15
+				max_width  	703)
 			    width      	819
 			    height     	425
 			    annotation 	8)
@@ -26034,7 +26085,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@479
-			location   	(56, 184)
+			location   	(56, 179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -26042,7 +26093,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@479
-			location   	(56, 134)
+			location   	(56, 133)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

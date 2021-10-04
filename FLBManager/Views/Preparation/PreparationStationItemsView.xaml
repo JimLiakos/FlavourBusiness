@@ -9,11 +9,28 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ViewModel:PreparationStationPresentation x:Key="D_PreparationStationPresentation"></ViewModel:PreparationStationPresentation>
-            
-                <ControlTemplate x:Key="MenuSeparatorTemplate">
-                    <Separator />
-                </ControlTemplate>
-            
+
+            <ControlTemplate x:Key="MenuSeparatorTemplate">
+                <Separator />
+            </ControlTemplate>
+
+            <ContextMenu  x:Key="NodeContextMenu" ItemsSource="{Binding ContextMenuItems}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding Command}" />
+                        <Setter Property="Header" Value="{Binding Header}" />
+                        <Setter Property="Icon" Value="{Binding Icon}" />
+                        <Setter Property="CommandParameter" Value="{Binding Path=Parameter}" />
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                <Setter Property="Template" Value="{StaticResource MenuSeparatorTemplate}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -34,7 +51,7 @@
                     <RowDefinition/>
 
                 </Grid.RowDefinitions>
-                
+
                 <Label Grid.Column="1" Grid.Row="0" Margin="3,0,3,3"  Content="{x:Static resx:Resources.PreparationStationDescriptionLabel}" VerticalAlignment="Bottom" Height="20" />
                 <wpftoolkitex:WatermarkTextBox  Grid.Row="1" Grid.Column="1"  Margin="2,0,2,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Text="{Binding Name,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Watermark="{x:Static resx:Resources.WritePreparationStationDescriptionPrompt}"  HorizontalAlignment="Stretch" AcceptsReturn="True" Height="24" />
                 <CheckBox FlowDirection="RightToLeft" Grid.Row="1"  x:Name="PreparationTimeVisibility" Grid.Column="2" VerticalAlignment="Center" Content="Preparation time is visible" IsChecked="{Binding PreparationTimeIsVisible}" ></CheckBox>
@@ -42,9 +59,84 @@
 
                 <TextBox Margin="2,0,2,0"  VerticalAlignment="Top" Text="{Binding PreparationStationIdentity,Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True"  HorizontalAlignment="Stretch"  Grid.Row="3" Grid.ColumnSpan="2"  Grid.Column="1" AcceptsReturn="True" Height="22" />
                 <TreeView  DragEnter="DragEnter" Drop="Drop" DragLeave="DragLeave" DragOver="DragOver"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding PreparationStationSubjects}"  >
-                    <!--<TreeView.Resources>
-                
-                </TreeView.Resources>-->
+                    <TreeView.Resources>
+                        <DataTemplate x:Key="NormalTemplate">
+                            <ContentControl Background="Transparent" MouseDoubleClick="ContentControl_MouseDoubleClick" >
+                                <ContentControl.InputBindings>
+                                    <MouseBinding MouseAction="WheelClick"
+                    Command="{Binding DoubleClickCommand}"
+                    CommandParameter="Wheel Click"/>
+                                </ContentControl.InputBindings>
+                                <!--<i:Interaction.Triggers>
+                                    
+                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                        
+                                        <i:InvokeCommandAction Command="{Binding Path=DoubleClickCommand, Mode=OneWay}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>-->
+
+                                <StackPanel   AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
+                                    <!--DragEnter="TreeNode_DragEnter" DragLeave="TreeNode_DragLeave" DragOver="TreeNode_DragOver" Drop="TreeNode_Drop" MouseMove="ItemMouseMove"  MouseDown="ItemMouseDown"-->
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasContextMenu}" Value="True" >
+                                                    <Setter Property="ContextMenu" Value="{StaticResource NodeContextMenu}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+
+                                    </StackPanel.Resources>
+                                    <StackPanel.InputBindings>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
+                                    </StackPanel.InputBindings>
+
+
+                                    <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
+                                    <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
+                                    <ControlsEx:EditableTextBlock Background="Transparent" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" >
+                                        <!--<ControlsEx:EditableTextBlock.InputBindings>
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
+                                    </ControlsEx:EditableTextBlock.InputBindings>-->
+                                    </ControlsEx:EditableTextBlock>
+
+                                    <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                    <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+
+
+                                </StackPanel>
+                            </ContentControl>
+                        </DataTemplate>
+                        <DataTemplate x:Key="EditTemplate">
+                            <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
+                                <!--DragEnter="TreeNode_DragEnter" DragLeave="TreeNode_DragLeave" DragOver="TreeNode_DragOver" Drop="TreeNode_Drop" MouseMove="ItemMouseMove"  MouseDown="ItemMouseDown"-->
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasContextMenu}" Value="True" >
+                                                <Setter Property="ContextMenu" Value="{StaticResource NodeContextMenu}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </StackPanel.Resources>
+
+                                <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
+                                <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
+                                <ControlsEx:EditableTextBlock IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+
+                                <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+
+
+                            </StackPanel>
+
+                        </DataTemplate>
+
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                        </Style>
+                    </TreeView.Resources>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedItemChanged">
@@ -71,50 +163,23 @@
 
 
                         <HierarchicalDataTemplate   ItemsSource="{Binding Members}" >
-                            <HierarchicalDataTemplate.Resources>
-
-                                <ContextMenu  x:Key="NodeContextMenu" ItemsSource="{Binding ContextMenuItems}">
-                                    <ContextMenu.ItemContainerStyle>
-                                        <Style TargetType="{x:Type MenuItem}">
-                                            <Setter Property="Command" Value="{Binding Command}" />
-                                            <Setter Property="Header" Value="{Binding Header}" />
-                                            <Setter Property="Icon" Value="{Binding Icon}" />
-                                            <Setter Property="CommandParameter" Value="{Binding Path=Parameter}" />
-
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                                                    <Setter Property="Template" Value="{StaticResource MenuSeparatorTemplate}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ContextMenu.ItemContainerStyle>
-                                </ContextMenu>
-
-                            </HierarchicalDataTemplate.Resources>
-
-                            <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
-                                <!--DragEnter="TreeNode_DragEnter" DragLeave="TreeNode_DragLeave" DragOver="TreeNode_DragOver" Drop="TreeNode_Drop" MouseMove="ItemMouseMove"  MouseDown="ItemMouseDown"-->
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type StackPanel}">
+                            <ContentControl>
+                                <ContentControl.Resources>
+                                    <Style TargetType="{x:Type ContentControl}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding HasContextMenu}" Value="True" >
                                                 <Setter Property="ContextMenu" Value="{StaticResource NodeContextMenu}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-
-                                </StackPanel.Resources>
-
-                                <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
-                                <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
-                                <ControlsEx:EditableTextBlock IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
-
-                                <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                                <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+                                </ContentControl.Resources>
+                                <local:ItemsPreparationInfoTreeView/>
 
 
-                            </StackPanel>
 
+                            </ContentControl>
+
+                           
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
 

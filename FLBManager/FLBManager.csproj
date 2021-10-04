@@ -209,6 +209,10 @@
     <Compile Include="Views\PageDialogEmulator.xaml.cs">
       <DependentUpon>PageDialogEmulator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preparation\ItemsPreparationInfoTreeView.xaml.cs">
+      <DependentUpon>ItemsPreparationInfoTreeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Views\Preparation\PreparationStationItemsPage.xaml.cs">
       <DependentUpon>PreparationStationItemsPage.xaml</DependentUpon>
     </Compile>
@@ -380,6 +384,10 @@
     <Page Include="Views\PageDialogEmulator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preparation\ItemsPreparationInfoTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\Preparation\PreparationStationItemsPage.xaml">
       <SubType>Designer</SubType>

@@ -20,6 +20,7 @@ namespace FLBManager.ViewModel
             _Parent = parent;
         }
 
+        /// <MetaDataID>{1f395390-f063-4419-86c4-c84eb7cc39a3}</MetaDataID>
         public string FullName
         {
             get

@@ -19,6 +19,7 @@ namespace MenuItemsEditor.Views
     /// <summary>
     /// Interaction logic for MenuItemPage.xaml
     /// </summary>
+    /// <MetaDataID>{a4395b56-812a-4d7b-9a59-516041cfee79}</MetaDataID>
     public partial class MenuItemPage : PageDialogViewEmulator
     {
         public MenuItemPage()

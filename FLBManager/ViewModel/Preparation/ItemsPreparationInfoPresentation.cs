@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -25,16 +26,19 @@ namespace FLBManager.ViewModel.Preparation
         /// <summary>
         /// Preparation infos concern menu item
         /// </summary>
+        /// <MetaDataID>{664db8b4-7bf9-46f2-b0e8-a18af5e23430}</MetaDataID>
         // <MetaDataID>{4e50a2ba-e4a7-498e-a316-aa888e4692bd}</MetaDataID>
         IMenuItem MenuItem;
 
         /// <summary>
         ///  Preparation infos concern menu items of category
         /// </summary>
+        /// <MetaDataID>{b341b6ed-cd19-4c47-b3a2-9f175b91d05b}</MetaDataID>
         // <MetaDataID>{a777298f-cf21-4ccb-848d-38596df908f3}</MetaDataID>
         internal IItemsCategory ItemsCategory;
 
-   
+
+        /// <MetaDataID>{52d37e38-fef0-4770-a962-3d282892667b}</MetaDataID>
         private void AddSubPreparationStation()
         {
             if (PreparationStationPresentation != null)
@@ -47,9 +51,10 @@ namespace FLBManager.ViewModel.Preparation
         /// When EditMode is true you can include item in preparation station, exclude or edit item preparation info.
         /// </summary>
         /// <MetaDataID>{27d5229c-bc53-42bd-9d47-6ceea9487d1f}</MetaDataID>
-       readonly bool EditMode;
+        readonly bool EditMode;
 
 
+        /// <MetaDataID>{636b39c3-93bd-4987-988e-ebb01317fc4d}</MetaDataID>
         public readonly bool IsRootCategory;
 
         /// <summary>
@@ -61,9 +66,8 @@ namespace FLBManager.ViewModel.Preparation
         /// <param name="menu">
         /// Defines the items menu
         /// </param>
-        /// <param name="editMode">
-        /// 
-        /// </param>
+        /// <param name="editMode"></param>
+        /// <MetaDataID>{36657d09-72be-40de-bc82-5213ba950d4b}</MetaDataID>
         // <MetaDataID>{6d5912d3-dbd6-431c-b216-d6a4732da003}</MetaDataID>
         public ItemsPreparationInfoPresentation(PreparationStationPresentation preparationStationPresentation, IMenu menu, bool editMode) : base(preparationStationPresentation)
         {
@@ -85,6 +89,12 @@ namespace FLBManager.ViewModel.Preparation
             {
                 AddSubPreparationStation();
             });
+            DoubleClickCommand = new MessageCommand();
+
+            //System.Windows.Input.RoutedCommand((object sender) =>
+            //{
+            //    System.Diagnostics.Debug.WriteLine("");
+            //});
 
 
         }
@@ -129,12 +139,14 @@ namespace FLBManager.ViewModel.Preparation
         ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation> MenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPreparationInfoPresentation>();
 
 
+        /// <MetaDataID>{84a81ae6-4358-49c3-8561-00cbeb5bf937}</MetaDataID>
         internal ViewModelWrappers<IPreparationStation, PreparationStationPresentation> PreparationSubStations = new ViewModelWrappers<IPreparationStation, PreparationStationPresentation>();
 
         /// <summary>
         /// Defines when ItemsPreparationInfoPresentation node has items which can prepared from preparation station 
         /// In view mode displayed, only items category node and items which prepared from preparation station
         /// </summary>
+        /// <MetaDataID>{2f994810-395c-48aa-8eb6-d44938a06d5c}</MetaDataID>
         // <MetaDataID>{5166e975-649f-47b1-b98e-5f1abf42f3ad}</MetaDataID>
         public bool HasItemsWhichCanPrepared
         {
@@ -195,6 +207,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        /// <MetaDataID>{a558dc92-8072-47f3-b669-0d4c1b763396}</MetaDataID>
         public bool PreparationTimeIsVisible
         {
             get
@@ -202,6 +215,35 @@ namespace FLBManager.ViewModel.Preparation
                 return CanPrepared;
             }
         }
+
+        /// <MetaDataID>{d65a5bb7-76e1-475e-ad30-25a94bc394d9}</MetaDataID>
+        bool _IsCooked;
+        /// <MetaDataID>{7fd81c05-f3b6-42e1-94b8-956d4ddbf0ed}</MetaDataID>
+        public bool IsCooked
+        {
+            get
+            {
+
+                if (this.ItemsCategory != null)
+                    return this.PreparationStationPresentation.IsCooked(this.ItemsCategory);
+
+                if (this.MenuItem != null)
+                    return this.PreparationStationPresentation.IsCooked(this.MenuItem);
+
+                return false;
+
+            }
+            set
+            {
+
+                if (this.ItemsCategory != null)
+                    this.PreparationStationPresentation.SetIsCooked(this.ItemsCategory, value);
+
+                if (this.MenuItem != null)
+                    this.PreparationStationPresentation.SetIsCooked(this.MenuItem, value);
+            }
+        }
+
 
         /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
         public bool CanPrepared
@@ -241,6 +283,7 @@ namespace FLBManager.ViewModel.Preparation
         /// Some times a change in items preparation info affect nodes in preparation station infos hierarchy
         /// this method update the  hierarchy if needed
         /// </summary>
+        /// <MetaDataID>{eabde86b-dbcc-439f-9118-3958c36c0e92}</MetaDataID>
         private void UpdatePresentationItems()
         {
 
@@ -249,7 +292,7 @@ namespace FLBManager.ViewModel.Preparation
                 Root.Refresh(ItemsCategory as ItemsCategory);
                 Root.PreparationStationPresentation.Refresh(ItemsCategory as ItemsCategory);
             }
-     
+
 
             if (MenuItem != null)
             {
@@ -260,6 +303,7 @@ namespace FLBManager.ViewModel.Preparation
 
             //Refresh();
         }
+        /// <MetaDataID>{7e6b7299-dd58-402d-9094-9c51b82cb177}</MetaDataID>
         ItemsPreparationInfoPresentation Root
         {
             get
@@ -390,8 +434,11 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
+        /// <MetaDataID>{21c808d9-18d9-4d71-a039-827f56f10443}</MetaDataID>
         public RelayCommand NewSubPreparationStationCommand { get; protected set; }
 
+        /// <MetaDataID>{261115fe-509b-4c99-bb24-709235bb932f}</MetaDataID>
+        public ICommand DoubleClickCommand { get; protected set; }
 
 
         /// <exclude>Excluded</exclude>
@@ -469,10 +516,12 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{abae4496-c9a2-4ad7-a3bf-a508792fa0af}</MetaDataID>
         public override void SelectionChange()
         {
         }
 
+        /// <MetaDataID>{cae2c912-49d0-45d1-894b-57dce6c77bdd}</MetaDataID>
         public bool AllInHierarchyCanPrepared
         {
             get
@@ -492,7 +541,8 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
-       public bool IncludeAllItemsAllowed
+        /// <MetaDataID>{92d02018-715b-457b-b012-419b8623cd59}</MetaDataID>
+        public bool IncludeAllItemsAllowed
         {
             get
             {
@@ -529,6 +579,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        /// <MetaDataID>{68294fd3-55bc-4e63-ac2d-453faacd02d9}</MetaDataID>
         public void Refresh(MenuItem menuItemWithChanges)
         {
 
@@ -557,6 +608,7 @@ namespace FLBManager.ViewModel.Preparation
                 Refresh();
 
         }
+        /// <MetaDataID>{919c4b1c-7f8e-40e3-8ad7-fdcab01e6dbb}</MetaDataID>
         public void Refresh(ItemsCategory itemsCategoryWithChanges)
         {
 
@@ -606,5 +658,23 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
 
         }
+    }
+
+    /// <MetaDataID>{ebe0f2d5-91b0-4f71-a21a-1c44252745f2}</MetaDataID>
+    public class MessageCommand : ICommand
+    {
+        /// <MetaDataID>{9d854f45-dbfe-42fd-a1dd-9eb803df2819}</MetaDataID>
+        public void Execute(object parameter)
+        {
+            // MessageBox.Show(parameter.ToString());
+        }
+
+        /// <MetaDataID>{f02c9e44-b026-461d-9ac4-e6926c7d1534}</MetaDataID>
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 }

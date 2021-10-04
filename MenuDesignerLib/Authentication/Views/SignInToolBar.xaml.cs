@@ -88,8 +88,22 @@ namespace FLBAuthentication.Views
             if (SignInWindow.IsVisible)
                 SignInWindow.Hide();
             else
-                SignInWindow.Show(PointToScreen(new Point(ActualWidth / 2, ActualHeight + 4)));
+                SignInWindow.Show(PointToScreenWithScale(new Point(ActualWidth / 2, ActualHeight + 4)));
 
+
+
+        }
+
+        private Point PointToScreenWithScale(Point point)
+        {
+
+            double WitdhOnscreen = PointToScreen(new Point(ActualWidth, ActualHeight)).X - PointToScreen(new Point(0, 0)).X;
+            double scalex =    ActualWidth/ WitdhOnscreen;
+            double HeightonScreen = PointToScreen(new Point(ActualWidth, ActualHeight)).Y - PointToScreen(new Point(0, 0)).Y;
+            double scaley = ActualHeight/HeightonScreen  ;
+
+            var newPoint= new Point(PointToScreen(point).X* scalex, PointToScreen(point).Y * scaley);
+            return newPoint;
         }
 
         private void SignInToolBar_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

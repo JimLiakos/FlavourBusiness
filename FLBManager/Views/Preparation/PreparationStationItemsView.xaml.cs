@@ -77,6 +77,9 @@ namespace FLBManager.Views.Preparation
             
         }
 
-       
+        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //ButtonCommand
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace FloorLayoutDesigner.Views
     /// <summary>
     /// Interaction logic for HallMealTypesPage.xaml
     /// </summary>
+    /// <MetaDataID>{c014d3d0-f4a1-47f7-83a8-51d306ad376c}</MetaDataID>
     public partial class HallMealTypesPage : StyleableWindow.PageDialogViewEmulator
     {
         public HallMealTypesPage()

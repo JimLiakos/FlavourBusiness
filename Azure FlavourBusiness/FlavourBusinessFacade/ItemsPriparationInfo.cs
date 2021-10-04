@@ -24,9 +24,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+4")]
         double PreparationTimeSpanInMin { get; set; }
 
+        /// <MetaDataID>{1650b10f-bc6e-4034-ab83-fc2a947f759b}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        bool IsCooked { get; set; }
+
         /// <MetaDataID>{1b78b048-2f35-4fcf-a227-1794e032c31d}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         int LearningCurveCount { get; set; }
+        /// <MetaDataID>{3ce058c1-96e9-436d-b7fa-2b510bac9427}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         ItemsPreparationInfoType ItemsPreparationInfoType { get; set; }
 

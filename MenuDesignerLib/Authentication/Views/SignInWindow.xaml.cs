@@ -85,17 +85,20 @@ namespace FLBAuthentication.Views
             if (this.ActualHeight == 0)
             {
                 Point arrowOffset = (DataContext as ViewModel.SignInUserPopupViewModel).ArrowOffset;
-                this.Left = location.X - arrowOffset.X;
-                this.Top = location.Y - arrowOffset.Y-MainGrid.Margin.Top;
-                this.Width = (DataContext as ViewModel.SignInUserPopupViewModel).PopupWitdh;
-                this.Height = (DataContext as ViewModel.SignInUserPopupViewModel).PopupHeight + 50;
+                Left = location.X - arrowOffset.X;
+                Top = location.Y - arrowOffset.Y-MainGrid.Margin.Top;
+                Width = (DataContext as ViewModel.SignInUserPopupViewModel).PopupWitdh;
+                Height = (DataContext as ViewModel.SignInUserPopupViewModel).PopupHeight + 50;
                 Visibility = Visibility.Hidden;
-                this.Show();
+                //Left = 0;
+                Top = 0;
+                Show();
             }
         }
         public void Show(Point location)
         {
             OrgLocation = location;
+
             var pageSize = new Size((DataContext as ViewModel.SignInUserPopupViewModel).PopupWitdh, (DataContext as ViewModel.SignInUserPopupViewModel).PopupHeight);
             RecalculateWindowPos(pageSize);
             Show();
@@ -122,7 +125,7 @@ namespace FLBAuthentication.Views
             if (hwndSource != null)
             {
                 hwnd = hwndSource.Handle;
-                oldParent = SetParent(hwnd, (IntPtr)HWND_MESSAGE);
+               // oldParent = SetParent(hwnd, (IntPtr)HWND_MESSAGE);
                 Visibility = Visibility.Hidden;
             }
         }
@@ -140,6 +143,9 @@ namespace FLBAuthentication.Views
             Point arrowOffset = (DataContext as ViewModel.SignInUserPopupViewModel).ArrowOffset;
             this.Left = OrgLocation.X - arrowOffset.X;
             this.Top = OrgLocation.Y - arrowOffset.Y - MainGrid.Margin.Top;
+            var ss = Application.Current.MainWindow.LayoutTransform.Value;
+           // this.Left = 950;
+            //this.Top = 0;
         }
 
        // string url = "http://localhost:4200/#/signin";
@@ -159,7 +165,7 @@ namespace FLBAuthentication.Views
             if (!PageLoaded)
             {
                 Visibility = Visibility.Hidden;
-                SetParent(hwnd, oldParent);
+                //SetParent(hwnd, oldParent);
                 PageLoaded = true;
             }
         }
