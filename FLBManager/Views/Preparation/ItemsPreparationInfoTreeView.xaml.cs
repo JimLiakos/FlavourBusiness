@@ -71,7 +71,8 @@ namespace FLBManager.Views.Preparation
         /// <MetaDataID>{082d1303-8cd4-4c0f-bf33-90f841c2d52c}</MetaDataID>
         private void GlobalPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var mousepos = Mouse.GetPosition(this);
+            var po = PointToScreen(new Point(0, 0));
+            var mousepos = Mouse.GetPosition(Grid);
             if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
             {
                 PreviewMouseDown -= GlobalPreviewMouseDown;

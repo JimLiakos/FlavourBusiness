@@ -19,6 +19,7 @@
             </ContentControl>
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
+            
             <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
 
 
@@ -27,18 +28,19 @@
                 <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Background="{StaticResource WindowBackgroundBrush}">
                     <StackPanel  Orientation="Horizontal" Margin="5,5,5,5">
                         <Label VerticalAlignment="Center"  Content="{Binding Name}" />
-                        <ControlsEx:TextBoxNumberWithUnit Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
+                        <ControlsEx:TextBoxNumberWithUnit Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
                         <!--<TextBlock Grid.Column="1" Margin="3,0,0,0"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>-->
-                        <CheckBox Margin="5,0,0,0" Background="AliceBlue" VerticalAlignment="Center" Content="is cooked" TabIndex="1"></CheckBox>
+                        <CheckBox Margin="5,0,0,0" Background="AliceBlue" VerticalAlignment="Center" Content="is cooked" IsChecked="{Binding IsCooked}" TabIndex="1"></CheckBox>
                     </StackPanel>
                 </Border>
 
             </StackPanel>
+            
 
         </DataTemplate>
 
     </UserControl.Resources>
-    <Grid MouseLeftButtonDown="MouseLeftButtonDown" Focusable="True"  >
+    <Grid MouseLeftButtonDown="MouseLeftButtonDown" x:Name="Grid" >
         <ContentPresenter Content="{Binding}" >
             <ContentPresenter.Style>
                 <Style TargetType="{x:Type ContentPresenter}">
