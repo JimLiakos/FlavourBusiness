@@ -36,6 +36,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
         void Items…nPreparation(List<string> itemPreparationUris);
 
+        void ItemsRoasting(List<string> itemPreparationUris);
+
+        
+
         /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
         void ItemsPrepared(List<string> itemPreparationUris);
 

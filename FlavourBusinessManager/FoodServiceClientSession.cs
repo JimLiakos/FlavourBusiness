@@ -1354,6 +1354,10 @@ namespace FlavourBusinessManager.EndUsers
                     if (flavourItem.State == ItemPreparationState.IsPrepared)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
 
+                    if (flavourItem.State == ItemPreparationState.IsRoasting)
+                        flavourItem.State = ItemPreparationState.ÉnPreparation;
+
+
                 }
 
                 stateTransition.Consistent = true;
@@ -1413,6 +1417,29 @@ namespace FlavourBusinessManager.EndUsers
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
         }
+
+        public void ItemsRoasting(List<IItemPreparation> flavourItems)
+        {
+            CatchStateEvents();
+            var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var flavourItem in clientSessionItems)
+                    flavourItem.State = ItemPreparationState.IsPrepared;
+
+                stateTransition.Consistent = true;
+            }
+
+            foreach (var clientSession in MainSession.PartialClientSessions)
+                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+            foreach (var mealCourse in MainSession.Meal.Courses)
+                mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+
+        }
+
+        
 
         private ItemPreparation GetSessionItem(IItemPreparation item)
         {

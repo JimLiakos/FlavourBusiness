@@ -76,6 +76,12 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{d6f26cd4-5d10-4d71-a8f4-01a8b13bc9c2}</MetaDataID>
         [BackwardCompatibilityID("+14")]
         string CodeCard { get; set; }
+
+
+
+        bool IsCooked { get; }
+
+
     }
 
 
@@ -106,7 +112,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// The item is cooked
         /// </summary>
-        IsCooked = 5,
+        IsRoasting = 5,
 
         /// <summary>
         /// The item is prepared

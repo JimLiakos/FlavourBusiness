@@ -109,6 +109,17 @@ namespace FlavourBusinessFacade.ServicesContextResources
             return itemsPreparationInfoHierarchy;
         }
 
+        public static bool IsCooked(this IPreparationStation preparationStation,IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = preparationStation.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.IsCooked != null)
+                    return itemsPreparationInfo.IsCooked.Value;
+            }
+            return false;
+        }
+
         /// <MetaDataID>{b3200fb3-30f9-492c-afab-de4c31bcd06c}</MetaDataID>
         public static List<IItemsPreparationInfo> GetItemsPreparationInfo(this IPreparationStation preparationStation, IItemsCategory itemsCategory)
         {

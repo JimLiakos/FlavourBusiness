@@ -86,7 +86,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
-                if (itemsPreparationInfo.IsCooked != null)
+                if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
 
@@ -468,6 +468,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     if (CanPrepareItem(item.MenuItem))
                     {
+                        item.IsCooked = this.IsCooked(item.MenuItem);
+
                         //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
                         //itemPreparation.Update(item);
                         preparationItems.Add(item);
@@ -571,6 +573,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (flavourItem.PreparationStation != this)
                 {
                     flavourItem.PreparationStation = this;
+                    flavourItem.IsCooked= this.IsCooked(flavourItem.MenuItem);
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
                     var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
@@ -669,6 +672,20 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+
+        public void ItemsRoasting(List<string> itemPreparationUris)
+        {
+            var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where itemPreparationUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+
+            foreach (var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
+        }
+
+
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
         public void ItemsPrepared(List<string> itemPreparationUris)
         {

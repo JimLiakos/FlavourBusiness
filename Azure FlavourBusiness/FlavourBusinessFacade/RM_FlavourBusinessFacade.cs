@@ -2399,6 +2399,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemsPrepared", args, argsTypes);
         }
         
+        public void ItemsRoasting(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> clientSessionItems)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = clientSessionItems;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemsRoasting", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];
@@ -3061,6 +3070,15 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsΙnPreparation", args, argsTypes);
+        }
+        
+        public void ItemsRoasting(System.Collections.Generic.List<string> itemPreparationUris)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemPreparationUris;
+            argsTypes[0] = typeof(System.Collections.Generic.List<string>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsRoasting", args, argsTypes);
         }
         
         public void ItemsPrepared(System.Collections.Generic.List<string> itemPreparationUris)
