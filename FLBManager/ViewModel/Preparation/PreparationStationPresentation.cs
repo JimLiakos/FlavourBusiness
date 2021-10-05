@@ -370,12 +370,12 @@ namespace FLBManager.ViewModel.Preparation
         internal void SetIsCooked(MenuModel.IMenuItem menuItem, bool isCooked)
         {
             GetOrCreateItemsPreparationInfo(menuItem).IsCooked = isCooked;
-            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-                itemsPreparationInfoPresentation.Refresh();
+            //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+            //    itemsPreparationInfoPresentation.Refresh();
 
-            if (PreparationStationItems != null)
-                PreparationStationItems.Refresh();
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            //if (PreparationStationItems != null)
+            //    PreparationStationItems.Refresh();
+            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
         /// <MetaDataID>{f3cd4dba-9e86-44dc-ab51-d9dc8c7bc07c}</MetaDataID>
