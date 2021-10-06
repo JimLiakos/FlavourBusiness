@@ -1427,7 +1427,7 @@ namespace FlavourBusinessManager.EndUsers
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var flavourItem in clientSessionItems)
-                    flavourItem.State = ItemPreparationState.IsPrepared;
+                    flavourItem.State = ItemPreparationState.IsRoasting;
 
                 stateTransition.Consistent = true;
             }
