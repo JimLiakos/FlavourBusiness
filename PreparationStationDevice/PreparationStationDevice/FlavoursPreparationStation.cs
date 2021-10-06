@@ -230,6 +230,39 @@ namespace PreparationStationDevice
 
 
 
+
+        [HttpVisible]
+        public void ItemsRoasting(List<ItemPreparation> itemPreparations)
+        {
+            var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from preparationStationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                              select preparationStationItem).ToDictionary(x => x.uid);
+            foreach (var itemPreparation in itemPreparations)
+                itemPreparationsDictionary[itemPreparation.uid].Update(itemPreparation);
+
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
+                        break;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+        }
+
         private void PreparationStation_PreparationItemsChangeState(IPreparationStationRuntime sender, string deviceUpdateEtag)
         {
             var itemsOnDevice = (from servicePointPreparationItems in ServicePointsPreparationItems
