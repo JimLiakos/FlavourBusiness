@@ -648,15 +648,15 @@ namespace FlavourBusinessManager.RoomService
         {
             if (_MenuItemUri != item._MenuItemUri)
                 throw new Exception("_MenuItem can't be change");
-            ;
+            
             bool changed;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 changed = (_Price != item.Price ||
-_Quantity != item.Quantity ||
-_IsShared != item.IsShared ||
-_NumberOfShares != item.NumberOfShares ||
-_SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
+                        _Quantity != item.Quantity ||
+                        _IsShared != item.IsShared ||
+                        _NumberOfShares != item.NumberOfShares ||
+                        _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
 
                 _Price = item.Price;
                 _Quantity = item.Quantity;
@@ -664,6 +664,7 @@ _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
                 _NumberOfShares = item.NumberOfShares;
                 _CustomItemEnabled = item.CustomItemEnabled;
                 _SelectedMealCourseTypeUri = item.SelectedMealCourseTypeUri;
+                _State = item._State;
 
                 List<OptionChange> removedOptions = new List<OptionChange>(_OptionsChanges.OfType<OptionChange>());
 
