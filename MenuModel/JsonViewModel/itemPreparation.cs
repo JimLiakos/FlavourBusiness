@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MenuModel;
 using OOAdvantech;
+using OOAdvantech.Json;
 
 namespace MenuModel.JsonViewModel
 {
@@ -80,6 +81,7 @@ namespace MenuModel.JsonViewModel
         Multilingual _Name = new Multilingual();
 
         /// <MetaDataID>{a2dd9055-c206-498b-aebf-4ccf0cd19f21}</MetaDataID>
+        [JsonIgnore]
         public string Name
         {
             get
@@ -96,6 +98,7 @@ namespace MenuModel.JsonViewModel
         Multilingual _FullName = new Multilingual();
 
         /// <MetaDataID>{0ce5cb2f-42ec-4a14-8983-f7d4d4144227}</MetaDataID>
+        [JsonIgnore]
         public string FullName
         {
             get
@@ -116,9 +119,11 @@ namespace MenuModel.JsonViewModel
             }
             set
             {
+                _Name = value;
             }
         }
         /// <MetaDataID>{dc1df6b0-5184-431d-8ceb-47eb8ac23653}</MetaDataID>
+        
         public Multilingual MultilingualFullName
         {
             get
@@ -127,18 +132,21 @@ namespace MenuModel.JsonViewModel
             }
             set
             {
+                _FullName = value;
             }
         }
 
         /// <exclude>Excluded</exclude>
         Multilingual _Description = new Multilingual();
         /// <MetaDataID>{6daa2373-a0b4-4cb4-84b3-1782055dcba0}</MetaDataID>
+        [JsonIgnore]
         public string Description { get => _Description.GetValue<string>(); set => _Description.SetValue<string>(value); }
 
         /// <exclude>Excluded</exclude>
         Multilingual _ExtrasDescription = new Multilingual();
 
         /// <MetaDataID>{43483056-af33-4c5f-8a04-cb25dffde308}</MetaDataID>
+        [JsonIgnore]
         public string ExtrasDescription { get => _ExtrasDescription.GetValue<string>(); set => _ExtrasDescription.SetValue<string>(value); }
 
 
@@ -192,20 +200,22 @@ namespace MenuModel.JsonViewModel
 
         /// <exclude>Excluded</exclude>
         Multilingual _PromptForCustom = new Multilingual();
+        [JsonIgnore]
         public string PromptForCustom { get => _PromptForCustom.GetValue<string>(); set => _PromptForCustom.SetValue<string>(value); }
 
         /// <exclude>Excluded</exclude>
         Multilingual _PromptForDefault = new Multilingual();
+        [JsonIgnore]
         public string PromptForDefault { get => _PromptForDefault.GetValue<string>(); set => _PromptForDefault.SetValue<string>(value); }
         public bool AllowCustom { get; set; }
 
-        public Multilingual MultilingualPromptForCustom { get { return new Multilingual(_PromptForCustom); } set { } }
+        public Multilingual MultilingualPromptForCustom { get { return new Multilingual(_PromptForCustom); } set { _PromptForCustom = value; } }
 
-        public Multilingual MultilingualPromptForDefault { get { return new Multilingual(_PromptForDefault); } set { } }
+        public Multilingual MultilingualPromptForDefault { get { return new Multilingual(_PromptForDefault); } set { _PromptForDefault = value; } }
 
-        public Multilingual MultilingualDescription { get { return new Multilingual(_Description); } set { } }
+        public Multilingual MultilingualDescription { get { return new Multilingual(_Description); } set { _Description = value; } }
 
-        public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { } }
+        public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { _ExtrasDescription = value; } }
 
         public bool Stepper { get; set; }
 

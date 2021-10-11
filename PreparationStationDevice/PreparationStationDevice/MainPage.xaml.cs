@@ -27,7 +27,7 @@ namespace PreparationStationDevice
             //url = @"http://10.0.0.13:4301/";//work
             //url = "local://index.html";
 
-            url =string.Format( @"http://{0}:4301/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);//work
+            url =string.Format( @"https://{0}:4301/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);//work
             hybridWebView.Uri = url;
 
             try

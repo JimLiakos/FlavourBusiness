@@ -6,6 +6,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{ccf5778b-f8d7-4a74-9a29-6e633b64f90b}</MetaDataID>
     [BackwardCompatibilityID("{ccf5778b-f8d7-4a74-9a29-6e633b64f90b}")]
+    [GenerateFacadeProxy]
     public interface IItemsPreparationInfo
     {
         /// <MetaDataID>{af070276-0111-4c31-a073-48493d0a2ea8}</MetaDataID>
@@ -50,6 +51,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     //Extension
 
+#if !FlavourBusinessDevice    
     /// <MetaDataID>{15225b5f-29c1-422f-a877-130c45aa7ce7}</MetaDataID>
     public static class ItemsPreparationInfoTypeExtension
     {
@@ -253,4 +255,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
     }
+
+#endif
 }

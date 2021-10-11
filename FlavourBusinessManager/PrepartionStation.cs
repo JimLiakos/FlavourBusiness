@@ -453,12 +453,19 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
+            foreach (var servicePointPreparationItems in  (from  openSession  in ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions
+             from sessionPart in openSession.PartialClientSessions
+             from itemPreparation in sessionPart.FlavourItems
+             orderby itemPreparation.PreparedAtForecast
+            //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
+            group itemPreparation by openSession into ServicePointItems
+             select ServicePointItems))
 
-            foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-                                                                                       //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
-                                                                                   select item.Fetching(item.ClientSession)).ToArray()
-                                                          group itemPreparation by itemPreparation.ClientSession.MainSession into ServicePointItems
-                                                          select ServicePointItems))
+            //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
+            //                                                                           //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
+            //                                                                       select item.Fetching(item.ClientSession)).ToArray()
+            //                                              group itemPreparation by itemPreparation.ClientSession.MainSession into ServicePointItems
+            //                                              select ServicePointItems))
             {
                 var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
                 foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.Json.Linq;
 
 namespace MenuModel.JsonViewModel
@@ -35,6 +36,7 @@ namespace MenuModel.JsonViewModel
 
 
         /// <MetaDataID>{36b4e726-1744-4bab-9b5d-1c59f3509b3d}</MetaDataID>
+        [JsonIgnore]
         public string Name
         {
             get

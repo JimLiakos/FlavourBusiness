@@ -48,6 +48,7 @@ namespace MenuModel.JsonViewModel
         /// <exclude>Excluded</exclude>
         protected Multilingual _FullName = new Multilingual();
 
+        [JsonIgnore]
         public string FullName
         {
             get
@@ -76,6 +77,7 @@ namespace MenuModel.JsonViewModel
         protected Multilingual _Name = new Multilingual();
 
         /// <MetaDataID>{06636afc-de3b-4373-866c-79c2530762a7}</MetaDataID>
+        [JsonIgnore]
         public string Name
         {
             get
@@ -136,7 +138,7 @@ namespace MenuModel.JsonViewModel
         public IMenuItemType MenuItemType { get; set; }
 
         /// <MetaDataID>{651a67ee-b6d4-42fb-b895-17310c10916e}</MetaDataID>
-        public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
+        public Multilingual MultilingualName { get => new Multilingual(_Name); set { _Name = value; } }
 
         public Multilingual MultilingualFullName { get => new Multilingual(_FullName); set { _FullName = value; } }
 
@@ -430,13 +432,14 @@ namespace MenuModel.JsonViewModel
         {
         }
         public double PriceFactor { get; set; }
-        public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
+        public Multilingual MultilingualName { get => new Multilingual(_Name); set { _Name = value; } }
 
 
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();
 
         /// <MetaDataID>{37620c73-4bf5-4280-a40d-67fb7ef64614}</MetaDataID>
+        [JsonIgnore]
         public string Name
         {
             get

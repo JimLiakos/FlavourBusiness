@@ -31,9 +31,10 @@ namespace MenuModel.JsonViewModel
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();
 
-        public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
+        public Multilingual MultilingualName { get => new Multilingual(_Name); set { _Name = value; } }
 
         public double DurationInMinutes { get; set; }
+        [JsonIgnore]
         public string Name
         {
             get

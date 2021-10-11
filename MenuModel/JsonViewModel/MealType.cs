@@ -1,4 +1,5 @@
 ﻿using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.PersistenceLayer;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,14 @@ namespace MenuModel.JsonViewModel
         public string MealTypeUri { get; set; }
 
 
-        public Multilingual MultilingualName { get => new Multilingual(_Name); set { } }
+        public Multilingual MultilingualName { get => new Multilingual(_Name); set { _Name = value; } }
 
 
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();
 
         /// <MetaDataID>{37620c73-4bf5-4280-a40d-67fb7ef64614}</MetaDataID>
+        [JsonIgnore]
         public string Name
         {
             get
