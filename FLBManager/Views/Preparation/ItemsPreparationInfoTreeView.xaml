@@ -16,12 +16,12 @@
                     <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                     <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
                     <Image Margin="5,0,0,0" Width="16" Height="16"  Source="/FLBManager;component/Resources/Images/Metro/bbq16.png" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
-                    
+
                 </StackPanel>
             </ContentControl>
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
-            
+
             <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
 
 
@@ -33,11 +33,18 @@
                         <ControlsEx:TextBoxNumberWithUnit Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
                         <!--<TextBlock Grid.Column="1" Margin="3,0,0,0"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>-->
                         <CheckBox Margin="5,0,0,0" Background="AliceBlue" VerticalAlignment="Center" Content="is cooked" IsChecked="{Binding IsCooked}" TabIndex="1"></CheckBox>
+                        <Button x:Name="TagsToggle" Margin="5,0,0,0"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
+                            <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
+                        </Button>
+                        <Popup IsOpen="{Binding TagsPopupOpen}" Placement="Bottom" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="LanguagePopup"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
+                            <Grid Width="300" Height="100" Background="Bisque"></Grid>
+                        </Popup>
+
                     </StackPanel>
                 </Border>
 
             </StackPanel>
-            
+
 
         </DataTemplate>
 

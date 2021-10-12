@@ -85,6 +85,11 @@ namespace FLBManager.ViewModel.Preparation
                 Delete();
             });
 
+            ToggleTagsCommand = new RelayCommand((object sender) =>
+            {
+                ToggleTags();
+            });
+
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
                 AddSubPreparationStation();
@@ -99,6 +104,12 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
+        private void ToggleTags()
+        {
+            TagsPopupOpen = !TagsPopupOpen;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TagsPopupOpen)));
+        }
+
         /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent)
         {
@@ -110,6 +121,10 @@ namespace FLBManager.ViewModel.Preparation
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
+            });
+            ToggleTagsCommand = new RelayCommand((object sender) =>
+            {
+                ToggleTags();
             });
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
@@ -128,6 +143,10 @@ namespace FLBManager.ViewModel.Preparation
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
+            });
+            ToggleTagsCommand = new RelayCommand((object sender) =>
+            {
+                ToggleTags();
             });
 
         }
@@ -356,7 +375,7 @@ namespace FLBManager.ViewModel.Preparation
             {
             }
         }
-
+        public RelayCommand ToggleTagsCommand { get; protected set; } 
         /// <MetaDataID>{5b29545c-fe12-4953-ae37-58f532044a8c}</MetaDataID>
         public override ImageSource TreeImage
         {
@@ -578,6 +597,8 @@ namespace FLBManager.ViewModel.Preparation
                 return true;
             }
         }
+
+        public bool TagsPopupOpen { get;  set; }
 
         /// <MetaDataID>{68294fd3-55bc-4e63-ac2d-453faacd02d9}</MetaDataID>
         public void Refresh(MenuItem menuItemWithChanges)

@@ -38,7 +38,18 @@ namespace FLBAuthentication.ViewModel
         public event NewMessmateHandler MessmateAdded;
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
-        public event OOAdvantech.ObjectChangeStateHandle ObjectChanged;
+        public event OOAdvantech.ObjectChangeStateHandle _ObjectChanged;
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChanged
+        {
+            add
+            {
+                _ObjectChanged += value;
+            }
+            remove
+            {
+                _ObjectChanged -= value;
+            }
+        }
 
         public event EventHandler SwitchOnOffPopupView;
 
@@ -459,7 +470,7 @@ namespace FLBAuthentication.ViewModel
 
                          IUser user = null; ;
 
-                         
+
                          var userData = pAuthFlavourBusines.SignIn();
                          if (userData != null)
                          {
@@ -478,6 +489,11 @@ namespace FLBAuthentication.ViewModel
 
                          SignedIn?.Invoke(this, user);
                          OnPageSizeChanged(_PopupWitdh, _PopupHeight);
+                         _ObjectChanged?.Invoke(this, null);
+                         //Task.Run(() =>
+                         //{
+                         //    ObjectChanged?.Invoke(this, nameof(UserName));
+                         //});
                          return true;
 
                      }
