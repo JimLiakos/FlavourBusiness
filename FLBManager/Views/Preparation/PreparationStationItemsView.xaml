@@ -3,14 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FLBManager.Views.Preparation" 
-             xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" 
-             xmlns:ViewModel="clr-namespace:FLBManager.ViewModel.Preparation" 
-             xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" 
-             xmlns:resx="clr-namespace:FLBManager.Properties" 
-             
-             xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
-             xmlns:TreeViewEx="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
+             xmlns:local="clr-namespace:FLBManager.Views.Preparation" xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" xmlns:ViewModel="clr-namespace:FLBManager.ViewModel.Preparation" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:resx="clr-namespace:FLBManager.Properties" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -65,10 +58,8 @@
                 <Label Grid.Row="2" Grid.Column="1" Margin="3,0,3,3" Content="{x:Static resx:Resources.PreparationStationIdentityLabel}"   VerticalAlignment="Bottom" Height="20"/>
 
                 <TextBox Margin="2,0,2,0"  VerticalAlignment="Top" Text="{Binding PreparationStationIdentity,Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True"  HorizontalAlignment="Stretch"  Grid.Row="3" Grid.ColumnSpan="2"  Grid.Column="1" AcceptsReturn="True" Height="22" />
-
-                <!--<TreeViewEx:MultiSelectTreeView ></TreeViewEx:MultiSelectTreeView>-->
-                <TreeViewEx:MultiSelectTreeView  DragEnter="DragEnter" Drop="Drop" DragLeave="DragLeave" DragOver="DragOver"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding PreparationStationSubjects}"  >
-                    <TreeViewEx:MultiSelectTreeView.Resources>
+                <TreeView  DragEnter="DragEnter" Drop="Drop" DragLeave="DragLeave" DragOver="DragOver"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding PreparationStationSubjects}"  >
+                    <TreeView.Resources>
                         <DataTemplate x:Key="NormalTemplate">
                             <ContentControl Background="Transparent" MouseDoubleClick="ContentControl_MouseDoubleClick" >
                                 <ContentControl.InputBindings>
@@ -145,7 +136,7 @@
                         <Style TargetType="TreeViewItem">
                             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                         </Style>
-                    </TreeViewEx:MultiSelectTreeView.Resources>
+                    </TreeView.Resources>
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedItemChanged">
@@ -153,9 +144,9 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 
-                    <TreeViewEx:MultiSelectTreeView.ItemContainerStyle>
+                    <TreeView.ItemContainerStyle>
 
-                        <Style TargetType="{x:Type TreeViewEx:MultiSelectTreeViewItem}">
+                        <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                             <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
                             <!--<EventSetter Event="Selected" Handler="TreeViewSelectedItemChanged" />-->
@@ -166,9 +157,9 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </TreeViewEx:MultiSelectTreeView.ItemContainerStyle>
+                    </TreeView.ItemContainerStyle>
 
-                    <TreeViewEx:MultiSelectTreeView.ItemTemplate>
+                    <TreeView.ItemTemplate>
 
 
                         <HierarchicalDataTemplate   ItemsSource="{Binding Members}" >
@@ -190,9 +181,9 @@
 
                            
                         </HierarchicalDataTemplate>
-                    </TreeViewEx:MultiSelectTreeView.ItemTemplate>
+                    </TreeView.ItemTemplate>
 
-                </TreeViewEx:MultiSelectTreeView>
+                </TreeView>
 
             </Grid>
 
