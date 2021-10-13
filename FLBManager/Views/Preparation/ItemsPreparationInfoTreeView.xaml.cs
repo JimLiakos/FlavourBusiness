@@ -92,6 +92,11 @@ namespace FLBManager.Views.Preparation
             var mousepos = Mouse.GetPosition(Grid);
             if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
             {
+                if (DataContext is ItemsPreparationInfoPresentation && (DataContext as ItemsPreparationInfoPresentation).TagsPopupOpen)
+                    return;
+
+
+
                 PreviewMouseDown -= GlobalPreviewMouseDown;
                 var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
                 if (itemsPreparationInfo != null)

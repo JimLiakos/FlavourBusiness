@@ -89,26 +89,45 @@
 
             <Label Grid.Column="2" Content="{x:Static resx:Resources.OptionsLabel}" VerticalAlignment="Bottom" Margin="4,0,0,4"></Label>
 
-            <ListBox x:Name="List" Margin="4,0,0,0" SelectionMode="Extended"   SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  
+            <Border Grid.Column="2" Grid.Row="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}" >
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="45" Height="auto" />
+                    
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                    <Grid Margin="5,0,5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                <Label VerticalAlignment="Center"  Content="Tags:" Margin="4,0,0,4"></Label>
+                        <Border Margin="8" Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
+                <StackPanel   ></StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <ListBox x:Name="List" Margin="4,0,0,4" SelectionMode="Extended" Grid.Row="3"   SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  
                              ScrollViewer.CanContentScroll="False"
                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                             Grid.Column="2"
-                             Grid.Row="1" 
+                            
                              ItemsSource="{Binding Path= SelectedMenuType.Options}"
                              ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True"
                      ConnectableCtrl:ListBoxBehavior.UnselectAllOnEmptyClick="True" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
 
-                        <Grid  >
-                            <!--<TextBlock  Text="sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf "></TextBlock>-->
-                            <local:PreparationOptionView ViewType="{Binding ViewType}"></local:PreparationOptionView>
-                            <!--<ControlsEx:EditableTextBlock  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />-->
-                        </Grid>
+                            <Grid  >
+                                <!--<TextBlock  Text="sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf "></TextBlock>-->
+                                <local:PreparationOptionView ViewType="{Binding ViewType}"></local:PreparationOptionView>
+                                <!--<ControlsEx:EditableTextBlock  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />-->
+                            </Grid>
 
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            </Border>
             <Grid Grid.Row="2" Grid.Column="2" Background="WhiteSmoke" Margin="4,0,0,2">
                 <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
