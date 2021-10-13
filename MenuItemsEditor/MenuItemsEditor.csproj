@@ -141,6 +141,7 @@
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="ViewModel\ScaleTypesViewModel.cs" />
     <Compile Include="ViewModel\ScaleTypeViewModel.cs" />
+    <Compile Include="ViewModel\TagViewModel.cs" />
     <Compile Include="ViewModel\TaxableTypeViewModel.cs" />
     <Compile Include="ViewModel\TreeViewMenuItemViewModel.cs" />
     <Compile Include="Views\CategoryMenuItemTypesWindow.xaml.cs">

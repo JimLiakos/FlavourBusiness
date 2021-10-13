@@ -183,6 +183,11 @@ namespace MenuItemsEditor.ViewModel
 
               }, (object sender) => SelectedOption != null && !MultipleSelection);
 
+            NewTagCommand = new RelayCommand((object sender) =>
+            {
+                NewTag();
+            });
+
             DeleteSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
 
@@ -257,6 +262,8 @@ namespace MenuItemsEditor.ViewModel
             SetSelectedOptionCheckUncheckCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionCheckUncheck(); }, (object sender) => SelectedScaledOption != null && SelectedScaledOption.Quantitative && !SelectedScaledOption.IsHidden);
             SetSelectedOptionHideShowCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionHideShow(); }, (object sender) => SelectedOption != null);
         }
+
+       
 
         string _OptionShowImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/view16.png";
         string _OptionHideImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/restriction16.png";
@@ -333,6 +340,23 @@ namespace MenuItemsEditor.ViewModel
                 RealObject.Name = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnTranslated)));
             }
+        }
+
+        public List<TagViewModel> Tags
+        {
+            get
+            {
+                List<TagViewModel> tags = new List<TagViewModel>();
+                int index = 0;
+                foreach( var tag in   RealObject.PreparationTags.Split(';'))
+                    tags.Add(new TagViewModel(tag, index++));
+                return tags;
+            }
+        }
+
+        private void NewTag()
+        {
+         
         }
 
         public bool UnTranslated
@@ -445,6 +469,9 @@ namespace MenuItemsEditor.ViewModel
 
             }
         }
+
+
+        public WPFUIElementObjectBind.RelayCommand NewTagCommand { get; protected set; }
 
         /// <MetaDataID>{80e44ffa-d230-4eb5-8d25-24d79a0a17f5}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand EditSelectedOptionCommand { get; protected set; }

@@ -14,7 +14,7 @@ namespace MenuModel
 
 
         /// <exclude>Excluded</exclude>
-     OOAdvantech.MultilingualMember<string> _Name=new OOAdvantech.MultilingualMember<string>();
+        OOAdvantech.MultilingualMember<string> _Name = new OOAdvantech.MultilingualMember<string>();
         /// <MetaDataID>{9ff83696-c3ad-4c01-963b-85b285be16ff}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         [PersistentMember("_Name")]
@@ -67,7 +67,7 @@ namespace MenuModel
 
 
 
-   
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event PreparationOptionAddedHandle PreparationOptionAdded;
@@ -144,6 +144,29 @@ namespace MenuModel
                 return (from itemSelectorOptionsGroup in this.Options.OfType<ItemSelectorOptionsGroup>()
                         from itemSelectorOption in itemSelectorOptionsGroup.GroupedOptions
                         select itemSelectorOption).OfType<IPricingContext>().ToList();
+            }
+        }
+        /// <exclude>Excluded</exclude>
+        string _PreparationTags;
+
+        /// <MetaDataID>{58c8088e-85fe-449e-a569-6dfb5a42268a}</MetaDataID>
+        [PersistentMember(nameof(_PreparationTags))]
+        [BackwardCompatibilityID("+8")]
+        public string PreparationTags
+        {
+            get => _PreparationTags; 
+            set
+            {
+
+                if (_PreparationTags != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparationTags = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
             }
         }
 

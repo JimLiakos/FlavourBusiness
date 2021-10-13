@@ -100,11 +100,15 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                 <Label VerticalAlignment="Center"  Content="Tags:" Margin="4,0,0,4"></Label>
                         <Border Margin="8" Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
                 <StackPanel   ></StackPanel>
                         </Border>
+                        <Button VerticalAlignment="Center" Grid.Column="2" Margin="10,1,1,1" Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="26" Command="{Binding Path= SelectedMenuType.NewTagCommand}">
+                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                        </Button>
                     </Grid>
 
                     <ListBox x:Name="List" Margin="4,0,0,4" SelectionMode="Extended" Grid.Row="3"   SelectedValue="{Binding Path= SelectedMenuType.SelectedOption}"  

@@ -8,6 +8,9 @@ namespace MenuModel
     /// <MetaDataID>{e2352da1-a028-4f5c-980b-0403e38510c5}</MetaDataID>
     public interface IMenuItemType
     {
+        /// <MetaDataID>{2031194b-6448-4e09-914c-89fa20928f46}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
+        string PreparationTags { get; set; }
 
         /// <MetaDataID>{46fd7d70-aaf8-4ef8-a073-36b5e55e9c0e}</MetaDataID>
         void MovePreparationOption(IPreparationOption preparationOption, int newpos);
