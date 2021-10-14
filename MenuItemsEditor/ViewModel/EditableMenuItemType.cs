@@ -348,15 +348,25 @@ namespace MenuItemsEditor.ViewModel
             {
                 List<TagViewModel> tags = new List<TagViewModel>();
                 int index = 0;
-                foreach( var tag in   RealObject.PreparationTags.Split(';'))
-                    tags.Add(new TagViewModel(tag, index++));
+                if (RealObject.PreparationTags != null)
+                {
+                    foreach (var tag in RealObject.PreparationTags.Split(';'))
+                        tags.Add(new TagViewModel(tag, index++));
+                }
                 return tags;
             }
         }
 
         private void NewTag()
         {
-         
+
+            if (string.IsNullOrWhiteSpace(RealObject.PreparationTags))
+                RealObject.PreparationTags += "new tag";
+            else
+                RealObject.PreparationTags += ";new tag";
+
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Tags)));
+
         }
 
         public bool UnTranslated
