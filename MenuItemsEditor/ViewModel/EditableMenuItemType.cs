@@ -217,13 +217,13 @@ namespace MenuItemsEditor.ViewModel
 
 
                     var jSetttings = new JsonSerializerSettings(JsonContractType.Serialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);// { TypeNameHandling = ServerSession.Web ? TypeNameHandling.None : TypeNameHandling.All, Binder = new OOAdvantech.Remoting.RestApi.SerializationBinder(Web), ContractResolver = new JsonContractResolver(JsonContractType.Serialize, ChannelUri, InternalChannelUri, ServerSession,Web) };
-                     var json = OOAdvantech.Json.JsonConvert.SerializeObject(options, jSetttings);
+                    var json = OOAdvantech.Json.JsonConvert.SerializeObject(options, jSetttings);
 
                     //var json = JsonConvert.SerializeObject(options, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
                     Clipboard.SetData("OptionsJson", json);
                 }
 
-                
+
             }, (object sender) => SelectedOption != null);
 
             PasteOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
@@ -232,7 +232,7 @@ namespace MenuItemsEditor.ViewModel
                 Dictionary<object, object> mappedObjects = new Dictionary<object, object>();
                 var json = Clipboard.GetData("OptionsJson") as string;
                 var jSetttings = new JsonSerializerSettings(JsonContractType.Deserialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);
-                var options= OOAdvantech.Json.JsonConvert.DeserializeObject<object[]>(json, jSetttings).OfType<MenuModel.IPreparationOption>().ToList();
+                var options = OOAdvantech.Json.JsonConvert.DeserializeObject<object[]>(json, jSetttings).OfType<MenuModel.IPreparationOption>().ToList();
 
                 foreach (var option in options)
                 {
@@ -263,7 +263,7 @@ namespace MenuItemsEditor.ViewModel
             SetSelectedOptionHideShowCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionHideShow(); }, (object sender) => SelectedOption != null);
         }
 
-       
+
 
         string _OptionShowImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/view16.png";
         string _OptionHideImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/restriction16.png";
@@ -342,31 +342,79 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
+        List<TagViewModel> _Tags;
+
         public List<TagViewModel> Tags
         {
             get
             {
-                List<TagViewModel> tags = new List<TagViewModel>();
-                int index = 0;
-                if (RealObject.PreparationTags != null)
+                if (_Tags == null)
                 {
-                    foreach (var tag in RealObject.PreparationTags.Split(';'))
-                        tags.Add(new TagViewModel(tag, index++));
+                    List<TagViewModel> tags = new List<TagViewModel>();
+                    int index = 0;
+                    if (RealObject.PreparationTags != null)
+                    {
+                        foreach (var tag in RealObject.PreparationTags.Split(';'))
+                        {
+                            var tagPresentation = new TagViewModel(tag, index++);
+                            tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+                            tagPresentation.NameChanged += TagPresentation_NameChanged;
+                            tags.Add(tagPresentation);
+                        }
+                    }
+                    _Tags = tags;
                 }
-                return tags;
+
+                return _Tags;
             }
+        }
+
+        private void TagPresentation_TagDeleted(TagViewModel tag)
+        {
+            _Tags.RemoveAt(tag.Index);
+            tag.TagDeleted -= TagPresentation_TagDeleted;
+            tag.NameChanged -= TagPresentation_NameChanged;
+            int i = 0;
+            RealObject.PreparationTags = null;
+            foreach (var theTag in _Tags)
+            {
+                theTag.Index = _Tags.IndexOf(theTag);
+                if (_Tags.IndexOf(theTag) == 0)
+                    RealObject.PreparationTags = tag.Name;
+                else
+                    RealObject.PreparationTags = ";" + tag.Name;
+            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
         }
 
         private void NewTag()
         {
-
-            if (string.IsNullOrWhiteSpace(RealObject.PreparationTags))
-                RealObject.PreparationTags += "new tag";
+            var tagPresentation = new TagViewModel("new tag", Tags.Count);
+            tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+            tagPresentation.NameChanged += TagPresentation_NameChanged;
+            if (Tags.Count == 0)
+                RealObject.PreparationTags += tagPresentation.Name;
             else
-                RealObject.PreparationTags += ";new tag";
+                RealObject.PreparationTags += ";" + tagPresentation.Name;
 
-            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Tags)));
+            _Tags.Add(tagPresentation);
 
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
+
+        }
+
+        private void TagPresentation_NameChanged(TagViewModel tag)
+        {
+            int i = 0;
+            RealObject.PreparationTags = null;
+            foreach (var theTag in _Tags)
+            {
+                theTag.Index = _Tags.IndexOf(theTag);
+                if (_Tags.IndexOf(theTag) == 0)
+                    RealObject.PreparationTags = tag.Name;
+                else
+                    RealObject.PreparationTags = ";" + tag.Name;
+            }
         }
 
         public bool UnTranslated

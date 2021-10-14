@@ -1,4 +1,4 @@
-﻿using FLBManager.ViewModel.Preparation;
+﻿using MenuItemsEditor.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,30 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FLBManager.Views.Preparation
+namespace MenuItemsEditor.Views
 {
     /// <summary>
-    /// Interaction logic for ItemsPreparationInfoTreeView.xaml
+    /// Interaction logic for TagView.xaml
     /// </summary>
-    /// <MetaDataID>FLBManager.Views.Preparation.ItemsPreparationInfoTreeView</MetaDataID>
-    public partial class ItemsPreparationInfoTreeView : UserControl
+    public partial class TagView : UserControl
     {
-        /// <MetaDataID>{61ee8805-1350-48bb-b110-343579eb0ca1}</MetaDataID>
-        public ItemsPreparationInfoTreeView()
+        public TagView()
         {
             InitializeComponent();
-            Unloaded += ItemsPreparationInfoTreeView_Unloaded;
-            Loaded += ItemsPreparationInfoTreeView_Loaded;
+            Unloaded += TagView_Unloaded;
+            Loaded += TagView_Loaded;
         }
 
-        private void ItemsPreparationInfoTreeView_Loaded(object sender, RoutedEventArgs e)
+
+        private void TagView_Loaded(object sender, RoutedEventArgs e)
         {
-            var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
-            if (itemsPreparationInfo != null && itemsPreparationInfo.CanPrepared&&itemsPreparationInfo.Edit)
+            var tag = this.GetDataContextObject<TagViewModel>();
+            if (tag != null &&  tag.Edit)
                 PreviewMouseDown += GlobalPreviewMouseDown;
         }
 
-        private void ItemsPreparationInfoTreeView_Unloaded(object sender, RoutedEventArgs e)
+        private void TagView_Unloaded(object sender, RoutedEventArgs e)
         {
             PreviewMouseDown -= GlobalPreviewMouseDown;
         }
@@ -70,16 +69,16 @@ namespace FLBManager.Views.Preparation
             {
                 PreviewMouseDown += GlobalPreviewMouseDown;
 
-                var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
-                if (itemsPreparationInfo != null && itemsPreparationInfo.CanPrepared)
+                var tag = this.GetDataContextObject<TagViewModel>();
+                if (tag != null )
                 {
-                    itemsPreparationInfo.Edit = true;
+                    tag.Edit = true;
                     e.Handled = true;
                 }
             }
         }
 
-        
+
 
         /// <MetaDataID>{082d1303-8cd4-4c0f-bf33-90f841c2d52c}</MetaDataID>
         private void GlobalPreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -88,15 +87,15 @@ namespace FLBManager.Views.Preparation
             var mousepos = Mouse.GetPosition(Grid);
             if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
             {
-                if (DataContext is ItemsPreparationInfoPresentation && (DataContext as ItemsPreparationInfoPresentation).TagsPopupOpen)
-                    return;
-
-
-
                 PreviewMouseDown -= GlobalPreviewMouseDown;
-                var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
-                if (itemsPreparationInfo != null)
-                    itemsPreparationInfo.Edit = false;
+                var tag = this.GetDataContextObject<TagViewModel>();
+                if (tag != null)
+                {
+                    this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
+                    {
+                        tag.Edit = false;
+                    }));
+                }
             }
         }
 
@@ -105,11 +104,7 @@ namespace FLBManager.Views.Preparation
         {
             _PreviewMouseDown?.Invoke(sender, e);
         }
+
+        delegate void PreviewMouseDownHandle(object sender, MouseButtonEventArgs e);
     }
-
-
-
-
-    delegate void PreviewMouseDownHandle(object sender, MouseButtonEventArgs e);
-
 }

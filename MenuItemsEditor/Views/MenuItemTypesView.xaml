@@ -104,28 +104,53 @@
                         </Grid.ColumnDefinitions>
                         <Label VerticalAlignment="Center"  Content="Tags:" Margin="4,0,0,4"></Label>
                         <Border Margin="8" Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
-                            <StackPanel >
+                            
                                 <ItemsControl ItemsSource="{Binding SelectedMenuType.Tags}" >
-                                    <ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Margin="3,0,0,0"  BorderBrush="#FF000000" BorderThickness="1" CornerRadius="10"  HorizontalAlignment="Left">
+                                        <local:TagView></local:TagView>
+                                            <!--<Border Margin="3,2,0,0"  BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="1" CornerRadius="10"  HorizontalAlignment="Left">
                                             <Grid Margin="8,1,8,1"  HorizontalAlignment="Left"  >
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
                                                 
-                                            <TextBlock Text="{Binding Name}"></TextBlock>
-                                                    <Image Grid.Column="1" Margin="5,0,0,0" Width="12" Height="12" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+                                                    <Image Cursor="Hand" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Width="12" Height="12" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png">
+                                                        <Image.Style>
+                                                            <Style TargetType="{x:Type Image}">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect ShadowDepth="0" Color="{StaticResource Color_000}" Opacity="1" BlurRadius="20"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Image.Style>
+                                                        <Image.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding DeleteTagCommand, Mode=OneTime}" />
+                                                        </Image.InputBindings>
+
+                                                    </Image>
                                                 </Grid>
-                                            </Border>
+                                            </Border>-->
+                                            
                                         </DataTemplate>
 
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
 
 
-                            </StackPanel>
+                            
                         </Border>
                         <Button VerticalAlignment="Center" Grid.Column="2" Margin="10,1,1,1" Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="26" Command="{Binding Path= SelectedMenuType.NewTagCommand}">
                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
