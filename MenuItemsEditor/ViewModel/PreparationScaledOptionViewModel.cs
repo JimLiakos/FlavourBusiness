@@ -562,14 +562,13 @@ namespace MenuItemsEditor.ViewModel
                 if (_Tags == null)
                 {
                     List<TagViewModel> tags = new List<TagViewModel>();
-                    int index = 0;
+                    
                     if (PreparationScaledOption.PreparationTags != null)
                     {
-                        foreach (var tag in PreparationScaledOption.PreparationTags.Split(';'))
+                        foreach (var tag in PreparationScaledOption.PreparationTags)
                         {
-                            var tagPresentation = new TagViewModel(tag, index++);
+                            var tagPresentation = new TagViewModel(tag);
                             tagPresentation.TagDeleted += TagPresentation_TagDeleted;
-                            tagPresentation.NameChanged += TagPresentation_NameChanged;
                             tags.Add(tagPresentation);
                         }
                     }
@@ -583,31 +582,17 @@ namespace MenuItemsEditor.ViewModel
 
         private void TagPresentation_TagDeleted(TagViewModel tag)
         {
-            _Tags.RemoveAt(tag.Index);
+            _Tags.Remove(tag);
             tag.TagDeleted -= TagPresentation_TagDeleted;
-            tag.NameChanged -= TagPresentation_NameChanged;
-            int i = 0;
-            PreparationScaledOption.PreparationTags = null;
-            foreach (var theTag in _Tags)
-            {
-                theTag.Index = _Tags.IndexOf(theTag);
-                if (_Tags.IndexOf(theTag) == 0)
-                    PreparationScaledOption.PreparationTags = tag.Name;
-                else
-                    PreparationScaledOption.PreparationTags = ";" + tag.Name;
-            }
+            PreparationScaledOption.RemovePreparationTag(tag.Tag);
             _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
+
         }
 
         private void NewTag()
         {
-            var tagPresentation = new TagViewModel("new tag", Tags.Count);
+            var tagPresentation = new TagViewModel(PreparationScaledOption.NewPreparationTag());
             tagPresentation.TagDeleted += TagPresentation_TagDeleted;
-            tagPresentation.NameChanged += TagPresentation_NameChanged;
-            if (Tags.Count == 0)
-                PreparationScaledOption.PreparationTags += tagPresentation.Name;
-            else
-                PreparationScaledOption.PreparationTags += ";" + tagPresentation.Name;
 
             _Tags.Add(tagPresentation);
 
@@ -615,21 +600,7 @@ namespace MenuItemsEditor.ViewModel
 
         }
 
-        private void TagPresentation_NameChanged(TagViewModel tag)
-        {
-            int i = 0;
-            PreparationScaledOption.PreparationTags = null;
-            foreach (var theTag in _Tags)
-            {
-                theTag.Index = _Tags.IndexOf(theTag);
-                if (_Tags.IndexOf(theTag) == 0)
-                    PreparationScaledOption.PreparationTags = tag.Name;
-                else
-                    PreparationScaledOption.PreparationTags = ";" + tag.Name;
-            }
-        }
-
-
+ 
 
         /// <MetaDataID>{91cfab13-4383-4cae-a993-ff04ce46bcec}</MetaDataID>
         public virtual decimal Price

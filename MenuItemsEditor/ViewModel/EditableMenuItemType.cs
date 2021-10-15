@@ -351,72 +351,41 @@ namespace MenuItemsEditor.ViewModel
                 if (_Tags == null)
                 {
                     List<TagViewModel> tags = new List<TagViewModel>();
-                    int index = 0;
                     if (RealObject.PreparationTags != null)
                     {
-                        foreach (var tag in RealObject.PreparationTags.Split(';'))
+                        foreach (var tag in RealObject.PreparationTags)
                         {
-                            var tagPresentation = new TagViewModel(tag, index++);
+                            var tagPresentation = new TagViewModel(tag );
                             tagPresentation.TagDeleted += TagPresentation_TagDeleted;
-                            tagPresentation.NameChanged += TagPresentation_NameChanged;
                             tags.Add(tagPresentation);
                         }
                     }
                     _Tags = tags;
                 }
-
                 return _Tags;
             }
         }
 
         private void TagPresentation_TagDeleted(TagViewModel tag)
         {
-            _Tags.RemoveAt(tag.Index);
+            _Tags.Remove(tag);
             tag.TagDeleted -= TagPresentation_TagDeleted;
-            tag.NameChanged -= TagPresentation_NameChanged;
-            int i = 0;
-            RealObject.PreparationTags = null;
-            foreach (var theTag in _Tags)
-            {
-                theTag.Index = _Tags.IndexOf(theTag);
-                if (_Tags.IndexOf(theTag) == 0)
-                    RealObject.PreparationTags = tag.Name;
-                else
-                    RealObject.PreparationTags = ";" + tag.Name;
-            }
+            RealObject.RemovePreparationTag(tag.Tag);
+      
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
         }
 
         private void NewTag()
         {
-            var tagPresentation = new TagViewModel("new tag", Tags.Count);
+            var tagPresentation = new TagViewModel(RealObject.NewPreparationTag());
             tagPresentation.TagDeleted += TagPresentation_TagDeleted;
-            tagPresentation.NameChanged += TagPresentation_NameChanged;
-            if (Tags.Count == 0)
-                RealObject.PreparationTags += tagPresentation.Name;
-            else
-                RealObject.PreparationTags += ";" + tagPresentation.Name;
-
             _Tags.Add(tagPresentation);
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
 
         }
 
-        private void TagPresentation_NameChanged(TagViewModel tag)
-        {
-            int i = 0;
-            RealObject.PreparationTags = null;
-            foreach (var theTag in _Tags)
-            {
-                theTag.Index = _Tags.IndexOf(theTag);
-                if (_Tags.IndexOf(theTag) == 0)
-                    RealObject.PreparationTags = tag.Name;
-                else
-                    RealObject.PreparationTags = ";" + tag.Name;
-            }
-        }
-
+   
         public bool UnTranslated
         {
             get

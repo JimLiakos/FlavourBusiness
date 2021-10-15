@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MenuModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,21 +11,22 @@ namespace MenuItemsEditor.ViewModel
     /// <MetaDataID>{a5029aea-1f16-402d-8b23-3e958c492af4}</MetaDataID>
     public class TagViewModel : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, INotifyPropertyChanged
     {
-
-        public TagViewModel(string name, int index)
+        public readonly ITag Tag;
+        public TagViewModel(ITag tag)
         {
-            Name = name;
-            orgName = name;
-            Index = index;
+            Tag = tag;
+            Name = tag. Name;
+            
+            
             DeleteTagCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 TagDeleted?.Invoke(this);
             });
         }
-        string orgName;
+        
         public string Name { get; set; }
 
-        public int Index;
+        
 
         public WPFUIElementObjectBind.RelayCommand DeleteTagCommand { get; protected set; }
 
@@ -39,17 +41,17 @@ namespace MenuItemsEditor.ViewModel
             {
                 _Edit = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
-                if (value == false && Name != orgName)
+                if (value == false )
                 {
-                    orgName = Name;
+                    Tag.Name = Name;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
-                    NameChanged?.Invoke(this);
+                    
                 }
             }
         }
 
         public event TagDeletedHandle TagDeleted;
-        public event NameChangedHandle NameChanged;
+        
         public event PropertyChangedEventHandler PropertyChanged;
     }
     public delegate void TagDeletedHandle(TagViewModel tag);

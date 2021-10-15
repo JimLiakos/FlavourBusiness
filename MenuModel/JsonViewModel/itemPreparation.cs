@@ -44,16 +44,10 @@ namespace MenuModel.JsonViewModel
             Quantity = 1;
             Prices = new List<IMenuItemPrice>();
 
-            foreach (var tag in (from menuItemType in menuItem.Types
-                                 where menuItemType.PreparationTags != null
-                                 from preparationTag in menuItemType.PreparationTags.Split(';')
-                                 select preparationTag).ToList().Distinct())
-            {
-                if (!string.IsNullOrWhiteSpace(PreparationTags))
-                    PreparationTags += ";";
-
-                PreparationTags += tag;
-            }
+            PreparationTags = (from menuItemType in menuItem.Types
+                               from preparationTag in menuItemType.PreparationTags
+                               select preparationTag).ToList();
+            
 
             mappedObject[menuItem] = this;
             foreach (var menuItemPrice in menuItem.Prices)
@@ -170,7 +164,7 @@ namespace MenuModel.JsonViewModel
 
         /// <MetaDataID>{7b7e0fa3-d03b-4a63-aae4-218a0d0699a8}</MetaDataID>
         public IList<IMenuItemPrice> Prices { set; get; }
-        public string PreparationTags { get; set; }
+        public List<ITag> PreparationTags { get; set; }
 
         /// <MetaDataID>{2ed1e1fe-f97f-47cd-8b0d-7c254f2fb503}</MetaDataID>
         public string ISOCurrencySymbol { set; get; }

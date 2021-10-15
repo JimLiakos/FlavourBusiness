@@ -8,9 +8,18 @@ namespace MenuModel
     /// <MetaDataID>{e2352da1-a028-4f5c-980b-0403e38510c5}</MetaDataID>
     public interface IMenuItemType
     {
-        /// <MetaDataID>{2031194b-6448-4e09-914c-89fa20928f46}</MetaDataID>
-        [BackwardCompatibilityID("+1")]
-        string PreparationTags { get; set; }
+        [Association("ItemTypeTags", Roles.RoleA, "9d978529-a864-4ddb-a62f-c825741b81a5")]
+        [RoleAMultiplicityRange(1)]
+        [RoleBMultiplicityRange(0, 1)]
+        List<ITag> PreparationTags { get; }
+
+
+        /// <MetaDataID>{b8612e4e-dce3-4855-8e2d-a3b689f6f55d}</MetaDataID>
+        ITag NewPreparationTag( );
+
+        /// <MetaDataID>{c6076c60-d729-4c5d-8dd8-0d3f76d3a75b}</MetaDataID>
+        void RemovePreparationTag(ITag tag);
+
 
         /// <MetaDataID>{46fd7d70-aaf8-4ef8-a073-36b5e55e9c0e}</MetaDataID>
         void MovePreparationOption(IPreparationOption preparationOption, int newpos);

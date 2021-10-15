@@ -147,26 +147,38 @@ namespace MenuModel
             }
         }
         /// <exclude>Excluded</exclude>
-        string _PreparationTags;
+        OOAdvantech.Collections.Generic.Set<ITag> _PreparationTags = new OOAdvantech.Collections.Generic.Set<ITag>();
 
-        /// <MetaDataID>{58c8088e-85fe-449e-a569-6dfb5a42268a}</MetaDataID>
+
+
+        /// <MetaDataID>{bb132a8f-c130-4efe-8b5d-2d5e7176c80c}</MetaDataID>
         [PersistentMember(nameof(_PreparationTags))]
-        [BackwardCompatibilityID("+8")]
-        public string PreparationTags
+        [BackwardCompatibilityID("+9")]
+        public System.Collections.Generic.List<MenuModel.ITag> PreparationTags => _PreparationTags.ToThreadSafeList();
+
+        /// <MetaDataID>{38a33b37-5cc4-4f58-b495-221d4009f2ce}</MetaDataID>
+        public ITag NewPreparationTag()
         {
-            get => _PreparationTags; 
-            set
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                var tag = new Tag();
+                tag.Name = "new Tag";
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(tag);
+                _PreparationTags.Add(tag);
+                stateTransition.Consistent = true;
+                return tag;
+            }
 
-                if (_PreparationTags != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _PreparationTags = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
+        }
 
+        /// <MetaDataID>{6f93d5d8-debb-4d37-8299-0ac61ff737e2}</MetaDataID>
+        public void RemovePreparationTag(ITag tag)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _PreparationTags.Remove(tag);
+                stateTransition.Consistent = true;
             }
         }
 
@@ -202,5 +214,7 @@ namespace MenuModel
             }
 
         }
+
+     
     }
 }

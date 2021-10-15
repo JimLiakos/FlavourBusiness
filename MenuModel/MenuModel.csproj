@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="ScaleType.cs" />
     <Compile Include="StepperOptionsGroup.cs" />
+    <Compile Include="Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">

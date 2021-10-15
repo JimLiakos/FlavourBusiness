@@ -14,6 +14,7 @@ namespace MenuModel
     [Persistent()]
     public class PreparationScaledOption : MarshalByRefObject, IPreparationScaledOption
     {
+      
 
         /// <exclude>Excluded</exclude>
         bool _AutoGenFullName;
@@ -26,7 +27,6 @@ namespace MenuModel
             get => _AutoGenFullName;
             set
             {
-
                 if (_AutoGenFullName != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -35,7 +35,6 @@ namespace MenuModel
                         stateTransition.Consistent = true;
                     }
                 }
-
             }
         }
 
@@ -371,27 +370,8 @@ namespace MenuModel
             }
         }
 
-        /// <exclude>Excluded</exclude>
-        string _PreparationTags;
+      
 
-        /// <MetaDataID>{56b0eace-4331-4b5b-b859-2c57a8a3abe7}</MetaDataID>
-        [PersistentMember(nameof(_PreparationTags))]
-        [BackwardCompatibilityID("+14")]
-        public string PreparationTags
-        {
-            get => _PreparationTags;
-            set
-            {
-                if (_PreparationTags != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _PreparationTags = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
 
 
         /// <MetaDataID>{9ee65ddc-efa8-440f-a2d5-1207e091705c}</MetaDataID>
@@ -548,5 +528,44 @@ namespace MenuModel
 
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ITag> _PreparationTags = new OOAdvantech.Collections.Generic.Set<ITag>();
+
+        /// <MetaDataID>{bb132a8f-c130-4efe-8b5d-2d5e7176c80c}</MetaDataID>
+        [PersistentMember(nameof(_PreparationTags))]
+        [BackwardCompatibilityID("+15")]
+        public System.Collections.Generic.List<MenuModel.ITag> PreparationTags => _PreparationTags.ToThreadSafeList();
+
+
+        /// <MetaDataID>{fcd7f32e-028f-488f-a7d4-231d967ca139}</MetaDataID>
+        public void RemovePreparationTag(ITag tag)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _PreparationTags.Remove(tag);
+                stateTransition.Consistent = true;
+            }
+        }
+
+
+      
+        /// <MetaDataID>{38a33b37-5cc4-4f58-b495-221d4009f2ce}</MetaDataID>
+        public ITag NewPreparationTag()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var tag = new Tag();
+                tag.Name = "new Tag";
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(tag);
+                _PreparationTags.Add(tag);
+                stateTransition.Consistent = true;
+                return tag;
+            }
+
+        }
+
     }
 }

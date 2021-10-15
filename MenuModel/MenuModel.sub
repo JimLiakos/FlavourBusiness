@@ -114,7 +114,11 @@
 		(object Realize_Relationship
 		    quid       	"60757A76011F"
 		    supplier   	"Logical View::MenuModel::IPartofMeal"
-		    quidu      	"6075775A010B"))
+		    quidu      	"6075775A010B")
+		(object Realize_Relationship
+		    quid       	"616954290275"
+		    supplier   	"Logical View::MenuModel::ITag"
+		    quidu      	"616950830001"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -825,4 +829,36 @@
 		    quidu      	"60757A76011F"
 		    client     	@18
 		    supplier   	@39
+		    line_style 	0)
+		(object InterfaceView "Logical View::MenuModel::ITag" @41
+		    location   	(1649, 1653)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@41
+			location   	(1648, 1761)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ITag")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"616950830001")
+		(object RealizeView "" @42
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"616954290275"
+		    client     	@18
+		    supplier   	@41
 		    line_style 	0)))))

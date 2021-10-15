@@ -7,9 +7,14 @@ namespace MenuModel
     /// <MetaDataID>{b39bddb7-8b3f-447d-a8ba-6130d048cbf0}</MetaDataID>
     public interface IPreparationScaledOption : IPricedSubject, IPreparationOption
     {
-        /// <MetaDataID>{ae71d1cc-ad52-485a-880c-e462b39922e1}</MetaDataID>
-        [BackwardCompatibilityID("+7")]
-        string PreparationTags { get; set; }
+        /// <MetaDataID>{6e119471-363f-4e9e-aed1-de0506416ee7}</MetaDataID>
+        void RemovePreparationTag(ITag tag);
+        MenuModel.ITag NewPreparationTag();
+
+        [Association("OtionTag", Roles.RoleA, "c46ab72d-2868-4607-b1b1-96d7bc916509")]
+        [RoleBMultiplicityRange(0, 1)]
+        List<ITag> PreparationTags { get; }
+
 
         /// <MetaDataID>{29efc8b3-7f6c-4747-9f54-ba3919433c30}</MetaDataID>
         [BackwardCompatibilityID("+6")]

@@ -40,6 +40,8 @@ namespace MenuModel.JsonViewModel
             PreparationTags = orgOption.PreparationTags;
 
 
+
+
         }
 
         //public Option(JObject jToken, Dictionary<string, object> mappedObject)
@@ -148,7 +150,9 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{93085f95-6a95-4064-aaaf-95037afa97d2}</MetaDataID>
         public bool IsRecipeIngredient { get; set; }
         public bool AutoGenFullName { get; set; }
-        public string PreparationTags { get; set; }
+
+        public List<ITag> PreparationTags { get; set; }
+
 
 
 #if MenuModel
@@ -299,6 +303,21 @@ namespace MenuModel.JsonViewModel
 
         /// <MetaDataID>{ff3cb718-369b-401c-a158-b0ec7fd28ee4}</MetaDataID>
         public void RemoveOptionSpecificFor(IMenuItem menuItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePreparationTag(ITag tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPreparationTag(ITag tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITag NewPreparationTag()
         {
             throw new NotImplementedException();
         }
