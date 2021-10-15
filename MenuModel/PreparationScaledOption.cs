@@ -120,6 +120,7 @@ namespace MenuModel
             _Name.Value = name;
         }
 
+        /// <MetaDataID>{3a3fd8ea-96f6-48bd-94a2-221053ec5ede}</MetaDataID>
         public PreparationScaledOption(IPreparationScaledOption preparationScaledOption, IMenuItemType menuItemType)
         {
 
@@ -370,7 +371,27 @@ namespace MenuModel
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _PreparationTags;
 
+        /// <MetaDataID>{56b0eace-4331-4b5b-b859-2c57a8a3abe7}</MetaDataID>
+        [PersistentMember(nameof(_PreparationTags))]
+        [BackwardCompatibilityID("+14")]
+        public string PreparationTags
+        {
+            get => _PreparationTags;
+            set
+            {
+                if (_PreparationTags != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparationTags = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <MetaDataID>{9ee65ddc-efa8-440f-a2d5-1207e091705c}</MetaDataID>

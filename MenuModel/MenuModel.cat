@@ -539,7 +539,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"7"))
+		    value      	"8"))
 	    quid       	"57221D830252"
 	    stereotype 	"Interface"
 	    superclasses 	(list inheritance_relationship_list
@@ -872,6 +872,39 @@
 			    value      	"+6"))
 		    quid       	"60672308032D"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "PreparationTags"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ae71d1cc-ad52-485a-880c-e462b39922e1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61691BC2018A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"61691BC2018A"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModelFacade"
 	    quidu      	"5D03255500E1"
@@ -2773,7 +2806,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"14"))
+		    value      	"15"))
 	    quid       	"57C3CC0702FB"
 	    realized_interfaces 	(list realize_rel_list
 		(object Realize_Relationship
@@ -2828,7 +2861,7 @@
 		    quid       	"589C12A7004A"
 		    parameters 	(list Parameters
 			(object Parameter "pricicingContext"
-			    quid       	"58D363A10082"
+			    quid       	"61691C7103CB"
 			    type       	"MenuModel.IPricingContext"))
 		    result     	"decimal"
 		    concurrency 	"Sequential"
@@ -2847,10 +2880,10 @@
 		    quid       	"589C12A70083"
 		    parameters 	(list Parameters
 			(object Parameter "pricicingContext"
-			    quid       	"58D363A102C4"
+			    quid       	"61691C720008"
 			    type       	"MenuModel.IPricingContext")
 			(object Parameter "price"
-			    quid       	"58D363A1031D"
+			    quid       	"61691C72001D"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2869,8 +2902,8 @@
 		    quid       	"589C12A700D6"
 		    parameters 	(list Parameters
 			(object Parameter "customazedPrice"
-			    quid       	"58D363A2005E"
-			    type       	"MenuModel.ICustomazedPrice"))
+			    quid       	"61691C720046"
+			    type       	"MenuModel.ICustomizedPrice"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -2888,7 +2921,7 @@
 		    quid       	"58A7560A00C8"
 		    parameters 	(list Parameters
 			(object Parameter "menuItem"
-			    quid       	"58A7560A00D7"
+			    quid       	"61691C72006B"
 			    type       	"MenuModel.IMenuItem"))
 		    result     	"MenuModel.IOptionMenuItemSpecific"
 		    concurrency 	"Sequential"
@@ -2907,7 +2940,7 @@
 		    quid       	"58A7560A0106"
 		    parameters 	(list Parameters
 			(object Parameter "menuItem"
-			    quid       	"58A7560A0125"
+			    quid       	"61691C720098"
 			    type       	"MenuModel.IMenuItem"))
 		    result     	"MenuModel.ILevel"
 		    concurrency 	"Sequential"
@@ -2926,10 +2959,10 @@
 		    quid       	"58A7560A0145"
 		    parameters 	(list Parameters
 			(object Parameter "menuItem"
-			    quid       	"58A7560A0164"
+			    quid       	"61691C7200C1"
 			    type       	"MenuModel.IMenuItem")
 			(object Parameter "initialLevel"
-			    quid       	"58A7560A0174"
+			    quid       	"61691C7200D4"
 			    type       	"MenuModel.ILevel"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2948,7 +2981,7 @@
 		    quid       	"58D363A20158"
 		    parameters 	(list Parameters
 			(object Parameter "menuItem"
-			    quid       	"58D363A201A6"
+			    quid       	"61691C72011B"
 			    type       	"MenuModel.IMenuItem"))
 		    result     	"bool"
 		    concurrency 	"Sequential"
@@ -2967,11 +3000,52 @@
 		    quid       	"58D363A20281"
 		    parameters 	(list Parameters
 			(object Parameter "menuItem"
-			    quid       	"58D363A202DE"
+			    quid       	"61691C72013C"
 			    type       	"MenuModel.IMenuItem")
 			(object Parameter "value"
-			    quid       	"58D363A2033C"
+			    quid       	"61691C72014D"
 			    type       	"bool"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PreparationScaledOption"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3a3fd8ea-96f6-48bd-94a2-221053ec5ede}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61691C710380"))
+		    quid       	"61691C710380"
+		    parameters 	(list Parameters
+			(object Parameter "preparationScaledOption"
+			    quid       	"61691C710394"
+			    type       	"MenuModel.IPreparationScaledOption")
+			(object Parameter "menuItemType"
+			    quid       	"61691C7103A8"
+			    type       	"MenuModel.IMenuItemType"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveOptionSpecificFor"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8bdbf291-53af-4eb9-b017-9025287fe627}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61691C7200F0"))
+		    quid       	"61691C7200F0"
+		    parameters 	(list Parameters
+			(object Parameter "menuItem"
+			    quid       	"61691C7200FF"
+			    type       	"MenuModel.IMenuItem"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -3374,6 +3448,52 @@
 			    value      	"{2d56972b-08d4-4e89-90ef-cff92b0d0cc4}"))
 		    quid       	"60671B89022B"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ad04d56a-77a8-4f0b-b074-5d1ccc3133af}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61691C720192"))
+		    quid       	"61691C720192"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "PreparationTags"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{56b0eace-4331-4b5b-b859-2c57a8a3abe7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61691C72024E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+14"))
+		    quid       	"61691C72024E"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModel"
 	    quidu      	"5721E69F03B9"
@@ -10132,7 +10252,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	7
+			nlines     	8
 			max_width  	937)
 		    width      	588
 		    height     	312
@@ -10542,24 +10662,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2E556007B"
-		    compartment 	(object Compartment
-			Parent_View 	@68
-			location   	(4785, 2077)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	303)
 		    width      	456
 		    height     	339
 		    annotation 	8)
@@ -11625,7 +11727,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	15
+			nlines     	17
 			max_width  	1581)
 		    width      	681
 		    height     	418

@@ -7,6 +7,10 @@ namespace MenuModel
     /// <MetaDataID>{b39bddb7-8b3f-447d-a8ba-6130d048cbf0}</MetaDataID>
     public interface IPreparationScaledOption : IPricedSubject, IPreparationOption
     {
+        /// <MetaDataID>{ae71d1cc-ad52-485a-880c-e462b39922e1}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        string PreparationTags { get; set; }
+
         /// <MetaDataID>{29efc8b3-7f6c-4747-9f54-ba3919433c30}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         bool AutoGenFullName { get; set; }

@@ -37,6 +37,9 @@ namespace MenuModel.JsonViewModel
             InitialLevelIndex = orgOption.LevelType.Levels.IndexOf(orgOption.Initial);// (orgOption.GetInitialFor(menuItem));
             IsRecipeIngredient = orgOption.IsRecipeIngredient;
             AutoGenFullName = orgOption.AutoGenFullName;
+            PreparationTags = orgOption.PreparationTags;
+
+
         }
 
         //public Option(JObject jToken, Dictionary<string, object> mappedObject)
@@ -145,6 +148,7 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{93085f95-6a95-4064-aaaf-95037afa97d2}</MetaDataID>
         public bool IsRecipeIngredient { get; set; }
         public bool AutoGenFullName { get; set; }
+        public string PreparationTags { get; set; }
 
 
 #if MenuModel

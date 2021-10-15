@@ -82,6 +82,11 @@ namespace MenuItemsEditor.ViewModel
             }, (object sender) => SelectedOptionLevel != null);
 
 
+            NewTagCommand = new RelayCommand((object sender) =>
+            {
+                NewTag();
+            });
+
 
             PreparationScaledOption.MenuItemType.PreparationOptionAdded += MenuItemType_PreparationOptionAdded;
             PreparationScaledOption.MenuItemType.PreparationOptionRemoved += MenuItemType_PreparationOptionRemoved;
@@ -544,6 +549,88 @@ namespace MenuItemsEditor.ViewModel
                 PreparationScaledOption.Quantitative = value;
             }
         }
+
+
+
+
+        List<TagViewModel> _Tags;
+
+        public List<TagViewModel> Tags
+        {
+            get
+            {
+                if (_Tags == null)
+                {
+                    List<TagViewModel> tags = new List<TagViewModel>();
+                    int index = 0;
+                    if (PreparationScaledOption.PreparationTags != null)
+                    {
+                        foreach (var tag in PreparationScaledOption.PreparationTags.Split(';'))
+                        {
+                            var tagPresentation = new TagViewModel(tag, index++);
+                            tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+                            tagPresentation.NameChanged += TagPresentation_NameChanged;
+                            tags.Add(tagPresentation);
+                        }
+                    }
+                    _Tags = tags;
+                }
+
+                return _Tags;
+            }
+        }
+        public WPFUIElementObjectBind.RelayCommand NewTagCommand { get; protected set; }
+
+        private void TagPresentation_TagDeleted(TagViewModel tag)
+        {
+            _Tags.RemoveAt(tag.Index);
+            tag.TagDeleted -= TagPresentation_TagDeleted;
+            tag.NameChanged -= TagPresentation_NameChanged;
+            int i = 0;
+            PreparationScaledOption.PreparationTags = null;
+            foreach (var theTag in _Tags)
+            {
+                theTag.Index = _Tags.IndexOf(theTag);
+                if (_Tags.IndexOf(theTag) == 0)
+                    PreparationScaledOption.PreparationTags = tag.Name;
+                else
+                    PreparationScaledOption.PreparationTags = ";" + tag.Name;
+            }
+            _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
+        }
+
+        private void NewTag()
+        {
+            var tagPresentation = new TagViewModel("new tag", Tags.Count);
+            tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+            tagPresentation.NameChanged += TagPresentation_NameChanged;
+            if (Tags.Count == 0)
+                PreparationScaledOption.PreparationTags += tagPresentation.Name;
+            else
+                PreparationScaledOption.PreparationTags += ";" + tagPresentation.Name;
+
+            _Tags.Add(tagPresentation);
+
+            _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tags)));
+
+        }
+
+        private void TagPresentation_NameChanged(TagViewModel tag)
+        {
+            int i = 0;
+            PreparationScaledOption.PreparationTags = null;
+            foreach (var theTag in _Tags)
+            {
+                theTag.Index = _Tags.IndexOf(theTag);
+                if (_Tags.IndexOf(theTag) == 0)
+                    PreparationScaledOption.PreparationTags = tag.Name;
+                else
+                    PreparationScaledOption.PreparationTags = ";" + tag.Name;
+            }
+        }
+
+
+
         /// <MetaDataID>{91cfab13-4383-4cae-a993-ff04ce46bcec}</MetaDataID>
         public virtual decimal Price
         {

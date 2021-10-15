@@ -19,7 +19,7 @@ namespace MenuModel.JsonViewModel
 
         }
 
-        
+
 
         /// <MetaDataID>{7d896d84-3ce1-4ee7-ab0c-c19232d93533}</MetaDataID>
         public string Uri { get; set; }
@@ -44,9 +44,16 @@ namespace MenuModel.JsonViewModel
             Quantity = 1;
             Prices = new List<IMenuItemPrice>();
 
-            PreparationTags=(from menuItemType in menuItem.Types
-             from preparationTag in menuItemType.PreparationTags.Split(';')
-             select preparationTag).ToList();
+            foreach (var tag in (from menuItemType in menuItem.Types
+                                 where menuItemType.PreparationTags != null
+                                 from preparationTag in menuItemType.PreparationTags.Split(';')
+                                 select preparationTag).ToList().Distinct())
+            {
+                if (!string.IsNullOrWhiteSpace(PreparationTags))
+                    PreparationTags += ";";
+
+                PreparationTags += tag;
+            }
 
             mappedObject[menuItem] = this;
             foreach (var menuItemPrice in menuItem.Prices)
@@ -129,7 +136,7 @@ namespace MenuModel.JsonViewModel
             }
         }
         /// <MetaDataID>{dc1df6b0-5184-431d-8ceb-47eb8ac23653}</MetaDataID>
-        
+
         public Multilingual MultilingualFullName
         {
             get
@@ -163,7 +170,7 @@ namespace MenuModel.JsonViewModel
 
         /// <MetaDataID>{7b7e0fa3-d03b-4a63-aae4-218a0d0699a8}</MetaDataID>
         public IList<IMenuItemPrice> Prices { set; get; }
-        public List<string> PreparationTags { get;  set; }
+        public string PreparationTags { get; set; }
 
         /// <MetaDataID>{2ed1e1fe-f97f-47cd-8b0d-7c254f2fb503}</MetaDataID>
         public string ISOCurrencySymbol { set; get; }

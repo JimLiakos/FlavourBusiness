@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:localViews="clr-namespace:MenuItemsEditor.Views"
         xmlns:local="clr-namespace:MenuItemsEditor"
+                
         xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
        xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
@@ -63,7 +64,7 @@
 
             <ControlTemplate x:Key="MaxPreparationScaledOptionView" TargetType="{x:Type ContentControl}">
 
-                <Grid Margin="4">
+                <Grid Margin="4" d:DataContext="{d:DesignInstance ViewModel:PreparationScaledOptionViewModel, IsDesignTimeCreatable=True}">
                     <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
@@ -649,7 +650,7 @@
 
 
 
-    <Grid Margin="4">
+    <Grid Margin="4" d:DataContext="{d:DesignInstance ViewModel:PreparationScaledOptionViewModel, IsDesignTimeCreatable=True}">
         <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
@@ -893,7 +894,16 @@
                                                                    TextWrapping="Wrap"/>
 
                         </Grid>
-                        <CheckBox IsEnabled="{Binding IsEditable}" Grid.Row="1" Content="{x:Static resx:Resources.QuantitativeCheckBoxLabel}" ToolTip="{x:Static resx:Resources.QuantitativeCheckBoxToolTip}" IsChecked="{Binding Quantitative}" HorizontalAlignment="Center" Margin="0,10,0,0" ></CheckBox>
+                        
+                            <Grid Margin="0,5,0,0" Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsEnabled="{Binding IsEditable}"  Content="{x:Static resx:Resources.QuantitativeCheckBoxLabel}" ToolTip="{x:Static resx:Resources.QuantitativeCheckBoxToolTip}" IsChecked="{Binding Quantitative}"  HorizontalAlignment="Center" />
+                                <CheckBox  IsChecked="{Binding IsRecipeIngredient}" Grid.Column="1"   ToolTip="{x:Static resx:Resources.IngredientCheckBoxToolTip}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"  HorizontalAlignment="Center"/>
+                            </Grid>
+                        
                         <Grid  Grid.Row="2" Grid.Column="0" Margin="0,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="28" />
@@ -917,7 +927,38 @@
                             <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                   ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
                         </Grid>
-                        <CheckBox HorizontalAlignment="Left" Grid.Row="4" Margin="-2,5,5,5" IsChecked="{Binding IsRecipeIngredient}"   ToolTip="{x:Static resx:Resources.IngredientCheckBoxToolTip}"  Content="{x:Static resx:Resources.IngredientCheckBoxLabel}"></CheckBox>
+
+                        <Grid Margin="5,0,5,0" Grid.Row="4" MinHeight="45">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label VerticalAlignment="Center"  Content="Tags:" Margin="4,0,0,4"></Label>
+                            <Border Margin="8" Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
+
+                                <ItemsControl ItemsSource="{Binding Tags}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <localViews:TagView></localViews:TagView>
+                                        </DataTemplate>
+
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+
+
+                            </Border>
+                            <Button VerticalAlignment="Center" Grid.Column="2" Margin="10,1,1,1" Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="26" Command="{Binding Path= NewTagCommand}">
+                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                            </Button>
+                        </Grid>
+
                     </Grid>
 
 
