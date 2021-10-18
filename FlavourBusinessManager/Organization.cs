@@ -1171,12 +1171,14 @@ namespace FlavourBusinessManager
             fileManager.Copy(menuItemsBlobUrl, operativeMenuItemsBlobUrl);
 
             menuItemsStorageRef.UploadService = null;
-            operativeMenuItemsStorageRef.UploadService = null;
+
 
 
             //PublishMenuRestaurantMenuData(operativeMenuItemsStorageRef);
 
 
+            operativeMenuItemsStorageRef = GetStorage(OrganizationStorages.OperativeRestaurantMenu);
+            operativeMenuItemsStorageRef.UploadService = null;
 
             foreach (var servicesContext in ServicesContexts)
             {

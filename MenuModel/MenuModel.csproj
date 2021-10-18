@@ -67,6 +67,7 @@
     <Compile Include="JsonViewModel\OptionGroup.cs" />
     <Compile Include="JsonViewModel\OptionMenuItemSpecific.cs" />
     <Compile Include="JsonViewModel\PartofMeal.cs" />
+    <Compile Include="JsonViewModel\Tag.cs" />
     <Compile Include="JsonViewModel\TypedObject.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="ItemSelectorOption.cs" />

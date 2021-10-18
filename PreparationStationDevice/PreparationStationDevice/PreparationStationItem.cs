@@ -9,6 +9,7 @@ using System.Windows.Controls;
 
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 
 namespace PreparationStationDevice
@@ -16,9 +17,13 @@ namespace PreparationStationDevice
     /// <MetaDataID>{3608ab58-bcc2-49f4-8a76-cf28cea7ac97}</MetaDataID>
     public class PreparationStationItem
     {
+        public List<ITag> Tags { get; private set; }
+
         public List<Ingredient> Ingredients;
 
         public ItemPreparation ItemPreparation;
+
+
 
         public ServicePointPreparationItems ServicePointPreparationItems;
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
@@ -30,6 +35,11 @@ namespace PreparationStationDevice
             if (ItemPreparation.MenuItem == null)
                 ItemPreparation.LoadMenuItem(menuItems);
 
+            MenuModel.JsonViewModel.MenuFoodItem menuFoodItem = ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem;
+
+            Tags = menuFoodItem.PreparationTags.ToList();
+
+            //ItemPreparation.MenuItem.Types
 
             Ingredients = (from optionGroup in (this.ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
                            from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
@@ -49,8 +59,6 @@ namespace PreparationStationDevice
                         ingredient.OptionChange = optionChange;
                         ingredient.GetMultilingualFullName();
                     }
-
-
                 }
                 else
                     Ingredients.Add(new Ingredient(optionChange) { IsExtra = true });
@@ -75,6 +83,11 @@ namespace PreparationStationDevice
             }
 
             var names = Ingredients.Select(x => x.Name).ToList();
+
+             Tags.AddRange(  (from ingredient in Ingredients
+                        from tag in ingredient.PreparationScaledOption.PreparationTags
+                        select tag).ToList());
+
 
 
             //if (ItemPreparation.MenuItem == null)

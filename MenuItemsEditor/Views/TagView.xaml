@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MenuItemsEditor.Views" xmlns:ControlEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+             xmlns:local="clr-namespace:MenuItemsEditor.Views" 
+             xmlns:localViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+             xmlns:ControlEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
              mc:Ignorable="d" 
               d:DesignHeight="100" d:DesignWidth="800">
     <UserControl.Resources>
-        <DataTemplate x:Key="NormalTemplate">
+        <DataTemplate x:Key="NormalTemplate" >
             <Border Margin="3,2,0,2"  BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="1" CornerRadius="10"  HorizontalAlignment="Left">
-                <Grid Margin="8,1,8,1"  HorizontalAlignment="Left"  >
+                <Grid Margin="8,1,8,1"  HorizontalAlignment="Left" d:DataContext="{d:DesignInstance   localViewModel:TagViewModel, IsDesignTimeCreatable=True}" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+                    <ControlEx:EditableTextBlock VerticalAlignment="Center" UnTranslated="{Binding UnTranslatedName }" Translator="{Binding Translator}" Text="{Binding Name}"></ControlEx:EditableTextBlock>
                     <Image Cursor="Hand" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Width="12" Height="12" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png">
                         <Image.Style>
                             <Style TargetType="{x:Type Image}">
@@ -40,14 +42,44 @@
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
 
-            <ControlEx:MultiligualWatermarkTextBox Margin="4" Height="30" VerticalContentAlignment="Center"  VerticalAlignment="Center" Text="{Binding Name , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <ControlEx:MultiligualWatermarkTextBox Margin="4" Height="30" UnTranslated="{Binding UnTranslatedName }"   Translator="{Binding Translator}"  VerticalContentAlignment="Center"  VerticalAlignment="Center" Text="{Binding Name , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
 
         </DataTemplate>
 
     </UserControl.Resources>
     <Grid  x:Name="Grid" MouseLeftButtonDown="MouseLeftButtonDown">
-        <ContentPresenter Content="{Binding}" >
+        <Border Margin="3,2,0,2"  BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="1" CornerRadius="10"  HorizontalAlignment="Left">
+            <Grid Margin="8,1,8,1"  HorizontalAlignment="Left" d:DataContext="{d:DesignInstance   localViewModel:TagViewModel, IsDesignTimeCreatable=True}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ControlEx:EditableTextBlock VerticalAlignment="Center" UnTranslated="{Binding UnTranslatedName }" Translator="{Binding Translator}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></ControlEx:EditableTextBlock>
+                <Image Cursor="Hand" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" Width="12" Height="12" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" Color="{StaticResource Color_000}" Opacity="1" BlurRadius="20"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding DeleteTagCommand, Mode=OneTime}" />
+                    </Image.InputBindings>
+
+                </Image>
+            </Grid>
+        </Border>
+
+        <!--<ContentPresenter Content="{Binding}" >
             <ContentPresenter.Style>
                 <Style TargetType="{x:Type ContentPresenter}">
                     <Setter Property="ContentTemplate" Value="{StaticResource NormalTemplate}"/>
@@ -58,6 +90,6 @@
                     </Style.Triggers>
                 </Style>
             </ContentPresenter.Style>
-        </ContentPresenter>
+        </ContentPresenter>-->
     </Grid>
 </UserControl>

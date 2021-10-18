@@ -1,3 +1,4 @@
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -34,5 +35,7 @@ namespace MenuModel
 
             }
         }
+
+        public Multilingual MultilingualName =>  new Multilingual(_Name);
     }
 }

@@ -46,7 +46,7 @@ namespace MenuModel.JsonViewModel
 
             PreparationTags = (from menuItemType in menuItem.Types
                                from preparationTag in menuItemType.PreparationTags
-                               select preparationTag).ToList();
+                               select new MenuModel.JsonViewModel.Tag(preparationTag)).OfType<ITag>().ToList();
             
 
             mappedObject[menuItem] = this;

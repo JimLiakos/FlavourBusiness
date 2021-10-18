@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel
 {
@@ -15,18 +16,56 @@ namespace MenuItemsEditor.ViewModel
         public TagViewModel(ITag tag)
         {
             Tag = tag;
-            Name = tag. Name;
-            
-            
+            Name = tag.Name;
+
+
             DeleteTagCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 TagDeleted?.Invoke(this);
             });
         }
-        
-        public string Name { get; set; }
 
-        
+        public TagViewModel()
+        {
+
+        }
+
+
+        public string Name
+        {
+            get => Tag.Name;
+            set
+            {
+                Tag.Name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnTranslatedName)));
+
+            }
+        }
+
+        public bool UnTranslatedName
+        {
+            get
+            {
+                string name = Name;
+                using (OOAdvantech.CultureContext cultureContext = new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo, false))
+                {
+                    return name != Name;
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        ITranslator _Translator;
+        /// <MetaDataID>{56097b50-8be4-4397-8a8b-8309c42108a0}</MetaDataID>
+        public ITranslator Translator
+        {
+            get
+            {
+                if (_Translator == null)
+                    _Translator = new Translator();
+                return _Translator;
+            }
+        }
 
         public WPFUIElementObjectBind.RelayCommand DeleteTagCommand { get; protected set; }
 
@@ -41,17 +80,17 @@ namespace MenuItemsEditor.ViewModel
             {
                 _Edit = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
-                if (value == false )
+                if (value == false)
                 {
                     Tag.Name = Name;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
-                    
+
                 }
             }
         }
 
         public event TagDeletedHandle TagDeleted;
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
     public delegate void TagDeletedHandle(TagViewModel tag);
