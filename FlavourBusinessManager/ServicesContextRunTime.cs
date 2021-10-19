@@ -794,7 +794,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
 
             var fbstorage = (from servicesContextRunTimeStorage in Storages
-                             where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.RestaurantMenus
+                             where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
                              select servicesContextRunTimeStorage).FirstOrDefault();
             var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
 
