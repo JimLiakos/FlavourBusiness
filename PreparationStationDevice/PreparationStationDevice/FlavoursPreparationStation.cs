@@ -263,6 +263,10 @@ namespace PreparationStationDevice
             });
         }
 
+
+
+
+
         private void PreparationStation_PreparationItemsChangeState(IPreparationStationRuntime sender, string deviceUpdateEtag)
         {
             var itemsOnDevice = (from servicePointPreparationItems in ServicePointsPreparationItems
