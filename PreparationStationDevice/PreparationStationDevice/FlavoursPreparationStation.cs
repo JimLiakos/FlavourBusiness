@@ -273,9 +273,33 @@ namespace PreparationStationDevice
                                  from preparationItem in servicePointPreparationItems.PreparationItems
                                  select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
-            ServicePointsPreparationItems = sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
+            var servicePointsPreparationItems = sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
 
-            PreparationItemsLoaded?.Invoke(this);
+            var existingPreparationItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                            from itemPreparation in servicePointPreparationItems.PreparationItems
+                                            select itemPreparation).ToList();
+
+            foreach (var updatedItemPreparation in (from servicePointPreparationItems in servicePointsPreparationItems
+                                                    from itemPreparation in servicePointPreparationItems.PreparationItems
+                                                    select itemPreparation))
+            {
+                var existingPreparationItem = existingPreparationItems.Where(x => x.uid == updatedItemPreparation.uid).FirstOrDefault();
+                if(existingPreparationItem==null)
+                {
+                    ServicePointsPreparationItems = servicePointsPreparationItems;
+                    PreparationItemsLoaded?.Invoke(this);
+                    break;
+                }
+                else if((existingPreparationItem as ItemPreparation).Update(updatedItemPreparation as ItemPreparation))
+                {
+                    ServicePointsPreparationItems = servicePointsPreparationItems;
+                    PreparationItemsLoaded?.Invoke(this);
+                    break;
+
+                }
+
+            }
+
         }
 
         [OOAdvantech.MetaDataRepository.HttpVisible]

@@ -1351,8 +1351,12 @@ namespace FlavourBusinessManager.EndUsers
                     if (flavourItem.State == ItemPreparationState.ÉnPreparation)
                         flavourItem.State = ItemPreparationState.PendingPreparation;
 
-                    if (flavourItem.State == ItemPreparationState.IsPrepared)
+                    if (flavourItem.State == ItemPreparationState.IsPrepared&&!flavourItem.IsCooked)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
+
+                    if (flavourItem.State == ItemPreparationState.IsPrepared && flavourItem.IsCooked)
+                        flavourItem.State = ItemPreparationState.IsRoasting;
+
 
                     if (flavourItem.State == ItemPreparationState.IsRoasting)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
