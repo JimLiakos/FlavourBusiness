@@ -12,6 +12,8 @@ using System.Net.Http;
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech;
 using Xamarin.Forms;
+using System.Reflection;
+using OOAdvantech.Json.Linq;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -20,7 +22,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 namespace PreparationStationDevice
 {
     /// <MetaDataID>{293c7b92-a89a-4179-a8ff-616948355d82}</MetaDataID>
-    public class FlavoursPreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class FlavoursPreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ILocalization
     {
         public FlavoursPreparationStation()
         {
@@ -446,6 +448,118 @@ namespace PreparationStationDevice
             }
             return Task<bool>.FromResult(true);
         }
+
+        
+        string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+        public string Language { get { return lan; } }
+
+        Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
+
+        public string GetTranslation(string langCountry)
+        {
+            if (Translations.ContainsKey(langCountry))
+                return Translations[langCountry].ToString();
+            string json = "{}";
+            var assembly = Assembly.GetExecutingAssembly();
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("PreparationStationDevice.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(jsonName))
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))
+                {
+                    json = reader.ReadToEnd();
+                    Translations[langCountry] = JObject.Parse(json);
+                    // Do something with the value
+                }
+            }
+            return json;
+
+        }
+
+
+        public string GetString(string langCountry, string key)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return null;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            return (jToken as JValue).Value as string;
+                    }
+                    return null;
+                }
+
+                if (jObject.TryGetValue(member, out jToken))
+                {
+                    jObject = jToken as JObject;
+
+                }
+                else
+                    return null;
+                i++;
+            }
+
+            return null;
+        }
+
+
+        public void SetString(string langCountry, string key, string newValue)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            (jToken as JValue).Value = newValue;
+                    }
+                    else
+                        jObject.Add(member, new JValue(newValue));
+                }
+                else
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                        jObject = jToken as JObject;
+                    else
+                    {
+                        jObject.Add(member, new JObject());
+                        jObject = jObject[member] as JObject;
+                    }
+                }
+                i++;
+            }
+
+        }
+
+        public string AppIdentity => "com.microneme.preparationstationdevice";
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);

@@ -1114,7 +1114,7 @@ namespace WaiterApp.ViewModel
                 return Translations[langCountry].ToString();
             string json = "{}";
             var assembly = Assembly.GetExecutingAssembly();
-            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(jsonName))
             {
                 using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))

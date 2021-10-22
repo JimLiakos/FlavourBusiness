@@ -117,6 +117,15 @@
     <EmbeddedResource Include="..\angularprojects\dont-wait\projects\waiterweb\src\assets\i18n\en.json">
       <Link>WaiterApp.WPF\i18n\en.json</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\WaiterWeb\src\assets\i18n\el.json">
+      <Link>WaiterApp.WPF\i18n\el.json</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\PreparationStationDeviceWeb\src\assets\i18n\el.json">
+      <Link>PreparationStationDevice.WPF\i18n\el.json</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\PreparationStationDeviceWeb\src\assets\i18n\en.json">
+      <Link>PreparationStationDevice.WPF\i18n\en.json</Link>
+    </EmbeddedResource>
     <None Include="..\menupresentationmodel\menustyles\FontData.cs">
       <Link>MenuCanvas\FontData.cs</Link>
     </None>
@@ -317,7 +326,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="WaiterApp.WPF\i18n\el.json" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="PreparationStationDevice.WPF\MainWindow.xaml">
@@ -387,8 +395,6 @@
       <Name>RestaurantHallLayoutModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PreparationStationDevice.WPF\i18n\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
