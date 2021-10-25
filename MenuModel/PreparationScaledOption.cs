@@ -538,6 +538,8 @@ namespace MenuModel
         [BackwardCompatibilityID("+15")]
         public System.Collections.Generic.List<MenuModel.ITag> PreparationTags => _PreparationTags.ToThreadSafeList();
 
+        public string Uri => OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.GetPersistentObjectUri(this);
+
 
         /// <MetaDataID>{fcd7f32e-028f-488f-a7d4-231d967ca139}</MetaDataID>
         public void RemovePreparationTag(ITag tag)

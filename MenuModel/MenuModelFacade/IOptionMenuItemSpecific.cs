@@ -22,9 +22,11 @@ namespace MenuModel
         [Association("CustomInitialLevel", Roles.RoleA, "ea0c898b-c84c-42ea-a29d-99f5e56e7f0c")]
         ILevel InitialLevel { get; set; }
 
-         
+        string Uri { get; }
 
 
 
-    }
+
+
+        }
 }

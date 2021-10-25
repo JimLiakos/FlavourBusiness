@@ -108,5 +108,7 @@ namespace MenuModel
                 }
             }
         }
+
+        public string Uri => OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.GetPersistentObjectUri(this);
     }
 }

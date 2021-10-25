@@ -244,9 +244,13 @@ namespace DontWaitApp
 
         /// <MetaDataID>{d52da524-96a8-4f0b-ae0f-703be4348ff2}</MetaDataID>
         string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+        
 
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
         public string Language { get { return lan; } }
+
+        string deflan = "en";
+        public string DefaultLanguage { get { return deflan; } }
 
         public string FontsLink { get; set; } = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
 

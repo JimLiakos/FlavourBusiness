@@ -66,7 +66,8 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
         public string Language { get { return lan; } }
 
-        
+        string deflan = "en";
+        public string DefaultLanguage { get { return deflan; } }
 
         static IAppLifeTime AppLifeTime
         {

@@ -16,11 +16,29 @@ namespace PreparationStationDevice
         public OOAdvantech.Multilingual MultilingualName;
         public OOAdvantech.Multilingual MultilingualNewLevelName;
 
-        public Ingredient(IPreparationScaledOption preparationScaledOption)
+        public string OptionUri;
+
+        public int LevelIndex;
+        public Ingredient(IPreparationScaledOption preparationScaledOption, IMenuItem menuItem)
         {
             PreparationScaledOption = preparationScaledOption;
+            var optionSpecific = PreparationScaledOption.GetMenuItemSpecific(menuItem);
+            if (optionSpecific != null)
+            {
+                OptionUri = optionSpecific.Uri;
+                LevelIndex = optionSpecific.Option.LevelType.Levels.IndexOf(optionSpecific.InitialLevel);
+            }
+            else
+            {
+                OptionUri = preparationScaledOption.Uri;
+                LevelIndex = preparationScaledOption.LevelType.Levels.IndexOf(preparationScaledOption.Initial);
+            }
+
             MultilingualName = preparationScaledOption.MultilingualName;
             GetMultilingualFullName();
+            
+            //MenuModel.JsonViewModel.ItemSelectorOption
+            //OptionUri= PreparationScaledOption
             //MultilingualFullName = preparationScaledOption.MultilingualFullName;
         }
 

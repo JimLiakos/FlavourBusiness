@@ -100,5 +100,8 @@ namespace MenuModel
         /// <MetaDataID>{f9f74c1a-7b65-48bf-931c-358341a44041}</MetaDataID>
         void SetHiddenFor(IMenuItem menuItem, bool value);
 
+
+        string Uri { get; }
+
     }
 }

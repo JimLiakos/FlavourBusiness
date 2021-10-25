@@ -25,6 +25,7 @@ namespace PreparationStationDevice
 
 
 
+
         public ServicePointPreparationItems ServicePointPreparationItems;
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
         {
@@ -41,10 +42,16 @@ namespace PreparationStationDevice
 
             //ItemPreparation.MenuItem.Types
 
-            Ingredients = (from optionGroup in (this.ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
+            Ingredients = (from optionGroup in (ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
                            from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
                            where option.InitialInRecipe(ItemPreparation.MenuItem)
-                           select new Ingredient(option)).ToList();
+                           select new Ingredient(option, ItemPreparation.MenuItem)).ToList();
+
+
+            var extraIngredients = (from optionGroup in (ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
+                           from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
+                           where !option.InitialInRecipe(ItemPreparation.MenuItem)
+                           select new Ingredient(option, ItemPreparation.MenuItem)).ToList();
 
 
             foreach (var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
@@ -60,9 +67,22 @@ namespace PreparationStationDevice
                         ingredient.GetMultilingualFullName();
                     }
                 }
-                else
-                    Ingredients.Add(new Ingredient(optionChange) { IsExtra = true });
 
+            }
+
+            foreach (var extraIngredient in extraIngredients)
+            {
+                foreach (var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
+                {
+                    if(extraIngredient.PreparationScaledOption== optionChange.itemSpecificOption.Option)
+                    {
+                        extraIngredient.IsExtra = true;
+                        extraIngredient.OptionChange = optionChange;
+                        extraIngredient.GetMultilingualFullName();
+
+                        Ingredients.Add(extraIngredient);
+                    }
+                }
             }
 
             foreach (var ingredient in Ingredients.ToList())

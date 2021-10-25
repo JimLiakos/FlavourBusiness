@@ -453,6 +453,11 @@ namespace PreparationStationDevice
         string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
         public string Language { get { return lan; } }
 
+        string deflan = "en";
+        public string DefaultLanguage { get { return deflan; } }
+
+
+
         Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
 
         public string GetTranslation(string langCountry)
