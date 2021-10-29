@@ -88,6 +88,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyFirebaseMessagingService.cs" />
     <Compile Include="MyFirebaseIIDService.cs" />
+    <Compile Include="MyForeGroundService.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

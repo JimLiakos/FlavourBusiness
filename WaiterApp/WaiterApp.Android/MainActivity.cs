@@ -13,6 +13,7 @@ using Android.Gms.Extensions;
 using Android.Support.V4.App;
 using Android.Content;
 using System.Threading.Tasks;
+using DestoPesto.Droid;
 
 namespace WaiterApp.Droid
 {
@@ -102,8 +103,32 @@ namespace WaiterApp.Droid
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
 
 
+            //ForeGroundService.ServiceState serviceState = new ForeGroundService.ServiceState()
+            //{
+            //    NotificationTitle = "Δέστω πέστω",
+            //    NotificationContentText = "The started service is running.",
+            //    NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
+            //    StopServiceCommandTitle = "Stop Service",
+            //    StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
+            //    StopActionID = "DestoPesto.action.STOP_SERVICE",
+            //    DelayBetweenLogMessage = 5000, // milliseconds,
+            //    ServiceRunningNotificationID = 10000,
+            //    ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
+            //    ServiceStartedKey = "has_service_been_started",
+            //    Terminate = false
 
-         
+            //};
+            //serviceState.Runnable = new Action(async () =>
+            //{
+            //    do
+            //    {
+            //        System.Threading.Thread.Sleep(1000);
+
+            //    } while (!serviceState.Terminate);
+            //});
+
+            //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
+
 
             LoadApplication(new App());
 
