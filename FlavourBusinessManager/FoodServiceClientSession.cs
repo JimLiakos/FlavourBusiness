@@ -1350,18 +1350,12 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (flavourItem.State == ItemPreparationState.ÉnPreparation)
                         flavourItem.State = ItemPreparationState.PendingPreparation;
-
-                    if (flavourItem.State == ItemPreparationState.IsPrepared&&!flavourItem.IsCooked)
+                    else if (flavourItem.State == ItemPreparationState.IsPrepared && !flavourItem.IsCooked)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
-
-                    if (flavourItem.State == ItemPreparationState.IsPrepared && flavourItem.IsCooked)
+                    else if (flavourItem.State == ItemPreparationState.IsPrepared && flavourItem.IsCooked)
                         flavourItem.State = ItemPreparationState.IsRoasting;
-
-
-                    if (flavourItem.State == ItemPreparationState.IsRoasting)
+                    else if (flavourItem.State == ItemPreparationState.IsRoasting)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
-
-
                 }
 
                 stateTransition.Consistent = true;
