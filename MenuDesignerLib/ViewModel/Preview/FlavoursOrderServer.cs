@@ -31,6 +31,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
         public string Language { get { return lan; } }
+        public string DefaultLanguage { get { return "en"; } }
         public string FontsLink { get; set; } = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
 
         public MenuData MenuData { get; set; }
