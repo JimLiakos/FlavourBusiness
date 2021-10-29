@@ -19,6 +19,7 @@ namespace ServiceContextManagerApp.WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// <MetaDataID>{ca6e5961-399b-48f5-a455-f2d918df846e}</MetaDataID>
     public partial class MainWindow : Window
     {
         WebBrowserOverlay Browser;
@@ -38,7 +39,7 @@ namespace ServiceContextManagerApp.WPF
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));
-            
+
         }
     }
 }

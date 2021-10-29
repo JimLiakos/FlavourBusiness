@@ -58,6 +58,9 @@ namespace PreparationStationDevice
             }
         }
 
+
+
+
         /// <MetaDataID>{f7bdf5cc-1cb2-45ef-9a97-3e7a0db20410}</MetaDataID>
         public static string ExtraStoragePath { get; internal set; }
 
@@ -143,5 +146,26 @@ namespace PreparationStationDevice
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        bool _IsTagsBarOpen;
+
+        /// <MetaDataID>{b79668ff-299e-4798-a61f-c164635869ab}</MetaDataID>
+        [PersistentMember(nameof(_IsTagsBarOpen))]
+        [BackwardCompatibilityID("+3")]
+        public bool IsTagsBarOpen 
+        { 
+            get=> _IsTagsBarOpen; 
+            set
+            {
+                if (_IsTagsBarOpen != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsTagsBarOpen = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

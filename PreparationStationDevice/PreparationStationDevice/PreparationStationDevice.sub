@@ -14,11 +14,11 @@
 		(object Attribute
 		    tool       	"DotNet"
 		    name       	"Solution"
-		    value      	"$dot Net Projects Path\\FlavourBusiness\\PreparationStationDevice\\PreparationStationDevice.sln")
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusiness.sln")
 		(object Attribute
 		    tool       	"DotNet"
 		    name       	"Project"
-		    value      	"$dot Net Projects Path\\FlavourBusiness\\PreparationStationDevice\\PreparationStationDevice\\PreparationStationDevice.csproj")
+		    value      	"$dot Net Projects Path\\FlavourBusiness\\FlavourBusinessApps\\FlavourBusinessApps.csproj")
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"MetaObjectID"

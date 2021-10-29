@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" ProjectGUID="0ea0edf8-8cf9-45c9-8001-07f56e7fd824">
+﻿<Project Sdk="Microsoft.NET.Sdk" ProjectGUID="0ea0edf8-8cf9-45c9-8001-07f56e7fd824">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 	</PropertyGroup>
@@ -16,6 +16,7 @@
 		<Compile Include="..\..\MenuModel\JsonViewModel\MealCourseType.cs" Link="MenuModel\MealCourseType.cs" />
 		<Compile Include="..\..\MenuModel\JsonViewModel\MealType.cs" Link="MenuModel\MealType.cs" />
 		<Compile Include="..\..\MenuModel\JsonViewModel\PartofMeal.cs" Link="MenuModel\PartofMeal.cs" />
+		<Compile Include="..\..\MenuModel\JsonViewModel\Tag.cs" Link="MenuModel\Tag.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemCustomazedPrice.cs" Link="MenuModel\IItemCustomazedPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">
@@ -51,6 +52,7 @@
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IScaleType.cs">
 			<Link>MenuModel\IScaleType.cs</Link>
 		</Compile>
+		<Compile Include="..\..\MenuModel\MenuModelFacade\ITag.cs" Link="MenuModel\ITag.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
 		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs" Link="RestaurantHallLayoutModel\HallLayout.cs" />
 		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs" Link="RestaurantHallLayoutModel\HallLayoutShape.cs" />
@@ -80,6 +82,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="MenuModel\" />
+		<Folder Include="i18n\" />
 		<Folder Include="RestaurantHallLayoutModel\" />
 		<Folder Include="UIBaseEx\" />
 	</ItemGroup>
@@ -91,5 +94,11 @@
 	  <Compile Include="..\..\menumodel\jsonviewmodel\OptionGroup.cs" Link="MenuModel\OptionGroup.cs" />
 	  <Compile Include="..\..\menumodel\jsonviewmodel\OptionMenuItemSpecific.cs" Link="MenuModel\OptionMenuItemSpecific.cs" />
 	  <Compile Include="..\..\menumodel\jsonviewmodel\TypedObject.cs" Link="MenuModel\TypedObject.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\PreparationStationDeviceWeb\src\assets\i18n\en.json" Link="i18n\en.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\PreparationStationDeviceWeb\src\assets\i18n\el.json" Link="i18n\el.json" />
 	</ItemGroup>
 </Project>

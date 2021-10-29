@@ -132,6 +132,8 @@ namespace PreparationStationDevice
             });
         }
 
+
+
         [HttpVisible]
         public void CancelLastPreparationStep(List<ItemPreparation> itemPreparations)
         {
@@ -286,13 +288,13 @@ namespace PreparationStationDevice
                                                     select itemPreparation))
             {
                 var existingPreparationItem = existingPreparationItems.Where(x => x.uid == updatedItemPreparation.uid).FirstOrDefault();
-                if(existingPreparationItem==null)
+                if (existingPreparationItem == null)
                 {
                     ServicePointsPreparationItems = servicePointsPreparationItems;
                     PreparationItemsLoaded?.Invoke(this);
                     break;
                 }
-                else if((existingPreparationItem as ItemPreparation).Update(updatedItemPreparation as ItemPreparation))
+                else if ((existingPreparationItem as ItemPreparation).Update(updatedItemPreparation as ItemPreparation))
                 {
                     ServicePointsPreparationItems = servicePointsPreparationItems;
                     PreparationItemsLoaded?.Invoke(this);
@@ -319,6 +321,18 @@ namespace PreparationStationDevice
         public event PreparationItemsLoadedHandle PreparationItemsLoaded;
 
 
+        [HttpVisible]
+        public bool IsTagsBarOpen
+        {
+            get
+            {
+                return ApplicationSettings.Current.IsTagsBarOpen;
+            }
+            set
+            {
+                ApplicationSettings.Current.IsTagsBarOpen = value;
+            }
+        }
 
         [HttpVisible]
         public string CommunicationCredentialKey
@@ -364,7 +378,7 @@ namespace PreparationStationDevice
                     var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                     MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
-                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(),null).ToList();
+                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
                     CommunicationCredentialKey = communicationCredentialKey;
                     return true;
                 }
@@ -389,10 +403,10 @@ namespace PreparationStationDevice
         {
 #if DeviceDotNet
             var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
-            if(PreparationStation!=null)
+            if (PreparationStation != null)
             {
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return ;
+                    return;
                 PreparationStation.AssignCodeCardsToSessions(new List<string>() { result.Text });
             }
 #endif
@@ -449,8 +463,8 @@ namespace PreparationStationDevice
             return Task<bool>.FromResult(true);
         }
 
-        
-        string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+
+        string lan = "en";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
         public string Language { get { return lan; } }
 
         string deflan = "en";
@@ -466,7 +480,16 @@ namespace PreparationStationDevice
                 return Translations[langCountry].ToString();
             string json = "{}";
             var assembly = Assembly.GetExecutingAssembly();
-            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("PreparationStationDevice.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            string path = "";
+
+
+#if DeviceDotNet   
+            path = "PreparationStationDevice.i18n";
+#else
+            path = "PreparationStationDevice.WPF.i18n";
+#endif
+
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains(path) && x.Contains(langCountry + ".json")).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(jsonName))
             {
                 using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))
