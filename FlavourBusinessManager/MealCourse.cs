@@ -201,7 +201,9 @@ namespace FlavourBusinessManager.RoomService
                 List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
                                                                      where itemPreparation.State == ItemPreparationState.PendingPreparation ||
                                                                      itemPreparation.State == ItemPreparationState.PreparationDelay ||
-                                                                     itemPreparation.State == ItemPreparationState.ÉnPreparation
+                                                                     itemPreparation.State == ItemPreparationState.ÉnPreparation||
+                                                                     itemPreparation.State == ItemPreparationState.IsRoasting||
+                                                                     itemPreparation.State == ItemPreparationState.IsPrepared
                                                                      group itemPreparation by itemPreparation.PreparationStation into itemsUnderPreparation
                                                                      select new ItemsPreparationContext(this, itemsUnderPreparation.Key, itemsUnderPreparation.ToList())).ToList();
                 return foodItemsInProgress;
