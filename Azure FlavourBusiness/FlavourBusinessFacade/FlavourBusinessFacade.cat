@@ -5296,9 +5296,12 @@
 			    quid       	"5D7E6C130253"
 			    parameters 	(list Parameters
 				(object Parameter "itemsOnDevice"
-				    quid       	"5F4A2EAE004B"
-				    type       	"List<ItemPreparationAbbreviation>"))
-			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+				    quid       	"61812C1D0196"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>")
+				(object Parameter "deviceUpdateEtag"
+				    quid       	"61812C1D01CD"
+				    type       	"string"))
+			    result     	"System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
@@ -5318,6 +5321,120 @@
 				    quid       	"5DA6EC520238"
 				    type       	"DateTime"))
 			    result     	"List<MenuModel.IMenuItem>"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "Items…nPreparation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{559e7066-f32e-4ac7-b308-9208d59c9e39}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1D02BF"))
+			    quid       	"61812C1D02BF"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"61812C1D02E2"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsRoasting"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{358c2943-5794-46d6-aacb-402ce2409085}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1D0335"))
+			    quid       	"61812C1D0335"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"61812C1D0357"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsPrepared"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ec0f68a2-87b3-4e9c-8c45-14915ca53830}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1D03AA"))
+			    quid       	"61812C1D03AA"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"61812C1D03D8"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CancelLastPreparationStep"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{99ef195b-b347-42d7-b70d-adbcfdb0c54e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1E003F"))
+			    quid       	"61812C1E003F"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"61812C1E005E"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignCodeCardsToSessions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2d9ccb0f-821d-4469-8f74-9087c2be669b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1E00B9"))
+			    quid       	"61812C1E00B9"
+			    parameters 	(list Parameters
+				(object Parameter "codeCards"
+				    quid       	"61812C1E00E3"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsServing"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C2C013D"))
+			    quid       	"61812C2C013D"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"61812CC50021"
+				    type       	"System.Collections.Generic.List<string>"))
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -5353,6 +5470,27 @@
 				    name       	"Identity"
 				    value      	"+1"))
 			    quid       	"5D84501200F7"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "RestaurantMenuDataSharedUri"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{734c631d-41d1-4cbc-bf4c-037cc82dbade}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61812C1E01D3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"61812C1E01D3"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
@@ -13302,6 +13440,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@158
+				location   	(25, 1062)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	7
+				max_width  	1528)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -13333,6 +13489,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@159
+				location   	(1413, 1174)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	32
+				max_width  	1321)
 			    width      	719
 			    height     	431
 			    annotation 	8)

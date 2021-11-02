@@ -1356,6 +1356,9 @@ namespace FlavourBusinessManager.EndUsers
                         flavourItem.State = ItemPreparationState.IsRoasting;
                     else if (flavourItem.State == ItemPreparationState.IsRoasting)
                         flavourItem.State = ItemPreparationState.ÉnPreparation;
+                    else if (flavourItem.State == ItemPreparationState.Serving)
+                        flavourItem.State = ItemPreparationState.IsPrepared;
+
                 }
 
                 stateTransition.Consistent = true;
@@ -1404,7 +1407,10 @@ namespace FlavourBusinessManager.EndUsers
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var flavourItem in clientSessionItems)
+                {
                     flavourItem.State = ItemPreparationState.IsPrepared;
+                    flavourItem.StateTimestamp = DateTime.UtcNow;
+                }
 
                 stateTransition.Consistent = true;
             }
@@ -1425,7 +1431,11 @@ namespace FlavourBusinessManager.EndUsers
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var flavourItem in clientSessionItems)
+                {
                     flavourItem.State = ItemPreparationState.IsRoasting;
+                    flavourItem.StateTimestamp = DateTime.UtcNow;
+
+                }
 
                 stateTransition.Consistent = true;
             }
@@ -1437,7 +1447,32 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
-        
+        public void ItemsServing(List<IItemPreparation> flavourItems)
+        {
+
+            CatchStateEvents();
+            var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var flavourItem in clientSessionItems)
+                {
+                    flavourItem.State = ItemPreparationState.Serving;
+                    flavourItem.StateTimestamp = DateTime.UtcNow;
+                }
+
+                stateTransition.Consistent = true;
+            }
+
+            foreach (var clientSession in MainSession.PartialClientSessions)
+                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+            foreach (var mealCourse in MainSession.Meal.Courses)
+                mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+
+        }
+
+
 
         private ItemPreparation GetSessionItem(IItemPreparation item)
         {

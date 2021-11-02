@@ -693,6 +693,17 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
         }
+        public void ItemsServing(List<string> itemPreparationUris)
+        {
+            var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where itemPreparationUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+
+            foreach (var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
+        }
 
 
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>

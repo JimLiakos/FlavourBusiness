@@ -201,6 +201,38 @@ namespace PreparationStationDevice
         }
 
         [HttpVisible]
+        public void ItemsServing(List<ItemPreparation> itemPreparations)
+        {
+            var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems
+                                              from preparationStationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                              select preparationStationItem).ToDictionary(x => x.uid);
+            foreach (var itemPreparation in itemPreparations)
+                itemPreparationsDictionary[itemPreparation.uid].Update(itemPreparation);
+
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        PreparationStation.ItemsServing(itemPreparations.Select(x => x.uid).ToList());
+                        break;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+        }
+
+        [HttpVisible]
         public void ItemsΙnPreparation(List<ItemPreparation> itemPreparations)
         {
             var itemPreparationsDictionary = (from servicePointPreparationItems in ServicePointsPreparationItems

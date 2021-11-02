@@ -9,6 +9,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IPreparationStationRuntime
     {
+        /// <MetaDataID>{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}</MetaDataID>
+        void ItemsServing(List<string> itemPreparationUris);
 
 
         /// <MetaDataID>{c819f9e6-21ed-4c0d-9c72-a240fbd8728d}</MetaDataID>
@@ -36,9 +38,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
         void Items…nPreparation(List<string> itemPreparationUris);
 
+        /// <MetaDataID>{358c2943-5794-46d6-aacb-402ce2409085}</MetaDataID>
         void ItemsRoasting(List<string> itemPreparationUris);
 
-        
+
 
         /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
         void ItemsPrepared(List<string> itemPreparationUris);

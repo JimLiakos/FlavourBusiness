@@ -186,13 +186,21 @@ namespace FlavourBusinessManager.RoomService
                                         _Courses.Remove(mealCourse);
                                         removedMealCourses.Add(mealCourse);
                                     }
-
                                     stateTransition.Consistent = true;
                                 }
 
                                 if (removedMealCourses.Count > 0)
                                     (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnRemoveMealCoursesInrogress(removedMealCourses);
 
+
+                                foreach (var mealCourse in Courses.ToList())
+                                {
+                                    if(mealCourse.FoodItems.Where(x=>x.State==ItemPreparationState.Serving).Count()== mealCourse.FoodItems.Count)
+                                    {
+
+                                    }
+
+                                }
 
                             }
                             catch (Exception error)

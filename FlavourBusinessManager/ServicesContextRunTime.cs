@@ -559,6 +559,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
+        
+
         /// <MetaDataID>{c1f668e1-a630-46cf-9797-3569d2e193b2}</MetaDataID>
         List<HumanResources.Waiter> WaitersWithUnreadedMessages = null;
         /// <MetaDataID>{a8d06287-3ab2-4a1a-8858-e36d8822fcb9}</MetaDataID>

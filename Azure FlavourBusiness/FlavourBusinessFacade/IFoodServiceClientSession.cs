@@ -182,6 +182,10 @@ namespace FlavourBusinessFacade.EndUsers
         void CancelLastPreparationStep(List<IItemPreparation> clientSessionItems);
         void ItemsPrepared(List<IItemPreparation> clientSessionItems);
         void ItemsRoasting(List<IItemPreparation> clientSessionItems);
+
+        void ItemsServing(List<IItemPreparation> clientSessionItems);
+
+        
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>
