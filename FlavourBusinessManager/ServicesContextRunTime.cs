@@ -245,7 +245,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         static ServicesContextRunTime _Current;
         /// <MetaDataID>{925c577b-d2f2-457e-99ed-c29b27e24eda}</MetaDataID>
-        public static ServicesContextRunTime Current { get => _Current; }
+        public static ServicesContextRunTime Current
+        {
+            get
+            {
+                if (_Current != null)
+                    return _Current;
+                else
+                {
+                    
+
+                    var flavoursServicesContext = FlavoursServicesContext.ActiveFlavoursServicesContexts.Where(x => x.RunAtContext.ContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID).FirstOrDefault();
+               
+                    if (flavoursServicesContext == null)
+                        return null;
+                    flavoursServicesContext.GetRunTime();
+
+                    return _Current;
+                }
+            }
+        }
 
 
         /// <MetaDataID>{54caa9a3-5612-44a1-a91d-91e7294825ba}</MetaDataID>
@@ -479,13 +498,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                         where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
                                                         select aPreparationStation))
                     {
-
-                        this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+                        if(!string.IsNullOrWhiteSpace( preparationStation.PreparationStationIdentity))
+                            this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+                        
                     }
                 }
                 return _PreparationStationRuntimes;
             }
         }
+
+        //internal static ServicesContextRunTime GetServicesContextRunTime(OOAdvantech.PersistenceLayer.ObjectStorage objectStorage, string servicesContextIdentity)
+        //{
+
+        //    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+        //    var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
+        //                                  where theServicePointRun.ServicesContextIdentity == servicesContextIdentity
+        //                                  select theServicePointRun).FirstOrDefault();
+
+        //    return servicesContextRunTime;
+
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -560,7 +592,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
-        
+
 
         /// <MetaDataID>{c1f668e1-a630-46cf-9797-3569d2e193b2}</MetaDataID>
         List<HumanResources.Waiter> WaitersWithUnreadedMessages = null;
@@ -1117,11 +1149,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         FlavourBusinessFacade.RoomService.IMealsController _MealsController;
 
         /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
-       public FlavourBusinessFacade.RoomService.IMealsController MealsController
+        public FlavourBusinessFacade.RoomService.IMealsController MealsController
         {
             get
             {
-                if(_MealsController==null)
+                if (_MealsController == null)
                     _MealsController = new RoomService.MealsController(this);
                 return _MealsController;
             }
@@ -1195,7 +1227,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken,  string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -1211,7 +1243,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //                  where aServicePoint.ServicesPointIdentity == servicePointIdentity
             //                  select aServicePoint).FirstOrDefault();
 
-            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken,  create);
+            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create);
             if (create)
             {
                 lock (ObjLock)
@@ -1243,7 +1275,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
                 (clientSession as EndUsers.FoodServiceClientSession).Menu = graphicMenu;
-                if((clientSession as EndUsers.FoodServiceClientSession).MainSession!=null)
+                if ((clientSession as EndUsers.FoodServiceClientSession).MainSession != null)
                     ((clientSession as EndUsers.FoodServiceClientSession).MainSession as FoodServiceSession).MenuStorageIdentity = graphicMenu.StorageIdentity;
 
             }

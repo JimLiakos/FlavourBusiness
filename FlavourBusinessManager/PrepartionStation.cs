@@ -453,7 +453,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
-            foreach (var servicePointPreparationItems in  (from  openSession  in ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions
+            var servicesContextRunTime = ServicesContextRunTime.Current;// GetServicesContextRunTime(ObjectStorage.GetStorageOfObject(this), this.ServicesContextIdentity);
+
+            foreach (var servicePointPreparationItems in  (from  openSession  in servicesContextRunTime.OpenSessions
              from sessionPart in openSession.PartialClientSessions
              from itemPreparation in sessionPart.FlavourItems
              orderby itemPreparation.PreparedAtForecast
@@ -761,6 +763,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 preparationStation = new PreparationStation();
                 preparationStation.Description = Properties.Resources.DefaultSubPreparationStationDescription;
+                preparationStation.ServicesContextIdentity = ServicesContextIdentity;
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(preparationStation);
                 _SubStations.Add(preparationStation);
                 stateTransition.Consistent = true;
