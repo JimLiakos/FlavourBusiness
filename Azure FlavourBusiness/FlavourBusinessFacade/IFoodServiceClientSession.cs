@@ -185,7 +185,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         void ItemsServing(List<IItemPreparation> clientSessionItems);
 
-        
+
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>
@@ -208,6 +208,7 @@ namespace FlavourBusinessFacade.EndUsers
         MenuItemProposal = 2,
         ShareItemHasChange = 3,
         LaytheTable = 4,
+        ItemsReadyToServe = 5
     }
 
 

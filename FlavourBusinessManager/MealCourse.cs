@@ -8,6 +8,9 @@ using System.Linq;
 using System.Collections.Generic;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.ServicesContextResources;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -178,7 +181,23 @@ namespace FlavourBusinessManager.RoomService
         public ItemPreparationState PreparationState
         {
             get => _PreparationState;
-            set => throw new NotImplementedException();
+            set
+            {
+
+                if (_PreparationState != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparationState = value;
+                   
+                        stateTransition.Consistent = true;
+                    }
+
+                    if (value == ItemPreparationState.Serving)
+                        ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
+                }
+
+            }
         }
 
         /// <exclude>Excluded</exclude>

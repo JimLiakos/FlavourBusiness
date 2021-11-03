@@ -607,7 +607,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 foreach (var waiter in activeWaiters)
                 {
-                    if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                    if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                     {
                         var clientMessage = new Message();
                         clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
@@ -642,6 +643,56 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                 }
             }
+        }
+
+
+
+
+        internal void MealItemsReadyToServe(ServicePoint servicePoint)
+        {
+            
+            
+                var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+                foreach (var waiter in activeWaiters)
+                {
+                    if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    {
+                        var clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
+                        waiter.PushMessage(clientMessage);
+
+                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                        {
+                            CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                stateTransition.Consistent = true;
+                            }
+                            lock (ServiceContextRTLock)
+                            {
+                                WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                               from message in activeWaiter.Messages
+                                                               where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !message.MessageReaded
+                                                               select activeWaiter).ToList();
+                            }
+
+                        }
+
+                    }
+                }
+            
         }
 
         [CachingDataOnClientSide]
@@ -1064,7 +1115,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
         /// <MetaDataID>{a82e0e64-72d8-4c6c-bc2d-6c30c4737337}</MetaDataID>
-        IList<IShiftWork> GetActiveShiftWorks()
+        internal IList<IShiftWork> GetActiveShiftWorks()
         {
             var mileStoneDate = System.DateTime.UtcNow - TimeSpan.FromDays(1);
             var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);

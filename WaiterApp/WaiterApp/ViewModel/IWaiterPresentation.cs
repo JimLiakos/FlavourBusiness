@@ -9,6 +9,7 @@ namespace WaiterApp.ViewModel
 {
 
     public delegate void LaytheTableRequestHandle(IWaiterPresentation waiterPresentation, string messageID,string servicePointIdentity);
+    public delegate void ItemsReadyToServeRequesttHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
 
     /// <MetaDataID>{981df64d-06d2-47af-9900-792dd6492ef0}</MetaDataID>
     [HttpVisible]
@@ -16,6 +17,8 @@ namespace WaiterApp.ViewModel
     {
         [GenerateEventConsumerProxy]
         event LaytheTableRequestHandle LayTheTableRequest;
+        [GenerateEventConsumerProxy]
+        event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
 
         /// <MetaDataID>{315e4a19-6d46-4ae0-8e38-6bef23632d5a}</MetaDataID>

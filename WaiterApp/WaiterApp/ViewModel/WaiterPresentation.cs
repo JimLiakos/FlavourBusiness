@@ -95,6 +95,7 @@ namespace WaiterApp.ViewModel
         public event ObjectChangeStateHandle ObjectChangeState;
 
         public event LaytheTableRequestHandle LayTheTableRequest;
+        public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
         string _SignInProvider;
@@ -943,6 +944,22 @@ namespace WaiterApp.ViewModel
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
                                 LayTheTableRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                //PartOfMealRequestMessageForward(message);
+                                return;
+                            }
+                        }
+                    }
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe)
+                    {
+                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                            Waiter.RemoveMessage(message.MessageID);
+                        else
+                        {
+                            if (message != null && InActiveShiftWork)
+                            {
+
+                                string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+                                ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
                                 //PartOfMealRequestMessageForward(message);
                                 return;
                             }

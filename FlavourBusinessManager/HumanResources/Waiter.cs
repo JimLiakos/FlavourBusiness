@@ -155,15 +155,23 @@ namespace FlavourBusinessManager.HumanResources
         public void PushMessage(Message message)
         {
 
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
+            try
             {
-                message.MessageTimestamp = DateTime.UtcNow;
-                _Messages.Add(message);
-                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
+                {
+                    message.MessageTimestamp = DateTime.UtcNow;
+                    _Messages.Add(message);
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
 
-                stateTransition.Consistent = true;
+                    stateTransition.Consistent = true;
+                }
+                _MessageReceived?.Invoke(this);
             }
-            _MessageReceived?.Invoke(this);
+            catch (Exception error)
+            {
+
+                throw;
+            }
         }
 
         event MessageReceivedHandle _MessageReceived;

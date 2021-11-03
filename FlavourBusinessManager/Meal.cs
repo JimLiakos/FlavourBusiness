@@ -199,12 +199,11 @@ namespace FlavourBusinessManager.RoomService
                                     {
                                         if((System.DateTime.Now- mealCourse.FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes>1)
                                         {
-
-                                            var currentContextID = ComputationalResources.IsolatedComputingContext.CurrentContextID;
-                                            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
-                                            var flavoursServicesContext = (from serviceContext in storage.GetObjectCollection<FlavoursServicesContext>()
-                                                                           where serviceContext.RunAtContext.ContextID == currentContextID
-                                                                           select serviceContext).FirstOrDefault();
+                                            if(mealCourse.PreparationState!=ItemPreparationState.Serving)
+                                            {
+                                                mealCourse.PreparationState = ItemPreparationState.Serving;
+                                            }
+                                         
                                         }
 
                                     }
