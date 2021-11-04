@@ -22,25 +22,25 @@ namespace WaiterApp.Droid
 
         public bool Run(Action action, BackgroundServiceState backgroundServiceState)
         {
-            //ForegroundService.ServiceState serviceState = new ForegroundService.ServiceState()
-            //{
-            //    NotificationTitle = "Waiter app",
-            //    NotificationContentText = "The started service is running.",
-            //    NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopServiceCommandTitle = "Stop Service",
-            //    StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopActionID = "dontwaitwaiterapp.action.STOP_SERVICE",
-            //    DelayBetweenLogMessage = 5000, // milliseconds,
-            //    ServiceRunningNotificationID = 10000,
-            //    ActionsMainActivity = "dontwaitwaiterapp.action.MAIN_ACTIVITY",
-            //    ServiceStartedKey = "has_service_been_started",
-            //    BackgroundServiceState = backgroundServiceState,
-            //    Terminate = false
+            ForegroundService.ServiceState serviceState = new ForegroundService.ServiceState()
+            {
+                NotificationTitle = "Waiter app",
+                NotificationContentText = "The started service is running.",
+                NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
+                StopServiceCommandTitle = "Stop Service",
+                StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
+                StopActionID = "dontwaitwaiterapp.action.STOP_SERVICE",
+                DelayBetweenLogMessage = 5000, // milliseconds,
+                ServiceRunningNotificationID = 10000,
+                ActionsMainActivity = "dontwaitwaiterapp.action.MAIN_ACTIVITY",
+                ServiceStartedKey = "has_service_been_started",
+                BackgroundServiceState = backgroundServiceState,
+                Terminate = false
 
-            //};
-            //serviceState.Runnable = action;
+            };
+            serviceState.Runnable = action;
 
-            //StartForegroundService(this, "dontwaitwaiterapp.action.START_SERVICE", serviceState);
+            StartForegroundService(this, "dontwaitwaiterapp.action.START_SERVICE", serviceState);
             return true;
         }
 

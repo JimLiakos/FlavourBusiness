@@ -24,7 +24,7 @@ namespace WaiterApp.Droid
         internal static readonly string CHANNEL_ID = "my_notification_channel";
         internal static readonly int NOTIFICATION_ID = 100;
 
-        string msgText;
+         string msgText;
         public bool IsPlayServicesAvailable()
         {
             int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
@@ -104,31 +104,31 @@ namespace WaiterApp.Droid
 
             OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
-            OOAdvantech.Droid.ForegroundService.ServiceState serviceState = new OOAdvantech.Droid.ForegroundService.ServiceState()
-            {
-                NotificationTitle = "Δέστω πέστω",
-                NotificationContentText = "The started service is running.",
-                NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
-                StopServiceCommandTitle = "Stop Service",
-                StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
-                StopActionID = "DestoPesto.action.STOP_SERVICE",
-                DelayBetweenLogMessage = 5000, // milliseconds,
-                ServiceRunningNotificationID = 10000,
-                ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
-                ServiceStartedKey = "has_service_been_started",
-                Terminate = false
+            //OOAdvantech.Droid.ForegroundService.ServiceState serviceState = new OOAdvantech.Droid.ForegroundService.ServiceState()
+            //{
+            //    NotificationTitle = "Δέστω πέστω",
+            //    NotificationContentText = "The started service is running.",
+            //    NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
+            //    StopServiceCommandTitle = "Stop Service",
+            //    StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
+            //    StopActionID = "DestoPesto.action.STOP_SERVICE",
+            //    DelayBetweenLogMessage = 5000, // milliseconds,
+            //    ServiceRunningNotificationID = 10000,
+            //    ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
+            //    ServiceStartedKey = "has_service_been_started",
+            //    Terminate = false
 
-            };
-            serviceState.Runnable = new Action(async () =>
-            {
-                do
-                {
-                    System.Threading.Thread.Sleep(1000);
+            //};
+            //serviceState.Runnable = new Action(async () =>
+            //{
+            //    do
+            //    {
+            //        System.Threading.Thread.Sleep(1000);
 
-                } while (!serviceState.Terminate);
-            });
+            //    } while (!serviceState.Terminate);
+            //});
 
-            new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
+            //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
 
 
             LoadApplication(new App());
@@ -148,7 +148,11 @@ namespace WaiterApp.Droid
             FirebaseAuthentication.OnActivityResult(requestCode, resultCode, data);
         }
 
-  
+        protected override void OnDestroy()
+        {
+            OOAdvantech.Droid.DeviceOOAdvantechCore.OnDestroy();
+            base.OnDestroy();
+        }
 
         public override void OnBackPressed()
         {

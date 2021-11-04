@@ -73,6 +73,7 @@ namespace WaiterApp
             }
             // Handle when your app sleeps
         }
+        
 
         protected override void OnResume()
         {
