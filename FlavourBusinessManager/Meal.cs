@@ -1,4 +1,5 @@
 using ComputationalResources;
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
@@ -191,6 +192,15 @@ namespace FlavourBusinessManager.RoomService
 
                                 if (removedMealCourses.Count > 0)
                                     (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnRemoveMealCoursesInrogress(removedMealCourses);
+                                var siftWork = ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks().FirstOrDefault();
+                                bool testMessage = false;
+                                if (siftWork != null && siftWork.Worker is IWaiter)
+                                {
+                                    if(testMessage)
+                                        (siftWork.Worker as IWaiter).PushMessage(null);
+                                }
+
+                                    
 
 
                                 foreach (var mealCourse in Courses.ToList())

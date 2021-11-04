@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Android.App;
-using Android.Content.PM;
+
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -13,7 +13,7 @@ using Android.Gms.Extensions;
 using Android.Support.V4.App;
 using Android.Content;
 using System.Threading.Tasks;
-using DestoPesto.Droid;
+using Android.Content.PM;
 
 namespace WaiterApp.Droid
 {
@@ -102,32 +102,33 @@ namespace WaiterApp.Droid
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
 
+            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
-            //ForeGroundService.ServiceState serviceState = new ForeGroundService.ServiceState()
-            //{
-            //    NotificationTitle = "Δέστω πέστω",
-            //    NotificationContentText = "The started service is running.",
-            //    NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopServiceCommandTitle = "Stop Service",
-            //    StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopActionID = "DestoPesto.action.STOP_SERVICE",
-            //    DelayBetweenLogMessage = 5000, // milliseconds,
-            //    ServiceRunningNotificationID = 10000,
-            //    ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
-            //    ServiceStartedKey = "has_service_been_started",
-            //    Terminate = false
+            OOAdvantech.Droid.ForegroundService.ServiceState serviceState = new OOAdvantech.Droid.ForegroundService.ServiceState()
+            {
+                NotificationTitle = "Δέστω πέστω",
+                NotificationContentText = "The started service is running.",
+                NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
+                StopServiceCommandTitle = "Stop Service",
+                StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
+                StopActionID = "DestoPesto.action.STOP_SERVICE",
+                DelayBetweenLogMessage = 5000, // milliseconds,
+                ServiceRunningNotificationID = 10000,
+                ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
+                ServiceStartedKey = "has_service_been_started",
+                Terminate = false
 
-            //};
-            //serviceState.Runnable = new Action(async () =>
-            //{
-            //    do
-            //    {
-            //        System.Threading.Thread.Sleep(1000);
+            };
+            serviceState.Runnable = new Action(async () =>
+            {
+                do
+                {
+                    System.Threading.Thread.Sleep(1000);
 
-            //    } while (!serviceState.Terminate);
-            //});
+                } while (!serviceState.Terminate);
+            });
 
-            //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
+            new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
 
 
             LoadApplication(new App());

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <RootNamespace>WaiterApp;FlavourBusinessDevice</RootNamespace>
+    <RootNamespace>WaiterApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
@@ -216,6 +216,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\WaiterWeb\src\assets\i18n\el.json" Link="i18n\el.json" />
+    <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\WaiterWeb\src\assets\i18n\en.json" Link="i18n\en.json" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="SkiaSharp" Version="2.80.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
@@ -232,6 +236,7 @@
   <ItemGroup>
     <Folder Include="MenuCanvas\" />
     <Folder Include="MenuModel\" />
+    <Folder Include="i18n\" />
     <Folder Include="ProxiesGenDlls\" />
     <Folder Include="UIBaseEx\" />
     <Folder Include="RestaurantHallLayoutModel\" />

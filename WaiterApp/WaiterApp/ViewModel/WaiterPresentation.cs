@@ -57,6 +57,25 @@ namespace WaiterApp.ViewModel
         public WaiterPresentation()
         {
             this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true };
+
+
+            var deviceInstantiator = DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+            {
+                do
+                {
+                    System.Threading.Thread.Sleep(1000);
+
+                } while (!serviceState.Terminate);
+            }), serviceState);
+            }
+
+
         }
 
 
@@ -207,7 +226,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
- 
+
 
 
 
@@ -361,10 +380,10 @@ namespace WaiterApp.ViewModel
                         //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
                         if (Waiter != null && Waiter.SignUpUserIdentity == authUser.User_ID)
                         {
-                            
+
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            if(this._Halls!=null)
+                            if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
                                     (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
@@ -373,7 +392,7 @@ namespace WaiterApp.ViewModel
                             this._Halls = this._Halls.Where(x => x != null).ToList();
                             foreach (var hall in this._Halls)
                             {
-                                
+
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
@@ -530,7 +549,7 @@ namespace WaiterApp.ViewModel
 
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
         {
-            
+
         }
 
         async Task<bool> IOSPseudoSignIn()
@@ -743,7 +762,7 @@ namespace WaiterApp.ViewModel
                     {
 
                     }
-                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber,Address=this.Address };
+                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
                     UserData = pAuthFlavourBusiness.SignUp(UserData);
 
                     if (UserData != null)
@@ -1044,11 +1063,11 @@ namespace WaiterApp.ViewModel
         public string GetString(string langCountry, string key)
         {
             JObject jObject = null;
-            if (!Translations.TryGetValue(langCountry,out jObject))
+            if (!Translations.TryGetValue(langCountry, out jObject))
             {
                 GetTranslation(langCountry);
                 jObject = Translations[langCountry];
-                
+
             }
 
             var keyParts = key.Split('.');
@@ -1097,7 +1116,7 @@ namespace WaiterApp.ViewModel
             foreach (string member in keyParts)
             {
                 if (jObject == null)
-                    return ;
+                    return;
                 JToken jToken = null;
                 if (i == keyParts.Length - 1)
                 {
@@ -1132,13 +1151,22 @@ namespace WaiterApp.ViewModel
                 return Translations[langCountry].ToString();
             string json = "{}";
             var assembly = Assembly.GetExecutingAssembly();
-            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+
+#if DeviceDotNet
+            string path = "WaiterApp.i18n";
+#else
+            string path = "WaiterApp.WPF.i18n";
+#endif
+
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains(path) && x.Contains(langCountry + ".json")).FirstOrDefault();
+
+            //string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(jsonName))
             {
                 using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))
                 {
                     json = reader.ReadToEnd();
-                    Translations[langCountry]= JObject.Parse(json);
+                    Translations[langCountry] = JObject.Parse(json);
                     // Do something with the value
                 }
             }

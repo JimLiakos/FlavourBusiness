@@ -155,7 +155,7 @@ namespace FlavourBusinessManager.HumanResources
         public void PushMessage(Message message)
         {
 
-            try
+            if (message != null)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
                 {
@@ -165,13 +165,9 @@ namespace FlavourBusinessManager.HumanResources
 
                     stateTransition.Consistent = true;
                 }
-                _MessageReceived?.Invoke(this);
             }
-            catch (Exception error)
-            {
+            _MessageReceived?.Invoke(this);
 
-                throw;
-            }
         }
 
         event MessageReceivedHandle _MessageReceived;
@@ -223,11 +219,11 @@ namespace FlavourBusinessManager.HumanResources
                     hallLayout.ServiceArea = serviceArea;
                     foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
                     {
-                        var servicePoint= hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
+                        var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
                         if (servicePoint != null)
                         {
                             servicePointShape.ServicesPointState = servicePoint.State;
-                            
+
                         }
                     }
 
