@@ -131,10 +131,10 @@ namespace WaiterApp.Droid
 
             //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
 
-            Android.Net.Uri uri = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone);
-            Ringtone rt = RingtoneManager.GetRingtone(this.ApplicationContext, uri);
-            rt.Play();
-
+            //Android.Net.Uri uri = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone);
+            //Ringtone rt = RingtoneManager.GetRingtone(this.ApplicationContext, uri);
+            //rt.Play();
+            
 
             LoadApplication(new App());
 
