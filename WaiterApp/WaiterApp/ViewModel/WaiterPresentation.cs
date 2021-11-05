@@ -14,6 +14,7 @@ using DontWaitApp;
 using FlavourBusinessFacade.EndUsers;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
+using Xamarin.Essentials;
 
 #if DeviceDotNet
 using DeviceUtilities.NetStandard;
@@ -59,21 +60,7 @@ namespace WaiterApp.ViewModel
             this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true };
 
 
-            var deviceInstantiator = DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-
-            if (!device.IsBackgroundServiceStarted)
-            {
-                BackgroundServiceState serviceState = new BackgroundServiceState();
-                device.RunInBackground(new Action(async () =>
-            {
-                do
-                {
-                    System.Threading.Thread.Sleep(1000);
-
-                } while (!serviceState.Terminate);
-            }), serviceState);
-            }
+        
 
 
         }
@@ -412,6 +399,8 @@ namespace WaiterApp.ViewModel
                             GetMessages();
 
 
+                   
+
                             return true;
 
                         }
@@ -475,6 +464,24 @@ namespace WaiterApp.ViewModel
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
+
+                            if (!device.IsBackgroundServiceStarted)
+                            {
+                                BackgroundServiceState serviceState = new BackgroundServiceState();
+                                device.RunInBackground(new Action(async () =>
+                                {
+                                    var message = Waiter.PeekMessage();
+                                    Waiter.MessageReceived += Waiter_MessageReceived;
+
+                                    do
+                                    {
+                                        System.Threading.Thread.Sleep(1000);
+
+                                    } while (!serviceState.Terminate);
+
+                                    Waiter.MessageReceived -= Waiter_MessageReceived;
+                                }), serviceState);
+                            }
 #endif
 
 
@@ -544,6 +551,12 @@ namespace WaiterApp.ViewModel
                 return result;
 
             }
+
+        }
+
+        private void Waiter_MessageReceived(IMessageConsumer sender)
+        {
+          
 
         }
 
@@ -687,7 +700,36 @@ namespace WaiterApp.ViewModel
         }
         private void MessageReceived(IMessageConsumer sender)
         {
-            GetMessages();
+            try
+            {
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                var isInSleepMode = device.IsinSleepMode;
+
+                Task.Run(() => {
+                    int count = 3;
+                    var duration = TimeSpan.FromSeconds(3);
+                    while (count > 0)
+                    {
+                        count--;
+                        Vibration.Vibrate(duration);
+                        System.Threading.Thread.Sleep(3000);
+                        Vibration.Cancel();
+                        System.Threading.Thread.Sleep(3000);
+                    }
+
+
+                });
+            }
+            catch (Exception error)
+            {
+            }
+            try
+            {
+                GetMessages();
+            }
+            catch (Exception error)
+            {
+            }
         }
 
         private void Waiter_ObjectChangeState(object _object, string member)

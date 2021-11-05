@@ -178,7 +178,7 @@ namespace FlavourBusinessManager.RoomService
                             {
                                 CheckForNewItems();
 
-                                List<IMealCourse>  removedMealCourses = new List<IMealCourse>();
+                                List<IMealCourse> removedMealCourses = new List<IMealCourse>();
 
                                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                                 {
@@ -196,24 +196,34 @@ namespace FlavourBusinessManager.RoomService
                                 bool testMessage = false;
                                 if (siftWork != null && siftWork.Worker is IWaiter)
                                 {
-                                    if(testMessage)
+                                    if (testMessage)
                                         (siftWork.Worker as IWaiter).PushMessage(null);
                                 }
 
-                                    
 
+                                bool Sendmessage = false;
+                                if (Sendmessage)
+                                {
+                                    var activeWaiter = (from shiftWork in ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                        where shiftWork.Worker is IWaiter
+                                                        select shiftWork.Worker).OfType<HumanResources.Waiter>().FirstOrDefault();
+
+                                    if (activeWaiter != null)
+                                        activeWaiter.PushMessage(null);
+
+                                }
 
                                 foreach (var mealCourse in Courses.ToList())
                                 {
-                                    if(mealCourse.FoodItems.Where(x=>x.State==ItemPreparationState.Serving).Count()== mealCourse.FoodItems.Count)
+                                    if (mealCourse.FoodItems.Where(x => x.State == ItemPreparationState.Serving).Count() == mealCourse.FoodItems.Count)
                                     {
-                                        if((System.DateTime.Now- mealCourse.FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes>1)
+                                        if ((System.DateTime.Now - mealCourse.FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
                                         {
-                                            if(mealCourse.PreparationState!=ItemPreparationState.Serving)
+                                            if (mealCourse.PreparationState != ItemPreparationState.Serving)
                                             {
                                                 mealCourse.PreparationState = ItemPreparationState.Serving;
                                             }
-                                         
+
                                         }
 
                                     }
@@ -270,7 +280,7 @@ namespace FlavourBusinessManager.RoomService
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
                             newMealCourses.Add(mealCourse);
 
-                            _Courses.Add(mealCourse); 
+                            _Courses.Add(mealCourse);
                             stateTransition.Consistent = true;
                         }
 

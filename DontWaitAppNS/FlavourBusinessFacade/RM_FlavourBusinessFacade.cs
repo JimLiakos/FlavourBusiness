@@ -4576,6 +4576,106 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PushMessage", args, argsTypes);
         }
     }
+    
+    public sealed class Pr_IMessageConsumer : FlavourBusinessFacade.EndUsers.IMessageConsumer, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.EndUsers.IMessageConsumer Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceived
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "add_MessageReceived",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.MessageReceivedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "remove_MessageReceived",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.MessageReceivedHandle)});
+                }
+            }
+        
+        public Pr_IMessageConsumer(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message> Messages
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_Messages", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message>>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemoveMessage(string messageId)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = messageId;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "RemoveMessage", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.Message GetMessage(string messageId)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = messageId;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "GetMessage", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.Message>(retValue);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.Message PeekMessage()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PeekMessage", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.Message>(retValue);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.Message PopMessage()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PopMessage", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.Message>(retValue);
+        }
+        
+        public void PushMessage(FlavourBusinessFacade.EndUsers.Message message)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = message;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Message);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PushMessage", args, argsTypes);
+        }
+    }
 }
 namespace FlavourBusinessFacade.RoomService.Proxies
 {

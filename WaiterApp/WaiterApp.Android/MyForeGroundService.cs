@@ -16,9 +16,15 @@ namespace WaiterApp.Droid
     /// <MetaDataID>{52453757-2621-49c4-a293-43e18ae14e6a}</MetaDataID>
 
     [Service(Name = "com.microneme.dontwaitwaiterapp.MyForeGroundService")]
-    public class MyForeGroundService : ForegroundService, OOAdvantech.IBackgroundService
+    public class MyForeGroundService : ForegroundService, IBackgroundService
     {
-        public bool IsServiceStarted { get; private set; }
+        public bool IsServiceStarted
+        {
+            get
+            {
+                return isStarted;
+            }
+        }
 
         public bool Run(Action action, BackgroundServiceState backgroundServiceState)
         {
@@ -46,7 +52,7 @@ namespace WaiterApp.Droid
 
         public void Stop()
         {
-            
+
         }
     }
 }

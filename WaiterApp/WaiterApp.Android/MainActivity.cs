@@ -14,6 +14,7 @@ using Android.Support.V4.App;
 using Android.Content;
 using System.Threading.Tasks;
 using Android.Content.PM;
+using Android.Media;
 
 namespace WaiterApp.Droid
 {
@@ -129,6 +130,10 @@ namespace WaiterApp.Droid
             //});
 
             //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
+
+            Android.Net.Uri uri = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone);
+            Ringtone rt = RingtoneManager.GetRingtone(this.ApplicationContext, uri);
+            rt.Play();
 
 
             LoadApplication(new App());

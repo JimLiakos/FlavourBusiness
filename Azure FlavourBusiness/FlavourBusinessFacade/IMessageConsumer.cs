@@ -4,6 +4,7 @@ namespace FlavourBusinessFacade.EndUsers
 {
     /// <MetaDataID>{e8b53bcd-b127-44bb-bc7b-4ae17c869e88}</MetaDataID>
     [BackwardCompatibilityID("{e8b53bcd-b127-44bb-bc7b-4ae17c869e88}")]
+    [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IMessageConsumer
     {
         [Association("ClientMessages", Roles.RoleA, "83213b62-9c18-4fb1-a8ab-2cbacb978f6e")]
