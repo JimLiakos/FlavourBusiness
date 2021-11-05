@@ -38,7 +38,9 @@ namespace WaiterApp
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
 
-
+            SerializeTaskScheduler.RunAsync();
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.IsinSleepMode = false;
             //MainPage = new FacebookSignIn();
             //MainPage = new MainPage();
             MainPage = new NavigationPage(new MainPage());

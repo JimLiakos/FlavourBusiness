@@ -55,16 +55,21 @@ namespace WaiterApp.ViewModel
     public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, ISecureUser, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
-        public WaiterPresentation()
+        protected WaiterPresentation()
         {
             this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true };
-
-
-        
-
-
         }
+        static WaiterPresentation _Current;
 
+        public static WaiterPresentation Current
+        {
+            get
+            {
+                if (_Current == null)
+                    _Current = new WaiterPresentation();
+                return _Current;
+            }
+        }
 
         /// <MetaDataID>{d52da524-96a8-4f0b-ae0f-703be4348ff2}</MetaDataID>
         string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
@@ -308,7 +313,7 @@ namespace WaiterApp.ViewModel
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public async Task<bool> SignIn()
         {
-
+          
             //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
             System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -362,7 +367,10 @@ namespace WaiterApp.ViewModel
                     if (authUser != null && !string.IsNullOrWhiteSpace(ApplicationSettings.Current.WaiterObjectRef))
                     {
                         if (Waiter != null)
+                        {
                             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
+                            Waiter.MessageReceived -= MessageReceived;
+                        }
 
                         //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
                         if (Waiter != null && Waiter.SignUpUserIdentity == authUser.User_ID)
@@ -451,7 +459,10 @@ namespace WaiterApp.ViewModel
                         if (role.RoleType == UserData.RoleType.Waiter)
                         {
                             if (Waiter != null)
+                            {
                                 Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
+                                Waiter.MessageReceived -= MessageReceived;
+                            }
                             Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
 
                             string objectRef = RemotingServices.SerializeObjectRef(Waiter);
@@ -702,12 +713,19 @@ namespace WaiterApp.ViewModel
         {
             try
             {
-                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+                IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
                 var isInSleepMode = device.IsinSleepMode;
 
                 Task.Run(() => {
-                    int count = 3;
-                    var duration = TimeSpan.FromSeconds(3);
+
+                    ringtoneService.Play();
+
+                    int count = 4;
+                    if (!isInSleepMode)
+                        count = 1;
+
+                    var duration = TimeSpan.FromSeconds(2);
                     while (count > 0)
                     {
                         count--;
@@ -716,7 +734,7 @@ namespace WaiterApp.ViewModel
                         Vibration.Cancel();
                         System.Threading.Thread.Sleep(3000);
                     }
-
+                    ringtoneService.Stop();
 
                 });
             }

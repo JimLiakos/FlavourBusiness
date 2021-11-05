@@ -192,13 +192,7 @@ namespace FlavourBusinessManager.RoomService
 
                                 if (removedMealCourses.Count > 0)
                                     (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnRemoveMealCoursesInrogress(removedMealCourses);
-                                var siftWork = ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks().FirstOrDefault();
-                                bool testMessage = false;
-                                if (siftWork != null && siftWork.Worker is IWaiter)
-                                {
-                                    if (testMessage)
-                                        (siftWork.Worker as IWaiter).PushMessage(null);
-                                }
+                             
 
 
                                 bool Sendmessage = false;

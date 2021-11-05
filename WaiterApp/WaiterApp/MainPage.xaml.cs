@@ -15,7 +15,7 @@ namespace WaiterApp
             InitializeComponent();
 
             var appSettings = DontWaitApp.ApplicationSettings.Current;
-            BindingContext = new WaiterApp.ViewModel.WaiterPresentation();
+            BindingContext = ViewModel.WaiterPresentation.Current;
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
             {
