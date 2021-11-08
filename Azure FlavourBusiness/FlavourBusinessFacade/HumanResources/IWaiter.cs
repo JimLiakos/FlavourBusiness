@@ -1,7 +1,9 @@
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -15,7 +17,7 @@ namespace FlavourBusinessFacade.HumanResources
         [BackwardCompatibilityID("+10")]
         string DeviceFirebaseToken { get; set; }
         /// <MetaDataID>{79a921fc-7507-410d-bb75-57d83658cb91}</MetaDataID>
-        System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls();
+        IList<IHallLayout> GetServiceHalls();
 
         /// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
         void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
@@ -23,7 +25,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{278fd92b-7ae7-4817-9f43-d22ab6aefbad}</MetaDataID>
         [RoleAMultiplicityRange(0)]
         [Association("WaterServiceSession", OOAdvantech.MetaDataRepository.Roles.RoleA, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
-        System.Collections.Generic.List<EndUsers.IFoodServiceClientSession> ClientSessions { get; }
+        List<EndUsers.IFoodServiceClientSession> ClientSessions { get; }
 
 
         [RemoteEventPublish(InvokeType.Async)]
@@ -53,7 +55,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{0db5ebc9-5c07-4512-ba47-dc6c0dd7e177}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         string Password { get; set; }
-
+        IList<IItemPreparation> GetItemsReadToServe();
 
 
 

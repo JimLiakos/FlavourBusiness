@@ -14,9 +14,11 @@ using DontWaitApp;
 using FlavourBusinessFacade.EndUsers;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
-using Xamarin.Essentials;
+
+
 
 #if DeviceDotNet
+using Xamarin.Essentials;
 using DeviceUtilities.NetStandard;
 using Xamarin.Forms;
 using ZXing;
@@ -313,7 +315,7 @@ namespace WaiterApp.ViewModel
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public async Task<bool> SignIn()
         {
-          
+
             //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
             System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -407,7 +409,7 @@ namespace WaiterApp.ViewModel
                             GetMessages();
 
 
-                   
+
 
                             return true;
 
@@ -567,7 +569,7 @@ namespace WaiterApp.ViewModel
 
         private void Waiter_MessageReceived(IMessageConsumer sender)
         {
-          
+
 
         }
 
@@ -711,6 +713,7 @@ namespace WaiterApp.ViewModel
         }
         private void MessageReceived(IMessageConsumer sender)
         {
+#if DeviceDotNet
             try
             {
                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
@@ -741,6 +744,7 @@ namespace WaiterApp.ViewModel
             catch (Exception error)
             {
             }
+#endif
             try
             {
                 GetMessages();
@@ -1014,7 +1018,7 @@ namespace WaiterApp.ViewModel
                     var message = Waiter.PeekMessage();
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable)
                     {
-                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 40)
                             Waiter.RemoveMessage(message.MessageID);
                         else
                         {

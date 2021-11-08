@@ -591,6 +591,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        internal IList<FlavourBusinessFacade.RoomService.IItemPreparation>  GetItemsReadToServe(HumanResources.Waiter waiter)
+        {
+            return (from openSession in OpenSessions
+             from sessionPart in openSession.PartialClientSessions
+             from itemPreparation in sessionPart.FlavourItems
+             where itemPreparation.State == FlavourBusinessFacade.RoomService.ItemPreparationState.Serving &&
+             (openSession.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+             select itemPreparation).ToList();
+        }
+
 
 
 

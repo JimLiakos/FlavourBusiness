@@ -195,17 +195,17 @@ namespace FlavourBusinessManager.RoomService
                              
 
 
-                                bool Sendmessage = false;
-                                if (Sendmessage)
-                                {
-                                    var activeWaiter = (from shiftWork in ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                        where shiftWork.Worker is IWaiter
-                                                        select shiftWork.Worker).OfType<HumanResources.Waiter>().FirstOrDefault();
+                                //bool Sendmessage = false;
+                                //if (Sendmessage)
+                                //{
+                                //    var activeWaiter = (from shiftWork in ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                //                        where shiftWork.Worker is IWaiter
+                                //                        select shiftWork.Worker).OfType<HumanResources.Waiter>().FirstOrDefault();
 
-                                    if (activeWaiter != null)
-                                        activeWaiter.PushMessage(null);
+                                //    if (activeWaiter != null)
+                                //        activeWaiter.PushMessage(null);
 
-                                }
+                                //}
 
                                 foreach (var mealCourse in Courses.ToList())
                                 {
@@ -217,13 +217,9 @@ namespace FlavourBusinessManager.RoomService
                                             {
                                                 mealCourse.PreparationState = ItemPreparationState.Serving;
                                             }
-
                                         }
-
                                     }
-
                                 }
-
                             }
                             catch (Exception error)
                             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -638,6 +639,12 @@ namespace FlavourBusinessManager.HumanResources
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+        }
+
+        /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
+        public IList<IItemPreparation> GetItemsReadToServe()
+        {
+            return ServicesContextRunTime.GetItemsReadToServe(this);
         }
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

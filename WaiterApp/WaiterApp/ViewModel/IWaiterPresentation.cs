@@ -17,6 +17,7 @@ namespace WaiterApp.ViewModel
     {
         [GenerateEventConsumerProxy]
         event LaytheTableRequestHandle LayTheTableRequest;
+
         [GenerateEventConsumerProxy]
         event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }

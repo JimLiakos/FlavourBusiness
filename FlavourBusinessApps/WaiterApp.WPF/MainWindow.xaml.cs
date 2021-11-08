@@ -26,7 +26,7 @@ namespace WaiterApp.WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel.WaiterPresentation();
+            DataContext = ViewModel.WaiterPresentation.Current;
             string url = @"http://192.168.2.8:4303/";//org
             url = @"http://192.168.2.5:4303/";//Braxati
             //url = @"http://10.0.0.13:4303/";//work

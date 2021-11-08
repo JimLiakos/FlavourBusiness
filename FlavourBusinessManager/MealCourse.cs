@@ -186,15 +186,18 @@ namespace FlavourBusinessManager.RoomService
 
                 if (_PreparationState != value)
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    var activeWaiters = ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.EndsAt > System.DateTime.UtcNow).Select(x => x.Worker).OfType<IWaiter>().ToList();
+                    if (activeWaiters.Count > 0)
                     {
-                        _PreparationState = value;
-                   
-                        stateTransition.Consistent = true;
-                    }
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _PreparationState = value;
+                            stateTransition.Consistent = true;
+                        }
 
-                    if (value == ItemPreparationState.Serving)
-                        ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
+                        if (value == ItemPreparationState.Serving)
+                            ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
+                    }
                 }
 
             }
