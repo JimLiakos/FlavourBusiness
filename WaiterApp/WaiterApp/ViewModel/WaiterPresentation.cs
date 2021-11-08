@@ -14,6 +14,7 @@ using DontWaitApp;
 using FlavourBusinessFacade.EndUsers;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
+using FlavourBusinessFacade.RoomService;
 
 
 
@@ -187,6 +188,12 @@ namespace WaiterApp.ViewModel
                 _Password = value;
             }
         }
+
+
+
+
+
+
 
         /// <MetaDataID>{32de8669-c820-4d42-b1b6-513d2e268af6}</MetaDataID>
         string _ConfirmPassword;
@@ -380,6 +387,8 @@ namespace WaiterApp.ViewModel
 
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
+                           ItemsReadyToServe=Waiter.GetItemsReadyToServe();
+
                             if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
@@ -500,6 +509,7 @@ namespace WaiterApp.ViewModel
 
 
                             ActiveShiftWork = Waiter.ActiveShiftWork;
+                            ItemsReadyToServe = Waiter.GetItemsReadyToServe();
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                             ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             if (this._Halls != null)
@@ -645,6 +655,7 @@ namespace WaiterApp.ViewModel
 
                                 Waiter.MessageReceived += MessageReceived;
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
+                                ItemsReadyToServe = Waiter.GetItemsReadyToServe();
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                                 ApplicationSettings.Current.FriendlyName = Waiter.FullName;
 
@@ -947,6 +958,8 @@ namespace WaiterApp.ViewModel
 
 
         IShiftWork ActiveShiftWork;
+
+        public IList<ItemsReadyToServe> ItemsReadyToServe { get; private set; }
 
         public bool InActiveShiftWork
         {

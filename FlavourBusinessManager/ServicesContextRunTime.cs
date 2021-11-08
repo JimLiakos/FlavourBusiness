@@ -18,6 +18,7 @@ using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using FlavourBusinessToolKit;
 using System.IO;
+using FlavourBusinessFacade.RoomService;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -253,10 +254,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     return _Current;
                 else
                 {
-                    
+
 
                     var flavoursServicesContext = FlavoursServicesContext.ActiveFlavoursServicesContexts.Where(x => x.RunAtContext.ContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID).FirstOrDefault();
-               
+
                     if (flavoursServicesContext == null)
                         return null;
                     flavoursServicesContext.GetRunTime();
@@ -498,9 +499,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                         where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
                                                         select aPreparationStation))
                     {
-                        if(!string.IsNullOrWhiteSpace( preparationStation.PreparationStationIdentity))
+                        if (!string.IsNullOrWhiteSpace(preparationStation.PreparationStationIdentity))
                             this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
-                        
+
                     }
                 }
                 return _PreparationStationRuntimes;
@@ -591,14 +592,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        internal IList<FlavourBusinessFacade.RoomService.IItemPreparation>  GetItemsReadToServe(HumanResources.Waiter waiter)
+        internal IList<ItemsReadyToServe> GetItemsReadToServe(HumanResources.Waiter waiter)
         {
-            return (from openSession in OpenSessions
-             from sessionPart in openSession.PartialClientSessions
-             from itemPreparation in sessionPart.FlavourItems
-             where itemPreparation.State == FlavourBusinessFacade.RoomService.ItemPreparationState.Serving &&
-             (openSession.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
-             select itemPreparation).ToList();
+            List<ItemsReadyToServe> itemsReadToServe = new List<ItemsReadyToServe>();
+            foreach (var servicePointPreparedItems in from openSession in OpenSessions
+                                                         from sessionPart in openSession.PartialClientSessions
+                                                         from itemPreparation in sessionPart.FlavourItems
+                                                         where itemPreparation.State == FlavourBusinessFacade.RoomService.ItemPreparationState.Serving &&
+                                                         (openSession.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                                         group itemPreparation by openSession into ServicePointItems
+                                                         select ServicePointItems)
+            {
+                itemsReadToServe.Add(new ItemsReadyToServe(servicePointPreparedItems.Key, servicePointPreparedItems.ToList()));
+            }
+            
+
+            return itemsReadToServe;
         }
 
 
@@ -660,49 +669,49 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         internal void MealItemsReadyToServe(ServicePoint servicePoint)
         {
-            
-            
-                var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
-                foreach (var waiter in activeWaiters)
+
+            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+            foreach (var waiter in activeWaiters)
+            {
+                if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
                 {
-                    if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    var clientMessage = new Message();
+                    clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
+                    clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                    clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
+                    waiter.PushMessage(clientMessage);
+
+                    if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
                     {
-                        var clientMessage = new Message();
-                        clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
-                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
-                        waiter.PushMessage(clientMessage);
+                        CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
 
-                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
-
-                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
                             {
-                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
-                                {
-                                    message.NotificationsNum += 1;
-                                    message.NotificationTimestamp = DateTime.UtcNow;
-                                }
-
-                                stateTransition.Consistent = true;
-                            }
-                            lock (ServiceContextRTLock)
-                            {
-                                WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                               from message in activeWaiter.Messages
-                                                               where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !message.MessageReaded
-                                                               select activeWaiter).ToList();
+                                message.NotificationsNum += 1;
+                                message.NotificationTimestamp = DateTime.UtcNow;
                             }
 
+                            stateTransition.Consistent = true;
+                        }
+                        lock (ServiceContextRTLock)
+                        {
+                            WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                           from message in activeWaiter.Messages
+                                                           where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !message.MessageReaded
+                                                           select activeWaiter).ToList();
                         }
 
                     }
+
                 }
-            
+            }
+
         }
 
         [CachingDataOnClientSide]

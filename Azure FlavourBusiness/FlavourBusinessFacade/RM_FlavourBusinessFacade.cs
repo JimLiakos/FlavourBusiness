@@ -4339,12 +4339,12 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "RemoveClientSession", args, argsTypes);
         }
         
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> GetItemsReadToServe()
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsReadyToServe> GetItemsReadyToServe()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetItemsReadToServe", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetItemsReadyToServe", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsReadyToServe>>(retValue);
         }
         
         public void RemoveMessage(string messageId)

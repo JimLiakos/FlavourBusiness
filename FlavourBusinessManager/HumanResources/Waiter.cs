@@ -642,7 +642,7 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
-        public IList<IItemPreparation> GetItemsReadToServe()
+        public IList<ItemsReadyToServe> GetItemsReadyToServe()
         {
             return ServicesContextRunTime.GetItemsReadToServe(this);
         }
