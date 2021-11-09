@@ -1018,6 +1018,7 @@ namespace WaiterApp.ViewModel
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
+            ItemsReadyToServe = Waiter.GetItemsReadyToServe();
             GetMessages();
         }
 

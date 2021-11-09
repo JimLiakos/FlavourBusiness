@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
@@ -14,6 +15,15 @@ namespace FlavourBusinessFacade.RoomService
             PreparedItems = preparationItems;
             Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
             
+        }
+
+        public ItemsReadyToServe(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext>  underPreparationItems  )
+        {
+            
+            ServicePoint = mealCourse.Meal.Session.ServicePoint;
+            //PreparedItems = preparationItems;
+            Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+
         }
         [OOAdvantech.Json.JsonConstructor]
         public ItemsReadyToServe(IServicePoint servicePoint, System.Collections.Generic.List<RoomService.IItemPreparation> preparedItems, string description)
