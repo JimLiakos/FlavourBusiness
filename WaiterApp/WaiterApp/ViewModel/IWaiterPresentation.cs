@@ -32,7 +32,10 @@ namespace WaiterApp.ViewModel
         {
             get;
         }
-
+        IList<FlavourBusinessFacade.RoomService.ItemsReadyToServe> ItemsReadyToServe
+        {
+            get;
+        }
         bool InActiveShiftWork { get; }
 
         System.DateTime ActiveShiftWorkStartedAt { get; }

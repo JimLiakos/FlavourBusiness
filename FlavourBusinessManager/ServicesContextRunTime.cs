@@ -595,27 +595,33 @@ namespace FlavourBusinessManager.ServicePointRunTime
         internal IList<ItemsReadyToServe> GetItemsReadToServe(HumanResources.Waiter waiter)
         {
 
-            
+
             List<ItemsReadyToServe> itemsReadToServe = new List<ItemsReadyToServe>();
-            if (waiter.ActiveShiftWork!=null)
+            if (waiter.ActiveShiftWork != null)
             {
-                var tt = (from mealCourse in MealsController.MealCoursesInProgress
+                var mealCoursesToServe = (from mealCourse in MealsController.MealCoursesInProgress
                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                           from itemPreparation in itemsPreparationContext.PreparationItems
                           where itemPreparation.State == ItemPreparationState.Serving &&
                           (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
                           select mealCourse).Distinct().ToList();
 
-
-                foreach (var servicePointPreparedItems in from openSession in OpenSessions
-                                                          from sessionPart in openSession.PartialClientSessions
-                                                          from itemPreparation in sessionPart.FlavourItems
-                                                          where itemPreparation.State == FlavourBusinessFacade.RoomService.ItemPreparationState.Serving &&
-                                                          (openSession.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
-                                                          group itemPreparation by openSession into ServicePointItems
-                                                          select ServicePointItems)
+                foreach (var mealCourse in mealCoursesToServe)
                 {
-                    itemsReadToServe.Add(new ItemsReadyToServe(servicePointPreparedItems.Key, servicePointPreparedItems.ToList()));
+                    //IList<ItemsPreparationContext> underPreparationItems
+
+                    IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                    where itemsPreparationContext.PreparationItems.All(x => x.State == ItemPreparationState.Serving)
+                                                                    select itemsPreparationContext).ToList();
+
+                    IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                            where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                                            x.State == ItemPreparationState.ÉnPreparation ||
+                                                                            x.State == ItemPreparationState.IsRoasting ||
+                                                                            x.State == ItemPreparationState.IsPrepared)
+                                                                            select itemsPreparationContext).ToList();
+
+                    itemsReadToServe.Add(new ItemsReadyToServe(mealCourse, preparedItems, underPreparationItems));
                 }
             }
 
