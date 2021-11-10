@@ -32,7 +32,7 @@ namespace WaiterApp.ViewModel
         {
             get;
         }
-        IList<FlavourBusinessFacade.RoomService.ItemsReadyToServe> ItemsReadyToServe
+        IList<ItemsReadyToServePresentation> ItemsReadyToServe
         {
             get;
         }

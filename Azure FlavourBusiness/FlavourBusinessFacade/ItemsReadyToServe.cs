@@ -10,18 +10,14 @@ namespace FlavourBusinessFacade.RoomService
     {
 
 
-        public ItemsReadyToServe(IFoodServiceSession serviceSession, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
-        {
-            ServicePoint = serviceSession.ServicePoint;
-            PreparedItems = preparationItems;
-            Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
-
-        }
+  
 
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; private set; }
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
+        public IMealCourse MealCourse { get; private set; }
         public ItemsReadyToServe(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
+            MealCourse = mealCourse;
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
@@ -34,15 +30,16 @@ namespace FlavourBusinessFacade.RoomService
 
         }
         [OOAdvantech.Json.JsonConstructor]
-
-        public ItemsReadyToServe(IServicePoint servicePoint, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
+        public ItemsReadyToServe(IServicePoint servicePoint, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
         {
+            MealCourse = mealCourse;
             ServicePoint = servicePoint;
             PreparedItems = preparedItems;
             Description = description;
             ContextsOfPreparedItems = contextsOfPreparedItems;
             ContextsOfUnderPreparationItems = contextsOfUnderPreparationItems;
         }
+        public ServicePointType ServicePointType { get; set; } = ServicePointType.HallServicePoint;
 
         public string Description;
 
@@ -51,7 +48,7 @@ namespace FlavourBusinessFacade.RoomService
         [RoleAMultiplicityRange(1, 1)]
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
         public ServicesContextResources.IServicePoint ServicePoint;
-
+        
         [Association("PreparedItemsToServe", Roles.RoleA, "2b36e0e0-e305-45c5-9b91-4f13b7048c84")]
         [OOAdvantech.MetaDataRepository.RoleAMultiplicityRange(1)]
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]

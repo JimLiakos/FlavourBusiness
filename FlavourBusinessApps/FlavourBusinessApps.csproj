@@ -39,6 +39,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,6 +101,9 @@
     </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ΜealCourse.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\ΜealCourse.cs</Link>
+    </Compile>
+    <Compile Include="..\WaiterApp\WaiterApp\ViewModel\ItemsReadyToServe.cs">
+      <Link>ViewModel\ItemsReadyToServe.cs</Link>
     </Compile>
     <Compile Include="Apps.cs" />
     <Compile Include="PreparationStationDevice.WPF\MainWindow.xaml.cs">
