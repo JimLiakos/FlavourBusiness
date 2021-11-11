@@ -26,7 +26,9 @@ namespace FlavourBusinessFacade.RoomService
                              from itemPreparation in itemsPreparationContext.PreparationItems
                              select itemPreparation).ToList();
 
-            Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+            Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
+
+            //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
 
         }
         [OOAdvantech.Json.JsonConstructor]
