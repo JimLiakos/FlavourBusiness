@@ -17,10 +17,12 @@ namespace FlavourBusinessFacade.RoomService
         public IMealCourse MealCourse { get; private set; }
         public ItemsReadyToServe(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
+            
             MealCourse = mealCourse;
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
+            ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
 
             PreparedItems = (from itemsPreparationContext in preparedItems
                              from itemPreparation in itemsPreparationContext.PreparationItems
@@ -32,10 +34,10 @@ namespace FlavourBusinessFacade.RoomService
 
         }
         [OOAdvantech.Json.JsonConstructor]
-        public ItemsReadyToServe(IServicePoint servicePoint, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
+        public ItemsReadyToServe(string servicesPointIdentity, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
         {
             MealCourse = mealCourse;
-            ServicePoint = servicePoint;
+            ServicesPointIdentity = servicesPointIdentity;
             PreparedItems = preparedItems;
             Description = description;
             ContextsOfPreparedItems = contextsOfPreparedItems;
@@ -50,7 +52,9 @@ namespace FlavourBusinessFacade.RoomService
         [RoleAMultiplicityRange(1, 1)]
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
         public ServicesContextResources.IServicePoint ServicePoint;
-        
+
+        public string ServicesPointIdentity { get; set; }
+
         [Association("PreparedItemsToServe", Roles.RoleA, "2b36e0e0-e305-45c5-9b91-4f13b7048c84")]
         [OOAdvantech.MetaDataRepository.RoleAMultiplicityRange(1)]
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]

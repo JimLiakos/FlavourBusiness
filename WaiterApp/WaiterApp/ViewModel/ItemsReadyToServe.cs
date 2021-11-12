@@ -14,6 +14,7 @@ namespace WaiterApp.ViewModel
         {
             
             Description = itemsReadyToServe.Description;
+            ServicesPointIdentity = itemsReadyToServe.ServicesPointIdentity;
             ContextsOfPreparedItems = itemsReadyToServe.ContextsOfPreparedItems;
             ContextsOfUnderPreparationItems = itemsReadyToServe.ContextsOfUnderPreparationItems;
             ServicePointType = itemsReadyToServe.ServicePointType;
@@ -38,6 +39,7 @@ namespace WaiterApp.ViewModel
 
         public MenuData MenuData { get; private set; }
         public string Description { get; private set; }
+        public string ServicesPointIdentity { get; private set; }
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; private set; }
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
         public ServicePointType ServicePointType { get; private set; }
