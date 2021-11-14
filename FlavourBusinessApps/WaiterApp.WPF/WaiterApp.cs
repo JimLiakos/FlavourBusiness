@@ -11,11 +11,11 @@ namespace FlavourBusinessApps.WaiterApp.WPF
     /// <MetaDataID>{8f191801-4c6c-4a70-b7e9-818f84ea701c}</MetaDataID>
     public class WaiterApp
     {
-        public static void Startup()
+        public static void Startup(string deviceID)
         {
 
-            OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = "81000000296";
-            ApplicationSettings.ExtraStoragePath = "81000000296";
+            OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = deviceID;
+            ApplicationSettings.ExtraStoragePath = deviceID;
 
 
 

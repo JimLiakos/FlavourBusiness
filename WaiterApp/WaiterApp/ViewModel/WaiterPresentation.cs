@@ -788,6 +788,11 @@ namespace WaiterApp.ViewModel
         {
             UserData = new UserData();
             AuthUser = null;
+            Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
+            Waiter.MessageReceived -= MessageReceived;
+            Waiter = null;
+            this._Halls = null;
+            ActiveShiftWork = null;
             //Organization = null;
             //ServiceContextSupervisor = null;
             //_ServicesContexts.Clear();

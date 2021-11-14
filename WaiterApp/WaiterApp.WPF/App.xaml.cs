@@ -32,10 +32,13 @@ namespace WaiterApp.WPF
 
             SerializeTaskScheduler.RunAsync();
 
-            FlavourBusinessApps.WaiterApp.WPF.WaiterApp.Startup();
-
-            MainWindow mainWindow = new MainWindow();
+            DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
+
+            //FlavourBusinessApps.WaiterApp.WPF.WaiterApp.Startup();
+
+            //MainWindow mainWindow = new MainWindow();
+            //mainWindow.Show();
 
             base.OnStartup(e);
         }

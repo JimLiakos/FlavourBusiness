@@ -55,6 +55,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ItemPreparationAbbreviation.cs" Link="ItemPreparationAbbreviation.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ItemsPreparationContext.cs" Link="ItemsPreparationContext.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ItemsPriparationInfo.cs" Link="ItemsPriparationInfo.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ItemsReadyToServe.cs" Link="ItemsReadyToServe.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IUploadSlot.cs" Link="IUploadSlot.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IUser.cs" Link="IUser.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IWaiter.cs" Link="IWaiter.cs" />
