@@ -320,10 +320,17 @@ namespace FlavourBusinessManager.RoomService
                         flavourItem.LoadMenuItem();
 
                     var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
-                    
-                    (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
+                    if (preparationData.PreparationStationRuntime != null)
+                    {
+                        (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
+                        flavourItem.State = ItemPreparationState.PreparationDelay;
+                    }
+                    else
+                        flavourItem.State= ItemPreparationState.Serving;
 
-                    flavourItem.State = ItemPreparationState.PreparationDelay;
+
+
+
                 }
 
                 ObjectChangeState?.Invoke(this, nameof(FoodItems));

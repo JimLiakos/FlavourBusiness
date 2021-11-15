@@ -39,11 +39,16 @@ namespace FlavourBusinessFacade.RoomService
         public ItemsPreparationContext(IMealCourse mealCourse, IPreparationStation preparationStation, List<IItemPreparation> preparationItems)
         {
             //this.MealCourse = mealCourse;
-            this.PreparationStationIdentity = preparationStation.PreparationStationIdentity;
-            PreparationStationDescription = preparationStation.Description;
+            if (preparationStation != null)
+            {
+                this.PreparationStationIdentity = preparationStation.PreparationStationIdentity;
+                PreparationStationDescription = preparationStation.Description;
 
-            this.PreparationItems = preparationItems;
-            Description = preparationStation.Description;
+                this.PreparationItems = preparationItems;
+                Description = preparationStation.Description;
+            }
+            else
+                Description = Resource.FoodItemInstantlyAvailable;
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
 
         }

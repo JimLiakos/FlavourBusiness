@@ -74,6 +74,11 @@
     <Compile Include="IUser.cs" />
     <Compile Include="HumanResources\IServicesContextWorker.cs" />
     <Compile Include="HumanResources\ServiceContextHumanResources.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserData.cs" />
     <Compile Include="ΙHallLayout.cs" />
     <Compile Include="HumanResources\ΙShifWork.cs" />
@@ -138,6 +143,12 @@
       <Project>{E58D9F23-6236-4587-913C-F5FADCF11C9C}</Project>
       <Name>ComputationalResources</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
