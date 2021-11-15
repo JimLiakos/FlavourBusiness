@@ -171,6 +171,17 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        int? _MealCourseTyepOrder;
+        public int MealCourseTyepOrder
+        {
+            get
+            {
+                if(_MealCourseTyepOrder==null)
+                    _MealCourseTyepOrder = (Meal as Meal).MealType.Courses.OfType<MenuModel.MealCourseType>().Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)).ToList().IndexOf(_MealCourseTypeUri);
+                return _MealCourseTyepOrder.Value;
+            }
+
+        }
 
         /// <exclude>Excluded</exclude>
         ItemPreparationState _PreparationState;
@@ -223,8 +234,8 @@ namespace FlavourBusinessManager.RoomService
                 List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
                                                                      where itemPreparation.State == ItemPreparationState.PendingPreparation ||
                                                                      itemPreparation.State == ItemPreparationState.PreparationDelay ||
-                                                                     itemPreparation.State == ItemPreparationState.ÉnPreparation||
-                                                                     itemPreparation.State == ItemPreparationState.IsRoasting||
+                                                                     itemPreparation.State == ItemPreparationState.ÉnPreparation ||
+                                                                     itemPreparation.State == ItemPreparationState.IsRoasting ||
                                                                      itemPreparation.State == ItemPreparationState.IsPrepared ||
                                                                      itemPreparation.State == ItemPreparationState.Serving
                                                                      group itemPreparation by itemPreparation.PreparationStation into itemsUnderPreparation
@@ -234,14 +245,14 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        
+
 
         [CachingDataOnClientSide]
         public FlavourBusinessFacade.EndUsers.SessionData SessionData
         {
             get
             {
-                var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x=>x.StorageIdentity== (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
+                var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x => x.StorageIdentity == (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
                 if (fbstorage != null && (Meal.Session as ServicesContextResources.FoodServiceSession).Menu == null)
                 {
                     IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity);
@@ -266,7 +277,7 @@ namespace FlavourBusinessManager.RoomService
                     servedMealTypesUris = Meal.Session.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
                 }
 
-                FlavourBusinessFacade.EndUsers.SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,Menu= (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };
+                FlavourBusinessFacade.EndUsers.SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity, Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };
                 return sessionData;
             }
         }
@@ -274,7 +285,7 @@ namespace FlavourBusinessManager.RoomService
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <MetaDataID>{7b6700b2-c8a4-4548-be19-657614416518}</MetaDataID>
-        private MealCourseType mealCourseType;
+        public readonly MealCourseType mealCourseType;
 
         /// <MetaDataID>{e6899983-8b85-4e28-84f4-8a8199511318}</MetaDataID>
         public MealCourse(MealCourseType mealCourseType, List<ItemPreparation> itemPreparations)
@@ -287,6 +298,8 @@ namespace FlavourBusinessManager.RoomService
                 AddItem(flavourItem);
 
         }
+
+
 
         /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
@@ -326,7 +339,7 @@ namespace FlavourBusinessManager.RoomService
                         flavourItem.State = ItemPreparationState.PreparationDelay;
                     }
                     else
-                        flavourItem.State= ItemPreparationState.Serving;
+                        flavourItem.State = ItemPreparationState.Serving;
 
 
 

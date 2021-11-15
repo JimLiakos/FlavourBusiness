@@ -109,5 +109,7 @@ namespace MenuModel
         [PersistentMember(nameof(_Meal))]
         [BackwardCompatibilityID("+4")]
         public MenuModel.IMealType Meal => _Meal.Value;
+
+        
     }
 }

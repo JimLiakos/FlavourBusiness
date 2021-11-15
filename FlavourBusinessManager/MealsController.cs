@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.ServicesContextResources;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace FlavourBusinessManager.RoomService
             {
                 var mealCourses = (from openSession in ServicesContextRunTime.OpenSessions
                                    from mealCource in openSession.Meal.Courses
-                                   orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource.Meal as Meal).Courses.IndexOf(mealCource)
+                                   orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTyepOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
                 //you have to  filter mealcourses by state. 
 
 
-
+                
                 //(from foodServiceSession in ServicesContextRunTime.OpenSessions
                 // from ss in foodServiceSession.PartialClientSessions
                 return mealCourses;

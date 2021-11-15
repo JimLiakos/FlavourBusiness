@@ -44,11 +44,12 @@ namespace FlavourBusinessFacade.RoomService
                 this.PreparationStationIdentity = preparationStation.PreparationStationIdentity;
                 PreparationStationDescription = preparationStation.Description;
 
-                this.PreparationItems = preparationItems;
+                
                 Description = preparationStation.Description;
             }
             else
                 Description = Resource.FoodItemInstantlyAvailable;
+            this.PreparationItems = preparationItems;
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
 
         }
