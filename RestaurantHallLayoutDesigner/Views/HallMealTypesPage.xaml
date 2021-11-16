@@ -6,6 +6,7 @@
                              xmlns:ViewModel="clr-namespace:FloorLayoutDesigner.ViewModel"
                              xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
                              xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+                             xmlns:Behaviors="clr-namespace:WPFUIElementObjectBind.Behaviors;assembly=WPFConnectableControls"
                              xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:FloorLayoutDesigner.Properties"
                              mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -38,6 +39,7 @@
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                             <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
+                            <Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>
                             <!--<EventSetter Event="Selected" Handler="TreeViewSelectedItemChanged" />-->
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">

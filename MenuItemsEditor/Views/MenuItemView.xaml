@@ -58,7 +58,7 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" Margin="0,0,13,0" BorderThickness="1" >
-
+                    <ScrollViewer>
                     <Grid MinHeight="400" MinWidth="180" Grid.Column="1" Margin="5,0,5,10" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="200*"/>
@@ -347,6 +347,7 @@
                         </Grid>
 
                     </Grid>
+                    </ScrollViewer>
                 </Border>
                 <GridSplitter Grid.Column="1" Margin="0,0,0,0" />
 

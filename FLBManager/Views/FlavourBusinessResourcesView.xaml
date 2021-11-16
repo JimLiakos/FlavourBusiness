@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FLBManager.Views"
              xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
              xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+             xmlns:Behaviors="clr-namespace:WPFUIElementObjectBind.Behaviors;assembly=WPFConnectableControls"
              xmlns:ViewModel="clr-namespace:FLBManager.ViewModel"
              xmlns:resx="clr-namespace:FLBManager.Properties"   
              xmlns:MenuItemsEditor="clr-namespace:MenuItemsEditor;assembly=MenuItemsEditor"
@@ -86,6 +87,7 @@
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                         <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
+                        <Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>
                         <!--<EventSetter Event="Selected" Handler="TreeViewSelectedItemChanged" />-->
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">

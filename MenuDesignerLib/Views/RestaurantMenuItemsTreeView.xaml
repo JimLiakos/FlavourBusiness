@@ -9,6 +9,7 @@
               xmlns:Resx="clr-namespace:MenuDesigner.Properties"
              xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
              xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+             xmlns:Behaviors="clr-namespace:WPFUIElementObjectBind.Behaviors;assembly=WPFConnectableControls"
              xmlns:resx="clr-namespace:MenuDesigner.Properties"   
    
              mc:Ignorable="d" 
@@ -115,7 +116,7 @@
                     </Grid>
                 </Border>
             </Grid>
-            <TreeView BorderThickness="0"  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding RootCategory.Members}" 
+            <TreeView BorderThickness="0" Padding="0,0,0,20"  MouseLeftButtonDown="MenuItemsTreeView_MouseLeftButtonDown" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding RootCategory.Members}" 
                       ConnectableCtrl:DragDropExtension.ScrollOnDragDrop="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
@@ -128,6 +129,7 @@
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected ,Mode=TwoWay}" />
                         <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
+                        <Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>
                         <!--<EventSetter Event="Selected" Handler="TreeViewSelectedItemChanged" />-->
                     </Style>
                 </TreeView.ItemContainerStyle>

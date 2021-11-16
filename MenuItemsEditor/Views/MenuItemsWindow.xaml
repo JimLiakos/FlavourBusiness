@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:MenuItemsEditor"
              xmlns:MenuModel="clr-namespace:MenuModel;assembly=MenuModel"
             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+            xmlns:Behaviors="clr-namespace:WPFUIElementObjectBind.Behaviors;assembly=WPFConnectableControls"
             xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"
             xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
             xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
@@ -35,9 +36,10 @@
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsSelected" Value="{Binding IsSelected}" />
                     <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded}"/>
+                    <Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>
                     <EventSetter Event="Selected" Handler="TreeViewSelectedItemChanged" />
                 </Style>
-                
+
             </TreeView.ItemContainerStyle>
 
             <TreeView.ItemTemplate>

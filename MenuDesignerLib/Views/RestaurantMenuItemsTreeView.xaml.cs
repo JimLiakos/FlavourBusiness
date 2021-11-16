@@ -101,7 +101,9 @@ namespace MenuDesigner.Views
             {
                 var menuCanvasItems = (from foodItemViewModel in itemsCategoryViewModel.Members.OfType<ViewModel.MenuCanvas.TreeFoodItemViewModel>()
                                        select foodItemViewModel.MenuCanvasFoodItem as MenuPresentationModel.MenuCanvas.IMenuCanvasItem).ToList();
-                DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(menuCanvasItems), DragDropEffects.Copy);
+
+                if (menuCanvasItems.Count > 0)
+                    DragDrop.DoDragDrop(this, new ViewModel.MenuCanvas.DragCanvasItems(menuCanvasItems), DragDropEffects.Copy);
             }
 
 
