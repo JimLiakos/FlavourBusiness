@@ -23,6 +23,9 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{b6e7eb8b-024d-496d-bfaf-a486b1840263}</MetaDataID>
         public string PreparationStationDescription { get; set; }
 
+
+#if !FlavourBusinessDevice
+
         /// <summary>
         /// Defines items collection with common meal course and common preparation station.
         /// </summary>
@@ -53,6 +56,8 @@ namespace FlavourBusinessFacade.RoomService
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
 
         }
+#endif
+
         /// <MetaDataID>{b53c2414-42ee-432c-a6ba-ac82e1f6f1bd}</MetaDataID>
         public ItemsPreparationContext()
         {
