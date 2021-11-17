@@ -12,13 +12,19 @@ namespace WaiterApp.ViewModel
     {
         public ServingBatchPresentation(ServingBatch servingBatch)
         {
-            
+
+            List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = servingBatch.Description;
             ServicesPointIdentity = servingBatch.ServicesPointIdentity;
             ContextsOfPreparedItems = servingBatch.ContextsOfPreparedItems;
+            allContextsOfPreparedItems.AddRange(ContextsOfPreparedItems);
+
             ContextsOfUnderPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
+            allContextsOfPreparedItems.AddRange(ContextsOfUnderPreparationItems);
+
             ServicePointType = servingBatch.ServicePointType;
 
+            AllContextsOfPreparedItems = allContextsOfPreparedItems;
             var sessionData = servingBatch.MealCourse.SessionData;
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
@@ -36,6 +42,8 @@ namespace WaiterApp.ViewModel
                 DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
         }
+
+        public IList<ItemsPreparationContext> AllContextsOfPreparedItems { get; private set; }
 
         public MenuData MenuData { get; private set; }
         public string Description { get; private set; }

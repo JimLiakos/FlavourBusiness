@@ -67,6 +67,7 @@
     <Compile Include="IParty.cs" />
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
+    <Compile Include="IServingBatch.cs" />
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />
     <Compile Include="ItemsPreparationContext.cs" />

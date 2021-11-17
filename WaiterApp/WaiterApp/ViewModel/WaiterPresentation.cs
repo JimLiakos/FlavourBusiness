@@ -379,6 +379,10 @@ namespace WaiterApp.ViewModel
                         {
                             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
                             Waiter.MessageReceived -= MessageReceived;
+                            if (Waiter is ITransparentProxy)
+                                (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+
+
                         }
 
                         //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
@@ -409,6 +413,9 @@ namespace WaiterApp.ViewModel
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                             Waiter.MessageReceived += MessageReceived;
+                            if (Waiter is ITransparentProxy)
+                                (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
+
 
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -474,6 +481,9 @@ namespace WaiterApp.ViewModel
                             {
                                 Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
                                 Waiter.MessageReceived -= MessageReceived;
+                                if (Waiter is ITransparentProxy)
+                                    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+
                             }
                             Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
 
@@ -482,6 +492,9 @@ namespace WaiterApp.ViewModel
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                             Waiter.MessageReceived += MessageReceived;
+                            if (Waiter is ITransparentProxy)
+                                (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
+
 
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -495,6 +508,9 @@ namespace WaiterApp.ViewModel
                                 {
                                     var message = Waiter.PeekMessage();
                                     Waiter.MessageReceived += Waiter_MessageReceived;
+                                    //if (Waiter is ITransparentProxy)
+                                    //    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
+
 
                                     do
                                     {
@@ -503,6 +519,8 @@ namespace WaiterApp.ViewModel
                                     } while (!serviceState.Terminate);
 
                                     Waiter.MessageReceived -= Waiter_MessageReceived;
+                                    //if (Waiter is ITransparentProxy)
+                                    //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                 }), serviceState);
                             }
 #endif
@@ -578,6 +596,21 @@ namespace WaiterApp.ViewModel
 
             }
 
+        }
+
+        private void WaiterPresentation_Reconnected(object sender)
+        {
+            if(Waiter!=null)
+            {
+                List<ItemPreparationAbbreviation> servingItemsOnDevice =(from servingBatch in this.ServingBatches
+                 from itemsContext in servingBatch.AllContextsOfPreparedItems
+                 from itemPreparation in itemsContext.PreparationItems
+                 select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+                if (ActiveShiftWork != null)
+                {
+                    ServingBatchUpdates servingBatchUpdates = Waiter.GetServingUpdate(servingItemsOnDevice);
+                }
+            }
         }
 
         private void Waiter_MessageReceived(IMessageConsumer sender)
@@ -657,6 +690,10 @@ namespace WaiterApp.ViewModel
                                 Waiter.ObjectChangeState += Waiter_ObjectChangeState;
 
                                 Waiter.MessageReceived += MessageReceived;
+                                if (Waiter is ITransparentProxy)
+                                    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
+
+
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
                                 ServingBatches = (from servingBatche in Waiter.GetServingBatches()
                                                      select new ServingBatchPresentation(servingBatche)).ToList();
@@ -790,6 +827,9 @@ namespace WaiterApp.ViewModel
             AuthUser = null;
             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
             Waiter.MessageReceived -= MessageReceived;
+            if (Waiter is ITransparentProxy)
+                (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+
             Waiter = null;
             this._Halls = null;
             ActiveShiftWork = null;

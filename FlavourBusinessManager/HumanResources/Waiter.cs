@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
@@ -645,6 +646,33 @@ namespace FlavourBusinessManager.HumanResources
         public IList<ServingBatch> GetServingBatches()
         {
             return ServicesContextRunTime.GetServingBatches(this);
+        }
+
+        public ServingBatchUpdates GetServingUpdate(List<ItemPreparationAbbreviation> servingItemsOnDevice)
+        {
+
+            List<ServingBatch> servingBatches = ServicesContextRunTime.GetServingBatches(this).ToList();
+
+            var itemsToServe = (from servingBatch in servingBatches
+                                from itemsContext in servingBatch.ContextsOfPreparedItems
+                                from itemPreparation in itemsContext.PreparationItems
+                                select new { servingBatch, itemsContext, itemPreparation }).ToList();
+            itemsToServe.AddRange((from servingBatch in servingBatches
+                                   from itemsContext in servingBatch.ContextsOfUnderPreparationItems
+                                   from itemPreparation in itemsContext.PreparationItems
+                                   select new { servingBatch, itemsContext, itemPreparation }).ToList());
+            foreach (var itemToServe in itemsToServe.ToList())
+            {
+                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid && x.StateTimestamp.ToOADate() == itemToServe.itemPreparation.StateTimestamp.ToOADate()).FirstOrDefault();
+                if (servingItemOnDevice != null)
+                {
+                    itemsToServe.Remove(itemToServe);
+                    servingItemsOnDevice.Remove(servingItemOnDevice);
+                }
+            }
+            servingBatches =itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
+
+            return new ServingBatchUpdates(servingBatches, servingItemsOnDevice);
         }
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

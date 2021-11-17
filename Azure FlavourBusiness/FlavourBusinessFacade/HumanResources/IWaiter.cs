@@ -59,5 +59,8 @@ namespace FlavourBusinessFacade.HumanResources
         IList<ServingBatch> GetServingBatches();
 
 
+        ServingBatchUpdates GetServingUpdate(List<ItemPreparationAbbreviation> servingItemsOnDevice );
+
+
     }
 }

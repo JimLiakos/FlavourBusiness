@@ -177,7 +177,11 @@
 		(object Realize_Relationship
 		    quid       	"61374CDF0209"
 		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealsController"
-		    quidu      	"613748FD01E6"))
+		    quidu      	"613748FD01E6")
+		(object Realize_Relationship
+		    quid       	"61953A830228"
+		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IServingBatch"
+		    quidu      	"6195344F038E"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -1649,4 +1653,36 @@
 		    quidu      	"61374CDF0209"
 		    client     	@1
 		    supplier   	@82
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::RoomService::IServingBatch" @84
+		    location   	(659, 2643)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@84
+			location   	(658, 2751)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IServingBatch")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"6195344F038E")
+		(object RealizeView "" @85
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"61953A830228"
+		    client     	@1
+		    supplier   	@84
 		    line_style 	0)))))

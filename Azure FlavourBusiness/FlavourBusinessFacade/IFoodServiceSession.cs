@@ -17,7 +17,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [RoleAMultiplicityRange(1, 1)]
         RoomService.IMeal Meal { get;  }
 
-
+         
         [RoleAMultiplicityRange(0)]
         [Association("FoodServiceSession", Roles.RoleA, "93808acd-1c78-45da-8c44-dd7666ae0128")]
         System.Collections.Generic.IList<IFoodServiceClientSession> PartialClientSessions { get; }

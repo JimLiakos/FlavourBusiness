@@ -11700,11 +11700,11 @@
 			    supplier   	@73
 			    vertices   	(list Points
 				(1056, 788)
-				(1056, 960)
-				(1191, 960))
+				(1056, 959)
+				(1191, 959))
 			    line_style 	3
 			    origin_attachment 	(1056, 788)
-			    terminal_attachment 	(1191, 960)
+			    terminal_attachment 	(1191, 959)
 			    label      	(object SegLabel @110
 				Parent_View 	@108
 				location   	(1139, 923)
