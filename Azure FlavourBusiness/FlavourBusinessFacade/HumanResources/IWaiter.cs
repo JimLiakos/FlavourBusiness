@@ -56,7 +56,7 @@ namespace FlavourBusinessFacade.HumanResources
         [BackwardCompatibilityID("+9")]
         string Password { get; set; }
 
-        IList<ItemsReadyToServe> GetItemsReadyToServe();
+        IList<ServingBatch> GetServingBatches();
 
 
     }

@@ -642,9 +642,9 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
-        public IList<ItemsReadyToServe> GetItemsReadyToServe()
+        public IList<ServingBatch> GetServingBatches()
         {
-            return ServicesContextRunTime.GetItemsReadToServe(this);
+            return ServicesContextRunTime.GetServingBatches(this);
         }
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

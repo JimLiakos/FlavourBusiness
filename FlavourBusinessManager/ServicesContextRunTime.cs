@@ -592,11 +592,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        internal IList<ItemsReadyToServe> GetItemsReadToServe(HumanResources.Waiter waiter)
+        internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
         {
 
 
-            List<ItemsReadyToServe> itemsReadToServe = new List<ItemsReadyToServe>();
+            List<ServingBatch> servingBatches = new List<ServingBatch>();
             if (waiter.ActiveShiftWork != null)
             {
                 var mealCoursesToServe = (from mealCourse in MealsController.MealCoursesInProgress
@@ -621,12 +621,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();
 
-                    itemsReadToServe.Add(new ItemsReadyToServe(mealCourse, preparedItems, underPreparationItems));
+                    servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
                 }
             }
 
 
-            return itemsReadToServe;
+            return servingBatches;
         }
 
 

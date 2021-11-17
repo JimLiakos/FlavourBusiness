@@ -8,18 +8,18 @@ using System.Text;
 namespace WaiterApp.ViewModel
 {
     /// <MetaDataID>{c6caec47-b340-48ee-8f09-428622c0945c}</MetaDataID>
-    public class ItemsReadyToServePresentation
+    public class ServingBatchPresentation
     {
-        public ItemsReadyToServePresentation(ItemsReadyToServe itemsReadyToServe)
+        public ServingBatchPresentation(ServingBatch servingBatch)
         {
             
-            Description = itemsReadyToServe.Description;
-            ServicesPointIdentity = itemsReadyToServe.ServicesPointIdentity;
-            ContextsOfPreparedItems = itemsReadyToServe.ContextsOfPreparedItems;
-            ContextsOfUnderPreparationItems = itemsReadyToServe.ContextsOfUnderPreparationItems;
-            ServicePointType = itemsReadyToServe.ServicePointType;
+            Description = servingBatch.Description;
+            ServicesPointIdentity = servingBatch.ServicesPointIdentity;
+            ContextsOfPreparedItems = servingBatch.ContextsOfPreparedItems;
+            ContextsOfUnderPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
+            ServicePointType = servingBatch.ServicePointType;
 
-            var sessionData = itemsReadyToServe.MealCourse.SessionData;
+            var sessionData = servingBatch.MealCourse.SessionData;
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
 

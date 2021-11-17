@@ -387,8 +387,8 @@ namespace WaiterApp.ViewModel
 
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            ItemsReadyToServe = (from itemsReadyToServe in Waiter.GetItemsReadyToServe()
-                                                 select new ItemsReadyToServePresentation(itemsReadyToServe)).ToList();
+                            ServingBatches = (from itemsReadyToServe in Waiter.GetServingBatches()
+                                                 select new ServingBatchPresentation(itemsReadyToServe)).ToList();
 
                             if (this._Halls != null)
                             {
@@ -510,8 +510,8 @@ namespace WaiterApp.ViewModel
 
 
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            ItemsReadyToServe = (from itemsReadyToServe in Waiter.GetItemsReadyToServe()
-                                                 select new ItemsReadyToServePresentation(itemsReadyToServe)).ToList();
+                            ServingBatches = (from servingBatche in Waiter.GetServingBatches()
+                                                 select new ServingBatchPresentation(servingBatche)).ToList();
 
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                             ApplicationSettings.Current.FriendlyName = Waiter.FullName;
@@ -658,8 +658,8 @@ namespace WaiterApp.ViewModel
 
                                 Waiter.MessageReceived += MessageReceived;
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
-                                ItemsReadyToServe = (from itemsReadyToServe in Waiter.GetItemsReadyToServe()
-                                                     select new ItemsReadyToServePresentation(itemsReadyToServe)).ToList();
+                                ServingBatches = (from servingBatche in Waiter.GetServingBatches()
+                                                     select new ServingBatchPresentation(servingBatche)).ToList();
 
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                                 ApplicationSettings.Current.FriendlyName = Waiter.FullName;
@@ -969,7 +969,7 @@ namespace WaiterApp.ViewModel
 
         IShiftWork ActiveShiftWork;
 
-        public IList<ItemsReadyToServePresentation> ItemsReadyToServe { get; private set; }
+        public IList<ServingBatchPresentation> ServingBatches { get; private set; }
 
         public bool InActiveShiftWork
         {
@@ -1028,8 +1028,8 @@ namespace WaiterApp.ViewModel
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
-            ItemsReadyToServe = (from itemsReadyToServe in Waiter.GetItemsReadyToServe()
-                                 select new ItemsReadyToServePresentation(itemsReadyToServe)).ToList();
+            ServingBatches = (from servingBatche in Waiter.GetServingBatches()
+                                 select new ServingBatchPresentation(servingBatche)).ToList();
 
             GetMessages();
         }

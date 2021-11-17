@@ -24,7 +24,7 @@ namespace FlavourBusinessApps.WaiterApp.WPF
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.OptionMenuItemSpecific"] = typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.Option"] = typeof(MenuModel.JsonViewModel.Option);
 
-            SerializationBinder.NamesTypesDictionary["WaiterApp.ViewModel.ItemsReadyToServePresentation"] = typeof(global::WaiterApp.ViewModel.ItemsReadyToServePresentation);
+            SerializationBinder.NamesTypesDictionary["WaiterApp.ViewModel.ServingBatchPresentation"] = typeof(global::WaiterApp.ViewModel.ServingBatchPresentation);
 
 
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
@@ -47,7 +47,7 @@ namespace FlavourBusinessApps.WaiterApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealType)] = "MenuModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.FixedMealType)] = "MenuModel.FixedMealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
-            SerializationBinder.TypesNamesDictionary[typeof(global::WaiterApp.ViewModel.ItemsReadyToServePresentation)] = "WaiterApp.ViewModel.ItemsReadyToServePresentation";
+            SerializationBinder.TypesNamesDictionary[typeof(global::WaiterApp.ViewModel.ServingBatchPresentation)] = "WaiterApp.ViewModel.ServingBatchPresentation";
 
             
 

@@ -6,16 +6,14 @@ using System.Linq;
 namespace FlavourBusinessFacade.RoomService
 {
     /// <MetaDataID>{e547a3a4-13e0-4cdf-97d4-4a44c90a4889}</MetaDataID>
-    public class ItemsReadyToServe
+    public class ServingBatch
     {
 
-
-  
 
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; private set; }
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
         public IMealCourse MealCourse { get; private set; }
-        public ItemsReadyToServe(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
+        public ServingBatch(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
             
             MealCourse = mealCourse;
@@ -34,7 +32,7 @@ namespace FlavourBusinessFacade.RoomService
 
         }
         [OOAdvantech.Json.JsonConstructor]
-        public ItemsReadyToServe(string servicesPointIdentity, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
+        public ServingBatch(string servicesPointIdentity, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
         {
             MealCourse = mealCourse;
             ServicesPointIdentity = servicesPointIdentity;

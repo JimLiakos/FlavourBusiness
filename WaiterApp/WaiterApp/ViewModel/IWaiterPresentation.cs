@@ -32,7 +32,7 @@ namespace WaiterApp.ViewModel
         {
             get;
         }
-        IList<ItemsReadyToServePresentation> ItemsReadyToServe
+        IList<ServingBatchPresentation> ServingBatches
         {
             get;
         }
