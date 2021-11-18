@@ -1009,7 +1009,37 @@ namespace WaiterApp.ViewModel
 
         IShiftWork ActiveShiftWork;
 
-        public IList<ServingBatchPresentation> ServingBatches { get; private set; }
+        public List<ServingBatchPresentation> ServingBatches { get; private set; }
+
+        public List<ServingBatchPresentation> AssignedServingBatches { get; private set; } = new List<ServingBatchPresentation>();
+
+        public bool AssignServingBatch(string serviceBatchIdentity)
+        {
+            var servingBatch= ServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+            if(servingBatch!=null)
+            {
+                ServingBatches.Remove(servingBatch);
+                AssignedServingBatches.Add(servingBatch);
+                return true;
+            }
+
+            return false;
+            
+        }
+
+
+        public bool DeassignServingBatch(string serviceBatchIdentity)
+        {
+            var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+            if (servingBatch != null)
+            {
+                AssignedServingBatches.Remove(servingBatch);
+                ServingBatches.Add(servingBatch);
+                return true;
+            }
+
+            return false;
+        }
 
         public bool InActiveShiftWork
         {

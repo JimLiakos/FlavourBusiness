@@ -32,10 +32,21 @@ namespace WaiterApp.ViewModel
         {
             get;
         }
-        IList<ServingBatchPresentation> ServingBatches
+        List<ServingBatchPresentation> ServingBatches
         {
             get;
         }
+
+        List<ServingBatchPresentation> AssignedServingBatches
+        {
+            get;
+        }
+
+        bool AssignServingBatch(string serviceBatchIdentity);
+
+        
+        bool DeassignServingBatch(string serviceBatchIdentity);
+
         bool InActiveShiftWork { get; }
 
         System.DateTime ActiveShiftWorkStartedAt { get; }

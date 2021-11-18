@@ -4339,12 +4339,12 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "RemoveClientSession", args, argsTypes);
         }
         
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ServingBatch> GetServingBatches()
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch> GetServingBatches()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingBatches", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ServingBatch>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
         }
         
         public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetServingUpdate(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
@@ -4355,6 +4355,24 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingUpdate", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ServingBatchUpdates>(retValue);
+        }
+        
+        public void AssignServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servingBatch;
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IServingBatch);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "AssignServingBatch", args, argsTypes);
+        }
+        
+        public void DeassignServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servingBatch;
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IServingBatch);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "DeassignServingBatch", args, argsTypes);
         }
         
         public void RemoveMessage(string messageId)
