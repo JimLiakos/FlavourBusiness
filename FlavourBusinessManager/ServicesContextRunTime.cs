@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using FlavourBusinessToolKit;
 using System.IO;
 using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.RoomService;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {

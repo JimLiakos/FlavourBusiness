@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
@@ -22,5 +23,19 @@ namespace FlavourBusinessFacade.RoomService
         string ServicesPointIdentity { get; set; }
         /// <MetaDataID>{ffac02fc-d79b-4238-90aa-1a9cae4ca48b}</MetaDataID>
         ServicePointType ServicePointType { get; set; }
+    }
+
+    /// <MetaDataID>{bb7eff35-3ac4-4ac7-90a1-5fb3a4a8f122}</MetaDataID>
+    public class ServingBatchUpdates
+    {
+        [OOAdvantech.Json.JsonConstructor]
+        public ServingBatchUpdates(List<IServingBatch> servingBatches, List<ItemPreparationAbbreviation> removedServingItems)
+        {
+            RemovedServingItems = removedServingItems;
+            ServingBatches = servingBatches;
+        }
+        public List<ItemPreparationAbbreviation> RemovedServingItems { get; }
+        public List<IServingBatch> ServingBatches { get; }
+
     }
 }

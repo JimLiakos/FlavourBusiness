@@ -616,7 +616,7 @@ namespace FlavourBusinessManager.HumanResources
             ShiftWork shiftWork = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition())
             {
-                shiftWork = new ShiftWork(Name);
+                shiftWork = new ServingShiftWork(Name);
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
                 shiftWork.StartsAt = startedAt;
                 shiftWork.PeriodInHours = timespanInHours;
@@ -643,15 +643,15 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
-        public IList<ServingBatch> GetServingBatches()
+        public IList<IServingBatch> GetServingBatches()
         {
-            return ServicesContextRunTime.GetServingBatches(this);
+            return ServicesContextRunTime.GetServingBatches(this).OfType<IServingBatch>().ToList();
         }
 
         public ServingBatchUpdates GetServingUpdate(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
 
-            List<ServingBatch> servingBatches = ServicesContextRunTime.GetServingBatches(this).ToList();
+            List<RoomService.ServingBatch> servingBatches = ServicesContextRunTime.GetServingBatches(this).ToList();
 
             var itemsToServe = (from servingBatch in servingBatches
                                 from itemsContext in servingBatch.ContextsOfPreparedItems
@@ -672,8 +672,22 @@ namespace FlavourBusinessManager.HumanResources
             }
             servingBatches =itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
 
-            return new ServingBatchUpdates(servingBatches, servingItemsOnDevice);
+            return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
         }
+
+
+        public void AssignServingBatch(IServingBatch servingBatch)
+        {
+
+        }
+
+
+        public void DeassignServingBatch(IServingBatch servingBatch)
+        {
+            if (ActiveShiftWork is ServingShiftWork)
+                (ActiveShiftWork as ServingShiftWork).RemoveServingBatch(servingBatch);
+        }
+
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)
         //{

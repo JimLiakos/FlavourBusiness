@@ -10,7 +10,7 @@ namespace WaiterApp.ViewModel
     /// <MetaDataID>{c6caec47-b340-48ee-8f09-428622c0945c}</MetaDataID>
     public class ServingBatchPresentation
     {
-        public ServingBatchPresentation(ServingBatch servingBatch)
+        public ServingBatchPresentation(IServingBatch servingBatch)
         {
 
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();

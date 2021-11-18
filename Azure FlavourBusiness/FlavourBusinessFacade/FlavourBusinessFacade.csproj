@@ -71,7 +71,7 @@
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />
     <Compile Include="ItemsPreparationContext.cs" />
-    <Compile Include="ItemsReadyToServe.cs" />
+    <None Include="ItemsReadyToServe.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="HumanResources\IServicesContextWorker.cs" />
     <Compile Include="HumanResources\ServiceContextHumanResources.cs" />
