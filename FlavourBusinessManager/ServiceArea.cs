@@ -26,13 +26,23 @@ namespace FlavourBusinessManager.ServicesContextResources
         internal void OnActivated()
         {
 
-           foreach(var servicePoint in  ServicePoints)
+            foreach (var servicePoint in ServicePoints)
                 servicePoint.ObjectChangeState += ServicePoint_ObjectChangeState;
+
+
+            if (string.IsNullOrWhiteSpace(MealTypesUris))
+            {
+                var twoCourseMealType = ServicePointRunTime.ServicesContextRunTime.Current.GetTowcoursesMealType();
+                if (twoCourseMealType != null)
+                    MealTypesUris = (ObjectStorage.GetStorageOfObject(twoCourseMealType).GetPersistentObjectUri(twoCourseMealType));
+            }
+
+
         }
 
         private void ServicePoint_ObjectChangeState(object _object, string member)
         {
-            
+
         }
 
 

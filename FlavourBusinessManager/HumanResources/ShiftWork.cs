@@ -23,7 +23,7 @@ namespace FlavourBusinessManager.HumanResources
         public double PeriodInHours
         {
             get => _PeriodInHours;
-            set
+            internal set
             {
 
                 if (_PeriodInHours != value)
@@ -103,7 +103,7 @@ namespace FlavourBusinessManager.HumanResources
 
                 return _StartsAt;
             }
-            set
+            internal set
             {
 
                 if (_StartsAt != value)

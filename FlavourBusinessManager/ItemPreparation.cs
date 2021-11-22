@@ -787,7 +787,16 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{3393c0e9-7404-4097-be16-5d9e678a9bdb}</MetaDataID>
         public bool IsCooked { get; set; }
+
+
+        OOAdvantech.Member<IServingBatch> _ServedInTheBatch = new OOAdvantech.Member<IServingBatch>();
+
+        /// <MetaDataID>{ab76fae1-98fe-4f45-9973-c9dde93e547d}</MetaDataID>
+        [PersistentMember(nameof(_ServedInTheBatch))]
+        [BackwardCompatibilityID("+23")]
+        public IServingBatch ServedInTheBatch => _ServedInTheBatch.Value;
 
         ///// <MetaDataID>{fdd3e18e-43b8-4c77-80b1-d7a17c1a9c8b}</MetaDataID>
         //public string Timestamp;

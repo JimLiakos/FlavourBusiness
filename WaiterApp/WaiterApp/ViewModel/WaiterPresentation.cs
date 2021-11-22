@@ -394,6 +394,7 @@ namespace WaiterApp.ViewModel
                             ServingBatches = (from itemsReadyToServe in Waiter.GetServingBatches()
                                                  select new ServingBatchPresentation(itemsReadyToServe)).ToList();
 
+                            
                             if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
@@ -1016,11 +1017,36 @@ namespace WaiterApp.ViewModel
         public bool AssignServingBatch(string serviceBatchIdentity)
         {
             var servingBatch= ServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+
             if(servingBatch!=null)
             {
+
                 ServingBatches.Remove(servingBatch);
                 AssignedServingBatches.Add(servingBatch);
-                return true;
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        {
+                            this.Waiter.AssignServingBatch(servingBatch.ServingBatch);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                        catch (Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
+                    return true;
             }
 
             return false;

@@ -14,6 +14,7 @@ namespace FlavourBusinessManager.HumanResources
         [PersistentMember(nameof(_ServingBatches))]
         [RoleAMultiplicityRange(0)]
         [Association("ServingBatchInShiftWork", Roles.RoleA, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public System.Collections.Generic.List<RoomService.ServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
          

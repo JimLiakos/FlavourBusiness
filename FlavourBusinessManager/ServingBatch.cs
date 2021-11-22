@@ -19,6 +19,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2411b3a6-0864-4dcf-b4c3-7ead1eb055c2}</MetaDataID>
         [PersistentMember(nameof(_PreparedItems))]
         [BackwardCompatibilityID("+1")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public List<IItemPreparation> PreparedItems
         {
             get => _PreparedItems.ToThreadSafeList();
@@ -45,6 +46,15 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{7a3cacaf-eaba-4fcd-a84b-e8bc312e54f5}</MetaDataID>
         [CachingDataOnClientSide]
         public ServicePointType ServicePointType { get; set; }
+
+        [CachingDataOnClientSide]
+        public bool IsAssigned
+        {
+            get
+            {
+                return ShiftWork != null;
+            }
+        }
 
 
         /// <MetaDataID>{1603a1ea-fc7a-4b83-ac7a-24c143fe7d31}</MetaDataID>

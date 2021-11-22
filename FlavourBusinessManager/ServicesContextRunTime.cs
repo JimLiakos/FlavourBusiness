@@ -568,6 +568,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
+        internal void WaiterSiftWorkUpdated(HumanResources.Waiter waiter)
+        {
+            if (waiter.ActiveShiftWork != null && !ActiveShiftWorks.Contains(waiter.ActiveShiftWork))
+                ActiveShiftWorks.Add(waiter.ActiveShiftWork);
+
+            var activeShiftWorks = GetActiveShiftWorks();
+
+
+        }
+
         /// <MetaDataID>{fa22f19b-550e-4ae2-8c6c-315fa0ea2b26}</MetaDataID>
         [PersistentMember(nameof(_Description))]
         [BackwardCompatibilityID("+1")]
@@ -596,16 +606,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
         internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
         {
 
+            var activeShiftWork = GetActiveShiftWorks();
 
             List<ServingBatch> servingBatches = new List<ServingBatch>();
             if (waiter.ActiveShiftWork != null)
             {
                 var mealCoursesToServe = (from mealCourse in MealsController.MealCoursesInProgress
-                          from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                          from itemPreparation in itemsPreparationContext.PreparationItems
-                          where itemPreparation.State == ItemPreparationState.Serving &&
-                          (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
-                          select mealCourse).Distinct().ToList();
+                                          from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                          from itemPreparation in itemsPreparationContext.PreparationItems
+                                          where itemPreparation.State == ItemPreparationState.Serving &&
+                                          (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
                 {
@@ -621,6 +632,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                                             x.State == ItemPreparationState.IsRoasting ||
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();
+
+                    (from itemsPreparationContext in  preparedItems
+                    from itemPreparation in itemsPreparationContext.PreparationItems
+                    where itemPreparation.ServedInTheBatch!=null
+                    select itemPreparation.ServedInTheBatch).Any
 
                     servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
                 }
@@ -1052,13 +1068,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
 
+
                 serviceArea.Description = Properties.Resources.DefaultServiceAreaDescription;
                 serviceArea.ServicesContextIdentity = this.ServicesContextIdentity;
 
-                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu));
-                var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
-                                 select mealType).ToList();
-                var twoCourseMealType = mealTypes.Where(x => x.Courses.Count() == 2).FirstOrDefault();
+                MenuModel.FixedMealType twoCourseMealType = GetTowcoursesMealType();
+
                 serviceArea.AddMealType(ObjectStorage.GetStorageOfObject(twoCourseMealType).GetPersistentObjectUri(twoCourseMealType));
 
 
@@ -1073,6 +1088,24 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
             return serviceArea;
 
+        }
+
+        internal MenuModel.FixedMealType GetTowcoursesMealType()
+        {
+            if (OperativeRestaurantMenu != null)
+            {
+                var objectStorage = ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu);
+                if (objectStorage != null)
+                {
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                    var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
+                                     select mealType).ToList();
+                    var twoCourseMealType = mealTypes.Where(x => x.Courses.Count() == 2).FirstOrDefault();
+                    return twoCourseMealType;
+                }
+
+            }
+            return null;
         }
 
 
@@ -1153,26 +1186,39 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
+
+
+        List<IShiftWork> ActiveShiftWorks;
+
         /// <MetaDataID>{a82e0e64-72d8-4c6c-bc2d-6c30c4737337}</MetaDataID>
         internal IList<IShiftWork> GetActiveShiftWorks()
         {
             var mileStoneDate = System.DateTime.UtcNow - TimeSpan.FromDays(1);
-            var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+            if (ActiveShiftWorks == null)
+            {
 
-            var shiftWorks = (from shiftWork in storage.GetObjectCollection<FlavourBusinessManager.HumanResources.ShiftWork>()
-                              where shiftWork.StartsAt > mileStoneDate
-                              orderby shiftWork.StartsAt
-                              group shiftWork by shiftWork.Worker into workerShiftWorks
-                              select new { worker = workerShiftWorks.Key, workerShiftWorks }).ToList();
+                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
 
-
-
-
-            var activeShiftWork = shiftWorks.Select(x => x.workerShiftWorks.Last()).OfType<IShiftWork>().ToList();
+                var shiftWorks = (from shiftWork in storage.GetObjectCollection<FlavourBusinessManager.HumanResources.ShiftWork>()
+                                  where shiftWork.StartsAt > mileStoneDate
+                                  orderby shiftWork.StartsAt
+                                  group shiftWork by shiftWork.Worker into workerShiftWorks
+                                  select new { worker = workerShiftWorks.Key, workerShiftWorks }).ToList();
 
 
-            return activeShiftWork;
+
+
+                var activeShiftWork = shiftWorks.Select(x => x.workerShiftWorks.Last()).OfType<IShiftWork>().ToList();
+                ActiveShiftWorks = activeShiftWork;
+            }
+            else
+            {
+                ActiveShiftWorks = ActiveShiftWorks.Where(x => x.StartsAt > mileStoneDate).ToList();
+            }
+
+
+            return ActiveShiftWorks;
         }
 
 

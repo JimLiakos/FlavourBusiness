@@ -17,10 +17,11 @@ namespace WaiterApp.ViewModel
 
         public string ServiceBatchIdentity { get; set; }
 
-
+        public readonly IServingBatch ServingBatch
 
         public ServingBatchPresentation(IServingBatch servingBatch)
         {
+            ServingBatch = servingBatch;
             ServiceBatchIdentity = servingBatch.MealCourseUri;
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = servingBatch.Description;

@@ -8,6 +8,7 @@ namespace FlavourBusinessFacade.RoomService
     public interface IServingBatch
     {
 
+        bool IsAssigned { get; }
 
         string MealCourseUri { get; }
 

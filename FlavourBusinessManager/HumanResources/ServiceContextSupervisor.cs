@@ -411,17 +411,15 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
-        /// <MetaDataID>{b1d958ee-40be-46d2-ac9a-8ef237624200}</MetaDataID>
         internal void AddShiftWork(ShiftWork shiftWork)
         {
-
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _ShiftWorks.Add(shiftWork);
                 stateTransition.Consistent = true;
             }
-
         }
+
         /// <MetaDataID>{bbc190ff-d979-456d-af43-5dff0a41cb54}</MetaDataID>
         public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours)
         {

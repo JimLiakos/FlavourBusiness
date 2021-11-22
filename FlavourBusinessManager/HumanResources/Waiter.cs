@@ -623,8 +623,11 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+
+
+            ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
+
             return shiftWork;
             //return this.ServicesContextRunTime.NewShifWork(this, startedAt, timespanInHours);
         }
@@ -640,6 +643,7 @@ namespace FlavourBusinessManager.HumanResources
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
         }
 
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
@@ -678,7 +682,8 @@ namespace FlavourBusinessManager.HumanResources
 
         public void AssignServingBatch(IServingBatch servingBatch)
         {
-
+            if (ActiveShiftWork is ServingShiftWork)
+                (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
         }
 
 
