@@ -5001,14 +5001,6 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "get_StartsAt", args, argsTypes);
                 return this.Proxy.GetValue<System.DateTime>(retValue);
             }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(System.DateTime);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "set_StartsAt", args, argsTypes);
-            }
         }
         
         // The Width property for the object.
@@ -5020,14 +5012,6 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "get_PeriodInHours", args, argsTypes);
                 return this.Proxy.GetValue<double>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(double);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "set_PeriodInHours", args, argsTypes);
             }
         }
         

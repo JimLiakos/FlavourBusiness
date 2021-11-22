@@ -442,8 +442,8 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                shiftWork.StartsAt = startedAt;
-                shiftWork.PeriodInHours = timespanInHours;
+                (shiftWork as ShiftWork).StartsAt = startedAt;
+                (shiftWork as ShiftWork).PeriodInHours = timespanInHours;
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));

@@ -31,6 +31,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(servingBatch);
                 _ServingBatches.Add(servingBatch as RoomService.ServingBatch);
                 stateTransition.Consistent = true;
             }
@@ -40,6 +41,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
                 _ServingBatches.Remove(servingBatch as RoomService.ServingBatch);
                 stateTransition.Consistent = true;
             }

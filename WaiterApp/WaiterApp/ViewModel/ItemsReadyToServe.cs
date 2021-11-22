@@ -17,7 +17,7 @@ namespace WaiterApp.ViewModel
 
         public string ServiceBatchIdentity { get; set; }
 
-        public readonly IServingBatch ServingBatch
+        public readonly IServingBatch ServingBatch;
 
         public ServingBatchPresentation(IServingBatch servingBatch)
         {

@@ -1,6 +1,7 @@
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,24 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        [CommitObjectStateInStorageCall]
+        void CommitObjectState()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var item in (from itemsPreprationContext in ContextsOfPreparedItems
+                                      from itemPreparation in itemsPreprationContext.PreparationItems
+                                      select itemPreparation))
+                {
+                    _PreparedItems.Add(item);
+                } 
+                stateTransition.Consistent = true;
+            }
+
+
+        }
+        /// 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<HumanResources.ServingShiftWork> _ShiftWork = new OOAdvantech.Member<HumanResources.ServingShiftWork>();
 

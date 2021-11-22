@@ -20,10 +20,10 @@ namespace FlavourBusinessFacade.HumanResources
 
         /// <MetaDataID>{c9ce9f96-f8c9-45f9-bc85-58e42a2e9e3e}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
-        System.DateTime StartsAt { get; set; }
+        System.DateTime StartsAt { get;  }
 
         /// <MetaDataID>{6a244954-71e1-4d1f-a22a-bd1781a99a01}</MetaDataID>
         [BackwardCompatibilityID("+3")]
-        double PeriodInHours { get; set; }
+        double PeriodInHours { get;  }
     }
 }

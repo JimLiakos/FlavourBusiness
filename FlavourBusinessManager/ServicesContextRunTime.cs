@@ -633,10 +633,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();
 
-                    (from itemsPreparationContext in  preparedItems
-                    from itemPreparation in itemsPreparationContext.PreparationItems
-                    where itemPreparation.ServedInTheBatch!=null
-                    select itemPreparation.ServedInTheBatch).Any
+                   var serviceBatches= (from itemsPreparationContext in preparedItems
+                     from itemPreparation in itemsPreparationContext.PreparationItems
+                     where itemPreparation.ServedInTheBatch != null
+                     select itemPreparation.ServedInTheBatch).ToList();
 
                     servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
                 }
