@@ -47,6 +47,7 @@ namespace FlavourBusinessManager.HumanResources
             {
                 OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
                 _ServingBatches.Remove(servingBatch as RoomService.ServingBatch);
+                
                 stateTransition.Consistent = true;
             }
         }

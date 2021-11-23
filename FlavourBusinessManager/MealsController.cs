@@ -16,7 +16,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 var mealCourses = (from openSession in ServicesContextRunTime.OpenSessions
                                    from mealCource in openSession.Meal.Courses
-                                   orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTyepOrder//.Courses.IndexOf(mealCource)
+                                   orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
                 //you have to  filter mealcourses by state. 
 

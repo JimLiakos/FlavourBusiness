@@ -637,7 +637,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     var serviceBatch = (from itemsPreparationContext in preparedItems
                                         from itemPreparation in itemsPreparationContext.PreparationItems
-                                        where itemPreparation.ServedInTheBatch != null 
+                                        where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse== mealCourse
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                     if (serviceBatch != null)
                     {
@@ -652,6 +652,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
 
+            int i = 0;
+            foreach(var servingBatch in servingBatches)
+                servingBatch.SortID = i++;
 
             return servingBatches;
         }

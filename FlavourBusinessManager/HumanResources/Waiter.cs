@@ -689,8 +689,9 @@ namespace FlavourBusinessManager.HumanResources
 
         public void DeassignServingBatch(IServingBatch servingBatch)
         {
-            if (ActiveShiftWork is ServingShiftWork)
-                (ActiveShiftWork as ServingShiftWork).RemoveServingBatch(servingBatch);
+            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
+
+          
         }
 
 

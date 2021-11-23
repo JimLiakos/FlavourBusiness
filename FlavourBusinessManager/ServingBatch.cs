@@ -46,7 +46,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-    
+
 
 
         /// <exclude>Excluded</exclude>
@@ -79,6 +79,9 @@ namespace FlavourBusinessManager.RoomService
                 return ShiftWork != null;
             }
         }
+
+        [CachingDataOnClientSide]
+        public int SortID {get;internal set;}
 
 
         /// <MetaDataID>{1603a1ea-fc7a-4b83-ac7a-24c143fe7d31}</MetaDataID>

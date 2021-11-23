@@ -1036,6 +1036,10 @@ namespace WaiterApp.ViewModel
 
                 ServingBatches.Remove(servingBatch);
                 AssignedServingBatches.Add(servingBatch);
+                AssignedServingBatches = (from theServingBatch in AssignedServingBatches
+                                          orderby theServingBatch.ServingBatch.SortID
+                                          select theServingBatch).ToList();
+
                 SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
@@ -1074,6 +1078,35 @@ namespace WaiterApp.ViewModel
             {
                 AssignedServingBatches.Remove(servingBatch);
                 ServingBatches.Add(servingBatch);
+                ServingBatches = (from theServingBatch in ServingBatches
+                                  orderby theServingBatch.ServingBatch.SortID
+                                          select theServingBatch).ToList();
+
+
+                
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        {
+                            this.Waiter.DeassignServingBatch(servingBatch.ServingBatch);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                        catch (Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
                 return true;
             }
 

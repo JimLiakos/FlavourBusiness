@@ -2758,6 +2758,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch> ServingBatches
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServingBatches", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.RoomService.IMeal Meal
         {
             get

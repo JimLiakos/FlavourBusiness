@@ -12,9 +12,10 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{81d18623-47c4-4758-8c09-ab1f11cf5e5d}</MetaDataID>
         bool IsAssigned { get; }
+        int SortID { get; }
 
-        /// <MetaDataID>{ba252d9e-edb5-4fc7-b860-894e9542b431}</MetaDataID>
-        string MealCourseUri { get; }
+    /// <MetaDataID>{ba252d9e-edb5-4fc7-b860-894e9542b431}</MetaDataID>
+    string MealCourseUri { get; }
 
         [Association("ServicePointServingBatch", Roles.RoleA, "48d7a02e-c7e1-4272-af2e-fb0ef5ee917b")]
         [RoleAMultiplicityRange(1, 1)]

@@ -172,15 +172,15 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <MetaDataID>{716e1a7a-9abf-43a1-9d52-e49af11c518c}</MetaDataID>
-        int? _MealCourseTyepOrder;
+        int? _MealCourseTypeOrder;
         /// <MetaDataID>{b5c8f968-c936-4c77-aef2-a4d107446aaf}</MetaDataID>
-        public int MealCourseTyepOrder
+        public int MealCourseTypeOrder
         {
             get
             {
-                if (_MealCourseTyepOrder == null)
-                    _MealCourseTyepOrder = (Meal as Meal).MealType.Courses.OfType<MenuModel.MealCourseType>().Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)).ToList().IndexOf(_MealCourseTypeUri);
-                return _MealCourseTyepOrder.Value;
+                if (_MealCourseTypeOrder == null)
+                    _MealCourseTypeOrder = (Meal as Meal).MealType.Courses.OfType<MenuModel.MealCourseType>().Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)).ToList().IndexOf(_MealCourseTypeUri);
+                return _MealCourseTypeOrder.Value;
             }
 
         }
