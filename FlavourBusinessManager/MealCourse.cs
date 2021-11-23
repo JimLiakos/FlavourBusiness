@@ -171,12 +171,14 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{716e1a7a-9abf-43a1-9d52-e49af11c518c}</MetaDataID>
         int? _MealCourseTyepOrder;
+        /// <MetaDataID>{b5c8f968-c936-4c77-aef2-a4d107446aaf}</MetaDataID>
         public int MealCourseTyepOrder
         {
             get
             {
-                if(_MealCourseTyepOrder==null)
+                if (_MealCourseTyepOrder == null)
                     _MealCourseTyepOrder = (Meal as Meal).MealType.Courses.OfType<MenuModel.MealCourseType>().Select(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x)).ToList().IndexOf(_MealCourseTypeUri);
                 return _MealCourseTyepOrder.Value;
             }
@@ -225,6 +227,7 @@ namespace FlavourBusinessManager.RoomService
         public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
 
 
+        /// <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
         [CachingDataOnClientSide]
         public IList<ItemsPreparationContext> FoodItemsInProgress
         {
@@ -247,6 +250,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+        /// <MetaDataID>{e146e6e4-9b86-429f-b4d2-171b340d8937}</MetaDataID>
         [CachingDataOnClientSide]
         public FlavourBusinessFacade.EndUsers.SessionData SessionData
         {
@@ -281,6 +285,14 @@ namespace FlavourBusinessManager.RoomService
                 return sessionData;
             }
         }
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<IServingBatch>();
+
+        /// <MetaDataID>{6ad7a9db-e78f-4fe6-baf6-151bb81a730f}</MetaDataID>
+        [PersistentMember(nameof(_ServingBatches))]
+        [BackwardCompatibilityID("+10")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -307,6 +319,7 @@ namespace FlavourBusinessManager.RoomService
             ObjectChangeState?.Invoke(this, nameof(FoodItems));
         }
 
+        /// <MetaDataID>{b75dd0be-1b93-4c0d-8c13-f368e2c5a980}</MetaDataID>
         public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             ItemsStateChanged?.Invoke(newItemsState);

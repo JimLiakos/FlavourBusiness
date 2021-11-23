@@ -17,16 +17,19 @@ namespace FlavourBusinessManager.HumanResources
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public System.Collections.Generic.List<RoomService.ServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
-         
 
+
+        /// <MetaDataID>{0fcf5c16-341d-4a23-9693-c2141a8f9ebe}</MetaDataID>
         public ServingShiftWork(string name) : base(name)
         {
 
         }
+        /// <MetaDataID>{3801d11d-03cd-4295-9a55-9bba39cca3c0}</MetaDataID>
         public ServingShiftWork()
         {
 
         }
+        /// <MetaDataID>{6b1126db-350d-4b30-8e3e-add90e7d0f0b}</MetaDataID>
         public void AddServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -37,6 +40,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{80e72316-2082-4d79-bbd3-7a36d6d8b272}</MetaDataID>
         public void RemoveServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

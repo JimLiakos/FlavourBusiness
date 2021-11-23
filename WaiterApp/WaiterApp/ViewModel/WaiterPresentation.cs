@@ -391,10 +391,14 @@ namespace WaiterApp.ViewModel
 
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            ServingBatches = (from itemsReadyToServe in Waiter.GetServingBatches()
-                                                 select new ServingBatchPresentation(itemsReadyToServe)).ToList();
+                            var servingBatches = (from servingBatch in Waiter.GetServingBatches()
+                                                  select new ServingBatchPresentation(servingBatch)).ToList();
 
-                            
+                            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
+                            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+
+
+
                             if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
@@ -529,8 +533,12 @@ namespace WaiterApp.ViewModel
 
 
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            ServingBatches = (from servingBatche in Waiter.GetServingBatches()
-                                                 select new ServingBatchPresentation(servingBatche)).ToList();
+                            var servingBatches = (from itemsReadyToServe in Waiter.GetServingBatches()
+                                                  select new ServingBatchPresentation(itemsReadyToServe)).ToList();
+
+                            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
+                            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+
 
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                             ApplicationSettings.Current.FriendlyName = Waiter.FullName;
@@ -601,12 +609,12 @@ namespace WaiterApp.ViewModel
 
         private void WaiterPresentation_Reconnected(object sender)
         {
-            if(Waiter!=null)
+            if (Waiter != null)
             {
-                List<ItemPreparationAbbreviation> servingItemsOnDevice =(from servingBatch in this.ServingBatches
-                 from itemsContext in servingBatch.AllContextsOfPreparedItems
-                 from itemPreparation in itemsContext.PreparationItems
-                 select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+                List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.ServingBatches
+                                                                          from itemsContext in servingBatch.AllContextsOfPreparedItems
+                                                                          from itemPreparation in itemsContext.PreparationItems
+                                                                          select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
                 if (ActiveShiftWork != null)
                 {
                     ServingBatchUpdates servingBatchUpdates = Waiter.GetServingUpdate(servingItemsOnDevice);
@@ -696,8 +704,13 @@ namespace WaiterApp.ViewModel
 
 
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
-                                ServingBatches = (from servingBatche in Waiter.GetServingBatches()
-                                                     select new ServingBatchPresentation(servingBatche)).ToList();
+                            
+                                var servingBatches = (from servingBatch in Waiter.GetServingBatches()
+                                                      select new ServingBatchPresentation(servingBatch)).ToList();
+
+                                ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
+                                AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+
 
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                                 ApplicationSettings.Current.FriendlyName = Waiter.FullName;
@@ -1016,9 +1029,9 @@ namespace WaiterApp.ViewModel
 
         public bool AssignServingBatch(string serviceBatchIdentity)
         {
-            var servingBatch= ServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+            var servingBatch = ServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
 
-            if(servingBatch!=null)
+            if (servingBatch != null)
             {
 
                 ServingBatches.Remove(servingBatch);
@@ -1046,11 +1059,11 @@ namespace WaiterApp.ViewModel
                     return true;
 
                 });
-                    return true;
+                return true;
             }
 
             return false;
-            
+
         }
 
 
@@ -1124,8 +1137,12 @@ namespace WaiterApp.ViewModel
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
-            ServingBatches = (from servingBatche in Waiter.GetServingBatches()
-                                 select new ServingBatchPresentation(servingBatche)).ToList();
+
+            var servingBatches = (from servingBatch in Waiter.GetServingBatches()
+                                  select new ServingBatchPresentation(servingBatch)).ToList();
+
+            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
+            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
 
             GetMessages();
         }

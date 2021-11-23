@@ -9,6 +9,9 @@ namespace FlavourBusinessFacade.RoomService
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IMealCourse
     {
+        [RoleAMultiplicityRange(0)]
+        [Association("MealCourseServingBatches", Roles.RoleA, "be1d6d0b-5778-416c-b68f-18f019d34479")]
+        List<IServingBatch> ServingBatches { get; }
         [Association("MealCourses", Roles.RoleB, "3c1213a5-f6e9-4d34-8802-72a4f051472b")]
         [RoleBMultiplicityRange(1, 1)]
         IMeal Meal { get; }
@@ -46,12 +49,14 @@ namespace FlavourBusinessFacade.RoomService
         IList<ItemsPreparationContext> FoodItemsInProgress { get; }
 
 
+        /// <MetaDataID>{314d0217-3182-440d-8da4-5405eb86c0bd}</MetaDataID>
         EndUsers.SessionData SessionData { get; }
 
+        /// <MetaDataID>{5e6117fe-6aad-4b88-8aea-5ca123480287}</MetaDataID>
         void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
 
 
-         event ItemsStateChangedHandle ItemsStateChanged;
+        event ItemsStateChangedHandle ItemsStateChanged;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }

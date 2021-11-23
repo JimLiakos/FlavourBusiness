@@ -633,12 +633,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();
 
-                   var serviceBatches= (from itemsPreparationContext in preparedItems
-                     from itemPreparation in itemsPreparationContext.PreparationItems
-                     where itemPreparation.ServedInTheBatch != null
-                     select itemPreparation.ServedInTheBatch).ToList();
+                    var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
-                    servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                    var serviceBatch = (from itemsPreparationContext in preparedItems
+                                        from itemPreparation in itemsPreparationContext.PreparationItems
+                                        where itemPreparation.ServedInTheBatch != null 
+                                        select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
+                    if (serviceBatch != null)
+                    {
+                        if (serviceBatch.ShiftWork.Worker == waiter)
+                        {
+                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                            servingBatches.Add(serviceBatch);
+                        }
+                    }
+                    else
+                        servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
                 }
             }
 

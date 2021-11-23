@@ -13,6 +13,8 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class ServingBatch : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IServingBatch
     {
+        /// <MetaDataID>{0892df45-97cf-424c-9294-05700287fe9c}</MetaDataID>
+        public string MealCourseUri { get; private set; }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _PreparedItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();
@@ -27,6 +29,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{aafc5519-34b2-4c81-9379-a37e19b52226}</MetaDataID>
         [CommitObjectStateInStorageCall]
         void CommitObjectState()
         {
@@ -38,13 +41,14 @@ namespace FlavourBusinessManager.RoomService
                                       select itemPreparation))
                 {
                     _PreparedItems.Add(item);
-                } 
+                }
                 stateTransition.Consistent = true;
             }
-
-
         }
-        /// 
+
+    
+
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<HumanResources.ServingShiftWork> _ShiftWork = new OOAdvantech.Member<HumanResources.ServingShiftWork>();
 
@@ -66,6 +70,7 @@ namespace FlavourBusinessManager.RoomService
         [CachingDataOnClientSide]
         public ServicePointType ServicePointType { get; set; }
 
+        /// <MetaDataID>{0ac6e347-b768-4b8a-b22a-34094c85357d}</MetaDataID>
         [CachingDataOnClientSide]
         public bool IsAssigned
         {
@@ -79,9 +84,28 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1603a1ea-fc7a-4b83-ac7a-24c143fe7d31}</MetaDataID>
         public IServicePoint ServicePoint { get; set; }
 
+        /// <exclude>Excluded</exclude>
+      OOAdvantech.Member<  IMealCourse> _MealCourse=new OOAdvantech.Member<IMealCourse>();
+        
         /// <MetaDataID>{bb994edc-6942-44d7-ab3b-88e6ede82264}</MetaDataID>
+        [PersistentMember(nameof(_MealCourse))]
+        [BackwardCompatibilityID("+4")]
         [CachingDataOnClientSide]
-        public IMealCourse MealCourse { get; set; }
+        public IMealCourse MealCourse
+        {
+            get => _MealCourse.Value;
+            private set
+            {
+                if (_MealCourse != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MealCourse.Value = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <MetaDataID>{229605f9-a461-4742-b21c-003791d9f578}</MetaDataID>
         [CachingDataOnClientSide]
@@ -96,18 +120,8 @@ namespace FlavourBusinessManager.RoomService
         {
         }
 
-        ///// <MetaDataID>{f444def7-8e79-4c23-bd25-7580da6b8351}</MetaDataID>
-        //[OOAdvantech.Json.JsonConstructor]
-        //public ServingBatch(string servicesPointIdentity, IMealCourse mealCourse, List<IItemPreparation> preparedItems, IList<ItemsPreparationContext> contextsOfPreparedItems, IList<ItemsPreparationContext> contextsOfUnderPreparationItems, string description)
-        //{
-        //    MealCourse = mealCourse;
-        //    ServicesPointIdentity = servicesPointIdentity;
-        //    PreparedItems = preparedItems;
-        //    Description = description;
-        //    ContextsOfPreparedItems = contextsOfPreparedItems;
-        //    ContextsOfUnderPreparationItems = contextsOfUnderPreparationItems;
-        //}
-        public string MealCourseUri { get; }
+
+  
 
         /// <MetaDataID>{35670efb-8e94-47ae-af59-82be8a3e6bec}</MetaDataID>
         public ServingBatch(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
@@ -115,20 +129,38 @@ namespace FlavourBusinessManager.RoomService
 
             MealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
             MealCourse = mealCourse;
-            
+
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
 
-          
+
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 
             //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
         }
 
+        /// <MetaDataID>{1dfeec9c-13a0-4b97-bd97-31914813ab66}</MetaDataID>
+        internal void Update(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
+        {
+            var mealCourseUri= (mealCourse as MealCourse).MealCourseTypeUri;
+            MealCourseUri = mealCourseUri;
+            //if (mealCourse != MealCourse)
+            //    throw new Exception("Meal course mismatch");
+
+            MealCourse = mealCourse;
+
+            ContextsOfPreparedItems = preparedItems;
+            ContextsOfUnderPreparationItems = underPreparationItems;
+            ServicePoint = mealCourse.Meal.Session.ServicePoint;
+            ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
 
 
+
+            Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
+
+        }
     }
 }
