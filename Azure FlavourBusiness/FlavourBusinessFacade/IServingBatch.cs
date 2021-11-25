@@ -5,21 +5,27 @@ using System.Collections.Generic;
 namespace FlavourBusinessFacade.RoomService
 {
     /// <MetaDataID>{1a7e7782-86f1-474f-9a85-d87a3067b01a}</MetaDataID>
+    [BackwardCompatibilityID("{1a7e7782-86f1-474f-9a85-d87a3067b01a}")]
+    [GenerateFacadeProxy]
     public interface IServingBatch
     {
+        /// <MetaDataID>{7a3cacaf-eaba-4fcd-a84b-e8bc312e54f5}</MetaDataID>
+        ServicePointType ServicePointType { get; set; }
+
         [Association("MealCourseServingBatches", Roles.RoleB, "be1d6d0b-5778-416c-b68f-18f019d34479")]
         IMealCourse MealCourse { get; }
 
         /// <MetaDataID>{81d18623-47c4-4758-8c09-ab1f11cf5e5d}</MetaDataID>
         bool IsAssigned { get; }
+        /// <MetaDataID>{ddc19c8a-0a40-475a-82df-2e682a382e8e}</MetaDataID>
         int SortID { get; }
 
-    /// <MetaDataID>{ba252d9e-edb5-4fc7-b860-894e9542b431}</MetaDataID>
-    string MealCourseUri { get; }
+        /// <MetaDataID>{ba252d9e-edb5-4fc7-b860-894e9542b431}</MetaDataID>
+        string MealCourseUri { get; }
 
         [Association("ServicePointServingBatch", Roles.RoleA, "48d7a02e-c7e1-4272-af2e-fb0ef5ee917b")]
         [RoleAMultiplicityRange(1, 1)]
-        [RoleBMultiplicityRange(1, 1)]
+        [RoleBMultiplicityRange(0)]
         IServicePoint ServicePoint { get; }
 
 
@@ -28,7 +34,7 @@ namespace FlavourBusinessFacade.RoomService
         [RoleBMultiplicityRange(1, 1)]
         List<IItemPreparation> PreparedItems { get; }
 
-   
+
         /// <MetaDataID>{1c82234b-1265-4f06-9c61-7915cbae32c4}</MetaDataID>
         IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; }
 
@@ -42,10 +48,7 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{46f36229-fd4d-4d54-b0c2-751685130bdc}</MetaDataID>
         string ServicesPointIdentity { get; set; }
-        /// <MetaDataID>{ffac02fc-d79b-4238-90aa-1a9cae4ca48b}</MetaDataID>
-        ServicePointType ServicePointType { get; set; }
 
-        
     }
 
     /// <MetaDataID>{bb7eff35-3ac4-4ac7-90a1-5fb3a4a8f122}</MetaDataID>

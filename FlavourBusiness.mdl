@@ -953,7 +953,7 @@
 			supplier   	@4
 			line_style 	0)
 		    (object CategoryView "Logical View::FlavourBusinessManager::RoomService" @13
-			location   	(570, 1292)
+			location   	(567, 1292)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -966,7 +966,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@13
-			    location   	(294, 1208)
+			    location   	(291, 1208)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552
