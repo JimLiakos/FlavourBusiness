@@ -683,7 +683,10 @@ namespace FlavourBusinessManager.HumanResources
         public void AssignServingBatch(IServingBatch servingBatch)
         {
             if (ActiveShiftWork is ServingShiftWork)
+            {
                 (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
+                ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchAssigned(this, servingBatch);
+            }
 
             
         }
@@ -692,9 +695,14 @@ namespace FlavourBusinessManager.HumanResources
         public void DeassignServingBatch(IServingBatch servingBatch)
         {
             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
+            ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchDeassigned(this, servingBatch);
 
-          
+
+
+
+
         }
+        public event ServingBatchesChangedHandler ServingBatchesChanged;
 
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

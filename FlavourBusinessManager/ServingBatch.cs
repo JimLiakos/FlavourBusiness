@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -28,6 +29,7 @@ namespace FlavourBusinessManager.RoomService
             get => _PreparedItems.ToThreadSafeList();
 
         }
+        public event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{aafc5519-34b2-4c81-9379-a37e19b52226}</MetaDataID>
         [CommitObjectStateInStorageCall]
@@ -51,6 +53,10 @@ namespace FlavourBusinessManager.RoomService
         [ObjectsLinkCall]
         void ObjectsLink(object linkedObject,AssociationEnd associationEnd,bool added)
         {
+            if(associationEnd.Name == nameof(ShiftWork))
+            {
+
+            }
 
         }
 

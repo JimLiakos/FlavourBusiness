@@ -603,6 +603,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
+
         internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
         {
 
@@ -637,7 +639,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     var serviceBatch = (from itemsPreparationContext in preparedItems
                                         from itemPreparation in itemsPreparationContext.PreparationItems
-                                        where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse== mealCourse
+                                        where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                     if (serviceBatch != null)
                     {
@@ -648,15 +650,39 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
                     }
                     else
-                        servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                    {
+                        UnassignedMealCourses.TryGetValue(mealCourse, out serviceBatch);
+                        if (serviceBatch == null)
+                            servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                        else
+                        {
+                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                            servingBatches.Add(serviceBatch);
+                        }
+                    }
                 }
             }
 
             int i = 0;
-            foreach(var servingBatch in servingBatches)
+            foreach (var servingBatch in servingBatches)
                 servingBatch.SortID = i++;
 
             return servingBatches;
+        }
+
+        internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
+        {
+
+            var servicePoint = this.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+
+            foreach (var a_Waiter in Waiters.Where(x => x != waiter && servicePoint.IsAssignedTo(waiter, waiter.ActiveShiftWork)))
+            {
+                a_Waiter.ServingBatchesChanged
+            }
+
+            from openSession in this.OpenSessions
+            from servicePoint in openSession.ser
+            servingBatch.ó
         }
 
 

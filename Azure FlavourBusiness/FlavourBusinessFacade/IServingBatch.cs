@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
 
@@ -15,6 +16,8 @@ namespace FlavourBusinessFacade.RoomService
         [Association("MealCourseServingBatches", Roles.RoleB, "be1d6d0b-5778-416c-b68f-18f019d34479")]
         IMealCourse MealCourse { get; }
 
+
+        event ObjectChangeStateHandle ObjectChangeState;
         /// <MetaDataID>{81d18623-47c4-4758-8c09-ab1f11cf5e5d}</MetaDataID>
         bool IsAssigned { get; }
         /// <MetaDataID>{ddc19c8a-0a40-475a-82df-2e682a382e8e}</MetaDataID>

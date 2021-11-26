@@ -70,5 +70,12 @@ namespace FlavourBusinessFacade.HumanResources
         void DeassignServingBatch(IServingBatch servingBatch);
 
 
+        event ServingBatchesChangedHandler ServingBatchesChanged;
+
+
     }
+
+
+    public delegate void ServingBatchesChangedHandler();
+
 }

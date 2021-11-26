@@ -8,19 +8,24 @@ using System.Text;
 namespace WaiterApp.ViewModel
 {
     /// <MetaDataID>{c6caec47-b340-48ee-8f09-428622c0945c}</MetaDataID>
-    public class ServingBatchPresentation
+    public class ServingBatchPresentation:System.IDisposable
     {
         public ServingBatchPresentation()
         {
 
         }
 
+        public void Dispose()
+        {
+
+        }
         public string ServiceBatchIdentity { get; set; }
 
         public readonly IServingBatch ServingBatch;
-
-        public ServingBatchPresentation(IServingBatch servingBatch)
+        public readonly  WaiterPresentation WaiterPresentation;
+        public ServingBatchPresentation(IServingBatch servingBatch,WaiterPresentation waiterPresentation)
         {
+            WaiterPresentation = waiterPresentation;
             ServingBatch = servingBatch;
             ServiceBatchIdentity = servingBatch.MealCourseUri;
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();

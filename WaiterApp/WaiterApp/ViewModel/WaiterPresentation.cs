@@ -15,6 +15,7 @@ using FlavourBusinessFacade.EndUsers;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
 using FlavourBusinessFacade.RoomService;
+using UIBaseEx;
 
 
 
@@ -391,13 +392,8 @@ namespace WaiterApp.ViewModel
 
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            var servingBatches = (from servingBatch in Waiter.GetServingBatches()
-                                                  select new ServingBatchPresentation(servingBatch)).ToList();
 
-                            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
-                            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
-
-
+                            UpdateServingBatches(Waiter.GetServingBatches());
 
                             if (this._Halls != null)
                             {
@@ -533,11 +529,11 @@ namespace WaiterApp.ViewModel
 
 
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                            var servingBatches = (from itemsReadyToServe in Waiter.GetServingBatches()
-                                                  select new ServingBatchPresentation(itemsReadyToServe)).ToList();
+                       
+                            UpdateServingBatches(Waiter.GetServingBatches());
 
-                            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
-                            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+
+                       
 
 
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
@@ -605,6 +601,32 @@ namespace WaiterApp.ViewModel
 
             }
 
+        }
+
+        private void UpdateServingBatches(IList<IServingBatch> allServingBatches)
+        {
+            
+            var servingBatches = allServingBatches.Where(x => !x.IsAssigned).ToList();
+            foreach (var servingBatch in servingBatches)
+                _ServingBatches.GetViewModelFor(servingBatch, servingBatch,this);
+
+            var asignedServingBatches = allServingBatches.Where(x => x.IsAssigned).ToList();
+
+            foreach (var assignedServingBatch in asignedServingBatches)
+                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch,this);
+
+
+            foreach (var servingBatch in _ServingBatches.Keys.Where(x => !servingBatches.Contains(x)).ToList())
+            {
+                _ServingBatches[servingBatch].Dispose();
+                _ServingBatches.Remove(servingBatch);
+            }
+
+            foreach (var assignedServingBatch in _AssignedServingBatches.Keys.Where(x => !asignedServingBatches.Contains(x)).ToList())
+            {
+                _AssignedServingBatches[assignedServingBatch].Dispose();
+                _AssignedServingBatches.Remove(assignedServingBatch);
+            }
         }
 
         private void WaiterPresentation_Reconnected(object sender)
@@ -704,12 +726,8 @@ namespace WaiterApp.ViewModel
 
 
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
-                            
-                                var servingBatches = (from servingBatch in Waiter.GetServingBatches()
-                                                      select new ServingBatchPresentation(servingBatch)).ToList();
 
-                                ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
-                                AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+                                UpdateServingBatches(Waiter.GetServingBatches());
 
 
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
@@ -1023,9 +1041,14 @@ namespace WaiterApp.ViewModel
 
         IShiftWork ActiveShiftWork;
 
-        public List<ServingBatchPresentation> ServingBatches { get; private set; }
+        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
 
-        public List<ServingBatchPresentation> AssignedServingBatches { get; private set; } = new List<ServingBatchPresentation>();
+
+        public List<ServingBatchPresentation> ServingBatches => _ServingBatches.Values.OrderBy(x => x.ServingBatch.SortID).ToList();
+
+        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _AssignedServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
+
+        public List<ServingBatchPresentation> AssignedServingBatches => _AssignedServingBatches.Values.OrderBy(x => x.ServingBatch.SortID).ToList();
 
         public bool AssignServingBatch(string serviceBatchIdentity)
         {
@@ -1036,10 +1059,7 @@ namespace WaiterApp.ViewModel
 
                 ServingBatches.Remove(servingBatch);
                 AssignedServingBatches.Add(servingBatch);
-                AssignedServingBatches = (from theServingBatch in AssignedServingBatches
-                                          orderby theServingBatch.ServingBatch.SortID
-                                          select theServingBatch).ToList();
-
+            
                 SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
@@ -1078,12 +1098,8 @@ namespace WaiterApp.ViewModel
             {
                 AssignedServingBatches.Remove(servingBatch);
                 ServingBatches.Add(servingBatch);
-                ServingBatches = (from theServingBatch in ServingBatches
-                                  orderby theServingBatch.ServingBatch.SortID
-                                          select theServingBatch).ToList();
+              
 
-
-                
                 SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
@@ -1171,11 +1187,8 @@ namespace WaiterApp.ViewModel
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
 
-            var servingBatches = (from servingBatch in Waiter.GetServingBatches()
-                                  select new ServingBatchPresentation(servingBatch)).ToList();
-
-            ServingBatches = servingBatches.Where(x => !x.ServingBatch.IsAssigned).ToList();
-            AssignedServingBatches = servingBatches.Where(x => x.ServingBatch.IsAssigned).ToList();
+            UpdateServingBatches(Waiter.GetServingBatches());
+          
 
             GetMessages();
         }
