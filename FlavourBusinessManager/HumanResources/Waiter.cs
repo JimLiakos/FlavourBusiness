@@ -684,6 +684,8 @@ namespace FlavourBusinessManager.HumanResources
         {
             if (ActiveShiftWork is ServingShiftWork)
                 (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
+
+            
         }
 
 

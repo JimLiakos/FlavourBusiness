@@ -48,6 +48,12 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+        [ObjectsLinkCall]
+        void ObjectsLink(object linkedObject,AssociationEnd associationEnd,bool added)
+        {
+
+        }
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<HumanResources.ServingShiftWork> _ShiftWork = new OOAdvantech.Member<HumanResources.ServingShiftWork>();

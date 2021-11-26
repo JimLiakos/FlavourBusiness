@@ -816,7 +816,7 @@
 			width      	512
 			height     	187)
 		    (object CategoryView "Logical View::OOAdvantech" @7
-			location   	(3637, 1934)
+			location   	(3636, 1934)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -829,7 +829,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@7
-			    location   	(3281, 1846)
+			    location   	(3280, 1846)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	712
