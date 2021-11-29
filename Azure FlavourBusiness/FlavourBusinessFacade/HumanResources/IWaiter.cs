@@ -61,7 +61,7 @@ namespace FlavourBusinessFacade.HumanResources
 
 
         /// <MetaDataID>{738255e8-f3cf-4f76-be25-11890cab1610}</MetaDataID>
-        ServingBatchUpdates GetServingUpdate(List<ItemPreparationAbbreviation> servingItemsOnDevice);
+        ServingBatchUpdates GetServingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice);
 
         /// <MetaDataID>{018c2f0e-7ace-4dd6-b878-d45801ffe0ed}</MetaDataID>
         void AssignServingBatch(IServingBatch servingBatch);

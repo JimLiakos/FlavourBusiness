@@ -16,10 +16,9 @@ namespace FlavourBusinessFacade.ComputingResources
         public int Port { get; set; }
 
 #if DEBUG
-        //public static string Server = "192.168.2.10";//Braxati
-        /// <MetaDataID>{28efc4a8-a12d-48cb-825d-428db99d2dee}</MetaDataID>
+        public static string Server = "192.168.2.18";//Braxati
         //public static string Server = "192.168.2.8";//org
-        public static string Server = "10.0.0.13";//work
+        //public static string Server = "10.0.0.13";//work
 #endif
     }
 }

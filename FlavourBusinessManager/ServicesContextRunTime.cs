@@ -670,21 +670,32 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return servingBatches;
         }
 
+        internal void ServingBatchDeassigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
+        {
+
+            var servicePoint = this.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+
+            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+        }
+
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 
             var servicePoint = this.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
-            foreach (var a_Waiter in Waiters.Where(x => x != waiter && servicePoint.IsAssignedTo(waiter, waiter.ActiveShiftWork)))
-            {
-                a_Waiter.ServingBatchesChanged
-            }
+            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
-            from openSession in this.OpenSessions
-            from servicePoint in openSession.ser
-            servingBatch.ó
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+
         }
-
 
 
 

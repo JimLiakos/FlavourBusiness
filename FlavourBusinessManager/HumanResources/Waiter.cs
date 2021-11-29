@@ -652,7 +652,7 @@ namespace FlavourBusinessManager.HumanResources
             return ServicesContextRunTime.GetServingBatches(this).OfType<IServingBatch>().ToList();
         }
 
-        public ServingBatchUpdates GetServingUpdate(List<ItemPreparationAbbreviation> servingItemsOnDevice)
+        public ServingBatchUpdates GetServingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
 
             List<RoomService.ServingBatch> servingBatches = ServicesContextRunTime.GetServingBatches(this).ToList();
@@ -694,7 +694,12 @@ namespace FlavourBusinessManager.HumanResources
 
         public void DeassignServingBatch(IServingBatch servingBatch)
         {
+            var mealCourse = servingBatch.MealCourse;
+            var preparedItems = servingBatch.ContextsOfPreparedItems;
+            var underPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
+
+            (servingBatch as RoomService.ServingBatch). Update(mealCourse, preparedItems, underPreparationItems);
             ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchDeassigned(this, servingBatch);
 
 
@@ -703,6 +708,11 @@ namespace FlavourBusinessManager.HumanResources
 
         }
         public event ServingBatchesChangedHandler ServingBatchesChanged;
+
+        internal void RaiseServingBatchesChangedEvent()
+        {
+            ServingBatchesChanged?.Invoke();
+        }
 
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

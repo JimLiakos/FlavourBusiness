@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
+    /// <summary>
+    /// Specifies a service section.
+    /// </summary>
     /// <MetaDataID>{1a7e7782-86f1-474f-9a85-d87a3067b01a}</MetaDataID>
     [BackwardCompatibilityID("{1a7e7782-86f1-474f-9a85-d87a3067b01a}")]
     [GenerateFacadeProxy]
@@ -37,11 +40,15 @@ namespace FlavourBusinessFacade.RoomService
         [RoleBMultiplicityRange(1, 1)]
         List<IItemPreparation> PreparedItems { get; }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         /// <MetaDataID>{1c82234b-1265-4f06-9c61-7915cbae32c4}</MetaDataID>
         IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; }
 
-
+        /// <summary>
+        /// Defines the prepared items
+        /// </summary>
         /// <MetaDataID>{04be4909-5947-4ed7-a47f-6b881f1cb9ee}</MetaDataID>
         IList<ItemsPreparationContext> ContextsOfPreparedItems { get; }
 
@@ -54,6 +61,11 @@ namespace FlavourBusinessFacade.RoomService
 
     }
 
+    /// <summary>
+    /// Defines the waiter serving updates
+    /// The RemovedServingItems are the items where aren't anymore available for serving
+    /// The ServingBatches contains the new items where are available for serving
+    /// </summary>
     /// <MetaDataID>{bb7eff35-3ac4-4ac7-90a1-5fb3a4a8f122}</MetaDataID>
     public class ServingBatchUpdates
     {
@@ -64,8 +76,16 @@ namespace FlavourBusinessFacade.RoomService
             RemovedServingItems = removedServingItems;
             ServingBatches = servingBatches;
         }
+        /// <summary>
+        /// Defines the RemovedServingItems are the items where aren't anymore available for serving
+        /// </summary>
         /// <MetaDataID>{0fd1a264-342b-40d2-96d0-7f156710889a}</MetaDataID>
         public List<ItemPreparationAbbreviation> RemovedServingItems { get; }
+
+
+        /// <summary>
+        /// Defines the ServingBatches contains the new items where are available for serving
+        /// </summary>
         /// <MetaDataID>{4dd157ca-5593-404c-9318-f7164fd270c0}</MetaDataID>
         public List<IServingBatch> ServingBatches { get; }
 

@@ -380,6 +380,7 @@ namespace WaiterApp.ViewModel
                         {
                             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
                             Waiter.MessageReceived -= MessageReceived;
+                            Waiter.ServingBatchesChanged -= ServingBatchesChanged;
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
 
@@ -414,6 +415,7 @@ namespace WaiterApp.ViewModel
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                             Waiter.MessageReceived += MessageReceived;
+                            Waiter.ServingBatchesChanged += ServingBatchesChanged;
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
@@ -482,6 +484,7 @@ namespace WaiterApp.ViewModel
                             {
                                 Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
                                 Waiter.MessageReceived -= MessageReceived;
+                                Waiter.ServingBatchesChanged -= ServingBatchesChanged;
                                 if (Waiter is ITransparentProxy)
                                     (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
 
@@ -493,6 +496,7 @@ namespace WaiterApp.ViewModel
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                             Waiter.MessageReceived += MessageReceived;
+                            Waiter.ServingBatchesChanged += ServingBatchesChanged;
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
@@ -529,11 +533,11 @@ namespace WaiterApp.ViewModel
 
 
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-                       
+
                             UpdateServingBatches(Waiter.GetServingBatches());
 
 
-                       
+
 
 
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
@@ -603,17 +607,68 @@ namespace WaiterApp.ViewModel
 
         }
 
+        private void ServingBatchesChanged()
+        {
+            var nn = Waiter.Name;
+            if (Waiter != null)
+            {
+                if (ActiveShiftWork != null)
+                    GetServingUpdates();
+            }
+        }
+
+        private void GetServingUpdates()
+        {
+            List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.ServingBatches
+                                                                      from itemsContext in servingBatch.AllContextsOfPreparedItems
+                                                                      from itemPreparation in itemsContext.PreparationItems
+                                                                      select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+
+            ServingBatchUpdates servingBatchUpdates = Waiter.GetServingUpdates(servingItemsOnDevice);
+
+            var servingBatches = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).ToList();
+            foreach (var servingBatch in servingBatches)
+                _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
+
+            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).ToList();
+
+            foreach (var assignedServingBatch in asignedServingBatches)
+                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+
+            if (servingBatchUpdates.RemovedServingItems.Count > 0)
+            {
+                foreach (var servingBatch in ServingBatches.ToList())
+                {
+                    bool allItemsRemoved = true;
+                    foreach (var servingItem in from servingItemContext in servingBatch.AllContextsOfPreparedItems
+                                                from servingItem in servingItemContext.PreparationItems
+                                                select servingItem)
+                    {
+                        if (servingBatchUpdates.RemovedServingItems.Where(x => x.uid == servingItem.uid).Count() == 0)
+                        {
+                            allItemsRemoved = false;
+                            break;
+                        }
+                    }
+                    if (allItemsRemoved)
+                        _ServingBatches.Remove(servingBatch.ServingBatch);
+
+                }
+            }
+            ObjectChangeState?.Invoke(this, "ServingBatches");
+        }
+
         private void UpdateServingBatches(IList<IServingBatch> allServingBatches)
         {
-            
+
             var servingBatches = allServingBatches.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in servingBatches)
-                _ServingBatches.GetViewModelFor(servingBatch, servingBatch,this);
+                _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
 
             var asignedServingBatches = allServingBatches.Where(x => x.IsAssigned).ToList();
 
             foreach (var assignedServingBatch in asignedServingBatches)
-                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch,this);
+                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
 
 
             foreach (var servingBatch in _ServingBatches.Keys.Where(x => !servingBatches.Contains(x)).ToList())
@@ -639,7 +694,7 @@ namespace WaiterApp.ViewModel
                                                                           select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
                 if (ActiveShiftWork != null)
                 {
-                    ServingBatchUpdates servingBatchUpdates = Waiter.GetServingUpdate(servingItemsOnDevice);
+                    ServingBatchUpdates servingBatchUpdates = Waiter.GetServingUpdates(servingItemsOnDevice);
                 }
             }
         }
@@ -719,6 +774,7 @@ namespace WaiterApp.ViewModel
 
                                 Waiter = RemotingServices.CastTransparentProxy<FlavourBusinessFacade.HumanResources.IWaiter>(role.User);
                                 Waiter.ObjectChangeState += Waiter_ObjectChangeState;
+                                Waiter.ServingBatchesChanged += ServingBatchesChanged;
 
                                 Waiter.MessageReceived += MessageReceived;
                                 if (Waiter is ITransparentProxy)
@@ -859,6 +915,7 @@ namespace WaiterApp.ViewModel
             AuthUser = null;
             Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
             Waiter.MessageReceived -= MessageReceived;
+            Waiter.ServingBatchesChanged -= ServingBatchesChanged;
             if (Waiter is ITransparentProxy)
                 (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
 
@@ -1057,9 +1114,10 @@ namespace WaiterApp.ViewModel
             if (servingBatch != null)
             {
 
-                ServingBatches.Remove(servingBatch);
-                AssignedServingBatches.Add(servingBatch);
-            
+                _AssignedServingBatches[servingBatch.ServingBatch] = _ServingBatches[servingBatch.ServingBatch];
+                _ServingBatches.Remove(servingBatch.ServingBatch);
+
+
                 SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
@@ -1096,9 +1154,11 @@ namespace WaiterApp.ViewModel
             var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
             if (servingBatch != null)
             {
-                AssignedServingBatches.Remove(servingBatch);
-                ServingBatches.Add(servingBatch);
-              
+
+                _ServingBatches[servingBatch.ServingBatch] = _AssignedServingBatches[servingBatch.ServingBatch];
+                _AssignedServingBatches.Remove(servingBatch.ServingBatch);
+
+
 
                 SerializeTaskScheduler.AddTask(async () =>
                 {
@@ -1188,7 +1248,7 @@ namespace WaiterApp.ViewModel
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
 
             UpdateServingBatches(Waiter.GetServingBatches());
-          
+
 
             GetMessages();
         }

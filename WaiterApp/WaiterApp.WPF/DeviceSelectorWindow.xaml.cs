@@ -48,6 +48,8 @@ namespace WaiterApp.WPF
         {
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
 
+            GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
+
             FlavourBusinessApps.WaiterApp.WPF.WaiterApp.Startup(DevicesIDS[SelectedIndex]);
             
             MainWindow mainWindow = new MainWindow();
