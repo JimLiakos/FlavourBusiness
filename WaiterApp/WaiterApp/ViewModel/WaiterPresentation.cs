@@ -1032,20 +1032,20 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{9921c079-439e-4f42-8b4d-44130647d4b1}</MetaDataID>
         public async Task<bool> Assign()
         {
-#if DeviceDotNet
+#if !DeviceDotNet
             string waiterAssignKey = null;
-            try
-            {
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+            //try
+            //{
+            //    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
 
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return false;
-                waiterAssignKey = result.Text;
-            }
-            catch (Exception error)
-            {
-                return false;
-            }
+            //    if (result == null || string.IsNullOrWhiteSpace(result.Text))
+            //        return false;
+            //    waiterAssignKey = result.Text;
+            //}
+            //catch (Exception error)
+            //{
+            //    return false;
+            //}
 
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";

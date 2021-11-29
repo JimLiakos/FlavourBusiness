@@ -4164,6 +4164,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
+public event FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler ServingBatchesChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "add_ServingBatchesChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "remove_ServingBatchesChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler)});
+                }
+            }
 public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceived
             {
                 add
@@ -4551,13 +4562,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
         }
         
-        public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetServingUpdate(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
+        public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetServingUpdates(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = servingItemsOnDevice;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingUpdate", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingUpdates", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ServingBatchUpdates>(retValue);
         }
         

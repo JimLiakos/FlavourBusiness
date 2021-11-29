@@ -48,12 +48,19 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        [DeleteObjectCall]
+        void ObjectDeleting()
+        {
+            if (MealCourse != null)
+                MealCourse.ObjectChangeState -= MealCourse_ObjectChangeState;
+
+        }
 
 
         [ObjectsLinkCall]
-        void ObjectsLink(object linkedObject,AssociationEnd associationEnd,bool added)
+        void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
         {
-            if(associationEnd.Name == nameof(ShiftWork))
+            if (associationEnd.Name == nameof(ShiftWork))
             {
 
             }
@@ -93,15 +100,15 @@ namespace FlavourBusinessManager.RoomService
         }
 
         [CachingDataOnClientSide]
-        public int SortID {get;internal set;}
+        public int SortID { get; internal set; }
 
 
         /// <MetaDataID>{1603a1ea-fc7a-4b83-ac7a-24c143fe7d31}</MetaDataID>
         public IServicePoint ServicePoint { get; set; }
 
         /// <exclude>Excluded</exclude>
-      OOAdvantech.Member<  IMealCourse> _MealCourse=new OOAdvantech.Member<IMealCourse>();
-        
+        OOAdvantech.Member<IMealCourse> _MealCourse = new OOAdvantech.Member<IMealCourse>();
+
         /// <MetaDataID>{bb994edc-6942-44d7-ab3b-88e6ede82264}</MetaDataID>
         [PersistentMember(nameof(_MealCourse))]
         [BackwardCompatibilityID("+4")]
@@ -136,7 +143,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-  
+
 
         /// <MetaDataID>{35670efb-8e94-47ae-af59-82be8a3e6bec}</MetaDataID>
         public ServingBatch(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
@@ -154,18 +161,28 @@ namespace FlavourBusinessManager.RoomService
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 
+            if (MealCourse != null)
+                MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;
+
+
             //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
         }
 
         /// <MetaDataID>{1dfeec9c-13a0-4b97-bd97-31914813ab66}</MetaDataID>
         internal void Update(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
-            var mealCourseUri= (mealCourse as MealCourse).MealCourseTypeUri;
+            var mealCourseUri = (mealCourse as MealCourse).MealCourseTypeUri;
             MealCourseUri = mealCourseUri;
             //if (mealCourse != MealCourse)
             //    throw new Exception("Meal course mismatch");
 
+            if (MealCourse != null)
+                MealCourse.ObjectChangeState -= MealCourse_ObjectChangeState;
+
             MealCourse = mealCourse;
+
+            if (MealCourse != null)
+                MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;
 
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
@@ -175,6 +192,11 @@ namespace FlavourBusinessManager.RoomService
 
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
+
+        }
+
+        private void MealCourse_ObjectChangeState(object _object, string member)
+        {
 
         }
     }
