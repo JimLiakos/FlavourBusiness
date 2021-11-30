@@ -52,7 +52,7 @@ namespace FlavourBusinessManager.RoomService
         void ObjectDeleting()
         {
             if (MealCourse != null)
-                MealCourse.ObjectChangeState -= MealCourse_ObjectChangeState;
+                MealCourse.ObjectChangeState -= MealCourseChangeState;
 
         }
 
@@ -162,7 +162,7 @@ namespace FlavourBusinessManager.RoomService
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 
             if (MealCourse != null)
-                MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;
+                MealCourse.ObjectChangeState += MealCourseChangeState;
 
 
             //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
@@ -177,12 +177,12 @@ namespace FlavourBusinessManager.RoomService
             //    throw new Exception("Meal course mismatch");
 
             if (MealCourse != null)
-                MealCourse.ObjectChangeState -= MealCourse_ObjectChangeState;
+                MealCourse.ObjectChangeState -= MealCourseChangeState;
 
             MealCourse = mealCourse;
 
             if (MealCourse != null)
-                MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;
+                MealCourse.ObjectChangeState += MealCourseChangeState;
 
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
@@ -195,9 +195,54 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
-        private void MealCourse_ObjectChangeState(object _object, string member)
+        private void MealCourseChangeState(object _object, string member)
         {
 
+            IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
+                                                            where itemsPreparationContext.PreparationItems.All(x => x.State == ItemPreparationState.Serving)
+                                                            select itemsPreparationContext).ToList();
+
+            IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
+                                                                    where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                                    x.State == ItemPreparationState.ÉnPreparation ||
+                                                                    x.State == ItemPreparationState.IsRoasting ||
+                                                                    x.State == ItemPreparationState.IsPrepared)
+                                                                    select itemsPreparationContext).ToList();
+            var newPreparationItems = (from itemsPreparationContext in preparedItems
+                                       from itemPreparation in itemsPreparationContext.PreparationItems
+                                       select itemPreparation).ToList();
+
+            var existingPreparationItems = (from itemsPreparationContext in ContextsOfPreparedItems
+                                            from itemPreparation in itemsPreparationContext.PreparationItems
+                                            select itemPreparation).ToList();
+
+            bool servingBatchChanged = false;
+
+            if (newPreparationItems.Where(x => !existingPreparationItems.Contains(x)).Count() != 0)
+                servingBatchChanged = true;
+            else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
+                servingBatchChanged = true;
+
+            if (!servingBatchChanged)
+            {
+                newPreparationItems = (from itemsPreparationContext in underPreparationItems
+                                       from itemPreparation in itemsPreparationContext.PreparationItems
+                                       select itemPreparation).ToList();
+
+                existingPreparationItems = (from itemsPreparationContext in ContextsOfUnderPreparationItems
+                                            from itemPreparation in itemsPreparationContext.PreparationItems
+                                            select itemPreparation).ToList();
+                if (newPreparationItems.Where(x => !existingPreparationItems.Contains(x)).Count() != 0)
+                    servingBatchChanged = true;
+                else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
+                    servingBatchChanged = true;
+            }
+            if (servingBatchChanged)
+            {
+                ContextsOfPreparedItems = preparedItems;
+                ContextsOfUnderPreparationItems = underPreparationItems;
+                ObjectChangeState?.Invoke(this, null);
+            }
         }
     }
 }

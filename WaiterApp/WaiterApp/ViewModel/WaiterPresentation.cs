@@ -112,6 +112,11 @@ namespace WaiterApp.ViewModel
         public event LaytheTableRequestHandle LayTheTableRequest;
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
+        internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
+        {
+            ObjectChangeState?.Invoke(this, "ServingBatches");
+        }
+
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
         string _SignInProvider;
         /// <MetaDataID>{44230b90-69cb-4ff5-9841-bcb77b77de42}</MetaDataID>

@@ -684,7 +684,11 @@ namespace FlavourBusinessManager.HumanResources
         {
             if (ActiveShiftWork is ServingShiftWork)
             {
-                (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
+                lock (servingBatch)
+                {
+                    if (!servingBatch.IsAssigned)
+                        (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
+                }
                 ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchAssigned(this, servingBatch);
             }
 

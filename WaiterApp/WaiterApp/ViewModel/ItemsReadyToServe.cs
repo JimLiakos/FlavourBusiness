@@ -27,6 +27,7 @@ namespace WaiterApp.ViewModel
         {
             WaiterPresentation = waiterPresentation;
             ServingBatch = servingBatch;
+            ServingBatch.ObjectChangeState += ServingBatchChangeState;
             ServiceBatchIdentity = servingBatch.MealCourseUri;
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = servingBatch.Description;
@@ -56,6 +57,25 @@ namespace WaiterApp.ViewModel
                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                 DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
+        }
+
+        private void ServingBatchChangeState(object _object, string member)
+        {
+            ServiceBatchIdentity = ServingBatch.MealCourseUri;
+            List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
+            Description = ServingBatch.Description;
+            ServicesPointIdentity = ServingBatch.ServicesPointIdentity;
+            ContextsOfPreparedItems = ServingBatch.ContextsOfPreparedItems;
+            allContextsOfPreparedItems.AddRange(ContextsOfPreparedItems);
+
+            ContextsOfUnderPreparationItems = ServingBatch.ContextsOfUnderPreparationItems;
+            allContextsOfPreparedItems.AddRange(ContextsOfUnderPreparationItems);
+
+            ServicePointType = ServingBatch.ServicePointType;
+
+            AllContextsOfPreparedItems = allContextsOfPreparedItems;
+
+            WaiterPresentation.ServingBatchUpdated(this);
         }
 
         public IList<ItemsPreparationContext> AllContextsOfPreparedItems { get; private set; }
