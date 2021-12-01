@@ -260,12 +260,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acountability.cs" />
+    <Compile Include="Address.cs" />
     <Compile Include="AuthFlavourBusiness.cs" />
     <Compile Include="AuthUserRef.cs" />
     <Compile Include="CallerIDLine.cs" />
     <Compile Include="CallerIDServer.cs" />
     <Compile Include="CashierStation.cs" />
     <Compile Include="CloudNotificationManager.cs" />
+    <Compile Include="FisicalParty.cs" />
     <Compile Include="FlavourBusinessManager.cs" />
     <Compile Include="FlavourBusinessStorage.cs" />
     <Compile Include="FlavoursServicesContext.cs" />
@@ -339,6 +341,10 @@
     <ProjectReference Include="..\Azure FlavourBusiness\ComputationalResources\ComputationalResources.csproj">
       <Project>{e58d9f23-6236-4587-913c-f5fadcf11c9c}</Project>
       <Name>ComputationalResources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{BC023782-2913-447E-90C1-AF934F8F2CE1}</Project>
+      <Name>FinanceFacade</Name>
     </ProjectReference>
     <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
       <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>

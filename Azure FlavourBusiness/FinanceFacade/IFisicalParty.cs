@@ -17,6 +17,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{166dab6e-f381-4ef5-8dc6-bfef9f092ab9}</MetaDataID>
         string VATNumber { get; set; }
+        /// <MetaDataID>{a940faf8-ffdf-4f2c-ab9e-c7c1a4c0b636}</MetaDataID>
         string Name { get; set; }
     }
 }

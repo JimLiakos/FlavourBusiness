@@ -1,6 +1,7 @@
 namespace FinanceFacade
 {
     /// <MetaDataID>{e18940d1-a92b-4eeb-af0b-49ec3dac20df}</MetaDataID>
+    [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{e18940d1-a92b-4eeb-af0b-49ec3dac20df}")]
     public interface IAddress
     {
         /// <MetaDataID>{69e5fe2d-0b47-4c5e-9382-40a405c2aa04}</MetaDataID>
