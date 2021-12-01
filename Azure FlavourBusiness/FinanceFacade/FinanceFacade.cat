@@ -2055,6 +2055,129 @@
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#"
 	    persistence 	"Persistent")
+	(object Class "IFisicalParty"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{55f92046-b447-4988-bfaa-355da614ed9a}"))
+	    quid       	"61A723C7032B"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "VATNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{166dab6e-f381-4ef5-8dc6-bfef9f092ab9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A72855025E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61A72855025E"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "CountryCode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fe25c29f-7596-46e6-a3eb-771e1b347f5f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A7285502CB")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61A7285502CB"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Branch"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a498b640-6fdb-4d0f-b214-9202d00b909d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A728550322")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61A728550322"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{360bd1e7-7b40-4426-8345-bab0104a8b0b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A728550389")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61A728550389"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "IAddress"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{e18940d1-a92b-4eeb-af0b-49ec3dac20df}"))
+	    quid       	"61A72AF6036B"
+	    stereotype 	"Interface"
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
 	(object Association "TransactionItem"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -2316,7 +2439,60 @@
 		    quid       	"5C6E399C01FF"
 		    supplier   	"Logical View::FinanceFacade::ITaxAuthority"
 		    quidu      	"5C6E352E016D"
-		    client_cardinality 	(value cardinality "1")))))
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "FisicalPartyAddress"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"61A7340A029B")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"13449730-7348-487c-bc20-9a7f3b898778"))
+	    quid       	"61A7340A029B"
+	    roles      	(list role_list
+		(object Role "Address"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A7340B0285")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{494669ad-481d-4b93-8fdc-654c6a56a67b}"))
+		    quid       	"61A7340B0285"
+		    label      	"Address"
+		    supplier   	"Logical View::FinanceFacade::IAddress"
+		    quidu      	"61A72AF6036B"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$4"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61A7340B0289")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b97820ab-0876-4c7f-93d1-8b8b8922ef50}"))
+		    quid       	"61A7340B0289"
+		    supplier   	"Logical View::FinanceFacade::IFisicalParty"
+		    quidu      	"61A723C7032B"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Taxes"
 	    quid       	"5C6A4E47015F"
@@ -2355,24 +2531,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6D02014E"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(2832, 205)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	384)
 		    width      	419
 		    height     	300
 		    annotation 	8)
@@ -2403,24 +2561,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2CFC0371"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1199, 1126)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	1465)
 		    width      	519
 		    height     	288
 		    annotation 	8)
@@ -2451,24 +2591,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D3E021D"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(2079, 1132)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	1518)
 		    width      	550
 		    height     	332
 		    annotation 	8)
@@ -2499,24 +2621,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D80037E"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(3473, 1123)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	1334)
 		    width      	563
 		    height     	262
 		    annotation 	8)
@@ -2547,24 +2651,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2DB701D6"
-		    compartment 	(object Compartment
-			Parent_View 	@5
-			location   	(2748, 1132)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	890)
 		    width      	556
 		    height     	319
 		    annotation 	8)
@@ -2603,24 +2689,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A63D303B2"
-		    compartment 	(object Compartment
-			Parent_View 	@7
-			location   	(3469, 645)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	412)
 		    width      	525
 		    height     	300
 		    annotation 	8)
@@ -2692,24 +2760,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6160024B"
-		    compartment 	(object Compartment
-			Parent_View 	@10
-			location   	(2085, 548)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	4
-			max_width  	412)
 		    width      	538
 		    height     	388
 		    annotation 	8)
@@ -2880,24 +2930,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A61DE02D0"
-		    compartment 	(object Compartment
-			Parent_View 	@19
-			location   	(1281, 655)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	412)
 		    width      	438
 		    height     	281
 		    annotation 	8)
@@ -3220,24 +3252,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
-		    compartment 	(object Compartment
-			Parent_View 	@35
-			location   	(55, 1461)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	450)
 		    width      	538
 		    height     	375
 		    annotation 	8)
@@ -3433,24 +3447,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C7104940072"
-		    compartment 	(object Compartment
-			Parent_View 	@44
-			location   	(56, 2011)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	1506)
 		    width      	575
 		    height     	406
 		    annotation 	8)
@@ -3469,8 +3465,8 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	1837
-	    origin_y   	0
+	    origin_x   	0
+	    origin_y   	1497
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FinanceFacade::Transaction" @46
 		    ShowCompartmentStereotypes 	TRUE
@@ -3499,6 +3495,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6AD03E4"
+		    compartment 	(object Compartment
+			Parent_View 	@46
+			location   	(212, 1266)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	1550)
 		    width      	569
 		    height     	368
 		    annotation 	8)
@@ -3529,6 +3543,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6CF0194"
+		    compartment 	(object Compartment
+			Parent_View 	@47
+			location   	(1178, 1314)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	1340)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -3560,6 +3592,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
+		    compartment 	(object Compartment
+			Parent_View 	@48
+			location   	(1168, 662)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	400)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -3590,6 +3640,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BD7AB00BA"
+		    compartment 	(object Compartment
+			Parent_View 	@49
+			location   	(2311, 705)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	384)
 		    width      	581
 		    height     	263
 		    annotation 	8)
@@ -3767,6 +3835,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBD69034C"
+		    compartment 	(object Compartment
+			Parent_View 	@57
+			location   	(226, 687)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	459)
 		    width      	531
 		    height     	394
 		    annotation 	8)
@@ -4060,4 +4146,176 @@
 		    quidu      	"5C6D17CC0237"
 		    width      	475
 		    height     	231
-		    annotation 	8)))))
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @73
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1122, 2256)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@73
+			location   	(806, 2225)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	632
+			justify    	0
+			label      	"IFisicalParty")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61A723C7032B"
+		    width      	650
+		    height     	262
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IAddress" @74
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2130, 2249)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@74
+			location   	(1880, 2221)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	501
+			justify    	0
+			label      	"IAddress")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61A72AF6036B"
+		    width      	519
+		    height     	256
+		    annotation 	8)
+		(object AssociationViewNew "FisicalPartyAddress" @75
+		    location   	(1659, 2253)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @76
+			Parent_View 	@75
+			location   	(1659, 2129)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"FisicalPartyAddress"
+			pctDist    	0.500000
+			height     	125
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"61A7340A029B"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Address" @77
+			    Parent_View 	@75
+			    location   	(537, -3)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @78
+				Parent_View 	@77
+				location   	(1829, 2212)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	182
+				justify    	0
+				label      	"+Address"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61A7340B0285"
+			    client     	@75
+			    supplier   	@74
+			    line_style 	3
+			    origin_attachment 	(1659, 2253)
+			    terminal_attachment 	(1871, 2253)
+			    label      	(object SegLabel @79
+				Parent_View 	@77
+				location   	(1850, 2307)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$4" @80
+			    Parent_View 	@75
+			    location   	(537, -3)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61A7340B0289"
+			    client     	@75
+			    supplier   	@73
+			    line_style 	3
+			    origin_attachment 	(1659, 2253)
+			    terminal_attachment 	(1447, 2253))))))))

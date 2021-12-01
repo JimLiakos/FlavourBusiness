@@ -1678,11 +1678,38 @@
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"6195344F038E")
+		    quidu      	"6195344F038E"
+		    width      	180
+		    height     	60)
 		(object RealizeView "" @85
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"61953A830228"
 		    client     	@1
 		    supplier   	@84
-		    line_style 	0)))))
+		    line_style 	0)
+		(object InterfaceView "Logical View::FinanceFacade::IFisicalParty" @86
+		    location   	(3269, 1383)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@86
+			location   	(3268, 1491)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IFisicalParty")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61A723C7032B")))))

@@ -57,7 +57,15 @@
 		(object Realize_Relationship
 		    quid       	"5C6E3A5C0063"
 		    supplier   	"Logical View::FinanceFacade::ITaxAuthority"
-		    quidu      	"5C6E352E016D"))
+		    quidu      	"5C6E352E016D")
+		(object Realize_Relationship
+		    quid       	"61A728A203A4"
+		    supplier   	"Logical View::FinanceFacade::IFisicalParty"
+		    quidu      	"61A723C7032B")
+		(object Realize_Relationship
+		    quid       	"61A72BC601C0"
+		    supplier   	"Logical View::FinanceFacade::IAddress"
+		    quidu      	"61A72AF6036B"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -401,4 +409,68 @@
 		    quidu      	"5C6E3A5C0063"
 		    client     	@1
 		    supplier   	@18
+		    line_style 	0)
+		(object InterfaceView "Logical View::FinanceFacade::IFisicalParty" @20
+		    location   	(839, 1383)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(838, 1491)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IFisicalParty")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61A723C7032B")
+		(object RealizeView "" @21
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"61A728A203A4"
+		    client     	@1
+		    supplier   	@20
+		    line_style 	0)
+		(object InterfaceView "Logical View::FinanceFacade::IAddress" @22
+		    location   	(1649, 483)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@22
+			location   	(1648, 591)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IAddress")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61A72AF6036B")
+		(object RealizeView "" @23
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"61A72BC601C0"
+		    client     	@1
+		    supplier   	@22
 		    line_style 	0)))))

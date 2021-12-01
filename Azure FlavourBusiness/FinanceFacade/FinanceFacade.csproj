@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAddress.cs" />
     <Compile Include="ICashierDevice.cs" />
+    <Compile Include="IFisicalParty.cs" />
     <Compile Include="ITax.cs" />
     <Compile Include="ITaxableType.cs" />
     <Compile Include="ITaxAuthority.cs" />
