@@ -1,4 +1,5 @@
 using System;
+using FinanceFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -10,6 +11,26 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class CashierStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICashierStation
     {
+        /// <exclude>Excluded</exclude>
+        IFisicalParty _Issuer;
+        /// <MetaDataID>{128db8e9-4c7a-4d52-a542-cfd6edea863d}</MetaDataID>
+        [PersistentMember(nameof(_Issuer))]
+        [BackwardCompatibilityID("+3")]
+        public IFisicalParty Issuer
+        {
+            get => _Issuer;
+            set
+            {
+                if (_Issuer != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Issuer = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -67,5 +88,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+
+      
     }
 }

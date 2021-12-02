@@ -206,6 +206,9 @@
     <Compile Include="Views\HumanResources\TranlatorWindow.xaml.cs">
       <DependentUpon>TranlatorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Infrastructure\CashierStationWindow.xaml.cs">
+      <DependentUpon>CashierStationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PageDialogEmulator.xaml.cs">
       <DependentUpon>PageDialogEmulator.xaml</DependentUpon>
     </Compile>
@@ -380,6 +383,10 @@
     <Page Include="Views\HumanResources\TranlatorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Infrastructure\CashierStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageDialogEmulator.xaml">
       <SubType>Designer</SubType>
@@ -644,6 +651,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\tags.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Edit16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

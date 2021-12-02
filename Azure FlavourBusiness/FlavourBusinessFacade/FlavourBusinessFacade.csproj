@@ -144,6 +144,10 @@
       <Project>{E58D9F23-6236-4587-913C-F5FADCF11C9C}</Project>
       <Name>ComputationalResources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FinanceFacade\FinanceFacade.csproj">
+      <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx">

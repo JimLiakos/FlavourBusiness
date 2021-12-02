@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.Infrastructure
@@ -14,7 +16,10 @@ namespace FLBManager.ViewModel.Infrastructure
     /// <MetaDataID>{417f9100-3809-4886-8902-bcb2acd74f3d}</MetaDataID>
     public class CashierStationPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
+        public CashierStationPresentation():base(null)
+        {
 
+        }
         public readonly ICashierStation CashierStation;
         TreasuryTreeNode Treasury;
         public CashierStationPresentation(TreasuryTreeNode parent, ICashierStation cashierStation) : base(parent)
@@ -30,19 +35,44 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 Delete();
             });
+            EditCommand = new RelayCommand((object sender) =>
+            {
+                CashierStationEdit();
+            });
         }
 
+        private void CashierStationEdit()
+        {
+            System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
+            Views.Infrastructure.CashierStationWindow cashierStationWindow = new Views.Infrastructure.CashierStationWindow();
+            cashierStationWindow.Owner = win;
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+            {
+
+
+                cashierStationWindow.GetObjectContext().SetContextInstance(this);
+                if (cashierStationWindow.ShowDialog().Value)
+                {
+
+
+                    stateTransition.Consistent = true;
+                }
+            }
+
+
+        }
 
         public void EditMode()
         {
             if (_Edit == true)
             {
                 _Edit = !_Edit;
-                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Edit)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CashierStationEdit)));
             }
             _Edit = true;
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Edit)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CashierStationEdit)));
         }
 
         private void Delete()
@@ -54,6 +84,7 @@ namespace FLBManager.ViewModel.Infrastructure
 
         public RelayCommand RenameCommand { get; protected set; }
         public RelayCommand DeleteCommand { get; protected set; }
+        public RelayCommand EditCommand { get; protected set; }
 
 
 
@@ -77,6 +108,15 @@ namespace FLBManager.ViewModel.Infrastructure
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = RenameCommand;
                     _ContextMenuItems.Add(menuItem);
+
+                    _ContextMenuItems.Add(menuItem);
+                    menuItem = new WPFUIElementObjectBind.MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"));
+                    menuItem.Header = MenuItemsEditor.Properties.Resources.EditObject;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = EditCommand;
+                    _ContextMenuItems.Add(menuItem);
+
 
 
                     //_ContextMenuItems.Add(null);
