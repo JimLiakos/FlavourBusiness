@@ -1,0 +1,46 @@
+﻿<sw:Window x:Class="FLBManager.Views.HumanResources.FisicalPartyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:ViewModel="clr-namespace:FLBManager.ViewModel.HumanResources"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
+        xmlns:resx="clr-namespace:FLBManager.Properties" 
+        xmlns:local="clr-namespace:FLBManager.Views.HumanResources"
+        Icon="/FLBManager;component/Resources/Images/Metro/assets24.png" 
+        mc:Ignorable="d"
+           ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"       
+        Title="FisicalPartyWindow" Height="450" Width="500">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:FisicalPartyPresentation}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Window.Resources>
+        <ViewModel:FisicalPartyPresentation x:Key="D_CashierStationPresentation"/>
+    </Window.Resources>
+    <!--FisicalPartyPresentation-->
+    <Grid>
+        <sw:DialogContentControl  DataContext="{Binding Value, Mode=OneWay}" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="172*"/>
+                    <ColumnDefinition Width="30*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
+                    <Label   Content="{x:Static resx:Resources.CashierNameLabel}" Margin="10,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+            </Grid>
+        </sw:DialogContentControl>
+
+    </Grid>
+</sw:Window>

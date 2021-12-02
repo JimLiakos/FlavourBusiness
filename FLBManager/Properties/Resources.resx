@@ -135,6 +135,9 @@
   <data name="AssignPreparationDevicePrompt" xml:space="preserve">
     <value>Assign  device</value>
   </data>
+  <data name="CashierNameLabel" xml:space="preserve">
+    <value>Cashier name :</value>
+  </data>
   <data name="CompanyResourcesLabel" xml:space="preserve">
     <value>Company Resources</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
     <value>Main Room</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
+  </data>
+  <data name="FisicalPartyLabel" xml:space="preserve">
+    <value>Cashier register to :</value>
   </data>
   <data name="GraphicMenusTitle" xml:space="preserve">
     <value>Menus</value>

@@ -86,6 +86,8 @@ namespace FLBManager.ViewModel.Infrastructure
         public RelayCommand DeleteCommand { get; protected set; }
         public RelayCommand EditCommand { get; protected set; }
 
+        public RelayCommand AddFisicalPartyCommand { get; protected set; }
+
 
 
         List<MenuCommand> _ContextMenuItems;
