@@ -149,6 +149,7 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{18e6acdd-c608-4181-9a3b-64464d21dc8f}</MetaDataID>
         RoomService.IMealsController MealsController { get; }
+        IList<IFisicalParty> FisicalParties { get; }
 
         IFisicalParty NewFisicalParty();
         void RemoveFisicalParty(IFisicalParty fisicalParty);

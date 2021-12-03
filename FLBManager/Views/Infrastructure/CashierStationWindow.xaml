@@ -55,7 +55,7 @@
                         
                         <TextBlock Grid.Column="0"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding PartsOfMealText}" TextTrimming="CharacterEllipsis"/>
                     </Grid>
-                    <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding PartsOfMealExpanded, Mode=TwoWay}" />
+                        <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding FisicalPartiesExpanded, Mode=TwoWay}" />
 
                     <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" IsOpen="{Binding Path=IsChecked , ElementName=PartOfMealToggle }"   Panel.ZIndex="10"  >
                         <Border >
@@ -64,7 +64,7 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <ListBox MinHeight="80" ItemsSource="{Binding PartsOfMeals}" SelectedItem="{Binding SelectedPartOfMeal}">
+                                    <ListBox MinHeight="80" ItemsSource="{Binding FisicalParties}" SelectedItem="{Binding SelectedFisicalParty}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
@@ -72,8 +72,8 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding PartofMeal.MealType.Name}"></TextBlock>
-                                                <TextBlock Grid.Column="1"  Text="{Binding PartofMeal.MealCourseType.Name}"></TextBlock>
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
+                                                    <TextBlock Grid.Column="1"  Text="{Binding VATNumber}"></TextBlock>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
@@ -124,8 +124,8 @@
                                             </StackPanel>
                                             <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
 
-                                                <Button Command="{Binding OpenMealTypesCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/MealCoursesClock16.png"></Image>
+                                                    <Button IsEnabled="{Binding IsEditSelectedEnabled}" Command="{Binding EditSelectedFisicalPartyCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
                                                 </Button>
                                             </StackPanel>
                                         </Grid>

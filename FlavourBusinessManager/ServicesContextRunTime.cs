@@ -20,6 +20,7 @@ using FlavourBusinessToolKit;
 using System.IO;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
+using FinanceFacade;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -1217,6 +1218,20 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
 
         }
+        public IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                var servicesContextIdentity = ServicesContextIdentity;
+
+                return (from fisicalParty in servicesContextStorage.GetObjectCollection<IFisicalParty>()
+                        select fisicalParty).ToList();
+            }
+        }
 
         /// <MetaDataID>{f26b75fe-4231-4cc0-890d-618a20ed0f42}</MetaDataID>
         public ServiceContextResources ServiceContextResources
@@ -1818,18 +1833,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
 
-                fisicalParty.Name = Properties.Resources.DefaultPreparationStationDescription;
-                FisicalParty.ServicesContextIdentity = this.ServicesContextIdentity;
-                objectStorage.CommitTransientObjectState(FisicalParty);
+                fisicalParty.Name = Properties.Resources.DefaultFisicalPartName;
+                
+
+                objectStorage.CommitTransientObjectState(fisicalParty);
 
                 stateTransition.Consistent = true;
             }
-            return FisicalParty;
+            return fisicalParty;
         }
 
         public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
-          
+            ObjectStorage.DeleteObject(fisicalParty);
         }
     }
 }

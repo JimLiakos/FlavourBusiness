@@ -20,5 +20,20 @@ namespace FLBManager.ViewModel.HumanResources
         {
             FisicalParty = fisicalPart;
         }
+
+        public string Name
+        {
+            get
+            {
+                return FisicalParty.Name;
+            }
+        }
+        public string VATNumber
+        {
+            get
+            {
+                return FisicalParty.VATNumber;
+            }
+        }
     }
 }

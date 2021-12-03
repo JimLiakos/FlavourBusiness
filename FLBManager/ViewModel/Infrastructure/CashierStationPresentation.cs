@@ -8,7 +8,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel.HumanResources;
 using OOAdvantech.Transactions;
+using UIBaseEx;
 using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.Infrastructure
@@ -16,7 +18,7 @@ namespace FLBManager.ViewModel.Infrastructure
     /// <MetaDataID>{417f9100-3809-4886-8902-bcb2acd74f3d}</MetaDataID>
     public class CashierStationPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
-        public CashierStationPresentation():base(null)
+        public CashierStationPresentation() : base(null)
         {
 
         }
@@ -42,23 +44,62 @@ namespace FLBManager.ViewModel.Infrastructure
 
             AddFisicalPartyCommand = new RelayCommand((object sender) =>
             {
-                System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                var fisicalParty = Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewFisicalParty();
+                FisicalPartiesMap.GetViewModelFor(fisicalParty);
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalParties)));
+
+            });
+            EditSelectedFisicalPartyCommand = new RelayCommand((object sender) =>
+            {
+                FisicalPartiesExpanded = false;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalPartiesExpanded)));
+                System.Windows.Window win = System.Windows.Window.GetWindow(EditSelectedFisicalPartyCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
                 Views.HumanResources.FisicalPartyWindow fisicalPartyWindow = new Views.HumanResources.FisicalPartyWindow();
                 fisicalPartyWindow.Owner = win;
 
-
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                 {
-                    
-                    
-
-                    stateTransition.Consistent = true;
+                    fisicalPartyWindow.GetObjectContext().SetContextInstance(_SelectedFisicalParty);
+                    if (fisicalPartyWindow.ShowDialog().Value)
+                        stateTransition.Consistent = true;
                 }
 
-
+               
             });
+            foreach (var fisicalParty in Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.FisicalParties)
+                FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
+
+            _SelectedFisicalParty = FisicalPartiesMap.Values.Where(x => x.FisicalParty == CashierStation.Issuer).FirstOrDefault();
         }
+
+        public bool FisicalPartiesExpanded { get; set; }
+
+        internal ViewModelWrappers<FinanceFacade.IFisicalParty, FisicalPartyPresentation> FisicalPartiesMap = new ViewModelWrappers<FinanceFacade.IFisicalParty, FisicalPartyPresentation>();
+
+        public List<FisicalPartyPresentation> FisicalParties
+        {
+            get
+            {
+                return FisicalPartiesMap.Values.ToList();
+
+            }
+        }
+
+        FisicalPartyPresentation _SelectedFisicalParty;
+        public FisicalPartyPresentation SelectedFisicalParty
+        {
+            get
+            {
+                return _SelectedFisicalParty;
+            }
+            set
+            {
+                _SelectedFisicalParty = value;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsEditSelectedEnabled)));
+            }
+        }
+
         //052790304
         private void CashierStationEdit()
         {
@@ -108,6 +149,10 @@ namespace FLBManager.ViewModel.Infrastructure
         public RelayCommand AddFisicalPartyCommand { get; protected set; }
 
         public RelayCommand DeleteFisicalPartyCommand { get; protected set; }
+
+        public RelayCommand EditSelectedFisicalPartyCommand { get; protected set; }
+
+        public bool IsEditSelectedEnabled => _SelectedFisicalParty != null;
 
 
 
@@ -246,7 +291,7 @@ namespace FLBManager.ViewModel.Infrastructure
 
         public override void SelectionChange()
         {
-            
+
         }
 
     }

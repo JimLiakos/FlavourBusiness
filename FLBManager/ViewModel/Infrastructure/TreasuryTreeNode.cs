@@ -61,7 +61,7 @@ namespace FLBManager.ViewModel.Infrastructure
 
         public RelayCommand NewCashierCommand { get; protected set; }
 
-        InfrastructureTreeNode ServiceContextInfrastructure;
+        public readonly InfrastructureTreeNode ServiceContextInfrastructure;
 
 
         List<MenuCommand> _ContextMenuItems;

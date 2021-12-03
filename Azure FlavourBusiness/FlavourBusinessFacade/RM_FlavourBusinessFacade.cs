@@ -507,6 +507,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_FisicalParties", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FinanceFacade.IFisicalParty>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.ServiceContextResources ServiceContextResources
         {
             get
@@ -690,6 +702,23 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = cashierStation;
             argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.ICashierStation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveCashierStation", args, argsTypes);
+        }
+        
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "NewFisicalParty", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.IFisicalParty>(retValue);
+        }
+        
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveFisicalParty", args, argsTypes);
         }
         
         public void LaunchCallerIDServer()
@@ -1118,6 +1147,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_FisicalParties", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FinanceFacade.IFisicalParty>>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -1398,6 +1439,23 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignWaiterUser", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+        }
+        
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewFisicalParty", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.IFisicalParty>(retValue);
+        }
+        
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveFisicalParty", args, argsTypes);
         }
     }
     

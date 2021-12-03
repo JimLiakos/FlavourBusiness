@@ -26,6 +26,9 @@ namespace FlavourBusinessFacade
         IList<ICashierStation> CashierStations { get; }
 
 
+        IList<FinanceFacade.IFisicalParty> FisicalParties { get; }
+
+
         /// <MetaDataID>{a1ad8b56-94d9-453e-be84-9485915eb0f1}</MetaDataID>
         ICashierStation NewCashierStation();
 

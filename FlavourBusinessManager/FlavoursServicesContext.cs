@@ -310,6 +310,13 @@ namespace FlavourBusinessManager
             }
         }
 
+        public IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                return GetRunTime().FisicalParties;
+            }
+        }
         /// <MetaDataID>{9919d8d1-7601-428d-94f5-933aabf2ed42}</MetaDataID>
         public ServiceContextResources ServiceContextResources
         {

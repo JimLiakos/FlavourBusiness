@@ -61,6 +61,10 @@
     <Compile Include="ΙΤaxable.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
       <Project>{83492998-8E8B-44A9-BCC8-9A6E979E3EB6}</Project>
       <Name>OOAdvantech - VS10</Name>

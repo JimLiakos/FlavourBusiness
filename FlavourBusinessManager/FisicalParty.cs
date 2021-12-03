@@ -9,6 +9,23 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class FisicalParty : FinanceFacade.IFisicalParty
     {
         /// <exclude>Excluded</exclude>
+        string _FisicalPartyUri;
+        public string FisicalPartyUri
+        {
+            get
+            {
+                if(string.IsNullOrWhiteSpace(_FisicalPartyUri))
+                    _FisicalPartyUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.GetPersistentObjectUri(this);
+
+                return _FisicalPartyUri;
+            }
+            set
+            {
+                _FisicalPartyUri = value;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink=new OOAdvantech.ObjectStateManagerLink();
 
         /// <exclude>Excluded</exclude>
