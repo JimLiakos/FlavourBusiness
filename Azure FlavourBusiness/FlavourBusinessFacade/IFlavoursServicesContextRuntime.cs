@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FinanceFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -149,9 +150,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{18e6acdd-c608-4181-9a3b-64464d21dc8f}</MetaDataID>
         RoomService.IMealsController MealsController { get; }
 
-
-        
-
-
+        IFisicalParty NewFisicalParty();
+        void RemoveFisicalParty(IFisicalParty fisicalParty);
     }
 }

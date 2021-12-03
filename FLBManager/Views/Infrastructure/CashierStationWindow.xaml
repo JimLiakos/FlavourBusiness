@@ -114,11 +114,11 @@
                                         <Grid>
                                             <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                                <Button Command="{Binding DeletePartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Button Command="{Binding DeleteFisicalPartyCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                                     <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
                                                 </Button>
 
-                                                <Button Command="{Binding AddPartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Button Command="{Binding AddFisicalPartyCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                                     <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
                                                 </Button>
                                             </StackPanel>

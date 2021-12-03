@@ -279,5 +279,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        public string FormattedAddress
+        {
+            get
+            {
+                return string.Format("{0} {1}, {3} {6}, {7}", StreetName, StreetNumber, Locality, City, Sub_Area, Area, PostalCode, Country);
+            }
+        }
     }
 }

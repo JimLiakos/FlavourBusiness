@@ -1808,5 +1808,28 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             return fbstorage != null;
         }
+
+
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+            var fisicalParty = new FisicalParty();
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+
+                fisicalParty.Name = Properties.Resources.DefaultPreparationStationDescription;
+                FisicalParty.ServicesContextIdentity = this.ServicesContextIdentity;
+                objectStorage.CommitTransientObjectState(FisicalParty);
+
+                stateTransition.Consistent = true;
+            }
+            return FisicalParty;
+        }
+
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+          
+        }
     }
 }

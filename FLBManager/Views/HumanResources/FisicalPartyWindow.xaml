@@ -11,17 +11,17 @@
         Icon="/FLBManager;component/Resources/Images/Metro/assets24.png" 
         mc:Ignorable="d"
            ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"       
-        Title="FisicalPartyWindow" Height="450" Width="500">
+        Title="FisicalPartyWindow" Height="480" Width="500">
     <Window.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:FisicalPartyPresentation}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
     <Window.Resources>
-        <ViewModel:FisicalPartyPresentation x:Key="D_CashierStationPresentation"/>
+        <ViewModel:FisicalPartyPresentation x:Key="D_FisicalPartyPresentation"/>
     </Window.Resources>
     <!--FisicalPartyPresentation-->
     <Grid>
         <sw:DialogContentControl  DataContext="{Binding Value, Mode=OneWay}" >
-            <Grid>
+            <Grid d:DataContext="{StaticResource D_FisicalPartyPresentation}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30*"/>
                     <ColumnDefinition Width="172*"/>
@@ -34,10 +34,27 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
-                    <Label   Content="{x:Static resx:Resources.CashierNameLabel}" Margin="10,0,0,5" />
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+                    <Label   Content="{x:Static resx:Resources.FisicalPartyNameLabel}" Margin="5,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Name  , Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
+                    <Label   Content="{x:Static resx:Resources.FisicalPartyVatNumberLabel}" Margin="5,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.VATNumber  , Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
+                    <Label   Content="{x:Static resx:Resources.FisicalPartyBranchLabel}" Margin="5,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Branch  , Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
+                    <Label   Content="{x:Static resx:Resources.FisicalPartyAddressLabel}" Margin="5,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Address.FormattedAddress  , Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
+                    <Label   Content="{x:Static resx:Resources.FisicalPartyCountryLabel}" Margin="5,0,0,5" />
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.CountryCode  , Mode=TwoWay}"></TextBox>
                 </StackPanel>
             </Grid>
         </sw:DialogContentControl>

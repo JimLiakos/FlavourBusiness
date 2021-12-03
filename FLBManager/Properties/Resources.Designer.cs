@@ -142,11 +142,56 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string FisicalPartyAddressLabel {
+            get {
+                return ResourceManager.GetString("FisicalPartyAddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch.
+        /// </summary>
+        public static string FisicalPartyBranchLabel {
+            get {
+                return ResourceManager.GetString("FisicalPartyBranchLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country code.
+        /// </summary>
+        public static string FisicalPartyCountryLabel {
+            get {
+                return ResourceManager.GetString("FisicalPartyCountryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cashier register to :.
         /// </summary>
         public static string FisicalPartyLabel {
             get {
                 return ResourceManager.GetString("FisicalPartyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string FisicalPartyNameLabel {
+            get {
+                return ResourceManager.GetString("FisicalPartyNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VAT.
+        /// </summary>
+        public static string FisicalPartyVatNumberLabel {
+            get {
+                return ResourceManager.GetString("FisicalPartyVatNumberLabel", resourceCulture);
             }
         }
         

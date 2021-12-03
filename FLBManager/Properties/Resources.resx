@@ -148,8 +148,28 @@
     <value>Main Room</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
   </data>
+  <data name="FisicalPartyAddressLabel" xml:space="preserve">
+    <value>Address</value>
+    <comment>Defines the prompt label for fisical party address</comment>
+  </data>
+  <data name="FisicalPartyBranchLabel" xml:space="preserve">
+    <value>Branch</value>
+    <comment>Defines the prompt label for fisical party branch</comment>
+  </data>
+  <data name="FisicalPartyCountryLabel" xml:space="preserve">
+    <value>Country code</value>
+    <comment>Defines the prompt label for fisical party address</comment>
+  </data>
   <data name="FisicalPartyLabel" xml:space="preserve">
     <value>Cashier register to :</value>
+  </data>
+  <data name="FisicalPartyNameLabel" xml:space="preserve">
+    <value>Name</value>
+    <comment>Defines the prompt label for fisical party name</comment>
+  </data>
+  <data name="FisicalPartyVatNumberLabel" xml:space="preserve">
+    <value>VAT</value>
+    <comment>Defines the prompt label for fisical party vat</comment>
   </data>
   <data name="GraphicMenusTitle" xml:space="preserve">
     <value>Menus</value>

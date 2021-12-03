@@ -581,6 +581,18 @@ namespace FlavourBusinessManager
             GetRunTime().RemoveCashierStation(cashierStation);
         }
 
+
+
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            return GetRunTime().NewFisicalParty();
+        }
+
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            GetRunTime().RemoveFisicalParty(fisicalParty);
+        }
+
         /// <MetaDataID>{f7fbc80c-50ed-436e-831b-eafc0e94b61b}</MetaDataID>
         public OrganizationStorageRef GetHallLayoutStorageForServiceArea(IServiceArea serviceArea)
         {

@@ -31,7 +31,15 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{7cc3c0eb-0aa6-490f-839b-e4f96a5ab6fa}</MetaDataID>
         void RemoveCashierStation(ICashierStation cashierStation);
-        
+
+
+
+
+        FinanceFacade.IFisicalParty NewFisicalParty();
+
+        void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty);
+
+
 
 
         /// <MetaDataID>{19320e10-ee11-4ad2-9050-29003b34cf6f}</MetaDataID>

@@ -39,8 +39,27 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 CashierStationEdit();
             });
-        }
 
+            AddFisicalPartyCommand = new RelayCommand((object sender) =>
+            {
+                System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+
+                Views.HumanResources.FisicalPartyWindow fisicalPartyWindow = new Views.HumanResources.FisicalPartyWindow();
+                fisicalPartyWindow.Owner = win;
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    
+                    
+
+                    stateTransition.Consistent = true;
+                }
+
+
+            });
+        }
+        //052790304
         private void CashierStationEdit()
         {
             System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
@@ -87,6 +106,8 @@ namespace FLBManager.ViewModel.Infrastructure
         public RelayCommand EditCommand { get; protected set; }
 
         public RelayCommand AddFisicalPartyCommand { get; protected set; }
+
+        public RelayCommand DeleteFisicalPartyCommand { get; protected set; }
 
 
 

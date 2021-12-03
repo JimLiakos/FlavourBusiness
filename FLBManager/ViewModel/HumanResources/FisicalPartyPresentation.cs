@@ -15,10 +15,10 @@ namespace FLBManager.ViewModel.HumanResources
         {
 
         }
-        IFisicalParty FisicalPart;
+        public IFisicalParty FisicalParty { get; }
         public FisicalPartyPresentation(IFisicalParty fisicalPart)
         {
-            FisicalPart = fisicalPart;
+            FisicalParty = fisicalPart;
         }
     }
 }
