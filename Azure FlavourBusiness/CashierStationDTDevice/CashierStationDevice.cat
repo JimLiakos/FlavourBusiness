@@ -146,7 +146,126 @@
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"
 	    quidu      	"61AD947E00A7"
 	    language   	"C#"
-	    persistence 	"Persistent"))
+	    persistence 	"Persistent")
+	(object Class "CashierController"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{82be5194-83d3-4038-b878-d6225ab658cb}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
+	    quid       	"61AE0993037E"
+	    operations 	(list Operations
+		(object Operation "Start"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d76d5629-dbbc-4583-8610-6cd79f7f3c2c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61AE09C1025B"))
+		    quid       	"61AE09C1025B"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "AzureServerUrl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{af4a528e-ef65-4e03-b887-e0ba7e094e13}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61AE09C1031A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"61AE09C1031A"
+		    type       	"string"))
+	    module     	"Component View::CashierStationDevice::CashierStationDevice"
+	    quidu      	"61AD947E00A7"
+	    language   	"C#")
+	(object Mechanism @1
+	    logical_models 	(list unit_reference_list
+		(object Object "$UNNAMED$0"
+		    quid       	"61AE27AE0234"
+		    collaborators 	(list link_list
+			(object Link
+			    quid       	"61AE27D3019F"
+			    supplier   	"$UNNAMED$1"
+			    quidu      	"61AE27B5038B"
+			    messages   	(list Messages
+				(object Message "GetTransactionsForPrinting"
+				    quid       	"61AE282D01A0"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"ToClientFromSupplier"
+				    sequence   	"1.1"
+				    ordinal    	1
+				    quidu      	"000000000000"
+				    creation   	FALSE)
+				(object Message "TransactionPrinted(string, string)"
+				    quid       	"61AE28F500E7"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"ToClientFromSupplier"
+				    sequence   	"3"
+				    ordinal    	3
+				    quidu      	"61AE29180195"
+				    creation   	FALSE)
+				(object Message "TransactionPrintRequest"
+				    quid       	"61AE2C360320"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Return"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"1"
+				    ordinal    	0
+				    quidu      	"000000000000"
+				    creation   	FALSE))))
+		    class      	"Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime"
+		    quidu      	"61ADB71200C0"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE)
+		(object Object "$UNNAMED$1"
+		    quid       	"61AE27B5038B"
+		    collaborators 	(list link_list
+			(object Link
+			    quid       	"61AE28B6020C"
+			    supplier   	"$UNNAMED$1"
+			    quidu      	"61AE27B5038B"
+			    messages   	(list Messages
+				(object Message "Print"
+				    quid       	"61AE28B6020D"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"2"
+				    ordinal    	2
+				    quidu      	"000000000000"
+				    creation   	FALSE))))
+		    class      	"Logical View::CashierStationDevice::CashierController"
+		    quidu      	"61AE0993037E"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"61AD94380058"
@@ -157,9 +276,9 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::CashierStationDevice::ApplicationSettings" @1
+		(object ClassView "Class" "Logical View::CashierStationDevice::ApplicationSettings" @2
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(606, 519)
+		    location   	(634, 513)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -171,8 +290,8 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@1
-			location   	(250, 406)
+			Parent_View 	@2
+			location   	(278, 400)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	713
@@ -184,4 +303,322 @@
 		    quidu      	"61AD944301A2"
 		    width      	731
 		    height     	250
-		    annotation 	8)))))
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::CashierStationDevice::CashierController" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(631, 903)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(287, 787)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	688
+			justify    	0
+			label      	"CashierController")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61AE0993037E"
+		    width      	706
+		    height     	256
+		    annotation 	8)))
+	(object InteractionDiagram "PrintReceipt"
+	    mechanism_ref 	@1
+	    quid       	"61AE0A4A010E"
+	    title      	"PrintReceipt"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object InterObjView "$UNNAMED$0" @4
+		    location   	(521, 225)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(521, 225)
+			fill_color 	13434879
+			anchor_loc 	1
+			nlines     	2
+			max_width  	472
+			justify    	0
+			label      	"")
+		    icon       	"Interface"
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61AE27AE0234"
+		    width      	490
+		    height     	893
+		    icon_height 	0
+		    icon_width 	0
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @5
+			location   	(521, 338)
+			line_color 	3342489
+			InterObjView 	@4
+			height     	60
+			y_coord    	0
+			Nested     	FALSE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @6
+			location   	(1137, 562)
+			line_color 	3342489
+			InterObjView 	@4
+			height     	60
+			y_coord    	0
+			Nested     	FALSE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @7
+			location   	(1137, 908)
+			line_color 	3342489
+			InterObjView 	@4
+			height     	60
+			y_coord    	0
+			Nested     	FALSE))
+		(object InterObjView "$UNNAMED$1" @8
+		    location   	(1250, 225)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1250, 225)
+			fill_color 	13434879
+			anchor_loc 	1
+			nlines     	2
+			max_width  	330
+			justify    	0
+			label      	"")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61AE27B5038B"
+		    width      	348
+		    height     	893
+		    icon_height 	0
+		    icon_width 	0
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @9
+			location   	(1225, 398)
+			line_color 	3342489
+			InterObjView 	@8
+			height     	284
+			y_coord    	224
+			Nested     	FALSE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @10
+			location   	(1250, 753)
+			line_color 	3342489
+			InterObjView 	@8
+			height     	120
+			y_coord    	60
+			Nested     	FALSE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @11
+			location   	(450, 753)
+			line_color 	3342489
+			InterObjView 	@8
+			height     	60
+			y_coord    	0
+			Nested     	TRUE)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @12
+			location   	(1250, 908)
+			line_color 	3342489
+			InterObjView 	@8
+			height     	120
+			y_coord    	60
+			Nested     	FALSE))
+		(object InterMessView "" @13
+		    location   	(844, 562)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @14
+			Parent_View 	@13
+			location   	(886, 607)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"61AE282D01A0"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	532
+			justify    	0
+			label      	"GetTransactionsForPrinting"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@8
+		    supplier   	@4
+		    Focus_Src  	@9
+		    Focus_Entry 	@6
+		    origin     	(1234, 562)
+		    terminus   	(537, 562)
+		    ordinal    	1)
+		(object SelfMessView "" @15
+		    location   	(0, 753)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(1341, 709)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"61AE28B6020D"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	138
+			justify    	0
+			label      	"Print"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@8
+		    supplier   	@8
+		    Focus_Src  	@10
+		    Focus_Entry 	@11
+		    origin     	(1266, 753)
+		    terminus   	(1416, 753)
+		    ordinal    	2)
+		(object InterMessView "" @17
+		    location   	(884, 908)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @18
+			Parent_View 	@17
+			location   	(886, 953)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"61AE28F500E7"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	619
+			justify    	0
+			label      	"TransactionPrinted(string, string)"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@8
+		    supplier   	@4
+		    Focus_Src  	@12
+		    Focus_Entry 	@7
+		    origin     	(1234, 908)
+		    terminus   	(537, 908)
+		    ordinal    	3)
+		(object InterMessView "" @19
+		    location   	(884, 398)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @20
+			Parent_View 	@19
+			location   	(885, 354)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"61AE2C360320"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	482
+			justify    	0
+			label      	"TransactionPrintRequest"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@4
+		    supplier   	@8
+		    Focus_Src  	@5
+		    Focus_Entry 	@9
+		    origin     	(536, 398)
+		    terminus   	(1234, 398)
+		    ordinal    	0)))))
