@@ -24,7 +24,7 @@
             <Grid d:DataContext="{StaticResource D_CashierStationPresentation}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60*"/>
-                    
+
                     <ColumnDefinition Width="500*"/>
                     <ColumnDefinition Width="60*"/>
 
@@ -35,109 +35,76 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    
+
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
-                <Label   Content="{x:Static resx:Resources.CashierNameLabel}" Margin="10,0,0,5" />
+                    <Label   Content="{x:Static resx:Resources.CashierNameLabel}" Margin="10,0,0,5" />
+
                     <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" VerticalAlignment="Top"  Grid.Column="1">
-                <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,5" Content="{x:Static resx:Resources.FisicalPartyLabel}" />
-                <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,10">
+                    <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,5" Content="{x:Static resx:Resources.FisicalPartyLabel}" />
+                    <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,10">
 
-                    <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="30"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Grid.Column="0"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding PartsOfMealText}" TextTrimming="CharacterEllipsis"/>
-                    </Grid>
-                        <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding FisicalPartiesExpanded, Mode=TwoWay}" />
+                        <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                    <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" IsOpen="{Binding Path=IsChecked , ElementName=PartOfMealToggle }"   Panel.ZIndex="10"  >
-                        <Border >
-                            <Grid MaxHeight="100"  >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding SelectedFisicalParty.Name}" TextTrimming="CharacterEllipsis"/>
+                        </Grid>
+                        <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="FisicalPartToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding FisicalPartiesExpanded, Mode=TwoWay}" />
+
+                        <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="False" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=FisicalPartToggle }" IsOpen="{Binding Path=IsChecked , ElementName=FisicalPartToggle }"   Panel.ZIndex="10"  >
+                            <Border >
+                                <Grid MaxHeight="100"  >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
                                     <ListBox MinHeight="80" ItemsSource="{Binding FisicalParties}" SelectedItem="{Binding SelectedFisicalParty}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
                                                     <TextBlock Grid.Column="1"  Text="{Binding VATNumber}"></TextBlock>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
 
-                                <Grid  Grid.Row="1" Style="{DynamicResource ListViewButtonsBarStyle}" Margin="0,0,0,0">
-                                    <Popup Panel.ZIndex="20" Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" AllowsTransparency="True"  IsOpen="{Binding NewPartOfMeal}" Placement="Top">
-                                        <Grid>
-
-                                            <Grid Margin="1,2,1,2" Style="{DynamicResource ListViewButtonsBarStyle}"  >
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="3" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="48" />
-                                                </Grid.ColumnDefinitions>
-                                                <GridSplitter Width="2" Grid.Column="1" HorizontalAlignment="Center" ></GridSplitter>
-                                                <ComboBox ItemsSource="{Binding MealTypes}"  SelectedItem="{Binding SelectedMealTypeViewModel}" >
-                                                    <ComboBox.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                                                        </DataTemplate>
-                                                    </ComboBox.ItemTemplate>
-
-                                                </ComboBox>
-                                                <ComboBox Grid.Column="2" ItemsSource="{Binding SelectedMealTypeCourses}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMealCourseType}"  ></ComboBox>
-                                                <Button Grid.Column="3"   Style="{StaticResource ListViewBarButtonStyle}" 
-                                                                    Command="{Binding SavePartofMealCommand}"
-                                                                Width="30" 
-                                                                Height="30"   Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Save.png"></Image>
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </Popup>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
-
-                                        <Grid>
-                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
-
+                                    <Grid  Grid.Row="1" Style="{DynamicResource ListViewButtonsBarStyle}" Margin="0,0,0,0">
+                                        <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+                                            <Grid>
+                                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
                                                     <Button Command="{Binding DeleteFisicalPartyCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                                </Button>
-
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                    </Button>
                                                     <Button Command="{Binding AddFisicalPartyCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                                </Button>
-                                            </StackPanel>
-                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                    </Button>
+                                                </StackPanel>
+                                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <Button IsEnabled="{Binding IsEditSelectedEnabled}" Command="{Binding EditSelectedFisicalPartyCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
+                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
                                 </Grid>
 
-                            </Grid>
+                            </Border>
+                        </Popup>
 
-                        </Border>
-                    </Popup>
-
-                </Grid>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </sw:DialogContentControl>

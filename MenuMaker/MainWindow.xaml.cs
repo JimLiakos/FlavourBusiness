@@ -28,7 +28,7 @@ namespace MenuMaker
             InitializeComponent();
 
             this.GetObjectContext().Initialize(this);
-            MenuMakerViewModel = new ViewModel.MenuMakerViewModel();
+            MenuMakerViewModel = new MenuMakerViewModel();
             this.GetObjectContext().SetContextInstance(MenuMakerViewModel);
 
         }

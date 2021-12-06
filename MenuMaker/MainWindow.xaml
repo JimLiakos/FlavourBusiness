@@ -16,7 +16,6 @@
         Title="MainWindow" 
         Height="900" Width="1700">
     <Window.DataContext >
-
         <ConnectableCtrl:ObjectContext  ViewControlObjectType="{x:Type ViewModel:MenuMakerViewModel}"    Name="Connection"  RollbackOnExitWithoutAnswer="True"/>
     </Window.DataContext>
     <Window.Resources>

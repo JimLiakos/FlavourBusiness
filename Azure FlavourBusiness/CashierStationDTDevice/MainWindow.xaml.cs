@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CashierStationDevice.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +19,26 @@ namespace CashierStationDTDevice
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// <MetaDataID>{57e42df5-aabd-483b-aa9c-ecfd5f5b7e90}</MetaDataID>
     public partial class MainWindow : Window
     {
         /// <MetaDataID>{60a25c8b-0556-49d6-804d-f506ca31745a}</MetaDataID>
         public MainWindow()
         {
             InitializeComponent();
-            var ss= CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice;
+            this.GetObjectContext().Initialize(this);
+            CashierStationDevicePresentation = new CashierStationDevicePresentation();
+            this.GetObjectContext().SetContextInstance(CashierStationDevicePresentation);
         }
 
+        public CashierStationDevicePresentation CashierStationDevicePresentation { get; }
 
-        
+
+
         /// <MetaDataID>{3165c8ff-7fa7-4860-ad78-ea1c02be69b3}</MetaDataID>
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             FinanceFacade.Transaction transaction = new FinanceFacade.Transaction();
             var Spinach = new FinanceFacade.Item() { Name = "Spinach", Quantity = 1, Price = 7.5m };
 

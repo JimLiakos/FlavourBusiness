@@ -267,6 +267,7 @@
     <Compile Include="CallerIDServer.cs" />
     <Compile Include="CashierStation.cs" />
     <Compile Include="CloudNotificationManager.cs" />
+    <Compile Include="DeviceIDAbbreviation.cs" />
     <Compile Include="FisicalParty.cs" />
     <Compile Include="FlavourBusinessManager.cs" />
     <Compile Include="FlavourBusinessStorage.cs" />

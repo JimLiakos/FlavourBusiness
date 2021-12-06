@@ -42,6 +42,8 @@ namespace FlavourBusinessFacade
 
         void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty);
 
+        void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty);
+
 
 
 

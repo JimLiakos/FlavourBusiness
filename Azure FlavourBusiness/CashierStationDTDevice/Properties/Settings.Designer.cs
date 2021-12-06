@@ -8,13 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CashierStationDTDevice.Properties
+namespace CashierStationDevice.Properties
 {
 
 
-    /// <MetaDataID>{45903f07-b29f-4699-b552-7708afe5f263}</MetaDataID>
+    /// <MetaDataID>{54d1c9c5-af9c-4bd4-b597-d84f6457ac4c}</MetaDataID>
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
     {
 

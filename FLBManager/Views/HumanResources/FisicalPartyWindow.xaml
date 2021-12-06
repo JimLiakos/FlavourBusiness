@@ -28,13 +28,13 @@
                     <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyNameLabel}" Margin="5,0,0,5" />
@@ -42,7 +42,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyVatNumberLabel}" Margin="5,0,0,5" />
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.VATNumber  , Mode=TwoWay}"></TextBox>
+                    <TextBox x:Name="VatTextBox"  HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.VATNumber  , Mode=TwoWay}"></TextBox>
                 </StackPanel>
                 <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyBranchLabel}" Margin="5,0,0,5" />
@@ -50,7 +50,23 @@
                 </StackPanel>
                 <StackPanel Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyAddressLabel}" Margin="5,0,0,5" />
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Address.FormattedAddress  , Mode=TwoWay}"></TextBox>
+                    <Grid>
+                        <Rectangle Height="{Binding ElementName=VatTextBox, Path=ActualHeight}" x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding SelectedFisicalParty.Name}" TextTrimming="CharacterEllipsis"/>
+                            <Button HorizontalAlignment="Stretch" Grid.Column="1"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
+                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                            </Button>
+
+                        </Grid>
+
+                    </Grid>
+                    <!--<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Address.FormattedAddress  , Mode=TwoWay}"></TextBox>-->
                 </StackPanel>
                 <StackPanel Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyCountryLabel}" Margin="5,0,0,5" />

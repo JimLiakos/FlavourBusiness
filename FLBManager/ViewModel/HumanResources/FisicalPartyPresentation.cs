@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FLBManager.ViewModel.HumanResources
 {
+    /// <MetaDataID>{b7f325f2-25bc-4e58-b4f7-1405eb262d1f}</MetaDataID>
     public class FisicalPartyPresentation : MarshalByRefObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

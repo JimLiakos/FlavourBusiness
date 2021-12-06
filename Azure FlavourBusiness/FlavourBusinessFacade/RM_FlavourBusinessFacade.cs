@@ -721,6 +721,15 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveFisicalParty", args, argsTypes);
         }
         
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "UpdateFisicalParty", args, argsTypes);
+        }
+        
         public void LaunchCallerIDServer()
         {
             object[] args = new object[0];
@@ -869,6 +878,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[5] = typeof(bool);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetServicesContextRuntime", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetCashiersStationRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
         }
         
         public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, string deviceFirebaseToken, bool create)
@@ -1456,6 +1475,25 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = fisicalParty;
             argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveFisicalParty", args, argsTypes);
+        }
+        
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "UpdateFisicalParty", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetCashiersStationRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
         }
     }
     
@@ -4843,6 +4881,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "set_ServicesContextIdentity", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime ServicesContextRunTime
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "get_ServicesContextRunTime", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
             }
         }
         

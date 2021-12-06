@@ -8,7 +8,6 @@ namespace FinanceFacade
 {
     /// <MetaDataID>{f4fdf9fe-3c45-48fd-b958-c16677d2397c}</MetaDataID>
     public class Transaction : ITransaction
-
     {
 
 

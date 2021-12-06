@@ -17,5 +17,15 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{99255338-9722-4eba-8e33-e3c09e062747}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         string ServicesContextIdentity { get; set; }
+
+
+
+        /// <MetaDataID>{e07828e8-94d1-414a-b538-13b08cca6f88}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
+        string DeviceCredentialKeyAbbreviation { get; }
+
+        /// <MetaDataID>{95bd802c-3612-4ac6-86be-41d758d1f1ca}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
+        string CashierStationIdentity { get; }
     }
 }

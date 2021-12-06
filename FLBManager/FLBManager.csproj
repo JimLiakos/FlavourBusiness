@@ -198,6 +198,9 @@
     <Compile Include="Views\FlavourBusinessResourcesView.xaml.cs">
       <DependentUpon>FlavourBusinessResourcesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResources\AddresWindow.xaml.cs">
+      <DependentUpon>AddresWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResources\FisicalPartyWindow.xaml.cs">
       <DependentUpon>FisicalPartyWindow.xaml</DependentUpon>
     </Compile>
@@ -375,6 +378,10 @@
     <Page Include="Views\FlavourBusinessResourcesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HumanResources\AddresWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResources\FisicalPartyWindow.xaml">
       <SubType>Designer</SubType>

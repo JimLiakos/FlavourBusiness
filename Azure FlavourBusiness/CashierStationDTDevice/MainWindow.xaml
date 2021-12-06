@@ -3,11 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CashierStationDTDevice"
+        xmlns:local="clr-namespace:CashierStationDTDevice" 
+        xmlns:Authentication="clr-namespace:FLBAuthentication.Views;assembly=MenuDesignerLib" 
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="234,175,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        Title="MainWindow" Height="650" Width="1225">
+    <Window.DataContext >
+        
+        <ConnectableCtrl:ObjectContext  ViewControlObjectType="{x:Type ViewModel:CashierStationDevicePresentation}"    Name="Connection"  RollbackOnExitWithoutAnswer="True"/>
+    </Window.DataContext>
+    <Window.Resources>
+
+        <ViewModel:CashierStationDevicePresentation x:Key="D_CashierStationDevice"></ViewModel:CashierStationDevicePresentation>
+        <Style x:Key="Hoverhighlight" TargetType="{x:Type TextBlock}">
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid   DataContext="{Binding Value, Mode=OneWay}" Margin="4"  d:DataContext="{StaticResource D_CashierStationDevice}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border VerticalAlignment="Top" BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!--<Menu Style="{StaticResource BorderLessMenu}" ItemsSource="{Binding MenuItems}" ItemContainerStyle="{StaticResource MenuItemStyle}"/>-->
+                <Grid Grid.Column="1" >
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Hyperlink   Command="{Binding SettingsCommand}"  >
+                        <StackPanel  Orientation="Horizontal" >
+                        <Image Width="16" Height="16" Source="Resources/Images/Metro/Settings16.png" />
+                            <TextBlock Style="{StaticResource Hoverhighlight}"  Margin="4,0,0,0" Text="Settings"></TextBlock>
+                        </StackPanel>
+                    </Hyperlink>
+                        </TextBlock>
+                </Grid>
+                <Authentication:SignInToolBar Grid.Column="2" VerticalAlignment="Top" x:Name="SignInToolBarItem" Height="30" DataContext="{Binding SignInUser}"  HorizontalAlignment="Right"  MinWidth="340" />
+            </Grid>
+        </Border>
+
+        <sw:PageDialogFrame Grid.Row="1" Background="Transparent" x:Name="PageDialogHost"  >
+
+        </sw:PageDialogFrame>
+        <!--<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="234,175,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>-->
 
     </Grid>
 </Window>

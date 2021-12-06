@@ -153,5 +153,7 @@ namespace FlavourBusinessFacade
 
         IFisicalParty NewFisicalParty();
         void RemoveFisicalParty(IFisicalParty fisicalParty);
+        void UpdateFisicalParty(IFisicalParty fisicalParty);
+        ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
     }
 }

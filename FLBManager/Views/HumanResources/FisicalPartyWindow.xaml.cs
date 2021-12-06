@@ -17,6 +17,7 @@ namespace FLBManager.Views.HumanResources
     /// <summary>
     /// Interaction logic for FisicalPartyWindow.xaml
     /// </summary>
+    /// <MetaDataID>{22c9e0eb-b2e6-450a-86c5-c99119603fa3}</MetaDataID>
     public partial class FisicalPartyWindow : StyleableWindow.Window
     {
         public FisicalPartyWindow()

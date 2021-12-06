@@ -29,6 +29,8 @@ namespace FLBManager.ViewModel.Infrastructure
             Treasury = parent;
             CashierStation = cashierStation;
 
+            var ds = cashierStation.CashierStationIdentity;
+
             RenameCommand = new RelayCommand((object sender) =>
             {
                 EditMode();
@@ -45,7 +47,7 @@ namespace FLBManager.ViewModel.Infrastructure
             AddFisicalPartyCommand = new RelayCommand((object sender) =>
             {
                 var fisicalParty = Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewFisicalParty();
-                FisicalPartiesMap.GetViewModelFor(fisicalParty);
+                FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalParties)));
 
             });
@@ -62,7 +64,10 @@ namespace FLBManager.ViewModel.Infrastructure
                 {
                     fisicalPartyWindow.GetObjectContext().SetContextInstance(_SelectedFisicalParty);
                     if (fisicalPartyWindow.ShowDialog().Value)
+                    {
+                        Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.UpdateFisicalParty(_SelectedFisicalParty.FisicalParty);
                         stateTransition.Consistent = true;
+                    }
                 }
 
                
@@ -97,6 +102,7 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 _SelectedFisicalParty = value;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsEditSelectedEnabled)));
+                CashierStation.Issuer = _SelectedFisicalParty.FisicalParty;
             }
         }
 
@@ -245,6 +251,7 @@ namespace FLBManager.ViewModel.Infrastructure
             set
             {
                 CashierStation.Description = value;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
             }
         }
         public override bool HasContextMenu

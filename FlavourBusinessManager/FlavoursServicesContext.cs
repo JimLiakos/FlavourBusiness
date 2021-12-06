@@ -599,7 +599,10 @@ namespace FlavourBusinessManager
         {
             GetRunTime().RemoveFisicalParty(fisicalParty);
         }
-
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            GetRunTime().UpdateFisicalParty(fisicalParty);
+        }
         /// <MetaDataID>{f7fbc80c-50ed-436e-831b-eafc0e94b61b}</MetaDataID>
         public OrganizationStorageRef GetHallLayoutStorageForServiceArea(IServiceArea serviceArea)
         {

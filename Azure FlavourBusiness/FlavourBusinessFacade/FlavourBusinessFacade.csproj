@@ -57,6 +57,7 @@
     <Compile Include="IAzureInstancesManager.cs" />
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
+    <Compile Include="ICashierStationRuntime.cs" />
     <Compile Include="IMeal.cs" />
     <Compile Include="IMealController.cs" />
     <Compile Include="IMealCourse.cs" />

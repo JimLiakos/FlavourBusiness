@@ -37,7 +37,12 @@ namespace FlavourBusinessFacade.HumanResources
         [CachingDataOnClientSide]
         string ServicesContextIdentity { get; set; }
 
-        
+        /// <MetaDataID>{0a94826c-6b90-4b08-8776-b3c3ea0d6635}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
+        IFlavoursServicesContextRuntime ServicesContextRunTime { get; }
+
+
+
 
 
     }

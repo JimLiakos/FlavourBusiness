@@ -397,7 +397,8 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{83f015dc-7ec7-4910-9574-de82d9545def}</MetaDataID>
         public List<IAccountability> Commissions => new List<IAccountability>();
 
-
+        /// <MetaDataID>{74bd474b-62f8-402f-aa8f-47226fbad1e7}</MetaDataID>
+        FlavourBusinessFacade.IFlavoursServicesContextRuntime IServiceContextSupervisor.ServicesContextRunTime => ServicesContextRunTime;
 
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
         public void RemoveShiftWork(IShiftWork shiftWork)
@@ -411,6 +412,7 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        /// <MetaDataID>{3784979d-a8ed-487f-9011-092a3791e597}</MetaDataID>
         internal void AddShiftWork(ShiftWork shiftWork)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

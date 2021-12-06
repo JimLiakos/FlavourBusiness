@@ -141,6 +141,9 @@
   <data name="SamtecDriverConnectionErrorMessage" xml:space="preserve">
     <value>Πρόβλημα επικοινωνίας με το πρόγραμμα οδήγησης Samtec. Βεβαιωθείτε ότι βρίσκεται εν λειτουργία.</value>
   </data>
+  <data name="SettingDialogTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="UserMenuModeMessage" xml:space="preserve">
     <value>Η συσκευή είναι σε "Χρήση μενού"</value>
   </data>

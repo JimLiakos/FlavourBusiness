@@ -17,6 +17,7 @@ namespace FLBManager.Views.Infrastructure
     /// <summary>
     /// Interaction logic for CashierStationWindow.xaml
     /// </summary>
+    /// <MetaDataID>{2b6f9b85-c481-4bb1-a120-1626eb5735d2}</MetaDataID>
     public partial class CashierStationWindow : StyleableWindow.Window
     {
         public CashierStationWindow()

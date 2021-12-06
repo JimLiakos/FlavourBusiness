@@ -88,6 +88,7 @@ namespace FlavourBusinessManager
             return clientSession;
         }
 
+        /// <MetaDataID>{4b6acc8b-1b62-41db-933f-9840a7eb5a2c}</MetaDataID>
         public FlavourBusinessFacade.HumanResources.IWaiter AssignWaiterUser(string waiterAssignKey)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -112,6 +113,7 @@ namespace FlavourBusinessManager
             return waiter;
         }
 
+        /// <MetaDataID>{ce23edf9-4f91-4120-9a43-7e55e8edb31b}</MetaDataID>
         public FlavourBusinessFacade.HumanResources.IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -129,7 +131,7 @@ namespace FlavourBusinessManager
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
 
-            var serviceContextSupervisor =flavoursServicesContextRunTime.AssignSupervisorUser(supervisorAssignKey, authUser.User_ID, authUserRef.FullName);
+            var serviceContextSupervisor = flavoursServicesContextRunTime.AssignSupervisorUser(supervisorAssignKey, authUser.User_ID, authUserRef.FullName);
             authUserRef.AddRole(serviceContextSupervisor);
 
 
@@ -189,6 +191,8 @@ namespace FlavourBusinessManager
 
         }
 
+
+
         /// <MetaDataID>{1726fda9-eed5-4e8c-8a04-a3fc80a093bc}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationCredentialKey)
         {
@@ -208,6 +212,28 @@ namespace FlavourBusinessManager
             var preparationStation = flavoursServicesContextRunTime.GetPreparationStationRuntime(preparationStationCredentialKey);//, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, orgIdentity, graphicMenus);
 
             return preparationStation;
+
+
+        }
+
+        
+
+
+        public ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+            string servicesContextIdentity = communicationCredentialKey.Substring(0, communicationCredentialKey.IndexOf("_"));
+            string preparationStationIdentity = communicationCredentialKey.Substring(communicationCredentialKey.IndexOf("_") + 1);
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            if (flavoursServicesContext == null)
+                return null;
+
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+
+
+            ICashiersStationRuntime cashiersStation = flavoursServicesContextRunTime.GetCashiersStationRuntime(communicationCredentialKey);//, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, orgIdentity, graphicMenus);
+
+            return cashiersStation;
 
 
         }

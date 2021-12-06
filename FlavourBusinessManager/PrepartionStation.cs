@@ -31,6 +31,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             _PreparationStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
+            _ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
         /// <exclude>Excluded</exclude>
         string _DeviceUpdateEtag;

@@ -29,6 +29,8 @@
                 <Setter Property="FontSize" Value="14"/>
             </Style>
 
+            
+            
             <ViewModel:BookViewModel x:Key="BookViewModel"></ViewModel:BookViewModel>
         </ResourceDictionary>
     </UserControl.Resources>

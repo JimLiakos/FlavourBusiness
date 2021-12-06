@@ -7,6 +7,16 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="NotifyIconResources.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Shared.xaml"/>
+                
+                <ResourceDictionary Source="Resources/Styles/GroupBox.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Expander.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/ScrollBar.xaml"/>
+            
+                <!-- Metro Theme -->
+                <ResourceDictionary Source="Resources/Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="Resources/Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
+                <ResourceDictionary Source="Resources/Themes/Metro/Metro.MNControls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

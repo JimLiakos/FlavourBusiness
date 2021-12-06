@@ -1,5 +1,6 @@
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -33,6 +34,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{e6b4abad-96cb-41b9-a889-7c072fd83500}</MetaDataID>
         [PersistentMember(nameof(_Address))]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
         [BackwardCompatibilityID("+4")]
         public FinanceFacade.IAddress Address
         {
@@ -140,6 +142,38 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                 }
             }
+        }
+
+        internal void Update(FisicalParty fisicalParty)
+        {
+            if (fisicalParty.FisicalPartyUri != FisicalPartyUri || string.IsNullOrWhiteSpace(FisicalPartyUri))
+                throw new Exception("FisicalPartyUri mismatch");
+
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+
+                this.Name = fisicalParty.Name;
+                this.VATNumber = fisicalParty.VATNumber;
+                this.Branch = fisicalParty.Branch;
+                this.CountryCode = fisicalParty.CountryCode;
+                if(_Address==null&&fisicalParty.Address!=null)
+                {
+                    _Address = fisicalParty.Address;
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Address);
+                }
+                else
+                {
+                    if (fisicalParty.Address == null)
+                        _Address = null;
+                    else
+                        (_Address as Address).Update(fisicalParty.Address);
+                }
+
+                stateTransition.Consistent = true;
+
+            }
+
         }
     }
 }

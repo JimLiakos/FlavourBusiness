@@ -1,5 +1,7 @@
+using FinanceFacade;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -186,6 +188,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
 
             }
+        }
+
+        internal void Update(IAddress address)
+        {
+            throw new NotImplementedException();
         }
 
         /// <exclude>Excluded</exclude>

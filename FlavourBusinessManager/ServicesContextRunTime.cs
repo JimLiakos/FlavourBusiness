@@ -1397,12 +1397,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            ServicesContextResources.CashierStation cashierStation = new ServicesContextResources.CashierStation();
+            CashierStation cashierStation = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-
+                cashierStation = new ServicesContextResources.CashierStation(this.ServicesContextIdentity);
                 cashierStation.Description = Properties.Resources.DefaultPreparationStationDescription;
-                cashierStation.ServicesContextIdentity = this.ServicesContextIdentity;
+                
                 objectStorage.CommitTransientObjectState(cashierStation);
 
                 stateTransition.Consistent = true;
@@ -1571,6 +1571,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
             //7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad
             return this.PreparationStationRuntimes[preparationStationIdentity];
+        }
+
+
+        public ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+
+            return CashierStations.OfType<CashierStation>().Where(x => x.CashierStationIdentity == communicationCredentialKey).FirstOrDefault();
+            
         }
 
         /// <MetaDataID>{e3638d03-da40-44de-a45b-5aa5953904d8}</MetaDataID>
@@ -1828,16 +1836,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public FinanceFacade.IFisicalParty NewFisicalParty()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
-
             var fisicalParty = new FisicalParty();
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-
                 fisicalParty.Name = Properties.Resources.DefaultFisicalPartName;
-                
-
                 objectStorage.CommitTransientObjectState(fisicalParty);
-
                 stateTransition.Consistent = true;
             }
             return fisicalParty;
@@ -1846,6 +1849,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             ObjectStorage.DeleteObject(fisicalParty);
+        }
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            ObjectStorage.GetObjectFromUri<FisicalParty>((fisicalParty as FisicalParty).FisicalPartyUri).Update(fisicalParty as FisicalParty);
         }
     }
 }
