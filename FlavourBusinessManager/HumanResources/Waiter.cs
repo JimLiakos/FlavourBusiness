@@ -719,6 +719,11 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
+        public void ServingBatchesCommit()
+        {
+
+        }
+
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)
         //{
         //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

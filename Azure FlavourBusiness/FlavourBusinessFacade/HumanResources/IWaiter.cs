@@ -12,6 +12,9 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IWaiter : EndUsers.IMessageConsumer, IServicesContextWorker, IUser
     {
+        /// <MetaDataID>{26e7cbcc-041c-4ac4-a9af-ee76b63c9193}</MetaDataID>
+        void ServingBatchesCommit();
+
         /// <MetaDataID>{aa6ffdd8-59a3-4253-940f-ce7c4e0d1135}</MetaDataID>
         /// <summary>This token is the identity of device for push notification mechanism</summary>
         [BackwardCompatibilityID("+10")]
