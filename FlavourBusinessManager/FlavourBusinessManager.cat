@@ -6798,7 +6798,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"7"))
+			    value      	"8"))
 		    quid       	"5C66B8670182"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
@@ -6813,6 +6813,153 @@
 			    quid       	"61ADBC2E019D"
 			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime"
 			    quidu      	"61ADB71200C0"))
+		    operations 	(list Operations
+			(object Operation "ObjectActivation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{516fa955-dc1a-4115-ba39-01eba844f1f9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF690602CF"))
+			    quid       	"61AF690602CF"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "FlavourItem_ObjectChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b68665e9-c01c-421b-97fe-5673e7691267}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF69060306"))
+			    quid       	"61AF69060306"
+			    parameters 	(list Parameters
+				(object Parameter "_object"
+				    quid       	"61AF69060322"
+				    type       	"object")
+				(object Parameter "member"
+				    quid       	"61AF69060335"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "BeforeCommitObjectState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d0089674-75cc-4000-bbc1-7e5995a43b40}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF6906035F"))
+			    quid       	"61AF6906035F"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CashierStation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{57957487-b853-444c-ad61-3388b00695ef}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF6906038A"))
+			    quid       	"61AF6906038A"
+			    parameters 	(list Parameters
+				(object Parameter "servicesContextIdentity"
+				    quid       	"61AF690603A0"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignItemPreparation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b9ca7f04-6dc4-41cd-b071-762066864cc8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF690603D7"))
+			    quid       	"61AF690603D7"
+			    parameters 	(list Parameters
+				(object Parameter "flavourItem"
+				    quid       	"61AF69070006"
+				    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "SetPrintReceiptCondition"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3947afe1-bd2c-4829-b2d9-3270f40e74b0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF69070033"))
+			    quid       	"61AF69070033"
+			    parameters 	(list Parameters
+				(object Parameter "servicePointType"
+				    quid       	"61AF69070052"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType")
+				(object Parameter "itemState"
+				    quid       	"61AF6907007A"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetPrintReceiptCondition"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{141d39a7-be70-420f-a5ae-94936e07f83d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF690700C5"))
+			    quid       	"61AF690700C5"
+			    parameters 	(list Parameters
+				(object Parameter "servicePointType"
+				    quid       	"61AF690700E0"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType"))
+			    result     	"FlavourBusinessFacade.RoomService.ItemPreparationState"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CashierStation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ed608efa-fc7b-435e-b16f-a579836c0bf5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF6907033D"))
+			    quid       	"61AF6907033D"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Protected"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Description"
 			    attributes 	(list Attribute_Set
@@ -7028,7 +7175,72 @@
 				    value      	"+5"))
 			    quid       	"61ABB28D0363"
 			    type       	"string"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicePointsPreparationItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{dcddcd6e-8523-46fa-b078-4ea706a3d471}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF690701B1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"61AF690701B1"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>")
+			(object ClassAttribute "DeviceUpdateLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{00b7f6c6-e4c1-4272-9a21-3ed25cc674ae}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF69070256")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"61AF69070256"
+			    type       	"object"
+			    exportControl 	"Public")
+			(object ClassAttribute "PrintReceiptsConditions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4c0b9461-e4fc-422b-9f41-f60179819e3d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF69070303")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"61AF69070303"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.PrintReceiptCondition>")
+			(object ClassAttribute "PrintReceiptsConditionsJson"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7d0f3477-7cf2-4c22-a788-4869819fe9b9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61AF69D70383")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"61AF69D70383"
+			    type       	"string"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -10866,7 +11078,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	1404
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::FlavoursServicesContext" @113
 			    ShowCompartmentStereotypes 	TRUE
@@ -10939,8 +11151,8 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	8
-				max_width  	787)
+				nlines     	20
+				max_width  	2759)
 			    width      	744
 			    height     	337
 			    annotation 	8)
