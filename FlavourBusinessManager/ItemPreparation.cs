@@ -202,16 +202,16 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        public bool IsFollowingState(ItemPreparationState state)
+        public bool IsInFollowingState(ItemPreparationState state)
         {
             //following 
-            return ((int)state) > ((int)this.State);
+            return  ((int)this.State)< ((int)state);
         }
 
-        public bool IsPreviousState(ItemPreparationState state)
+        public bool IsInPreviousState(ItemPreparationState state)
         {
             //previous
-            return ((int)state) < ((int)this.State);
+            return  ((int)this.State)< ((int)state);
         }
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;

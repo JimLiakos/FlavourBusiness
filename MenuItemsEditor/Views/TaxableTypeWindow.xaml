@@ -36,16 +36,50 @@
                     <ColumnDefinition Width="289*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" >
-                <Label  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
-                    <wpftoolkitex:WatermarkTextBox Text="{Binding Description}" Watermark="{x:Static resx:Resources.WriteTaxableTypeDescriptionPrompt}" ></wpftoolkitex:WatermarkTextBox>
-            </StackPanel>
-        </Grid>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+                <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
+                    <wpftoolkitex:WatermarkTextBox Grid.Row="1" VerticalAlignment="Top" Text="{Binding Description}" Watermark="{x:Static resx:Resources.WriteTaxableTypeDescriptionPrompt}" ></wpftoolkitex:WatermarkTextBox>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="4"></Grid>
+                <Grid Grid.Row="6" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
+                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                        <Grid>
+                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                <Button Command="{Binding AddOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                </Button>
+
+                                <Button Command="{Binding DeleteSelectedOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                </Button>
+
+
+                            </StackPanel>
+                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Command="{Binding RenameSelectedOptionsTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                </Button>
+                                <Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+
+
+            </Grid>
         </sw:DialogContentControl>
     </Grid>
 </sw:Window>

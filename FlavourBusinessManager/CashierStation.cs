@@ -81,8 +81,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{dcddcd6e-8523-46fa-b078-4ea706a3d471}</MetaDataID>
         List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
+        /// <MetaDataID>{516fa955-dc1a-4115-ba39-01eba844f1f9}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()
         {
@@ -113,14 +115,40 @@ namespace FlavourBusinessManager.ServicesContextResources
                 ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
             }
 
+
+            if (!string.IsNullOrWhiteSpace(PrintReceiptsConditionsJson))
+                PrintReceiptsConditions = OOAdvantech.Json.JsonConvert.DeserializeObject<List<PrintReceiptCondition>>(PrintReceiptsConditionsJson);
+
         }
 
+        /// <MetaDataID>{d0089674-75cc-4000-bbc1-7e5995a43b40}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            PrintReceiptsConditionsJson = OOAdvantech.Json.JsonConvert.SerializeObject(PrintReceiptsConditions);
+        }
 
-
+        /// <MetaDataID>{b68665e9-c01c-421b-97fe-5673e7691267}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-            (_object as ItemPreparation).State==ItemPreparationState.OnRoad
-            (_object as ItemPreparation).ServedInTheBatch;
+            ItemPreparation itemPreparation = (_object as ItemPreparation);
+
+            var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
+            if (itemPreparation.IsInFollowingState(printReceiptCondition.ItemState))
+            {
+                if(itemPreparation.IsInFollowingState(ItemPreparationState.Serving))
+                {
+                    if(itemPreparation.ServedInTheBatch.PreparedItems.Where(x=>x.State==ItemPreparationState.OnRoad).Count()== itemPreparation.ServedInTheBatch.PreparedItems.Count())
+                        PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                }
+            }
+            //(_object as ItemPreparation).State == ItemPreparationState.OnRoad
+            //(_object as ItemPreparation).ServedInTheBatch;
+        }
+
+        private void PrintReceipt(List<IItemPreparation> preparedItems)
+        {
+            
         }
 
 
@@ -178,11 +206,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+        /// <MetaDataID>{ed608efa-fc7b-435e-b16f-a579836c0bf5}</MetaDataID>
         protected CashierStation()
         {
-
+            SetPrintReceiptCondition(ServicePointType.Delivery, ItemPreparationState.OnRoad);
+            SetPrintReceiptCondition(ServicePointType.HallServicePoint, ItemPreparationState.OnRoad);
+            SetPrintReceiptCondition(ServicePointType.TakeAway, ItemPreparationState.PendingPreparation);
         }
-        public CashierStation(string servicesContextIdentity)
+        /// <MetaDataID>{57957487-b853-444c-ad61-3388b00695ef}</MetaDataID>
+        public CashierStation(string servicesContextIdentity) : this()
         {
             _ServicesContextIdentity = servicesContextIdentity;
             _CashierStationIdentity = _ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
@@ -223,14 +255,22 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+
+
+        /// <MetaDataID>{7d0f3477-7cf2-4c22-a788-4869819fe9b9}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+7")]
+        string PrintReceiptsConditionsJson;
+
+        /// <MetaDataID>{00b7f6c6-e4c1-4272-9a21-3ed25cc674ae}</MetaDataID>
         public object DeviceUpdateLock = new object();
 
+        /// <MetaDataID>{b9ca7f04-6dc4-41cd-b071-762066864cc8}</MetaDataID>
         internal void AssignItemPreparation(ItemPreparation flavourItem)
         {
 
             lock (DeviceUpdateLock)
             {
-
                 var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
                 if (!servicePointPreparationItems.PreparationItems.Contains(flavourItem))
                 {
@@ -241,7 +281,33 @@ namespace FlavourBusinessManager.ServicesContextResources
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
                 }
             }
+        }
+
+
+        /// <MetaDataID>{3947afe1-bd2c-4829-b2d9-3270f40e74b0}</MetaDataID>
+        public void SetPrintReceiptCondition(ServicePointType servicePointType, ItemPreparationState itemState)
+        {
 
         }
+        /// <MetaDataID>{141d39a7-be70-420f-a5ae-94936e07f83d}</MetaDataID>
+        public ItemPreparationState GetPrintReceiptCondition(ServicePointType servicePointType)
+        {
+            return ItemPreparationState.PendingPreparation;
+        }
+
+
+        //ItemPreparationState GetPrintReceiptCondition(ServicePointType servicePointType);
+        /// <MetaDataID>{4c0b9461-e4fc-422b-9f41-f60179819e3d}</MetaDataID>
+        List<PrintReceiptCondition> PrintReceiptsConditions = new List<PrintReceiptCondition>();
+
+    }
+
+
+    /// <MetaDataID>{3903c825-a5c4-438f-a450-965d7a3aacdf}</MetaDataID>
+    public class PrintReceiptCondition
+    {
+        public ServicePointType ServicePointType { get; set; }
+
+        public ItemPreparationState ItemState { get; set; }
     }
 }
