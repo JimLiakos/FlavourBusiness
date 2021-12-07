@@ -345,17 +345,17 @@ namespace FlavourBusinessManager.RoomService
                     if (flavourItem.MenuItem == null)
                         flavourItem.LoadMenuItem();
 
-                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(flavourItem);
+                    var preparationData = PreparationStation.GetPreparationData(flavourItem);
                     if (preparationData.PreparationStationRuntime != null)
                     {
-                        (preparationData.PreparationStationRuntime as ServicesContextResources.PreparationStation).AssignItemPreparation(flavourItem);
+                        (preparationData.PreparationStationRuntime as PreparationStation).AssignItemPreparation(flavourItem);
                         flavourItem.State = ItemPreparationState.PreparationDelay;
                     }
                     else
                         flavourItem.State = ItemPreparationState.Serving;
 
-
-
+                    CashierStation cashierStation = (flavourItem.ClientSession.MainSession as FoodServiceSession).CashierStation as CashierStation;
+                    cashierStation.AssignItemPreparation(flavourItem);
 
                 }
 

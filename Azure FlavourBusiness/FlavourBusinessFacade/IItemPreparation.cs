@@ -127,14 +127,15 @@ namespace FlavourBusinessFacade.RoomService
         /// The item is on serving state
         /// </summary>
         Serving = 7,
-        /// <summary>
-        /// the item served
-        /// </summary>
-        Served = 8,
+
         /// <summary>
         /// the item is on road to delivered 
         /// </summary>
-        OnRoad = 9,
+        OnRoad = 8,
+        /// <summary>
+        /// the item served
+        /// </summary>
+        Served = 9,
         /// <summary>
         /// the item is canceled
         /// </summary>

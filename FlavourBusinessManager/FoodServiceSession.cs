@@ -102,6 +102,14 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IList<IFoodServiceClientSession> PartialClientSessions => _PartialClientSessions.AsReadOnly();
 
 
+        public ICashiersStationRuntime CashierStation
+        {
+            get
+            {
+                return ServicePointRunTime.ServicesContextRunTime.Current.CashierStations.OfType<ICashiersStationRuntime>().FirstOrDefault();
+            }
+        }
+
 
 
         ///// <MetaDataID>{0aa1ebef-0011-45f0-9176-eba5e8afd63a}</MetaDataID>

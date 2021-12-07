@@ -4624,6 +4624,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public void ServingBatchesCommit()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "ServingBatchesCommit", args, argsTypes);
+        }
+        
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls()
         {
             object[] args = new object[0];

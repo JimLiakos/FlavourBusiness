@@ -201,6 +201,19 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+        public bool IsFollowingState(ItemPreparationState state)
+        {
+            //following 
+            return ((int)state) > ((int)this.State);
+        }
+
+        public bool IsPreviousState(ItemPreparationState state)
+        {
+            //previous
+            return ((int)state) < ((int)this.State);
+        }
+
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{b1d5d07f-80ed-4028-9238-bed638d7dd1f}</MetaDataID>
@@ -648,7 +661,7 @@ namespace FlavourBusinessManager.RoomService
         {
             if (_MenuItemUri != item._MenuItemUri)
                 throw new Exception("_MenuItem can't be change");
-            
+
             bool changed;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
@@ -773,7 +786,7 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+22")]
         public string CodeCard
         {
-            get => _CodeCard; 
+            get => _CodeCard;
             set
             {
                 if (_CodeCard != value)
@@ -797,6 +810,8 @@ namespace FlavourBusinessManager.RoomService
         [PersistentMember(nameof(_ServedInTheBatch))]
         [BackwardCompatibilityID("+23")]
         public IServingBatch ServedInTheBatch => _ServedInTheBatch.Value;
+
+
 
         ///// <MetaDataID>{fdd3e18e-43b8-4c77-80b1-d7a17c1a9c8b}</MetaDataID>
         //public string Timestamp;

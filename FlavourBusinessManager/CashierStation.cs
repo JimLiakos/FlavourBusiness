@@ -1,6 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FinanceFacade;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -76,6 +81,50 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
+
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+
+
+
+            foreach (var servicePointPreparationItems in (from openSession in ServicesContextRunTime.Current.OpenSessions
+                                                          where openSession.CashierStation == this
+                                                          from sessionPart in openSession.PartialClientSessions
+                                                          from itemPreparation in sessionPart.FlavourItems
+                                                          orderby itemPreparation.PreparedAtForecast
+                                                          group itemPreparation by openSession into ServicePointItems
+                                                          select ServicePointItems))
+
+
+            {
+                var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
+                foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
+                {
+                    if (item.MenuItem == null)
+                        item.LoadMenuItem();
+
+
+                    preparationItems.Add(item);
+                    item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                }
+                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
+            }
+
+        }
+
+
+
+        private void FlavourItem_ObjectChangeState(object _object, string member)
+        {
+            (_object as ItemPreparation).State==ItemPreparationState.OnRoad
+            (_object as ItemPreparation).ServedInTheBatch;
+        }
+
+
+
         /// <exclude>Excluded</exclude>
         IFisicalParty _Issuer;
         /// <MetaDataID>{128db8e9-4c7a-4d52-a542-cfd6edea863d}</MetaDataID>
@@ -137,8 +186,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             _ServicesContextIdentity = servicesContextIdentity;
             _CashierStationIdentity = _ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
-            _DeviceCredentialKeyAbbreviation= DeviceIDAbbreviation.GetAbbreviation(_CashierStationIdentity);
-            while(_DeviceCredentialKeyAbbreviation==null)
+            _DeviceCredentialKeyAbbreviation = DeviceIDAbbreviation.GetAbbreviation(_CashierStationIdentity);
+            while (_DeviceCredentialKeyAbbreviation == null)
             {
                 _CashierStationIdentity = _ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
                 _DeviceCredentialKeyAbbreviation = DeviceIDAbbreviation.GetAbbreviation(_CashierStationIdentity);
@@ -148,7 +197,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         string _ServicesContextIdentity;
 
-     
+
 
         /// <MetaDataID>{b214da78-22cc-49ee-9200-8e27feaf7bf7}</MetaDataID>
         [PersistentMember(nameof(_ServicesContextIdentity))]
@@ -174,7 +223,25 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+        public object DeviceUpdateLock = new object();
 
+        internal void AssignItemPreparation(ItemPreparation flavourItem)
+        {
 
+            lock (DeviceUpdateLock)
+            {
+
+                var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                if (!servicePointPreparationItems.PreparationItems.Contains(flavourItem))
+                {
+                    flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+                    if (servicePointPreparationItems == null)
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.MainSession, new List<IItemPreparation>() { flavourItem }));
+                    else
+                        servicePointPreparationItems.AddPreparationItem(flavourItem);
+                }
+            }
+
+        }
     }
 }
