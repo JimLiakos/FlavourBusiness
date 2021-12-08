@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade;
 using MenuDesigner.ViewModel;
@@ -80,6 +81,10 @@ namespace FLBManager.ViewModel
             }
         }
 
+
+        public WPFUIElementObjectBind.RoutedCommand EditSelectedTaxAuthorityCommand { get; private set; }
+
+
         List<FinanceFacade.ITaxAuthority> _TaxAuthorities;
         public IList<FinanceFacade.ITaxAuthority> TaxAuthorities
         {
@@ -87,14 +92,15 @@ namespace FLBManager.ViewModel
             {
                 if (_TaxAuthorities == null)
                 {
+                    _TaxAuthorities = new List<FinanceFacade.ITaxAuthority>() { this.RestaurantMenus.Menus[0].TaxAuthority };
 
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
-                    {
+                    //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                    //{
 
-                        _TaxAuthorities = new List<FinanceFacade.ITaxAuthority>() { new FinanceFacade.TaxAuthority("Φορολογική αρχή Ελλάδας", "{05A3FB1D-267E-48E1-8421-81CEA62F1A85}") };
+                    //    _TaxAuthorities = new List<FinanceFacade.ITaxAuthority>() { new FinanceFacade.TaxAuthority("Φορολογική αρχή Ελλάδας", "{05A3FB1D-267E-48E1-8421-81CEA62F1A85}") };
 
-                        stateTransition.Consistent = true;
-                    }
+                    //    stateTransition.Consistent = true;
+                    //}
 
                 }
 
@@ -122,6 +128,31 @@ namespace FLBManager.ViewModel
             _Resources = new List<FBResourceTreeNode>() { _Company };
             _Company.PropertyChanged += Company_PropertyChanged;
             this.RestaurantMenus = restaurantMenus;
+
+            EditSelectedTaxAuthorityCommand = new RoutedCommand((object sender) => {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    try
+                    {
+                        System.Windows.Window win = System.Windows.Window.GetWindow(EditSelectedTaxAuthorityCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                        Finance.Views.TaxAuthorityWindowWindow window = new Finance.Views.TaxAuthorityWindowWindow();
+                        window.Owner = win;
+
+
+                        window.GetObjectContext().SetContextInstance(new Finance.ViewModel.TaxAuthorityPresentation( SelectedTaxAuthority));
+                        if (window.ShowDialog().Value)
+                        {
+
+                        }
+                        stateTransition.Consistent = true;
+                    }
+                    catch (Exception error)
+                    {
+                    }
+                }
+
+            });
         }
 
         public void SignOut()

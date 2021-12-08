@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Finance.Views"
+        
         xmlns:ViewModel="clr-namespace:Finance.ViewModel"
         xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
         xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
@@ -14,7 +14,7 @@
 
         mc:Ignorable="d"
         Title="Taxable Type" Height="382.235" Width="342.353"
-           Icon="/MenuItemsEditor;component/Image/Taxes16.png" 
+           Icon="/FinanceWpf;component/Images/Taxes16.png" 
              ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
              WindowStartupLocation="CenterOwner">
     <Window.DataContext>
@@ -22,7 +22,6 @@
     </Window.DataContext>
     <Window.Resources>
         <ViewModel:TaxableTypeViewModel x:Key="D_TaxableTypeViewModel"/>
-
     </Window.Resources>
     <Grid>
         <sw:DialogContentControl >

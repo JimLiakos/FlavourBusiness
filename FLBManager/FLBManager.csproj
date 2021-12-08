@@ -520,6 +520,10 @@
       <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
       <Name>FlavourBusinessToolKit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FinanceWpf\FinanceWpf.csproj">
+      <Project>{98c2fcec-7ba2-4075-82e9-b828c855a41a}</Project>
+      <Name>FinanceWpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlavourBusinessApps\FlavourBusinessApps.csproj">
       <Project>{d58ad795-d497-4b69-a950-b0a8e107f291}</Project>
       <Name>FlavourBusinessApps</Name>

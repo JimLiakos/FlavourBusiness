@@ -77,8 +77,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModel\TaxableTypeViewModel.cs" />
+    <Compile Include="ViewModel\TaxAuthorityPresentation.cs" />
     <Compile Include="Views\TaxableTypeWindow.xaml.cs">
       <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxAuthorityWindowWindow.xaml.cs">
+      <DependentUpon>TaxAuthorityWindowWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -95,8 +99,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\TaxAuthorityWindowWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083b37-96ef-4867-aa51-4d698ad34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
+      <Project>{E0E5873E-E5E4-46F6-94F1-731C172CC1C6}</Project>
+      <Name>UserInterface - VS10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\StyleableWindow\StyleableWindow.csproj">
       <Project>{6368d7f0-70f8-4b7a-8b36-ef31d07c11c1}</Project>
       <Name>StyleableWindow</Name>
@@ -109,6 +129,21 @@
       <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
       <Name>FinanceFacade</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Taxes64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Taxes32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Taxes16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Taxes128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Edit16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
