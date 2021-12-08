@@ -1,19 +1,19 @@
-﻿<sw:Window x:Class="MenuItemsEditor.Views.TaxableTypeWindow"
+﻿<sw:Window x:Class="Finance.Views.TaxableTypeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MenuItemsEditor.Views"
-        xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+        xmlns:local="clr-namespace:Finance.Views"
+        xmlns:ViewModel="clr-namespace:Finance.ViewModel"
         xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
         xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
-        xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
-        xmlns:localViews="clr-namespace:MenuItemsEditor.Views"
+        xmlns:resx="clr-namespace:Finance.Properties"
+        
         xmlns:wpftoolkitex="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
 
         mc:Ignorable="d"
-        Title="Taxable Type" Height="360" Width="600"
+        Title="Taxable Type" Height="382.235" Width="342.353"
            Icon="/MenuItemsEditor;component/Image/Taxes16.png" 
              ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
              WindowStartupLocation="CenterOwner">
@@ -21,35 +21,54 @@
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxableTypeViewModel}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
     <Window.Resources>
-        <ResourceDictionary>
-            <!--<ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Metro.Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>-->
-        </ResourceDictionary>
+        <ViewModel:TaxableTypeViewModel x:Key="D_TaxableTypeViewModel"/>
 
     </Window.Resources>
     <Grid>
         <sw:DialogContentControl >
-        <Grid DataContext="{Binding Value}">
+            <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource D_TaxableTypeViewModel}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="293*"/>
                     <ColumnDefinition Width="289*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2.1*"/>
                 </Grid.RowDefinitions>
 
 
                 <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
-                    <wpftoolkitex:WatermarkTextBox Grid.Row="1" VerticalAlignment="Top" Text="{Binding Description}" Watermark="{x:Static resx:Resources.WriteTaxableTypeDescriptionPrompt}" ></wpftoolkitex:WatermarkTextBox>
-                <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="4"></Grid>
-                <Grid Grid.Row="6" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
+                    <wpftoolkitex:WatermarkTextBox Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="{Binding Description}" Watermark="{x:Static resx:Resources.WriteTaxableTypeDescriptionPrompt}" ></wpftoolkitex:WatermarkTextBox>
+                <Label Margin="0,0,0,4" Grid.Row="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TaxesListBoxLabel}"/>
+                <Grid Grid.Row="3"  Grid.ColumnSpan="2" Grid.RowSpan="6">
+                    <ListBox ItemsSource="{Binding ta}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <ControlsEx:EditableTextBlock></ControlsEx:EditableTextBlock>
+                                    <ControlsEx:EditableTextBlock></ControlsEx:EditableTextBlock>
+                                    <TextBlock Text="%"></TextBlock>
+                                    
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                    </ListBox>
+                </Grid>
+                <Grid Grid.Row="9" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
                     <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
                         <Grid>

@@ -5,11 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MenuItemsEditor.ViewModel
+namespace Finance.ViewModel
 {
     /// <MetaDataID>{64e21e03-560a-46a9-95ec-d25b6c3443ce}</MetaDataID>
     public class TaxableTypeViewModel : MarshalByRefObject, INotifyPropertyChanged
     {
+
+        public TaxableTypeViewModel()
+        {
+
+        }
         public readonly FinanceFacade.ITaxableType TaxableType;
         public TaxableTypeViewModel(FinanceFacade.ITaxableType taxableType)
         {
@@ -20,7 +25,7 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                return TaxableType.Description;
+                return TaxableType?.Description;
             }
             set
             {

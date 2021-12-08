@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Finance.ViewModel;
 using FinanceFacade;
 using GenWebBrowser;
 using Newtonsoft.Json;
@@ -437,7 +438,7 @@ namespace MenuItemsEditor.ViewModel
                     try
                     {
                         System.Windows.Window win = System.Windows.Window.GetWindow(AddOptionsTypeCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                        Views.TaxableTypeWindow window = new Views.TaxableTypeWindow();
+                        Finance.Views.TaxableTypeWindow window = new Finance.Views.TaxableTypeWindow();
                         window.Owner = win;
 
 

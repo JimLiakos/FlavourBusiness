@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MenuItemsEditor.Views
+namespace Finance.Views
 {
     /// <summary>
     /// Interaction logic for TaxableTypeWindow.xaml

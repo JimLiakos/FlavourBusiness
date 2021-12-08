@@ -142,7 +142,6 @@
     <Compile Include="ViewModel\ScaleTypesViewModel.cs" />
     <Compile Include="ViewModel\ScaleTypeViewModel.cs" />
     <Compile Include="ViewModel\TagViewModel.cs" />
-    <Compile Include="ViewModel\TaxableTypeViewModel.cs" />
     <Compile Include="ViewModel\TreeViewMenuItemViewModel.cs" />
     <Compile Include="Views\CategoryMenuItemTypesWindow.xaml.cs">
       <DependentUpon>CategoryMenuItemTypesWindow.xaml</DependentUpon>
@@ -185,9 +184,6 @@
     </Compile>
     <Compile Include="Views\TagView.xaml.cs">
       <DependentUpon>TagView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TaxableTypeWindow.xaml.cs">
-      <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CategoryMenuItemTypesWindow.xaml">
       <SubType>Designer</SubType>
@@ -242,10 +238,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TagView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TaxableTypeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -337,6 +329,10 @@
     <ProjectReference Include="..\BingAPILibrary\BingAPILibrary.csproj">
       <Project>{0082f653-f24c-470c-b6d8-15f0ad290592}</Project>
       <Name>BingAPILibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinanceWpf\FinanceWpf.csproj">
+      <Project>{98c2fcec-7ba2-4075-82e9-b828c855a41a}</Project>
+      <Name>FinanceWpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlavourBusinessManager\FlavourBusinessManager.csproj">
       <Project>{25aec1bf-1882-41c8-8b4a-b3b3e1ef624d}</Project>
