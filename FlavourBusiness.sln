@@ -123,6 +123,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlavourBusinessML.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlavourBusinessML.ConsoleApp", "FlavourBusinessML.ConsoleApp\FlavourBusinessML.ConsoleApp.csproj", "{9B40CB6A-4964-460A-9EB6-8ACE1D41F7C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceWpf", "FinanceWpf\FinanceWpf.csproj", "{98C2FCEC-7BA2-4075-82E9-B828C855A41A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1579,6 +1581,30 @@ Global
 		{9B40CB6A-4964-460A-9EB6-8ACE1D41F7C7}.Release|x64.Build.0 = Release|Any CPU
 		{9B40CB6A-4964-460A-9EB6-8ACE1D41F7C7}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B40CB6A-4964-460A-9EB6-8ACE1D41F7C7}.Release|x86.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|x64.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Debug|x86.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|x64.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|x64.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|x86.ActiveCfg = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Debug|x86.Build.0 = Debug|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|Any CPU.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|x64.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|x64.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|x86.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Net4Release|x86.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|x64.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|x64.Build.0 = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|x86.ActiveCfg = Release|Any CPU
+		{98C2FCEC-7BA2-4075-82E9-B828C855A41A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
