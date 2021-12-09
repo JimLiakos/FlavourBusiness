@@ -30,6 +30,32 @@ namespace FinanceFacade
 
         }
 
+        public ITax NewTax()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var tax = new Tax() { Description = Finance.Properties.Resources.NewTaxDefaultName };
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(tax);
+                _Taxes.Add(tax);
+                stateTransition.Consistent = true;
+
+                return tax;
+            }
+
+        }
+
+        public void RemoveTax(ITax tax)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Taxes.Remove(tax);
+                stateTransition.Consistent = true;
+            }
+
+        }
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -68,6 +94,7 @@ namespace FinanceFacade
         /// <MetaDataID>{015abca3-f488-47c7-b0a5-7dd9d5bdf2fa}</MetaDataID>
         [PersistentMember(nameof(_Taxes))]
         [BackwardCompatibilityID("+2")]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public IList<ITax> Taxes
         {
       

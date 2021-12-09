@@ -19,5 +19,10 @@ namespace FinanceFacade
         [Association("TaxableTypeTaxes", Roles.RoleA, "f7cd85a2-93d6-4d24-a571-9ec045818360")]
         [OOAdvantech.MetaDataRepository.RoleAMultiplicityRange(1)]
         IList<ITax> Taxes { get; }
+
+
+        ITax NewTax();
+
+        void RemoveTax(ITax tax);
     }
 }

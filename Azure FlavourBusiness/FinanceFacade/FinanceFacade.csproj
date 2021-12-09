@@ -50,6 +50,11 @@
     <Compile Include="ITaxOverride.cs" />
     <Compile Include="ITem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tax.cs" />
     <Compile Include="TaxableType.cs" />
     <Compile Include="TaxAmount.cs" />
@@ -73,6 +78,12 @@
       <Project>{40f1d627-8e66-43d5-923e-318a5d67e3c1}</Project>
       <Name>MicronemeCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
