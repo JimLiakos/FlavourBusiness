@@ -458,7 +458,6 @@ namespace FloorLayoutDesigner.ViewModel
             get
             {
                 return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServiceArea.png"));
-
             }
         }
 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WPFUIElementObjectBind;
 
 namespace Finance.ViewModel
@@ -23,6 +24,9 @@ namespace Finance.ViewModel
                 IsMaximized = !IsMaximized;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
+                
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
             });
         }
 
@@ -51,6 +55,25 @@ namespace Finance.ViewModel
             }
         }
 
+        //public string MaxMinImage
+        //{
+        //    get
+        //    {
+        //        "/MenuItemsEditor;component/Image/MaximizeWindow.png"
+        //    }
+        //}
+
+        public  ImageSource MaxMinImage
+        {
+            get
+            {
+                if(this.IsMaximized)
+                    return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FinanceWpf;component/Images/MinimizeWindow.png"));
+                else
+                    return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FinanceWpf;component/Images/MaximizeWindow.png"));
+            }
+        }
+
         public string AccountID
         {
             get
@@ -64,5 +87,13 @@ namespace Finance.ViewModel
         }
 
         public bool IsMaximized { get; private set; }
+        public bool IsMimized
+        {
+            get
+            {
+                return !IsMaximized;
+
+            }
+        }
     }
 }

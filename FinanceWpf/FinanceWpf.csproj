@@ -146,5 +146,11 @@
   <ItemGroup>
     <Resource Include="Images\Edit16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MaximizeWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MinimizeWindow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
