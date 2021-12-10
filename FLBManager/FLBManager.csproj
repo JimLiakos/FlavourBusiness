@@ -186,12 +186,14 @@
     <Compile Include="ViewModel\Infrastructure\CallerIDLineTreeNode.cs" />
     <Compile Include="ViewModel\Infrastructure\CallerIDServerTreeNode.cs" />
     <Compile Include="ViewModel\MenuDesignerHost.cs" />
+    <Compile Include="ViewModel\MenuItemTaxInfo.cs" />
     <Compile Include="ViewModel\Preparation\ItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\PreparationSattionsTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\PreparationStationPresentation.cs" />
     <Compile Include="ViewModel\Infrastructure\TreasuryTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\RootItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\ServicePointsPreparationInfoPresentation.cs" />
+    <Compile Include="ViewModel\TaxesPresentation.cs" />
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -238,6 +240,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Taxes\TaxesWindow.xaml.cs">
+      <DependentUpon>TaxesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Styles\Expander.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -426,6 +431,10 @@
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Taxes\TaxesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

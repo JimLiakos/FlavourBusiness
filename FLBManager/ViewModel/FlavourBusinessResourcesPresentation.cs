@@ -136,11 +136,11 @@ namespace FLBManager.ViewModel
                     try
                     {
                         System.Windows.Window win = System.Windows.Window.GetWindow(EditSelectedTaxAuthorityCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                        Finance.Views.TaxAuthorityWindowWindow window = new Finance.Views.TaxAuthorityWindowWindow();
+                        var window = new Views.Taxes.TaxesWindow();
                         window.Owner = win;
 
 
-                        window.GetObjectContext().SetContextInstance(new Finance.ViewModel.TaxAuthorityPresentation( SelectedTaxAuthority));
+                        window.GetObjectContext().SetContextInstance(new TaxesPresentation( SelectedTaxAuthority, this.RestaurantMenus.Menus[0]));
                         if (window.ShowDialog().Value)
                         {
 

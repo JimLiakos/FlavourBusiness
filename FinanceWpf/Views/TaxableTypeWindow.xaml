@@ -84,26 +84,27 @@
                                             <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
                                                 <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
                                             </Button>
-                                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition/>
                                                     <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                     <RowDefinition Height="10"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="5"/>
+                                                    <ColumnDefinition Width="10"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
-                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
-                                                <Label Grid.Row="2" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
-                                                <ControlsEx:TextBoxNumberWithUnit Grid.Column="0" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="3" Unit="%"/>
+                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" VerticalContentAlignment="Center"  Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
 
-                                                <Label Grid.Row="2" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
-                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="3"></wpftoolkitex:WatermarkTextBox>
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
+                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4" Unit="%"/>
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
+                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4"></wpftoolkitex:WatermarkTextBox>
 
 
 
