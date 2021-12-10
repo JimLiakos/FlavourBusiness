@@ -14,6 +14,10 @@ namespace Finance.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public TaxViewModel()
+        {
+
+        }
 
         public readonly FinanceFacade.ITax Tax;
         public TaxViewModel(FinanceFacade.ITax tax)
@@ -25,7 +29,7 @@ namespace Finance.ViewModel
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
-                
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
             });
         }
@@ -34,7 +38,7 @@ namespace Finance.ViewModel
         {
             get
             {
-                return Tax.Description;
+                return Tax?.Description;
             }
             set
             {
@@ -47,11 +51,13 @@ namespace Finance.ViewModel
         {
             get
             {
-                return Tax.TaxRate;
+                if (Tax == null)
+                    return default(double);
+                return Tax.TaxRate*100;
             }
             set
             {
-                Tax.TaxRate = value;
+                Tax.TaxRate = value/100;
             }
         }
 
@@ -63,11 +69,11 @@ namespace Finance.ViewModel
         //    }
         //}
 
-        public  ImageSource MaxMinImage
+        public ImageSource MaxMinImage
         {
             get
             {
-                if(this.IsMaximized)
+                if (this.IsMaximized)
                     return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FinanceWpf;component/Images/MinimizeWindow.png"));
                 else
                     return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FinanceWpf;component/Images/MaximizeWindow.png"));
@@ -78,7 +84,7 @@ namespace Finance.ViewModel
         {
             get
             {
-                return Tax.AccountID;
+                return Tax?.AccountID;
             }
             set
             {

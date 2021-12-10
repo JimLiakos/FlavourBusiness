@@ -21,7 +21,7 @@
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxableTypeViewModel}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
     <Window.Resources>
-        <ViewModel:TaxableTypeViewModel x:Key="D_TaxableTypeViewModel"/>
+        <ViewModel:TaxableTypeViewModel x:Key="D_TaxableTypeViewModel" />
         <Style x:Key="myLBStyle" TargetType="{x:Type ListBoxItem}">
             <Style.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
@@ -54,52 +54,64 @@
                     <wpftoolkitex:WatermarkTextBox Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Text="{Binding Description}" Watermark="{x:Static resx:Resources.WriteTaxableTypeDescriptionPrompt}" ></wpftoolkitex:WatermarkTextBox>
                 <Label Margin="0,0,0,4" Grid.Row="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TaxesListBoxLabel}"/>
                 <Grid Grid.Row="3"  Grid.ColumnSpan="2" Grid.RowSpan="6">
-                    <ListBox ItemsSource="{Binding Taxes}" SelectedValue="{Binding SelectedTax}"   >
+                 
+                    
+                    <ListBox  ItemsSource="{Binding Taxes}" SelectedValue="{Binding SelectedTax}"   >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid  Background="{StaticResource TextBoxBackgroundBrush}">
-                                    <Border Margin="3" BorderThickness="0,0,0,2" BorderBrush="{StaticResource ListBoxBorderBrush}">
-                                        <Grid Margin="3">
+                                <Grid >
+                                    <Grid Margin="2,4,2,4"  Background="{StaticResource TextBoxBackgroundBrush}">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                        </Grid.Effect>
+
+                                        <Grid Margin="3,3,3,3">
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5"/>
                                                 <ColumnDefinition/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="25" />
                                                 <ColumnDefinition Width="15" />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
-
-                                            <Button VerticalAlignment="Top" Grid.Column="2" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+                                            <TextBlock Grid.Column="1"  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
                                                 <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
                                             </Button>
-                                            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                     <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="2"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="5"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="Description"/>
-                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" Text="{Binding Description}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+                                                <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
+                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
                                                 <Label Grid.Row="2" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
-                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="0"  Text="{Binding Description}"  Grid.Row="3"></wpftoolkitex:WatermarkTextBox>
+                                                <ControlsEx:TextBoxNumberWithUnit Grid.Column="0" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="3" Unit="%"/>
 
                                                 <Label Grid.Row="2" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
-                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  Text="{Binding Description}"  Grid.Row="3"></wpftoolkitex:WatermarkTextBox>
+                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="3"></wpftoolkitex:WatermarkTextBox>
 
 
 
                                             </Grid>
 
                                         </Grid>
-                                    </Border>
+                                    
+                                </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
