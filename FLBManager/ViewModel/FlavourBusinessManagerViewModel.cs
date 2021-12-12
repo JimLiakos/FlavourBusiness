@@ -21,6 +21,7 @@ using MenuDesigner.ViewModel;
 using System.Windows.Media.Imaging;
 using OOAdvantech.PersistenceLayer;
 using MenuItemsEditor;
+using FLBManager.ViewModel.Taxes;
 
 namespace FLBManager.ViewModel
 {
@@ -659,7 +660,7 @@ namespace FLBManager.ViewModel
             RestaurantMenus = new MenuItemsEditor.RestaurantMenus(storageData);
             _BusinessResources.RestaurantMenus = RestaurantMenus;
             MenuData = new RestaurantMenuItemsPresentation((RestaurantMenus.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, null);
-
+            MenuData.ShowMenuTaxes += MenuData_ShowMenuTaxes;
             OrganizationStorageRef styleSeetStorageRef = resourceManager.GetStorage(OrganizationStorages.StyleSheets);
             temporaryStorageLocation = appDataPath + "\\StyleSheets.xml";
             RawStorageData styleSeetStorageData = new RawStorageData(temporaryStorageLocation, styleSeetStorageRef, null);
@@ -694,6 +695,31 @@ namespace FLBManager.ViewModel
 
 
 
+        }
+
+        private void MenuData_ShowMenuTaxes(MenuModel.IMenu menu)
+        {
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+            {
+                try
+                {
+                    System.Windows.Window win = System.Windows.Window.GetWindow(ClickPseudoCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                    var window = new Views.Taxes.TaxesWindow();
+                    window.Owner = win;
+
+
+                    window.GetObjectContext().SetContextInstance(new TaxesPresentation(menu.TaxAuthority, this.RestaurantMenus.Menus[0]));
+                    if (window.ShowDialog().Value)
+                    {
+
+                    }
+                    stateTransition.Consistent = true;
+                }
+                catch (Exception error)
+                {
+                }
+            }
         }
         private async void SignInUserPopup_SignedIn(SignInUserPopupViewModel authedication, IUser user)
         {

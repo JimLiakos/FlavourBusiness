@@ -51,7 +51,7 @@
                     <Grid>
                         <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
                             <Grid>
-                                <Popup Placement="Bottom" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="AddPopup"  StaysOpen="False"   >
+                                <Popup Placement="Bottom" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="AddPopup" IsOpen="{Binding ActionsPopupOpen,Mode=TwoWay}" StaysOpen="False"   >
                                     <Popup.Resources>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ListViewBarButtonStyle}" >
                                             <Setter Property="ConnectableCtrl:ButtonClosePopupBehavior.ClosePopupOnClick" Value="True" />
@@ -68,7 +68,7 @@
                                                 <DataTemplate DataType="{x:Type ConnectableCtrl:MenuCommand}">
                                                     <Button Command="{Binding Command}" HorizontalContentAlignment="Left" Margin="1"  >
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                            <Image Width="16" Height="16" Source="{Binding Path=Icon.Source}"></Image>
+                                                            <Image Width="16" Height="16" Source="{Binding Path=Icon.Source}" Margin="0,0,5,0"></Image>
                                                             <Label Content="{Binding Header}" ></Label>
                                                         </StackPanel>
                                                     </Button>
@@ -101,7 +101,7 @@
                                         </StackPanel>-->
                                     </Grid>
                                 </Popup>
-                                <ToggleButton Style="{StaticResource ListViewBarToggleButtonStyle}" IsChecked="{Binding ElementName=AddPopup, Path=IsOpen, Mode=TwoWay}"  Height="24"  Margin="1,1,1,1" VerticalAlignment="Top" >
+                                <ToggleButton Style="{StaticResource ListViewBarToggleButtonStyle}"  Command="{Binding ActionsCommand}"   Height="24"  Margin="1,1,1,1" VerticalAlignment="Top" >
 
                                     <StackPanel Style="{x:Null}" Orientation="Horizontal">
                                         <Image Style="{x:Null}" Margin="2,0,0,0" Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/dropdownmenu.png"></Image>

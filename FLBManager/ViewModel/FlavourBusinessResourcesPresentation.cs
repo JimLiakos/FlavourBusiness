@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade;
+using FLBManager.ViewModel.Taxes;
 using MenuDesigner.ViewModel;
 using MenuDesigner.ViewModel.MenuCanvas;
 using OOAdvantech.Transactions;
@@ -91,18 +92,7 @@ namespace FLBManager.ViewModel
             get
             {
                 if (_TaxAuthorities == null)
-                {
                     _TaxAuthorities = new List<FinanceFacade.ITaxAuthority>() { this.RestaurantMenus.Menus[0].TaxAuthority };
-
-                    //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
-                    //{
-
-                    //    _TaxAuthorities = new List<FinanceFacade.ITaxAuthority>() { new FinanceFacade.TaxAuthority("Φορολογική αρχή Ελλάδας", "{05A3FB1D-267E-48E1-8421-81CEA62F1A85}") };
-
-                    //    stateTransition.Consistent = true;
-                    //}
-
-                }
 
                 return _TaxAuthorities;
             }
@@ -123,24 +113,26 @@ namespace FLBManager.ViewModel
         public FlavourBusinessResourcesPresentation(IOrganization organization, GraphicMenusPresentation graphicMenusPresentation, MenuItemsEditor.RestaurantMenus restaurantMenus)
         {
             this.Organization = organization;
-            
+
             _Company = new CompanyPresentation(organization, null, graphicMenusPresentation, restaurantMenus);
             _Resources = new List<FBResourceTreeNode>() { _Company };
             _Company.PropertyChanged += Company_PropertyChanged;
             this.RestaurantMenus = restaurantMenus;
 
-            EditSelectedTaxAuthorityCommand = new RoutedCommand((object sender) => {
+            EditSelectedTaxAuthorityCommand = new RoutedCommand((object sender) =>
+            {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 {
                     try
                     {
                         System.Windows.Window win = System.Windows.Window.GetWindow(EditSelectedTaxAuthorityCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                        var window = new Views.Taxes.TaxesWindow();
+
+                        var window = new Finance.Views.TaxAuthorityWindow();
                         window.Owner = win;
 
 
-                        window.GetObjectContext().SetContextInstance(new TaxesPresentation( SelectedTaxAuthority, this.RestaurantMenus.Menus[0]));
+                        window.GetObjectContext().SetContextInstance(new Finance.ViewModel.TaxAuthorityPresentation(SelectedTaxAuthority));
                         if (window.ShowDialog().Value)
                         {
 

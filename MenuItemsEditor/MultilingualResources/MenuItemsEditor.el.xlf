@@ -350,6 +350,14 @@ There are preaparation oprtions with wrang, scale type.</target>
           <source>Option participate  as ingredient in recipe of product</source>
           <target state="new">Option participate  as ingredient in recipe of product</target>
         </trans-unit>
+        <trans-unit id="TaxesListBoxLabel" translate="yes" xml:space="preserve">
+          <source>Taxes</source>
+          <target state="new">Taxes</target>
+        </trans-unit>
+        <trans-unit id="TaxesMenuItemHeader" translate="yes" xml:space="preserve">
+          <source>Menu Taxes</source>
+          <target state="new">Menu Taxes</target>
+        </trans-unit>
       </group>
     </body>
   </file>

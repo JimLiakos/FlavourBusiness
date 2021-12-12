@@ -186,14 +186,14 @@
     <Compile Include="ViewModel\Infrastructure\CallerIDLineTreeNode.cs" />
     <Compile Include="ViewModel\Infrastructure\CallerIDServerTreeNode.cs" />
     <Compile Include="ViewModel\MenuDesignerHost.cs" />
-    <Compile Include="ViewModel\MenuItemTaxInfo.cs" />
+    <Compile Include="ViewModel\Taxes\MenuItemTaxInfo.cs" />
     <Compile Include="ViewModel\Preparation\ItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\PreparationSattionsTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\PreparationStationPresentation.cs" />
     <Compile Include="ViewModel\Infrastructure\TreasuryTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\RootItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\ServicePointsPreparationInfoPresentation.cs" />
-    <Compile Include="ViewModel\TaxesPresentation.cs" />
+    <Compile Include="ViewModel\Taxes\TaxesPresentation.cs" />
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -685,6 +685,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\assets24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Taxes32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Taxes16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

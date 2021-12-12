@@ -82,8 +82,8 @@
     <Compile Include="Views\TaxableTypeWindow.xaml.cs">
       <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TaxAuthorityWindowWindow.xaml.cs">
-      <DependentUpon>TaxAuthorityWindowWindow.xaml</DependentUpon>
+    <Compile Include="Views\TaxAuthorityWindow.xaml.cs">
+      <DependentUpon>TaxAuthorityWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -100,7 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TaxAuthorityWindowWindow.xaml">
+    <Page Include="Views\TaxAuthorityWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

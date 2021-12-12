@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPFUIElementObjectBind;
 
-namespace FLBManager.ViewModel
+namespace FLBManager.ViewModel.Taxes
 {
     /// <MetaDataID>{3a6dc7cd-83e1-48f1-9705-99e1168a8ebb}</MetaDataID>
     public class TaxesPresentation : MarshalByRefObject, INotifyPropertyChanged
@@ -31,9 +31,7 @@ namespace FLBManager.ViewModel
             });
             DeleteSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-                //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
-                //{
-
+              
 
                 var taxableType = SelectedTaxableType.TaxableType;
                 SelectedTaxableType = null;
@@ -45,7 +43,6 @@ namespace FLBManager.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedTaxableType)));
 
-                //}
             }, (object sender) => CanDeleteSelectedTaxableType());
 
             EditSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
@@ -70,6 +67,22 @@ namespace FLBManager.ViewModel
                     {
                     }
                 }
+
+                //(MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.NewTaxableType();
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
+
+
+            });
+
+
+            RenameSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+               
+
+                    SelectedTaxableType.Edit = true;
+             
+                    
+                
 
                 //(MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.NewTaxableType();
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));

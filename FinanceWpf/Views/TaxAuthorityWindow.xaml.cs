@@ -17,9 +17,9 @@ namespace Finance.Views
     /// <summary>
     /// Interaction logic for TaxAuthorityWindowWindow.xaml
     /// </summary>
-    public partial class TaxAuthorityWindowWindow : StyleableWindow.Window
+    public partial class TaxAuthorityWindow : StyleableWindow.Window
     {
-        public TaxAuthorityWindowWindow()
+        public TaxAuthorityWindow()
         {
             InitializeComponent();
         }

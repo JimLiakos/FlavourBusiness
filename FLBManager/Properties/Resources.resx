@@ -193,6 +193,10 @@
   <data name="MenuMakerWindowTilte" xml:space="preserve">
     <value>Menu maker</value>
   </data>
+  <data name="MenuTaxesWindowTitle" xml:space="preserve">
+    <value>Menu taxes</value>
+    <comment>Defines the title of window with taxes of menu</comment>
+  </data>
   <data name="NewCashierStationPrompt" xml:space="preserve">
     <value>New cashier desk</value>
   </data>

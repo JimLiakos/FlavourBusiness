@@ -50,8 +50,36 @@ namespace Finance.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Taxes)));
             }, (object sender) => _SelectedTax != null);
 
+
+
         }
 
+        public bool IsEditable
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        bool _Edit;
+        public bool Edit
+        {
+            get
+            {
+                return  _Edit;
+            }
+            set
+            {
+                if(_Edit!=value)
+                {
+                  
+                    _Edit = value;
+                  
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Edit)));
+            }
+        }
 
         public string Description
         {
@@ -95,6 +123,7 @@ namespace Finance.ViewModel
 
 
         public RelayCommand DeleteSelectedTaxCommand { get; protected set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

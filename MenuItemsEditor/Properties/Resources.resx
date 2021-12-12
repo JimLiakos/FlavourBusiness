@@ -386,4 +386,7 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="TaxesListBoxLabel" xml:space="preserve">
     <value>Taxes</value>
   </data>
+  <data name="TaxesMenuItemHeader" xml:space="preserve">
+    <value>Menu Taxes</value>
+  </data>
 </root>

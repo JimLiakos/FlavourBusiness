@@ -1,0 +1,202 @@
+﻿<sw:Window  xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" x:Class="Finance.Views.TaxAuthorityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Finance.Views" 
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        xmlns:ViewModel="clr-namespace:Finance.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:Finance.Properties"
+            mc:Ignorable="d"
+            ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
+        Title="TaxAuthorityWindowWindow" Height="450" Width="517.442">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxAuthorityPresentation}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Window.Resources>
+        <ViewModel:TaxAuthorityPresentation x:Key="D_TaxAuthorityPresentation"/>
+    </Window.Resources>
+    <Grid>
+
+        <sw:DialogContentControl Grid.ColumnSpan="2" >
+
+            <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource D_TaxAuthorityPresentation}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="241*"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Label Content="Taxable types" Margin="5,0,0,5" ></Label>
+                    <ListBox ItemsSource="{Binding TaxableTypes}" Grid.Row="1" Grid.RowSpan="2" SelectedValue="{Binding SelectedTaxableType}"  >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Description}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+
+                    </ListBox>
+                    <Grid  Grid.Row="3" Background="WhiteSmoke" Margin="0,0.111,1.222,8" Grid.RowSpan="2">
+                        <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                            <Grid>
+                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                    <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                    </Button>
+
+                                    <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                    </Button>
+                                    <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Label Grid.Row="5" Content="Taxable types" Margin="5,0,0,5"></Label>
+                    <ListBox  Grid.Row="6" Grid.RowSpan="3"  >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Description}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+
+                    </ListBox>
+                    <Grid  Grid.Row="8" Background="WhiteSmoke" >
+                        <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                            <Grid>
+                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                    <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                    </Button>
+
+                                    <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                    </Button>
+                                    <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label  Grid.Row="1" Content="Taxes" Margin="5,0,0,5"></Label>
+                    <ListBox  ItemsSource="{Binding SelectedTaxableType.Taxes}"  Grid.Row="2" Grid.RowSpan="3"  >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid Margin="2,4,2,4"  Background="{StaticResource TextBoxBackgroundBrush}">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                        </Grid.Effect>
+
+                                        <Grid Margin="3,3,3,3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="25" />
+                                                <ColumnDefinition Width="15" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="1"  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+                                                <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
+                                            </Button>
+                                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
+                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" VerticalContentAlignment="Center"  Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
+                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4" Unit="%"/>
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
+                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4"></wpftoolkitex:WatermarkTextBox>
+
+
+
+                                            </Grid>
+
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+                    
+                </Grid>
+
+            </Grid>
+
+
+        </sw:DialogContentControl>
+    </Grid>
+</sw:Window>

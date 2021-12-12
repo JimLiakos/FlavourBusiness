@@ -14,7 +14,7 @@
 
         mc:Ignorable="d"
         Title="Taxable Type" Height="382.235" Width="342.353"
-           Icon="/FinanceWpf;component/Images/Taxes16.png" 
+           Icon="/FinanceWpf;component/Images/Taxes32.png" 
              ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
              WindowStartupLocation="CenterOwner">
     <Window.DataContext>

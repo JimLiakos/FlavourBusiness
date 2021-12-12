@@ -657,6 +657,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Menu Taxes.
+        /// </summary>
+        public static string TaxesMenuItemHeader {
+            get {
+                return ResourceManager.GetString("TaxesMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit the scale types.
         /// </summary>
         public static string TooltipForEditScaleTypes {

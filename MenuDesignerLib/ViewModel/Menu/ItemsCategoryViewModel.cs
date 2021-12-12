@@ -95,7 +95,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 NewMenuItem(win);
             });
 
-            EditOptionsTypesCommand = new RelayCommand((object sender) =>
+          
+
+             EditOptionsTypesCommand = new RelayCommand((object sender) =>
            {
 
                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
@@ -122,7 +124,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         }
 
-
+   
         internal void RemoveMenuItem(TreeFoodItemViewModel treeViewMenuItemViewModel)
         {
             using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
@@ -336,6 +338,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     menuItem.Command = EditOptionsTypesCommand;
 
                     _ContextMenuItems.Add(menuItem);
+
+                  
 
                 }
                 return _ContextMenuItems;
