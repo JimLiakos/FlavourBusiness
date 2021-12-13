@@ -115,6 +115,14 @@ namespace Finance.ViewModel
 
         }
 
+        List<TaxOverrideViewModel> _TaxOverrides;
+        List<TaxOverrideViewModel> TaxOverrides
+        {
+            get
+            {
+                return _TaxOverrides;
+            }
+        }
 
         bool CanDeleteSelectedTaxableType()
         {
