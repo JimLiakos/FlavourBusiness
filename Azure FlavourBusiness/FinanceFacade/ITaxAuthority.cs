@@ -7,6 +7,17 @@ namespace FinanceFacade
     [BackwardCompatibilityID("{e2f5fd0a-5bdc-4ad2-9ed4-37bf92496b57}")]
     public interface ITaxAuthority
     {
+        /// <MetaDataID>{c4a5a68a-4d4f-4e99-960e-457f8bc7dd66}</MetaDataID>
+        bool RemoveTaxesContext(ITaxesContext taxesContext);
+
+        /// <MetaDataID>{4642324c-9f2d-4f98-8bd8-55b0c815a3c5}</MetaDataID>
+        ITaxesContext NewTaxesContext();
+
+        [Association("AuthorityTaxesContext", Roles.RoleA, "7129c1c9-619e-497b-a77e-e6081719d15f")]
+        [RoleAMultiplicityRange(1)]
+        [RoleBMultiplicityRange(1, 1)]
+        List<ITaxesContext> TaxesContexts { get; }
+
         /// <MetaDataID>{d6e530e0-2086-4366-bcc6-766144f6f7fe}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         string Identity { get; set; }

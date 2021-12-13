@@ -13797,6 +13797,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
+		    compartment 	(object Compartment
+			Parent_View 	@207
+			location   	(75, 1026)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	0)
 		    width      	468
 		    height     	307
 		    annotation 	8)

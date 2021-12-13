@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="NewTaxableType" xml:space="preserve">
+    <value>Taxable type</value>
+    <comment>Defines default name for new taxable type</comment>
+  </data>
   <data name="NewTaxDefaultName" xml:space="preserve">
     <value>Tax</value>
     <comment>Defines default name for new tax</comment>
+  </data>
+  <data name="NewTaxesContext" xml:space="preserve">
+    <value>Taxes context</value>
+    <comment>Defines default name for new taxes context</comment>
   </data>
 </root>

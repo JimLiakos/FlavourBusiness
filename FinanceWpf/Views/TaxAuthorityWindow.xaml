@@ -77,12 +77,13 @@
                         </Border>
                     </Grid>
 
-                    <Label Grid.Row="5" Content="Taxable types" Margin="5,0,0,5"></Label>
-                    <ListBox  Grid.Row="6" Grid.RowSpan="3"  >
+                    <Label Grid.Row="5" Content="Tax Context" Margin="5,0,0,5"></Label>
+                    <ListBox  Grid.Row="6" Grid.RowSpan="3" ItemsSource="{Binding TaxesContexts}" SelectedValue="{Binding SelectedTaxesContext}"  >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock Text="{Binding Description}"></TextBlock>
+                                    <ControlsEx:EditableTextBlock Text="{Binding Description,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   IsInEditMode="{Binding Edit,Mode=TwoWay}" ></ControlsEx:EditableTextBlock>
+                                    
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -95,20 +96,17 @@
                             <Grid>
                                 <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                    <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Button Command="{Binding DeleteSelectedTaxesContexCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                         <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
                                     </Button>
 
-                                    <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Button Command="{Binding AddTaxesContexCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                         <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
                                     </Button>
                                 </StackPanel>
                                 <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Button Command="{Binding RenameSelectedTaxesContexCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
                                         <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
-                                    </Button>
-                                    <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
                                     </Button>
                                 </StackPanel>
                             </Grid>

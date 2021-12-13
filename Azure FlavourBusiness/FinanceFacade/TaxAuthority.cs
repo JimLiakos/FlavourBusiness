@@ -12,6 +12,14 @@ namespace FinanceFacade
     public class TaxAuthority : ITaxAuthority
     {
 
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ITaxesContext> _TaxesContexts = new OOAdvantech.Collections.Generic.Set<ITaxesContext>();
+
+        /// <MetaDataID>{638d2802-adb4-450c-b832-c52a8c516ffe}</MetaDataID>
+        [PersistentMember(nameof(_TaxesContexts))]
+        [BackwardCompatibilityID("+5")]
+        public List<ITaxesContext> TaxesContexts => _TaxesContexts.ToThreadSafeList();
+
 
         /// <MetaDataID>{2e3f1232-7301-4f78-bbc1-d5f5f7dfe93d}</MetaDataID>
         protected TaxAuthority()
@@ -131,6 +139,7 @@ namespace FinanceFacade
             }
         }
 
+     
         /// <MetaDataID>{530a45b7-854f-4e6c-865a-f57f879aaaac}</MetaDataID>
         public void AddTaxableType(ITaxableType taxableType)
         {
@@ -167,7 +176,7 @@ namespace FinanceFacade
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
             {
                 TaxableType taxableType = new TaxableType();
-                taxableType.Description = "Κανονικό Φπα";
+                taxableType.Description = Finance.Properties.Resources.NewTaxableType;
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(taxableType);
                 _TaxableTypes.Add(taxableType);
                 stateTransition.Consistent = true;
@@ -175,6 +184,39 @@ namespace FinanceFacade
 
             }
 
+
+        }
+
+        /// <MetaDataID>{4dc360a9-3451-4d65-8c0a-db8e6f95d262}</MetaDataID>
+        public bool RemoveTaxesContext(ITaxesContext taxesContext)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var taxOverride in taxesContext.TaxOverrides)
+                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(taxOverride);
+                _TaxesContexts.Remove(taxesContext);
+                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(taxesContext);
+                stateTransition.Consistent = true;
+            }
+            return true;
+
+        }
+
+        /// <MetaDataID>{fef89375-cfd9-4395-95c6-e555e5c9daf6}</MetaDataID>
+        public ITaxesContext NewTaxesContext()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
+            {
+                TaxesContext taxesContext = new TaxesContext();
+                taxesContext.Description = Finance.Properties.Resources.NewTaxesContext;
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(taxesContext);
+                _TaxesContexts.Add(taxesContext);
+                stateTransition.Consistent = true;
+                return taxesContext;
+
+            }
 
         }
     }

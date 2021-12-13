@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="ViewModel\TaxableTypeViewModel.cs" />
     <Compile Include="ViewModel\TaxAuthorityPresentation.cs" />
+    <Compile Include="ViewModel\TaxesContextViewModel.cs" />
     <Compile Include="ViewModel\TaxViewModel.cs" />
     <Compile Include="Views\TaxableTypeWindow.xaml.cs">
       <DependentUpon>TaxableTypeWindow.xaml</DependentUpon>
