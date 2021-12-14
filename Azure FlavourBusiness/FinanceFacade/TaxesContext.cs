@@ -74,5 +74,17 @@ namespace FinanceFacade
             return taxOverride;
         }
 
+        public void RemoveTaxOverride(ITaxOverride taxOverride)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _TaxOverrides.Remove(taxOverride);
+                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(taxOverride); 
+                stateTransition.Consistent = true;
+            }
+
+        }
+
     }
 }

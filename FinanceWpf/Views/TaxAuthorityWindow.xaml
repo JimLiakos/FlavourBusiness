@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Finance.Views" 
         xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
         xmlns:ViewModel="clr-namespace:Finance.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:Finance.Properties"
-            mc:Ignorable="d"
-            ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
-        Title="TaxAuthorityWindowWindow" Height="450" Width="617.442">
+        mc:Ignorable="d"
+        ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"
+        Title="{Binding Value.Name}"
+        Icon="/FinanceWpf;component/Images/Taxes32.png" 
+        Height="450" Width="617.442">
     <Window.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxAuthorityPresentation}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
@@ -149,10 +150,10 @@
                                                 <RowDefinition/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Column="1"  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
-                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
-                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
-                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding DeleteCommand}" HorizontalAlignment="left"  Style="{DynamicResource WindowButton}"  Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                                            <TextBlock Grid.Column="1" Opacity="{Binding OverridenOpacity}" Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="{Binding TaxRate}" Opacity="{Binding OverridenOpacity}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="%" Grid.Column="3" Opacity="{Binding OverridenOpacity}" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding DeleteCommand}" HorizontalAlignment="left"  Style="{DynamicResource WindowButton}"  Visibility="{Binding DeleteVisibility}" >
                                                 <Image  Width="12" Height="12" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png" ></Image>
                                             </Button>
                                             <Button VerticalAlignment="Top" Grid.Column="6" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >

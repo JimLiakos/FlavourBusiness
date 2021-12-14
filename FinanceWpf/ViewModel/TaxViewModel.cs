@@ -80,6 +80,38 @@ namespace Finance.ViewModel
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        double _AccountIDErrorBorder = 0;
+        public double AccountIDErrorBorder
+        {
+            get
+            {
+                return _AccountIDErrorBorder;
+            }
+            set
+            {
+                _AccountIDErrorBorder = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccountIDErrorBorder)));
+            }
+        }
+
+        internal bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(AccountID))
+            {
+                IsMaximized = true;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
+                AccountIDErrorBorder = 1;
+                return false;
+            }
+            AccountIDErrorBorder = 0;
+
+                return true;
+        }
+
         public string AccountID
         {
             get

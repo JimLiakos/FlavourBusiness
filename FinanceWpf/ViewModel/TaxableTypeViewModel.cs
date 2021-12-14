@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPFUIElementObjectBind;
 
 namespace Finance.ViewModel
@@ -49,6 +50,15 @@ namespace Finance.ViewModel
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Taxes)));
             }, (object sender) => _SelectedTax != null);
+
+            BeforeSaveCommand = new RelayCommand((object sender) =>
+            {
+                var objectContext = (BeforeSaveCommand.UserInterfaceObjectConnection?.ContainerControl as FrameworkElement).GetObjectContext();
+                if (this.Taxes != null && this.Taxes.Where(x => !x.Validate()).FirstOrDefault() != null)
+                    objectContext.InvalidData = true;
+
+            });
+
 
 
 
@@ -123,7 +133,7 @@ namespace Finance.ViewModel
 
 
         public RelayCommand DeleteSelectedTaxCommand { get; protected set; }
-
+        public RelayCommand BeforeSaveCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

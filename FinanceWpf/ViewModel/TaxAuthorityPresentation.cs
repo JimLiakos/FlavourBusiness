@@ -63,6 +63,16 @@ namespace Finance.ViewModel
                         window.GetObjectContext().SetContextInstance(SelectedTaxableType);
                         if (window.ShowDialog().Value)
                         {
+                            if (_SelectedTaxableType != null && _SelectedTaxesContext != null)
+                            {
+                                _TaxOverrides = SelectedTaxableType.Taxes.Select(x => new TaxOverrideViewModel(x.Tax, _SelectedTaxesContext.TaxesContext)).ToList();
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                            }
+                            else
+                            {
+                                _TaxOverrides = new List<TaxOverrideViewModel>();
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                            }
 
                         }
                         stateTransition.Consistent = true;
@@ -133,6 +143,14 @@ namespace Finance.ViewModel
             }
         }
 
+        public string Name
+        {
+            get
+            {
+                return TaxAuthority.Name;
+            }
+        }
+
         bool CanDeleteSelectedTaxableType()
         {
             if (SelectedTaxableType != null)
@@ -180,6 +198,7 @@ namespace Finance.ViewModel
                 return _TaxesContexts.Values.ToList();
             }
         }
+
 
 
         /// <exclude>Excluded</exclude>

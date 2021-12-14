@@ -30,7 +30,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <sw:DialogContentControl >
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding Value.BeforeSaveCommand}" >
             <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource D_TaxableTypeViewModel}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="293*"/>
@@ -104,7 +104,9 @@
                                                 <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
                                                 <ControlsEx:TextBoxNumberWithUnit  Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4" Unit="%"/>
                                                 <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
-                                                <wpftoolkitex:WatermarkTextBox  Grid.Column="2"  VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4"></wpftoolkitex:WatermarkTextBox>
+                                                <Border  Grid.Column="2" Grid.Row="4" BorderThickness="{Binding AccountIDErrorBorder}" BorderBrush="Red" Margin="1" >
+                                                    <wpftoolkitex:WatermarkTextBox    VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                                                </Border>
 
 
 

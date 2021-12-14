@@ -18,5 +18,6 @@ namespace FinanceFacade
 
         /// <MetaDataID>{b2cfef85-149a-44ff-8ebe-9d40c2d83b91}</MetaDataID>
         ITaxOverride GetTaxOverride(ITax tax,bool create=false);
+        void RemoveTaxOverride(ITaxOverride taxOverride);
     }
 }

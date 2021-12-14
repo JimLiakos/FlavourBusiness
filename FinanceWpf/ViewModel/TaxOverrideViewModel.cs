@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using WPFUIElementObjectBind;
 
@@ -40,7 +41,42 @@ namespace Finance.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
             });
 
-            del
+            DeleteCommand = new RelayCommand((object sender) =>
+             {
+                 var ovrs = Tax.TaxOverrides.ToArray();
+
+                 taxesContext.RemoveTaxOverride(TaxOverride);
+                 TaxOverride = null;
+
+                 ovrs = Tax.TaxOverrides.ToArray();
+
+                 IsMaximized = false;
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OverridenOpacity)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeleteVisibility)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxRate)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccountID)));
+
+             });
+        }
+
+        public Visibility DeleteVisibility
+        {
+            get
+            {
+                 return TaxOverride != null?Visibility.Visible:Visibility.Collapsed;
+            }
+        }
+
+        public double OverridenOpacity
+        {
+            get
+            {
+                return TaxOverride != null ? 1 : 0.5;
+            }
+
         }
 
         public string Description
@@ -74,8 +110,15 @@ namespace Finance.ViewModel
                 if (Tax.TaxRate != value / 100)
                 {
                     if (TaxOverride == null)
-                        TaxOverride = TaxesContext.GetTaxOverride(Tax,true);
+                    {
+
+                        TaxOverride = TaxesContext.GetTaxOverride(Tax, true);
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OverridenOpacity)));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeleteVisibility)));
+
+                    }
                     TaxOverride.TaxRate = value / 100;
+
                 }
             }
         }
@@ -99,8 +142,8 @@ namespace Finance.ViewModel
             }
         }
 
+        /// <exclude>Excluded</exclude>
         double _AccountIDErrorBorder = 0;
-
         public double AccountIDErrorBorder
         {
             get
@@ -112,7 +155,6 @@ namespace Finance.ViewModel
                 _AccountIDErrorBorder = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccountIDErrorBorder)));
             }
-
         }
 
         public string AccountID
@@ -127,8 +169,14 @@ namespace Finance.ViewModel
                 {
                     AccountIDErrorBorder = 0;
                     if (TaxOverride == null)
-                        TaxOverride = TaxesContext.GetTaxOverride(Tax,true);
+                    {
+                        TaxOverride = TaxesContext.GetTaxOverride(Tax, true);
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OverridenOpacity)));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DeleteVisibility)));
+                    }
                     TaxOverride.AccountID = value;
+
+             
                 }
             }
         }
@@ -156,7 +204,10 @@ namespace Finance.ViewModel
                 return false;
             }
             else
+            {
+                AccountIDErrorBorder = 1;
                 return true;
+            }
         }
     }
 }
