@@ -14,6 +14,9 @@ namespace FinanceFacade
         /// <MetaDataID>{b590c6d2-b097-41e5-a74e-294839d8be65}</MetaDataID>
         [Association("TaxOverride", Roles.RoleB, "42de5995-db4d-4076-bcef-88e364a59db1")]
         [OOAdvantech.MetaDataRepository.AssociationClass(typeof(ITaxOverride))]
-        IList<ITax> TaxOverrides { get; }
+        IList<ITaxOverride> TaxOverrides { get; }
+
+        /// <MetaDataID>{b2cfef85-149a-44ff-8ebe-9d40c2d83b91}</MetaDataID>
+        ITaxOverride GetTaxOverride(ITax tax,bool create=false);
     }
 }

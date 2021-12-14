@@ -70,12 +70,12 @@ namespace FinanceFacade
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<ITaxesContext> _TaxOverrides = new OOAdvantech.Collections.Generic.Set<ITaxesContext>();
+        OOAdvantech.Collections.Generic.Set<ITaxOverride> _TaxOverrides = new OOAdvantech.Collections.Generic.Set<ITaxOverride>();
 
         /// <MetaDataID>{5c1b4e8f-8584-4cce-8714-6d54f992f078}</MetaDataID>
         [PersistentMember(nameof(_TaxOverrides))]
         [BackwardCompatibilityID("+3")]
-        public IList<ITaxesContext> TaxOverrides
+        public IList<ITaxOverride> TaxOverrides
         {
             get
             {

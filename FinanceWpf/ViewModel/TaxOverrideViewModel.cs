@@ -10,7 +10,7 @@ using WPFUIElementObjectBind;
 namespace Finance.ViewModel
 {
     /// <MetaDataID>{18bb38f9-c1ee-40c4-974f-1c6874fd98ee}</MetaDataID>
-    public class TaxOverrideViewModel :MarshalByRefObject, INotifyPropertyChanged
+    public class TaxOverrideViewModel : MarshalByRefObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -20,9 +20,14 @@ namespace Finance.ViewModel
         }
 
         public readonly FinanceFacade.ITax Tax;
+
+        private FinanceFacade.ITaxOverride TaxOverride;
         FinanceFacade.ITaxesContext TaxesContext;
         public TaxOverrideViewModel(FinanceFacade.ITax tax, FinanceFacade.ITaxesContext taxesContext)
         {
+
+            TaxOverride = taxesContext.GetTaxOverride(tax);
+
             Tax = tax;
             TaxesContext = taxesContext;
 
@@ -32,9 +37,10 @@ namespace Finance.ViewModel
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
-
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
             });
+
+            del
         }
 
         public string Description
@@ -50,17 +56,27 @@ namespace Finance.ViewModel
         }
         public RelayCommand MaximizeCommand { get; set; }
 
+        public RelayCommand DeleteCommand { get; set; }
+
         public double TaxRate
         {
             get
             {
+                if (TaxOverride != null)
+                    return TaxOverride.TaxRate * 100;
+
                 if (Tax == null)
                     return default(double);
                 return Tax.TaxRate * 100;
             }
             set
             {
-                Tax.TaxRate = value / 100;
+                if (Tax.TaxRate != value / 100)
+                {
+                    if (TaxOverride == null)
+                        TaxOverride = TaxesContext.GetTaxOverride(Tax,true);
+                    TaxOverride.TaxRate = value / 100;
+                }
             }
         }
 
@@ -83,15 +99,37 @@ namespace Finance.ViewModel
             }
         }
 
+        double _AccountIDErrorBorder = 0;
+
+        public double AccountIDErrorBorder
+        {
+            get
+            {
+                return _AccountIDErrorBorder;
+            }
+            set
+            {
+                _AccountIDErrorBorder = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccountIDErrorBorder)));
+            }
+
+        }
+
         public string AccountID
         {
             get
             {
-                return Tax?.AccountID;
+                return TaxOverride?.AccountID;
             }
             set
             {
-                Tax.AccountID = value;
+                if (Tax.AccountID != value)
+                {
+                    AccountIDErrorBorder = 0;
+                    if (TaxOverride == null)
+                        TaxOverride = TaxesContext.GetTaxOverride(Tax,true);
+                    TaxOverride.AccountID = value;
+                }
             }
         }
 
@@ -103,6 +141,22 @@ namespace Finance.ViewModel
                 return !IsMaximized;
 
             }
+        }
+
+        internal bool Validate()
+        {
+            if (TaxOverride != null && (TaxOverride.TaxRate == Tax.TaxRate || string.IsNullOrWhiteSpace(TaxOverride.AccountID)))
+            {
+                IsMaximized = true;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
+                AccountIDErrorBorder = 1;
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

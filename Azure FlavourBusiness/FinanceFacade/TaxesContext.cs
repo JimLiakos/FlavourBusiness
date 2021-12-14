@@ -41,18 +41,38 @@ namespace FinanceFacade
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<ITax> _TaxOverrides = new OOAdvantech.Collections.Generic.Set<ITax>();
+        OOAdvantech.Collections.Generic.Set<ITaxOverride> _TaxOverrides = new OOAdvantech.Collections.Generic.Set<ITaxOverride>();
 
         /// <MetaDataID>{5366a24d-8b93-4c1b-9cf3-9986c226f806}</MetaDataID>
-        public IList<ITax> TaxOverrides
+        [PersistentMember(nameof(_TaxOverrides))]
+        [BackwardCompatibilityID("+2")]
+        public IList<ITaxOverride> TaxOverrides
         {
             get
             {
-                lock (_TaxOverrides)
-                {
-                    return _TaxOverrides.ToList();
-                }
+                return _TaxOverrides.ToThreadSafeList();
             }
         }
+
+        /// <MetaDataID>{a6dc13bd-7380-4fbe-96ed-ee113baad87a}</MetaDataID>
+        public ITaxOverride GetTaxOverride(ITax tax, bool create = false)
+        {
+            var taxOverride = TaxOverrides.Where(x => x.Tax == tax).FirstOrDefault();
+            if (taxOverride == null && create)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    taxOverride = new TaxOverride() { Tax = tax, TaxesContext = this };
+                    var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                    if (objectStorage != null)
+                        objectStorage.CommitTransientObjectState(taxOverride);
+
+                    stateTransition.Consistent = true;
+                }
+            }
+            return taxOverride;
+        }
+
     }
 }

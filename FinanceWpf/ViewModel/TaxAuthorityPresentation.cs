@@ -105,18 +105,27 @@ namespace Finance.ViewModel
                 //}
             }, (object sender) => CanDeleteSelectedTaxesContext());
 
-            
+
             RenameSelectedTaxesContexCommand = new RelayCommand((object sender) =>
             {
-                SelectedTaxesContext.Edit=true;
+                SelectedTaxesContext.Edit = true;
 
-            }, (object sender) =>SelectedTaxesContext!=null);
+            }, (object sender) => SelectedTaxesContext != null);
+
+
+            BeforeSaveCommand = new RelayCommand((object sender) =>
+             {
+                 var objectContext = (BeforeSaveCommand.UserInterfaceObjectConnection?.ContainerControl as FrameworkElement).GetObjectContext();
+                 if(this.TaxOverrides!=null&& this.TaxOverrides.Where(x=>!x.Validate()).FirstOrDefault()!=null)
+                    objectContext.InvalidData = true;
+
+             });
 
 
         }
 
         List<TaxOverrideViewModel> _TaxOverrides;
-        List<TaxOverrideViewModel> TaxOverrides
+        public List<TaxOverrideViewModel> TaxOverrides
         {
             get
             {
@@ -187,13 +196,52 @@ namespace Finance.ViewModel
             set
             {
 
-                _SelectedTaxableType = value;
+                if (_SelectedTaxableType != value)
+                {
+                    _SelectedTaxableType = value;
+                    if (_SelectedTaxableType != null && _SelectedTaxesContext != null)
+                    {
+                        _TaxOverrides = SelectedTaxableType.Taxes.Select(x => new TaxOverrideViewModel(x.Tax, _SelectedTaxesContext.TaxesContext)).ToList();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                    }
+                    else
+                    {
+                        _TaxOverrides = new List<TaxOverrideViewModel>();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                    }
+
+                }
 
 
             }
         }
 
-        public TaxesContextViewModel SelectedTaxesContext { get; set; }
+        /// <exclude>Excluded</exclude>
+        TaxesContextViewModel _SelectedTaxesContext;
+
+        public TaxesContextViewModel SelectedTaxesContext
+        {
+            get => _SelectedTaxesContext;
+
+            set
+            {
+                if (_SelectedTaxesContext != value)
+                {
+                    _SelectedTaxesContext = value;
+                    if (_SelectedTaxableType != null && _SelectedTaxesContext != null)
+                    {
+                        _TaxOverrides = SelectedTaxableType.Taxes.Select(x => new TaxOverrideViewModel(x.Tax, _SelectedTaxesContext.TaxesContext)).ToList();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                    }
+                    else
+                    {
+                        _TaxOverrides = new List<TaxOverrideViewModel>();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
+                    }
+
+                }
+            }
+        }
 
         public TaxAuthorityPresentation()
         {
@@ -214,6 +262,7 @@ namespace Finance.ViewModel
         public RelayCommand AddTaxesContexCommand { get; protected set; }
         public RelayCommand DeleteSelectedTaxesContexCommand { get; }
         public RelayCommand RenameSelectedTaxesContexCommand { get; }
+        public RelayCommand BeforeSaveCommand { get; }
         public RelayCommand DeleteTaxesContexCommand { get; protected set; }
 
         public RelayCommand RenameTaxesContexCommand { get; protected set; }

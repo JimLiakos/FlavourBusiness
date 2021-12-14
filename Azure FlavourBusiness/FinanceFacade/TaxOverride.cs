@@ -5,8 +5,11 @@ using OOAdvantech.Transactions;
 namespace FinanceFacade
 {
     /// <MetaDataID>{6730c08f-b107-4846-b47f-11625755c856}</MetaDataID>
+    [BackwardCompatibilityID("{6730c08f-b107-4846-b47f-11625755c856}")]
+    [Persistent()]
     public class TaxOverride : ITaxOverride
     {
+    
         /// <exclude>Excluded</exclude>
         double _TaxRate;
         /// <MetaDataID>{31f5e81a-fe63-49a9-bd87-9301b5939fb5}</MetaDataID>
@@ -62,10 +65,10 @@ namespace FinanceFacade
 
 
         /// <exclude>Excluded</exclude>
-        FinanceFacade.ITax _Tax;
+        ITax _Tax;
 
         /// <MetaDataID>{aee1d5f9-d02b-4e80-867f-cb73e7bcefca}</MetaDataID>
-        [PersistentMember(nameof(_Tax))]
+        [AssociationClassRole(Roles.RoleB, nameof(_Tax))]
         [BackwardCompatibilityID("+2")]
         public FinanceFacade.ITax Tax
         {
@@ -90,9 +93,9 @@ namespace FinanceFacade
         ITaxesContext _TaxesContext;
 
         /// <MetaDataID>{4aaeca1a-4541-473b-8536-873e6664116e}</MetaDataID>
-        [PersistentMember(nameof(_TaxesContext))]
+        [AssociationClassRole(Roles.RoleA, nameof(_TaxesContext))]
         [BackwardCompatibilityID("+3")]
-        public ITaxesContext TaxesContext
+        public FinanceFacade.ITaxesContext TaxesContext
         {
             get
             {
