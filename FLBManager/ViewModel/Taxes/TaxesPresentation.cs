@@ -22,10 +22,10 @@ namespace FLBManager.ViewModel.Taxes
             TaxAuthority = taxAuthority;
 
 
-            this.PrintReceiptsItemStates = new List<PrintReceiptsItemState>() {
-                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.Delivery,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
-                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
-                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation)
+            this.PrintReceiptsItemStates = new List<PrintReceiptsItemStateViewModel>() {
+                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.Delivery,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
+                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.TakeAway,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
+                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation)
             };
 
             MenuItemsTaxInfo = new List<MenuItemTaxInfo>() { new MenuItemTaxInfo(null, menu.RootCategory, true) };
@@ -105,7 +105,7 @@ namespace FLBManager.ViewModel.Taxes
             }
         }
 
-        public List<PrintReceiptsItemState> PrintReceiptsItemStates { get; }
+        public List<PrintReceiptsItemStateViewModel> PrintReceiptsItemStates { get; }
 
         public List<MenuItemTaxInfo> MenuItemsTaxInfo { get; set; }
         bool CanDeleteSelectedTaxableType()

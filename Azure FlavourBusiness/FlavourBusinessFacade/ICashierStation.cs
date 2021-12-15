@@ -31,9 +31,12 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         /// <MetaDataID>{736a5de0-6436-4fe5-b045-96b2fa834727}</MetaDataID>
-        void SetPrintReceiptCondition(ServicePointType servicePointType, ItemPreparationState itemState);
+        void SetPrintReceiptCondition(ServicePointType servicePointType, PrintReceiptCondition itemState);
 
-        ItemPreparationState GetPrintReceiptCondition(ServicePointType servicePointType);
+        PrintReceiptCondition GetPrintReceiptCondition(ServicePointType servicePointType);
+
+        
+        
 
 
     }
@@ -41,10 +44,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     /// <MetaDataID>{3903c825-a5c4-438f-a450-965d7a3aacdf}</MetaDataID>
     public class PrintReceiptCondition
     {
-        /// <MetaDataID>{8e0715d8-3fcc-4fbf-9d8e-8f09dcc46d76}</MetaDataID>
         public ServicePointType ServicePointType { get; set; }
 
-        /// <MetaDataID>{4b15b3a0-74f5-48ab-b34d-e264d37bdf08}</MetaDataID>
-        public ItemPreparationState ItemState { get; set; }
+        public ItemPreparationState? ItemState { get; set; }
+
+        public bool? IsPaid { get; set; }
     }
 }

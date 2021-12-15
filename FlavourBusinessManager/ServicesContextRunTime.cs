@@ -1581,6 +1581,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
             
         }
 
+
+        
+
+
         /// <MetaDataID>{e3638d03-da40-44de-a45b-5aa5953904d8}</MetaDataID>
         public OrganizationStorageRef GetHallLayoutStorageForServiceArea(IServiceArea serviceArea)
         {

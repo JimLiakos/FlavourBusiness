@@ -12,7 +12,7 @@
         Icon="/FLBManager;component/Resources/Images/Metro/cashier16.png" 
         mc:Ignorable="d"
            
-        Title="CashierStationWindow" Height="450" Width="500">
+        Title="CashierStationWindow" Height="508" Width="500">
     <Window.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:CashierStationPresentation}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
@@ -30,11 +30,14 @@
 
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="20"/>
 
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" >
@@ -106,6 +109,33 @@
 
                     </Grid>
                 </StackPanel>
+                <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,5" Content="Print receipt when :" />
+
+                <Border Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" BorderThickness="2" BorderBrush="{StaticResource ListBoxBorderBrush}" >
+                    <ItemsControl ItemsSource="{Binding PrintReceiptsItemStates}" Margin="5" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="{StaticResource TextBoxBackgroundBrush}" Margin="4" >
+                                    <Grid.Effect>
+                                        <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                    </Grid.Effect>
+
+                                    <Grid Margin="5" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Description}"></TextBlock>
+                                        <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" ItemsSource="{Binding PrintReceiptsStates}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedItemState}" ></ComboBox>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                </Border>
+
+
             </Grid>
         </sw:DialogContentControl>
     </Grid>

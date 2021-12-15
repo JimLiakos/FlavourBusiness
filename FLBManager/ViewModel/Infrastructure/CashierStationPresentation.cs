@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
 using FLBManager.ViewModel.HumanResources;
+using FLBManager.ViewModel.Taxes;
 using OOAdvantech.Transactions;
 using UIBaseEx;
 using WPFUIElementObjectBind;
@@ -28,8 +29,13 @@ namespace FLBManager.ViewModel.Infrastructure
         {
             Treasury = parent;
             CashierStation = cashierStation;
+            PrintReceiptsItemStates = new List<PrintReceiptsItemStateViewModel>();
+            PrintReceiptsItemStates.Add(new PrintReceiptsItemStateViewModel(cashierStation.GetPrintReceiptCondition(ServicePointType.Delivery)));
+            PrintReceiptsItemStates.Add(new PrintReceiptsItemStateViewModel(cashierStation.GetPrintReceiptCondition(ServicePointType.HallServicePoint)));
+            PrintReceiptsItemStates.Add(new PrintReceiptsItemStateViewModel(cashierStation.GetPrintReceiptCondition(ServicePointType.TakeAway)));
 
-            var ds = cashierStation.CashierStationIdentity;
+
+
 
             RenameCommand = new RelayCommand((object sender) =>
             {
@@ -70,17 +76,22 @@ namespace FLBManager.ViewModel.Infrastructure
                     }
                 }
 
-               
+
             });
             foreach (var fisicalParty in Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.FisicalParties)
                 FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
 
-            _SelectedFisicalParty = FisicalPartiesMap.Values.Where(x => x.FisicalParty == CashierStation.Issuer).FirstOrDefault();
+            _SelectedFisicalParty = FisicalPartiesMap.Values.Where(x => x.FisicalParty.FisicalPartyUri == CashierStation.Issuer.FisicalPartyUri).FirstOrDefault();
+
+
+
         }
 
         public bool FisicalPartiesExpanded { get; set; }
 
         internal ViewModelWrappers<FinanceFacade.IFisicalParty, FisicalPartyPresentation> FisicalPartiesMap = new ViewModelWrappers<FinanceFacade.IFisicalParty, FisicalPartyPresentation>();
+
+
 
         public List<FisicalPartyPresentation> FisicalParties
         {
@@ -92,6 +103,9 @@ namespace FLBManager.ViewModel.Infrastructure
         }
 
         FisicalPartyPresentation _SelectedFisicalParty;
+
+        public List<PrintReceiptsItemStateViewModel> PrintReceiptsItemStates { get; }
+
         public FisicalPartyPresentation SelectedFisicalParty
         {
             get
@@ -102,7 +116,7 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 _SelectedFisicalParty = value;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsEditSelectedEnabled)));
-                CashierStation.Issuer = _SelectedFisicalParty.FisicalParty;
+                //CashierStation.Issuer = _SelectedFisicalParty.FisicalParty;
             }
         }
 
@@ -116,18 +130,16 @@ namespace FLBManager.ViewModel.Infrastructure
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
             {
-
-
                 cashierStationWindow.GetObjectContext().SetContextInstance(this);
                 if (cashierStationWindow.ShowDialog().Value)
                 {
-
-
+                    if (_SelectedFisicalParty != null)
+                        CashierStation.Issuer = _SelectedFisicalParty.FisicalParty;
+                    foreach (var printReceiptsItemState in PrintReceiptsItemStates)
+                        CashierStation.SetPrintReceiptCondition(printReceiptsItemState.ServicePointType, printReceiptsItemState.PrintReceiptCondition);
                     stateTransition.Consistent = true;
                 }
             }
-
-
         }
 
         public void EditMode()

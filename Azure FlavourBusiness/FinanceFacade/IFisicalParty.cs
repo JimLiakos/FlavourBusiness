@@ -26,5 +26,8 @@ namespace FinanceFacade
         /// <MetaDataID>{a940faf8-ffdf-4f2c-ab9e-c7c1a4c0b636}</MetaDataID>
         [CachingDataOnClientSide]
         string Name { get; set; }
+
+        string FisicalPartyUri { get; }
+
     }
 }

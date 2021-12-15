@@ -142,11 +142,7 @@ namespace FlavourBusinessFacade.RoomService
         /// </summary>
         IsBilled = 10,
 
-        /// <summary>
-        /// the item was paid
-        /// </summary>
-        IsPaid = 11,
-
+  
         /// <summary>
         /// the item is canceled
         /// </summary>
