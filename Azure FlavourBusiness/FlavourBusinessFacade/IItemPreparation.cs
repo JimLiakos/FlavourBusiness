@@ -133,13 +133,26 @@ namespace FlavourBusinessFacade.RoomService
         /// </summary>
         OnRoad = 8,
         /// <summary>
-        /// the item served
+        /// the item was served
         /// </summary>
         Served = 9,
+
+        /// <summary>
+        /// the item was billed
+        /// </summary>
+        IsBilled = 10,
+
+        /// <summary>
+        /// the item was paid
+        /// </summary>
+        IsPaid = 11,
+
         /// <summary>
         /// the item is canceled
         /// </summary>
-        Canceled = 10
+        Canceled = 12,
+
+
     }
 
 }

@@ -51,7 +51,7 @@ namespace Finance.ViewModel
 
             EditSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
                 {
                     try
                     {
@@ -73,9 +73,9 @@ namespace Finance.ViewModel
                                 _TaxOverrides = new List<TaxOverrideViewModel>();
                                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxOverrides)));
                             }
-
+                            stateTransition.Consistent = true;
                         }
-                        stateTransition.Consistent = true;
+                        
                     }
                     catch (Exception error)
                     {

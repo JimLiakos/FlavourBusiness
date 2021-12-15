@@ -193,6 +193,7 @@
     <Compile Include="ViewModel\Infrastructure\TreasuryTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\RootItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\ServicePointsPreparationInfoPresentation.cs" />
+    <Compile Include="ViewModel\Taxes\PrintReceiptsItemState.cs" />
     <Compile Include="ViewModel\Taxes\TaxesPresentation.cs" />
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>

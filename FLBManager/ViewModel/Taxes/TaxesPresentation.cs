@@ -20,6 +20,14 @@ namespace FLBManager.ViewModel.Taxes
         public TaxesPresentation(FinanceFacade.ITaxAuthority taxAuthority, MenuModel.IMenu menu)
         {
             TaxAuthority = taxAuthority;
+
+
+            this.PrintReceiptsItemStates = new List<PrintReceiptsItemState>() {
+                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.Delivery,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
+                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
+                new PrintReceiptsItemState(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation)
+            };
+
             MenuItemsTaxInfo = new List<MenuItemTaxInfo>() { new MenuItemTaxInfo(null, menu.RootCategory, true) };
             AddTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
@@ -29,9 +37,10 @@ namespace FLBManager.ViewModel.Taxes
 
 
             });
+
             DeleteSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-              
+
 
                 var taxableType = SelectedTaxableType.TaxableType;
                 SelectedTaxableType = null;
@@ -74,20 +83,11 @@ namespace FLBManager.ViewModel.Taxes
 
             });
 
-
             RenameSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-               
-
-                    SelectedTaxableType.Edit = true;
-             
-                    
-                
-
+                SelectedTaxableType.Edit = true;
                 //(MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.NewTaxableType();
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
-
-
             });
 
         }
@@ -104,6 +104,8 @@ namespace FLBManager.ViewModel.Taxes
 
             }
         }
+
+        public List<PrintReceiptsItemState> PrintReceiptsItemStates { get; }
 
         public List<MenuItemTaxInfo> MenuItemsTaxInfo { get; set; }
         bool CanDeleteSelectedTaxableType()

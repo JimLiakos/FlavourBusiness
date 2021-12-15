@@ -21,116 +21,147 @@
     </Window.Resources>
     <Grid>
         <sw:DialogContentControl >
-
             <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource D_TaxAuthorityPresentation}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="150"/>
-                    <RowDefinition/>
+                <TabControl Margin="0,10,5,0" >
+                    <TabItem Header="Taxes">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="150"/>
+                                <RowDefinition/>
 
-                </Grid.RowDefinitions>
-                <Label Content="{Binding Name}" Grid.Row="1" Margin="5,0,0,5"></Label>
-                <Grid Grid.Row="2" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
+                            <Label Content="{Binding Name}" Grid.Row="1" Margin="5,0,0,5"></Label>
+                            <Grid Grid.Row="2" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
 
-                    <ListBox ItemsSource="{Binding TaxableTypes}" Grid.Row="0" Grid.RowSpan="2" SelectedValue="{Binding SelectedTaxableType}" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <ControlsEx:EditableTextBlock Text="{Binding Description,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   IsInEditMode="{Binding Edit,Mode=TwoWay}" ></ControlsEx:EditableTextBlock>
+                                <ListBox ItemsSource="{Binding TaxableTypes}" Grid.Row="0" Grid.RowSpan="2" SelectedValue="{Binding SelectedTaxableType}" >
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <ControlsEx:EditableTextBlock Text="{Binding Description,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   IsInEditMode="{Binding Edit,Mode=TwoWay}" ></ControlsEx:EditableTextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+
+                                </ListBox>
+
+                                <Grid  Grid.Row="1" Background="WhiteSmoke" Margin="0,0,0,0">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                        <Grid>
+                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                                <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                </Button>
+
+                                                <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                </Button>
+                                            </StackPanel>
+                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                </Button>
+                                                <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
                                 </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
 
-
-                    </ListBox>
-
-                    <Grid  Grid.Row="1" Background="WhiteSmoke" Margin="0,0,0,0">
-                        <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
-
-                            <Grid>
-                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
-
-                                    <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                    </Button>
-
-                                    <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                    </Button>
-                                </StackPanel>
-                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
-                                    </Button>
-                                    <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                                    </Button>
-                                </StackPanel>
                             </Grid>
-                        </Border>
-                    </Grid>
 
-                </Grid>
+                            <TreeView Grid.Row="3"        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding MenuItemsTaxInfo}"  >
 
-                <TreeView Grid.Row="3"        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding MenuItemsTaxInfo}"  >
-       
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedItemChanged">
-                            <i:InvokeCommandAction Command="{Binding Path=SelectedCommand, Mode=OneWay}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedItemChanged">
+                                        <i:InvokeCommandAction Command="{Binding Path=SelectedCommand, Mode=OneWay}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
 
-                    <TreeView.ItemContainerStyle>
+                                <TreeView.ItemContainerStyle>
 
-                        <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                            <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
-                            <!--<Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>-->
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                        <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}"/>
+                                        <!--<Setter Property="Behaviors:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True"/>-->
 
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="#FF7DA2CE" />
-                                    <Setter Property="Background" Value="#FFCCE2FC" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TreeView.ItemContainerStyle>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="BorderBrush" Value="#FF7DA2CE" />
+                                                <Setter Property="Background" Value="#FFCCE2FC" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
 
-                    <TreeView.ItemTemplate>
+                                <TreeView.ItemTemplate>
 
 
-                        <HierarchicalDataTemplate   ItemsSource="{Binding Members}" >
-                            <ContentControl>
-                                <ContentControl.Resources>
-                                    <!--<Style TargetType="{x:Type ContentControl}">
+                                    <HierarchicalDataTemplate   ItemsSource="{Binding Members}" >
+                                        <ContentControl>
+                                            <ContentControl.Resources>
+                                                <!--<Style TargetType="{x:Type ContentControl}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding HasContextMenu}" Value="True" >
                                                 <Setter Property="ContextMenu" Value="{StaticResource NodeContextMenu}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>-->
-                                </ContentControl.Resources>
-                                <StackPanel   AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
-                                    <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding TaxTypeAssigned}"></CheckBox>
-                                    <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
-                                    <TextBlock Background="Transparent" Text="{Binding Name}" />
+                                            </ContentControl.Resources>
+                                            <StackPanel   AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" >
+                                                <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding TaxTypeAssigned}"></CheckBox>
+                                                <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
+                                                <TextBlock Background="Transparent" Text="{Binding Name}" />
 
-                                </StackPanel>
+                                            </StackPanel>
 
-                            </ContentControl>
-
-
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-
-                </TreeView>
+                                        </ContentControl>
 
 
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+
+                            </TreeView>
+
+
+                        </Grid>
+
+                    </TabItem>
+                    <TabItem Header="Receipts">
+                        <Border Width="400" Height="300" BorderThickness="2" BorderBrush="{StaticResource ListBoxBorderBrush}" >
+                        <ItemsControl ItemsSource="{Binding PrintReceiptsItemStates}" Margin="5" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Background="{StaticResource TextBoxBackgroundBrush}" Margin="4" >
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                        </Grid.Effect>
+
+                                        <Grid Margin="5" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}"></TextBlock>
+                                            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" ItemsSource="{Binding PrintReceiptsStates}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedItemState}" ></ComboBox>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                        </Border>
+                    </TabItem>
+                </TabControl>
             </Grid>
 
 

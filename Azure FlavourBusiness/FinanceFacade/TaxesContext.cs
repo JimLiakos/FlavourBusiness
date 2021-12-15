@@ -67,7 +67,7 @@ namespace FinanceFacade
                     var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
                     if (objectStorage != null)
                         objectStorage.CommitTransientObjectState(taxOverride);
-
+                    _TaxOverrides.Add(taxOverride);
                     stateTransition.Consistent = true;
                 }
             }
