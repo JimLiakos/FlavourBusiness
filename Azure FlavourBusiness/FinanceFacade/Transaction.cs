@@ -92,8 +92,8 @@ namespace FinanceFacade
         /// <exclude>Excluded</exclude>
         Set<IItem> _Items = new Set<IItem>();
         /// <MetaDataID>{414777ff-5a14-4bba-a10a-fa9900d41e71}</MetaDataID>
-                [BackwardCompatibilityID("+4")]
-        public System.Collections.Generic.IList<FinanceFacade.IItem> Items
+        [BackwardCompatibilityID("+4")]
+        public IList<IItem> Items
         {
             get
             {
@@ -107,7 +107,7 @@ namespace FinanceFacade
         Set<TaxAmount> _TransactionTaxes = new Set<TaxAmount>();
 
         /// <MetaDataID>{d83595b4-e005-4d29-878a-fa02bb297519}</MetaDataID>
-                [BackwardCompatibilityID("+5")]
+        [BackwardCompatibilityID("+5")]
         public System.Collections.Generic.IList<FinanceFacade.TaxAmount> TransactionTaxes
         {
             get
@@ -118,6 +118,7 @@ namespace FinanceFacade
                 }
             }
         }
+
 
         /// <exclude>Excluded</exclude> 
         string _PayeeRegistrationNumber;

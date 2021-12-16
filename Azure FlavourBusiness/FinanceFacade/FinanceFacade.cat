@@ -607,6 +607,31 @@
 			    value      	TRUE))
 		    quid       	"5C6C0DF603CD"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "uid"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8d545d0c-7b8c-4f0a-8501-e41cdfabf17b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61BB72D803DF")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61BB72D803DF"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -816,10 +841,6 @@
 			    name       	"UniqueID"
 			    value      	"5C6CF2490010")
 			(object Attribute
-			    tool       	"Persistent"
-			    name       	"Persistent"
-			    value      	TRUE)
-			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
 			    value      	"+4"))
@@ -836,10 +857,6 @@
 			    tool       	"MetaData"
 			    name       	"UniqueID"
 			    value      	"5C6CF249006F")
-			(object Attribute
-			    tool       	"Persistent"
-			    name       	"Persistent"
-			    value      	TRUE)
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -4163,7 +4180,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	7
+			nlines     	8
 			max_width  	400)
 		    width      	613
 		    height     	469
@@ -4634,7 +4651,7 @@
 				(456, 522))
 			    line_style 	3
 			    origin_attachment 	(1553, 391)
-			    terminal_attachment 	(455, 518)
+			    terminal_attachment 	(456, 522)
 			    label      	(object SegLabel @76
 				Parent_View 	@75
 				location   	(519, 435)

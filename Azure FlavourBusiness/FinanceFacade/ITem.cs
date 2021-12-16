@@ -12,6 +12,8 @@ namespace FinanceFacade
     /// <MetaDataID>{1efed191-267f-4beb-90d6-8ffe00bd2fa8}</MetaDataID>
     public interface IItem
     {
+        /// <MetaDataID>{8d545d0c-7b8c-4f0a-8501-e41cdfabf17b}</MetaDataID>
+        string uid { get; set; }
 
         /// <MetaDataID>{50f519ce-2209-4ef9-827f-a2bd8c8cc5a2}</MetaDataID>
         [RoleAMultiplicityRange(0)]
@@ -20,8 +22,10 @@ namespace FinanceFacade
         IList<TaxAmount> Taxes { get; }
 
 
+        /// <MetaDataID>{1cb77c22-fd7f-4f62-9583-255dff947245}</MetaDataID>
         void AddTax(TaxAmount taxAmount);
 
+        /// <MetaDataID>{3168fc8d-dd3c-4fb0-8dfa-d642bb8fb596}</MetaDataID>
         void RemoveTax(TaxAmount taxAmount);
 
         //
@@ -267,7 +271,7 @@ namespace FinanceFacade
         Set<TaxAmount> _Taxes = new Set<TaxAmount>();
 
         /// <MetaDataID>{74c47746-adec-4859-91bf-07340565354e}</MetaDataID>
-        [PersistentMember(nameof(_Taxes))]
+        
         [BackwardCompatibilityID("+2")]
         public System.Collections.Generic.IList<FinanceFacade.TaxAmount> Taxes
         {
@@ -279,6 +283,10 @@ namespace FinanceFacade
                 }
             }
         }
+
+        public decimal Amount { get => Quantity * Price; }
+
+        public string uid { get ; set; }
     }
 
 }

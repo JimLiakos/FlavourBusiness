@@ -173,13 +173,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             FinanceFacade.Transaction transaction = new FinanceFacade.Transaction();
             foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
             {
-
                 taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
-
-                var Spinach = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price=(decimal)receiptItem.Price};
-                foreach( (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes
-                Spinach.AddTax(new TaxAmount() { AccountID = "c1", Amount = 1.45m });
-
+                var transactionItem = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price,uid=receiptItem.uid };
+                decimal amount = transactionItem.Amount;
+                foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
+                    transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount =  transactionItem.Amount/(1+ (decimal)tax.TaxRate) });
             }
 
         }
