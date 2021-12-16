@@ -20,6 +20,7 @@ namespace FLBManager.Views.Taxes
     /// <MetaDataID>{3c71458f-86c3-40a7-81e4-271cf2b42c6e}</MetaDataID>
     public partial class TaxesWindow : StyleableWindow.Window
     {
+        /// <MetaDataID>{582c1035-ed4d-47f2-8560-2c783117b6ae}</MetaDataID>
         public TaxesWindow()
         {
             InitializeComponent();

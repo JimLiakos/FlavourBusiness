@@ -16,12 +16,15 @@ namespace FinanceFacade
         [Association("TransactionItem", Roles.RoleA, "7ccfc6ee-4f2d-4f52-bd22-b8c63e74d0f9")]
         IList<IItem> Items { get; }
 
+        /// <MetaDataID>{61e00694-8dce-4da4-8ece-6f3485fb4ae5}</MetaDataID>
         string PayeeRegistrationNumber { get; set; }
 
 
+        /// <MetaDataID>{bc1f1de8-1e9d-4efb-bb54-27a7f499d22d}</MetaDataID>
         string GetPropertyValue(string propertyName);
 
-        void SetPropertyValue(string propertyName,string value);
+        /// <MetaDataID>{d55ce88a-4440-4845-b6d2-5c8b8ed9bd9f}</MetaDataID>
+        void SetPropertyValue(string propertyName, string value);
 
 
         //

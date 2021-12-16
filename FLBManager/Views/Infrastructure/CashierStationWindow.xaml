@@ -9,10 +9,10 @@
         xmlns:ViewModel="clr-namespace:FLBManager.ViewModel.Infrastructure"
         xmlns:resx="clr-namespace:FLBManager.Properties" 
         ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"       
-        Icon="/FLBManager;component/Resources/Images/Metro/cashier16.png" 
+        Icon="/FLBManager;component/Resources/Images/Metro/cashier32.png" 
         mc:Ignorable="d"
            
-        Title="CashierStationWindow" Height="508" Width="500">
+        Title="{x:Static resx:Resources.CashiersStationWindowTitle}" Height="608" Width="500">
     <Window.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:CashierStationPresentation}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
@@ -112,6 +112,7 @@
                 <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,5" Content="Print receipt when :" />
 
                 <Border Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" BorderThickness="2" BorderBrush="{StaticResource ListBoxBorderBrush}" >
+                    <ScrollViewer>
                     <ItemsControl ItemsSource="{Binding PrintReceiptsItemStates}" Margin="5" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -120,19 +121,25 @@
                                         <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
                                     </Grid.Effect>
 
-                                    <Grid Margin="5" >
+                                        <Grid Margin="5" Background="{StaticResource TextBoxBackgroundBrush}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
                                         <TextBlock VerticalAlignment="Center" Text="{Binding Description}"></TextBlock>
-                                        <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" ItemsSource="{Binding PrintReceiptsStates}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedItemState}" ></ComboBox>
+                                        <CheckBox Grid.Row="2" Content="{x:Static resx:Resources.ItemIsPaidCheckboxLabel}" IsChecked="{Binding IsPaid}"></CheckBox>
+                                         <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" ItemsSource="{Binding PrintReceiptsStates}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedItemState}" ></ComboBox>
                                     </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-
                     </ItemsControl>
+                    </ScrollViewer>
                 </Border>
 
 

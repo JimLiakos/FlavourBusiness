@@ -118,9 +118,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (!string.IsNullOrWhiteSpace(PrintReceiptsConditionsJson))
                 PrintReceiptsConditions = OOAdvantech.Json.JsonConvert.DeserializeObject<List<PrintReceiptCondition>>(PrintReceiptsConditionsJson);
-            
+
             if (GetPrintReceiptCondition(ServicePointType.Delivery) == null)
-                PrintReceiptsConditions.Add(new PrintReceiptCondition() {ServicePointType= ServicePointType.Delivery, ItemState = ItemPreparationState.OnRoad });
+                PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.Delivery, ItemState = ItemPreparationState.OnRoad });
             if (GetPrintReceiptCondition(ServicePointType.HallServicePoint) == null)
                 PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.HallServicePoint, ItemState = ItemPreparationState.OnRoad });
             if (GetPrintReceiptCondition(ServicePointType.TakeAway) == null)
@@ -149,12 +149,38 @@ namespace FlavourBusinessManager.ServicesContextResources
                         PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
                 }
             }
-            //(_object as ItemPreparation).State == ItemPreparationState.OnRoad
-            //(_object as ItemPreparation).ServedInTheBatch;
         }
 
-        private void PrintReceipt(List<IItemPreparation> preparedItems)
+        /// <MetaDataID>{7a14c632-b037-4b38-8722-2d631ffbe80b}</MetaDataID>
+        private void PrintReceipt(List<IItemPreparation> receiptItems)
         {
+
+
+            //FinanceFacade.Transaction transaction = new FinanceFacade.Transaction();
+            //var Spinach = new FinanceFacade.Item() { Name = "Spinach", Quantity = 1, Price = 7.5m };
+
+            //Spinach.AddTax(new FinanceFacade.TaxAmount() { AccountID = "c1", Amount = 1.45m });
+            //transaction.AddItem(Spinach);
+            //var pasta = new FinanceFacade.Item() { Name = "Πένες Μπολονέζ", Quantity = 1, Price = 6.5m };
+            //pasta.AddTax(new FinanceFacade.TaxAmount() { AccountID = "c1", Amount = 1.3m });
+            //transaction.AddItem(pasta);
+            //var beer = new FinanceFacade.Item() { Name = "Μπύρα Μύθος", Quantity = 1, Price = 2.5m };
+            //beer.AddTax(new FinanceFacade.TaxAmount() { AccountID = "c1", Amount = 0.48m });
+            //transaction.AddItem(beer);
+
+
+            ITaxAuthority taxAuthority = null;
+            FinanceFacade.Transaction transaction = new FinanceFacade.Transaction();
+            foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
+            {
+
+                taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
+
+                var Spinach = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price=(decimal)receiptItem.Price};
+                foreach( (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes
+                Spinach.AddTax(new TaxAmount() { AccountID = "c1", Amount = 1.45m });
+
+            }
 
         }
 
@@ -314,7 +340,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{141d39a7-be70-420f-a5ae-94936e07f83d}</MetaDataID>
         public PrintReceiptCondition GetPrintReceiptCondition(ServicePointType servicePointType)
         {
-          var pp=  PrintReceiptsConditions.Where(x => x.ServicePointType == servicePointType).FirstOrDefault();
+
             return PrintReceiptsConditions.Where(x => x.ServicePointType == servicePointType).FirstOrDefault();
         }
 

@@ -20,6 +20,7 @@ namespace FLBManager.Views.Infrastructure
     /// <MetaDataID>{2b6f9b85-c481-4bb1-a120-1626eb5735d2}</MetaDataID>
     public partial class CashierStationWindow : StyleableWindow.Window
     {
+        /// <MetaDataID>{3c446748-349a-4b28-91b1-dd3a12299024}</MetaDataID>
         public CashierStationWindow()
         {
             InitializeComponent();

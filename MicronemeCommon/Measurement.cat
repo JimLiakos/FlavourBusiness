@@ -203,7 +203,7 @@
 		    quidu      	"1435734A6026")
 		(object Realize_Relationship
 		    quid       	"5C6D103200C4"
-		    supplier   	"Logical View::FlavourBusinessFacade::OOAdvantech::Remoting::IExtMarshalByRefObject"
+		    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
 		    quidu      	"416244F90271"))
 	    operations 	(list Operations
 		(object Operation "Convert"

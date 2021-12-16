@@ -138,6 +138,9 @@
   <data name="CashierNameLabel" xml:space="preserve">
     <value>Cashier name :</value>
   </data>
+  <data name="CashiersStationWindowTitle" xml:space="preserve">
+    <value>Cashiers station</value>
+  </data>
   <data name="CompanyResourcesLabel" xml:space="preserve">
     <value>Company Resources</value>
   </data>
@@ -147,6 +150,10 @@
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
     <value>Main Room</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
+  </data>
+  <data name="DeliveryServicePointDescription" xml:space="preserve">
+    <value>Delivery</value>
+    <comment>Defines the description for Service point type Delivery</comment>
   </data>
   <data name="FisicalPartyAddressLabel" xml:space="preserve">
     <value>Address</value>
@@ -177,8 +184,20 @@
   <data name="GraphicMenuTitle" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="HallServicePointDescription" xml:space="preserve">
+    <value>Restaurant tables</value>
+    <comment>Defines the description for Service point type HallServicePoint</comment>
+  </data>
   <data name="HeadingListViewTitle" xml:space="preserve">
     <value>Menu Headings</value>
+  </data>
+  <data name="IsBilledtemStateDescription" xml:space="preserve">
+    <value>On bill</value>
+    <comment>Defines the description for IsBilled item state  </comment>
+  </data>
+  <data name="ItemIsPaidCheckboxLabel" xml:space="preserve">
+    <value>Item is paid</value>
+    <comment>Defines the name for is paid check box label</comment>
   </data>
   <data name="LaunchCallerIDServer" xml:space="preserve">
     <value>Launch CallerID Server</value>
@@ -219,11 +238,23 @@
   <data name="NewWaiterPrompt" xml:space="preserve">
     <value>New Waiter</value>
   </data>
+  <data name="NoneItemStateDescription" xml:space="preserve">
+    <value>None</value>
+    <comment>Defines the description for undifined item preparation state  </comment>
+  </data>
+  <data name="OnRoadtemStateDescription" xml:space="preserve">
+    <value>On the road</value>
+    <comment>Defines the description for OnRoad item state  </comment>
+  </data>
   <data name="OpenGraphicMenuMenuItemHeader" xml:space="preserve">
     <value>Open Menu</value>
   </data>
   <data name="OrganizationMenuItemHeader" xml:space="preserve">
     <value>Organization</value>
+  </data>
+  <data name="PendingPreparationItemStateDescription" xml:space="preserve">
+    <value>On preparation</value>
+    <comment>Defines the description for PendingPreparation item state  </comment>
   </data>
   <data name="PreparationSattionsTitle" xml:space="preserve">
     <value>Food Preparation</value>
@@ -260,6 +291,10 @@
   </data>
   <data name="SettingsMenuPrompt" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="TakeawayServicePointDescription" xml:space="preserve">
+    <value>Takeaway</value>
+    <comment>Defines the description for Service point type takeaway</comment>
   </data>
   <data name="TaxAuthoritySelectionLabel" xml:space="preserve">
     <value>Tax Authority :</value>

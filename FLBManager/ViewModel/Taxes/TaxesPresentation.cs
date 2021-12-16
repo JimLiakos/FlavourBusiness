@@ -16,17 +16,14 @@ namespace FLBManager.ViewModel.Taxes
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <MetaDataID>{33310523-5013-4a97-b584-2d5d97b74740}</MetaDataID>
         FinanceFacade.ITaxAuthority TaxAuthority;
+        /// <MetaDataID>{b257666c-a368-4d7d-beb8-c2b19322f0c8}</MetaDataID>
         public TaxesPresentation(FinanceFacade.ITaxAuthority taxAuthority, MenuModel.IMenu menu)
         {
             TaxAuthority = taxAuthority;
 
 
-            this.PrintReceiptsItemStates = new List<PrintReceiptsItemStateViewModel>() {
-                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.Delivery,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
-                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.TakeAway,FlavourBusinessFacade.RoomService.ItemPreparationState.OnRoad),
-                new PrintReceiptsItemStateViewModel(FlavourBusinessFacade.ServicesContextResources.ServicePointType.HallServicePoint,FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation)
-            };
 
             MenuItemsTaxInfo = new List<MenuItemTaxInfo>() { new MenuItemTaxInfo(null, menu.RootCategory, true) };
             AddTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
@@ -93,6 +90,7 @@ namespace FLBManager.ViewModel.Taxes
         }
 
 
+        /// <MetaDataID>{7b794a0d-a34c-4292-a82f-3547e00791cf}</MetaDataID>
         public string Name
         {
             get
@@ -105,9 +103,10 @@ namespace FLBManager.ViewModel.Taxes
             }
         }
 
-        public List<PrintReceiptsItemStateViewModel> PrintReceiptsItemStates { get; }
 
+        /// <MetaDataID>{1252ee2a-83d1-4375-b87b-7a4bcd4862b7}</MetaDataID>
         public List<MenuItemTaxInfo> MenuItemsTaxInfo { get; set; }
+        /// <MetaDataID>{1d5d6d3b-a72e-46dc-8686-3713be3f0c1f}</MetaDataID>
         bool CanDeleteSelectedTaxableType()
         {
             if (SelectedTaxableType != null)
@@ -160,13 +159,16 @@ namespace FLBManager.ViewModel.Taxes
             }
         }
 
+        /// <MetaDataID>{1678da9b-38e5-4f40-b0ca-e811df752818}</MetaDataID>
         public TaxesPresentation()
         {
         }
 
+        /// <MetaDataID>{ced197c8-741f-4fb4-94a2-a39a7b9d715e}</MetaDataID>
         public RelayCommand AddTaxableTypeCommand { get; protected set; }
 
 
+        /// <MetaDataID>{468cd9d3-f3f3-4632-8de7-7258d08e70be}</MetaDataID>
         public RelayCommand EditSelectedTaxableTypeCommand { get; protected set; }
         /// <MetaDataID>{50a25739-a329-4358-be0e-b61f130a8205}</MetaDataID>
         public RelayCommand DeleteSelectedTaxableTypeCommand { get; protected set; }

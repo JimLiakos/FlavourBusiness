@@ -7,6 +7,8 @@ using OOAdvantech.MetaDataRepository;
 namespace FinanceFacade
 {
     /// <MetaDataID>{f4fdf9fe-3c45-48fd-b958-c16677d2397c}</MetaDataID>
+    [BackwardCompatibilityID("{f4fdf9fe-3c45-48fd-b958-c16677d2397c}")]
+    [Persistent()]
     public class Transaction : ITransaction
     {
 
@@ -39,12 +41,15 @@ namespace FinanceFacade
             _Items.Add(item);
         }
 
+        /// <MetaDataID>{ed7e9605-e1fd-440e-a3f7-6ea6505e3cb0}</MetaDataID>
         System.Collections.Generic.Dictionary<string, string> TransactionProperies = new System.Collections.Generic.Dictionary<string, string>();
+        /// <MetaDataID>{1cf01a7e-9061-4c02-8ed0-e89e9588d776}</MetaDataID>
         public string GetPropertyValue(string propertyName)
         {
             return TransactionProperies[propertyName];
         }
 
+        /// <MetaDataID>{4a9c2476-2b3a-4b04-8ae4-b2ecb76330f5}</MetaDataID>
         public void SetPropertyValue(string propertyName, string value)
         {
             TransactionProperies[propertyName] = value;
@@ -87,8 +92,7 @@ namespace FinanceFacade
         /// <exclude>Excluded</exclude>
         Set<IItem> _Items = new Set<IItem>();
         /// <MetaDataID>{414777ff-5a14-4bba-a10a-fa9900d41e71}</MetaDataID>
-        [PersistentMember(nameof(_Items))]
-        [BackwardCompatibilityID("+4")]
+                [BackwardCompatibilityID("+4")]
         public System.Collections.Generic.IList<FinanceFacade.IItem> Items
         {
             get
@@ -103,8 +107,7 @@ namespace FinanceFacade
         Set<TaxAmount> _TransactionTaxes = new Set<TaxAmount>();
 
         /// <MetaDataID>{d83595b4-e005-4d29-878a-fa02bb297519}</MetaDataID>
-        [PersistentMember(nameof(_TransactionTaxes))]
-        [BackwardCompatibilityID("+5")]
+                [BackwardCompatibilityID("+5")]
         public System.Collections.Generic.IList<FinanceFacade.TaxAmount> TransactionTaxes
         {
             get
@@ -119,6 +122,7 @@ namespace FinanceFacade
         /// <exclude>Excluded</exclude> 
         string _PayeeRegistrationNumber;
 
+        /// <MetaDataID>{89200097-a871-44e8-a73c-29db104b8668}</MetaDataID>
         public string PayeeRegistrationNumber
         {
             get

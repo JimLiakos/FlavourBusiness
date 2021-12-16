@@ -17,6 +17,7 @@ namespace FLBManager.Views.HumanResources
     /// <summary>
     /// Interaction logic for AddresWindow.xaml
     /// </summary>
+    /// <MetaDataID>{233f5acc-840f-4c58-b4f7-392879a056dd}</MetaDataID>
     public partial class AddresWindow : Window
     {
         public AddresWindow()

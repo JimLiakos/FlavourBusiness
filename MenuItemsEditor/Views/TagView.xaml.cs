@@ -19,6 +19,7 @@ namespace MenuItemsEditor.Views
     /// <summary>
     /// Interaction logic for TagView.xaml
     /// </summary>
+    /// <MetaDataID>{526f9344-4aeb-46be-ab44-16bf615e7b71}</MetaDataID>
     public partial class TagView : UserControl
     {
         public TagView()
@@ -32,7 +33,7 @@ namespace MenuItemsEditor.Views
         private void TagView_Loaded(object sender, RoutedEventArgs e)
         {
             var tag = this.GetDataContextObject<TagViewModel>();
-            if (tag != null &&  tag.Edit)
+            if (tag != null && tag.Edit)
                 PreviewMouseDown += GlobalPreviewMouseDown;
         }
 
@@ -70,7 +71,7 @@ namespace MenuItemsEditor.Views
                 PreviewMouseDown += GlobalPreviewMouseDown;
 
                 var tag = this.GetDataContextObject<TagViewModel>();
-                if (tag != null )
+                if (tag != null)
                 {
                     tag.Edit = true;
                     e.Handled = true;
