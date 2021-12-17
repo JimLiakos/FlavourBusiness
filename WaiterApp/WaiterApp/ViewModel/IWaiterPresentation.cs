@@ -44,7 +44,8 @@ namespace WaiterApp.ViewModel
 
         bool AssignServingBatch(string serviceBatchIdentity);
 
-        
+        bool CommitServingBatches();
+
         bool DeassignServingBatch(string serviceBatchIdentity);
 
         bool InActiveShiftWork { get; }

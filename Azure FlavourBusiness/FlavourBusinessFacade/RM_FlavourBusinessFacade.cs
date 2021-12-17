@@ -4693,6 +4693,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "DeassignServingBatch", args, argsTypes);
         }
         
+        public void CommitServingBatches()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "CommitServingBatches", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

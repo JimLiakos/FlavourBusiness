@@ -704,6 +704,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 a_Waiter.RaiseServingBatchesChangedEvent();
 
         }
+        //internal void ServingBatchesOnTheRoad(HumanResources.Waiter waiter)
+        //{
+        //    foreach (var servingBatch in (waiter.ActiveShiftWork as HumanResources.ServingShiftWork).ServingBatches.Where(x => x.State == ItemPreparationState.OnRoad))
+        //    {
+
+        //    }
+        //}
 
 
 

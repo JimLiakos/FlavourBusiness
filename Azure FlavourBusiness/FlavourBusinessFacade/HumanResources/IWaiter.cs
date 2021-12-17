@@ -75,7 +75,7 @@ namespace FlavourBusinessFacade.HumanResources
 
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
-
+        void CommitServingBatches();
     }
 
 

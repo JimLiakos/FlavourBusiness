@@ -1153,7 +1153,32 @@ namespace WaiterApp.ViewModel
 
         }
 
-
+        public bool CommitServingBatches()
+        {
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        Waiter.CommitServingBatches();
+                        return true;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        var er = error;
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+            return true;
+        }
         public bool DeassignServingBatch(string serviceBatchIdentity)
         {
             var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();

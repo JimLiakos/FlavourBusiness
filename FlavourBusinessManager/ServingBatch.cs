@@ -64,8 +64,9 @@ namespace FlavourBusinessManager.RoomService
             {
 
             }
-
         }
+
+        public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
 
         /// <exclude>Excluded</exclude>
@@ -136,6 +137,21 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1abcf246-6696-41e7-82ae-19bd863348a1}</MetaDataID>
         [CachingDataOnClientSide]
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; set; }
+        public ItemPreparationState State
+        {
+            get
+            {
+                if (this.PreparedItems.Where(x => x.State == ItemPreparationState.Serving).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.Serving;
+                if (this.PreparedItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.OnRoad;
+
+                if (this.PreparedItems.OfType<ItemPreparation>().Where(x => x.IsInFollowingState(ItemPreparationState.Served)).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.Served;
+
+                return ItemPreparationState.Serving;
+            }
+        }
 
         /// <MetaDataID>{2bf04da7-e667-4ae3-8268-339da1a42253}</MetaDataID>
         protected ServingBatch()
@@ -243,6 +259,19 @@ namespace FlavourBusinessManager.RoomService
                 ContextsOfUnderPreparationItems = underPreparationItems;
                 ObjectChangeState?.Invoke(this, null);
             }
+        }
+
+        internal void OnTheRoad()
+        {
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in PreparedItems)
+                    itemPreparation.State = ItemPreparationState.OnRoad;
+                stateTransition.Consistent = true;
+            }
+
+            ItemsStateChanged?.Invoke()
         }
     }
 }

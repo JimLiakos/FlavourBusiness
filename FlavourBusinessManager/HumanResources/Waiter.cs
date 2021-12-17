@@ -724,6 +724,24 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        public void CommitServingBatches()
+        {
+            if (ActiveShiftWork is ServingShiftWork)
+            {
+                lock (this)
+                {
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var servingBatch in (ActiveShiftWork as ServingShiftWork).ServingBatches.Where(x => x.State == ItemPreparationState.Serving))
+                            servingBatch.OnTheRoad();
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)
         //{
         //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

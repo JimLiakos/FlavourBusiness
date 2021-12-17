@@ -59,6 +59,8 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{46f36229-fd4d-4d54-b0c2-751685130bdc}</MetaDataID>
         string ServicesPointIdentity { get; set; }
 
+        event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
+
     }
 
     /// <summary>
