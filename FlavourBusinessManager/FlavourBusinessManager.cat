@@ -11135,24 +11135,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66B8670182"
-			    compartment 	(object Compartment
-				Parent_View 	@114
-				location   	(1666, 1288)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2759)
 			    width      	744
 			    height     	337
 			    annotation 	8)
@@ -11250,24 +11232,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
-			    compartment 	(object Compartment
-				Parent_View 	@118
-				location   	(1656, 444)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	787)
 			    width      	788
 			    height     	426
 			    annotation 	8)
@@ -14916,7 +14880,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"24")
+			    value      	"25")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -15064,9 +15028,85 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"619B549B01A5"
+				    quid       	"61BC22DB003E"
 				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsInFollowingState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cbfe3669-e50e-4f89-9386-96faadc59f3a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BC1EEC00BE"))
+			    quid       	"61BC1EEC00BE"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"61BC1EEC00DF"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsInPreviousState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a8d5ef31-2805-40cf-987c-ca2dfd96e832}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BC1EEC0115"))
+			    quid       	"61BC1EEC0115"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"61BC1EEC0126"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsInFollowingState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{52d16497-7a11-47e5-9020-8517e3d26493}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BC22DA01D3"))
+			    quid       	"61BC22DA01D3"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"61BC22DA01E7"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsInPreviousState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3e7af055-3c4e-4dc6-a201-64a5c6579372}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BC22DA0216"))
+			    quid       	"61BC22DA0216"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"61BC22DA0229"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -15837,6 +15877,35 @@
 				    value      	"+23"))
 			    quid       	"619B549C01B1"
 			    type       	"FlavourBusinessFacade.RoomService.IServingBatch"
+			    exportControl 	"Public")
+			(object ClassAttribute "TransactionUri"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5b71d7bd-61ea-41b5-9955-2b19d47b3320}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BC22DC00EB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
+			    quid       	"61BC22DC00EB"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"

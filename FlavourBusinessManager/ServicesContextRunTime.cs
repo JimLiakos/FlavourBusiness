@@ -290,6 +290,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                            select menu).FirstOrDefault();
 
             }
+
+            Task.Run(() =>
+            {
+                //Load CashierStations
+                var cashierStations = CashierStations;
+            });
+
         }
 
 
@@ -1402,7 +1409,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 cashierStation = new ServicesContextResources.CashierStation(this.ServicesContextIdentity);
                 cashierStation.Description = Properties.Resources.DefaultPreparationStationDescription;
-                
+
                 objectStorage.CommitTransientObjectState(cashierStation);
 
                 stateTransition.Consistent = true;
@@ -1578,11 +1585,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
 
             return CashierStations.OfType<CashierStation>().Where(x => x.CashierStationIdentity == communicationCredentialKey).FirstOrDefault();
-            
+
         }
 
 
-        
+
 
 
         /// <MetaDataID>{e3638d03-da40-44de-a45b-5aa5953904d8}</MetaDataID>

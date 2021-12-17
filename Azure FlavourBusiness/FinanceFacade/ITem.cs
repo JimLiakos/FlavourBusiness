@@ -257,11 +257,13 @@ namespace FinanceFacade
 
 
 
+        /// <MetaDataID>{a98c3d71-b06b-497a-9fa5-941aade21e83}</MetaDataID>
         public void AddTax(TaxAmount taxAmount)
         {
             _Taxes.Add(taxAmount);
         }
 
+        /// <MetaDataID>{6c8832cb-4dcc-4cbb-bf67-852e0b90c7c9}</MetaDataID>
         public void RemoveTax(TaxAmount taxAmount)
         {
             _Taxes.Remove(taxAmount);
@@ -284,9 +286,11 @@ namespace FinanceFacade
             }
         }
 
+        /// <MetaDataID>{55f5b0bc-8d8f-42af-b1b6-5b1c60383ef0}</MetaDataID>
         public decimal Amount { get => Quantity * Price; }
 
-        public string uid { get ; set; }
+        /// <MetaDataID>{38cd5338-a098-41bd-a30a-80ad5a068e6e}</MetaDataID>
+        public string uid { get; set; }
     }
 
 }

@@ -202,16 +202,18 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{52d16497-7a11-47e5-9020-8517e3d26493}</MetaDataID>
         public bool IsInFollowingState(ItemPreparationState state)
         {
             //following 
-            return  ((int)this.State)< ((int)state);
+            return ((int)this.State) > ((int)state);
         }
 
+        /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
         public bool IsInPreviousState(ItemPreparationState state)
         {
             //previous
-            return  ((int)this.State)< ((int)state);
+            return ((int)this.State) < ((int)state);
         }
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
@@ -803,13 +805,41 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{3393c0e9-7404-4097-be16-5d9e678a9bdb}</MetaDataID>
         public bool IsCooked { get; set; }
 
-
+        /// <exclude>Excluded</exclude>
         OOAdvantech.Member<IServingBatch> _ServedInTheBatch = new OOAdvantech.Member<IServingBatch>();
 
         /// <MetaDataID>{ab76fae1-98fe-4f45-9973-c9dde93e547d}</MetaDataID>
         [PersistentMember(nameof(_ServedInTheBatch))]
         [BackwardCompatibilityID("+23")]
         public IServingBatch ServedInTheBatch => _ServedInTheBatch.Value;
+
+
+        /// <exclude>Excluded</exclude>
+        string _TransactionUri;
+
+
+        /// <MetaDataID>{5b71d7bd-61ea-41b5-9955-2b19d47b3320}</MetaDataID>
+        [PersistentMember(nameof(_TransactionUri))]
+        [BackwardCompatibilityID("+24")]
+        [JsonIgnore]
+        public string TransactionUri
+        {
+            get => _TransactionUri;
+
+            internal set
+            {
+
+                if (_TransactionUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TransactionUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
 
 

@@ -12,6 +12,33 @@ namespace FinanceFacade
     public class Transaction : ITransaction
     {
 
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+
+
+        /// <MetaDataID>{69518e16-81af-4aee-805c-b85507378551}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            TaxesJson = OOAdvantech.Json.JsonConvert.SerializeObject(_TransactionTaxes);
+            ItemsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Items);
+            TransactionProperiesJson = OOAdvantech.Json.JsonConvert.SerializeObject(TransactionProperies);
+        }
+
+
+
+
+        /// <MetaDataID>{3f9250f2-d7ff-4391-a58d-b594ef71479b}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            _TransactionTaxes = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<TaxAmount>>(TaxesJson);
+            _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<IItem>>(ItemsJson);
+            TransactionProperies = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(TransactionProperiesJson);
+
+        }
+
+
 
         /// <exclude>Excluded</exclude>
         Measurement.Quantity _Amount;
@@ -32,6 +59,22 @@ namespace FinanceFacade
             }
         }
 
+        /// <MetaDataID>{18309797-10bc-4866-b603-f31c1db2ac33}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+9")]
+        string ItemsJson;
+
+        /// <MetaDataID>{eca8e8e8-575c-4abb-a3f8-2116112ae81e}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+8")]
+        string TaxesJson;
+
+
+        /// <MetaDataID>{f4315f4c-6dca-4db6-93f8-4200df91241c}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+9")]
+        string TransactionProperiesJson;
+
         /// <exclude>Excluded</exclude>
         string _Description;
 
@@ -40,8 +83,8 @@ namespace FinanceFacade
         {
             _Items.Add(item);
         }
-
-        /// <MetaDataID>{ed7e9605-e1fd-440e-a3f7-6ea6505e3cb0}</MetaDataID>
+        /// <MetaDataID>{dd608129-7e91-4e0b-a6a2-8be1c701baa6}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
         System.Collections.Generic.Dictionary<string, string> TransactionProperies = new System.Collections.Generic.Dictionary<string, string>();
         /// <MetaDataID>{1cf01a7e-9061-4c02-8ed0-e89e9588d776}</MetaDataID>
         public string GetPropertyValue(string propertyName)
@@ -90,7 +133,7 @@ namespace FinanceFacade
         }
 
         /// <exclude>Excluded</exclude>
-        Set<IItem> _Items = new Set<IItem>();
+        System.Collections.Generic.List<IItem> _Items = new System.Collections.Generic.List<IItem>();
         /// <MetaDataID>{414777ff-5a14-4bba-a10a-fa9900d41e71}</MetaDataID>
         [BackwardCompatibilityID("+4")]
         public IList<IItem> Items
@@ -104,7 +147,7 @@ namespace FinanceFacade
             }
         }
         /// <exclude>Excluded</exclude>
-        Set<TaxAmount> _TransactionTaxes = new Set<TaxAmount>();
+        System.Collections.Generic.List<TaxAmount> _TransactionTaxes = new System.Collections.Generic.List<TaxAmount>();
 
         /// <MetaDataID>{d83595b4-e005-4d29-878a-fa02bb297519}</MetaDataID>
         [BackwardCompatibilityID("+5")]

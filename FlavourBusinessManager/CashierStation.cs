@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -113,6 +114,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     item.ObjectChangeState += FlavourItem_ObjectChangeState;
                 }
                 ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
+
             }
 
 
@@ -125,6 +127,19 @@ namespace FlavourBusinessManager.ServicesContextResources
                 PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.HallServicePoint, ItemState = ItemPreparationState.OnRoad });
             if (GetPrintReceiptCondition(ServicePointType.TakeAway) == null)
                 PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.TakeAway, ItemState = ItemPreparationState.OnRoad });
+
+
+            Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(1000);
+                foreach (var preparationItem in (from servicePointPreparationItems in ServicePointsPreparationItems
+                                                 from preparationItem in servicePointPreparationItems.PreparationItems
+                                                 select preparationItem).OfType<ItemPreparation>())
+                {
+                    PrintReceiptCheck(preparationItem);
+                }
+            });
+
 
         }
 
@@ -140,6 +155,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             ItemPreparation itemPreparation = (_object as ItemPreparation);
 
+            PrintReceiptCheck(itemPreparation);
+        }
+
+        private void PrintReceiptCheck(ItemPreparation itemPreparation)
+        {
             var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
             if (printReceiptCondition.ItemState != null && itemPreparation.IsInFollowingState(printReceiptCondition.ItemState.Value))
             {
@@ -151,6 +171,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{d71448c3-59f6-4ad4-9636-bcc68c045e36}</MetaDataID>
+        static object PrintReceiptLock = new object();
         /// <MetaDataID>{7a14c632-b037-4b38-8722-2d631ffbe80b}</MetaDataID>
         private void PrintReceipt(List<IItemPreparation> receiptItems)
         {
@@ -169,15 +191,44 @@ namespace FlavourBusinessManager.ServicesContextResources
             //transaction.AddItem(beer);
 
 
-            ITaxAuthority taxAuthority = null;
-            FinanceFacade.Transaction transaction = new FinanceFacade.Transaction();
-            foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
+            lock (PrintReceiptLock)
             {
-                taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
-                var transactionItem = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price,uid=receiptItem.uid };
-                decimal amount = transactionItem.Amount;
-                foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
-                    transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount =  transactionItem.Amount/(1+ (decimal)tax.TaxRate) });
+                FinanceFacade.Transaction transaction = null;
+                receiptItems = receiptItems.OfType<ItemPreparation>().Where(x => string.IsNullOrEmpty(x.TransactionUri)).OfType<IItemPreparation>().ToList();
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                {
+                    ITaxAuthority taxAuthority = null;
+
+                    foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
+                    {
+                        if (transaction == null)
+                            transaction = new FinanceFacade.Transaction();
+
+                        taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
+                        var transactionItem = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price, uid = receiptItem.uid };
+                        decimal amount = transactionItem.Amount;
+                        foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
+                            transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = transactionItem.Amount / (1 + (decimal)tax.TaxRate) });
+                    }
+                    stateTransition.Consistent = true;
+                }
+
+                if (transaction != null)
+                {
+                    string transactionUri = ObjectStorage.GetStorageOfObject(transaction)?.GetPersistentObjectUri(transaction);
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
+                            receiptItem.TransactionUri = transactionUri;
+
+                        stateTransition.Consistent = true;
+                    }
+
+
+                }
+
             }
 
         }
