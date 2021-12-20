@@ -82,6 +82,8 @@ namespace FinanceFacade
     public class Item : IItem
     {
 
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
         string _Category;
@@ -260,13 +262,25 @@ namespace FinanceFacade
         /// <MetaDataID>{a98c3d71-b06b-497a-9fa5-941aade21e83}</MetaDataID>
         public void AddTax(TaxAmount taxAmount)
         {
-            _Taxes.Add(taxAmount);
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Taxes.Add(taxAmount); 
+                stateTransition.Consistent = true;
+            }
+
         }
 
         /// <MetaDataID>{6c8832cb-4dcc-4cbb-bf67-852e0b90c7c9}</MetaDataID>
         public void RemoveTax(TaxAmount taxAmount)
         {
-            _Taxes.Remove(taxAmount);
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Taxes.Remove(taxAmount); 
+                stateTransition.Consistent = true;
+            }
+
         }
 
         /// <exclude>Excluded</exclude>

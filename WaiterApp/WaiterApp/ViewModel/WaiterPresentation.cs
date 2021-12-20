@@ -59,12 +59,15 @@ namespace WaiterApp.ViewModel
     public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, ISecureUser, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
+        /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
         protected WaiterPresentation()
         {
             this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true };
         }
+        /// <MetaDataID>{94887bc2-fef8-4fcc-af96-24e9ef4e71c3}</MetaDataID>
         static WaiterPresentation _Current;
 
+        /// <MetaDataID>{ab4f306a-4e5e-4d88-b7d5-926cd6e2a15e}</MetaDataID>
         public static WaiterPresentation Current
         {
             get
@@ -81,9 +84,12 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
         public string Language { get { return lan; } }
 
+        /// <MetaDataID>{aa111635-723d-4de6-a65b-7bf679f73f1a}</MetaDataID>
         string deflan = "en";
+        /// <MetaDataID>{6a86b8c5-a1df-4b2d-8e67-93e04145bffe}</MetaDataID>
         public string DefaultLanguage { get { return deflan; } }
 
+        /// <MetaDataID>{4304272a-c50e-4870-b451-40af03eeb405}</MetaDataID>
         static IAppLifeTime AppLifeTime
         {
             get
@@ -96,6 +102,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{33f97ad3-db86-4b6d-9492-aa4a4fedd141}</MetaDataID>
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
         {
             get
@@ -112,6 +119,7 @@ namespace WaiterApp.ViewModel
         public event LaytheTableRequestHandle LayTheTableRequest;
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
+        /// <MetaDataID>{4d17380a-0570-480d-a1ec-b2140d0ca76a}</MetaDataID>
         internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
         {
             ObjectChangeState?.Invoke(this, "ServingBatches");
@@ -163,7 +171,9 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{01d2f1e0-5e56-4bde-82b6-d92468e60a58}</MetaDataID>
         string _Address;
+        /// <MetaDataID>{929b37eb-b260-496f-ae3c-9bcbca8b9a31}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         public string Address
@@ -266,6 +276,7 @@ namespace WaiterApp.ViewModel
         //static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
         //static string _AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
         //static string _AzureServerUrl = "http://10.0.0.13:8090/api/";//work
+        /// <MetaDataID>{b066e79f-6707-428e-ad3e-f96d17ae45c6}</MetaDataID>
         static string _AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
 
@@ -287,10 +298,13 @@ namespace WaiterApp.ViewModel
 
         /// <MetaDataID>{f55963f0-34db-4fb9-b9ef-14d064de47ec}</MetaDataID>
         string _PhoneNumber;
+        /// <MetaDataID>{809b179f-f0b6-4679-8896-53c71591a182}</MetaDataID>
         private IWaiter Waiter;
 
 
+        /// <MetaDataID>{75146911-f7c0-4e07-8ebb-da97efb23cb4}</MetaDataID>
         IList<IHallLayout> _Halls;
+        /// <MetaDataID>{a7e5913c-4175-4744-a4a6-3ed768cbe1a5}</MetaDataID>
         public IList<IHallLayout> Halls
         {
             get
@@ -322,6 +336,7 @@ namespace WaiterApp.ViewModel
         public bool IsActiveWaiter => Waiter != null;
 
 
+        /// <MetaDataID>{f21f1462-a47e-4783-a5ca-270d265d27bf}</MetaDataID>
         Task<bool> SignInTask;
 
         /// <MetaDataID>{0b631e28-fc5c-46ab-85c1-944ce7ead3eb}</MetaDataID>
@@ -612,6 +627,7 @@ namespace WaiterApp.ViewModel
 
         }
 
+        /// <MetaDataID>{a2faf413-7b2b-4136-91c4-8ac9771b842d}</MetaDataID>
         private void ServingBatchesChanged()
         {
             var nn = Waiter.Name;
@@ -622,6 +638,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{71eb9279-699c-45d1-a7d2-e767d2729291}</MetaDataID>
         private void GetServingUpdates()
         {
             List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.ServingBatches
@@ -663,6 +680,7 @@ namespace WaiterApp.ViewModel
             ObjectChangeState?.Invoke(this, "ServingBatches");
         }
 
+        /// <MetaDataID>{940f1f9b-d176-4955-aed9-195adf50fc55}</MetaDataID>
         private void UpdateServingBatches(IList<IServingBatch> allServingBatches)
         {
 
@@ -689,6 +707,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{e87cdab3-0026-4ab4-8939-1f23c921e269}</MetaDataID>
         private void WaiterPresentation_Reconnected(object sender)
         {
             if (Waiter != null)
@@ -704,17 +723,20 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{bb7ffd5e-7adb-466d-a1b8-217bd785ee91}</MetaDataID>
         private void Waiter_MessageReceived(IMessageConsumer sender)
         {
 
 
         }
 
+        /// <MetaDataID>{b4d7c3bf-4a36-4111-aa8d-b33709d3f35e}</MetaDataID>
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
         {
 
         }
 
+        /// <MetaDataID>{dedbf193-f9e7-4d31-899b-1119b925b50e}</MetaDataID>
         async Task<bool> IOSPseudoSignIn()
         {
 
@@ -857,6 +879,7 @@ namespace WaiterApp.ViewModel
             }
 
         }
+        /// <MetaDataID>{527b5bdb-7653-40f3-8370-e619aa9d216a}</MetaDataID>
         private void MessageReceived(IMessageConsumer sender)
         {
 #if DeviceDotNet
@@ -900,6 +923,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{d3502416-55ad-482e-875b-f19d27f520a4}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IServicesContextWorker.ActiveShiftWork))
@@ -1098,20 +1122,27 @@ namespace WaiterApp.ViewModel
         }
 
 
+        /// <MetaDataID>{3a868f16-c77b-4316-b6c0-c1a2bc4cf6b8}</MetaDataID>
         public DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; private set; }
 
 
+        /// <MetaDataID>{12e40d3a-0505-40a7-ac75-e728e24dd157}</MetaDataID>
         IShiftWork ActiveShiftWork;
 
+        /// <MetaDataID>{4d1af4d2-ecbb-4ef9-a0ee-8a43a3a7d137}</MetaDataID>
         ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
 
 
+        /// <MetaDataID>{dd252805-6fb8-4285-9393-644a55911ee3}</MetaDataID>
         public List<ServingBatchPresentation> ServingBatches => _ServingBatches.Values.OrderBy(x => x.ServingBatch.SortID).ToList();
 
+        /// <MetaDataID>{d4df3e7e-34d8-4d28-8cc1-98d2217c9c4b}</MetaDataID>
         ViewModelWrappers<IServingBatch, ServingBatchPresentation> _AssignedServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
 
+        /// <MetaDataID>{83a88d0b-ec9d-4025-8727-410a3e52b700}</MetaDataID>
         public List<ServingBatchPresentation> AssignedServingBatches => _AssignedServingBatches.Values.OrderBy(x => x.ServingBatch.SortID).ToList();
 
+        /// <MetaDataID>{9f501ecd-d882-47f3-b7ca-55e37b4ecf36}</MetaDataID>
         public bool AssignServingBatch(string serviceBatchIdentity)
         {
             var servingBatch = ServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
@@ -1153,6 +1184,7 @@ namespace WaiterApp.ViewModel
 
         }
 
+        /// <MetaDataID>{8675f074-c752-4808-a9bb-1d1feb84db6d}</MetaDataID>
         public bool CommitServingBatches()
         {
             SerializeTaskScheduler.AddTask(async () =>
@@ -1179,6 +1211,7 @@ namespace WaiterApp.ViewModel
             });
             return true;
         }
+        /// <MetaDataID>{76ef59a3-cbfb-4908-84c9-4578f906f5d8}</MetaDataID>
         public bool DeassignServingBatch(string serviceBatchIdentity)
         {
             var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
@@ -1219,6 +1252,7 @@ namespace WaiterApp.ViewModel
             return false;
         }
 
+        /// <MetaDataID>{e88857c6-f7c0-4805-933b-ad8e3a4a55e6}</MetaDataID>
         public bool InActiveShiftWork
         {
             get
@@ -1249,6 +1283,7 @@ namespace WaiterApp.ViewModel
         }
 
 
+        /// <MetaDataID>{6f36b650-3b5e-44e3-85fa-42b869925240}</MetaDataID>
         public DateTime ActiveShiftWorkStartedAt
         {
             get
@@ -1260,6 +1295,7 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{993f9cef-4758-4957-92bc-a524fe03c3b8}</MetaDataID>
         public DateTime ActiveShiftWorkEndsAt
         {
             get
@@ -1271,8 +1307,10 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        /// <MetaDataID>{4adb01c1-c93a-47dc-ad82-c5f8e696aab5}</MetaDataID>
         public string AppIdentity => "com.microneme.dontwaitwaiterapp";
 
+        /// <MetaDataID>{66534587-dc7c-4f65-8b94-4e14471f0437}</MetaDataID>
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
@@ -1283,7 +1321,9 @@ namespace WaiterApp.ViewModel
             GetMessages();
         }
 
+        /// <MetaDataID>{36574b28-ba8d-4c4a-bc63-873836f9d4eb}</MetaDataID>
         object MessagesLock = new object();
+        /// <MetaDataID>{7764a3ac-8238-42dd-81b2-bb9bf1832cae}</MetaDataID>
         private void GetMessages()
         {
             lock (MessagesLock)
@@ -1390,15 +1430,18 @@ namespace WaiterApp.ViewModel
 
 
 
+        /// <MetaDataID>{c4aab28c-46f3-45ae-9b95-fa4cd6fd1577}</MetaDataID>
         public void ExtendSiftWorkStart(double timespanInHours)
         {
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{269fc5a7-5b40-4aac-80a2-b55d55e41dc4}</MetaDataID>
         public MarshalByRefObject GetObjectFromUri(string uri)
         {
             return FlavoursOrderServer as MarshalByRefObject;
         }
+        /// <MetaDataID>{07acf9b5-7184-48c8-ae68-99b9073851ca}</MetaDataID>
         public string GetString(string langCountry, string key)
         {
             JObject jObject = null;
@@ -1440,6 +1483,7 @@ namespace WaiterApp.ViewModel
         }
 
 
+        /// <MetaDataID>{b9aa7b69-ee7c-4c79-b9c9-f44bbfcfcff9}</MetaDataID>
         public void SetString(string langCountry, string key, string newValue)
         {
             JObject jObject = null;
@@ -1482,8 +1526,10 @@ namespace WaiterApp.ViewModel
 
         }
 
+        /// <MetaDataID>{78e3b85a-cefd-4a92-aef3-66ad79121d13}</MetaDataID>
         Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
 
+        /// <MetaDataID>{daa58ef0-acd5-443f-8fde-ebd20b3d3ec0}</MetaDataID>
         public string GetTranslation(string langCountry)
         {
             if (Translations.ContainsKey(langCountry))

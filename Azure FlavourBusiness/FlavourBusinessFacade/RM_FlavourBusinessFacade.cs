@@ -3058,6 +3058,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
+public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+            }
         
         public Pr_IServingBatch(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {

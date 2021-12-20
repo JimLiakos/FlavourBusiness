@@ -102,6 +102,33 @@ namespace MenuModel
             }
         }
 
+        public List<PreparationScaledOption> GetAllScaledOptions()
+        {
+            List<PreparationScaledOption> scaledOptions = new List<PreparationScaledOption>();
+            foreach (var option in this.Options)
+            {
+                if (option is IPreparationOptionsGroup)
+                    scaledOptions.AddRange(GetAllScaledOptions(option as IPreparationOptionsGroup));
+                else if (option is PreparationScaledOption)
+                    scaledOptions.Add(option as PreparationScaledOption);
+            }
+            return scaledOptions;
+        }
+
+
+        List<PreparationScaledOption> GetAllScaledOptions(IPreparationOptionsGroup optionGroup)
+        {
+            List<PreparationScaledOption> scaledOptions = new List<PreparationScaledOption>();
+            foreach (var option in optionGroup.GroupedOptions)
+            {
+                if (option is IPreparationOptionsGroup)
+                    scaledOptions.AddRange(GetAllScaledOptions(option as IPreparationOptionsGroup));
+                else if (option is PreparationScaledOption)
+                    scaledOptions.Add(option as PreparationScaledOption);
+            }
+            return scaledOptions;
+        }
+
 
         /// <MetaDataID>{5a266cf0-ba7a-4056-90ed-1aee3db19e45}</MetaDataID>
         public void MovePreparationOption(IPreparationOption preparationOption, int newpos)
@@ -215,6 +242,6 @@ namespace MenuModel
 
         }
 
-     
+
     }
 }

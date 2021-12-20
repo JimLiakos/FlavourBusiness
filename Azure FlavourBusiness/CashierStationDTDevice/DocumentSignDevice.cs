@@ -687,24 +687,24 @@ namespace CashierStationDevice
             {
                 total_to_pay_poso += item.Price;
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 0)
+                if (VatAcounts[item.Taxes[0].AccountID] == 0)
                 {
                     vat_a += item.Taxes[0].Amount;
                     net_a += item.Price - item.Taxes[0].Amount;
                 }
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 1)
+                if (VatAcounts[item.Taxes[0].AccountID] == 1)
                 {
                     vat_b += item.Taxes[0].Amount;
                     net_b += item.Price - item.Taxes[0].Amount;
                 }
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 2)
+                if (VatAcounts[item.Taxes[0].AccountID] == 2)
                 {
                     vat_c += item.Taxes[0].Amount;
                     net_c += item.Price - item.Taxes[0].Amount;
                 }
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 3)
+                if (VatAcounts[item.Taxes[0].AccountID] == 3)
                 {
                     vat_d += item.Taxes[0].Amount;
                     net_d += item.Price - item.Taxes[0].Amount;
@@ -730,7 +730,22 @@ namespace CashierStationDevice
                 Print(transaction, "13", "", false, "", signature, out printText);
 
         }
-        public static List<string> VatAcounts = new List<string>() { "a1", "b1", "c1", "d1" };
+
+        public static Dictionary<string, int> VatAcounts = new Dictionary<string, int>{
+            {"a1",0},
+            {"b1",1},
+            {"c1",2},
+            {"d1",3},
+            {"C54-00-70-0006",0},
+            {"C54-00-70-0013",1},
+            {"C54-00-70-0024",2},
+            {"C54-00-70-0036",3},
+            {"C54-00-70-0000",4},
+            {"C54-00-79-0004",0},
+            {"C54-00-79-0009",1},
+            {"C54-00-79-0017",2},
+            {"C54-00-79-0025",3}
+        };
 
         public static bool Print(ITransaction transaction, string tableNumber, string ReportPath, bool change, string comments, SignatureData signuture, out string printTxt)
         {
@@ -1502,7 +1517,7 @@ namespace CashierStationDevice
             }
         }
 
-        public static List<string> VatAcounts = new List<string>() { "a1", "b1", "c1", "d1" };
+        public static Dictionary<string, int> VatAcounts = new Dictionary<string, int> { { "a1", 0 }, { "b1", 1 }, { "c1", 2 }, { "d1", 3 } };
         /// <MetaDataID>{f549381f-3821-4725-b1c4-255b4647dd9e}</MetaDataID>
         public void PrintReceipt(ITransaction transaction)
         {
@@ -1530,24 +1545,24 @@ namespace CashierStationDevice
             {
                 total_to_pay_poso += item.Price;
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 0)
+                if (VatAcounts[item.Taxes[0].AccountID] == 0)
                 {
                     vat_a += item.Taxes[0].Amount;
                     net_a += item.Price - item.Taxes[0].Amount;
                 }
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 1)
+                if (VatAcounts[item.Taxes[0].AccountID] == 1)
                 {
                     vat_b += item.Taxes[0].Amount;
                     net_b += item.Price - item.Taxes[0].Amount;
                 }
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 2)
+                if (VatAcounts[item.Taxes[0].AccountID] == 2)
                 {
                     vat_c += item.Taxes[0].Amount;
                     net_c += item.Price - item.Taxes[0].Amount;
                 }
 
-                if (VatAcounts.IndexOf(item.Taxes[0].AccountID) == 3)
+                if (VatAcounts[item.Taxes[0].AccountID] == 3)
                 {
                     vat_d += item.Taxes[0].Amount;
                     net_d += item.Price - item.Taxes[0].Amount;

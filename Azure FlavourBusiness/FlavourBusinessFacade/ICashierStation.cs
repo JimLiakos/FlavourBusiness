@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech.MetaDataRepository;
+using System;
 
 namespace FlavourBusinessFacade.ServicesContextResources
 {
@@ -7,6 +8,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [BackwardCompatibilityID("{a14a8c99-cafc-4905-a1c3-ee2cdf8dff75}")]
     public interface ICashierStation
     {
+        [Association("CahsierStationTransactions", Roles.RoleA, "ff84f259-3390-44f9-973a-452c0a9a4bd2")]
+        [RoleBMultiplicityRange(1, 1)]
+        System.Collections.Generic.List<FinanceFacade.ITransaction> Transactions { get; }
+
+        /// <MetaDataID>{fa614312-e7da-45ae-bcc8-ccbe88666c82}</MetaDataID>
+        string CashierStationDeviceData { get; set; }
+
+
         [Association("CashierOwner", Roles.RoleA, "d55e4a11-efb3-4bcb-963a-12c7ad00c2d8")]
         [RoleAMultiplicityRange(1, 1)]
         FinanceFacade.IFisicalParty Issuer {get; set;}
@@ -54,4 +63,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{a2f81bb6-721b-4690-af9d-d43ab4304b7b}</MetaDataID>
         public bool? IsPaid { get; set; }
     }
+
+    /// <MetaDataID>{cce15a1a-e252-4e74-9a6c-dff82db1b611}</MetaDataID>
+    public class CashierStationDeviceException : Exception
+    {
+        /// <MetaDataID>{29d331a0-9a81-4500-9e18-16d36ad042f4}</MetaDataID>
+        public CashierStationDeviceException(string message) : base(message)
+        {
+            HResult = 800;
+        }
+
+    }
+
 }

@@ -776,7 +776,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"10")
+		    value      	"11")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -874,6 +874,25 @@
 			(object Parameter "value"
 			    quid       	"61BC16EE01D9"
 			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{11230707-d626-44c3-b0d8-19ae7c0910c5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61BF2DCE02F9"))
+		    quid       	"61BF2DCE02F9"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"61BF2DCE030D"
+			    type       	"FinanceFacade.Item"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -1070,7 +1089,7 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
-			    value      	"+9"))
+			    value      	"+10"))
 		    quid       	"61BC16EE02DD"
 		    type       	"string")
 		(object ClassAttribute "TransactionProperies"
@@ -4095,7 +4114,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	16
+			nlines     	17
 			max_width  	1550)
 		    width      	569
 		    height     	368
@@ -4365,6 +4384,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBD69034C"
+		    compartment 	(object Compartment
+			Parent_View 	@64
+			location   	(225, 683)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	0)
 		    width      	531
 		    height     	394
 		    annotation 	8)

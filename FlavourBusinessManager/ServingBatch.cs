@@ -48,6 +48,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{36db5a26-d4bc-4f1c-af8f-13cfc237c9f5}</MetaDataID>
         [DeleteObjectCall]
         void ObjectDeleting()
         {
@@ -57,6 +58,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{a3dfa875-e9b1-4fae-9656-c09968bd587f}</MetaDataID>
         [ObjectsLinkCall]
         void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
         {
@@ -100,6 +102,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{4fd40b73-6ad1-4efb-a156-4e7c585155db}</MetaDataID>
         [CachingDataOnClientSide]
         public int SortID { get; internal set; }
 
@@ -137,6 +140,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1abcf246-6696-41e7-82ae-19bd863348a1}</MetaDataID>
         [CachingDataOnClientSide]
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; set; }
+        /// <MetaDataID>{6bf00296-5438-4802-bbba-52b4263092e0}</MetaDataID>
         public ItemPreparationState State
         {
             get
@@ -211,6 +215,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{a7f2b9ce-f952-472b-89c3-f1487c5a619c}</MetaDataID>
         private void MealCourseChangeState(object _object, string member)
         {
 
@@ -261,6 +266,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{7ddeada1-2762-4aea-812a-6486231344be}</MetaDataID>
         internal void OnTheRoad()
         {
 
@@ -271,7 +277,7 @@ namespace FlavourBusinessManager.RoomService
                 stateTransition.Consistent = true;
             }
 
-            ItemsStateChanged?.Invoke()
+            ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
         }
     }
 }

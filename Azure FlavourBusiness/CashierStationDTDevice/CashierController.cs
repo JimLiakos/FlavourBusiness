@@ -13,6 +13,8 @@ namespace CashierStationDevice
     {
         /// <MetaDataID>{af4a528e-ef65-4e03-b887-e0ba7e094e13}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
+        ICashiersStationRuntime CashiersStation;
         /// <MetaDataID>{d76d5629-dbbc-4583-8610-6cd79f7f3c2c}</MetaDataID>
         public void Start()
         {
@@ -20,7 +22,38 @@ namespace CashierStationDevice
             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
             string serverUrl = AzureServerUrl;
             IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-            ICashiersStationRuntime PreparationStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+            CashiersStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+            try
+            {
+
+
+
+
+                CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
+                var transctios = CashiersStation.GetOpenTransactions(null);
+                var sdsd = transctios.FirstOrDefault()?.Items;
+
+
+            }
+            catch (Exception error)
+            {
+
+                if (error.HResult == 800)
+                {
+                    if (!System.Diagnostics.EventLog.SourceExists("CashierStationDevice", "."))
+                        System.Diagnostics.EventLog.CreateEventSource("CashierStationDevice", "Microneme");
+                    System.Diagnostics.EventLog myLog = new System.Diagnostics.EventLog();
+                    myLog.Source = "CashierStationDevice";
+                    myLog.WriteEntry("There is already attached device to the cashier station", System.Diagnostics.EventLogEntryType.Error);
+
+                    throw new CashierStationDeviceException("Only one cashier station device allowed to subscribe");
+                }
+            }
+        }
+
+        private void CashiersStation_OpenTransactions(ICashiersStationRuntime sender, string deviceUpdateEtag)
+        {
+            var transctios = CashiersStation.GetOpenTransactions(deviceUpdateEtag);
         }
     }
 }

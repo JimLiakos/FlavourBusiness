@@ -515,9 +515,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     System.Threading.Thread.Sleep(1000);
                 }
-
             });
-
         }
 
 

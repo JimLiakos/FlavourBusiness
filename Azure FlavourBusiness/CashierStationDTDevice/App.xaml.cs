@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using CashierStationDevice;
+using FlavourBusinessFacade.ServicesContextResources;
 using NotifyIconWpf;
 
 namespace CashierStationDTDevice
@@ -35,7 +36,15 @@ namespace CashierStationDTDevice
             CashierController = new CashierStationDevice.CashierController();
             CashierController = new CashierStationDevice.CashierController();
 
-            CashierController.Start();
+            try
+            {
+                CashierController.Start();
+            }
+            catch (CashierStationDeviceException error)
+            {
+
+                System.Windows.Application.Current.Shutdown();
+            }
 
 
         }

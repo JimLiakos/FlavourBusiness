@@ -250,7 +250,10 @@ namespace FlavourBusinessManager.RoomService
         [JsonIgnore]
         public IOptionMenuItemSpecific itemSpecificOption { get; internal set; }
 
-     
+
+        [JsonIgnore]
+        public IPreparationScaledOption Option { get; internal set; }
+
 
 
         /// <MetaDataID>{e44bc19d-1563-4b43-ab0e-5e4c37707d55}</MetaDataID>

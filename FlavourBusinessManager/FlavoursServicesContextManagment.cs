@@ -268,8 +268,10 @@ namespace FlavourBusinessManager
                 {
                     try
                     {
-                        if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName))
+
+                        if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName)|| objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
                         {
+                            objectStorage.StorageMetaData.RegisterComponent(typeof(FinanceFacade.Transaction).Assembly.FullName);
                             objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
                             objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
                         }

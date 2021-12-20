@@ -31,6 +31,7 @@ namespace FlavourBusinessFacade.ViewModel
         /// <MetaDataID>{6c551519-9f15-4b0b-9608-d957db625e95}</MetaDataID>
         string Language { get; }
 
+        /// <MetaDataID>{ed4ee429-33f1-43bf-8ea5-c92169cae9b3}</MetaDataID>
         string DefaultLanguage { get; }
 
         /// <MetaDataID>{45d4c218-adff-467d-8136-4ad2f83a2697}</MetaDataID>

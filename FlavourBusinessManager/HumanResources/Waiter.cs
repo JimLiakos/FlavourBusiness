@@ -652,6 +652,7 @@ namespace FlavourBusinessManager.HumanResources
             return ServicesContextRunTime.GetServingBatches(this).OfType<IServingBatch>().ToList();
         }
 
+        /// <MetaDataID>{f5de8f49-f437-4d88-8daa-403e6aefce51}</MetaDataID>
         public ServingBatchUpdates GetServingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
 
@@ -674,12 +675,13 @@ namespace FlavourBusinessManager.HumanResources
                     servingItemsOnDevice.Remove(servingItemOnDevice);
                 }
             }
-            servingBatches =itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
+            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
 
             return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
         }
 
 
+        /// <MetaDataID>{16d6364d-018c-425d-808a-b663578c95b8}</MetaDataID>
         public void AssignServingBatch(IServingBatch servingBatch)
         {
             if (ActiveShiftWork is ServingShiftWork)
@@ -692,10 +694,11 @@ namespace FlavourBusinessManager.HumanResources
                 ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchAssigned(this, servingBatch);
             }
 
-            
+
         }
 
 
+        /// <MetaDataID>{e75ecf5b-3567-448e-8424-6ee02d26f10f}</MetaDataID>
         public void DeassignServingBatch(IServingBatch servingBatch)
         {
             var mealCourse = servingBatch.MealCourse;
@@ -703,7 +706,7 @@ namespace FlavourBusinessManager.HumanResources
             var underPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
 
-            (servingBatch as RoomService.ServingBatch). Update(mealCourse, preparedItems, underPreparationItems);
+            (servingBatch as RoomService.ServingBatch).Update(mealCourse, preparedItems, underPreparationItems);
             ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchDeassigned(this, servingBatch);
 
 
@@ -713,17 +716,20 @@ namespace FlavourBusinessManager.HumanResources
         }
         public event ServingBatchesChangedHandler ServingBatchesChanged;
 
+        /// <MetaDataID>{63737ce6-b491-4fe4-a179-4fc82c6063f6}</MetaDataID>
         internal void RaiseServingBatchesChangedEvent()
         {
             ServingBatchesChanged?.Invoke();
         }
 
 
+        /// <MetaDataID>{13795273-fe1b-4d00-b840-bb8bdcfda520}</MetaDataID>
         public void ServingBatchesCommit()
         {
 
         }
 
+        /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>
         public void CommitServingBatches()
         {
             if (ActiveShiftWork is ServingShiftWork)

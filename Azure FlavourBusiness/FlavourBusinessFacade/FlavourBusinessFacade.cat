@@ -4670,6 +4670,31 @@
 				    value      	"+2"))
 			    quid       	"61ABB1D3028B"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "CashierStationDeviceData"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61BE4EC2038E")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fa614312-e7da-45ae-bcc8-ccbe88666c82}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"61BE4EC2038E"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -7876,6 +7901,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
+			    compartment 	(object Compartment
+				Parent_View 	@61
+				location   	(1506, 2271)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	0)
 			    width      	656
 			    height     	343
 			    annotation 	8)

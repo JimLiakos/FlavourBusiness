@@ -208,6 +208,12 @@ namespace FlavourBusinessManager.RoomService
             //following 
             return ((int)this.State) > ((int)state);
         }
+        /// <MetaDataID>{b1802d54-39e2-45cc-b67e-4c8740ae9445}</MetaDataID>
+        public bool IsIntheSameOrFollowingState(ItemPreparationState state)
+        {
+            //following 
+            return ((int)this.State) >= ((int)state);
+        }
 
         /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
         public bool IsInPreviousState(ItemPreparationState state)
@@ -344,7 +350,26 @@ namespace FlavourBusinessManager.RoomService
         public IMenuItem LoadMenuItem()
         {
             if (_MenuItem == null && !string.IsNullOrWhiteSpace(_MenuItemUri))
+            {
                 _MenuItem = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(_MenuItemUri) as IMenuItem;
+
+                var optionsDictionary = (from itemType in _MenuItem.Types.OfType<MenuItemType>()
+                                         from option in itemType.GetAllScaledOptions()
+                                         select option).ToDictionary(x => x.Uri);
+
+                foreach (var optionChange in this.OptionsChanges.OfType<OptionChange>())
+                {
+                    PreparationScaledOption option = null;
+                    if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
+                    {
+                        optionChange.Option = option;
+                        optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
+                    }
+                }
+                //_MenuItem.OptionsMenuItemSpecifics
+
+
+            }
 
             return _MenuItem;
         }
@@ -608,6 +633,22 @@ namespace FlavourBusinessManager.RoomService
                     }
                 }
 
+            }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                string name = Name;
+                if (_MenuItem != null)
+                    name = _MenuItem.FullName;
+
+                var optionChange = this.OptionsChanges.OfType<OptionChange>().Where(x => x.PriceDif == 1 && x.Option is MenuModel.ItemSelectorOption).FirstOrDefault();
+                if (optionChange != null)
+                    return name + " " + optionChange.OptionName;
+                else
+                    return name;
             }
         }
 

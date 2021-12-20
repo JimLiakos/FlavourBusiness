@@ -3,16 +3,37 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace WaiterApp.ViewModel
 {
     /// <MetaDataID>{c6caec47-b340-48ee-8f09-428622c0945c}</MetaDataID>
-    public class ServingBatchPresentation:System.IDisposable
+    public class ServingBatchPresentation : System.IDisposable
     {
         public ServingBatchPresentation()
         {
 
+        }
+
+
+        public ItemPreparationState State
+        {
+            get
+            {
+                var servingBatchItems = (from itemsPreprationContext in this.ContextsOfPreparedItems
+                                         from preparedItem in itemsPreprationContext.PreparationItems
+                                         select preparedItem).OfType<FlavourBusinessManager.RoomService.ItemPreparation>().ToList();
+
+                 if (servingBatchItems.All(x=>x.State==ItemPreparationState.OnRoad))
+                    return ItemPreparationState.OnRoad;
+
+                if (servingBatchItems.All(x => x.IsInFollowingState(ItemPreparationState.OnRoad)))
+                    return ItemPreparationState.Served;
+
+                return ItemPreparationState.Serving;
+
+            }
         }
 
         public void Dispose()
@@ -22,12 +43,13 @@ namespace WaiterApp.ViewModel
         public string ServiceBatchIdentity { get; set; }
 
         public readonly IServingBatch ServingBatch;
-        public readonly  WaiterPresentation WaiterPresentation;
-        public ServingBatchPresentation(IServingBatch servingBatch,WaiterPresentation waiterPresentation)
+        public readonly WaiterPresentation WaiterPresentation;
+        public ServingBatchPresentation(IServingBatch servingBatch, WaiterPresentation waiterPresentation)
         {
             WaiterPresentation = waiterPresentation;
             ServingBatch = servingBatch;
             ServingBatch.ObjectChangeState += ServingBatchChangeState;
+            ServingBatch.ItemsStateChanged += ServingBatch_ItemsStateChanged;
             ServiceBatchIdentity = servingBatch.MealCourseUri;
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = servingBatch.Description;
@@ -57,6 +79,19 @@ namespace WaiterApp.ViewModel
                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                 DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
+        }
+
+        private void ServingBatch_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            foreach (var preparedItem in (from preparedItemsContext in AllContextsOfPreparedItems
+                                          from preparedItem in preparedItemsContext.PreparationItems
+                                          where newItemsState.ContainsKey(preparedItem.uid)
+                                          select preparedItem))
+            {
+                preparedItem.State = newItemsState[preparedItem.uid];
+                
+            }
+            WaiterPresentation.ServingBatchUpdated(this);
         }
 
         private void ServingBatchChangeState(object _object, string member)

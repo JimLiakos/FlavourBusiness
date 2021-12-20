@@ -133,10 +133,82 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 System.Threading.Thread.Sleep(1000);
                 foreach (var preparationItem in (from servicePointPreparationItems in ServicePointsPreparationItems
-                                                 from preparationItem in servicePointPreparationItems.PreparationItems
+                                                 from preparationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
+                                                 where string.IsNullOrWhiteSpace(preparationItem.TransactionUri)
                                                  select preparationItem).OfType<ItemPreparation>())
                 {
                     PrintReceiptCheck(preparationItem);
+                }
+                CashierStationDeviceMonitoring();
+
+
+            });
+
+
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _DeviceUpdateEtag;
+        /// <MetaDataID>{c78c2bbe-02f2-4094-9f11-6b1660e1f47c}</MetaDataID>
+        /// <summary>
+        /// Device update mechanism operates asynchronously
+        /// When the state of preparation station change the change marked as timestamp
+        /// The device update mechanism raise event after 3 seconds.
+        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+        /// the PreparationStationRuntime clear DeviceUpdateEtag 
+        /// </summary>
+        [BackwardCompatibilityID("+10")]
+        [PersistentMember(nameof(_DeviceUpdateEtag))]
+
+        public string DeviceUpdateEtag
+        {
+            get => _DeviceUpdateEtag;
+            set
+            {
+                if (_DeviceUpdateEtag != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceUpdateEtag = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        DateTime? RaiseEventTimeStamp;
+
+
+        /// <MetaDataID>{97143314-8688-4311-a99d-c87acb729de5}</MetaDataID>
+        private void CashierStationDeviceMonitoring()
+        {
+
+            Task.Run(() =>
+            {
+
+                while (true)
+                {
+                    lock (DeviceUpdateLock)
+                    {
+                        if (DeviceUpdateEtag != null)
+                        {
+                            long numberOfTicks = 0;
+                            if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
+                            {
+                                DateTime myDate = new DateTime(numberOfTicks);
+                                if ((DateTime.Now - myDate).TotalSeconds > 3)
+                                {
+                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
+                                    {
+                                        _OpenTransactions?.Invoke(this, DeviceUpdateEtag);
+                                        RaiseEventTimeStamp = DateTime.UtcNow;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    System.Threading.Thread.Sleep(1000);
                 }
             });
 
@@ -158,15 +230,17 @@ namespace FlavourBusinessManager.ServicesContextResources
             PrintReceiptCheck(itemPreparation);
         }
 
+        /// <MetaDataID>{5fb73605-0c1b-4106-9abc-26c71c953de7}</MetaDataID>
         private void PrintReceiptCheck(ItemPreparation itemPreparation)
         {
-            var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
-            if (printReceiptCondition.ItemState != null && itemPreparation.IsInFollowingState(printReceiptCondition.ItemState.Value))
+            if (string.IsNullOrWhiteSpace(itemPreparation.TransactionUri))
             {
-                if (itemPreparation.IsInFollowingState(ItemPreparationState.Serving))
+                var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
+                if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
                 {
-                    if (itemPreparation.ServedInTheBatch.PreparedItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == itemPreparation.ServedInTheBatch.PreparedItems.Count())
+                    if (itemPreparation.ServedInTheBatch.PreparedItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
                         PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+
                 }
             }
         }
@@ -193,40 +267,64 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (PrintReceiptLock)
             {
+                ObjectStorage objectStorage = null;
                 FinanceFacade.Transaction transaction = null;
                 receiptItems = receiptItems.OfType<ItemPreparation>().Where(x => string.IsNullOrEmpty(x.TransactionUri)).OfType<IItemPreparation>().ToList();
 
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                if (receiptItems.Count > 0)
                 {
-                    ITaxAuthority taxAuthority = null;
-
-                    foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
+                    lock (DeviceUpdateLock)
                     {
-                        if (transaction == null)
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            if (objectStorage == null)
+                                objectStorage = ObjectStorage.GetStorageOfObject(this);
                             transaction = new FinanceFacade.Transaction();
+                            objectStorage.CommitTransientObjectState(transaction);
+                            _Transactions.Add(transaction);
 
-                        taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
-                        var transactionItem = new Item() { Name = receiptItem.Name, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price, uid = receiptItem.uid };
-                        decimal amount = transactionItem.Amount;
-                        foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
-                            transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = transactionItem.Amount / (1 + (decimal)tax.TaxRate) });
+                            stateTransition.Consistent = true;
+                        }
+
+                        try
+                        {
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                            {
+                                ITaxAuthority taxAuthority = null;
+
+                                foreach (var receiptItem in receiptItems.OfType<ItemPreparation>().Where(x => string.IsNullOrEmpty(x.TransactionUri)))
+                                {
+
+                                    string transactionUri = ObjectStorage.GetStorageOfObject(transaction)?.GetPersistentObjectUri(transaction);
+                                    taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
+                                    var transactionItem = new Item() { Name = receiptItem.FullName, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price, uid = receiptItem.uid };
+                                    decimal amount = transactionItem.Amount;
+                                    if ((receiptItem.MenuItem as MenuModel.MenuItem).TaxableType != null)
+                                    {
+                                        foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
+                                            transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = (transactionItem.Amount / (1 + (decimal)tax.TaxRate)) * (decimal)tax.TaxRate });
+
+
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                    transaction.AddItem(transactionItem);
+                                    receiptItem.TransactionUri = transactionUri;
+                                }
+                                stateTransition.Consistent = true;
+                            }
+                            if (DeviceUpdateEtag == null)
+                                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
+                        }
+                        catch (Exception error)
+                        {
+
+                            ObjectStorage.DeleteObject(transaction);
+                        }
                     }
-                    stateTransition.Consistent = true;
-                }
-
-                if (transaction != null)
-                {
-                    string transactionUri = ObjectStorage.GetStorageOfObject(transaction)?.GetPersistentObjectUri(transaction);
-
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                    {
-                        foreach (var receiptItem in receiptItems.OfType<ItemPreparation>())
-                            receiptItem.TransactionUri = transactionUri;
-
-                        stateTransition.Consistent = true;
-                    }
-
-
                 }
 
             }
@@ -393,12 +491,79 @@ namespace FlavourBusinessManager.ServicesContextResources
             return PrintReceiptsConditions.Where(x => x.ServicePointType == servicePointType).FirstOrDefault();
         }
 
+        /// <MetaDataID>{84c983b6-bc2f-4f5d-834b-2cfcb5efffa5}</MetaDataID>
+        public List<ITransaction> GetOpenTransactions(string deviceUpdateEtag)
+        {
+            if (deviceUpdateEtag == DeviceUpdateEtag)
+            {
+                lock (DeviceUpdateLock)
+                {
+                    DeviceUpdateEtag = null;
+                    RaiseEventTimeStamp = null;
+                }
+            }
+
+
+            return this.Transactions.Where(x => x.InvoiceNumber == null).ToList();
+        }
+
 
         //ItemPreparationState GetPrintReceiptCondition(ServicePointType servicePointType);
         /// <MetaDataID>{4c0b9461-e4fc-422b-9f41-f60179819e3d}</MetaDataID>
         List<PrintReceiptCondition> PrintReceiptsConditions { get; set; } = new List<PrintReceiptCondition>();
 
+        /// <exclude>Excluded</exclude>
+        string _CashierStationDeviceData;
+
+        /// <exclude>Excluded</exclude>
+        event OpenTransactionsHandle _OpenTransactions;
+
+        public event OpenTransactionsHandle OpenTransactions
+        {
+            add
+            {
+                if (_OpenTransactions != null && _OpenTransactions.GetInvocationList().Length >= 1)
+                    throw new CashierStationDeviceException("Only one cashier station device allowed to subscribe");
+
+                _OpenTransactions += value;
+
+            }
+            remove
+            {
+                _OpenTransactions -= value;
+            }
+        }
+
+        /// <MetaDataID>{e38a5d74-b31d-44db-b669-50eca5862c8d}</MetaDataID>
+        [PersistentMember(nameof(_CashierStationDeviceData))]
+        [BackwardCompatibilityID("+8")]
+        public string CashierStationDeviceData
+        {
+            get => _CashierStationDeviceData;
+            set
+            {
+
+                if (_CashierStationDeviceData != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CashierStationDeviceData = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ITransaction> _Transactions = new OOAdvantech.Collections.Generic.Set<ITransaction>();
+
+        /// <MetaDataID>{e8489b63-60d4-4723-9d63-07af652c6bdb}</MetaDataID>
+        [PersistentMember(nameof(_Transactions))]
+        [BackwardCompatibilityID("+9")]
+        public List<ITransaction> Transactions => _Transactions.ToThreadSafeList();
     }
+
 
 
 

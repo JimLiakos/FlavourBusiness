@@ -621,10 +621,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
             List<ServingBatch> servingBatches = new List<ServingBatch>();
             if (waiter.ActiveShiftWork != null)
             {
+
+                var sdsd = (from mealCourse in MealsController.MealCoursesInProgress
+                            from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                            from itemPreparation in itemsPreparationContext.PreparationItems
+                            select new { itemPreparation.Name, itemPreparation.State, itemPreparation }).ToList();
+
                 var mealCoursesToServe = (from mealCourse in MealsController.MealCoursesInProgress
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
-                                          where itemPreparation.State == ItemPreparationState.Serving &&
+                                          where  (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
                                           (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
@@ -633,7 +639,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     //IList<ItemsPreparationContext> underPreparationItems
 
                     IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                                                                    where itemsPreparationContext.PreparationItems.All(x => x.State == ItemPreparationState.Serving)
+                                                                    where itemsPreparationContext.PreparationItems.All(x => (x.State == ItemPreparationState.Serving|| x.State == ItemPreparationState.OnRoad))
                                                                     select itemsPreparationContext).ToList();
 
                     IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
