@@ -33,7 +33,7 @@ namespace CashierStationDTDevice
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
             CashierStationDevice.DocumentSignDevice.Init();
 
-            CashierController = new CashierStationDevice.CashierController();
+            
             CashierController = new CashierStationDevice.CashierController();
 
             try

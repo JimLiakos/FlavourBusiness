@@ -22,197 +22,175 @@ namespace CashierStationDevice.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources
-    {
-
-        /// <MetaDataID>{10aed076-fe12-4edb-bbbd-60a73b7a751e}</MetaDataID>
+    public class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
-        /// <MetaDataID>{a19aec37-541e-4696-8304-c0b5e34c624b}</MetaDataID>
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
-        /// <MetaDataID>{e357f109-8156-49ec-935b-23ce963194a9}</MetaDataID>
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        /// <MetaDataID>{ca30a256-b9cd-4cd8-9737-65d3cf403cfa}</MetaDataID>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CashierStationDevice.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        /// <MetaDataID>{b4134df0-86d0-439e-9ab8-a5f88d53cd47}</MetaDataID>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Αύξων αριθμός.
+        /// </summary>
+        public static string AutoNumberLabel {
+            get {
+                return ResourceManager.GetString("AutoNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attached to.
+        /// </summary>
+        public static string CashierStationLabel {
+            get {
+                return ResourceManager.GetString("CashierStationLabel", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to CMOS Reset.
         /// </summary>
-        /// <MetaDataID>{92891118-ecc6-4c05-9c9c-338aa86e8ee9}</MetaDataID>
-        public static string CMOSResetMessage
-        {
-            get
-            {
+        public static string CMOSResetMessage {
+            get {
                 return ResourceManager.GetString("CMOSResetMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Κρίσιμο σφάλμα..
         /// </summary>
-        /// <MetaDataID>{0ad37a09-3ab5-443e-9960-b5f7b10fa7da}</MetaDataID>
-        public static string CriticalErrorMessage
-        {
-            get
-            {
+        public static string CriticalErrorMessage {
+            get {
                 return ResourceManager.GetString("CriticalErrorMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Description .
         /// </summary>
-        /// <MetaDataID>{b7a1e373-fb40-49ee-beca-d57cdaa5d901}</MetaDataID>
-        public static string DescriptionLabel
-        {
-            get
-            {
+        public static string DescriptionLabel {
+            get {
                 return ResourceManager.GetString("DescriptionLabel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Πρόβλημα επικοινωνίας με την συσκευή σήμανσης.
         /// </summary>
-        /// <MetaDataID>{c2bfa7a6-abe0-4acb-ac79-65914940bfa1}</MetaDataID>
-        public static string FiscalDeviceCommunicationErrorMessage
-        {
-            get
-            {
+        public static string FiscalDeviceCommunicationErrorMessage {
+            get {
                 return ResourceManager.GetString("FiscalDeviceCommunicationErrorMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Φορολογική μνήμη σχεδόν γεμάτη.
         /// </summary>
-        /// <MetaDataID>{2995f87d-76d4-49b7-9018-63743d9e927a}</MetaDataID>
-        public static string FiscalMemoryAlmostFullMessage
-        {
-            get
-            {
+        public static string FiscalMemoryAlmostFullMessage {
+            get {
                 return ResourceManager.GetString("FiscalMemoryAlmostFullMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Φορολογική μνήμη πλήρη.
         /// </summary>
-        /// <MetaDataID>{b82b1a83-376a-4d61-8311-a602fa7ff9a8}</MetaDataID>
-        public static string FiscalMemoryOverflowMessage
-        {
-            get
-            {
+        public static string FiscalMemoryOverflowMessage {
+            get {
                 return ResourceManager.GetString("FiscalMemoryOverflowMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Η συσκευή σήμανσης απάντησε με το εξής σφάλμα: Υπέρβαση χρονικού ορίου κλεισίματος Ζ.
         /// </summary>
-        /// <MetaDataID>{493f48e1-32d9-45c0-b5e5-7916938edb67}</MetaDataID>
-        public static string FisicalDayOpenMessage
-        {
-            get
-            {
+        public static string FisicalDayOpenMessage {
+            get {
                 return ResourceManager.GetString("FisicalDayOpenMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Τέλος χαρτιού..
         /// </summary>
-        /// <MetaDataID>{906f2494-09a5-4567-97cf-673aef708afe}</MetaDataID>
-        public static string OutofPaperMessage
-        {
-            get
-            {
+        public static string OutofPaperMessage {
+            get {
                 return ResourceManager.GetString("OutofPaperMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Πρόβλημα επικοινωνίας με το πρόγραμμα οδήγησης Samtec. Βεβαιωθείτε ότι βρίσκεται εν λειτουργία..
         /// </summary>
-        /// <MetaDataID>{447b96d2-0381-4528-badb-5f165db46729}</MetaDataID>
-        public static string SamtecDriverConnectionErrorMessage
-        {
-            get
-            {
+        public static string SamtecDriverConnectionErrorMessage {
+            get {
                 return ResourceManager.GetString("SamtecDriverConnectionErrorMessage", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Σειρά.
+        /// </summary>
+        public static string SeriesLabel {
+            get {
+                return ResourceManager.GetString("SeriesLabel", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        /// <MetaDataID>{bb0cdf41-9631-445b-99b0-0911951ab6d0}</MetaDataID>
-        public static string SettingDialogTitle
-        {
-            get
-            {
+        public static string SettingDialogTitle {
+            get {
                 return ResourceManager.GetString("SettingDialogTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Printers.
+        ///   Looks up a localized string similar to Fisiscal Printers.
         /// </summary>
-        /// <MetaDataID>{c6548358-6ca0-45f4-a3d8-9638ac674089}</MetaDataID>
-        public static string TransactionPrinterLabel
-        {
-            get
-            {
+        public static string TransactionPrinterLabel {
+            get {
                 return ResourceManager.GetString("TransactionPrinterLabel", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Η συσκευή είναι σε "Χρήση μενού".
+        ///   Looks up a localized string similar to Η συσκευή είναι σε &quot;Χρήση μενού&quot;.
         /// </summary>
-        /// <MetaDataID>{edebf7e8-2268-4698-ba4c-c2f5e78e4e0b}</MetaDataID>
-        public static string UserMenuModeMessage
-        {
-            get
-            {
+        public static string UserMenuModeMessage {
+            get {
                 return ResourceManager.GetString("UserMenuModeMessage", resourceCulture);
             }
         }

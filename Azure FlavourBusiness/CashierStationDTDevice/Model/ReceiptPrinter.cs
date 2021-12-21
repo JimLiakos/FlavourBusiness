@@ -11,7 +11,7 @@ namespace CashierStationDevice.Model
     /// <MetaDataID>{234c682f-bbbb-4221-8484-e2b3f26bf040}</MetaDataID>
     [BackwardCompatibilityID("{234c682f-bbbb-4221-8484-e2b3f26bf040}")]
     [Persistent()]
-    public class TransactionPrinter : MarshalByRefObject
+    public class TransactionPrinter 
     {
         /// <exclude>Excluded</exclude>
         string _Description;

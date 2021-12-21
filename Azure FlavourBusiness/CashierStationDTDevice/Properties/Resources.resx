@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AutoNumberLabel" xml:space="preserve">
+    <value>Αύξων αριθμός</value>
+  </data>
+  <data name="CashierStationLabel" xml:space="preserve">
+    <value>Attached to</value>
+  </data>
   <data name="CMOSResetMessage" xml:space="preserve">
     <value>CMOS Reset</value>
   </data>
@@ -145,11 +151,14 @@
   <data name="SamtecDriverConnectionErrorMessage" xml:space="preserve">
     <value>Πρόβλημα επικοινωνίας με το πρόγραμμα οδήγησης Samtec. Βεβαιωθείτε ότι βρίσκεται εν λειτουργία.</value>
   </data>
+  <data name="SeriesLabel" xml:space="preserve">
+    <value>Σειρά</value>
+  </data>
   <data name="SettingDialogTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="TransactionPrinterLabel" xml:space="preserve">
-    <value>Printers</value>
+    <value>Fisiscal Printers</value>
   </data>
   <data name="UserMenuModeMessage" xml:space="preserve">
     <value>Η συσκευή είναι σε "Χρήση μενού"</value>

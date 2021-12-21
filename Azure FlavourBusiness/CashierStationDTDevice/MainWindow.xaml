@@ -40,6 +40,7 @@
                 </Grid.ColumnDefinitions>
                 <!--<Menu Style="{StaticResource BorderLessMenu}" ItemsSource="{Binding MenuItems}" ItemContainerStyle="{StaticResource MenuItemStyle}"/>-->
                 <Grid Grid.Column="1" >
+                    <Image></Image>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <Hyperlink   Command="{Binding SettingsCommand}"  >
                         <StackPanel  Orientation="Horizontal" >

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using UIBaseEx;
 
 namespace CashierStationDevice.ViewModel
 {
@@ -87,7 +88,7 @@ namespace CashierStationDevice.ViewModel
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCashierStation)));
                     }
 
-                    
+
                 }
             }
 
@@ -97,7 +98,16 @@ namespace CashierStationDevice.ViewModel
         /// <MetaDataID>{dab55f71-b0a8-4c22-96a7-054f74f15014}</MetaDataID>
         public List<CashierStationPresentation> CashierStations { get; private set; }
 
-         public System.Collections.Generic.List<Model.TransactionPrinter> TransactionsPrinters => ApplicationSettings.Current?.TransactionsPrinters;
+        public System.Collections.Generic.List<TransactionPrinterPresentation> TransactionsPrinters
+        {
+            get
+            {
+                return (from transactionPrinter in ApplicationSettings.Current.TransactionsPrinters
+                        select TransactionPrintersDictionary.GetViewModelFor(transactionPrinter, transactionPrinter)).ToList();
+            }
+        }
+        internal ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation> TransactionPrintersDictionary = new ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation>();
+
 
         /// <exclude>Excluded</exclude>
         CashierStationPresentation _SelectedCashierStation;
@@ -106,7 +116,7 @@ namespace CashierStationDevice.ViewModel
         {
             get
             {
-                
+
                 if (_SelectedCashierStation == null && CashierStations != null && !string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
                     _SelectedCashierStation = CashierStations.Where(x => x.CashierStation.CashierStationIdentity == ApplicationSettings.Current.CommunicationCredentialKey).FirstOrDefault();
                 return _SelectedCashierStation;
