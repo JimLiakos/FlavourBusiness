@@ -97,6 +97,8 @@ namespace CashierStationDevice.ViewModel
         /// <MetaDataID>{dab55f71-b0a8-4c22-96a7-054f74f15014}</MetaDataID>
         public List<CashierStationPresentation> CashierStations { get; private set; }
 
+         public System.Collections.Generic.List<Model.TransactionPrinter> TransactionsPrinters => ApplicationSettings.Current?.TransactionsPrinters;
+
         /// <exclude>Excluded</exclude>
         CashierStationPresentation _SelectedCashierStation;
         /// <MetaDataID>{8f2a8cbf-5d47-4a6b-a630-ba41de36eb43}</MetaDataID>
@@ -104,6 +106,7 @@ namespace CashierStationDevice.ViewModel
         {
             get
             {
+                
                 if (_SelectedCashierStation == null && CashierStations != null && !string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
                     _SelectedCashierStation = CashierStations.Where(x => x.CashierStation.CashierStationIdentity == ApplicationSettings.Current.CommunicationCredentialKey).FirstOrDefault();
                 return _SelectedCashierStation;

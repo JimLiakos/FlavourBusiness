@@ -129,6 +129,7 @@
     </ApplicationDefinition>
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="CashierController.cs" />
+    <Compile Include="Model\ReceiptPrinter.cs" />
     <Compile Include="ViewModel\CashierStationDevicePresentation.cs" />
     <Compile Include="ViewModel\CashierStationPresentation.cs" />
     <Compile Include="Views\CashierStationSettingsPage.xaml.cs">

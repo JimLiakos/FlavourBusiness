@@ -11,6 +11,37 @@ namespace CashierStationDevice
     public class ApplicationSettings
     {
         /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter> _TransactionsPrinters = new OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter>();
+
+
+        [Association("CashierStationPrinters", Roles.RoleA, "1c778140-1ab8-42d2-a1bd-5055514aabca")]
+        [RoleAMultiplicityRange(1)]
+        [PersistentMember(nameof(_TransactionsPrinters))]
+        public System.Collections.Generic.List<Model.TransactionPrinter> TransactionsPrinters => _TransactionsPrinters.ToThreadSafeList();
+
+
+        /// <MetaDataID>{2a7fda1f-840d-4f30-b889-14c73618352e}</MetaDataID>
+        public void AddTransactionPrinter(Model.TransactionPrinter transactionPrinter)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _TransactionsPrinters.Add(transactionPrinter);
+                stateTransition.Consistent = true;
+            }
+        }
+
+        /// <MetaDataID>{aefefb04-6e80-48e4-810e-a4359cb0361f}</MetaDataID>
+        public void RemoveTransactionPrinter(Model.TransactionPrinter transactionPrinter)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _TransactionsPrinters.Remove(transactionPrinter);
+                stateTransition.Consistent = true;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <MetaDataID>{eb4339d5-8185-46f1-8875-ecf5a37524e9}</MetaDataID>
@@ -28,22 +59,34 @@ namespace CashierStationDevice
                 if (_Current == null)
                 {
 
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                    using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
                     {
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(AppSettingsStorage);
                         _Current = (from appSetting in storage.GetObjectCollection<ApplicationSettings>() select appSetting).FirstOrDefault();
-                        if (_Current == null)
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            _Current = new ApplicationSettings();
-                            AppSettingsStorage.CommitTransientObjectState(_Current);
+                            if (_Current == null)
+                            {
+                                _Current = new ApplicationSettings();
+                                AppSettingsStorage.CommitTransientObjectState(_Current);
+                            }
+                            if(_Current.TransactionsPrinters.Where(x=>x.IsDefault).FirstOrDefault()==null)
+                            {
+                                Model.TransactionPrinter transactionPrinter = new Model.TransactionPrinter();
+                                AppSettingsStorage.CommitTransientObjectState(transactionPrinter);
+                                transactionPrinter.Description = "Default";
+                                transactionPrinter.IsDefault = true;
+                                _Current.AddTransactionPrinter(transactionPrinter);
+
+                            }
+                            stateTransition.Consistent = true;
                         }
-                        stateTransition.Consistent = true;
                     }
                 }
                 return _Current;
             }
         }
-        
+
 
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
@@ -52,6 +95,10 @@ namespace CashierStationDevice
         /// <MetaDataID>{8b048297-d686-438d-a405-1919a7ea025d}</MetaDataID>
         public static OOAdvantech.PersistenceLayer.ObjectStorage AppSettingsStorage
         {
+            set
+            {
+
+            }
             get
             {
                 if (_AppSettingsStorage == null)

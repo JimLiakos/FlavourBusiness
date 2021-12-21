@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using OOAdvantech.Collections.Generic;
+
 using System.Linq;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -13,11 +13,24 @@ namespace FinanceFacade
     /// <MetaDataID>{f4fdf9fe-3c45-48fd-b958-c16677d2397c}</MetaDataID>
     [BackwardCompatibilityID("{f4fdf9fe-3c45-48fd-b958-c16677d2397c}")]
     [Persistent()]
-    public class Transaction :MarshalByRefObject, ITransaction
+    public class Transaction : ITransaction
     {
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
+
+
+        string _Uri;
+        public string Uri
+        {
+            get
+            {
+                if (_Uri == null)
+                    _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.GetPersistentObjectUri(this);
+
+                return _Uri;
+            }
+        }
 
 
         /// <MetaDataID>{69518e16-81af-4aee-805c-b85507378551}</MetaDataID>
@@ -25,24 +38,36 @@ namespace FinanceFacade
         public void BeforeCommitObjectState()
         {
 
-            var jSetttings = new JsonSerializerSettings(JsonContractType.Serialize, JsonSerializationFormat.NetTypedValuesJsonSerialization, null);
-            ItemsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Items, jSetttings);
-            TransactionProperiesJson = OOAdvantech.Json.JsonConvert.SerializeObject(TransactionProperies, jSetttings);
+            ItemsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Items);
+            TransactionProperiesJson = OOAdvantech.Json.JsonConvert.SerializeObject(TransactionProperies);
         }
 
+        [JsonConstructor]
+        public Transaction(string uri, string description,List<IItem> items, List<FinanceFacade.TaxAmount> transactionTaxes, Measurement.Quantity amount, string invoiceNumber, string payeeRegistrationNumber)
+        {
+            _Uri = uri;
+            _Description = description;
+            _Items = items;
+            _TransactionTaxes = transactionTaxes;
+            _Amount = amount;
+            _InvoiceNumber = invoiceNumber;
+            
+        }
+        public Transaction()
+        {
 
-
+        }
 
         /// <MetaDataID>{3f9250f2-d7ff-4391-a58d-b594ef71479b}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            var jSetttings = new JsonSerializerSettings(JsonContractType.Deserialize, JsonSerializationFormat.NetTypedValuesJsonSerialization, null);
+            
             if (!string.IsNullOrWhiteSpace(ItemsJson))
-                _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<IItem>>(ItemsJson, jSetttings);
+                _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<Item>>(ItemsJson).OfType<IItem>().ToList();
             
             if (!string.IsNullOrWhiteSpace(TransactionProperiesJson))
-                TransactionProperies = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(TransactionProperiesJson, jSetttings);
+                TransactionProperies = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(TransactionProperiesJson);
 
         }
 

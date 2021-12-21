@@ -19,6 +19,7 @@ namespace CashierStationDevice.Views
     /// <summary>
     /// Interaction logic for CashierStationSettings.xaml
     /// </summary>
+    /// <MetaDataID>{ea09b43f-65c6-49f8-8681-235ab974a197}</MetaDataID>
     public partial class CashierStationSettingsPage : PageDialogViewEmulator
     {
         public CashierStationSettingsPage()

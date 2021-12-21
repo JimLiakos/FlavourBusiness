@@ -38,6 +38,45 @@
 		    name       	"LastMemberID"
 		    value      	"2"))
 	    quid       	"61AD944301A2"
+	    operations 	(list Operations
+		(object Operation "AddTransactionPrinter"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2a7fda1f-840d-4f30-b889-14c73618352e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C180C9020A"))
+		    quid       	"61C180C9020A"
+		    parameters 	(list Parameters
+			(object Parameter "transactionPrinter"
+			    quid       	"61C180C9021E"
+			    type       	"CashierStationDevice.Model.TransactionPrinter"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveTransactionPrinter"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{aefefb04-6e80-48e4-810e-a4359cb0361f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C180C90252"))
+		    quid       	"61C180C90252"
+		    parameters 	(list Parameters
+			(object Parameter "transactionPrinter"
+			    quid       	"61C180C9025E"
+			    type       	"CashierStationDevice.Model.TransactionPrinter"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "AppSettingsStorage"
 		    attributes 	(list Attribute_Set
@@ -202,14 +241,309 @@
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"
 	    quidu      	"61AD947E00A7"
 	    language   	"C#")
+	(object Class "TransactionPrinter"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{234c682f-bbbb-4221-8484-e2b3f26bf040}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"7")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{234c682f-bbbb-4221-8484-e2b3f26bf040}"))
+	    quid       	"61C161CE000C"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "IsDefault"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2f3555d1-8bcc-4cf5-9807-5c0a8407d191}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C1720000AC")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"61C1720000AC"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "Series"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{77dcd376-d68d-4879-a242-9c83ef8c34d9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C172000130")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"61C172000130"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AutoNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a4c383d4-a1a7-4e03-a1e7-7d387dd339fc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C178D702F2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"61C178D702F2"
+		    type       	"int"
+		    exportControl 	"Public")
+		(object ClassAttribute "PrinterName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6667d0aa-b038-403f-888c-a5fca430b2f7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C178D7034B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"61C178D7034B"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "RawPrinterAddress"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{969e1e7d-bd8d-4858-b40e-d94cb48e0a99}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C178D703A9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"61C178D703A9"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c1330dbb-89bc-4bdd-a2dc-6d8c00261572}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C189C9012B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"61C189C9012B"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View::CashierStationDevice::CashierStationDevice"
+	    quidu      	"61AD947E00A7"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Association "CashierStationPrinters"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"Persistent"
+		    name       	"Persistent"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"61C17A46008C")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"1c778140-1ab8-42d2-a1bd-5055514aabca"))
+	    quid       	"61C17A46008C"
+	    roles      	(list role_list
+		(object Role "TransactionsPrinters"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C17A4603B3")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7e5c0ef0-40ab-495f-b0e7-4ed800590a7a}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<CashierStationDevice.Model.TransactionPrinter>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"61C17A4603B3"
+		    label      	"TransactionsPrinters"
+		    supplier   	"Logical View::CashierStationDevice::TransactionPrinter"
+		    quidu      	"61C161CE000C"
+		    client_cardinality 	(value cardinality "1..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61C17A4603B7")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ee342082-2838-466b-8dac-8924234ebc16}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"61C17A4603B7"
+		    supplier   	"Logical View::CashierStationDevice::ApplicationSettings"
+		    quidu      	"61AD944301A2")))
 	(object Mechanism @1
 	    logical_models 	(list unit_reference_list
-		(object Object "$UNNAMED$0"
+		(object Object "$UNNAMED$1"
 		    quid       	"61AE27AE0234"
 		    collaborators 	(list link_list
 			(object Link
 			    quid       	"61AE27D3019F"
-			    supplier   	"$UNNAMED$1"
+			    supplier   	"$UNNAMED$2"
 			    quidu      	"61AE27B5038B"
 			    messages   	(list Messages
 				(object Message "GetTransactionsForPrinting"
@@ -221,7 +555,7 @@
 				    ordinal    	1
 				    quidu      	"000000000000"
 				    creation   	FALSE)
-				(object Message "TransactionPrinted(string, string)"
+				(object Message "TransactionPrinted(  )"
 				    quid       	"61AE28F500E7"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -244,12 +578,12 @@
 		    persistence 	"Transient"
 		    creationObj 	FALSE
 		    multi      	FALSE)
-		(object Object "$UNNAMED$1"
+		(object Object "$UNNAMED$2"
 		    quid       	"61AE27B5038B"
 		    collaborators 	(list link_list
 			(object Link
 			    quid       	"61AE28B6020C"
-			    supplier   	"$UNNAMED$1"
+			    supplier   	"$UNNAMED$2"
 			    quidu      	"61AE27B5038B"
 			    messages   	(list Messages
 				(object Message "Print"
@@ -276,35 +610,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::CashierStationDevice::ApplicationSettings" @2
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(634, 513)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@2
-			location   	(278, 400)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	713
-			justify    	0
-			label      	"ApplicationSettings")
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"61AD944301A2"
-		    width      	731
-		    height     	250
-		    annotation 	8)
-		(object ClassView "Class" "Logical View::CashierStationDevice::CashierController" @3
+		(object ClassView "Class" "Logical View::CashierStationDevice::CashierController" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(631, 903)
 		    font       	(object Font
@@ -318,7 +624,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@3
+			Parent_View 	@2
 			location   	(287, 787)
 			fill_color 	13434879
 			nlines     	1
@@ -331,7 +637,177 @@
 		    quidu      	"61AE0993037E"
 		    width      	706
 		    height     	256
-		    annotation 	8)))
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::CashierStationDevice::TransactionPrinter" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1987, 515)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1696, 415)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	582
+			justify    	0
+			label      	"TransactionPrinter")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61C161CE000C"
+		    width      	600
+		    height     	225
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::CashierStationDevice::ApplicationSettings" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(634, 513)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(278, 400)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	713
+			justify    	0
+			label      	"ApplicationSettings")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"61AD944301A2"
+		    width      	731
+		    height     	250
+		    annotation 	8)
+		(object AssociationViewNew "CashierStationPrinters" @5
+		    location   	(1343, 516)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @6
+			Parent_View 	@5
+			location   	(1341, 365)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"CashierStationPrinters"
+			pctDist    	0.483333
+			height     	152
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"61C17A46008C"
+		    roleview_list 	(list RoleViews
+			(object RoleView "TransactionsPrinters" @7
+			    Parent_View 	@5
+			    location   	(709, 3)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @8
+				Parent_View 	@7
+				location   	(1531, 453)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	394
+				justify    	0
+				label      	"+TransactionsPrinters"
+				pctDist    	0.546193
+				height     	64
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61C17A4603B3"
+			    client     	@5
+			    supplier   	@3
+			    line_style 	3
+			    origin_attachment 	(1343, 516)
+			    terminal_attachment 	(1687, 516)
+			    label      	(object SegLabel @9
+				Parent_View 	@7
+				location   	(1653, 570)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$0" @10
+			    Parent_View 	@5
+			    location   	(709, 3)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61C17A4603B7"
+			    client     	@5
+			    supplier   	@4
+			    line_style 	3
+			    origin_attachment 	(1343, 516)
+			    terminal_attachment 	(999, 516))))))
 	(object InteractionDiagram "PrintReceipt"
 	    mechanism_ref 	@1
 	    quid       	"61AE0A4A010E"
@@ -342,7 +818,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object InterObjView "$UNNAMED$0" @4
+		(object InterObjView "$UNNAMED$1" @11
 		    location   	(521, 225)
 		    font       	(object Font
 			size       	10
@@ -355,7 +831,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@4
+			Parent_View 	@11
 			location   	(521, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -374,28 +850,28 @@
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @5
+		    Focus_Of_Control 	(object Focus_Of_Control "" @12
 			location   	(521, 338)
 			line_color 	3342489
-			InterObjView 	@4
+			InterObjView 	@11
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @6
-			location   	(1137, 562)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @13
+			location   	(521, 562)
 			line_color 	3342489
-			InterObjView 	@4
+			InterObjView 	@11
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @7
-			location   	(1137, 908)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @14
+			location   	(521, 908)
 			line_color 	3342489
-			InterObjView 	@4
+			InterObjView 	@11
 			height     	60
 			y_coord    	0
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$1" @8
+		(object InterObjView "$UNNAMED$2" @15
 		    location   	(1250, 225)
 		    font       	(object Font
 			size       	10
@@ -408,7 +884,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@8
+			Parent_View 	@15
 			location   	(1250, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -426,35 +902,35 @@
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @9
-			location   	(1225, 398)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @16
+			location   	(1250, 398)
 			line_color 	3342489
-			InterObjView 	@8
+			InterObjView 	@15
 			height     	284
 			y_coord    	224
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @10
+		    Focus_Of_Control 	(object Focus_Of_Control "" @17
 			location   	(1250, 753)
 			line_color 	3342489
-			InterObjView 	@8
+			InterObjView 	@15
 			height     	120
 			y_coord    	60
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @11
-			location   	(450, 753)
+		    Focus_Of_Control 	(object Focus_Of_Control "" @18
+			location   	(1250, 753)
 			line_color 	3342489
-			InterObjView 	@8
+			InterObjView 	@15
 			height     	60
 			y_coord    	0
 			Nested     	TRUE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @12
+		    Focus_Of_Control 	(object Focus_Of_Control "" @19
 			location   	(1250, 908)
 			line_color 	3342489
-			InterObjView 	@8
+			InterObjView 	@15
 			height     	120
 			y_coord    	60
 			Nested     	FALSE))
-		(object InterMessView "" @13
+		(object InterMessView "" @20
 		    location   	(844, 562)
 		    font       	(object Font
 			size       	10
@@ -466,8 +942,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @14
-			Parent_View 	@13
+		    label      	(object SegLabel @21
+			Parent_View 	@20
 			location   	(886, 607)
 			font       	(object Font
 			    size       	10
@@ -487,16 +963,16 @@
 			label      	"GetTransactionsForPrinting"
 			pctDist    	0.500000
 			height     	45
-			orientation 	0)
+			orientation 	1)
 		    line_color 	3342489
-		    client     	@8
-		    supplier   	@4
-		    Focus_Src  	@9
-		    Focus_Entry 	@6
+		    client     	@15
+		    supplier   	@11
+		    Focus_Src  	@16
+		    Focus_Entry 	@13
 		    origin     	(1234, 562)
 		    terminus   	(537, 562)
 		    ordinal    	1)
-		(object SelfMessView "" @15
+		(object SelfMessView "" @22
 		    location   	(0, 753)
 		    font       	(object Font
 			size       	10
@@ -508,8 +984,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @16
-			Parent_View 	@15
+		    label      	(object SegLabel @23
+			Parent_View 	@22
 			location   	(1341, 709)
 			font       	(object Font
 			    size       	10
@@ -531,14 +1007,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@8
-		    supplier   	@8
-		    Focus_Src  	@10
-		    Focus_Entry 	@11
+		    client     	@15
+		    supplier   	@15
+		    Focus_Src  	@17
+		    Focus_Entry 	@18
 		    origin     	(1266, 753)
 		    terminus   	(1416, 753)
 		    ordinal    	2)
-		(object InterMessView "" @17
+		(object InterMessView "" @24
 		    location   	(884, 908)
 		    font       	(object Font
 			size       	10
@@ -550,8 +1026,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @18
-			Parent_View 	@17
+		    label      	(object SegLabel @25
+			Parent_View 	@24
 			location   	(886, 953)
 			font       	(object Font
 			    size       	10
@@ -566,21 +1042,21 @@
 			quidu      	"61AE28F500E7"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	619
+			max_width  	10
 			justify    	0
-			label      	"TransactionPrinted(string, string)"
+			label      	"TransactionPrinted(  )"
 			pctDist    	0.500000
 			height     	45
-			orientation 	0)
+			orientation 	1)
 		    line_color 	3342489
-		    client     	@8
-		    supplier   	@4
-		    Focus_Src  	@12
-		    Focus_Entry 	@7
+		    client     	@15
+		    supplier   	@11
+		    Focus_Src  	@19
+		    Focus_Entry 	@14
 		    origin     	(1234, 908)
 		    terminus   	(537, 908)
 		    ordinal    	3)
-		(object InterMessView "" @19
+		(object InterMessView "" @26
 		    location   	(884, 398)
 		    font       	(object Font
 			size       	10
@@ -592,8 +1068,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @20
-			Parent_View 	@19
+		    label      	(object SegLabel @27
+			Parent_View 	@26
 			location   	(885, 354)
 			font       	(object Font
 			    size       	10
@@ -615,10 +1091,10 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@4
-		    supplier   	@8
-		    Focus_Src  	@5
-		    Focus_Entry 	@9
+		    client     	@11
+		    supplier   	@15
+		    Focus_Src  	@12
+		    Focus_Entry 	@16
 		    origin     	(536, 398)
 		    terminus   	(1234, 398)
 		    ordinal    	0)))))

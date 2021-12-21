@@ -123,6 +123,10 @@
   <data name="CriticalErrorMessage" xml:space="preserve">
     <value>Κρίσιμο σφάλμα.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description </value>
+    <comment>Defines the label for TransactionPrinter description TextBox</comment>
+  </data>
   <data name="FiscalDeviceCommunicationErrorMessage" xml:space="preserve">
     <value>Πρόβλημα επικοινωνίας με την συσκευή σήμανσης</value>
   </data>
@@ -143,6 +147,9 @@
   </data>
   <data name="SettingDialogTitle" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="TransactionPrinterLabel" xml:space="preserve">
+    <value>Printers</value>
   </data>
   <data name="UserMenuModeMessage" xml:space="preserve">
     <value>Η συσκευή είναι σε "Χρήση μενού"</value>

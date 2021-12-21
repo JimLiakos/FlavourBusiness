@@ -7,9 +7,9 @@
       xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" 
       xmlns:resx="clr-namespace:CashierStationDevice.Properties"
                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
-                            xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel"
+                            xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
                             mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="CashierStationSettings">
     <sw:PageDialogViewEmulator.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:CashierStationDevicePresentation}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
@@ -23,7 +23,107 @@
 
 
             <!-- SelectedValue="{Binding SelectedCashierStation}"-->
-            <ComboBox Grid.Row="1" Grid.Column="4" MinWidth="200"  HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Margin="5,0,0,4" Grid.Row="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
+                <ComboBox Grid.Row="1" Grid.Column="4" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
+                <Label Margin="5,0,0,4" Grid.Row="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
+                <Grid MinHeight="200" MinWidth="300" >
+
+
+                    <ListBox  ItemsSource="{Binding TransactionsPrinters}"    >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid Margin="2,4,2,4"  Background="{StaticResource TextBoxBackgroundBrush}">
+                                        <Grid.Effect>
+                                            <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                        </Grid.Effect>
+
+                                        <Grid Margin="3,3,3,3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="25" />
+                                                <ColumnDefinition Width="15" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="1"  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+                                                <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
+                                            </Button>
+                                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
+                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" VerticalContentAlignment="Center"  Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
+                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="4" Unit="%"/>
+                                                <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
+                                                <Border  Grid.Column="2" Grid.Row="4" BorderThickness="{Binding AccountIDErrorBorder}" BorderBrush="Red" Margin="1" >
+                                                    <wpftoolkitex:WatermarkTextBox    VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                                                </Border>
+
+
+
+                                            </Grid>
+
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+                </Grid>
+                <Grid Grid.Row="9" Grid.ColumnSpan="2" Background="WhiteSmoke" Margin="0,0,0,0">
+                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                        <Grid>
+                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                <Button Command="{Binding AddTaxCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                </Button>
+
+                                <Button Command="{Binding DeleteSelectedTaxCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                </Button>
+
+
+                            </StackPanel>
+                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Command="{Binding RenameSelectedOptionsTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                </Button>
+                                <Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </StackPanel>
         </sw:DialogContentControl>
     </Grid>
 </sw:PageDialogViewEmulator>
