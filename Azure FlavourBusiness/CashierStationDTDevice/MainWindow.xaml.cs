@@ -53,7 +53,7 @@ namespace CashierStationDTDevice
 
             transaction.PayeeRegistrationNumber = "800696676";
 
-            CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice.PrintReceipt(transaction);
+            //CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice.PrintReceipt(transaction);
         }
     }
 }
