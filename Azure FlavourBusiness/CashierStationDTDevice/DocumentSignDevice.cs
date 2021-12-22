@@ -48,7 +48,7 @@ namespace CashierStationDevice
                         try
                         {
                             DeviceCommunicationSocket.Connect("127.0.0.1", 6001);
-                            Status = new DeviceStatus();
+                            //Status = new DeviceStatus();
                         }
                         catch (Exception error)
                         {
@@ -118,6 +118,8 @@ namespace CashierStationDevice
 
                         CheckStatusForError();
                     }
+                    else
+                        Status = new DeviceStatus() { SamtecDriverConnectionError = true };
                 }
 
             }

@@ -103,7 +103,7 @@ namespace CashierStationDevice.ViewModel
             get
             {
                 return (from transactionPrinter in ApplicationSettings.Current.TransactionsPrinters
-                        select TransactionPrintersDictionary.GetViewModelFor(transactionPrinter, transactionPrinter)).ToList();
+                           select TransactionPrintersDictionary.GetViewModelFor(transactionPrinter, transactionPrinter)).ToList();
             }
         }
         internal ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation> TransactionPrintersDictionary = new ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation>();

@@ -25,22 +25,38 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="7"/>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="7*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*" MinHeight="60" />
+                    <RowDefinition Height="14*" />
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
 
-                
-                    <Label Margin="5,0,0,4" Grid.Row="1"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
+
+                <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
                     <ComboBox Grid.Row="2" Grid.Column="4" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
-                    <Label Margin="5,0,0,4" Grid.Row="4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
-                <Grid Grid.Row="5" MinHeight="200" MinWidth="380" >
+                        
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" MinHeight="30" />
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <Label Margin="5,0,0,4"   VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
+
+                    <Grid Grid.Row="1"  >
 
 
-                        <ListBox  ItemsSource="{Binding TransactionsPrinters}"    >
+                        <ListBox  ItemsSource="{Binding TransactionsPrinters}" ScrollViewer.VerticalScrollBarVisibility="Visible"   >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid >
@@ -59,7 +75,7 @@
                                                     <ColumnDefinition Width="15" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition Height="auto"/>
                                                     <RowDefinition Height="5"/>
                                                     <RowDefinition Height="auto"/>
                                                 </Grid.RowDefinitions>
@@ -69,7 +85,7 @@
                                                 <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
                                                     <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
                                                 </Button>
-                                                <Grid  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="5" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                                <Grid Margin="10"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="5" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition/>
                                                         <RowDefinition/>
@@ -84,7 +100,7 @@
                                                         <ColumnDefinition Width="4*"/>
                                                         <ColumnDefinition Width="10"/>
                                                         <ColumnDefinition Width="2*"/>
-                                                        <ColumnDefinition Width="34"/>
+
                                                     </Grid.ColumnDefinitions>
                                                     <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.SeriesLabel}"/>
                                                     <wpftoolkitex:WatermarkTextBox  VerticalContentAlignment="Center"  Text="{Binding Series,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
@@ -108,16 +124,17 @@
 
                                         </Grid>
                                     </Grid>
+
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
                         </ListBox>
-
-
+                      
                     </Grid>
-                 
+                </Grid>
 
-                
+
+
             </Grid>
         </sw:DialogContentControl>
     </Grid>
