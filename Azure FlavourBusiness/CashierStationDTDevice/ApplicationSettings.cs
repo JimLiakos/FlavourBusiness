@@ -70,7 +70,7 @@ namespace CashierStationDevice
                                 _Current = new ApplicationSettings();
                                 AppSettingsStorage.CommitTransientObjectState(_Current);
                             }
-                            if(_Current.TransactionsPrinters.Where(x=>x.IsDefault).FirstOrDefault()==null)
+                            if (_Current.TransactionsPrinters.Where(x => x.IsDefault).FirstOrDefault() == null)
                             {
                                 Model.TransactionPrinter transactionPrinter = new Model.TransactionPrinter();
                                 AppSettingsStorage.CommitTransientObjectState(transactionPrinter);
@@ -87,13 +87,30 @@ namespace CashierStationDevice
             }
         }
 
+        static public string AppDataPath
+        {
+            get
+            {
+                string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Microneme";
+                if (!System.IO.Directory.Exists(appDataPath))
+                    System.IO.Directory.CreateDirectory(appDataPath);
+                appDataPath += "\\CashiersStation";
+                if (!string.IsNullOrEmpty(ExtraStoragePath))
+                    appDataPath += "\\" + ExtraStoragePath;
 
+
+
+                if (!System.IO.Directory.Exists(appDataPath))
+                    System.IO.Directory.CreateDirectory(appDataPath);
+                return appDataPath;
+            }
+        }
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
 
 
         /// <MetaDataID>{8b048297-d686-438d-a405-1919a7ea025d}</MetaDataID>
-        public static OOAdvantech.PersistenceLayer.ObjectStorage AppSettingsStorage
+        public static ObjectStorage AppSettingsStorage
         {
             set
             {
@@ -106,16 +123,8 @@ namespace CashierStationDevice
 #if DeviceDotNet
                     string storageLocation = @"\DontWaitAppSettings.xml";
 #else
-                    string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Microneme";
-                    if (!System.IO.Directory.Exists(appDataPath))
-                        System.IO.Directory.CreateDirectory(appDataPath);
-                    appDataPath += "\\CashiersStation";
-                    if (!string.IsNullOrEmpty(ExtraStoragePath))
-                        appDataPath += "\\" + ExtraStoragePath;
 
-                    if (!System.IO.Directory.Exists(appDataPath))
-                        System.IO.Directory.CreateDirectory(appDataPath);
-                    string storageLocation = appDataPath + "\\CashiersStation.xml";
+                    string storageLocation = AppDataPath + "\\CashiersStation.xml";
 #endif
 
                     try

@@ -66,6 +66,14 @@ namespace CashierStationDevice
             var transactionPrinter = ApplicationSettings.Current.TransactionsPrinters.Where(x => x.IsDefault).FirstOrDefault();
             if(transactionPrinter!=null)
             {
+                var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
+                string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializerSettings);
+                transaction.t
+                transactiona.
+                ApplicationSettings.AppDataPath
+
+               var transactiona=  OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
+
 
             }
         }
