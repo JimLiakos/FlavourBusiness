@@ -737,12 +737,24 @@ namespace FlavourBusinessManager.HumanResources
                 lock (this)
                 {
 
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    try
                     {
-                        foreach (var servingBatch in (ActiveShiftWork as ServingShiftWork).ServingBatches.Where(x => x.State == ItemPreparationState.Serving))
-                            servingBatch.OnTheRoad();
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var servingBatch in GetServingBatches().OfType<RoomService.ServingBatch>().Where(x => x.State == ItemPreparationState.Serving && x.IsAssigned && x.ShiftWork.Worker == this))
+                                servingBatch.OnTheRoad();
 
-                        stateTransition.Consistent = true;
+
+                            //foreach (var servingBatch in (ActiveShiftWork as ServingShiftWork).ServingBatches.Where(x => x.State == ItemPreparationState.Serving))
+                            //    servingBatch.OnTheRoad();
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
                     }
                 }
             }

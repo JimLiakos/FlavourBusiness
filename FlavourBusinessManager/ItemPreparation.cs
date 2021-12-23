@@ -187,7 +187,16 @@ namespace FlavourBusinessManager.RoomService
                         _State = value;
                         stateTransition.Consistent = true;
                     }
-                    ObjectChangeState?.Invoke(this, nameof(State));
+
+
+                    Transaction.RunOnTransactionCompleted(() => {
+
+                        ObjectChangeState?.Invoke(this, nameof(State));
+                    });
+
+
+
+
 #if !FlavourBusinessDevice
                     //if (ClientSession is EndUsers.FoodServiceClientSession)
                     //{
@@ -642,7 +651,11 @@ namespace FlavourBusinessManager.RoomService
             {
                 string name = Name;
                 if (_MenuItem != null)
+                {
                     name = _MenuItem.FullName;
+                    if (string.IsNullOrWhiteSpace(name))
+                        name = _MenuItem.Name;
+                }
 
                 var optionChange = this.OptionsChanges.OfType<OptionChange>().Where(x => x.PriceDif == 1 && x.Option is MenuModel.ItemSelectorOption).FirstOrDefault();
                 if (optionChange != null)

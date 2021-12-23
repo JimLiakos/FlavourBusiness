@@ -68,11 +68,9 @@ namespace CashierStationDevice
             {
                 var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
                 string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializerSettings);
-                transaction.t
-                transactiona.
-                ApplicationSettings.AppDataPath
+               // ApplicationSettings.AppDataPath
 
-               var transactiona=  OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
+               //var transactiona=  OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
 
 
             }

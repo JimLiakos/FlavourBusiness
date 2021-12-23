@@ -131,7 +131,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             Task.Run(() =>
             {
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(500);
                 foreach (var preparationItem in (from servicePointPreparationItems in ServicePointsPreparationItems
                                                  from preparationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
                                                  where string.IsNullOrWhiteSpace(preparationItem.TransactionUri)
@@ -197,7 +197,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
                             {
                                 DateTime myDate = new DateTime(numberOfTicks);
-                                if ((DateTime.Now - myDate).TotalSeconds > 3)
+                                if ((DateTime.Now - myDate).TotalSeconds > 0.5)
                                 {
                                     if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
                                     {
@@ -208,7 +208,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             }
                         }
                     }
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(500);
                 }
             });
 

@@ -277,7 +277,13 @@ namespace FlavourBusinessManager.RoomService
                 stateTransition.Consistent = true;
             }
 
-            ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
+
+            Transaction.RunOnTransactionCompleted(() => {
+                ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
+            });
+
+     
+            
         }
     }
 }
