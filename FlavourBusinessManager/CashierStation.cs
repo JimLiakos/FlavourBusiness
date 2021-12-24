@@ -282,19 +282,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                             transaction = new FinanceFacade.Transaction();
                             objectStorage.CommitTransientObjectState(transaction);
                             _Transactions.Add(transaction);
-
                             stateTransition.Consistent = true;
                         }
-
                         try
                         {
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                             {
                                 ITaxAuthority taxAuthority = null;
-
                                 foreach (var receiptItem in receiptItems.OfType<ItemPreparation>().Where(x => string.IsNullOrEmpty(x.TransactionUri)))
                                 {
-
                                     string transactionUri = ObjectStorage.GetStorageOfObject(transaction)?.GetPersistentObjectUri(transaction);
                                     taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
                                     var transactionItem = new Item() { Name = receiptItem.FullName, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price, uid = receiptItem.uid };
@@ -303,12 +299,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                                     {
                                         foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
                                             transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = (transactionItem.Amount / (1 + (decimal)tax.TaxRate)) * (decimal)tax.TaxRate });
-
-
                                     }
                                     else
                                     {
-
                                     }
                                     transaction.AddItem(transactionItem);
                                     receiptItem.TransactionUri = transactionUri;

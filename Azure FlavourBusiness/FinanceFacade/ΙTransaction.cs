@@ -40,5 +40,7 @@ namespace FinanceFacade
         /// <MetaDataID>{cc41c482-497e-4c88-9f2e-8e9730a2ded3}</MetaDataID>
         string InvoiceNumber { get; set; }
 
+        string Uri { get; }
+
     }
 }

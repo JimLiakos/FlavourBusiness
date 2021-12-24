@@ -134,11 +134,15 @@ namespace FinanceFacade
         }
         /// <MetaDataID>{dd608129-7e91-4e0b-a6a2-8be1c701baa6}</MetaDataID>
         [BackwardCompatibilityID("+7")]
-        System.Collections.Generic.Dictionary<string, string> TransactionProperies = new System.Collections.Generic.Dictionary<string, string>();
+        public System.Collections.Generic.Dictionary<string, string> TransactionProperies = new System.Collections.Generic.Dictionary<string, string>();
         /// <MetaDataID>{1cf01a7e-9061-4c02-8ed0-e89e9588d776}</MetaDataID>
         public string GetPropertyValue(string propertyName)
         {
-            return TransactionProperies[propertyName];
+            string value = null;
+            if (TransactionProperies.TryGetValue(propertyName, out value))
+                return value;
+            else
+                return null;
         }
 
         /// <MetaDataID>{4a9c2476-2b3a-4b04-8ae4-b2ecb76330f5}</MetaDataID>

@@ -1,11 +1,13 @@
 ﻿using FinanceFacade;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CashierStationDevice
@@ -27,20 +29,26 @@ namespace CashierStationDevice
                 return;
             IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
             CashiersStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+
+            var path = ApplicationSettings.AppDataPath;
+            string[] filePaths = Directory.GetFiles(path, "*.json");
+            foreach(var filePath in filePaths)
+            {
+                var json = File.ReadAllText(filePath);
+                var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
+                var transaction = OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
+                Transactions.Add(transaction);
+
+
+            }
+
+
+
             try
             {
-
-
-
-
                 CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
-                var transctios = CashiersStation.GetOpenTransactions(null);
-
-
-                
-
-                foreach (var transaction in transctios)
-                    AddPendingTransactionsForPrint(transaction);
+                var transctions = CashiersStation.GetOpenTransactions(null);
+                AddPendingTransactionsForPrint(transctions);
 
 
             }
@@ -59,29 +67,68 @@ namespace CashierStationDevice
                 }
             }
         }
-
-        private void AddPendingTransactionsForPrint(ITransaction transaction)
+        List<ITransaction> Transactions = new List<ITransaction>();
+        object PendingTransactionsLock = new object();
+        private void AddPendingTransactionsForPrint(List<ITransaction> transactions)
         {
 
-            var transactionPrinter = ApplicationSettings.Current.TransactionsPrinters.Where(x => x.IsDefault).FirstOrDefault();
-            if(transactionPrinter!=null)
+            lock (PendingTransactionsLock)
             {
-                var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
-                string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializerSettings);
-               // ApplicationSettings.AppDataPath
+                var transactionPrinter = ApplicationSettings.Current.TransactionsPrinters.Where(x => x.IsDefault).FirstOrDefault();
+                if (transactionPrinter != null)
+                {
+                    var controlledTransactionsUris = Transactions.Select(x => x.Uri).ToList();
 
-               //var transactiona=  OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
 
 
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var transaction in transactions)
+                        {
+                            if (!controlledTransactionsUris.Contains(transaction.Uri))
+                            {
+                                if (transaction.GetPropertyValue("AutoNumber") == null)
+                                {
+                                    var autoNumber = ++transactionPrinter.AutoNumber;
+                                    transaction.SetPropertyValue("AutoNumber", autoNumber.ToString());
+                                    transaction.SetPropertyValue("Series", transactionPrinter.Series);
+                                }
+                                string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+                                Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+                                string transactionFileName = r.Replace(transaction.Uri, "_").Replace("-", "");
+
+                                string turi = transaction.Uri;
+                                var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
+                                string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializerSettings);
+                                var path = ApplicationSettings.AppDataPath + "\\" + transactionFileName + ".json";
+                                File.WriteAllText(path, json);
+
+                                Transactions.Add(transaction);
+                            }
+                        }  
+                        stateTransition.Consistent = true;
+                    }
+
+
+
+
+                }
             }
+
+            //var transactiona=  OOAdvantech.Json.JsonConvert.DeserializeObject<ITransaction>(json, jsonSerializerSettings);
+
+
+
         }
 
         private void CashiersStation_OpenTransactions(ICashiersStationRuntime sender, string deviceUpdateEtag)
         {
-            var transctios = CashiersStation.GetOpenTransactions(deviceUpdateEtag);
+            Task.Run(() =>
+            {
+                var transctions = CashiersStation.GetOpenTransactions(deviceUpdateEtag);
 
-            foreach (var transaction in transctios)
-                AddPendingTransactionsForPrint(transaction);
+                AddPendingTransactionsForPrint(transctions);
+            });
 
 
         }

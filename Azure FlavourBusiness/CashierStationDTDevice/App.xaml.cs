@@ -33,17 +33,29 @@ namespace CashierStationDTDevice
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
             CashierStationDevice.DocumentSignDevice.Init();
 
-            
-            CashierController = new CashierStationDevice.CashierController();
 
             try
             {
-                CashierController.Start();
+                Task.Run(()=>
+                {
+                    CashierController = new CashierStationDevice.CashierController();
+
+                    try
+                    {
+                        CashierController.Start();
+                    }
+                    catch (CashierStationDeviceException error)
+                    {
+
+                        System.Windows.Application.Current.Shutdown();
+                    }
+                });
+
             }
-            catch (CashierStationDeviceException error)
+            catch (Exception error)
             {
 
-                System.Windows.Application.Current.Shutdown();
+                
             }
 
 

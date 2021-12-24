@@ -219,8 +219,9 @@ namespace FlavourBusinessManager.RoomService
         private void MealCourseChangeState(object _object, string member)
         {
 
+
             IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
-                                                            where itemsPreparationContext.PreparationItems.All(x => x.State == ItemPreparationState.Serving)
+                                                            where itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(ItemPreparationState.Serving))
                                                             select itemsPreparationContext).ToList();
 
             IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
