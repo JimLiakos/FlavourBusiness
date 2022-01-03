@@ -462,7 +462,7 @@ namespace CashierStationDevice
 
 
                 string currOrderItemLine = transactionItemTemplateLine;
-                currOrderItemLine = FixLengthReplace(transactionItem.Quantity.ToString(), currOrderItemLine, "&",null, TextJustify.Right);
+                currOrderItemLine = FixLengthReplace(((double)transactionItem.Quantity).ToString(), currOrderItemLine, "&",null, TextJustify.Right);
                 currOrderItemLine = FixLengthReplace(transactionItem.Name, currOrderItemLine, "*");
                 currOrderItemLine = FixLengthReplace(GetPriceAsString(transactionItem.Price), currOrderItemLine, "!", "!!", TextJustify.Right);
 
