@@ -38,11 +38,11 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyNameLabel}" Margin="5,0,0,5" />
-                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.Name  , Mode=TwoWay}"></TextBox>
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  Name  , Mode=TwoWay}"></TextBox>
                 </StackPanel>
                 <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyVatNumberLabel}" Margin="5,0,0,5" />
-                    <TextBox x:Name="VatTextBox"  HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  FisicalParty.VATNumber  , Mode=TwoWay}"></TextBox>
+                    <TextBox x:Name="VatTextBox"  HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding  VATNumber  , Mode=TwoWay}"></TextBox>
                 </StackPanel>
                 <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Height="55" >
                     <Label   Content="{x:Static resx:Resources.FisicalPartyBranchLabel}" Margin="5,0,0,5" />

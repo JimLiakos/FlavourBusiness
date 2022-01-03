@@ -81,16 +81,17 @@ namespace CashierStationDevice
             Task.Run(() =>
             {
 
-
+                int index = 0;
                 while (true)
                 {
 
                     FinanceFacade.ITransaction transaction = null;
                     lock (Transactions)
                     {
+                        if (index >= Transactions.Count)
+                            index = 0;
                         if (Transactions.Count > 0)
-                            transaction = Transactions[0]
-;
+                            transaction = Transactions[index++];
                     }
                     try
                     {
@@ -98,8 +99,8 @@ namespace CashierStationDevice
                         {
                             CompanyHeader companyHeader = new CompanyHeader()
                             {
-                                Address = "Στρ. Μακρυγιάννη 40 Μοσχάτο,Νότιος Τομέας Αθηνών",
-                                Title = "Colosseo",
+                                Address = "Στρ. Μακρυγιάννη 40"+Environment.NewLine+ "Μοσχάτο,Νότιος Τομέας Αθηνών" + Environment.NewLine + "TK 183 44",
+                                Title = "Colosseo Pizza Pasta",
                                 Subtitle = "Πιτσαρία",
                                 FisicalData = "ΑΦΜ 47362769 ΔΟΥ Μοσχάτου",
                                 ContuctInfo = "Τηλ. 2109407777"
@@ -397,28 +398,28 @@ namespace CashierStationDevice
                 #region company header
                 //string title,
                 if (lineString.IndexOf("$") != -1)
-                    lineString = FixLengthReplace(companyHeader.Title, lineString, "$");
+                    lineString = FixLengthReplace(companyHeader.Title, lineString, "$").Trim();
 
                 //string productUser,
                 if (lineString.IndexOf("=") != -1)
-                    lineString = FixLengthReplace(companyHeader.Subtitle, lineString, "=");
+                    lineString = FixLengthReplace(companyHeader.Subtitle, lineString, "=").Trim();
 
                 //string organization,
                 if (lineString.IndexOf("¥") != -1)
-                    lineString = FixLengthReplace(companyHeader.TitleLine1, lineString, "¥");
+                    lineString = FixLengthReplace(companyHeader.TitleLine1, lineString, "¥").Trim();
 
 
                 //string address,
                 if (lineString.IndexOf("£") != -1)
-                    lineString = FixLengthReplace(companyHeader.Address, lineString, "£");
+                    lineString = FixLengthReplace(companyHeader.Address, lineString, "£").Trim();
 
                 //string organizationVat,
                 if (lineString.IndexOf("§") != -1)
-                    lineString = FixLengthReplace(companyHeader.FisicalData, lineString, "§");
+                    lineString = FixLengthReplace(companyHeader.FisicalData, lineString, "§").Trim();
 
                 //string ContuctInfo,
                 if (lineString.IndexOf("©") != -1)
-                    lineString = FixLengthReplace(companyHeader.ContuctInfo, lineString, "©");
+                    lineString = FixLengthReplace(companyHeader.ContuctInfo, lineString, "©").Trim();
                 #endregion
 
                 //Order Code
@@ -461,12 +462,12 @@ namespace CashierStationDevice
 
 
                 string currOrderItemLine = transactionItemTemplateLine;
-                currOrderItemLine = FixLengthReplace(transactionItem.Quantity.ToString(), currOrderItemLine, "&");
+                currOrderItemLine = FixLengthReplace(transactionItem.Quantity.ToString(), currOrderItemLine, "&",null, TextJustify.Right);
                 currOrderItemLine = FixLengthReplace(transactionItem.Name, currOrderItemLine, "*");
-                currOrderItemLine = FixLengthReplace(GetPriceAsString(transactionItem.Price), currOrderItemLine, "!", "!!");
+                currOrderItemLine = FixLengthReplace(GetPriceAsString(transactionItem.Price), currOrderItemLine, "!", "!!", TextJustify.Right);
 
                 foreach (var taxAmount in transactionItem.Taxes)
-                    currOrderItemLine = FixLengthReplace((taxAmount.TaxRate * 100).ToString(), currOrderItemLine, "|");
+                    currOrderItemLine = FixLengthReplace((taxAmount.TaxRate * 100).ToString(), currOrderItemLine, "|",null, TextJustify.Right);
 
                 rawPrintingWriter.WriteLine(currOrderItemLine);
             }
@@ -856,7 +857,7 @@ namespace CashierStationDevice
             return buffer;
         }
         /// <MetaDataID>{a4310878-48f3-4bd7-9871-1271c4dc783c}</MetaDataID>
-        private static string FixLengthReplace(string text, string lineString, string signChar, string startSign = null)
+        private static string FixLengthReplace(string text, string lineString, string signChar, string startSign = null, TextJustify textJustify =TextJustify.Left)
         {
             if (text == null)
                 text = "";
@@ -874,7 +875,16 @@ namespace CashierStationDevice
                 TableNumberStr = text.ToString();
 
             while (TableNumberStr.Length < endPos - startPos + 1)
-                TableNumberStr += " ";
+            {
+                if (textJustify==TextJustify.Left)
+                    TableNumberStr += " ";
+                else
+                    TableNumberStr = TableNumberStr.Insert(0, " ");
+            }
+
+
+
+
             string TableChars = null;
             while (startPos <= endPos)
             {
@@ -999,5 +1009,12 @@ namespace CashierStationDevice
 
 
 
+    }
+
+    enum TextJustify
+    {
+        Left=1,
+        Right=2,
+        Center=3
     }
 }

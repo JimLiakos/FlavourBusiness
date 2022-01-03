@@ -61,7 +61,7 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 FisicalPartiesExpanded = false;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalPartiesExpanded)));
-                System.Windows.Window win = System.Windows.Window.GetWindow(EditSelectedFisicalPartyCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                Window win = System.Windows.Window.GetWindow(EditSelectedFisicalPartyCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
                 Views.HumanResources.FisicalPartyWindow fisicalPartyWindow = new Views.HumanResources.FisicalPartyWindow();
                 fisicalPartyWindow.Owner = win;

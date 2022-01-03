@@ -28,7 +28,13 @@ namespace FLBManager.ViewModel.Taxes
             MenuItemsTaxInfo = new List<MenuItemTaxInfo>() { new MenuItemTaxInfo(null, menu.RootCategory, true) };
             AddTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-                var newTaxableType = TaxAuthority.NewTaxableType();
+                FinanceFacade.ITaxableType newTaxableType = null;
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+                {
+                    newTaxableType = TaxAuthority.NewTaxableType(); 
+                    stateTransition.Consistent = true;
+                }
+
                 _TaxableTypes[newTaxableType] = new TaxableTypeViewModel(newTaxableType);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
 
@@ -41,8 +47,17 @@ namespace FLBManager.ViewModel.Taxes
 
                 var taxableType = SelectedTaxableType.TaxableType;
                 SelectedTaxableType = null;
+                bool removed = false;
 
-                if (TaxAuthority.RemoveTaxableType(taxableType))
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+                {
+                    removed = TaxAuthority.RemoveTaxableType(taxableType); 
+                    stateTransition.Consistent = true;
+                }
+
+
+
+                if(removed)
                     _TaxableTypes.Remove(taxableType);
 
 
@@ -53,7 +68,7 @@ namespace FLBManager.ViewModel.Taxes
 
             EditSelectedTaxableTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
                 {
                     try
                     {

@@ -28,12 +28,23 @@ namespace FLBManager.ViewModel.HumanResources
             {
                 return FisicalParty.Name;
             }
+            set
+            {
+                FisicalParty.Name = value;
+            }
+
+
+
         }
         public string VATNumber
         {
             get
             {
                 return FisicalParty.VATNumber;
+            }
+            set
+            {
+                FisicalParty.VATNumber = value;
             }
         }
     }

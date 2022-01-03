@@ -18,7 +18,7 @@
              ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
              WindowStartupLocation="CenterOwner">
     <Window.DataContext>
-        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxableTypeViewModel}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:TaxableTypeViewModel}"    Name="Connection" TransactionOption="Required"   RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
     </Window.DataContext>
     <Window.Resources>
         <ViewModel:TaxableTypeViewModel x:Key="D_TaxableTypeViewModel" />
