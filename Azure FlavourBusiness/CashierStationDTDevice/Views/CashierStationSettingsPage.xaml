@@ -114,9 +114,9 @@
                                                     ...
                                                 </Button>-->
                                                     <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Raw Printer Address"/>
-                                                    <wpftoolkitex:WatermarkTextBox    Grid.Row="6" VerticalContentAlignment="Center"  Text="{Binding RawPrinterAddress ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="4" ></wpftoolkitex:WatermarkTextBox>
-
-
+                                                    <wpftoolkitex:WatermarkTextBox    Grid.Row="6" VerticalContentAlignment="Center"  Text="{Binding RawPrinterAddress ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                                                    <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="3"  VerticalAlignment="Bottom" Content="Code Page"/>
+                                                    <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="3"  Grid.Row="6"  VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding PrinterCodePage, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
 
                                                 </Grid>
 
@@ -124,12 +124,12 @@
 
                                         </Grid>
                                     </Grid>
-
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
                         </ListBox>
-                      
+          
+
                     </Grid>
                 </Grid>
 

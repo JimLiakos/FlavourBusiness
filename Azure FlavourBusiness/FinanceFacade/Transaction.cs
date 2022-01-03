@@ -15,12 +15,39 @@ namespace FinanceFacade
     [Persistent()]
     public class Transaction : ITransaction
     {
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+        /// <exclude>Excluded</exclude>
+        bool _PrintAgain;
+        /// <MetaDataID>{29b7d747-7afd-4a88-bf0e-b264a4021e13}</MetaDataID>
+        [PersistentMember(nameof(_PrintAgain))]
+        [BackwardCompatibilityID("+13")]
+        public bool PrintAgain
+        {
+            get => _PrintAgain;
+            set
+            {
+
+                if (_PrintAgain != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PrintAgain = value;
+                        stateTransition.Consistent = true;
+                    }
+
+                    ObjectChangeState?.Invoke(this, nameof(PrintAgain));
+                }
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
 
+        /// <exclude>Excluded</exclude>
         string _Uri;
+        /// <MetaDataID>{b6ad21f6-0b99-4e89-bf84-4de37cb5ef70}</MetaDataID>
         public string Uri
         {
             get
@@ -42,8 +69,9 @@ namespace FinanceFacade
             TransactionProperiesJson = OOAdvantech.Json.JsonConvert.SerializeObject(TransactionProperies);
         }
 
+        /// <MetaDataID>{6f55b4d5-9665-429b-b5db-814a4afe5e60}</MetaDataID>
         [JsonConstructor]
-        public Transaction(string uri, string description,List<IItem> items, List<FinanceFacade.TaxAmount> transactionTaxes, Measurement.Quantity amount, string invoiceNumber, string payeeRegistrationNumber)
+        public Transaction(string uri, string description, List<IItem> items, List<FinanceFacade.TaxAmount> transactionTaxes, Measurement.Quantity amount, string invoiceNumber, string payeeRegistrationNumber)
         {
             _Uri = uri;
             _Description = description;
@@ -51,8 +79,9 @@ namespace FinanceFacade
             _TransactionTaxes = transactionTaxes;
             _Amount = amount;
             _InvoiceNumber = invoiceNumber;
-            
+
         }
+        /// <MetaDataID>{9526e3c2-c3b9-4121-bdc2-843199ce8694}</MetaDataID>
         public Transaction()
         {
 
@@ -62,10 +91,10 @@ namespace FinanceFacade
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            
+
             if (!string.IsNullOrWhiteSpace(ItemsJson))
                 _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<Item>>(ItemsJson).OfType<IItem>().ToList();
-            
+
             if (!string.IsNullOrWhiteSpace(TransactionProperiesJson))
                 TransactionProperies = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(TransactionProperiesJson);
 
@@ -115,9 +144,18 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Items.Add(item); 
+                _Items.Add(item);
+                GetAmount();
                 stateTransition.Consistent = true;
             }
+
+        }
+
+        /// <MetaDataID>{68cb092d-d354-4416-9292-17ed6b75cdb6}</MetaDataID>
+        private void GetAmount()
+        {
+            var amount = Items.Sum(x => x.Price * x.Quantity);
+            _Amount = new Measurement.Quantity() { Amount = amount, UnitMeasure = _Amount.UnitMeasure };
 
         }
 
@@ -151,12 +189,12 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                TransactionProperies[propertyName] = value; 
+                TransactionProperies[propertyName] = value;
                 stateTransition.Consistent = true;
             }
 
         }
-        
+
         /// <exclude>Excluded</exclude>
         string _Description;
 
@@ -223,16 +261,16 @@ namespace FinanceFacade
             {
                 lock (_TransactionTaxes)
                 {
-                    
-                    
-                        _TransactionTaxes = (from item in _Items
-                                             from tax in item.Taxes
-                                             group tax by tax.AccountID into taxes
-                                             select new FinanceFacade.TaxAmount { AccountID = taxes.Key, Amount = taxes.Sum(x => x.Amount) }).ToList();
+
+
+                    _TransactionTaxes = (from item in _Items
+                                         from tax in item.Taxes
+                                         group tax by tax.AccountID into taxes
+                                         select new FinanceFacade.TaxAmount { AccountID = taxes.Key, Amount = taxes.Sum(x => x.Amount) }).ToList();
 
                     return _TransactionTaxes;
-                    
-                    
+
+
                 }
             }
         }
@@ -254,6 +292,66 @@ namespace FinanceFacade
             {
                 _PayeeRegistrationNumber = value;
             }
+        }
+        /// <exclude>Excluded</exclude>
+        decimal _DiscountAmount;
+
+        /// <MetaDataID>{c67007cb-3c65-4360-a4d2-c3d778850a9d}</MetaDataID>
+        [PersistentMember(nameof(_DiscountAmount))]
+        [BackwardCompatibilityID("+11")]
+        [CachingDataOnClientSide]
+        public decimal DiscountAmount
+        {
+            get => _DiscountAmount;
+            set
+            {
+                if (_DiscountAmount != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DiscountAmount = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        double _DiscountRate;
+
+        /// <MetaDataID>{8df19aef-c313-4796-92c9-8ebd16d47c44}</MetaDataID>
+        [PersistentMember(nameof(_DiscountRate))]
+        [BackwardCompatibilityID("+12")]
+        [CachingDataOnClientSide]
+        public double DiscountRate
+        {
+            get => _DiscountRate;
+            set
+            {
+                if (_DiscountRate != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DiscountRate = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{210812b9-81db-41e4-aad9-ee0c5a3ae399}</MetaDataID>
+        public void Update(Transaction transaction)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _InvoiceNumber = transaction.InvoiceNumber;
+                _PrintAgain = transaction.PrintAgain;
+                TransactionProperies = transaction.TransactionProperies;
+                stateTransition.Consistent = true;
+            }
+
         }
     }
 }

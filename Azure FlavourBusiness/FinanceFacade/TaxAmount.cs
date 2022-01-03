@@ -8,5 +8,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{4dadaa3a-1044-46df-9b24-02fa6efd7338}</MetaDataID>
         public decimal Amount;
+
+        public double TaxRate;
     }
 }

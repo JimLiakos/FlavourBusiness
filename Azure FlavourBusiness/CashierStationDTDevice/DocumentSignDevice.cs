@@ -213,7 +213,7 @@ namespace CashierStationDevice
         {
             lock (ConnectionLock)
             {
-                using (System.Net.Sockets.Socket DeviceCommunicationSocket = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp))
+                using (Socket DeviceCommunicationSocket = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp))
                 {
 
 
@@ -283,8 +283,13 @@ namespace CashierStationDevice
                                 }
                             }
                             else
-                                //[<]800696676;;;173;;12;0.00;0.00;6.10;0.00;0.00;0.00;0.00;1.40;0.00;7.50;0;;;[>]
-                                signDocumentResult = result.Substring(result.IndexOf("ΔΦΣΣ ") + "ΔΦΣΣ ".Length, result.IndexOf(",") - (result.IndexOf("ΔΦΣΣ ") + "ΔΦΣΣ ".Length));
+                            {
+                                if (result.IndexOf("[[Error") != -1)
+                                   return new SignatureData { Error = result };
+                               
+                                    //[<]800696676;;;173;;12;0.00;0.00;6.10;0.00;0.00;0.00;0.00;1.40;0.00;7.50;0;;;[>]
+                                    signDocumentResult = result.Substring(result.IndexOf("ΔΦΣΣ ") + "ΔΦΣΣ ".Length, result.IndexOf(",") - (result.IndexOf("ΔΦΣΣ ") + "ΔΦΣΣ ".Length));
+                            }
 
                             signatureParts = result.Split(',');
                             if (string.IsNullOrWhiteSpace(signDocumentResult))
@@ -585,8 +590,10 @@ namespace CashierStationDevice
     {
         public string Signuture;
         public string QRCode;
+        public string Error;
     }
 
+    /// <MetaDataID>{8a0d2caa-73f7-4246-9d7a-761e7c615ec4}</MetaDataID>
     public interface IDocumentSignDevice
     {
         SignatureData SignDocument(string document);

@@ -369,6 +369,48 @@
 		    value      	"{4fba9d38-4340-4447-8008-acf24fa3ab39}"))
 	    quid       	"5C6BBD69034C"
 	    stereotype 	"Interface"
+	    operations 	(list Operations
+		(object Operation "GetPropertyValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bc1f1de8-1e9d-4efb-bb54-27a7f499d22d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3C020E"))
+		    quid       	"61D01D3C020E"
+		    parameters 	(list Parameters
+			(object Parameter "propertyName"
+			    quid       	"61D01D3C0236"
+			    type       	"string"))
+		    result     	"string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetPropertyValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d55ce88a-4440-4845-b6d2-5c8b8ed9bd9f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3C02F9"))
+		    quid       	"61D01D3C02F9"
+		    parameters 	(list Parameters
+			(object Parameter "propertyName"
+			    quid       	"61D01D3C0318"
+			    type       	"string")
+			(object Parameter "value"
+			    quid       	"61D01D3C0341"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Description"
 		    attributes 	(list Attribute_Set
@@ -443,8 +485,128 @@
 			    name       	"GenerateSetOperation"
 			    value      	TRUE))
 		    quid       	"5C6CF73A0124"
-		    type       	"Quantity"
-		    quidu      	"14791CEF701D"
+		    type       	"Measurement.Quantity"
+		    exportControl 	"Public")
+		(object ClassAttribute "PayeeRegistrationNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{61e00694-8dce-4da4-8ece-6f3485fb4ae5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3D0059")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61D01D3D0059"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Uri"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d9728973-cc2b-475f-a811-ad7f3b17098c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3D01FE")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"61D01D3D01FE"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DiscountAmount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{695b925f-94e5-4667-968e-a3af4d321260}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3D030E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61D01D3D030E"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "DiscountRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4452d442-ca30-4e53-8dda-7d199562ec89}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3E0008")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61D01D3E0008"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PrintAgain"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{717ccd3d-77b6-4f17-baf1-dd3c07b09633}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D01D3E00EA")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61D01D3E00EA"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -776,7 +938,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"11")
+		    value      	"14")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -896,6 +1058,73 @@
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Transaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6f55b4d5-9665-429b-b5db-814a4afe5e60}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E500CB"))
+		    quid       	"61CD36E500CB"
+		    parameters 	(list Parameters
+			(object Parameter "uri"
+			    quid       	"61CD36E50103"
+			    type       	"string")
+			(object Parameter "description"
+			    quid       	"61CD36E50119"
+			    type       	"string")
+			(object Parameter "items"
+			    quid       	"61CD36E5013A"
+			    type       	"System.Collections.Generic.List<FinanceFacade.IItem>")
+			(object Parameter "transactionTaxes"
+			    quid       	"61CD36E50158"
+			    type       	"System.Collections.Generic.List<FinanceFacade.TaxAmount>")
+			(object Parameter "amount"
+			    quid       	"61CD36E5016C"
+			    type       	"Measurement.Quantity")
+			(object Parameter "invoiceNumber"
+			    quid       	"61CD36E50186"
+			    type       	"string")
+			(object Parameter "payeeRegistrationNumber"
+			    quid       	"61CD36E501A8"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Transaction"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9526e3c2-c3b9-4121-bdc2-843199ce8694}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E501CA"))
+		    quid       	"61CD36E501CA"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetAmount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{68cb092d-d354-4416-9292-17ed6b75cdb6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E50219"))
+		    quid       	"61CD36E50219"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Description"
@@ -1107,7 +1336,116 @@
 			    name       	"As Property"
 			    value      	FALSE))
 		    quid       	"61BC16EE0347"
-		    type       	"System.Collections.Generic.Dictionary<string,string>"))
+		    type       	"System.Collections.Generic.Dictionary<string,string>"
+		    exportControl 	"Public")
+		(object ClassAttribute "Uri"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b6ad21f6-0b99-4e89-bf84-4de37cb5ef70}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E502AD"))
+		    quid       	"61CD36E502AD"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DiscountAmount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c67007cb-3c65-4360-a4d2-c3d778850a9d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E50371")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+11"))
+		    quid       	"61CD36E50371"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "DiscountRate"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8df19aef-c313-4796-92c9-8ebd16d47c44}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CD36E60238")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+12"))
+		    quid       	"61CD36E60238"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PrintAgain"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{29b7d747-7afd-4a88-bf0e-b264a4021e13}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61D016E6032C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+13"))
+		    quid       	"61D016E6032C"
+		    type       	"bool"
+		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#"
@@ -4100,7 +4438,7 @@
 		    quidu      	"5C6CE6AD03E4"
 		    compartment 	(object Compartment
 			Parent_View 	@53
-			location   	(212, 1266)
+			location   	(212, 1262)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4114,7 +4452,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	17
+			nlines     	24
 			max_width  	1550)
 		    width      	569
 		    height     	368
@@ -4386,7 +4724,7 @@
 		    quidu      	"5C6BBD69034C"
 		    compartment 	(object Compartment
 			Parent_View 	@64
-			location   	(225, 683)
+			location   	(225, 679)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4400,7 +4738,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	4
+			nlines     	11
 			max_width  	0)
 		    width      	531
 		    height     	394

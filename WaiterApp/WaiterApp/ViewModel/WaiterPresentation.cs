@@ -1183,6 +1183,15 @@ namespace WaiterApp.ViewModel
             return false;
 
         }
+        public void PrintServingBatchReceipt(string serviceBatchIdentity)
+        {
+            var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+
+            if (servingBatch != null)
+            {
+                servingBatch.ServingBatch.PrintReceiptAgain();
+            }
+        }
 
         /// <MetaDataID>{8675f074-c752-4808-a9bb-1d1feb84db6d}</MetaDataID>
         public bool CommitServingBatches()

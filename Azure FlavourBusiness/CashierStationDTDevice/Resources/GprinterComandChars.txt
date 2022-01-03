@@ -1,0 +1,9 @@
+﻿! : Select print mode(s)
+
+! : Double-height mode selected. 
+
+! :
+
+a : Select justification 
+
+a1 : Centering 

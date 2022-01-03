@@ -14,6 +14,17 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class ServingBatch : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IServingBatch
     {
+
+        public void PrintReceiptAgain()
+        {
+            var transactionUri = PreparedItems.OfType<ItemPreparation>().Where(x => !string.IsNullOrWhiteSpace(x.TransactionUri)).FirstOrDefault()?.TransactionUri;
+            if(!string.IsNullOrWhiteSpace(transactionUri))
+            {
+                var transaction = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<FinanceFacade.Transaction>(transactionUri);
+                transaction.PrintAgain = true;
+             
+            }
+        }
         /// <MetaDataID>{0892df45-97cf-424c-9294-05700287fe9c}</MetaDataID>
         public string MealCourseUri { get; private set; }
 

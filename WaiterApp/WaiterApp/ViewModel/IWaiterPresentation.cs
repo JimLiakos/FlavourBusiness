@@ -49,6 +49,9 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{dfaa4dda-f0ac-4161-8a79-0f674b3e22fc}</MetaDataID>
         bool AssignServingBatch(string serviceBatchIdentity);
 
+        void PrintServingBatchReceipt(string serviceBatchIdentity);
+
+
         /// <MetaDataID>{d37c92b8-b562-4c44-87b2-61dd58581be7}</MetaDataID>
         bool CommitServingBatches();
 

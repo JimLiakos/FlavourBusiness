@@ -258,7 +258,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"7")
+		    value      	"8")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -462,6 +462,39 @@
 			    value      	"+6"))
 		    quid       	"61C189C9012B"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "PrinterCodePage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{71a4d598-c3ed-471b-98d0-628999b049e1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61CE8F8D027C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"61CE8F8D027C"
+		    type       	"int"
 		    exportControl 	"Public"))
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"
 	    quidu      	"61AD947E00A7"
@@ -555,7 +588,7 @@
 				    ordinal    	1
 				    quidu      	"000000000000"
 				    creation   	FALSE)
-				(object Message "TransactionPrinted(  )"
+				(object Message "TransactionPrinted(TransactionPrintID, TransactionPrintDataJson)"
 				    quid       	"61AE28F500E7"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -1044,7 +1077,7 @@
 			nlines     	1
 			max_width  	10
 			justify    	0
-			label      	"TransactionPrinted(  )"
+			label      	"TransactionPrinted(TransactionPrintID, TransactionPrintDataJson)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	1)

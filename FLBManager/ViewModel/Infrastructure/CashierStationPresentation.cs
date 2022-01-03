@@ -66,7 +66,7 @@ namespace FLBManager.ViewModel.Infrastructure
                 Views.HumanResources.FisicalPartyWindow fisicalPartyWindow = new Views.HumanResources.FisicalPartyWindow();
                 fisicalPartyWindow.Owner = win;
 
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
                 {
                     fisicalPartyWindow.GetObjectContext().SetContextInstance(_SelectedFisicalParty);
                     if (fisicalPartyWindow.ShowDialog().Value)
@@ -81,7 +81,10 @@ namespace FLBManager.ViewModel.Infrastructure
             foreach (var fisicalParty in Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.FisicalParties)
                 FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
 
-            _SelectedFisicalParty = FisicalPartiesMap.Values.Where(x => x.FisicalParty.FisicalPartyUri == CashierStation.Issuer.FisicalPartyUri).FirstOrDefault();
+
+            var isd= CashierStation.Issuer;
+
+            _SelectedFisicalParty = FisicalPartiesMap.Values.Where(x => x.FisicalParty.FisicalPartyUri == CashierStation.Issuer?.FisicalPartyUri).FirstOrDefault();
 
 
 

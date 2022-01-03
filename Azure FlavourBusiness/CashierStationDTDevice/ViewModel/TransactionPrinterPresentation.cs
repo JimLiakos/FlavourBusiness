@@ -12,7 +12,8 @@ using WPFUIElementObjectBind;
 
 namespace CashierStationDevice.ViewModel
 {
-    public class TransactionPrinterPresentation: MarshalByRefObject, INotifyPropertyChanged
+    /// <MetaDataID>{15827090-17db-482e-8b0a-50171b2ed232}</MetaDataID>
+    public class TransactionPrinterPresentation : MarshalByRefObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -21,7 +22,7 @@ namespace CashierStationDevice.ViewModel
         }
 
 
-        public List<string> AvailablePrinters { get; set;}
+        public List<string> AvailablePrinters { get; set; }
         public readonly TransactionPrinter TransactionPrinter;
         public TransactionPrinterPresentation(TransactionPrinter tax)
         {
@@ -38,8 +39,8 @@ namespace CashierStationDevice.ViewModel
 
             AvailablePrinters = PrinterSettings.InstalledPrinters.OfType<string>().ToList();
 
-            
-            if(!string.IsNullOrWhiteSpace(TransactionPrinter.PrinterName)&& AvailablePrinters.Where(x=>x.ToLower()== TransactionPrinter.PrinterName.ToLower()).FirstOrDefault()==null)
+
+            if (!string.IsNullOrWhiteSpace(TransactionPrinter.PrinterName) && AvailablePrinters.Where(x => x.ToLower() == TransactionPrinter.PrinterName.ToLower()).FirstOrDefault() == null)
                 AvailablePrinters.Insert(0, TransactionPrinter.PrinterName);
             AvailablePrinters.Insert(0, "(none)");
         }
@@ -57,7 +58,7 @@ namespace CashierStationDevice.ViewModel
             }
         }
 
-        
+
 
 
         public RelayCommand MaximizeCommand { get; set; }
@@ -76,7 +77,7 @@ namespace CashierStationDevice.ViewModel
                 if (value == "(none)")
                     TransactionPrinter.PrinterName = null;
 
-                TransactionPrinter.PrinterName=value;
+                TransactionPrinter.PrinterName = value;
             }
         }
 
@@ -166,6 +167,21 @@ namespace CashierStationDevice.ViewModel
                 TransactionPrinter.RawPrinterAddress = value;
             }
         }
+
+        public int PrinterCodePage
+        {
+            get
+            {
+                if (TransactionPrinter == null)
+                    return 0;
+                return TransactionPrinter.PrinterCodePage;
+            }
+            set
+            {
+                TransactionPrinter.PrinterCodePage = value;
+            }
+        }
+        
 
         public bool IsMaximized { get; private set; }
         public bool IsMimized

@@ -40,7 +40,19 @@ namespace FinanceFacade
         /// <MetaDataID>{cc41c482-497e-4c88-9f2e-8e9730a2ded3}</MetaDataID>
         string InvoiceNumber { get; set; }
 
+        /// <MetaDataID>{d9728973-cc2b-475f-a811-ad7f3b17098c}</MetaDataID>
         string Uri { get; }
+
+
+        /// <MetaDataID>{695b925f-94e5-4667-968e-a3af4d321260}</MetaDataID>
+        decimal DiscountAmount { get; set; }
+
+        /// <MetaDataID>{4452d442-ca30-4e53-8dda-7d199562ec89}</MetaDataID>
+        double DiscountRate { get; set; }
+
+
+        /// <MetaDataID>{717ccd3d-77b6-4f17-baf1-dd3c07b09633}</MetaDataID>
+        bool PrintAgain { get; set; }
 
     }
 }

@@ -1,3 +1,4 @@
+using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{a7218012-da49-4b19-ac73-a5f9d7911cfe}</MetaDataID>
         List<FinanceFacade.ITransaction> GetOpenTransactions(string deviceUpdateEtag);
+        void TransactionCommited(ITransaction transaction);
 
         // void Validate(string token);
 

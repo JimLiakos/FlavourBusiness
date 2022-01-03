@@ -668,7 +668,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(42, 394)
+			location   	(42, 389)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	482
@@ -676,7 +676,7 @@
 			label      	"Quantity")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(42, 344)
+			location   	(42, 343)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

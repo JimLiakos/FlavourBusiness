@@ -61,6 +61,8 @@ namespace FlavourBusinessFacade.RoomService
 
         event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
+        void PrintReceiptAgain();
+
     }
 
     /// <summary>

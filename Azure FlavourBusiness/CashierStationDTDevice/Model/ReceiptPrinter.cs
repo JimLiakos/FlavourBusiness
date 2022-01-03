@@ -11,7 +11,7 @@ namespace CashierStationDevice.Model
     /// <MetaDataID>{234c682f-bbbb-4221-8484-e2b3f26bf040}</MetaDataID>
     [BackwardCompatibilityID("{234c682f-bbbb-4221-8484-e2b3f26bf040}")]
     [Persistent()]
-    public class TransactionPrinter 
+    public class TransactionPrinter
     {
         /// <exclude>Excluded</exclude>
         string _Description;
@@ -161,6 +161,27 @@ namespace CashierStationDevice.Model
                     }
                 }
 
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        int _PrinterCodePage;
+
+        /// <MetaDataID>{71a4d598-c3ed-471b-98d0-628999b049e1}</MetaDataID>
+        [PersistentMember(nameof(_PrinterCodePage))]
+        [BackwardCompatibilityID("+7")]
+        public int PrinterCodePage
+        {
+            get => _PrinterCodePage; set
+            {
+                if (_PrinterCodePage != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PrinterCodePage = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
     }

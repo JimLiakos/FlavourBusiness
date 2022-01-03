@@ -5,6 +5,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
 using System.Linq;
+using OOAdvantech.Json;
 
 namespace FinanceFacade
 {
@@ -81,6 +82,25 @@ namespace FinanceFacade
     [Persistent()]
     public class Item : IItem
     {
+
+
+        public  Item()
+        { 
+        }
+
+        [JsonConstructor]
+        public  Item(string category, string description, string name, decimal price, decimal quantity, string sku, System.Collections.Generic.List<FinanceFacade.TaxAmount> taxes,string uid)
+        {
+            _Category = category;
+            _Description = description;
+            _Name = name;
+            _Price = price;
+            _Quantity = quantity;
+            _Sku = sku;
+            _Taxes = new Set<TaxAmount>(taxes);
+            this.uid = uid;
+
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -298,6 +318,7 @@ namespace FinanceFacade
                     return _Taxes.ToList();
                 }
             }
+
         }
 
         /// <MetaDataID>{55f5b0bc-8d8f-42af-b1b6-5b1c60383ef0}</MetaDataID>

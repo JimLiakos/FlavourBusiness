@@ -128,7 +128,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (GetPrintReceiptCondition(ServicePointType.TakeAway) == null)
                 PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.TakeAway, ItemState = ItemPreparationState.OnRoad });
 
-
+            foreach (var transaction in _Transactions.OfType<FinanceFacade.Transaction>())
+            {
+                transaction.ObjectChangeState += Transaction_ObjectChangeState;
+            }
             Task.Run(() =>
             {
                 System.Threading.Thread.Sleep(500);
@@ -145,6 +148,19 @@ namespace FlavourBusinessManager.ServicesContextResources
             });
 
 
+        }
+
+        private void Transaction_ObjectChangeState(object _object, string member)
+        {
+
+            if (member == nameof(FinanceFacade.Transaction.PrintAgain))
+            {
+                lock (DeviceUpdateLock)
+                {
+                    if (DeviceUpdateEtag == null)
+                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                }
+            }
         }
 
 
@@ -281,7 +297,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 objectStorage = ObjectStorage.GetStorageOfObject(this);
                             transaction = new FinanceFacade.Transaction();
                             objectStorage.CommitTransientObjectState(transaction);
+                            transaction.PayeeRegistrationNumber = Issuer.VATNumber;
                             _Transactions.Add(transaction);
+                            (transaction as FinanceFacade.Transaction).ObjectChangeState += Transaction_ObjectChangeState;
                             stateTransition.Consistent = true;
                         }
                         try
@@ -298,7 +316,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                     if ((receiptItem.MenuItem as MenuModel.MenuItem).TaxableType != null)
                                     {
                                         foreach (var tax in (receiptItem.MenuItem as MenuModel.MenuItem).TaxableType.Taxes)
-                                            transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = (transactionItem.Amount / (1 + (decimal)tax.TaxRate)) * (decimal)tax.TaxRate });
+                                            transactionItem.AddTax(new TaxAmount() { AccountID = tax.AccountID, Amount = (transactionItem.Amount / (1 + (decimal)tax.TaxRate)) * (decimal)tax.TaxRate, TaxRate = tax.TaxRate });
                                     }
                                     else
                                     {
@@ -495,10 +513,25 @@ namespace FlavourBusinessManager.ServicesContextResources
                     RaiseEventTimeStamp = null;
                 }
             }
-
-
-            return this.Transactions.Where(x => x.InvoiceNumber == null).ToList();
+            return this.Transactions.Where(x => x.InvoiceNumber == null || x.PrintAgain).ToList();
         }
+
+        public void TransactionCommited(ITransaction transaction)
+        {
+            lock (DeviceUpdateLock)
+            {
+                bool _throw = false;
+                if (_throw)
+                    throw new Exception("error");
+
+                var servertrasaction = ObjectStorage.GetObjectFromUri<FinanceFacade.Transaction>(transaction.Uri);
+                servertrasaction.Update(transaction as FinanceFacade.Transaction);
+                DeviceUpdateEtag = null;
+                RaiseEventTimeStamp = null;
+            }
+        }
+
+
 
 
         //ItemPreparationState GetPrintReceiptCondition(ServicePointType servicePointType);
@@ -555,6 +588,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_Transactions))]
         [BackwardCompatibilityID("+9")]
         public List<ITransaction> Transactions => _Transactions.ToThreadSafeList();
+
+
+
     }
 
 
