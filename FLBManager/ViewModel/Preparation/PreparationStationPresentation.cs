@@ -19,7 +19,10 @@ namespace FLBManager.ViewModel.Preparation
     public class PreparationStationPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
 
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <MetaDataID>{49b5c4dc-49d7-467f-8ea3-71f736302ce1}</MetaDataID>
         internal void ExcludeServicePoint(IServicePoint servicePoint)

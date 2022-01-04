@@ -17,7 +17,10 @@ namespace FLBManager.ViewModel.Preparation
     /// <MetaDataID>{6cb20dd9-745b-4737-82d2-f6b4f1bff1ce}</MetaDataID>
     public class ItemsPreparationInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         /// <MetaDataID>{017f504b-513b-4fc4-af42-c0c2ae4641b9}</MetaDataID>
         public readonly IItemsPreparationInfo ItemsPreparationInfo;
         /// <MetaDataID>{b369fbe0-d83b-467f-ba71-050afe49452e}</MetaDataID>

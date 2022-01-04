@@ -1,15 +1,15 @@
-﻿<sw:Window x:Class="FLBManager.Views.Infrastructure.CashierStationWindow"
+﻿<sw:Window x:Class="CashierStationUI.Views.CashierStationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
-        xmlns:local="clr-namespace:FLBManager.Views.Infrastructure"
-        xmlns:ViewModel="clr-namespace:FLBManager.ViewModel.Infrastructure"
-        xmlns:resx="clr-namespace:FLBManager.Properties" 
+        xmlns:local="clr-namespace:CashierStationUI.Views"
+        xmlns:ViewModel="clr-namespace:CashierStationUI.ViewModel"
+        xmlns:resx="clr-namespace:CashierStationUI.Properties" 
         ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False" WindowStartupLocation="CenterOwner"       
-        Icon="/FLBManager;component/Resources/Images/Metro/cashier32.png" 
+        Icon="/CashierStationUI;component/Resources/Images/cashier32.png" 
         mc:Ignorable="d"
            
         Title="{x:Static resx:Resources.CashiersStationWindowTitle}" Height="608" Width="500">
@@ -63,7 +63,7 @@
 
                         <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="False" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=FisicalPartToggle }" IsOpen="{Binding Path=IsChecked , ElementName=FisicalPartToggle }"   Panel.ZIndex="10"  >
                             <Border >
-                                <Grid MaxHeight="100"  >
+                                <Grid MaxHeight="100"  Background="{StaticResource ComboBoxBackgroundBrush}"  >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="auto"/>

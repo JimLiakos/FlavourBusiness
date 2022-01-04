@@ -15,6 +15,10 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{bc5c09c5-ff0e-4b11-b814-486aa4401af5}</MetaDataID>
     public class AssignedMealTypeViewMode : FBResourceTreeNode
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public readonly MenuModel.IMealType MealType;
         public readonly string MealTypeUri;
 

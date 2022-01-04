@@ -16,6 +16,11 @@ namespace FLBManager.ViewModel.HumanResources
     /// <MetaDataID>{45ee7499-6e58-49ef-9a94-21ec85e85018}</MetaDataID>
     public class SupervisorTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
+
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public readonly IServiceContextSupervisor Supervisor;
         AdministrationTreeNode Administration;
         public SupervisorTreeNode(AdministrationTreeNode parent, IServiceContextSupervisor supervisor) : base(parent)

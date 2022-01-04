@@ -325,6 +325,8 @@ namespace CashierStationDevice
         {
             return "[<]" + epsilon_line + "[>]";
         }
+
+        public bool IsOnline { get => Status!=null&&!Status.SamtecDriverConnectionError; }
         private string ReadAnswer(Socket DeviceCommunicationSocket)
         {
             byte[] resBuffera = new byte[1024];
@@ -598,6 +600,8 @@ namespace CashierStationDevice
     {
         SignatureData SignDocument(string document);
         string PrepareEpsilonLine(string epsilon_line);
+
+        bool IsOnline { get; }
     }
 
 

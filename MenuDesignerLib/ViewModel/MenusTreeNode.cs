@@ -16,7 +16,10 @@ namespace MenuDesigner.ViewModel
     /// <MetaDataID>{ad48a862-f965-49f9-85c4-013d7583888d}</MetaDataID>
     public class MenusTreeNode : FBResourceTreeNode, IDragDropTarget
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
 
         ///// <MetaDataID>{ab37fd26-6d11-4d08-a682-06e6aeabed58}</MetaDataID>
         //Dictionary<string, GraphicMenuTreeNode> GraphicMenus = new Dictionary<string, GraphicMenuTreeNode>();

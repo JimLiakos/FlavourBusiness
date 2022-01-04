@@ -23,7 +23,10 @@ namespace FLBManager.ViewModel
     /// <MetaDataID>{0d1d707a-9f9c-473c-a556-daedf99c71b2}</MetaDataID>
     public class FlavoursServicesContextPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaTreeNodeOwner,IGraphicMenusOwner
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <MetaDataID>{a6c9d015-f393-40ed-88ab-8914d4d64c90}</MetaDataID>
         Dictionary<IServiceArea, ServiceAreaPresentation> ServiceAreas = new Dictionary<IServiceArea, ServiceAreaPresentation>();

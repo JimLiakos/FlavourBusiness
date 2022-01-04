@@ -25,6 +25,10 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{2346d8c4-3061-4757-9e0e-9c039aaf0e89}</MetaDataID>
     public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         List<FBResourceTreeNode> _TreeItems;
         public List<FBResourceTreeNode> TreeItems
         {

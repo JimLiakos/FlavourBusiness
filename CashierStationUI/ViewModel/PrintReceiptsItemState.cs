@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FLBManager.ViewModel.Taxes
+namespace CashierStationUI.ViewModel
 {
     /// <MetaDataID>{918e6ea3-332c-433c-8a1c-e9c6f3caae62}</MetaDataID>
     public class PrintReceiptsItemStateViewModel : MarshalByRefObject, INotifyPropertyChanged

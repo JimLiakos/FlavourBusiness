@@ -16,6 +16,10 @@ namespace FLBManager.ViewModel.Infrastructure
     /// <MetaDataID>{ca225e58-da85-4932-95f3-2a75a72839cc}</MetaDataID>
     public class InfrastructureTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public readonly FlavoursServicesContextPresentation ServicesContextPresentation;
         CallerIDServerTreeNode CallerIDServerTreeNode;
 

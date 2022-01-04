@@ -15,7 +15,10 @@ namespace FLBManager.ViewModel.Preparation
     /// <MetaDataID>{38127261-e172-4d32-a9f9-7e052af99294}</MetaDataID>
     public class ServicePointsPreparationInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public readonly IPreparationForInfo ServicePointsPreparationInfo;
         PreparationStationPresentation PreparationStationPresentation;
 

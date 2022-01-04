@@ -18,7 +18,10 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{a7d4820a-b0ad-4e69-8887-a92bf937f61e}</MetaDataID>
     public class MealTypesTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
 
         ServiceAreaPresentation ServiceAreaPresentation;

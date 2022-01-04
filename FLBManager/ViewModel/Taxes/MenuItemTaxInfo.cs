@@ -17,6 +17,10 @@ namespace FLBManager.ViewModel.Taxes
     /// <MetaDataID>{feab2210-beff-4bf7-a39f-e459740c9a37}</MetaDataID>
     public class MenuItemTaxInfo : FBResourceTreeNode, INotifyPropertyChanged
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Preparation infos concern menu item
         /// </summary>

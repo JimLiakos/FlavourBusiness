@@ -15,7 +15,10 @@ namespace MenuMaker.ViewModel
     /// <MetaDataID>{e8fded29-f251-4dca-ae0e-ae338f0aed97}</MetaDataID>
     public class ManuMakingActivitiesTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         internal MenuMakerTreeNode MenuMakerTreeNode;
         public ManuMakingActivitiesTreeNode(MenuMakerTreeNode menuMeker) : base(menuMeker)
         {

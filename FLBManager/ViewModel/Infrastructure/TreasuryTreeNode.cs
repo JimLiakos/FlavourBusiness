@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CashierStationUI.ViewModel;
 using FlavourBusinessFacade.ServicesContextResources;
 using WPFUIElementObjectBind;
 
@@ -32,7 +33,7 @@ namespace FLBManager.ViewModel.Infrastructure
                 {
 
                     foreach (var cashierStation in ServiceContextInfrastructure.ServiceContextResources.CashierStations)
-                        CashierStations.Add(cashierStation, new CashierStationPresentation(this, cashierStation));
+                        CashierStations.Add(cashierStation, new CashierStationPresentation(this, cashierStation, this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext));
 
                     //foreach (var cashierStation in ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.CashierStations)
                     //    CashierStations.Add(cashierStation, new CashierStationPresentation( this, cashierStation));
@@ -50,11 +51,19 @@ namespace FLBManager.ViewModel.Infrastructure
             CashierStations.Remove(cashierStationPresentation.CashierStation);
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            if (treeNode is CashierStationPresentation)
+                RemoveCashierStation(treeNode as CashierStationPresentation);
+
+
+        }
 
         private void NewCashierStation()
         {
+            
             var cashierStation= ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewCashierStation();
-            CashierStations.Add(cashierStation, new CashierStationPresentation(this, cashierStation));
+            CashierStations.Add(cashierStation, new CashierStationPresentation(this, cashierStation, this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext));
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }

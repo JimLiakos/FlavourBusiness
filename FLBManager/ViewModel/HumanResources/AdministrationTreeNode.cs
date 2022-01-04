@@ -171,7 +171,10 @@ namespace FLBManager.ViewModel.HumanResources
         {
         }
 
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

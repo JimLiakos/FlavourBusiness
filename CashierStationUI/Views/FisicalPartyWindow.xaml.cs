@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FLBManager.Views.Infrastructure
+namespace CashierStationWindow.Views
 {
     /// <summary>
-    /// Interaction logic for CashierStationWindow.xaml
+    /// Interaction logic for FisicalPartyWindow.xaml
     /// </summary>
-    /// <MetaDataID>{2b6f9b85-c481-4bb1-a120-1626eb5735d2}</MetaDataID>
-    public partial class CashierStationWindow : StyleableWindow.Window
+    /// <MetaDataID>{22c9e0eb-b2e6-450a-86c5-c99119603fa3}</MetaDataID>
+    public partial class FisicalPartyWindow : StyleableWindow.Window
     {
-        /// <MetaDataID>{3c446748-349a-4b28-91b1-dd3a12299024}</MetaDataID>
-        public CashierStationWindow()
+        public FisicalPartyWindow()
         {
             InitializeComponent();
         }

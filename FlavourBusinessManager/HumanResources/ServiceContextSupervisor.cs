@@ -400,6 +400,8 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{74bd474b-62f8-402f-aa8f-47226fbad1e7}</MetaDataID>
         FlavourBusinessFacade.IFlavoursServicesContextRuntime IServiceContextSupervisor.ServicesContextRunTime => ServicesContextRunTime;
 
+        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get=> FlavoursServicesContext.GetServicesContext(ServicesContextIdentity); }
+        
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
         public void RemoveShiftWork(IShiftWork shiftWork)
         {

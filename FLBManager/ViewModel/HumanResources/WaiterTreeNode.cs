@@ -14,6 +14,10 @@ namespace FLBManager.ViewModel.HumanResources
     /// <MetaDataID>{3ba3af26-23ae-462c-baca-73833b4f9bab}</MetaDataID>
     public class WaiterTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public readonly IWaiter Waiter;
         WaitersTreeNode Waiters;
         public WaiterTreeNode(WaitersTreeNode parent, IWaiter waiter) : base(parent)

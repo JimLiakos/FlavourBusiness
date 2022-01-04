@@ -80,7 +80,9 @@ namespace CashierStationDevice.ViewModel
             {
                 if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
                 {
-                    CashierStations = (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContextRunTime.CashierStations.Select(x => new CashierStationPresentation(x)).ToList();
+                    
+                    
+                    CashierStations = (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContextRunTime.CashierStations.Select(x => new CashierStationPresentation(x, (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContext)).ToList();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CashierStations)));
                     if (SelectedCashierStation == null && CashierStations.Count > 0)
                     {

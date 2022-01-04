@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FLBManager.ViewModel.HumanResources
+namespace CashierStationUI.ViewModel
 {
     /// <MetaDataID>{b7f325f2-25bc-4e58-b4f7-1405eb262d1f}</MetaDataID>
     public class FisicalPartyPresentation : MarshalByRefObject, INotifyPropertyChanged

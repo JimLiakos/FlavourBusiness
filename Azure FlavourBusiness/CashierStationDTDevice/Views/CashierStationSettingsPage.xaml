@@ -41,9 +41,17 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition  Width="{Binding ElementName=CashierStations, Path=ActualHeight}"/>
+                    </Grid.ColumnDefinitions>
                     <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="4" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
-                        
+                    <ComboBox x:Name="CashierStations" Grid.Row="1" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
+                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectedCashierStation.EditCommand}"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
+                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                    </Button>
+
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="1" >

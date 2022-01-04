@@ -102,8 +102,9 @@ namespace CashierStationDevice
                                 Address = "Στρ. Μακρυγιάννη 40"+Environment.NewLine+ "Μοσχάτο,Νότιος Τομέας Αθηνών" + Environment.NewLine + "TK 183 44",
                                 Title = "Colosseo Pizza Pasta",
                                 Subtitle = "Πιτσαρία",
-                                FisicalData = "ΑΦΜ 47362769 ΔΟΥ Μοσχάτου",
+                                FisicalData = "ΑΦΜ 047362769 ΔΟΥ Μοσχάτου",
                                 ContuctInfo = "Τηλ. 2109407777"
+
 
                             };
                             PrintReceipt(transaction, CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice, companyHeader);
@@ -235,45 +236,49 @@ namespace CashierStationDevice
                 foreach (var item in transaction.Items)
                 {
                     total_to_pay_poso += item.Price;
+                    if (item.Taxes.Count > 0 && VatAcounts.ContainsKey(item.Taxes[0].AccountID))
+                    {
+                        if (VatAcounts[item.Taxes[0].AccountID] == 0)
+                        {
+                            vat_a += item.Taxes[0].Amount;
+                            net_a += item.Price - item.Taxes[0].Amount;
+                        }
+                        if (VatAcounts[item.Taxes[0].AccountID] == 1)
+                        {
+                            vat_b += item.Taxes[0].Amount;
+                            net_b += item.Price - item.Taxes[0].Amount;
+                        }
 
-                    if (VatAcounts[item.Taxes[0].AccountID] == 0)
-                    {
-                        vat_a += item.Taxes[0].Amount;
-                        net_a += item.Price - item.Taxes[0].Amount;
-                    }
-                    if (VatAcounts[item.Taxes[0].AccountID] == 1)
-                    {
-                        vat_b += item.Taxes[0].Amount;
-                        net_b += item.Price - item.Taxes[0].Amount;
-                    }
+                        if (VatAcounts[item.Taxes[0].AccountID] == 2)
+                        {
+                            vat_c += item.Taxes[0].Amount;
+                            net_c += item.Price - item.Taxes[0].Amount;
+                        }
 
-                    if (VatAcounts[item.Taxes[0].AccountID] == 2)
-                    {
-                        vat_c += item.Taxes[0].Amount;
-                        net_c += item.Price - item.Taxes[0].Amount;
-                    }
-
-                    if (VatAcounts[item.Taxes[0].AccountID] == 3)
-                    {
-                        vat_d += item.Taxes[0].Amount;
-                        net_d += item.Price - item.Taxes[0].Amount;
+                        if (VatAcounts[item.Taxes[0].AccountID] == 3)
+                        {
+                            vat_d += item.Taxes[0].Amount;
+                            net_d += item.Price - item.Taxes[0].Amount;
+                        }
                     }
 
                 }
 
                 string afdsDoc = printText;
-
-                string epsilon_line = string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0};{1};;{2};{3};{4};", myafm, clientafm, transactionTypeID, series, taxDocNumber);
-                epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};{4:N2};", net_a, net_b, net_c, net_d, net_e);
-                epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};", vat_a, vat_b, vat_c, vat_d);
-                epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};0;;;", total_to_pay_poso);
-                afdsDoc += documentSigner.PrepareEpsilonLine(epsilon_line);
-                SignatureData signature = documentSigner.SignDocument(afdsDoc);
-                if (!string.IsNullOrWhiteSpace(signature.Signuture))
+                if (documentSigner.IsOnline)
                 {
-                    transaction.SetPropertyValue("Signature", signature.Signuture);
-                    transaction.SetPropertyValue("QRCode", signature.QRCode);
-                    transaction.Save(ApplicationSettings.AppDataPath);
+                    string epsilon_line = string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0};{1};;{2};{3};{4};", myafm, clientafm, transactionTypeID, series, taxDocNumber);
+                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};{4:N2};", net_a, net_b, net_c, net_d, net_e);
+                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};", vat_a, vat_b, vat_c, vat_d);
+                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};0;;;", total_to_pay_poso);
+                    afdsDoc += documentSigner.PrepareEpsilonLine(epsilon_line);
+                    SignatureData signature = documentSigner.SignDocument(afdsDoc);
+                    if (!string.IsNullOrWhiteSpace(signature.Signuture))
+                    {
+                        transaction.SetPropertyValue("Signature", signature.Signuture);
+                        transaction.SetPropertyValue("QRCode", signature.QRCode);
+                        transaction.Save(ApplicationSettings.AppDataPath);
+                    }
                 }
             }
             printText = GetReceiptRawPrint(transaction, companyHeader, "13", "");

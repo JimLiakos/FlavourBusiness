@@ -41,6 +41,8 @@ namespace FlavourBusinessFacade.HumanResources
         [BackwardCompatibilityID("+9")]
         IFlavoursServicesContextRuntime ServicesContextRunTime { get; }
 
+        FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get; }
+
 
 
 

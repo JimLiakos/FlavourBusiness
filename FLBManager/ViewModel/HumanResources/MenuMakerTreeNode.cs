@@ -16,7 +16,10 @@ namespace FLBManager.ViewModel.HumanResources
     /// <MetaDataID>{28230a56-a983-4da1-bf57-9a6a006645d3}</MetaDataID>
     public class MenuMakerTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         /// <MetaDataID>{55be189e-0c0c-40b5-949e-dff553578092}</MetaDataID>
         MenuMakersTreeNode MenuMakers;
         /// <MetaDataID>{c3eaea5b-8aa7-417f-b532-6b12547c7380}</MetaDataID>

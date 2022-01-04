@@ -17,6 +17,10 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{0cedc37f-b933-45e3-958f-1f8ec3dec749}</MetaDataID>
     public class ServicePointPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServicePointViewModel
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         List<AssignedMealTypeViewMode> _MealTypes;
         public List<AssignedMealTypeViewMode> MealTypes
         {

@@ -14,6 +14,10 @@ namespace FLBManager.ViewModel.Infrastructure
     /// <MetaDataID>{d32b953d-a5d1-4367-b26b-dccf0837fc10}</MetaDataID>
     public class CallerIDLineTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         internal ICallerIDLine CallerIDLine;
         internal CallerIDServerTreeNode CallerIDServerTreeNode;
         public CallerIDLineTreeNode(CallerIDServerTreeNode parent, ICallerIDLine callerIDLine) : base(parent)

@@ -16,7 +16,10 @@ namespace FLBManager.ViewModel.Preparation
     /// <MetaDataID>{98bdc5c9-e359-40e1-93c6-5140f8c02cb1}</MetaDataID>
     public class PreparationSationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         /// <MetaDataID>{693b6572-cadd-40b4-8ab7-888267b37b31}</MetaDataID>
         public PreparationSationsTreeNode(Infrastructure.InfrastructureTreeNode parent) : base(parent)
         {

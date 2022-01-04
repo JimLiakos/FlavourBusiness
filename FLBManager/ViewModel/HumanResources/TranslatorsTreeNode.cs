@@ -15,7 +15,10 @@ namespace FLBManager.ViewModel.HumanResources
     /// <MetaDataID>{ab017689-cd57-4841-b9d5-25e539ca75c7}</MetaDataID>
     public class TranslatorsTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         /// <MetaDataID>{feb2c678-24b0-4beb-a0d4-e6172e0e4d4c}</MetaDataID>
         public TranslatorsTreeNode(CompanyPresentation parent, List<ITranslator> translators) : base(parent)
         {

@@ -20,7 +20,10 @@ namespace FLBManager.ViewModel
     public class CompanyPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IGraphicMenusOwner
     {
 
-
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         public event EventHandler CompanySignedOut;
 
         /// <MetaDataID>{a7039ad1-e004-4dda-928e-82c77fb62774}</MetaDataID>

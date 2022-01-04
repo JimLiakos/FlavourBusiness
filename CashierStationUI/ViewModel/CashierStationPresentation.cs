@@ -1,4 +1,11 @@
-﻿using System;
+﻿using CashierStationUI.ViewModel;
+using CashierStationUI.Views;
+using CashierStationWindow.Views;
+using FlavourBusinessFacade;
+using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel;
+using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,14 +14,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using FlavourBusinessFacade.ServicesContextResources;
-using FLBManager.ViewModel.HumanResources;
-using FLBManager.ViewModel.Taxes;
-using OOAdvantech.Transactions;
 using UIBaseEx;
 using WPFUIElementObjectBind;
 
-namespace FLBManager.ViewModel.Infrastructure
+namespace CashierStationUI.ViewModel
 {
     /// <MetaDataID>{417f9100-3809-4886-8902-bcb2acd74f3d}</MetaDataID>
     public class CashierStationPresentation : FBResourceTreeNode, INotifyPropertyChanged
@@ -24,11 +27,12 @@ namespace FLBManager.ViewModel.Infrastructure
 
         }
         public readonly ICashierStation CashierStation;
-        TreasuryTreeNode Treasury;
-        public CashierStationPresentation(TreasuryTreeNode parent, ICashierStation cashierStation) : base(parent)
+        public readonly IFlavoursServicesContext ServicesContext;
+        public CashierStationPresentation(FBResourceTreeNode parent, ICashierStation cashierStation, IFlavoursServicesContext servicesContext) : base(parent)
         {
-            Treasury = parent;
+            
             CashierStation = cashierStation;
+            ServicesContext = servicesContext;
             PrintReceiptsItemStates = new List<PrintReceiptsItemStateViewModel>();
             PrintReceiptsItemStates.Add(new PrintReceiptsItemStateViewModel(cashierStation.GetPrintReceiptCondition(ServicePointType.Delivery)));
             PrintReceiptsItemStates.Add(new PrintReceiptsItemStateViewModel(cashierStation.GetPrintReceiptCondition(ServicePointType.HallServicePoint)));
@@ -52,7 +56,7 @@ namespace FLBManager.ViewModel.Infrastructure
 
             AddFisicalPartyCommand = new RelayCommand((object sender) =>
             {
-                var fisicalParty = Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewFisicalParty();
+                var fisicalParty = ServicesContext.NewFisicalParty();
                 FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalParties)));
 
@@ -63,7 +67,7 @@ namespace FLBManager.ViewModel.Infrastructure
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(FisicalPartiesExpanded)));
                 Window win = System.Windows.Window.GetWindow(EditSelectedFisicalPartyCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
-                Views.HumanResources.FisicalPartyWindow fisicalPartyWindow = new Views.HumanResources.FisicalPartyWindow();
+                FisicalPartyWindow fisicalPartyWindow = new FisicalPartyWindow();
                 fisicalPartyWindow.Owner = win;
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
@@ -71,14 +75,14 @@ namespace FLBManager.ViewModel.Infrastructure
                     fisicalPartyWindow.GetObjectContext().SetContextInstance(_SelectedFisicalParty);
                     if (fisicalPartyWindow.ShowDialog().Value)
                     {
-                        Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.UpdateFisicalParty(_SelectedFisicalParty.FisicalParty);
+                        ServicesContext.UpdateFisicalParty(_SelectedFisicalParty.FisicalParty);
                         stateTransition.Consistent = true;
                     }
                 }
 
 
             });
-            foreach (var fisicalParty in Treasury.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.FisicalParties)
+            foreach (var fisicalParty in ServicesContext.FisicalParties)
                 FisicalPartiesMap.GetViewModelFor(fisicalParty, fisicalParty);
 
 
@@ -128,7 +132,7 @@ namespace FLBManager.ViewModel.Infrastructure
         {
             System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
-            Views.Infrastructure.CashierStationWindow cashierStationWindow = new Views.Infrastructure.CashierStationWindow();
+            CashierStationUI.Views.CashierStationWindow cashierStationWindow = new CashierStationUI.Views.CashierStationWindow();
             cashierStationWindow.Owner = win;
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
@@ -158,7 +162,8 @@ namespace FLBManager.ViewModel.Infrastructure
 
         private void Delete()
         {
-            Treasury.RemoveCashierStation(this);
+            Parent.RemoveChild(this);
+            
 
             // (Company as CompanyPresentation).RemoveServicesContext(this);
         }
@@ -229,7 +234,7 @@ namespace FLBManager.ViewModel.Infrastructure
 
                     menuItem = new MenuCommand();
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
-                    menuItem.Header = Properties.Resources.RemoveCallerIDServer;
+                    menuItem.Header = Properties.Resources.RemoveNode;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = DeleteCommand;
 
@@ -316,5 +321,9 @@ namespace FLBManager.ViewModel.Infrastructure
 
         }
 
+        public override void RemoveChild(FBResourceTreeNode FBResourceTreeNode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

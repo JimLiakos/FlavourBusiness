@@ -189,6 +189,7 @@ namespace FLBManager.ViewModel
             get;
         }
 
+        public abstract void RemoveChild(FBResourceTreeNode treeNode);
 
     }
 

@@ -359,6 +359,14 @@
       <Project>{8dfec0f3-c2ec-4d16-9e1d-09d33199e73f}</Project>
       <Name>WPFUIElementObjectBind-VS10</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CashierStationUI\CashierStationUI.csproj">
+      <Project>{9da0181b-bb0f-4774-a765-7f1fe4ce5646}</Project>
+      <Name>CashierStationUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FlavourBusinessUI\FlavourBusinessUI.csproj">
+      <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
+      <Name>FlavourBusinessUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MenuDesignerLib\MenuDesignerLib.csproj">
       <Project>{2AABB569-BFB9-4484-A3D9-38B2F930F1EC}</Project>
       <Name>MenuDesignerLib</Name>

@@ -165,12 +165,10 @@
     <Compile Include="ViewModel\FlavoursServicesContextPresentation.cs" />
     <Compile Include="ViewModel\HumanResources\AdministrationTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\DesignSubject.cs" />
-    <Compile Include="ViewModel\HumanResources\FisicalPartyPresentation.cs" />
     <Compile Include="ViewModel\HumanResources\GraphicDesignActivityPresentation.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakersTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakerTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakerViewModel.cs" />
-    <Compile Include="ViewModel\Infrastructure\CashierStationPresentation.cs" />
     <Compile Include="ViewModel\Infrastructure\InfrastructureTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\StaffTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\SupervisorTreeNode.cs" />
@@ -193,7 +191,6 @@
     <Compile Include="ViewModel\Infrastructure\TreasuryTreeNode.cs" />
     <Compile Include="ViewModel\Preparation\RootItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\ServicePointsPreparationInfoPresentation.cs" />
-    <Compile Include="ViewModel\Taxes\PrintReceiptsItemState.cs" />
     <Compile Include="ViewModel\Taxes\TaxesPresentation.cs" />
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>
@@ -204,9 +201,6 @@
     <Compile Include="Views\HumanResources\AddresWindow.xaml.cs">
       <DependentUpon>AddresWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HumanResources\FisicalPartyWindow.xaml.cs">
-      <DependentUpon>FisicalPartyWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\HumanResources\MenuMakerWindow.cs">
       <DependentUpon>MenuMakerWindow.xaml</DependentUpon>
     </Compile>
@@ -215,9 +209,6 @@
     </Compile>
     <Compile Include="Views\HumanResources\TranlatorWindow.xaml.cs">
       <DependentUpon>TranlatorWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Infrastructure\CashierStationWindow.xaml.cs">
-      <DependentUpon>CashierStationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageDialogEmulator.xaml.cs">
       <DependentUpon>PageDialogEmulator.xaml</DependentUpon>
@@ -389,10 +380,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HumanResources\FisicalPartyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HumanResources\MenuMakerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -404,10 +391,6 @@
     <Page Include="Views\HumanResources\TranlatorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Infrastructure\CashierStationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageDialogEmulator.xaml">
       <SubType>Designer</SubType>
@@ -530,6 +513,10 @@
       <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
       <Name>FlavourBusinessToolKit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CashierStationUI\CashierStationUI.csproj">
+      <Project>{9DA0181B-BB0F-4774-A765-7F1FE4CE5646}</Project>
+      <Name>CashierStationUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinanceWpf\FinanceWpf.csproj">
       <Project>{98c2fcec-7ba2-4075-82e9-b828c855a41a}</Project>
       <Name>FinanceWpf</Name>
@@ -577,6 +564,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\Metro\Generic\" />
+    <Folder Include="Views\Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\waiters16.png" />

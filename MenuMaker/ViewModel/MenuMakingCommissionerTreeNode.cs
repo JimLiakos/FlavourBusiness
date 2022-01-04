@@ -15,6 +15,10 @@ namespace MenuMaker.ViewModel
     /// <MetaDataID>{303d10ff-21fa-4012-8eac-de8b56142352}</MetaDataID>
     public class MenuMakingCommissionerTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IGraphicMenusOwner
     {
+        public override void RemoveChild(FBResourceTreeNode treeNode)
+        {
+            throw new NotImplementedException();
+        }
         readonly FlavourBusinessFacade.IParty Commissioner;
         readonly FlavourBusinessFacade.HumanResources.IAccountability Accountability;
         public MenuMakingCommissionerTreeNode(ManuMakingActivitiesTreeNode parent, FlavourBusinessFacade.HumanResources.IAccountability accountability) : base(parent)
