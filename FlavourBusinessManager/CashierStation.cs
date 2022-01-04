@@ -293,11 +293,17 @@ namespace FlavourBusinessManager.ServicesContextResources
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
+                            
                             if (objectStorage == null)
                                 objectStorage = ObjectStorage.GetStorageOfObject(this);
                             transaction = new FinanceFacade.Transaction();
                             objectStorage.CommitTransientObjectState(transaction);
                             transaction.PayeeRegistrationNumber = Issuer.VATNumber;
+
+                            string servingBatchUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(receiptItems[0].ServedInTheBatch)?.GetPersistentObjectUri(receiptItems[0].ServedInTheBatch);
+
+                            transaction.SetPropertyValue("ServingBatchUri", servingBatchUri);
+
                             _Transactions.Add(transaction);
                             (transaction as FinanceFacade.Transaction).ObjectChangeState += Transaction_ObjectChangeState;
                             stateTransition.Consistent = true;
@@ -529,6 +535,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 DeviceUpdateEtag = null;
                 RaiseEventTimeStamp = null;
             }
+        }
+
+        public IServingBatch GetServingBatch(string servingBatchUri)
+        {
+            return ObjectStorage.GetObjectFromUri<IServingBatch>(servingBatchUri);
         }
 
 

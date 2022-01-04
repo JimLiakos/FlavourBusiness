@@ -1,5 +1,6 @@
 ﻿using FinanceFacade;
 using FlavourBusinessFacade;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.Transactions;
 using System;
@@ -151,13 +152,15 @@ namespace CashierStationDevice
                                         transaction.SetRawPrinterAddress(transactionPrinter.RawPrinterAddress);
                                 }
 
-
+                                IServingBatch ServingBatch = CashiersStation.GetServingBatch(transaction.GetServiceBatchUri());
+                                ServingBatch.ServicePoint
                                 transaction.Save(ApplicationSettings.AppDataPath);
 
 
                                 lock (Transactions)
                                 {
                                     Transactions.Add(transaction);
+                                    
                                 }
                             }
                         }
@@ -281,7 +284,7 @@ namespace CashierStationDevice
                     }
                 }
             }
-            printText = GetReceiptRawPrint(transaction, companyHeader, "13", "");
+            printText = GetReceiptRawPrint(transaction, companyHeader, "Τραπέζι 13", "");
             int? codePage = transaction.GetCodePage();
             if (!string.IsNullOrWhiteSpace(transaction.GetPropertyValue("Signature")))
             {
@@ -384,10 +387,10 @@ namespace CashierStationDevice
                 #endregion
 
                 // Series receipt number
-                string series_autonumber = transaction.GetPropertyValue("Series") + "  " + transaction.GetPropertyValue("AutoNumber");
+                string series_autonumber = (transaction.GetPropertyValue("Series") + "  " + transaction.GetPropertyValue("AutoNumber")).Trim();
 
                 if (lineString.IndexOf("@") != -1)
-                    lineString = FixLengthReplace(series_autonumber, lineString, "@");
+                    lineString = FixLengthReplace(series_autonumber, lineString, "@").Trim();
 
                 //table number 
                 #region Defines the table (service point) description 

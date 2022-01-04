@@ -19,6 +19,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         List<FinanceFacade.ITransaction> GetOpenTransactions(string deviceUpdateEtag);
         void TransactionCommited(ITransaction transaction);
 
+
+        IServingBatch GetServingBatch(string servingBatchUri);
+
         // void Validate(string token);
 
     }

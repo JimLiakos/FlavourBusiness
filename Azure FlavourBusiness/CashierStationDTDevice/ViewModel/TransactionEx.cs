@@ -15,7 +15,11 @@ namespace CashierStationDevice
         {
             return tranasaction.GetPropertyValue("ServiceBatchID");
         }
-    
+
+        public static string GetServiceBatchUri(this FinanceFacade.ITransaction tranasaction)
+        {
+            return tranasaction.GetPropertyValue("ServingBatchUri");
+        }
         public static void SetServiceBatchID(this FinanceFacade.ITransaction tranasaction, string series)
         {
             tranasaction.SetPropertyValue("ServiceBatchID", series);
