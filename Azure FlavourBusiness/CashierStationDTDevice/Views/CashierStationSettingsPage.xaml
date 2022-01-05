@@ -9,7 +9,7 @@
                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
                             xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
                             mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="800"
       Title="CashierStationSettings">
     <sw:PageDialogViewEmulator.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:CashierStationDevicePresentation}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
@@ -19,131 +19,210 @@
 
     </sw:PageDialogViewEmulator.Resources>
     <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource Dd_CashierStationDevicePresentation}" >
-        <sw:DialogContentControl HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.SettingDialogTitle}" InitialWidth="500" InitialHeight="700" Icon="/CashierStationDevice;component/Resources/Images/Metro/Settings24.png">
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding SaveCommand}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.SettingDialogTitle}" InitialWidth="500" InitialHeight="700" Icon="/CashierStationDevice;component/Resources/Images/Metro/Settings24.png">
 
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*" MinHeight="60" />
-                    <RowDefinition Height="14*" />
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
-
-                <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" >
+            <ScrollViewer>
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*" MinHeight="60" />
+                        <RowDefinition Height="auto"  />
+                        <RowDefinition Height="14*" MinHeight="60" />
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition  Width="{Binding ElementName=CashierStations, Path=ActualHeight}"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
-                    <ComboBox x:Name="CashierStations" Grid.Row="1" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
-                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectedCashierStation.EditCommand}"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
-                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                    </Button>
-
-                </Grid>
-
-                <Grid Grid.Row="2" Grid.Column="1" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" MinHeight="30" />
-                        <RowDefinition Height="10*"/>
-                    </Grid.RowDefinitions>
-                    <Label Margin="5,0,0,4"   VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
-
-                    <Grid Grid.Row="1"  >
 
 
-                        <ListBox  ItemsSource="{Binding TransactionsPrinters}" ScrollViewer.VerticalScrollBarVisibility="Visible"   >
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid >
-                                        <Grid Margin="2,4,2,4"  Background="{StaticResource TextBoxBackgroundBrush}">
-                                            <Grid.Effect>
-                                                <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
-                                            </Grid.Effect>
+                    <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition  Width="{Binding ElementName=CashierStations, Path=ActualHeight}"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
+                        <ComboBox x:Name="CashierStations" Grid.Row="1" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
+                        <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectedCashierStation.EditCommand}"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
+                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                        </Button>
 
-                                            <Grid Margin="3,3,3,3">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="5"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="25" />
-                                                    <ColumnDefinition Width="15" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="5"/>
-                                                    <RowDefinition Height="auto"/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="1" VerticalAlignment="Top"  Text="{Binding Description}"   ></TextBlock>
-                                                <!--<TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>-->
-                                                <!--<TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>-->
-                                                <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
-                                                    <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
-                                                </Button>
-                                                <Grid Margin="10"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="5" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition Height="10"/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition Height="10"/>
-                                                    </Grid.RowDefinitions>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom"  Content="{x:Static resx:Resources.CompanyTitleLabel}" />
+                            <wpftoolkitex:WatermarkTextBox IsEnabled="{Binding EditCompanyHeader}" Text="{Binding CompanyTitle, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+                        </Grid>
+                        <Grid Grid.Row="1"  MinHeight="90">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CompanySubTitleLabel}"/>
+                            <Grid Grid.Row="1"  x:Name="SubtitleHost" >
+                                <wpftoolkitex:WatermarkTextBox AcceptsReturn="True" IsEnabled="{Binding EditCompanyHeader}" Text="{Binding CompanySubTitle, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Height="{Binding ElementName=SubtitleHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto" MinLines="3"  ></wpftoolkitex:WatermarkTextBox>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid Grid.Row="2" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.ContactUsLabel}" />
+                            <wpftoolkitex:WatermarkTextBox IsEnabled="{Binding EditCompanyHeader}" Grid.Row="1" Text="{Binding ContatInfo, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                        </Grid>
+                        <Grid Grid.Row="3" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.FiscaldataLabel}" />
+                            <wpftoolkitex:WatermarkTextBox Grid.Row="1" IsEnabled="{Binding EditCompanyHeader}" Text="{Binding FiscalData, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                        </Grid>
+                        <Grid Grid.Row="4" MinHeight="90"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.AddressLabel}"/>
+                            <Grid Grid.Row="1"  x:Name="AddressHost" >
+                                <wpftoolkitex:WatermarkTextBox IsEnabled="{Binding EditCompanyHeader}" AcceptsReturn="True" Height="{Binding ElementName=AddressHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto" Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                            </Grid>
+
+                        </Grid>
+
+
+                        <Grid Grid.Row="5" MinHeight="90"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.ThankfullMessageLabel}"/>
+                            <Grid Grid.Row="1"  x:Name="ThankfulMessageHost" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="85*"/>
+                                    <ColumnDefinition Width="258*"/>
+                                </Grid.ColumnDefinitions>
+                                <wpftoolkitex:WatermarkTextBox IsEnabled="{Binding EditCompanyHeader}" AcceptsReturn="True" Height="{Binding ElementName=ThankfulMessageHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding Thankfull, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                            </Grid>
+
+                        </Grid>
+                        <!--Thankful message-->
+                    </Grid>
+
+                    <Grid Grid.Row="3" Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" MinHeight="30" />
+                            <RowDefinition Height="10*"/>
+                        </Grid.RowDefinitions>
+                        <Label Margin="5,0,0,4"   VerticalAlignment="Bottom" Content="{x:Static resx:Resources.TransactionPrinterLabel}"/>
+
+                        <Grid Grid.Row="1" MinHeight="60"  >
+
+
+                            <ListBox  ItemsSource="{Binding TransactionsPrinters}" ScrollViewer.VerticalScrollBarVisibility="Visible"   >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid >
+                                            <Grid Margin="2,4,2,4"  Background="{StaticResource TextBoxBackgroundBrush}">
+                                                <Grid.Effect>
+                                                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" Color="{StaticResource Color_004}"/>
+                                                </Grid.Effect>
+
+                                                <Grid Margin="3,3,3,3">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="4*"/>
-                                                        <ColumnDefinition Width="10"/>
-                                                        <ColumnDefinition Width="2*"/>
-
+                                                        <ColumnDefinition Width="5"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="25" />
+                                                        <ColumnDefinition Width="15" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.SeriesLabel}"/>
-                                                    <wpftoolkitex:WatermarkTextBox  VerticalContentAlignment="Center"  Text="{Binding Series,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="5"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="1" VerticalAlignment="Top"  Text="{Binding Description}"   ></TextBlock>
+                                                    <!--<TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>-->
+                                                    <!--<TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>-->
+                                                    <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+                                                        <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
+                                                    </Button>
+                                                    <Grid Margin="10"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="5" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition Height="10"/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                            <RowDefinition Height="10"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="4*"/>
+                                                            <ColumnDefinition Width="10"/>
+                                                            <ColumnDefinition Width="2*"/>
 
-                                                    <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.AutoNumberLabel}"/>
-                                                    <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="2" Grid.ColumnSpan="2" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding AutoNumber, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="1" />
-                                                    <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Printer Name"/>
-                                                    <ComboBox  Grid.Row="4"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding PrinterName}" ItemsSource="{Binding AvailablePrinters}"  ></ComboBox>
-                                                    <!--<wpftoolkitex:WatermarkTextBox x:Name="PrinterNameEdit"   Grid.Row="4" VerticalContentAlignment="Center"  Text="{Binding PrinterName ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" ></wpftoolkitex:WatermarkTextBox>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.SeriesLabel}"/>
+                                                        <wpftoolkitex:WatermarkTextBox  VerticalContentAlignment="Center"  Text="{Binding Series,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+
+                                                        <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.AutoNumberLabel}"/>
+                                                        <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="2" Grid.ColumnSpan="2" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding AutoNumber, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="1" />
+                                                        <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Printer Name"/>
+                                                        <ComboBox  Grid.Row="4"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding PrinterName}" ItemsSource="{Binding AvailablePrinters}"  ></ComboBox>
+                                                        <!--<wpftoolkitex:WatermarkTextBox x:Name="PrinterNameEdit"   Grid.Row="4" VerticalContentAlignment="Center"  Text="{Binding PrinterName ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" ></wpftoolkitex:WatermarkTextBox>
                                                 <Button  Grid.Row="4" Grid.Column="4"  Command="{Binding SelectPrinterCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="{Binding ElementName=PrinterNameEdit, Path=ActualHeight}" Height="{Binding ElementName=PrinterNameEdit, Path=ActualHeight}" >
                                                     ...
                                                 </Button>-->
-                                                    <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Raw Printer Address"/>
-                                                    <wpftoolkitex:WatermarkTextBox    Grid.Row="6" VerticalContentAlignment="Center"  Text="{Binding RawPrinterAddress ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
-                                                    <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="3"  VerticalAlignment="Bottom" Content="Code Page"/>
-                                                    <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="3"  Grid.Row="6"  VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding PrinterCodePage, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
+                                                        <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Raw Printer Address"/>
+                                                        <wpftoolkitex:WatermarkTextBox    Grid.Row="6" VerticalContentAlignment="Center"  Text="{Binding RawPrinterAddress ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                                                        <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="3"  VerticalAlignment="Bottom" Content="Code Page"/>
+                                                        <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="3"  Grid.Row="6"  VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding PrinterCodePage, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
+
+                                                    </Grid>
 
                                                 </Grid>
 
                                             </Grid>
-
                                         </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
 
-                        </ListBox>
-          
+                            </ListBox>
 
+
+                        </Grid>
                     </Grid>
+
+
+
                 </Grid>
-
-
-
-            </Grid>
+            </ScrollViewer>
         </sw:DialogContentControl>
     </Grid>
 </sw:PageDialogViewEmulator>

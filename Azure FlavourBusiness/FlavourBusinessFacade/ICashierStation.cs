@@ -13,6 +13,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         System.Collections.Generic.List<FinanceFacade.ITransaction> Transactions { get; }
 
         /// <MetaDataID>{fa614312-e7da-45ae-bcc8-ccbe88666c82}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
         string CashierStationDeviceData { get; set; }
 
 

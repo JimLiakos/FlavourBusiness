@@ -15,6 +15,9 @@ namespace CashierStationDevice.ViewModel
     /// <MetaDataID>{5a0acdba-686f-421f-8708-457a6d462606}</MetaDataID>
     public class CashierStationDevicePresentation : MarshalByRefObject, INotifyPropertyChanged
     {
+
+        public WPFUIElementObjectBind.RelayCommand SaveCommand { get; set; }
+
         /// <MetaDataID>{b083528a-a33b-4db2-aa42-65b598210728}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand SettingsCommand { get; set; }
         /// <MetaDataID>{5b9797ed-270d-471b-88e3-f47f9488c62d}</MetaDataID>
@@ -40,7 +43,10 @@ namespace CashierStationDevice.ViewModel
                   }
 
               });
-
+            SaveCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                _SelectedCashierStation.CashierStation.CashierStationDeviceData = OOAdvantech.Json.JsonConvert.SerializeObject(CompanyHeader);
+            });
         }
 
         /// <MetaDataID>{62a7078c-27f5-4726-ac32-66098e2db723}</MetaDataID>
@@ -48,6 +54,8 @@ namespace CashierStationDevice.ViewModel
         {
 
         }
+
+
         #region Authentication
         /// <exclude>Excluded</exclude>
         SignInUserPopupViewModel _SignInUserPopup;
@@ -80,8 +88,8 @@ namespace CashierStationDevice.ViewModel
             {
                 if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
                 {
-                    
-                    
+
+
                     CashierStations = (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContextRunTime.CashierStations.Select(x => new CashierStationPresentation(x, (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContext)).ToList();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CashierStations)));
                     if (SelectedCashierStation == null && CashierStations.Count > 0)
@@ -105,7 +113,7 @@ namespace CashierStationDevice.ViewModel
             get
             {
                 return (from transactionPrinter in ApplicationSettings.Current.TransactionsPrinters
-                           select TransactionPrintersDictionary.GetViewModelFor(transactionPrinter, transactionPrinter)).ToList();
+                        select TransactionPrintersDictionary.GetViewModelFor(transactionPrinter, transactionPrinter)).ToList();
             }
         }
         internal ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation> TransactionPrintersDictionary = new ViewModelWrappers<Model.TransactionPrinter, TransactionPrinterPresentation>();
@@ -129,7 +137,27 @@ namespace CashierStationDevice.ViewModel
                 {
                     _SelectedCashierStation = value;
                     if (_SelectedCashierStation != null)
+                    {
+                        if (CompanyHeader == null && !string.IsNullOrWhiteSpace(_SelectedCashierStation.CashierStation.CashierStationDeviceData))
+                        {
+                            CompanyHeader = OOAdvantech.Json.JsonConvert.DeserializeObject<CompanyHeader>(_SelectedCashierStation.CashierStation.CashierStationDeviceData);
+                            EditCompanyHeader = true;
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
+
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanyTitle)));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanySubTitle)));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ContatInfo)));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiscalData)));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Address)));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thankfull)));
+                        }
+                        else if (CompanyHeader == null)
+                            CompanyHeader = new CompanyHeader();
+
+
+
                         ApplicationSettings.Current.CommunicationCredentialKey = _SelectedCashierStation.CashierStation.CashierStationIdentity;
+                    }
                     else
                         ApplicationSettings.Current.CommunicationCredentialKey = null;
                 }
@@ -137,5 +165,81 @@ namespace CashierStationDevice.ViewModel
             }
 
         }
+
+        public bool EditCompanyHeader { get; set; }
+        CompanyHeader CompanyHeader;
+
+        public string CompanyTitle
+        {
+            get
+            {
+                return CompanyHeader?.Title;
+            }
+            set
+            {
+                CompanyHeader.Title = value;
+            }
+        }
+
+        public string CompanySubTitle
+        {
+            get
+            {
+                return CompanyHeader?.Subtitle;
+            }
+            set
+            {
+                CompanyHeader.Subtitle = value;
+            }
+        }
+        public string ContatInfo
+        {
+            get
+            {
+                return CompanyHeader?.ContatInfo;
+            }
+            set
+            {
+                CompanyHeader.ContatInfo = value;
+            }
+        }
+        public string FiscalData
+        {
+            get
+            {
+                return CompanyHeader?.FiscalData;
+            }
+            set
+            {
+                CompanyHeader.FiscalData = value;
+            }
+        }
+
+
+        public string Address
+        {
+            get
+            {
+                return CompanyHeader?.Address;
+            }
+            set
+            {
+                CompanyHeader.Address = value;
+            }
+        }
+
+        public string Thankfull
+        {
+            get
+            {
+                return CompanyHeader?.Thankfull;
+            }
+            set
+            {
+                CompanyHeader.Thankfull = value;
+            }
+        }
+
+
     }
 }

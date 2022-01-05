@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressLabel" xml:space="preserve">
+    <value>Διεύθυνση</value>
+  </data>
   <data name="AutoNumberLabel" xml:space="preserve">
     <value>Αύξων αριθμός</value>
   </data>
@@ -126,12 +129,24 @@
   <data name="CMOSResetMessage" xml:space="preserve">
     <value>CMOS Reset</value>
   </data>
+  <data name="CompanySubTitleLabel" xml:space="preserve">
+    <value>Υπό τον τίτλο</value>
+  </data>
+  <data name="CompanyTitleLabel" xml:space="preserve">
+    <value>Τιτλος επιχείρησης</value>
+  </data>
+  <data name="ContactUsLabel" xml:space="preserve">
+    <value>Tηλέφωνο  email-web</value>
+  </data>
   <data name="CriticalErrorMessage" xml:space="preserve">
     <value>Κρίσιμο σφάλμα.</value>
   </data>
   <data name="DescriptionLabel" xml:space="preserve">
     <value>Description </value>
     <comment>Defines the label for TransactionPrinter description TextBox</comment>
+  </data>
+  <data name="FiscaldataLabel" xml:space="preserve">
+    <value>Α.Φ.Μ.    ΔΟΥ</value>
   </data>
   <data name="FiscalDeviceCommunicationErrorMessage" xml:space="preserve">
     <value>Πρόβλημα επικοινωνίας με την συσκευή σήμανσης</value>
@@ -145,6 +160,9 @@
   <data name="FisicalDayOpenMessage" xml:space="preserve">
     <value>Η συσκευή σήμανσης απάντησε με το εξής σφάλμα: Υπέρβαση χρονικού ορίου κλεισίματος Ζ</value>
   </data>
+  <data name="HallServicePointLabel" xml:space="preserve">
+    <value>Τραπέζι</value>
+  </data>
   <data name="OutofPaperMessage" xml:space="preserve">
     <value>Τέλος χαρτιού.</value>
   </data>
@@ -157,8 +175,11 @@
   <data name="SettingDialogTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ThankfullMessageLabel" xml:space="preserve">
+    <value>Ευχαριστήριο Μύνημα</value>
+  </data>
   <data name="TransactionPrinterLabel" xml:space="preserve">
-    <value>Fisiscal Printers</value>
+    <value>Fiscal Printers</value>
   </data>
   <data name="UserMenuModeMessage" xml:space="preserve">
     <value>Η συσκευή είναι σε "Χρήση μενού"</value>

@@ -103,8 +103,8 @@ namespace CashierStationDevice
                                 Address = "Στρ. Μακρυγιάννη 40"+Environment.NewLine+ "Μοσχάτο,Νότιος Τομέας Αθηνών" + Environment.NewLine + "TK 183 44",
                                 Title = "Colosseo Pizza Pasta",
                                 Subtitle = "Πιτσαρία",
-                                FisicalData = "ΑΦΜ 047362769 ΔΟΥ Μοσχάτου",
-                                ContuctInfo = "Τηλ. 2109407777"
+                                FiscalData = "ΑΦΜ 047362769 ΔΟΥ Μοσχάτου",
+                                ContatInfo = "Τηλ. 2109407777"
 
 
                             };
@@ -151,16 +151,20 @@ namespace CashierStationDevice
                                     if (!string.IsNullOrWhiteSpace(transactionPrinter.RawPrinterAddress))
                                         transaction.SetRawPrinterAddress(transactionPrinter.RawPrinterAddress);
                                 }
+                                var serviceBatchUri = transaction.GetServiceBatchUri();
+                                if (!string.IsNullOrWhiteSpace(serviceBatchUri))
+                                {
+                                    IServingBatch ServingBatch = CashiersStation.GetServingBatch(serviceBatchUri);
 
-                                IServingBatch ServingBatch = CashiersStation.GetServingBatch(transaction.GetServiceBatchUri());
-                                ServingBatch.ServicePoint
+                                    if (ServingBatch.ServicePoint.ServicePointType == ServicePointType.HallServicePoint)
+                                        transaction.SetPropertyValue("ServicePointDescription", Properties.Resources.HallServicePointLabel + " " + ServingBatch.ServicePoint.Description);
+                                }
+                                
                                 transaction.Save(ApplicationSettings.AppDataPath);
-
 
                                 lock (Transactions)
                                 {
                                     Transactions.Add(transaction);
-                                    
                                 }
                             }
                         }
@@ -218,7 +222,9 @@ namespace CashierStationDevice
 
             if (string.IsNullOrWhiteSpace(transaction.GetPropertyValue("Signature")))
             {
-                printText = GetReceiptRawPrint(transaction, companyHeader, "Τραπέζι 13", "");
+
+                
+                printText = GetReceiptRawPrint(transaction, companyHeader, transaction.GetPropertyValue("ServicePointDescription"), "");
                 string myafm = Issuer.VATNumber;
                 string clientafm = "";
 
@@ -284,7 +290,7 @@ namespace CashierStationDevice
                     }
                 }
             }
-            printText = GetReceiptRawPrint(transaction, companyHeader, "Τραπέζι 13", "");
+            printText = GetReceiptRawPrint(transaction, companyHeader, transaction.GetPropertyValue("ServicePointDescription"), "");
             int? codePage = transaction.GetCodePage();
             if (!string.IsNullOrWhiteSpace(transaction.GetPropertyValue("Signature")))
             {
@@ -399,7 +405,10 @@ namespace CashierStationDevice
                     if (!string.IsNullOrEmpty(tableLine))
                         lineString = FixLengthReplace(tableLine, lineString, "`");
                     else
-                        lineString = null;
+                    {
+                        lineString = report.ReadLine();
+                        continue;
+                    }
                 }
                 #endregion
 
@@ -412,10 +421,6 @@ namespace CashierStationDevice
                 if (lineString.IndexOf("=") != -1)
                     lineString = FixLengthReplace(companyHeader.Subtitle, lineString, "=").Trim();
 
-                //string organization,
-                if (lineString.IndexOf("¥") != -1)
-                    lineString = FixLengthReplace(companyHeader.TitleLine1, lineString, "¥").Trim();
-
 
                 //string address,
                 if (lineString.IndexOf("£") != -1)
@@ -423,11 +428,11 @@ namespace CashierStationDevice
 
                 //string organizationVat,
                 if (lineString.IndexOf("§") != -1)
-                    lineString = FixLengthReplace(companyHeader.FisicalData, lineString, "§").Trim();
+                    lineString = FixLengthReplace(companyHeader.FiscalData, lineString, "§").Trim();
 
                 //string ContuctInfo,
                 if (lineString.IndexOf("©") != -1)
-                    lineString = FixLengthReplace(companyHeader.ContuctInfo, lineString, "©").Trim();
+                    lineString = FixLengthReplace(companyHeader.ContatInfo, lineString, "©").Trim();
                 #endregion
 
                 //Order Code
@@ -514,6 +519,12 @@ namespace CashierStationDevice
                 // Total
                 if (lineString.IndexOf("?") != -1)
                     lineString = FixLengthReplace(GetPriceAsString(transaction.Amount.Amount), lineString, "?");
+
+
+                //string thankfull message,
+                if (lineString.IndexOf("¥") != -1)
+                    lineString = FixLengthReplace(companyHeader.Thankfull, lineString, "¥").Trim();
+
 
                 // Comments
                 if (lineString.IndexOf("!@#$%^") != -1)
@@ -1009,11 +1020,10 @@ namespace CashierStationDevice
     {
         public string Title;
         public string Subtitle;
-        public string TitleLine1;
-        public string TitleLine2;
-        public string ContuctInfo;//email telephone etc
-        public string FisicalData;//vat and etc
+        public string ContatInfo;//email telephone etc
+        public string FiscalData;//vat and etc
         public string Address;// defines the company address
+        public string Thankfull;
 
 
 
