@@ -2,6 +2,7 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,52 @@ namespace CashierStationDevice
         /// <MetaDataID>{af4a528e-ef65-4e03-b887-e0ba7e094e13}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
-        ICashiersStationRuntime CashiersStation;
+        
+
+        public CashierController()
+        {
+            ApplicationSettings.Current.ObjectChangeState += ApplicationSettings_ObjectChangeState;
+        }
+
+        private void ApplicationSettings_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(ApplicationSettings.CommunicationCredentialKey))
+            {
+                if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                {
+                    if (ApplicationSettings.Current.CashiersStation != null)
+                        ApplicationSettings.Current.CashiersStation.OpenTransactions -= CashiersStation_OpenTransactions;
+                }
+                else
+                {
+
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                    var cashiersStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+                    if (cashiersStation != ApplicationSettings.Current.CashiersStation)
+                    {
+                        if (ApplicationSettings.Current.CashiersStation != null)
+                            ApplicationSettings.Current.CashiersStation.OpenTransactions -= CashiersStation_OpenTransactions;
+                        ApplicationSettings.Current.CashiersStation = cashiersStation;
+                        ApplicationSettings.Current.CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
+                    }
+                }
+
+
+            }
+        }
+
+
+        public void Stop()
+        {
+
+            ApplicationSettings.Current.CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
+        }
+
+
+
         /// <MetaDataID>{d76d5629-dbbc-4583-8610-6cd79f7f3c2c}</MetaDataID>
         public void Start()
         {
@@ -29,7 +75,10 @@ namespace CashierStationDevice
             if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
                 return;
             IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-            CashiersStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+            ApplicationSettings.Current.CashiersStation = servicesContextManagment.GetCashiersStationRuntime(ApplicationSettings.Current.CommunicationCredentialKey);
+            if (ApplicationSettings.Current.CashiersStation == null)
+                return;
+            ApplicationSettings.Current.CompanyHeader = OOAdvantech.Json.JsonConvert.DeserializeObject<CompanyHeader>((ApplicationSettings.Current.CashiersStation as ICashierStation).CashierStationDeviceData);
 
             var path = ApplicationSettings.AppDataPath;
             string[] filePaths = Directory.GetFiles(path, "*.json");
@@ -52,9 +101,9 @@ namespace CashierStationDevice
             Retry:
             try
             {
-                Issuer = (CashiersStation as ICashierStation).Issuer;
-                CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
-                var transctions = CashiersStation.GetOpenTransactions(null);
+                Issuer = (ApplicationSettings.Current.CashiersStation as ICashierStation).Issuer;
+                ApplicationSettings.Current.CashiersStation.OpenTransactions += CashiersStation_OpenTransactions;
+                var transctions = ApplicationSettings.Current.CashiersStation.GetOpenTransactions(null);
                 AddPendingTransactionsForPrint(transctions);
 
 
@@ -100,7 +149,7 @@ namespace CashierStationDevice
                         {
                             CompanyHeader companyHeader = new CompanyHeader()
                             {
-                                Address = "Στρ. Μακρυγιάννη 40"+Environment.NewLine+ "Μοσχάτο,Νότιος Τομέας Αθηνών" + Environment.NewLine + "TK 183 44",
+                                Address = "Στρ. Μακρυγιάννη 40" + Environment.NewLine + "Μοσχάτο,Νότιος Τομέας Αθηνών" + Environment.NewLine + "TK 183 44",
                                 Title = "Colosseo Pizza Pasta",
                                 Subtitle = "Πιτσαρία",
                                 FiscalData = "ΑΦΜ 047362769 ΔΟΥ Μοσχάτου",
@@ -108,7 +157,7 @@ namespace CashierStationDevice
 
 
                             };
-                            PrintReceipt(transaction, CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice, companyHeader);
+                            PrintReceipt(transaction, CashierStationDevice.DocumentSignDevice.CurrentDocumentSignDevice, ApplicationSettings.Current.CompanyHeader);
                         }
                     }
                     catch (Exception error)
@@ -154,12 +203,12 @@ namespace CashierStationDevice
                                 var serviceBatchUri = transaction.GetServiceBatchUri();
                                 if (!string.IsNullOrWhiteSpace(serviceBatchUri))
                                 {
-                                    IServingBatch ServingBatch = CashiersStation.GetServingBatch(serviceBatchUri);
+                                    IServingBatch ServingBatch = ApplicationSettings.Current.CashiersStation.GetServingBatch(serviceBatchUri);
 
                                     if (ServingBatch.ServicePoint.ServicePointType == ServicePointType.HallServicePoint)
                                         transaction.SetPropertyValue("ServicePointDescription", Properties.Resources.HallServicePointLabel + " " + ServingBatch.ServicePoint.Description);
                                 }
-                                
+
                                 transaction.Save(ApplicationSettings.AppDataPath);
 
                                 lock (Transactions)
@@ -187,7 +236,7 @@ namespace CashierStationDevice
         {
             Task.Run(() =>
             {
-                var transctions = CashiersStation.GetOpenTransactions(deviceUpdateEtag);
+                var transctions = ApplicationSettings.Current.CashiersStation.GetOpenTransactions(deviceUpdateEtag);
 
                 AddPendingTransactionsForPrint(transctions);
             });
@@ -223,7 +272,7 @@ namespace CashierStationDevice
             if (string.IsNullOrWhiteSpace(transaction.GetPropertyValue("Signature")))
             {
 
-                
+
                 printText = GetReceiptRawPrint(transaction, companyHeader, transaction.GetPropertyValue("ServicePointDescription"), "");
                 string myafm = Issuer.VATNumber;
                 string clientafm = "";
@@ -327,7 +376,7 @@ namespace CashierStationDevice
                         }
                         lock (Transactions)
                         {
-                            CashiersStation.TransactionCommited(transaction);
+                            ApplicationSettings.Current.CashiersStation.TransactionCommited(transaction);
 
                             this.Transactions.Remove(transaction);
                             transaction.Save(ApplicationSettings.AppDataPath);
@@ -475,12 +524,12 @@ namespace CashierStationDevice
 
 
                 string currOrderItemLine = transactionItemTemplateLine;
-                currOrderItemLine = FixLengthReplace(((double)transactionItem.Quantity).ToString(), currOrderItemLine, "&",null, TextJustify.Right);
+                currOrderItemLine = FixLengthReplace(((double)transactionItem.Quantity).ToString(), currOrderItemLine, "&", null, TextJustify.Right);
                 currOrderItemLine = FixLengthReplace(transactionItem.Name, currOrderItemLine, "*");
                 currOrderItemLine = FixLengthReplace(GetPriceAsString(transactionItem.Price), currOrderItemLine, "!", "!!", TextJustify.Right);
 
                 foreach (var taxAmount in transactionItem.Taxes)
-                    currOrderItemLine = FixLengthReplace((taxAmount.TaxRate * 100).ToString(), currOrderItemLine, "|",null, TextJustify.Right);
+                    currOrderItemLine = FixLengthReplace((taxAmount.TaxRate * 100).ToString(), currOrderItemLine, "|", null, TextJustify.Right);
 
                 rawPrintingWriter.WriteLine(currOrderItemLine);
             }
@@ -578,7 +627,7 @@ namespace CashierStationDevice
                     }
                     else
                         lineString = lineString.Replace("$qrcode$", "");
-                   
+
                 }
                 else
                 {
@@ -876,7 +925,7 @@ namespace CashierStationDevice
             return buffer;
         }
         /// <MetaDataID>{a4310878-48f3-4bd7-9871-1271c4dc783c}</MetaDataID>
-        private static string FixLengthReplace(string text, string lineString, string signChar, string startSign = null, TextJustify textJustify =TextJustify.Left)
+        private static string FixLengthReplace(string text, string lineString, string signChar, string startSign = null, TextJustify textJustify = TextJustify.Left)
         {
             if (text == null)
                 text = "";
@@ -895,7 +944,7 @@ namespace CashierStationDevice
 
             while (TableNumberStr.Length < endPos - startPos + 1)
             {
-                if (textJustify==TextJustify.Left)
+                if (textJustify == TextJustify.Left)
                     TableNumberStr += " ";
                 else
                     TableNumberStr = TableNumberStr.Insert(0, " ");
@@ -1016,14 +1065,112 @@ namespace CashierStationDevice
     }
 
     /// <MetaDataID>{23f6cd11-d207-425b-b22b-e287dc016fad}</MetaDataID>
+    [Persistent]
+    [BackwardCompatibilityID("{23f6cd11-d207-425b-b22b-e287dc016fad}")]
     public class CompanyHeader
     {
-        public string Title;
-        public string Subtitle;
-        public string ContatInfo;//email telephone etc
-        public string FiscalData;//vat and etc
-        public string Address;// defines the company address
-        public string Thankfull;
+        string _Title;
+        public string Title
+        {
+            get => _Title;
+            set
+            {
+                if (_Title != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Title = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+        string _Subtitle;
+        public string Subtitle
+        {
+            get => _Subtitle;
+            set
+            {
+                if (_Subtitle != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Subtitle = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+        string _ContatInfo;//email telephone etc
+
+        public string ContatInfo
+        {
+            get => _ContatInfo;
+            set
+            {
+                if (_ContatInfo != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ContatInfo = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        string _FiscalData;//vat and etc
+        public string FiscalData
+        {
+            get => _FiscalData;
+            set
+            {
+                if (_FiscalData != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FiscalData = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        string _Address;// defines the company address
+
+        public string Address
+        {
+            get => _Address;
+            set
+            {
+                if (_Address != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Address = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        string _Thankfull;
+        public string Thankfull
+        {
+            get => _Thankfull;
+            set
+            {
+                if (_Thankfull != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Thankfull = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
 
 
@@ -1031,8 +1178,8 @@ namespace CashierStationDevice
 
     enum TextJustify
     {
-        Left=1,
-        Right=2,
-        Center=3
+        Left = 1,
+        Right = 2,
+        Center = 3
     }
 }

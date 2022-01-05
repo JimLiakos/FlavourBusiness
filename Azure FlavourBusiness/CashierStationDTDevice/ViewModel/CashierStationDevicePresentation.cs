@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade;
+using FlavourBusinessFacade.ServicesContextResources;
 using FLBAuthentication.ViewModel;
 using OOAdvantech.Transactions;
 using System;
@@ -26,6 +27,21 @@ namespace CashierStationDevice.ViewModel
             _SignInUserPopup = new SignInUserPopupViewModel(UserData.RoleType.ServiceContextSupervisor);
             _SignInUserPopup.SignedIn += SignInUserPopup_SignedIn;
             _SignInUserPopup.SignedOut += SignInUserPopup_SignedOut;
+            if (ApplicationSettings.Current.CompanyHeader != null)
+                CompanyHeader = new CompanyHeader()
+                {
+                    Address = ApplicationSettings.Current.CompanyHeader.Address,
+                    ContatInfo = ApplicationSettings.Current.CompanyHeader.ContatInfo,
+                    FiscalData = ApplicationSettings.Current.CompanyHeader.FiscalData,
+                    Subtitle = ApplicationSettings.Current.CompanyHeader.Subtitle,
+                    Thankfull = ApplicationSettings.Current.CompanyHeader.Thankfull,
+                    Title = ApplicationSettings.Current.CompanyHeader.Thankfull
+                };
+            if (ApplicationSettings.Current.CashiersStation != null)
+            {
+                CashierStations = new List<CashierStationPresentation>() { new CashierStationPresentation(ApplicationSettings.Current.CashiersStation as ICashierStation, null) };
+                _SelectedCashierStation = CashierStations[0];
+            }
 
             SettingsCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
               {
@@ -45,14 +61,19 @@ namespace CashierStationDevice.ViewModel
               });
             SaveCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
-                _SelectedCashierStation.CashierStation.CashierStationDeviceData = OOAdvantech.Json.JsonConvert.SerializeObject(CompanyHeader);
+                if (EditCompanyHeader)
+                {
+                    _SelectedCashierStation.CashierStation.CashierStationDeviceData = OOAdvantech.Json.JsonConvert.SerializeObject(CompanyHeader);
+                    ApplicationSettings.Current.CompanyHeader = CompanyHeader;
+                }
+
             });
         }
 
         /// <MetaDataID>{62a7078c-27f5-4726-ac32-66098e2db723}</MetaDataID>
         private void SignInUserPopup_SignedOut(SignInUserPopupViewModel authedication, IUser user)
         {
-
+            EditCompanyHeader = false;
         }
 
 
@@ -92,10 +113,17 @@ namespace CashierStationDevice.ViewModel
 
                     CashierStations = (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContextRunTime.CashierStations.Select(x => new CashierStationPresentation(x, (role.User as FlavourBusinessFacade.HumanResources.IServiceContextSupervisor).ServicesContext)).ToList();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CashierStations)));
-                    if (SelectedCashierStation == null && CashierStations.Count > 0)
+                    if (CashierStations.Count > 0)
                     {
-                        SelectedCashierStation = CashierStations[0];
+
+                        _SelectedCashierStation = CashierStations[0];
+                        if (_SelectedCashierStation != null)
+                        {
+                            EditCompanyHeader = true;
+                            GetCompanyHeader();
+                        }
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCashierStation)));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
                     }
 
 
@@ -128,7 +156,11 @@ namespace CashierStationDevice.ViewModel
             {
 
                 if (_SelectedCashierStation == null && CashierStations != null && !string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                {
                     _SelectedCashierStation = CashierStations.Where(x => x.CashierStation.CashierStationIdentity == ApplicationSettings.Current.CommunicationCredentialKey).FirstOrDefault();
+                    if (_SelectedCashierStation != null)
+                        GetCompanyHeader();
+                }
                 return _SelectedCashierStation;
             }
             set
@@ -138,23 +170,7 @@ namespace CashierStationDevice.ViewModel
                     _SelectedCashierStation = value;
                     if (_SelectedCashierStation != null)
                     {
-                        if (CompanyHeader == null && !string.IsNullOrWhiteSpace(_SelectedCashierStation.CashierStation.CashierStationDeviceData))
-                        {
-                            CompanyHeader = OOAdvantech.Json.JsonConvert.DeserializeObject<CompanyHeader>(_SelectedCashierStation.CashierStation.CashierStationDeviceData);
-                            EditCompanyHeader = true;
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
-
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanyTitle)));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanySubTitle)));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ContatInfo)));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiscalData)));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Address)));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thankfull)));
-                        }
-                        else if (CompanyHeader == null)
-                            CompanyHeader = new CompanyHeader();
-
-
+                        GetCompanyHeader();
 
                         ApplicationSettings.Current.CommunicationCredentialKey = _SelectedCashierStation.CashierStation.CashierStationIdentity;
                     }
@@ -164,6 +180,29 @@ namespace CashierStationDevice.ViewModel
 
             }
 
+        }
+
+        private void GetCompanyHeader()
+        {
+            if (CompanyHeader == null && !string.IsNullOrWhiteSpace(_SelectedCashierStation.CashierStation.CashierStationDeviceData))
+            {
+                CompanyHeader = OOAdvantech.Json.JsonConvert.DeserializeObject<CompanyHeader>(_SelectedCashierStation.CashierStation.CashierStationDeviceData);
+                EditCompanyHeader = true;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanyTitle)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompanySubTitle)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ContatInfo)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiscalData)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Address)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thankfull)));
+            }
+            else if (CompanyHeader == null)
+            {
+                CompanyHeader = new CompanyHeader();
+                EditCompanyHeader = true;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
+            }
         }
 
         public bool EditCompanyHeader { get; set; }

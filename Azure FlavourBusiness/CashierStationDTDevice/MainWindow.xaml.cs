@@ -29,6 +29,13 @@ namespace CashierStationDTDevice
             this.GetObjectContext().Initialize(this);
             CashierStationDevicePresentation = new CashierStationDevicePresentation();
             this.GetObjectContext().SetContextInstance(CashierStationDevicePresentation);
+            Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (OOAdvantech.Remoting.RestApi.DeviceAuthentication.Current != null)
+                OOAdvantech.Remoting.RestApi.DeviceAuthentication.Current.RaiseSignOutRequest();
         }
 
         public CashierStationDevicePresentation CashierStationDevicePresentation { get; }

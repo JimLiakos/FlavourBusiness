@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -10,6 +11,9 @@ namespace CashierStationDevice
     [Persistent()]
     public class ApplicationSettings
     {
+        public ICashiersStationRuntime CashiersStation;
+
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter> _TransactionsPrinters = new OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter>();
 
@@ -151,7 +155,7 @@ namespace CashierStationDevice
             }
         }
 
-
+        public CompanyHeader CompanyHeader;
 
         /// <exclude>Excluded</exclude>
         string _CommunicationCredentialKey;
@@ -171,6 +175,8 @@ namespace CashierStationDevice
                         _CommunicationCredentialKey = value;
                         stateTransition.Consistent = true;
                     }
+                    ObjectChangeState?.Invoke(this, nameof(CommunicationCredentialKey));
+
                 }
             }
         }
