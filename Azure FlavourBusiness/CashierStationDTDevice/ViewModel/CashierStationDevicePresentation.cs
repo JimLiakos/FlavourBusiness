@@ -5,6 +5,7 @@ using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace CashierStationDevice.ViewModel
 
         /// <MetaDataID>{b083528a-a33b-4db2-aa42-65b598210728}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand SettingsCommand { get; set; }
+
+        public WPFUIElementObjectBind.RelayCommand ReportDesignerCommand { get; set; }
         /// <MetaDataID>{5b9797ed-270d-471b-88e3-f47f9488c62d}</MetaDataID>
         public CashierStationDevicePresentation()
         {
@@ -59,6 +62,34 @@ namespace CashierStationDevice.ViewModel
                   }
 
               });
+            ReportDesignerCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                DXConnectableControls.XtraReports.Design.ReportDesignForm reportDesignForm = new DXConnectableControls.XtraReports.Design.ReportDesignForm();
+                reportDesignForm.OpenReport(@"E:\MyWindowProfileData\Documents\InvoiceReport.repx");
+
+                Invoice invoice = new Invoice((Application.Current as CashierStationDTDevice.App).CashierController.Transactions.FirstOrDefault(), (Application.Current as CashierStationDTDevice.App).CashierController.Issuer);
+                reportDesignForm.Report.DataSource = new List<Invoice>() { invoice };
+
+                var report = DXConnectableControls.XtraReports.UI.Report.FromFile(@"E:\MyWindowProfileData\Documents\InvoiceReport.repx", false);
+                report.DataSource = new List<Invoice>() { invoice };
+                report.ShowPreview();
+                //report.PrinterName = "Microsoft Print to PDF";
+                //report.Print("Microsoft Print to PDF");
+                //var printers = PrinterSettings.InstalledPrinters.OfType<string>().ToList();
+                //var ss = report.PrinterName
+
+
+                //OOAdvantech.UserInterface.ReportObjectDataSource.ReportDataSource reportDataSource = (reportDesignForm.Report as OOAdvantech.UserInterface.ReportObjectDataSource.IReport).ReportDataSource;
+                //reportDataSource.AssemblyFullName = typeof(IOrder).Assembly.FullName;
+                //reportDataSource.TypeFullName = typeof(IOrder).FullName;
+                //reportDesignForm.Report.ResumeDataSource();
+                //int tt= reportDataSource.DataSourceMembers.Count;
+                //reportDesignForm.OpenReport(@"c:\report1.repx");
+                //DXConnectableControls.XtraReports.UI.Report report = DXConnectableControls.XtraReports.UI.Report.FromFile(@"c:\report1.repx",true) as DXConnectableControls.XtraReports.UI.Report;
+                //reportDesignForm.OpenReport(report);
+               // reportDesignForm.ShowDialog();
+
+            });
             SaveCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 if (EditCompanyHeader)

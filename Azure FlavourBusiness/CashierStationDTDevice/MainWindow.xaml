@@ -40,8 +40,15 @@
                 </Grid.ColumnDefinitions>
                 <!--<Menu Style="{StaticResource BorderLessMenu}" ItemsSource="{Binding MenuItems}" ItemContainerStyle="{StaticResource MenuItemStyle}"/>-->
                 <Grid Grid.Column="1" >
-                    <Image></Image>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" >
                     <Hyperlink   Command="{Binding SettingsCommand}"  >
                         <StackPanel  Orientation="Horizontal" >
                         <Image Width="16" Height="16" Source="Resources/Images/Metro/Settings16.png" />
@@ -49,6 +56,16 @@
                         </StackPanel>
                     </Hyperlink>
                         </TextBlock>
+                        
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="3" >
+                    <Hyperlink   Command="{Binding ReportDesignerCommand}"  >
+                        <StackPanel  Orientation="Horizontal" >
+                        <Image Width="16" Height="16" Source="Resources/Images/Metro/business-report16.png" />
+                            <TextBlock Style="{StaticResource Hoverhighlight}"  Margin="4,0,0,0" Text="Report Designer"></TextBlock>
+                        </StackPanel>
+                    </Hyperlink>
+                        </TextBlock>
+                    </Grid>
                 </Grid>
                 <Authentication:SignInToolBar Grid.Column="2" VerticalAlignment="Top" x:Name="SignInToolBarItem" Height="30" DataContext="{Binding SignInUser}"  HorizontalAlignment="Right"  MinWidth="340" />
             </Grid>

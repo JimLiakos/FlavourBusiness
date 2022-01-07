@@ -70,6 +70,8 @@
     <Reference Include="CefSharp.Wpf, Version=92.0.260.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CefSharp.Wpf.92.0.260\lib\net452\CefSharp.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Utils.v9.3, Version=9.3.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v9.3, Version=9.3.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.HashFunction.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
@@ -92,6 +94,7 @@
     <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -133,6 +136,7 @@
     <Compile Include="Model\ReceiptPrinter.cs" />
     <Compile Include="ViewModel\CashierStationDevicePresentation.cs" />
     <Compile Include="ViewModel\CashierStationPresentation.cs" />
+    <Compile Include="ViewModel\Invoice.cs" />
     <Compile Include="ViewModel\TransactionEx.cs" />
     <Compile Include="ViewModel\TransactionPrinterPresentation.cs" />
     <Compile Include="Views\CashierStationSettingsPage.xaml.cs">
@@ -318,6 +322,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <EmbeddedResource Include="Resources\order.bin" />
+    <None Include="Resources\InvoiceReport.repx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -342,6 +347,10 @@
     <ProjectReference Include="..\..\..\UserInterface\UserInterface\UserInterface - VS10.csproj">
       <Project>{E0E5873E-E5E4-46F6-94F1-731C172CC1C6}</Project>
       <Name>UserInterface - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\UserInterface\WindowsUserInterfaceLibrary\ConnectableControls\DXConnectableControls\DXConnectableControls - VS10.csproj">
+      <Project>{5891d2d8-69c0-47fa-9f3a-c0e42c10c740}</Project>
+      <Name>DXConnectableControls - VS10</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\NotifyIconWpf\NotifyIconWpf.csproj">
       <Project>{7ac63864-7638-41c4-969c-d3197ef2bed9}</Project>
@@ -407,6 +416,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\GprinterComandChars.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\business-report24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\business-report16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
