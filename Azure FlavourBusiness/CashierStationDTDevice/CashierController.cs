@@ -20,7 +20,7 @@ namespace CashierStationDevice
         /// <MetaDataID>{af4a528e-ef65-4e03-b887-e0ba7e094e13}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
-
+        
 
         public CashierController()
         {
@@ -79,16 +79,6 @@ namespace CashierStationDevice
             if (ApplicationSettings.Current.CashiersStation == null)
                 return;
             ApplicationSettings.Current.CompanyHeader = OOAdvantech.Json.JsonConvert.DeserializeObject<CompanyHeader>((ApplicationSettings.Current.CashiersStation as ICashierStation).CashierStationDeviceData);
-            if (ApplicationSettings.Current.CompanyHeader == null)
-                ApplicationSettings.Current.CompanyHeader = new CompanyHeader();
-                //{
-                //    Title = Properties.Resources.CompanySubTitleLabel,
-                //    Subtitle = Properties.Resources.CompanySubTitleLabel,
-                //    ContatInfo = Properties.Resources.ContactUsLabel,
-                //    Address= Properties.Resources.AddressLabel,
-                    
-
-                //};
 
             var path = ApplicationSettings.AppDataPath;
             string[] filePaths = Directory.GetFiles(path, "*.json");
@@ -108,7 +98,7 @@ namespace CashierStationDevice
 
 
             int numofTries = 0;
-        Retry:
+            Retry:
             try
             {
                 Issuer = (ApplicationSettings.Current.CashiersStation as ICashierStation).Issuer;
@@ -180,7 +170,7 @@ namespace CashierStationDevice
             });
 
         }
-       internal List<ITransaction> Transactions = new List<ITransaction>();
+        internal List<ITransaction> Transactions = new List<ITransaction>();
         object PendingTransactionsLock = new object();
         private void AddPendingTransactionsForPrint(List<ITransaction> transactions)
         {
@@ -1186,7 +1176,6 @@ namespace CashierStationDevice
 
     }
 
-    /// <MetaDataID>{aab24d86-9b96-4695-b1b2-3b22b914bec6}</MetaDataID>
     enum TextJustify
     {
         Left = 1,
