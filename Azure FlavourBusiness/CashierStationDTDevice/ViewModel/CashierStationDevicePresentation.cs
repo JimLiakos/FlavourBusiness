@@ -65,14 +65,17 @@ namespace CashierStationDevice.ViewModel
             ReportDesignerCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 DXConnectableControls.XtraReports.Design.ReportDesignForm reportDesignForm = new DXConnectableControls.XtraReports.Design.ReportDesignForm();
-                reportDesignForm.OpenReport(@"E:\MyWindowProfileData\Documents\InvoiceReport.repx");
+                reportDesignForm.OpenReport(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\Azure FlavourBusiness\CashierStationDTDevice\Resources\InvoiceReport.repx");
 
                 Invoice invoice = new Invoice((Application.Current as CashierStationDTDevice.App).CashierController.Transactions.FirstOrDefault(), (Application.Current as CashierStationDTDevice.App).CashierController.Issuer);
                 reportDesignForm.Report.DataSource = new List<Invoice>() { invoice };
 
-                var report = DXConnectableControls.XtraReports.UI.Report.FromFile(@"E:\MyWindowProfileData\Documents\InvoiceReport.repx", false);
+                var report =  DXConnectableControls.XtraReports.UI.Report.FromFile(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\Azure FlavourBusiness\CashierStationDTDevice\Resources\InvoiceReport.repx", true);
+                
                 report.DataSource = new List<Invoice>() { invoice };
-                report.ShowPreview();
+                report.CreateDocument();
+
+                report.Print();
                 //report.PrinterName = "Microsoft Print to PDF";
                 //report.Print("Microsoft Print to PDF");
                 //var printers = PrinterSettings.InstalledPrinters.OfType<string>().ToList();
@@ -87,7 +90,7 @@ namespace CashierStationDevice.ViewModel
                 //reportDesignForm.OpenReport(@"c:\report1.repx");
                 //DXConnectableControls.XtraReports.UI.Report report = DXConnectableControls.XtraReports.UI.Report.FromFile(@"c:\report1.repx",true) as DXConnectableControls.XtraReports.UI.Report;
                 //reportDesignForm.OpenReport(report);
-               // reportDesignForm.ShowDialog();
+                //reportDesignForm.ShowDialog();
 
             });
             SaveCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>

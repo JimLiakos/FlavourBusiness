@@ -131,6 +131,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectableControls - VS10"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXConnectableControls - VS10", "..\UserInterface\WindowsUserInterfaceLibrary\ConnectableControls\DXConnectableControls\DXConnectableControls - VS10.csproj", "{5891D2D8-69C0-47FA-9F3A-C0E42C10C740}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXReportPringTest", "DXReportPringTest\DXReportPringTest.csproj", "{64462F53-58FB-4737-8231-34D7B922BACF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1683,6 +1685,30 @@ Global
 		{5891D2D8-69C0-47FA-9F3A-C0E42C10C740}.Release|x64.Build.0 = Release|Any CPU
 		{5891D2D8-69C0-47FA-9F3A-C0E42C10C740}.Release|x86.ActiveCfg = Release|Any CPU
 		{5891D2D8-69C0-47FA-9F3A-C0E42C10C740}.Release|x86.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|x64.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Debug|x86.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|x64.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|x64.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|x86.ActiveCfg = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Debug|x86.Build.0 = Debug|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|Any CPU.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|x64.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|x64.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|x86.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Net4Release|x86.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|x64.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|x64.Build.0 = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|x86.ActiveCfg = Release|Any CPU
+		{64462F53-58FB-4737-8231-34D7B922BACF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
