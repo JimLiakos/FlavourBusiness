@@ -190,7 +190,7 @@ namespace FlavourBusinessWorkerRole
             RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
             Authentication.InitializeFirebase("demomicroneme"); 
 
-            //CreateServiceHost(); // server for net.tcp:// internal channel
+            CreateServiceHost(); // server for net.tcp:// internal channel
 
             #endregion
 

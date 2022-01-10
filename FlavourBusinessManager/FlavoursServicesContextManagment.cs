@@ -83,7 +83,7 @@ namespace FlavourBusinessManager
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
-            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken,  orgIdentity, graphicMenus, create);
+            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, orgIdentity, graphicMenus, create);
 
             return clientSession;
         }
@@ -216,7 +216,7 @@ namespace FlavourBusinessManager
 
         }
 
-        
+
 
 
         public ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
@@ -258,7 +258,7 @@ namespace FlavourBusinessManager
             {
                 objectStorage = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
-                                                            storageType,FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName,FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
+                                                            storageType, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
 
 
                 //var sss = OOAdvantech.MetaDataRepository.Classifier.GetClassifier(typeof(RoomService.ItemPreparation)).Features.Where(x => x.Name == "FlavourItems").FirstOrDefault() as OOAdvantech.MetaDataRepository.AssociationEndRealization;
@@ -269,7 +269,7 @@ namespace FlavourBusinessManager
                     try
                     {
 
-                        if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName)|| objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
+                        if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName) || objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
                         {
                             objectStorage.StorageMetaData.RegisterComponent(typeof(FinanceFacade.Transaction).Assembly.FullName);
                             objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
@@ -297,7 +297,7 @@ namespace FlavourBusinessManager
                 var storageMetaData = task.Result;
                 if (storageMetaData == null || storageMetaData.StorageIdentity == null)
                     storagesClient.PostAsync(objectStorage.StorageMetaData, true);
-         
+
 
 
 
@@ -327,10 +327,10 @@ namespace FlavourBusinessManager
                 else
                 {
 
-                   // bool publishRestaurantMenuData = false;
+                    // bool publishRestaurantMenuData = false;
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
-                        
+
                         //publishRestaurantMenuData = servicesContextRunTime.RestaurantMenuDataLastModified.ToUniversalTime() != restaurantMenusDataStorageRef.TimeStamp.ToUniversalTime();
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
@@ -395,7 +395,7 @@ namespace FlavourBusinessManager
                         objectStorage.CommitTransientObjectState(servicesContextRunTime);
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
-                  
+
                         stateTransition.Consistent = true;
                     }
                     //PublishMenuRestaurantMenuData(servicesContextRunTime);
@@ -445,7 +445,9 @@ namespace FlavourBusinessManager
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
             string serverUrl = OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl;
+
             IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
         }
 
         ///// <MetaDataID>{e316c772-4861-4a2a-8183-e656ff7a011a}</MetaDataID>
