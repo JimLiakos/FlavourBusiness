@@ -1,5 +1,8 @@
-﻿using System;
+﻿
+using DXConnectableControls.XtraReports.UI;
+using PdfiumViewer;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -51,10 +54,46 @@ namespace DXReportPringTest
             
 
             MemoryStream memoryStream = new MemoryStream(Properties.Resources.InvoiceReport);
-            var report = DXConnectableControls.XtraReports.UI.Report.FromStream(memoryStream, true);
+            var report = Report.FromStream(memoryStream, true);
             report.DataSource = new List<Invoice>() { new Invoice() };
             report.CreateDocument();
-            report.ShowPreview();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                report.ExportToPdf(ms);
+                ms.Position = 0;
+                var printerSettings = new PrinterSettings
+                {
+                    PrinterName = "Microsoft Print to PDF",
+                    Copies = 1
+                };
+              var sds=  PrinterSettings.InstalledPrinters.OfType<string>().ToList();
+                // Create our page settings for the paper size selected
+                var pageSettings = new PageSettings(printerSettings)
+                {
+                    Margins = new Margins(0, 0, 0, 0),
+                };
+                //foreach (PaperSize paperSize in printerSettings.PaperSizes)
+                //{
+                //    if (paperSize.PaperName == "A4")
+                //    {
+                //        pageSettings.PaperSize = paperSize;
+                //        break;
+                //    }
+                //}
+
+                // Now print the PDF document
+                using (var document = PdfDocument.Load(ms))
+                {
+                    using (var printDocument = document.CreatePrintDocument())
+                    {
+                        printDocument.PrinterSettings = printerSettings;
+                        printDocument.DefaultPageSettings = pageSettings;
+                        printDocument.PrintController = new StandardPrintController();
+                        printDocument.Print();
+                    }
+                }
+            }
+            //report.ShowPreview();
 
             //DXConnectableControls.XtraReports.Design.ReportDesignForm reportDesignForm = new DXConnectableControls.XtraReports.Design.ReportDesignForm();
             //reportDesignForm.OpenReport(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\DXReportPringTest\InvoiceReport.repx");

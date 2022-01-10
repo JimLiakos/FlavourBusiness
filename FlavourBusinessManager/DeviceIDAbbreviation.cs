@@ -52,11 +52,11 @@ namespace FlavourBusinessManager
             {
                 if (_DeviceIDAbbreviationTable == null)
                 {
-                    CloudStorageAccount account = null;
-                    if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
-                        account = CloudStorageAccount.DevelopmentStorageAccount;
-                    else
-                        account = new CloudStorageAccount(new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
+                    CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
+                    //if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
+                    //    account = CloudStorageAccount.DevelopmentStorageAccount;
+                    //else
+                    //    account = new CloudStorageAccount(new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
 
                     CloudTableClient tableClient = account.CreateCloudTableClient();
                     CloudTable table = tableClient.GetTableReference("DeviceIDAbbreviation");

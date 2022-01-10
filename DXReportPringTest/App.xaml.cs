@@ -15,6 +15,7 @@ namespace DXReportPringTest
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
             DXConnectableControls.DevXpressModules.LoadModules();
             base.OnStartup(e);
         }

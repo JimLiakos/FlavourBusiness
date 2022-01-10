@@ -320,7 +320,7 @@ namespace FlavourBusinessManager
             else
             {
                 string blobUrl = fbStorage.Url;
-                return new FlavourBusinessToolKit.UploadSlot(blobUrl, RawStorageCloudBlob.CloudStorageAccount);
+                return new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
             }
         }
 
@@ -363,7 +363,7 @@ namespace FlavourBusinessManager
             {
                 if (_BackgroundImages == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/graphicmenusresources/BackgroundImages.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + "graphicmenusresources/BackgroundImages.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "BackgroundImages");
                     var objectStorage = ObjectStorage.OpenStorage("BackgroundImages", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -393,7 +393,7 @@ namespace FlavourBusinessManager
             {
                 if (_Borders == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/graphicmenusresources/Borders.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + "graphicmenusresources/Borders.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "Borders");
                     var objectStorage = ObjectStorage.OpenStorage("Borders", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -423,7 +423,7 @@ namespace FlavourBusinessManager
             {
                 if (_PageBorders == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/graphicmenusresources/Borders.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + "graphicmenusresources/BackgroundImages.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "Borders");
                     var objectStorage = ObjectStorage.OpenStorage("Borders", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -451,7 +451,7 @@ namespace FlavourBusinessManager
             {
                 if (_HeadingAccents == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/graphicmenusresources/HeadingAccents.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri +  "graphicmenusresources/HeadingAccents.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "HeadingAccents");
                     var objectStorage = ObjectStorage.OpenStorage("HeadingAccents", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -480,7 +480,7 @@ namespace FlavourBusinessManager
             {
                 if (_StyleSheets == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/graphicmenusresources/StyleSheets.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + "graphicmenusresources/StyleSheets.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "StyleSheets");
                     var objectStorage = ObjectStorage.OpenStorage("StyleSheets", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -575,8 +575,8 @@ namespace FlavourBusinessManager
 
                         stateTransition.Consistent = true;
                     }
-                    var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri  + fbstorage.Url;
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                     storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
@@ -605,8 +605,8 @@ namespace FlavourBusinessManager
 
                         stateTransition.Consistent = true;
                     }
-                    var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                     storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
@@ -620,8 +620,8 @@ namespace FlavourBusinessManager
             }
             else
             {
-                var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri+ fbstorage.Url;
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                 storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
 
@@ -764,17 +764,28 @@ namespace FlavourBusinessManager
 
                                 fbstorage.Name = name;
 
-                                var blobClient = RawStorageCloudBlob.CloudStorageAccount.CreateCloudBlobClient();
-                                var container = blobClient.GetContainerReference("usersfolder");
+                                string blobsContainerName = "usersfolder";
+                                if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
+                                    blobsContainerName = RawStorageCloudBlob.RootContainer;
+                                var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
+                                var container = blobClient.GetContainerReference(blobsContainerName);
+
+
                                 container.CreateIfNotExists();
                                 ObjectID objectID = null;
                                 string orgStorageIdentity = null;
                                 StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
-                                string blobUrl = Identity + "/" + name + ".xml";
+                                string blobUrl = "usersfolder/"+Identity + "/" + name + ".xml";
 
                                 string oldBlobUrl = fbstorage.Url;
-                                if (oldBlobUrl.IndexOf("usersfolder/") == 0)
-                                    oldBlobUrl = oldBlobUrl.Substring("usersfolder/".Length);
+
+                                if (blobUrl.IndexOf(blobsContainerName+"/") == 0)
+                                    blobUrl = oldBlobUrl.Substring((blobsContainerName+"/").Length);
+
+                                if (oldBlobUrl.IndexOf(blobsContainerName + "/") == 0)
+                                    oldBlobUrl = oldBlobUrl.Substring((blobsContainerName + "/").Length);
+
+
                                 var existBlob = container.GetBlockBlobReference(oldBlobUrl);
                                 var newBlob = container.GetBlockBlobReference(blobUrl);
                                 //create a new blob
@@ -795,8 +806,8 @@ namespace FlavourBusinessManager
                             stateTransition.Consistent = true;
                         }
                     }
-                    var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                     OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
@@ -859,13 +870,13 @@ namespace FlavourBusinessManager
                                   where storage.FlavourStorageType == OrganizationStorages.GraphicMenu
                                   select storage).ToList();
 
-                string urlRoot = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri ;
                 foreach (var fbStorage in fbstorages)
                 {
                     try
                     {
                         var storageUrl = urlRoot + fbStorage.Url;
-                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
 
                         OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
                         graphicMenusStorages.Add(storageRef);
@@ -958,8 +969,8 @@ namespace FlavourBusinessManager
                     stateTransition.Consistent = true;
                 }
 
-                var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri +  fbstorage.Url;
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                 OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
@@ -985,8 +996,17 @@ namespace FlavourBusinessManager
             string oldPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, oldName);
             string newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
 
-            var blobClient = RawStorageCloudBlob.CloudStorageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference("usersfolder");
+            string blobsContainerName = "usersfolder";
+            if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
+            {
+                blobsContainerName = RawStorageCloudBlob.RootContainer;
+                oldPublishedGraphicMenuUri = "usersfolder/" + oldPublishedGraphicMenuUri;
+                newPublishedGraphicMenuUri = "usersfolder/" + newPublishedGraphicMenuUri;
+            }
+            var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
+            var container = blobClient.GetContainerReference(blobsContainerName);
+
+
             container.CreateIfNotExists();
 
 
@@ -1006,8 +1026,18 @@ namespace FlavourBusinessManager
         private void RemovePublishedGraphicMenu(string storageIdentity, string version, string newName)
         {
             string publishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
-            var blobClient = RawStorageCloudBlob.CloudStorageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference("usersfolder");
+
+            string blobsContainerName = "usersfolder";
+            if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
+            {
+                blobsContainerName = RawStorageCloudBlob.RootContainer;
+                publishedGraphicMenuUri = "usersfolder/" + publishedGraphicMenuUri;
+            }
+            var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
+            var container = blobClient.GetContainerReference(blobsContainerName);
+
+
+
             container.CreateIfNotExists();
             var blob = container.GetBlockBlobReference(publishedGraphicMenuUri);
             blob.DeleteIfExists();
@@ -1058,7 +1088,7 @@ namespace FlavourBusinessManager
 
 
                 // removes graphic menu storage data
-                var blobClient = RawStorageCloudBlob.CloudStorageAccount.CreateCloudBlobClient();
+                var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
                 string containerName = fbstorage.Url.Substring(0, fbstorage.Url.IndexOf("/"));
                 string blobUrl = fbstorage.Url.Substring(fbstorage.Url.IndexOf("/") + 1);
                 var container = blobClient.GetContainerReference(containerName);
@@ -1147,7 +1177,7 @@ namespace FlavourBusinessManager
             string previousVersionServerStorageFolder = string.Format("usersfolder/{0}/Menus/{1}{2}", orgIdentity, storageRef.StorageIdentity, oldVersionSuffix);
 
 
-            IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
 
             restaurantMenu.PublishMenu(serverStorageFolder, previousVersionServerStorageFolder, "", fileManager, storageRef.Name);
 

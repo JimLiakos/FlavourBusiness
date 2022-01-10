@@ -100,6 +100,9 @@ namespace FlavourBusinessWorkerRole
             RemotingServices.SetProductionLeaseTime();
 #endif
 
+
+
+
             IsolatedContext.AssignAppDomain(ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
             IsolatedContext.AssignAppDomain("httpInternal" + ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
 
@@ -114,7 +117,26 @@ namespace FlavourBusinessWorkerRole
             RemotingServices.RunInAzureRole = true;
             System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[] { typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly, typeof(MenuModel.MenuItem).Assembly };
             OOAdvantech.PersistenceLayer.ObjectStorage.Init(assemblies);
-            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "");
+
+            FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
+
+            //FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="),true);
+
+            FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
+
+            //FlavourBusinessManagerApp.CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+            //FlavourBusinessManagerApp.RootContainer = "$web";
+
+            FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
+
+            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = "angularhost";
+            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
+            //FlavourBusinessManagerApp.FlavourBusinessStoragesLocation = "angularhost";
+
+
+            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
+            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+
 
             //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ComputingCluster.ClusterObjectStorage);
             //var isolatedComputingContexts = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
@@ -166,8 +188,9 @@ namespace FlavourBusinessWorkerRole
             #region initialize internal communication
 
             RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
-            Authentication.InitializeFirebase("demomicroneme");
-            CreateServiceHost();
+            Authentication.InitializeFirebase("demomicroneme"); 
+
+            //CreateServiceHost(); // server for net.tcp:// internal channel
 
             #endregion
 
@@ -274,7 +297,7 @@ namespace FlavourBusinessWorkerRole
 
             if (ComputingCluster.CurrentComputingResource.ResourceIndex == 0)
             {
-                var objectsStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "");
+                var objectsStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectsStorage);
 
 
@@ -514,11 +537,17 @@ namespace FlavourBusinessWorkerRole
             serverPublicUrl = WorkerRole.AzureServerUrl;
 
             RemotingServices.ServerPublicUrl = serverPublicUrl;
+
+            //FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost","$web");
+            FlavourBusinessManagerApp.Init(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "","",null);
+
             RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
 
-            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "");
+            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "","");
 
-            FlavourBusinessManagerApp.Init(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "");
+
+
 
             Authentication.InitializeFirebase("demomicroneme");
 

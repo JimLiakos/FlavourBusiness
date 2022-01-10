@@ -269,7 +269,7 @@ namespace FlavourBusinessManager.RoomService
                         versionSuffix = "";
 
                     var storageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, fbstorage.StorageIdentity, fbstorage.Name, versionSuffix);
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url);
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified( fbstorage.Url);
                     var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
                     (Meal.Session as ServicesContextResources.FoodServiceSession).Menu = storageRef;
                 }

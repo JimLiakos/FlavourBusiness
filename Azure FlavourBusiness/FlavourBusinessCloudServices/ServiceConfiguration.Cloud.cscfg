@@ -3,7 +3,16 @@
   <Role name="FlavourBusinessWorkerRole">
     <Instances count="2" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=asfameazure;AccountKey=$(_asfameazure.key_)" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Jim.liakos.msdn@hotmail.com" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEC53GZM3yLSaRkXY+5GJsH4wDQYJKoZIhvcNAQEBBQAEggEAqI974NifpSB4q+FxqUxAK5Bg90PYLIaCo1Mu6S0RfIiJjwfjiOrVD0xb693qYeO+LDPzlZMYggpan1iZ/YM981cZ/iBmI8XhAB8C9wqX/RKI87M7p/hm6eQWJNi/UM89+YboV4Tau9isiDeMq++hYNfYp/+rDGyqGb8EJdlGCXPIhz1aqqJ9k5+UjGyJHbcUyuZbzHbmy5QrlyI0z/i9Vu2AeO4VVhuVy++5/jjJIAVwQhuihlMrVnOl02hFJL5TB4dxupG/+K5eAqtAydY5jBpCct/+pJRg/YHTuZmGd7lWLZ9rE+pQ5gNJ5Un8hLNvmbAmGMEFfEszx2seFyjpHzAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECHa347+8WY4fgBDxEReRp9AK8XUzjwIXF3Jr" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2023-01-08T23:59:59.0000000+02:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="08319d29-3ae1-4b88-9ef1-bd30adf0db56" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="8EC50D5EC9C9C9AF6C2E74562A7F5DD06436DA91" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>

@@ -368,8 +368,8 @@ namespace FlavourBusinessManager
                                  where storage.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu
                                  select storage).FirstOrDefault();
 
-                var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri+  fbstorage.Url;
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                 var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 

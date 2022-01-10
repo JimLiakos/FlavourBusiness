@@ -1,4 +1,5 @@
-﻿using OOAdvantech.Json;
+﻿using FlavourBusinessManager;
+using OOAdvantech.Json;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using QRCoder;
@@ -66,8 +67,11 @@ namespace FLBManager
 
             EventManager.RegisterClassHandler(typeof(UIElement), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
 
+            //var obk= FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+
+
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
-            //Restore(@"F:\AzureData\Backup", "DevStorage", "", "");
+            //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
 
             //string storageName = "jimliakosgmailcom";
             //string storageLocation = "DevStorage";
@@ -82,7 +86,7 @@ namespace FLBManager
             //var sds = m_meal.Courses;
 
             //CreateQRCodeCards();
-           // PreparationTimeEstimator();
+            // PreparationTimeEstimator();
 
             base.OnStartup(e);
         }

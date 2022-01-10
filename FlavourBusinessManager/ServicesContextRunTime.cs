@@ -871,11 +871,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                   where storage.FlavourStorageType == OrganizationStorages.GraphicMenu
                                   select storage).ToList();
 
-                string urlRoot = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri ;
                 foreach (var fbStorage in fbstorages)
                 {
                     var storageUrl = urlRoot + fbStorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
 
                     OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
                     graphicMenusStorages.Add(storageRef);
@@ -962,7 +962,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         void PublishMenuRestaurantMenuData()
         {
 
-            IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
             var restaurantMenusData = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
             string version = "";
             string oldVersion = restaurantMenusData.Version;
@@ -1003,7 +1003,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{09d076c1-518e-4c4c-8c94-ad05f45ab97a}</MetaDataID>
         private void WritePublicRestaurantMenuData(string jsonFileName)
         {
-            IFileManager fileManager = new BlobFileManager(RawStorageCloudBlob.CloudStorageAccount);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
 
             var fbstorage = (from servicesContextRunTimeStorage in Storages
                              where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
@@ -1614,8 +1614,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 IHallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri((serviceArea as ServiceArea).HallLayoutUri) as IHallLayout;
                 var storageMetadata = ObjectStorage.GetStorageFromUri((serviceArea as ServiceArea).HallLayoutUri);
                 fbstorage = _Storages.Where(x => x.StorageIdentity == storageMetadata.StorageIdentity).FirstOrDefault();
-                var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
                 var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
                 return storageRef;
@@ -1649,7 +1649,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 (serviceArea as ServicesContextResources.ServiceArea).HallLayoutUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(restaurantHallLayout).GetPersistentObjectUri(restaurantHallLayout);
 
-                var storageUrl = RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/" + fbstorage.Url;
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
 
 
                 var task = System.Threading.Tasks.Task.Run(async () =>
@@ -1673,7 +1673,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 if (task.Exception != null)
                     throw task.Exception;
 
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(storageUrl);
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
                 var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
                 return storageRef;
             }
@@ -1691,7 +1691,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             else
             {
                 string blobUrl = fbStorage.Url;
-                var uploadSlot = new FlavourBusinessToolKit.UploadSlot(blobUrl, RawStorageCloudBlob.CloudStorageAccount);
+                var uploadSlot = new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
                 uploadSlot.FileUploaded += UploadSlot_FileUploaded;
                 uploadSlot.Tag = fbStorage;
                 return uploadSlot;

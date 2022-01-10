@@ -27,10 +27,10 @@ namespace FlavourBusinessWorkerRole.Controllers
         {
             try
             {
-                CloudStorageAccount account = null;
+                CloudStorageAccount account = FlavourBusinessManager.FlavourBusinessManagerApp.CloudTableStorageAccount;
 
                 //if (StorageLocation.ToLower() == @"DevStorage".ToLower() && string.IsNullOrWhiteSpace(userName))
-                account = CloudStorageAccount.DevelopmentStorageAccount;
+                //account = FlavourBusinessManager.RawStorageCloudBlob.CloudBlobStorageAccount;
                 //else
                 //    account = new CloudStorageAccount(new StorageCredentials(userName, userName), StorageLocation, true);
 
@@ -68,10 +68,10 @@ namespace FlavourBusinessWorkerRole.Controllers
         public string Post([FromBody]OOAdvantech.MetaDataRepository.StorageMetaData storageMetaData)
         {
 
-            CloudStorageAccount account = null;
+            CloudStorageAccount account = FlavourBusinessManager.FlavourBusinessManagerApp.CloudTableStorageAccount;
 
             //if (StorageLocation.ToLower() == @"DevStorage".ToLower() && string.IsNullOrWhiteSpace(userName))
-            account = CloudStorageAccount.DevelopmentStorageAccount;
+            //account = CloudStorageAccount.DevelopmentStorageAccount;
             //else
             //    account = new CloudStorageAccount(new StorageCredentials(userName, userName), StorageLocation, true);
 

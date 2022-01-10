@@ -258,7 +258,7 @@ namespace FlavourBusinessManager
             {
                 objectStorage = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
-                                                            storageType);
+                                                            storageType,FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName,FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
 
 
                 //var sss = OOAdvantech.MetaDataRepository.Classifier.GetClassifier(typeof(RoomService.ItemPreparation)).Features.Where(x => x.Name == "FlavourItems").FirstOrDefault() as OOAdvantech.MetaDataRepository.AssociationEndRealization;

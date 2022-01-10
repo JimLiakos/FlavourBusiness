@@ -61,8 +61,8 @@ namespace FlavourBusinessToolKit
     /// <MetaDataID>{c544a747-2012-4f8d-98ee-21c91666f568}</MetaDataID>
     internal class BlobInfo : FileInfo
     {
-        
-        
+
+
         CloudBlob CloudBlob;
         public BlobInfo(CloudBlob cloudBlob)
         {
@@ -70,7 +70,7 @@ namespace FlavourBusinessToolKit
         }
         public override void DeleteIfExists()
         {
-            if(CloudBlob!=null)
+            if (CloudBlob != null)
                 CloudBlob.DeleteIfExists();
         }
 
@@ -78,7 +78,7 @@ namespace FlavourBusinessToolKit
         {
             get
             {
-                if (CloudBlob==null)
+                if (CloudBlob == null)
                     return default(DateTime?);
 
                 if (CloudBlob.Properties.LastModified.HasValue)
@@ -153,10 +153,11 @@ namespace FlavourBusinessToolKit
     /// <MetaDataID>{9e226fb7-ec24-4583-863f-c6b88cb67320}</MetaDataID>
     public class BlobFileManager : FileManager, IFileManager
     {
-
-        public BlobFileManager(CloudStorageAccount cloudStorageAccount)
+        string Container;
+        public BlobFileManager(CloudStorageAccount cloudStorageAccount, string container)
         {
             CloudStorageAccount = cloudStorageAccount;
+            Container = container;
 
         }
         //public static string AzureStorageBaseUrl
@@ -224,7 +225,7 @@ namespace FlavourBusinessToolKit
             }
         }
 
-    
+
         //public void Upload(string credentialKey, string filePath, MemoryStream memoryStream, string contentType = "")
         //{
 
@@ -313,8 +314,11 @@ namespace FlavourBusinessToolKit
                     int bufferOffset = 0;
                     if (fileUploadEntry.AppendBlob == null)
                     {
+                        string containerName = Container;
+                        if (string.IsNullOrWhiteSpace(containerName))
+                            containerName = "usersfolder";
                         var blobClient = CloudStorageAccount.CreateCloudBlobClient();
-                        var container = blobClient.GetContainerReference("usersfolder");
+                        var container = blobClient.GetContainerReference(containerName);
                         container.CreateIfNotExists();
                         CloudAppendBlob blob = container.GetAppendBlobReference(fileUploadEntry.FileName);
                         blob.Properties.ContentType = fileUploadEntry.ContentType;
@@ -362,9 +366,12 @@ namespace FlavourBusinessToolKit
                     else
                     {
                         // file size is less than Chunk size
+                        string containerName = Container;
+                        if (string.IsNullOrWhiteSpace(containerName))
+                            containerName = "usersfolder";
 
                         var blobClient = CloudStorageAccount.CreateCloudBlobClient();
-                        var container = blobClient.GetContainerReference("usersfolder");
+                        var container = blobClient.GetContainerReference(containerName);
                         container.CreateIfNotExists();
 
                         var blob = container.GetBlockBlobReference(fileUploadEntry.FileName);
@@ -407,7 +414,7 @@ namespace FlavourBusinessToolKit
                 //opening the file for read.
                 FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 //creating the ServiceSoapClient which will allow to connect to the service.
-                FlavourBusinessToolKit.BlobFileManager fileUploader = new FlavourBusinessToolKit.BlobFileManager(CloudStorageAccount.DevelopmentStorageAccount);
+                FlavourBusinessToolKit.BlobFileManager fileUploader = new FlavourBusinessToolKit.BlobFileManager(CloudStorageAccount.DevelopmentStorageAccount, Container);
                 string fileUploadIdentity = fileUploader.CreateFileUploadSession(serverStorageFileName, (int)fs.Length, contentType);
 
 
@@ -459,7 +466,7 @@ namespace FlavourBusinessToolKit
         //    throw new NotImplementedException();
         //}
 
-        void IFileManager.Copy( string sourceUri, string targetUri)
+        void IFileManager.Copy(string sourceUri, string targetUri)
         {
 
             string root = RootUri.ToLower() + "/";
@@ -492,7 +499,7 @@ namespace FlavourBusinessToolKit
             //task.Wait();
 
         }
-        FileInfo IFileManager. GetBlobInfo(string blobUrl)
+        FileInfo IFileManager.GetBlobInfo(string blobUrl)
         {
 
             var blobClient = CloudStorageAccount.CreateCloudBlobClient();
@@ -524,20 +531,30 @@ namespace FlavourBusinessToolKit
                 return false;
 
         }
-        void IFileManager.Upload( string blobUrl, MemoryStream memoryStream, string contentType)
+        void IFileManager.Upload(string blobUrl, MemoryStream memoryStream, string contentType)
         {
             var blobClient = CloudStorageAccount.CreateCloudBlobClient();
-            string containerName = blobUrl.Substring(0, blobUrl.IndexOf("/"));
-            blobUrl = blobUrl.Substring(blobUrl.IndexOf("/") + 1);
-            var container = blobClient.GetContainerReference(containerName);
+            CloudBlobContainer cloudBlobContainer;
+            if (string.IsNullOrWhiteSpace(Container))
+            {
+                string containerName = blobUrl.Substring(0, blobUrl.IndexOf("/"));
 
-            CloudBlockBlob blob = container.GetBlockBlobReference(blobUrl);
+                blobUrl = blobUrl.Substring(blobUrl.IndexOf("/") + 1);
+
+                cloudBlobContainer = blobClient.GetContainerReference(containerName);
+            }
+            else
+                cloudBlobContainer = blobClient.GetContainerReference(Container);
+
+
+
+            CloudBlockBlob blob = cloudBlobContainer.GetBlockBlobReference(blobUrl);
             blob.Properties.ContentType = contentType;
             blob.DeleteIfExists();
             blob.UploadFromStream(memoryStream);
         }
 
-        List<FileInfo> IFileManager.ListBlobs( string serverStorageFolder)
+        List<FileInfo> IFileManager.ListBlobs(string serverStorageFolder)
         {
 
             var blobClient = CloudStorageAccount.CreateCloudBlobClient();
@@ -546,7 +563,7 @@ namespace FlavourBusinessToolKit
             var container = blobClient.GetContainerReference(containerName);
             var folder = container.ListBlobs(serverStorageFolder).OfType<CloudBlobDirectory>().FirstOrDefault();
 
-            if(folder!=null)
+            if (folder != null)
                 return (from cloudBlob in folder.ListBlobs().OfType<CloudBlob>() select new BlobInfo(cloudBlob)).OfType<FileInfo>().ToList();
             return new List<FileInfo>();
 
@@ -590,7 +607,7 @@ namespace FlavourBusinessToolKit
             }
             if (base64.Length > 0)
                 chunkAppened = uploadSlot.UploadFile(fileUploadIdentity, base64);
-            
+
             uploadSlot.EndOfUploadFile(fileUploadIdentity);
 
         }
@@ -642,7 +659,7 @@ namespace FlavourBusinessToolKit
             }
         }
 
-        public void Copy( string aboluteImageUri, string newImageUri)
+        public void Copy(string aboluteImageUri, string newImageUri)
         {
 
             string userFolder = "27B45100-AF26-4E33-8846-4FA08FA6A586";
@@ -676,7 +693,7 @@ namespace FlavourBusinessToolKit
             return System.IO.File.Exists(targetFileName);
         }
 
-        public List<FileInfo> ListBlobs( string serverStorageFolder)
+        public List<FileInfo> ListBlobs(string serverStorageFolder)
         {
             string userFolder = "27B45100-AF26-4E33-8846-4FA08FA6A586";
             string targetUri = RootUri + "usersfolder/" + userFolder + "/" + serverStorageFolder;
@@ -694,7 +711,7 @@ namespace FlavourBusinessToolKit
         }
 
 
-        public void Upload( string filePath, MemoryStream memoryStream, string contentType = "")
+        public void Upload(string filePath, MemoryStream memoryStream, string contentType = "")
         {
             string userFolder = "27B45100-AF26-4E33-8846-4FA08FA6A586";
             string targetUri = RootUri + "usersfolder/" + userFolder + "/" + filePath;
