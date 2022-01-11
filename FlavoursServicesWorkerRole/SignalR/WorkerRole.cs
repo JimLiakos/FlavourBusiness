@@ -34,6 +34,9 @@ namespace FlavoursServicesWorkerRole
         }
         private IDisposable _publicApp = null;
         private IDisposable _internalApp = null;
+
+        public SignalR.SignalRServer PublicSignalR { get; private set; }
+
         public override bool OnStart()
         {
             // Set the maximum number of concurrent connections
@@ -46,22 +49,31 @@ namespace FlavoursServicesWorkerRole
 
             Trace.TraceInformation("FlavoursServicesWorkerRole has been started");
 
+            #region Initialize SignalR communication
+            var endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["httpPublic"];
+            string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
+
+
+            PublicSignalR = new SignalR.SignalRServer();// WebApp.Start<SignalRServer.Startup>(baseUri);
+            PublicSignalR.Start(baseUri);
+
+            #endregion
 
             #region Initialize communication end point
 
-            var endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["httpInternal"];
-            string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
+            //var endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["httpInternal"];
+            //string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
 
-            Trace.TraceInformation(String.Format("Starting OWIN at {0}", baseUri),
-                "Information");
-            _internalApp = WebApp.Start<Startup>(new StartOptions(url: baseUri));
+            //Trace.TraceInformation(String.Format("Starting OWIN at {0}", baseUri),
+            //    "Information");
+            //_internalApp = WebApp.Start<Startup>(new StartOptions(url: baseUri));
 
-            endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["httpPublic"];
-            baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
+            //endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["httpPublic"];
+            //baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
 
-            Trace.TraceInformation(String.Format("Starting OWIN at {0}", baseUri),
-                "Information");
-            _publicApp = WebApp.Start<Startup>(new StartOptions(url: baseUri));
+            //Trace.TraceInformation(String.Format("Starting OWIN at {0}", baseUri),
+            //    "Information");
+            //_publicApp = WebApp.Start<Startup>(new StartOptions(url: baseUri));
 
             #endregion
 
@@ -114,8 +126,8 @@ namespace FlavoursServicesWorkerRole
         }
     }
 
-    public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
-    {
-        public string Message { get; set; }
-    }
+    //public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
+    //{
+    //    public string Message { get; set; }
+    //}
 }

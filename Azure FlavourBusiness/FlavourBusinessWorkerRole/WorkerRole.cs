@@ -33,10 +33,10 @@ namespace FlavourBusinessWorkerRole
         private IDisposable _internalApp = null;
         public override void Run()
         {
-            FlavoursServicesContextManagment.Init();
-            //FlavourBusinessesResourcesInitiatorTimer.Elapsed += FlavourBusinessesResourcesInitiatorTimer_Elapsed;
-            //FlavourBusinessesResourcesInitiatorTimer.Interval = TimeSpan.FromSeconds(0.8).TotalMilliseconds;
-            //FlavourBusinessesResourcesInitiatorTimer.Start();
+            //FlavoursServicesContextManagment.Init();
+            ////FlavourBusinessesResourcesInitiatorTimer.Elapsed += FlavourBusinessesResourcesInitiatorTimer_Elapsed;
+            ////FlavourBusinessesResourcesInitiatorTimer.Interval = TimeSpan.FromSeconds(0.8).TotalMilliseconds;
+            ////FlavourBusinessesResourcesInitiatorTimer.Start();
 
 
             Trace.TraceInformation("FlavourBusinessWorkerRole is running");
@@ -94,72 +94,72 @@ namespace FlavourBusinessWorkerRole
         public override bool OnStart()
         {
 
-#if DEBUG && !DeviceDotNet
-            RemotingServices.SetDebugLeaseTime();
-#else
-            RemotingServices.SetProductionLeaseTime();
-#endif
+//#if DEBUG && !DeviceDotNet
+//            RemotingServices.SetDebugLeaseTime();
+//#else
+//            RemotingServices.SetProductionLeaseTime();
+//#endif
 
 
 
 
-            IsolatedContext.AssignAppDomain(ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
-            IsolatedContext.AssignAppDomain("httpInternal" + ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
+//            IsolatedContext.AssignAppDomain(ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
+//            IsolatedContext.AssignAppDomain("httpInternal" + ComputingCluster.ComputingContextID, AppDomain.CurrentDomain);
 
-            string serverPublicUrl = "http://localhost:8090/api/";
-            serverPublicUrl = AzureServerUrl;
-            RemotingServices.ServerPublicUrl = serverPublicUrl;
-
-
-            string output = string.Format("- ð  ð - {1} RoleEnvironment.Changing for {0}:", RoleEnvironment.CurrentRoleInstance.Id, System.Diagnostics.Process.GetCurrentProcess().Id);
-            System.Diagnostics.Debug.WriteLine(output);
-
-            RemotingServices.RunInAzureRole = true;
-            System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[] { typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly, typeof(MenuModel.MenuItem).Assembly };
-            OOAdvantech.PersistenceLayer.ObjectStorage.Init(assemblies);
-
-            FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
-
-            //FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="),true);
-
-            FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
-
-            //FlavourBusinessManagerApp.CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
-            //FlavourBusinessManagerApp.RootContainer = "$web";
-
-            FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
-
-            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = "angularhost";
-            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
-            //FlavourBusinessManagerApp.FlavourBusinessStoragesLocation = "angularhost";
+//            string serverPublicUrl = "http://localhost:8090/api/";
+//            serverPublicUrl = AzureServerUrl;
+//            RemotingServices.ServerPublicUrl = serverPublicUrl;
 
 
-            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
-            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+//            string output = string.Format("- ð  ð - {1} RoleEnvironment.Changing for {0}:", RoleEnvironment.CurrentRoleInstance.Id, System.Diagnostics.Process.GetCurrentProcess().Id);
+//            System.Diagnostics.Debug.WriteLine(output);
+
+//            RemotingServices.RunInAzureRole = true;
+//            System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[] { typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly, typeof(MenuModel.MenuItem).Assembly };
+//            OOAdvantech.PersistenceLayer.ObjectStorage.Init(assemblies);
+
+//            FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
+
+//            //FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="),true);
+
+//            FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
+
+//            //FlavourBusinessManagerApp.CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+//            //FlavourBusinessManagerApp.RootContainer = "$web";
+
+//            FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
+
+//            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = "angularhost";
+//            //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
+//            //FlavourBusinessManagerApp.FlavourBusinessStoragesLocation = "angularhost";
 
 
-            //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ComputingCluster.ClusterObjectStorage);
-            //var isolatedComputingContexts = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
-            //                               //  where !computingContext.FixedComputingResource //computingContext.ContextID != StandardComputingContext.ComputingContext && computingContext.ContextID != StandardComputingContext.FlavourBusinessManagmenContext
-            //                                 orderby computingContext.ComputingResourceID
-            //                                 select computingContext).ToList();
+//            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
+//            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
-            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //{
-            //    foreach (var ss in isolatedComputingContexts)
-            //    {
-            //        ss.FixedComputingResource = true;
-            //    }
-            //    stateTransition.Consistent = true;
-            //}
+//            //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ComputingCluster.ClusterObjectStorage);
+//            //var isolatedComputingContexts = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
+//            //                               //  where !computingContext.FixedComputingResource //computingContext.ContextID != StandardComputingContext.ComputingContext && computingContext.ContextID != StandardComputingContext.FlavourBusinessManagmenContext
+//            //                                 orderby computingContext.ComputingResourceID
+//            //                                 select computingContext).ToList();
 
 
-            // Set the maximum number of concurrent connections
-            ServicePointManager.DefaultConnectionLimit = 12;
+//            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+//            //{
+//            //    foreach (var ss in isolatedComputingContexts)
+//            //    {
+//            //        ss.FixedComputingResource = true;
+//            //    }
+//            //    stateTransition.Consistent = true;
+//            //}
 
-            // For information on handling configuration changes
-            // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
+
+//            // Set the maximum number of concurrent connections
+//            ServicePointManager.DefaultConnectionLimit = 12;
+
+//            // For information on handling configuration changes
+//            // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
 
             bool result = base.OnStart();
 
@@ -185,22 +185,22 @@ namespace FlavourBusinessWorkerRole
 
             #endregion
 
-            #region initialize internal communication
+            //#region initialize internal communication
 
-            RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
-            Authentication.InitializeFirebase("demomicroneme"); 
+            //RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
+            //Authentication.InitializeFirebase("demomicroneme"); 
 
-            CreateServiceHost(); // server for net.tcp:// internal channel
+            //CreateServiceHost(); // server for net.tcp:// internal channel
 
-            #endregion
-
-
-            //FlavourBusinessManager.FlavourBusinessManagerApp.Init();
+            //#endregion
 
 
-            ComputingCluster.CurrentComputingCluster.StartUp();
+            ////FlavourBusinessManager.FlavourBusinessManagerApp.Init();
 
-            RoleEnvironment.Changed += OnChanged;
+
+            //ComputingCluster.CurrentComputingCluster.StartUp();
+
+            //RoleEnvironment.Changed += OnChanged;
 
 
 

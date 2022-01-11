@@ -45,6 +45,7 @@ namespace FlavoursServicesWorkerRole.Controllers
     using System.Web;
     using System.ServiceModel.Channels;
     using Microsoft.ServiceModel.WebSockets;
+    using Microsoft.Azure.Cosmos.Table;
 
     public class WebSocketMessagesController : ApiController
     {
@@ -55,6 +56,7 @@ namespace FlavoursServicesWorkerRole.Controllers
 
             if (request.Properties.ContainsKey("MS_HttpContext"))
             {
+                
                 return ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
             }
             else if (request.Properties.ContainsKey(System.ServiceModel.Channels.RemoteEndpointMessageProperty.Name))
@@ -124,26 +126,26 @@ namespace FlavoursServicesWorkerRole.Controllers
             ////var handler = new WebSocketServer(RequestUri,wsSendAsync, wsCloseAsync, CancellationToken.None,wsEnv);
             //handler.OnOpen();
 
-            //try
-            //{
-            //    CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+            try
+            {
+                CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
-            //    CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-            //    CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-            //    if (!logMessageTable.Exists())
-            //        logMessageTable.CreateIfNotExists();
+                CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
+                CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
+                if (!logMessageTable.Exists())
+                    logMessageTable.CreateIfNotExists();
 
-            //    LogMessage logMessage = new LogMessage();
-            //    logMessage.PartitionKey = "AAA";
-            //    logMessage.RowKey = Guid.NewGuid().ToString();
-            //    logMessage.Message = " websocket Open WorkerRole has been started";
+                LogMessage logMessage = new LogMessage();
+                logMessage.PartitionKey = "AAA";
+                logMessage.RowKey = Guid.NewGuid().ToString();
+                logMessage.Message = " websocket Open WorkerRole has been started";
 
-            //    TableOperation insertOperation = TableOperation.Insert(logMessage);
-            //    var executeResult = logMessageTable.Execute(insertOperation);
-            //}
-            //catch (Exception error)
-            //{
-            //}
+                TableOperation insertOperation = TableOperation.Insert(logMessage);
+                var executeResult = logMessageTable.Execute(insertOperation);
+            }
+            catch (Exception error)
+            {
+            }
 
             var buffer = new ArraySegment<byte>(new byte[4096]);
             try
@@ -163,30 +165,35 @@ namespace FlavoursServicesWorkerRole.Controllers
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Dispose();
                         memoryStream = new System.IO.MemoryStream();
-                        //if (bytes.Length > 0)
-                        //    handler.OnMessage(Encoding.UTF8.GetString(bytes, 0, bytes.Length));
+                        if (bytes.Length > 0)
+                        {
+                            string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                            //handler.OnMessage(message);
+
+                            try
+                            {
+                                CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+
+                                CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
+                                CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
+                                if (!logMessageTable.Exists())
+                                    logMessageTable.CreateIfNotExists();
+
+                                LogMessage logMessage = new LogMessage();
+                                logMessage.PartitionKey = "AAA";
+                                logMessage.RowKey = Guid.NewGuid().ToString();
+                                logMessage.Message = "websocket receive message :"+ message;
+
+                                TableOperation insertOperation = TableOperation.Insert(logMessage);
+                                var executeResult = logMessageTable.Execute(insertOperation);
+                            }
+                            catch (Exception error)
+                            {
+                            }
+                        }
 
 
-                        //try
-                        //{
-                        //    CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
-                        //    CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-                        //    CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-                        //    if (!logMessageTable.Exists())
-                        //        logMessageTable.CreateIfNotExists();
-
-                        //    LogMessage logMessage = new LogMessage();
-                        //    logMessage.PartitionKey = "AAA";
-                        //    logMessage.RowKey = Guid.NewGuid().ToString();
-                        //    logMessage.Message = " websocket receive Open WorkerRole has been started";
-
-                        //    TableOperation insertOperation = TableOperation.Insert(logMessage);
-                        //    var executeResult = logMessageTable.Execute(insertOperation);
-                        //}
-                        //catch (Exception error)
-                        //{
-                        //}
                     }
                 }
             }
