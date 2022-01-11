@@ -1,4 +1,4 @@
-using Microsoft.Azure.Cosmos.Table;
+
 using Microsoft.Owin.Hosting;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
@@ -66,26 +66,26 @@ namespace FlavoursServicesWorkerRole
             #endregion
 
 
-            try
-            {
-                CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+            //try
+            //{
+            //    CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
-                CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-                CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-                if (!logMessageTable.Exists())
-                    logMessageTable.CreateIfNotExists();
+            //    CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
+            //    CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
+            //    if (!logMessageTable.Exists())
+            //        logMessageTable.CreateIfNotExists();
 
-                LogMessage logMessage = new LogMessage();
-                logMessage.PartitionKey = "AAA";
-                logMessage.RowKey = Guid.NewGuid().ToString();
-                logMessage.Message = "Fb WorkerRole has been started";
+            //    LogMessage logMessage = new LogMessage();
+            //    logMessage.PartitionKey = "AAA";
+            //    logMessage.RowKey = Guid.NewGuid().ToString();
+            //    logMessage.Message = "Fb WorkerRole has been started";
 
-                TableOperation insertOperation = TableOperation.Insert(logMessage);
-                var executeResult = logMessageTable.Execute(insertOperation);
-            }
-            catch (Exception error)
-            {
-            }
+            //    TableOperation insertOperation = TableOperation.Insert(logMessage);
+            //    var executeResult = logMessageTable.Execute(insertOperation);
+            //}
+            //catch (Exception error)
+            //{
+            //}
 
 
             return result;
@@ -114,8 +114,8 @@ namespace FlavoursServicesWorkerRole
         }
     }
 
-    public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
-    {
-        public string Message { get; set; }
-    }
+    //public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
+    //{
+    //    public string Message { get; set; }
+    //}
 }
