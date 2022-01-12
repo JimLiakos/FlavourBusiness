@@ -102,8 +102,19 @@ namespace FlavoursServicesWorkerRole.Controllers
 
             webSocket = typeof(Microsoft.Web.WebSockets.WebSocketHandler);
 
-            IOwinContext owinContext = Request.GetOwinContext();
-
+            var rr = RequestContext;
+            if(rr==null)
+                return new string[] { "value null 1.87", "value2--" };
+            if(rr is IOwinContext)
+            {
+                return new string[] { "value IOwinContext 1.87", "value2--" };
+            }
+            else
+            {
+                var ocontext = RequestContext.GetType().GetProperty("Context")?.GetValue(RequestContext) as IOwinContext;
+                if(ocontext!=null)
+                    return new string[] { RequestContext.GetType().FullName+ "  value IOwinContext 1.87", "value2--" };
+            }
             //WebSocketAccept acceptToken = owinContext.Get<WebSocketAccept>("websocket.Accept");
             return new string[] { "value 1.87", "value2--" };
             //    if (acceptToken != null)

@@ -5,7 +5,7 @@
     <AzureDeploymentLabel>FlavoursServices</AzureDeploymentLabel>
     <AzureEnableRemoteDesktop>False</AzureEnableRemoteDesktop>
     <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
-    <AzureSolutionConfiguration>Debug</AzureSolutionConfiguration>
+    <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
     <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
     <EnableApplicationInsights>True</EnableApplicationInsights>
     <AzureRMCloudServiceV2Name>meridian-services</AzureRMCloudServiceV2Name>
