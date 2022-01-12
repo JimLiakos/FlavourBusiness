@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.Cosmos.Table;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,12 +9,35 @@ using System.Web.Http;
 
 namespace FlavoursServicesWorkerRole.Controllers
 {
-   // [EnableCors(origins: "*", headers: "*", methods: "*")]
+    // [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
-        public IEnumerable<string> Get()
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1.75", "value2--" };
+            try
+            {
+                CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+
+                CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
+                CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
+                if (!logMessageTable.Exists())
+                    logMessageTable.CreateIfNotExists();
+
+                LogMessage logMessage = new LogMessage();
+                logMessage.PartitionKey = "AAA";
+                logMessage.RowKey = Guid.NewGuid().ToString();
+                logMessage.Message = " Valuse :";
+
+                TableOperation insertOperation = TableOperation.Insert(logMessage);
+                var executeResult = logMessageTable.Execute(insertOperation);
+            }
+            catch (Exception error)
+            {
+
+            }
+            //return new string[] { "value 1.85", "value2--" };
+
+            return new HttpResponseMessage() { Version = new Version("1.1.1.3") } ;
         }
 
         // GET api/values/5
@@ -23,12 +47,12 @@ namespace FlavoursServicesWorkerRole.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 
