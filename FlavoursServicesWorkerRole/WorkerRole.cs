@@ -6,6 +6,7 @@ using Microsoft.Owin.Hosting;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi;
 using System;
 using System.Collections.Generic;
@@ -89,13 +90,23 @@ namespace FlavoursServicesWorkerRole
                 System.Diagnostics.Debug.WriteLine(output);
 
                 RemotingServices.RunInAzureRole = true;
-                System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[] { typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly, typeof(MenuModel.MenuItem).Assembly };
+                System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[]
+                {
+                    typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly,
+                    typeof(MenuModel.MenuItem).Assembly,
+                    typeof(OOAdvantech.DotNetMetaDataRepository.Assembly).Assembly,
+                      typeof(OOAdvantech.PersistenceLayerRunTime.ObjectStorage).Assembly,
+                      typeof(OOAdvantech.RDBMSMetaDataRepository.Storage).Assembly,
+                      typeof(OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Assembly
+
+
+                };
                 OOAdvantech.ObjectsContext.Init(assemblies);
 
 
                 //FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
 
-                FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="),true);
+                FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
                 //FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
 
@@ -110,11 +121,62 @@ namespace FlavoursServicesWorkerRole
 
                 LogMessage.WriteLog("computingResourceContext 2");
                 //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
-                ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+                //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
-                ComputingCluster.ClusterObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(storageName,
-                                                          storageLocation,
-                                                          storageType, accountName, acountkey);
+                if (ComputingCluster.ClusterObjectStorage == null)
+                {
+
+
+                    ObjectStorage storageSession = null;
+                    string storageName = "FlavourBusinessesResources";
+                    string storageLocation = "angularhost";
+                    string accountName = "angularhost";
+                    string acountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
+
+
+
+                    string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+                    ObjectStorage.ErrorLog = new ErrorLog();
+
+
+                    try
+                    {
+                        storageSession = ObjectStorage.OpenStorage(storageName,
+                                                                    storageLocation,
+                                                                    storageType, accountName, acountkey);
+
+                        if (storageSession == null)
+                            LogMessage.WriteLog("storageSession =null");
+                        else
+                        {
+                            LogMessage.WriteLog("storageSession !=null");
+                            LogMessage.WriteLog(storageSession.StorageMetaData.StorageName);
+                        }
+                    }
+                    catch (OOAdvantech.PersistenceLayer.StorageException Error)
+                    {
+                        LogMessage.WriteLog("Error aa" + Error.Message);
+
+
+                    }
+                    catch (System.Exception Error)
+                    {
+                        LogMessage.WriteLog("Error a2" + Environment.NewLine + Error.InnerException.Message + Environment.NewLine + Error.InnerException.StackTrace);
+                        int tt = 0;
+                    }
+                    if (storageSession == null)
+                    {
+                        int dd = 0;
+                    }
+
+
+                }
+
+
+
+                //ComputingCluster.ClusterObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(storageName,
+                //                                          storageLocation,
+                //                                          storageType, accountName, acountkey);
 
                 LogMessage.WriteLog("computingResourceContext 3");
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ComputingCluster.ClusterObjectStorage);
@@ -127,7 +189,7 @@ namespace FlavoursServicesWorkerRole
             }
             catch (Exception error)
             {
-                LogMessage.WriteLog("Error : "+error.Message);
+                LogMessage.WriteLog("Error : " + error.Message);
 
             }
 
@@ -191,7 +253,13 @@ namespace FlavoursServicesWorkerRole
             }
         }
     }
-
+    public class ErrorLog : IErrorLog
+    {
+        public void WriteLog(string message)
+        {
+            LogMessage.WriteLog(message);
+        }
+    }
     public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
     {
 
