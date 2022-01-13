@@ -14,27 +14,9 @@ namespace FlavoursServicesWorkerRole.Controllers
     {
         public HttpResponseMessage Get()
         {
-            try
-            {
-                CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
-                CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-                CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-                if (!logMessageTable.Exists())
-                    logMessageTable.CreateIfNotExists();
-
-                LogMessage logMessage = new LogMessage();
-                logMessage.PartitionKey = "AAA";
-                logMessage.RowKey = Guid.NewGuid().ToString();
-                logMessage.Message = " Valuse :";
-
-                TableOperation insertOperation = TableOperation.Insert(logMessage);
-                var executeResult = logMessageTable.Execute(insertOperation);
-            }
-            catch (Exception error)
-            {
-
-            }
+             
+                LogMessage .WriteLog( " Valuse :");
             //return new string[] { "value 1.85", "value2--" };
 
             return new HttpResponseMessage() { Version = new Version("1.1.1.3") } ;

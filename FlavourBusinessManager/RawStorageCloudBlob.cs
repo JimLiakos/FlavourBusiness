@@ -42,7 +42,7 @@ namespace FlavourBusinessManager
 
                 //return "https://angularhost.z16.web.core.windows.net";
 #else
-                return RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri;
+                return azureStorageUrl + RawStorageCloudBlob.CloudBlobStorageAccount.BlobEndpoint.AbsolutePath;
 #endif
             }
         }
@@ -50,8 +50,8 @@ namespace FlavourBusinessManager
 
 
         //public static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
-        
-         static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount
+
+        static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount
         {
             get
             {
@@ -66,7 +66,7 @@ namespace FlavourBusinessManager
 
         //public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
         //static Microsoft.Azure.Cosmos.Table.CloudStorageAccount _CloudTableStorageAccount;
-         static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount
+        static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount
         {
             get
             {
@@ -87,7 +87,13 @@ namespace FlavourBusinessManager
         {
             get
             {
-                return RawStorageCloudBlob.CloudBlobStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
+                if (FlavourBusinessManagerApp.RootContainer == "$web")
+                {
+                    return "https://angularhost.z16.web.core.windows.net/";
+                }
+                else
+                    return RawStorageCloudBlob.CloudBlobStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
+
                 //return RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "$web/";
                 //return "https://angularhost.z16.web.core.windows.net/";
 
@@ -101,7 +107,7 @@ namespace FlavourBusinessManager
             get
             {
                 ////return RawStorageCloudBlob.CloudStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + "/";
-                return RawStorageCloudBlob.CloudBlobStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + FlavourBusinessManagerApp.RootContainer+"/";
+                return RawStorageCloudBlob.CloudBlobStorageAccount.BlobStorageUri.PrimaryUri.AbsoluteUri + FlavourBusinessManagerApp.RootContainer + "/";
             }
         }
 
@@ -192,7 +198,8 @@ namespace FlavourBusinessManager
             {
 
                 throw;
-            }        }
+            }
+        }
         public string StorageLocation { get; private set; }
     }
 }

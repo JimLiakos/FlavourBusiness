@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin;
-//using OOAdvantech.Remoting.RestApi;
+using OOAdvantech.Remoting.RestApi;
 
 namespace FlavoursServicesWorkerRole.Controllers
 {
@@ -46,6 +46,7 @@ namespace FlavoursServicesWorkerRole.Controllers
     using System.ServiceModel.Channels;
     using Microsoft.Azure.Cosmos.Table;
     using FlavoursServicesWorkerRole;
+    using Microsoft.WindowsAzure.ServiceRuntime;
 
     public class WebSocketMessagesController : ApiController
     {
@@ -83,22 +84,7 @@ namespace FlavoursServicesWorkerRole.Controllers
             //IOwinContext owinContext = Request.GetOwinContext();
             IOwinContext owinContext = RequestContext.GetType().GetProperty("Context")?.GetValue(RequestContext) as IOwinContext;
 
-            CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
-
-
-            CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-            CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-            if (!logMessageTable.Exists())
-                logMessageTable.CreateIfNotExists();
-
-            LogMessage logMessage = new LogMessage();
-            logMessage.PartitionKey = "AAA";
-            logMessage.RowKey = Guid.NewGuid().ToString();
-            logMessage.Message = "websocket open :value 1.87 owinContext";
-
-            TableOperation insertOperation = TableOperation.Insert(logMessage);
-            var executeResult = logMessageTable.Execute(insertOperation);
-
+        
             WebSocketAccept acceptToken = owinContext.Get<WebSocketAccept>("websocket.Accept");
             if (acceptToken != null)
             {
@@ -135,9 +121,9 @@ namespace FlavoursServicesWorkerRole.Controllers
             var webSocketContext = (System.Net.WebSockets.WebSocketContext)wsEnv["System.Net.WebSockets.WebSocketContext"];
             var RequestUri = webSocketContext.RequestUri.AbsoluteUri;
             string roleInstanceID = Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.CurrentRoleInstance.Id;
-
-            //var handler = new WebSocketServer(RequestUri, wsSendAsync, wsCloseAsync, CancellationToken.None, wsEnv);
-            //handler.OnOpen();
+            //var handler = new WebSocketHandler();
+            var handler = new WebSocketServer(RequestUri, wsSendAsync, wsCloseAsync, CancellationToken.None, wsEnv);
+            handler.OnOpen();
             var buffer = new ArraySegment<byte>(new byte[4096]);
             try
             {
@@ -159,23 +145,8 @@ namespace FlavoursServicesWorkerRole.Controllers
                         if (bytes.Length > 0)
                         {
 
-                            //handler.OnMessage(Encoding.UTF8.GetString(bytes, 0, bytes.Length));
+                            handler.OnMessage(Encoding.UTF8.GetString(bytes, 0, bytes.Length));
 
-                            CloudStorageAccount cloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
-
-
-                            CloudTableClient tableClient = cloudTableStorageAccount.CreateCloudTableClient();
-                            CloudTable logMessageTable = tableClient.GetTableReference("LogMessage");
-                            if (!logMessageTable.Exists())
-                                logMessageTable.CreateIfNotExists();
-
-                            LogMessage logMessage = new LogMessage();
-                            logMessage.PartitionKey = "AAA";
-                            logMessage.RowKey = Guid.NewGuid().ToString();
-                            logMessage.Message = "websocket open :value 1.87 owinContext "+ Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-
-                            TableOperation insertOperation = TableOperation.Insert(logMessage);
-                            var executeResult = logMessageTable.Execute(insertOperation);
 
                         }
                     }
@@ -187,18 +158,18 @@ namespace FlavoursServicesWorkerRole.Controllers
                 if (ex.ErrorCode == 258)
                 {
                     await wsCloseAsync((int)WebSocketCloseStatus.EndpointUnavailable, "Closing", CancellationToken.None);
-                    //handler.OnClose();
+                    handler.OnClose();
                 }
                 else
                 {
                     await wsCloseAsync((int)WebSocketCloseStatus.InternalServerError, "Closing", CancellationToken.None);
-                    //handler.OnClose();
+                    handler.OnClose();
                 }
                 return;
             }
 
 
-            //handler.OnClose();
+            handler.OnClose();
             await wsCloseAsync((int)WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
         }
 
@@ -209,5 +180,33 @@ namespace FlavoursServicesWorkerRole.Controllers
         }
 
 
+    }
+
+    public class WebSocketHandler
+    {
+        internal void OnClose()
+        {
+
+            
+            LogMessage.WriteLog("websocket closed ");
+
+            
+        }
+
+        internal void OnMessage(string message)
+        {
+        
+
+            LogMessage.WriteLog("websocket message : " + message);
+
+        }
+
+        internal void OnOpen()
+        {
+
+          
+            LogMessage.WriteLog("websocket opened ");
+
+        }
     }
 }
