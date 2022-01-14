@@ -962,7 +962,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         void PublishMenuRestaurantMenuData()
         {
 
-            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
             var restaurantMenusData = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
             string version = "";
             string oldVersion = restaurantMenusData.Version;
@@ -1003,7 +1003,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{09d076c1-518e-4c4c-8c94-ad05f45ab97a}</MetaDataID>
         private void WritePublicRestaurantMenuData(string jsonFileName)
         {
-            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
 
             var fbstorage = (from servicesContextRunTimeStorage in Storages
                              where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
@@ -1691,7 +1691,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             else
             {
                 string blobUrl = fbStorage.Url;
-                var uploadSlot = new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
+                var uploadSlot = new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
                 uploadSlot.FileUploaded += UploadSlot_FileUploaded;
                 uploadSlot.Tag = fbStorage;
                 return uploadSlot;

@@ -80,8 +80,7 @@ namespace FlavourBusinessManager
 
 
 
-        //public string RootContainer=null;
-        public static string RootContainer = "$web";
+     
 
         public static string BlobsStorageHttpAbsoluteUri
         {

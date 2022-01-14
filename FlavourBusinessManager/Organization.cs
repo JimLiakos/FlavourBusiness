@@ -320,7 +320,7 @@ namespace FlavourBusinessManager
             else
             {
                 string blobUrl = fbStorage.Url;
-                return new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
+                return new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
             }
         }
 
@@ -765,8 +765,8 @@ namespace FlavourBusinessManager
                                 fbstorage.Name = name;
 
                                 string blobsContainerName = "usersfolder";
-                                if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
-                                    blobsContainerName = RawStorageCloudBlob.RootContainer;
+                                if (!string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.RootContainer))
+                                    blobsContainerName = FlavourBusinessManagerApp.RootContainer;
                                 var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
                                 var container = blobClient.GetContainerReference(blobsContainerName);
 
@@ -997,9 +997,9 @@ namespace FlavourBusinessManager
             string newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
 
             string blobsContainerName = "usersfolder";
-            if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
+            if (!string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.RootContainer))
             {
-                blobsContainerName = RawStorageCloudBlob.RootContainer;
+                blobsContainerName = FlavourBusinessManagerApp.RootContainer;
                 oldPublishedGraphicMenuUri = "usersfolder/" + oldPublishedGraphicMenuUri;
                 newPublishedGraphicMenuUri = "usersfolder/" + newPublishedGraphicMenuUri;
             }
@@ -1028,9 +1028,9 @@ namespace FlavourBusinessManager
             string publishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
 
             string blobsContainerName = "usersfolder";
-            if (!string.IsNullOrWhiteSpace(RawStorageCloudBlob.RootContainer))
+            if (!string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.RootContainer))
             {
-                blobsContainerName = RawStorageCloudBlob.RootContainer;
+                blobsContainerName = FlavourBusinessManagerApp.RootContainer;
                 publishedGraphicMenuUri = "usersfolder/" + publishedGraphicMenuUri;
             }
             var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
@@ -1177,7 +1177,7 @@ namespace FlavourBusinessManager
             string previousVersionServerStorageFolder = string.Format("usersfolder/{0}/Menus/{1}{2}", orgIdentity, storageRef.StorageIdentity, oldVersionSuffix);
 
 
-            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, RawStorageCloudBlob.RootContainer);
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
 
             restaurantMenu.PublishMenu(serverStorageFolder, previousVersionServerStorageFolder, "", fileManager, storageRef.Name);
 
