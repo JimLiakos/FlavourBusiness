@@ -37,6 +37,7 @@ namespace FlavourBusinessManager
             FlavourBusinessStoragesAccountkey = flavourBusinessStoragesAccountkey;
             FlavourBusinessStoragesLocation = flavourBusinessStoragesLocation;
 
+        
             var objectsStorage = OpenFlavourBusinessesResourcesStorage(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey, flavourBusinessStoragesLocation);
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectsStorage);
 

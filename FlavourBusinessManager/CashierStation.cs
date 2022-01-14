@@ -487,6 +487,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                itemState.ServicePointType = servicePointType;
                 var printReceiptsCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == servicePointType).FirstOrDefault();
                 if (printReceiptsCondition != null)
                 {

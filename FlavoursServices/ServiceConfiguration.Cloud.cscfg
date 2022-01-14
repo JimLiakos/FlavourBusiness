@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="FlavoursServices" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="5" osVersion="*" schemaVersion="2015-04.2.6">
   <Role name="FlavoursServicesWorkerRole">
-    <Instances count="1" />
+    <Instances count="2" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=angularhost;AccountKey=$(_angularhost.key_)" />
-      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="8e317780-f8cf-4e3f-a516-e2d68c1c9f30" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="567ccd26-fdbe-487b-a588-ea7b43383003" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Jim.liakos.msdn@hotmail.com" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEC53GZM3yLSaRkXY+5GJsH4wDQYJKoZIhvcNAQEBBQAEggEAqI974NifpSB4q+FxqUxAK5Bg90PYLIaCo1Mu6S0RfIiJjwfjiOrVD0xb693qYeO+LDPzlZMYggpan1iZ/YM981cZ/iBmI8XhAB8C9wqX/RKI87M7p/hm6eQWJNi/UM89+YboV4Tau9isiDeMq++hYNfYp/+rDGyqGb8EJdlGCXPIhz1aqqJ9k5+UjGyJHbcUyuZbzHbmy5QrlyI0z/i9Vu2AeO4VVhuVy++5/jjJIAVwQhuihlMrVnOl02hFJL5TB4dxupG/+K5eAqtAydY5jBpCct/+pJRg/YHTuZmGd7lWLZ9rE+pQ5gNJ5Un8hLNvmbAmGMEFfEszx2seFyjpHzAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECHa347+8WY4fgBDxEReRp9AK8XUzjwIXF3Jr" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2023-01-08T23:59:59.0000000+02:00" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=angularhost;AccountKey=$(_angularhost.key_)" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="8EC50D5EC9C9C9AF6C2E74562A7F5DD06436DA91" thumbprintAlgorithm="sha1" />

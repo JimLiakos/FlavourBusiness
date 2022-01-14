@@ -189,8 +189,8 @@ namespace FlavourBusinessManager
         {
             try
             {
-
-                var blobClient = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.CreateCloudBlobClient();
+                
+                var blobClient = CloudBlobStorageAccount.CreateCloudBlobClient();
                 return blobClient.GetBlobReferenceFromServer(new Uri(BlobsInternalAbsoluteUri + blobUrl)).Properties.LastModified;
 
             }
