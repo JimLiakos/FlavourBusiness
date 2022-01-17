@@ -28,6 +28,7 @@ namespace FlavoursServicesWorkerRole
         public override void Run()
         {
             Trace.TraceInformation("FlavoursServicesWorkerRole is running");
+            FlavoursServicesContextManagment.Init();
 
             string message = "Role instance run ";
             try
@@ -104,22 +105,22 @@ namespace FlavoursServicesWorkerRole
                 OOAdvantech.ObjectsContext.Init(assemblies);
 
 
-                FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
-                //FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+                //FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
+                FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
-                FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
-                //FlavourBusinessManagerApp.CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
-                //FlavourBusinessManagerApp.RootContainer = "$web";
+                //FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
+                FlavourBusinessManagerApp.CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
+                FlavourBusinessManagerApp.RootContainer = "$web";
 
-                FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
-                //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = "angularhost";
-                //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
-                //FlavourBusinessManagerApp.FlavourBusinessStoragesLocation = "angularhost";
-                
-                //OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider.SetImplicitOpenStorageCredentials("angularhost", new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey));
+                //FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
+                FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName = "angularhost";
+                FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey = "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==";
+                FlavourBusinessManagerApp.FlavourBusinessStoragesLocation = "angularhost";
 
-                ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
-                //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+                OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider.SetImplicitOpenStorageCredentials("angularhost", new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey));
+
+                //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
+                ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
 
@@ -483,7 +484,7 @@ namespace FlavoursServicesWorkerRole
             RemotingServices.RunInAzureRole = true;
 
             System.Reflection.Assembly[] assemblies = new System.Reflection.Assembly[]
-                      {
+              {
                     typeof(MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem).Assembly,
                     typeof(MenuModel.MenuItem).Assembly,
                     typeof(OOAdvantech.DotNetMetaDataRepository.Assembly).Assembly,
@@ -491,28 +492,28 @@ namespace FlavoursServicesWorkerRole
                     typeof(OOAdvantech.RDBMSMetaDataRepository.Storage).Assembly,
                     typeof(OOAdvantech.MetaDataLoadingSystem.Storage).Assembly,
                     typeof(OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Assembly
-                      };
-            OOAdvantech.ObjectsContext.Init(assemblies);
+              };
 
+            OOAdvantech.PersistenceLayer.ObjectStorage.Init(assemblies);
 
             string serverPublicUrl = "http://localhost:8090/api/";
             serverPublicUrl = WorkerRole.AzureServerUrl;
 
             RemotingServices.ServerPublicUrl = serverPublicUrl;
 
-            FlavourBusinessManagerApp.Init(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "", null);
+            //FlavourBusinessManagerApp.Init(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "", null);
 
-            //FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost","$web");
+            FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");
 
-            //OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider.SetImplicitOpenStorageCredentials("angularhost", new Microsoft.Azure.Cosmos.Table.StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey));
+            OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider.SetImplicitOpenStorageCredentials("angularhost", new Microsoft.Azure.Cosmos.Table.StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey));
 
 
 
             RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
 
-            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
-            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
-            
+            //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "");
+            ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
+
 
 
 
