@@ -259,7 +259,7 @@ namespace ComputationalResources
             {
                 ReAssignIsolatedComputingContext();
                 ComptingClusterAgentTimer.Enabled = true;
-                ComptingClusterAgentTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnUpdateComputingClusterAgents);
+                //ComptingClusterAgentTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnUpdateComputingClusterAgents);
                 ComptingClusterAgentTimer.AutoReset = false;
             }
         }

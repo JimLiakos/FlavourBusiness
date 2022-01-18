@@ -29,6 +29,7 @@ namespace FLBManager
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");
             //Type[] ParamTypes = new Type[] { typeof(System.Reflection.Assembly) };
 
             //var type = typeof(OOAdvantech.DotNetMetaDataRepository.Assembly);
@@ -170,8 +171,8 @@ namespace FLBManager
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl("http://192.168.2.4:8090/api/Storages");
-            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = "http://192.168.2.4:8090/api/";
+            OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl(string.Format("http://{0}:8090/api/Storages", FlavourBusinessFacade.ComputingResources.EndPoint.Server));
+            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl =string.Format( "http://{0}:8090/api/",FlavourBusinessFacade.ComputingResources.EndPoint.Server);
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
 
 

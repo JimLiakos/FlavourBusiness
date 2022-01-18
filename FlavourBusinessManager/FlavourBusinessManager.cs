@@ -59,8 +59,8 @@ namespace FlavourBusinessManager
                 }
             }
 
-            if (FlavourBusinessFacade.OrganizationsManager.AuthFlavourBusiness == null)
-                FlavourBusinessFacade.OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
+            if (OrganizationsManager.AuthFlavourBusiness == null)
+                OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
 
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
