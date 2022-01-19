@@ -1,5 +1,6 @@
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using ComputationalResources;
 using FlavourBusinessFacade;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -37,7 +38,12 @@ namespace FlavourBusinessManager
             FlavourBusinessStoragesAccountkey = flavourBusinessStoragesAccountkey;
             FlavourBusinessStoragesLocation = flavourBusinessStoragesLocation;
 
-        
+            OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
+            OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
+
+            //var businessesResourcesInitTask = Task.Run(() =>
+            //{
+            
             var objectsStorage = OpenFlavourBusinessesResourcesStorage(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey, flavourBusinessStoragesLocation);
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectsStorage);
 
@@ -58,12 +64,16 @@ namespace FlavourBusinessManager
                     stateTransition.Consistent = true;
                 }
             }
+            //});
 
-            if (OrganizationsManager.AuthFlavourBusiness == null)
-                OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
+            //var authManagerTask = Task.Run(() =>
+            //{
+                if (OrganizationsManager.AuthFlavourBusiness == null)
+                    OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
+            //});
 
-            OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
-            OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
+
+            //Task.WhenAll(businessesResourcesInitTask, businessesResourcesInitTask).Wait();
             //FlavoursServicesContextsMonitoringTimer.AutoReset = false;
 
 
@@ -74,7 +84,7 @@ namespace FlavourBusinessManager
 
 
         static ObjectStorage FlavourBusinessesResourcesStorage;
-        public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount;
+        public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount { get; set; }
 
         public static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount { get; set; }
         public static string RootContainer { get; set; }

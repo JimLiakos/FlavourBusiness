@@ -29,7 +29,11 @@ namespace FLBManager
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");
+            //var start = DateTime.Now;
+            //FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");
+
+            //var loadTimeSpan = DateTime.Now - start;
+            //System.Diagnostics.Debug.WriteLine(loadTimeSpan);
             //Type[] ParamTypes = new Type[] { typeof(System.Reflection.Assembly) };
 
             //var type = typeof(OOAdvantech.DotNetMetaDataRepository.Assembly);
