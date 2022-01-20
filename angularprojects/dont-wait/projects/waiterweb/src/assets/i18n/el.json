@@ -8,7 +8,8 @@
 	{
 		"BillCommandLabel":"Λογαριασμός",
 		"BillLabel":"Λογαριασμός",
-		"MessmatesCommandLabel":"Συνδαιτυμόνες"
+		"MessmatesCommandLabel":"Συνδαιτυμόνες",
+        "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο"
 	}
 
 }

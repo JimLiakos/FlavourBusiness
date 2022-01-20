@@ -6,7 +6,8 @@
 	"RoomService": {
 		"BillCommandLabel": "Bill",
 		"BillLabel": "Bill",
-		"MessmatesCommandLabel":"Messmates"
+		"MessmatesCommandLabel":"Messmates",
+        "TableAvailableCommandLabel":"Make Available"
 	}
 
 }
