@@ -2,5 +2,11 @@
 	"ShiftWork": {
 		"ActiveShiftWorkTitle": "Shift Work Active",
 		"OffShiftTitle": "Off - Shift "
+	},
+	"RoomService": {
+		"BillCommandLabel": "Bill",
+		"BillLabel": "Bill",
+		"MessmatesCommandLabel":"Messmates"
 	}
+
 }

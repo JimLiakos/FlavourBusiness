@@ -1,6 +1,14 @@
 {
 	"ShiftWork": {
-		"ActiveShiftWorkTitle": "Σε βάρδια ..",
+		"ActiveShiftWorkTitle": "Σε βάρδια ..*",
 		"OffShiftTitle": "Εκτός βάρδιας ..*"
+	},
+
+	"RoomService":
+	{
+		"BillCommandLabel":"Λογαριασμός",
+		"BillLabel":"Λογαριασμός",
+		"MessmatesCommandLabel":"Συνδαιτυμόνες"
 	}
+
 }
