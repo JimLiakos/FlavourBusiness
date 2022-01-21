@@ -7,7 +7,9 @@
 		"BillCommandLabel": "Bill",
 		"BillLabel": "Bill",
 		"MessmatesCommandLabel":"Messmates",
-        "TableAvailableCommandLabel":"Make Available"
+        "TableAvailableCommandLabel":"Make Available",
+		"TransferAllCommandLabel":"Transfer table",
+		"PartialTransferCommandLabel":"Partial transfer"
 	}
 
 }

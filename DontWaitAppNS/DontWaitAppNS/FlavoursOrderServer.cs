@@ -17,6 +17,7 @@ using OOAdvantech.BinaryFormatter;
 using System.Drawing;
 using OOAdvantech;
 using FlavourBusinessManager.RoomService;
+using FlavourBusinessFacade.ServicesContextResources;
 
 
 
@@ -1395,7 +1396,7 @@ namespace DontWaitApp
 
                     
                     var foodServiceClientSession = servicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
-
+                    
 
                     //menuData.MenuRoot = "http://192.168.2.3/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/";
                     //menuData.MenuFile = "Marzano Phone.json";
@@ -2004,6 +2005,23 @@ namespace DontWaitApp
                     throw;
                 }
             });
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        IList<IHallLayout> _Halls;
+        
+        public IList<IHallLayout> Halls
+        {
+            get
+            {
+                return _Halls;
+        
+            }
+            set
+            {
+                _Halls = value;
+            }
         }
 
         /// <MetaDataID>{7fd664dc-cdda-488a-ab38-6670e874af11}</MetaDataID>

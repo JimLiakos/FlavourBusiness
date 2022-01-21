@@ -9,7 +9,10 @@
 		"BillCommandLabel":"Λογαριασμός",
 		"BillLabel":"Λογαριασμός",
 		"MessmatesCommandLabel":"Συνδαιτυμόνες",
-        "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο"
+        "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο",
+		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
+		"PartialTransferCommandLabel":"Μεταφορά ειδών"
+
 	}
 
 }

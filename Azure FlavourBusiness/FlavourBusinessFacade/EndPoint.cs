@@ -22,6 +22,5 @@ namespace FlavourBusinessFacade.ComputingResources
         //public static string Server = "meridian-services.northeurope.cloudapp.azure.com";
 
 
-
     }
 }

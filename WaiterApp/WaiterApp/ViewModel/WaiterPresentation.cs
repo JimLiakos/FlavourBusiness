@@ -62,7 +62,7 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
         protected WaiterPresentation()
         {
-            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true };
+            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true,Halls=_Halls };
         }
         /// <MetaDataID>{94887bc2-fef8-4fcc-af96-24e9ef4e71c3}</MetaDataID>
         static WaiterPresentation _Current;
@@ -79,7 +79,7 @@ namespace WaiterApp.ViewModel
         }
 
         /// <MetaDataID>{d52da524-96a8-4f0b-ae0f-703be4348ff2}</MetaDataID>
-        string lan = "en";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+        string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
 
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
         public string Language { get { return lan; } }
@@ -430,7 +430,7 @@ namespace WaiterApp.ViewModel
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
-
+                            this.FlavoursOrderServer.Halls = _Halls;
 
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
@@ -576,7 +576,7 @@ namespace WaiterApp.ViewModel
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
-
+                            this.FlavoursOrderServer.Halls = _Halls;
                             GetMessages();
                         }
                         //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg

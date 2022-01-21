@@ -118,6 +118,12 @@ namespace DontWaitApp
         /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
         Task<HallLayout> GetHallLayout();
 
+        IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls
+        {
+            get;
+            set;
+        }
+
 
         /// <summary>
         /// Check if application is granted to access infrastructure for service point scanning 
