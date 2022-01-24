@@ -67,8 +67,10 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{d3208c58-156e-436d-ad70-6a90c3470674}</MetaDataID>
         public string Version { get; set; }
 
+        /// <MetaDataID>{42bbfdf4-67a3-4d98-8dcd-935330539a41}</MetaDataID>
         public OrganizationStorages FlavourStorageType { get; set; }
 
+        /// <MetaDataID>{f76e1d7f-4129-4e42-beb5-d411e3fb8326}</MetaDataID>
         public FlavourBusinessFacade.IUploadService UploadService { get; set; }
 
         /// <MetaDataID>{8c56a270-32bc-4192-917d-4c7340696988}</MetaDataID>

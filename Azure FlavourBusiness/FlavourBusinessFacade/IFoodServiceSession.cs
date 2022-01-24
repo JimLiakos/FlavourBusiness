@@ -10,6 +10,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        /// <MetaDataID>{34f182d7-6290-458b-896f-9b83e3e53444}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
+        IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
+
+
         /// <MetaDataID>{799eb1a5-caba-4b2d-9ea1-96aab99665e0}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         string Description { get; }
@@ -26,7 +31,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [Association("ServicePointSesions", Roles.RoleB, "08fdaee2-f871-4200-9856-8d2cc9754909")]
         [RoleBMultiplicityRange(1, 1)]
         [CachingDataOnClientSide]
-        IServicePoint ServicePoint { get; set; }
+        IServicePoint ServicePoint { get;  }
 
 
         /// <MetaDataID>{45ae4db3-87ca-4a6e-b867-bb5f33886b05}</MetaDataID>
@@ -46,6 +51,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{1859dba8-9740-40df-92a0-ceacd7586667}</MetaDataID>
         SessionState SessionState { get; set; }
+
+
+
+     
+
 
 
     }

@@ -457,8 +457,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             var servicesContextRunTime = ServicesContextRunTime.Current;// GetServicesContextRunTime(ObjectStorage.GetStorageOfObject(this), this.ServicesContextIdentity);
 
             foreach (var servicePointPreparationItems in  (from  openSession  in servicesContextRunTime.OpenSessions
-             from sessionPart in openSession.PartialClientSessions
-             from itemPreparation in sessionPart.FlavourItems
+             from mealCourse in openSession.Meal.Courses
+             from itemPreparation in mealCourse.FoodItems
              orderby itemPreparation.PreparedAtForecast
             //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
             group itemPreparation by openSession into ServicePointItems
@@ -587,9 +587,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                     flavourItem.IsCooked= this.IsCooked(flavourItem.MenuItem);
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
-                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.ServicePoint).FirstOrDefault();
+                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession.MainSession, new List<IItemPreparation>() { flavourItem }));
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse.Meal.Session, new List<IItemPreparation>() { flavourItem }));
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
 

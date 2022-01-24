@@ -12,6 +12,12 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IWaiter : EndUsers.IMessageConsumer, IServicesContextWorker, IUser
     {
+        /// <MetaDataID>{9d5dfa9d-7c42-414f-b9c8-be802f878bb6}</MetaDataID>
+        void TransferItems(IFoodServiceSession foodServiceSession, List<string> itemsPreparationsIDs, string targetServicePointIdentity);
+
+        /// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
+        void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
+
         /// <MetaDataID>{26e7cbcc-041c-4ac4-a9af-ee76b63c9193}</MetaDataID>
         void ServingBatchesCommit();
 
@@ -75,11 +81,15 @@ namespace FlavourBusinessFacade.HumanResources
 
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
+        event ServicesPointChangeStateHandler ServicesPointChangeState;
+
         /// <MetaDataID>{bc8e1dff-883d-4487-8b67-e4c7fdcbb2b7}</MetaDataID>
         void CommitServingBatches();
     }
 
-
+    
     public delegate void ServingBatchesChangedHandler();
+
+    public delegate void ServicesPointChangeStateHandler(string servicesPointIdentity, ServicePointState newState);
 
 }

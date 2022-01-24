@@ -716,6 +716,8 @@ namespace FlavourBusinessManager.HumanResources
         }
         public event ServingBatchesChangedHandler ServingBatchesChanged;
 
+        public event ServicesPointChangeStateHandler ServicesPointChangeState;
+
         /// <MetaDataID>{63737ce6-b491-4fe4-a179-4fc82c6063f6}</MetaDataID>
         internal void RaiseServingBatchesChangedEvent()
         {
@@ -758,6 +760,34 @@ namespace FlavourBusinessManager.HumanResources
                     }
                 }
             }
+        }
+
+        /// <MetaDataID>{47d8cdac-cb47-4f92-8fc1-79816021480c}</MetaDataID>
+        public void TransferItems(IFoodServiceSession foodServiceSession, List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+        {
+
+            
+
+
+        }
+
+        /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
+        public void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity)
+        {
+            if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
+                return;
+
+
+            var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
+                                      from servicePoint in serviceArea.ServicePoints
+                                      where servicePoint.ServicesPointIdentity == targetServicePointIdentity
+                                      select servicePoint).FirstOrDefault();
+
+            if (targetServicePoint == null)
+                throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
+            else
+                (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+
         }
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)

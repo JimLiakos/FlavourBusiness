@@ -18,6 +18,7 @@ using System.Drawing;
 using OOAdvantech;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.HumanResources;
 
 
 
@@ -2111,6 +2112,30 @@ namespace DontWaitApp
         {
             throw new NotImplementedException();
         }
-    }
 
+        public void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+        {
+            if(CurrentUser is IWaiter)
+            {
+
+            }
+        }
+
+        public async void TransferSession( string targetServicePointIdentity)
+        {
+            if (CurrentUser is IWaiter)
+            {
+
+                string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+                                                         from shape in hall.Shapes
+                                                         where shape.ServicesPointIdentity == targetServicePointIdentity
+                                                         select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+
+                (CurrentUser as IWaiter).TransferSession(FoodServiceClientSession.MainSession, targetServicePointIdentity);
+
+                await GetServicePointData(targetFullServicePointIdentity);
+
+            }
+        }
+    }
 }

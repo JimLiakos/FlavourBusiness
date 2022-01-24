@@ -9,6 +9,17 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+
+        /// <summary>
+        /// Defines the tracking transfer.
+        /// Any time where item is  transferred between service points
+        /// the source service point added to tracking data
+        /// </summary>
+        /// <MetaDataID>{e8dc77ff-fcc4-42be-ae8f-2d691e61bc77}</MetaDataID>
+        [BackwardCompatibilityID("+15")]
+        string TransferTracking { get; set; }
+
+
         [Association("PreparedItemsToServe", Roles.RoleB, "2b36e0e0-e305-45c5-9b91-4f13b7048c84")]
         [RoleBMultiplicityRange(1, 1)]
         IServingBatch ServedInTheBatch { get; }

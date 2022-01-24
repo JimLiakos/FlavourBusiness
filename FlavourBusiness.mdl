@@ -665,7 +665,7 @@
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::FlavourBusinessManager" @1
-			location   	(1012, 1399)
+			location   	(980, 1425)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -678,7 +678,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(250, 1068)
+			    location   	(218, 1094)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	1524

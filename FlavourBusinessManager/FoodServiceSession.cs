@@ -68,9 +68,31 @@ namespace FlavourBusinessManager.ServicesContextResources
                     _ServicePoint = _PartialClientSessions.FirstOrDefault()?.ServicePoint;
                 return _ServicePoint;
             }
-            set
+            internal set
             {
-                _ServicePoint = value;
+
+
+                if (_ServicePoint != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+
+                        if (_ServicePoint != null)
+                        {
+                            var currentServicePoint = _ServicePoint;
+                            _ServicePoint.RemoveFoodServiceSession(this);
+                            if (ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.ServicePoint == currentServicePoint).Count() == 0)
+                                currentServicePoint.State = ServicePointState.Free;
+                        }
+                        _ServicePoint = value;
+
+                        foreach (var sessionPart in this.PartialClientSessions)
+                            sessionPart.ServicePoint = value;
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+
             }
         }
 
@@ -102,6 +124,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IList<IFoodServiceClientSession> PartialClientSessions => _PartialClientSessions.AsReadOnly();
 
 
+        /// <MetaDataID>{51a1551b-e290-414a-87be-c8c5096ca437}</MetaDataID>
         public ICashiersStationRuntime CashierStation
         {
             get
@@ -213,7 +236,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     return;
                 MealValidationDelayTask = Task.Run(() =>
                  {
-                     var allMessmetesCommitedTimeSpanInSeconds = ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
+                     var allMessmetesCommitedTimeSpanInSeconds = FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
                      allMessmetesCommitedTimeSpanInSeconds = 8;
                      while (allMessmetesCommitedTimeSpanInSeconds > 0)
                      {
@@ -232,7 +255,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                              CreateAndInitMeal();
                              stateTransition.Consistent = true;
                          }
-                         (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
+                         (FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
                          _Meal.Value.MonitoringRun();
                      }
                  });
@@ -392,8 +415,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-        /// <MetaDataID>{a758a8bc-eb98-4fe9-9262-7b7d0e91ac35}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         string _MenuStorageIdentity;
+
         /// <MetaDataID>{6fa82f00-eaa4-41f5-a356-66a8b1862924}</MetaDataID>
         [PersistentMember(nameof(_MenuStorageIdentity))]
         [BackwardCompatibilityID("+8")]
@@ -413,8 +437,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{083c5981-bcc1-4a67-b17e-75600727da9a}</MetaDataID>
         public OrganizationStorageRef Menu { get; internal set; }
 
+        /// <MetaDataID>{ce6a2e61-2404-47a8-a373-8059c48001b8}</MetaDataID>
+        [BackwardCompatibilityID("+10")]
+        public IFlavoursServicesContextRuntime ServicesContextRuntime => FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current;
 
         /// <MetaDataID>{ce6107e5-bd9c-4f9f-bc82-e2070d163bf6}</MetaDataID>
         public void RemovePartialSession(IFoodServiceClientSession partialSession)

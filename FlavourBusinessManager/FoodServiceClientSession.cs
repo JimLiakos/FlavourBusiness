@@ -599,10 +599,12 @@ namespace FlavourBusinessManager.EndUsers
 
         /// <MetaDataID>{f264a5cd-5525-4b5e-9e47-d4af35fee08d}</MetaDataID>
         [PersistentMember(nameof(_SessionID))]
+        [CachingDataOnClientSide]
         [BackwardCompatibilityID("+11")]
         public string SessionID => _SessionID;
 
 
+        
 
 
         /// <MetaDataID>{b9282b8c-95a4-4d24-a711-dcc4abf87df6}</MetaDataID>
@@ -752,6 +754,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{02db7f63-0f70-476f-b1cc-d72700e10181}</MetaDataID>
         [PersistentMember(nameof(_MainSession))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [CachingDataOnClientSide]
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+2")]
         public IFoodServiceSession MainSession
         {

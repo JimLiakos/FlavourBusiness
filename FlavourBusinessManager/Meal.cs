@@ -214,9 +214,7 @@ namespace FlavourBusinessManager.RoomService
                                         if ((System.DateTime.Now - mealCourse.FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
                                         {
                                             if (mealCourse.PreparationState != ItemPreparationState.Serving)
-                                            {
                                                 mealCourse.PreparationState = ItemPreparationState.Serving;
-                                            }
                                         }
                                     }
                                 }

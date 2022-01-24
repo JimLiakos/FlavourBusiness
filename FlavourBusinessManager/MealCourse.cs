@@ -355,7 +355,7 @@ namespace FlavourBusinessManager.RoomService
                     else
                         flavourItem.State = ItemPreparationState.Serving;
 
-                    CashierStation cashierStation = (flavourItem.ClientSession.MainSession as FoodServiceSession).CashierStation as CashierStation;
+                    CashierStation cashierStation = (Meal.Session as FoodServiceSession).CashierStation as CashierStation;
                     cashierStation.AssignItemPreparation(flavourItem);
 
                 }

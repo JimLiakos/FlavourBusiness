@@ -68,6 +68,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
+        
 
 
         /// <MetaDataID>{fd43be80-69fc-44d3-8624-a95ed5810848}</MetaDataID>
@@ -128,7 +129,7 @@ namespace FlavourBusinessFacade.EndUsers
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
         IFoodServiceSession MainSession { get; }
 
-
+        
         ///// <MetaDataID>{00bd07cb-55bb-4fe5-b45e-e5f3f4e82235}</MetaDataID>
         //[BackwardCompatibilityID("+1")]
         //string ClientDeviceID { get; set; }
@@ -178,11 +179,16 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
         ClientSessionState SessionState { get; set; }
 
+        /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
         void Items…nPreparation(List<IItemPreparation> clientSessionItems);
+        /// <MetaDataID>{b08a831f-e2cb-4a7d-9c27-0b2d34653629}</MetaDataID>
         void CancelLastPreparationStep(List<IItemPreparation> clientSessionItems);
+        /// <MetaDataID>{012cae87-db8c-4329-9255-b6558cd26407}</MetaDataID>
         void ItemsPrepared(List<IItemPreparation> clientSessionItems);
+        /// <MetaDataID>{cefe1d83-ae6f-4983-b3ea-3cdb4e3cd11f}</MetaDataID>
         void ItemsRoasting(List<IItemPreparation> clientSessionItems);
 
+        /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
 
 
@@ -233,7 +239,9 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{61d96939-76a9-4eac-9a22-1dd3c521ce07}</MetaDataID>
         public string ServicesPointName;
 
+        /// <MetaDataID>{ba49626b-fd90-4356-bd8e-8540e5475a46}</MetaDataID>
         public string DefaultMealTypeUri;
+        /// <MetaDataID>{be004c8b-e151-43ee-af44-06ccfb191b27}</MetaDataID>
         public List<string> ServedMealTypesUris;
     }
 
@@ -254,8 +262,11 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{61d96939-76a9-4eac-9a22-1dd3c521ce07}</MetaDataID>
         public string ServicesPointName;
 
+        /// <MetaDataID>{5447b89b-a4f6-4ca2-af1e-1ddcab939b90}</MetaDataID>
         public string DefaultMealTypeUri;
+        /// <MetaDataID>{ed5c70fa-6122-44bc-a22f-6e04914840c7}</MetaDataID>
         public List<string> ServedMealTypesUris;
+        /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
     }
 

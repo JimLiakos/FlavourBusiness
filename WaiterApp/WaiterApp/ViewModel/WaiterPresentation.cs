@@ -431,6 +431,7 @@ namespace WaiterApp.ViewModel
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
                             this.FlavoursOrderServer.Halls = _Halls;
+                            
 
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;

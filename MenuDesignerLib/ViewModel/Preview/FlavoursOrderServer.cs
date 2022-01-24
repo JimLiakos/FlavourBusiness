@@ -1,4 +1,5 @@
 ﻿using DontWaitApp;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
@@ -43,6 +44,8 @@ namespace MenuDesigner.ViewModel.Preview
         public IList<ItemPreparation> PreparationItems => new List<ItemPreparation>();
 
         public string AppIdentity => throw new NotImplementedException();
+
+        public IList<IHallLayout> Halls { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -247,6 +250,16 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         public void SetString(string langCountry, string key, string newValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TransferSession(string targetServicePointIdentity)
         {
             throw new NotImplementedException();
         }

@@ -4677,7 +4677,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	566
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @1
 			    ShowCompartmentStereotypes 	TRUE
@@ -9731,7 +9731,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	2228
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::ServiceArea" @39
@@ -9888,7 +9888,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @43
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(4560, 1400)
+			    location   	(4561, 1400)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -9901,7 +9901,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@43
-				location   	(4225, 1370)
+				location   	(4226, 1370)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	670
@@ -10244,8 +10244,8 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	7
-				max_width  	1528)
+				nlines     	8
+				max_width  	2031)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -10256,8 +10256,8 @@
 			    client     	@43
 			    supplier   	@56
 			    line_style 	3
-			    origin_attachment 	(4566, 1268)
-			    terminal_attachment 	(4566, 803))
+			    origin_attachment 	(4564, 1268)
+			    terminal_attachment 	(4564, 802))
 			(object ClassView "Class" "Logical View::MenuModel::IMealType" @58
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2505, 1018)
@@ -11506,9 +11506,9 @@
 			    width      	631
 			    height     	306
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContext" @115
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::Address" @115
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(437, 484)
+			    location   	(4622, 1447)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11521,32 +11521,53 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@115
-				location   	(52, 271)
+				location   	(4331, 1325)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	770
+				max_width  	582
 				justify    	0
-				label      	"IFlavoursServicesContext")
+				label      	"Address")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"61A79F0A00A3"
+			    width      	600
+			    height     	269
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime" @116
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3037, 850)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@116
+				location   	(2712, 810)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	651
+				justify    	0
+				label      	"ICashiersStationRuntime")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"5B16B1600111"
-			    width      	788
-			    height     	626
+			    fill_color 	4227327
+			    quidu      	"61ADB71200C0"
+			    width      	669
+			    height     	281
 			    annotation 	8)
-			(object RealizeView "" @116
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"5B2CE99F00E5"
-			    client     	@113
-			    supplier   	@115
-			    line_style 	3
-			    origin_attachment 	(409, 1165)
-			    terminal_attachment 	(409, 797))
-			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @117
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::CashierStation" @117
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3717, 474)
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    location   	(2485, 1396)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11559,30 +11580,55 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@117
-				location   	(3451, 412)
+				location   	(2122, 1240)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	532
+				max_width  	726
 				justify    	0
-				label      	"IFisicalParty")
-			    icon       	"Interface"
+				label      	"CashierStation")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	4227327
-			    quidu      	"61A723C7032B"
-			    width      	550
-			    height     	325
+			    quidu      	"5C66B8670182"
+			    width      	744
+			    height     	337
 			    annotation 	8)
 			(object RealizeView "" @118
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    quidu      	"61A792DA023E"
-			    client     	@114
-			    supplier   	@117
-			    line_style 	3
-			    origin_attachment 	(3733, 1239)
-			    terminal_attachment 	(3733, 636))
-			(object ClassView "Class" "Logical View::FinanceFacade::IAddress" @119
+			    quidu      	"61ADBC2E019D"
+			    client     	@117
+			    supplier   	@116
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::FinanceFacade::Transaction" @119
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1315, 1634)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@119
+				location   	(1061, 1524)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	508
+				justify    	0
+				label      	"Transaction")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"5C6CE6AD03E4"
+			    width      	526
+			    height     	244
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FinanceFacade::IAddress" @120
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(4752, 468)
 			    font       	(object Font
@@ -11596,7 +11642,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@119
+				Parent_View 	@120
 				location   	(4532, 434)
 				fill_color 	13434879
 				nlines     	1
@@ -11611,7 +11657,92 @@
 			    width      	458
 			    height     	268
 			    annotation 	8)
-			(object AssociationViewNew "FisicalPartyAddress" @120
+			(object RealizeView "" @121
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61A79F2D018A"
+			    client     	@115
+			    supplier   	@120
+			    line_style 	3
+			    origin_attachment 	(4715, 1313)
+			    terminal_attachment 	(4715, 601))
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContext" @122
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(437, 484)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@122
+				location   	(52, 271)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	770
+				justify    	0
+				label      	"IFlavoursServicesContext")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5B16B1600111"
+			    width      	788
+			    height     	626
+			    annotation 	8)
+			(object RealizeView "" @123
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5B2CE99F00E5"
+			    client     	@113
+			    supplier   	@122
+			    line_style 	3
+			    origin_attachment 	(409, 1165)
+			    terminal_attachment 	(409, 797))
+			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @124
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3717, 474)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@124
+				location   	(3451, 412)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	532
+				justify    	0
+				label      	"IFisicalParty")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"61A723C7032B"
+			    width      	550
+			    height     	325
+			    annotation 	8)
+			(object RealizeView "" @125
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61A792DA023E"
+			    client     	@114
+			    supplier   	@124
+			    line_style 	3
+			    origin_attachment 	(3733, 1239)
+			    terminal_attachment 	(3733, 636))
+			(object AssociationViewNew "FisicalPartyAddress" @126
 			    location   	(4257, 469)
 			    font       	(object Font
 				size       	10
@@ -11623,8 +11754,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @121
-				Parent_View 	@120
+			    label      	(object SegLabel @127
+				Parent_View 	@126
 				location   	(4315, 295)
 				font       	(object Font
 				    size       	10
@@ -11649,8 +11780,8 @@
 			    line_color 	3342489
 			    quidu      	"61A7340A029B"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @122
-				    Parent_View 	@120
+				(object RoleView "" @128
+				    Parent_View 	@126
 				    location   	(435, -31)
 				    font       	(object Font
 					size       	10
@@ -11662,8 +11793,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @123
-					Parent_View 	@122
+				    label      	(object SegLabel @129
+					Parent_View 	@128
 					location   	(4045, 430)
 					font       	(object Font
 					    size       	10
@@ -11688,11 +11819,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7340B0289"
-				    client     	@120
-				    supplier   	@117
+				    client     	@126
+				    supplier   	@124
 				    line_style 	0)
-				(object RoleView "Address" @124
-				    Parent_View 	@120
+				(object RoleView "Address" @130
+				    Parent_View 	@126
 				    location   	(435, -31)
 				    font       	(object Font
 					size       	10
@@ -11704,8 +11835,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @125
-					Parent_View 	@124
+				    label      	(object SegLabel @131
+					Parent_View 	@130
 					location   	(4469, 427)
 					font       	(object Font
 					    size       	10
@@ -11729,11 +11860,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7340B0285"
-				    client     	@120
-				    supplier   	@119
+				    client     	@126
+				    supplier   	@120
 				    line_style 	0
-				    label      	(object SegLabel @126
-					Parent_View 	@124
+				    label      	(object SegLabel @132
+					Parent_View 	@130
 					location   	(4494, 522)
 					font       	(object Font
 					    size       	10
@@ -11754,9 +11885,9 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::Address" @127
+			(object ClassView "Class" "Logical View::FinanceFacade::ITransaction" @133
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(4622, 1447)
+			    location   	(1313, 843)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11768,142 +11899,29 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@127
-				location   	(4331, 1325)
+				Parent_View 	@133
+				location   	(1093, 784)
 				fill_color 	13434879
-				nlines     	1
-				max_width  	582
+				nlines     	2
+				max_width  	440
 				justify    	0
-				label      	"Address")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"61A79F0A00A3"
-			    width      	600
-			    height     	269
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime" @128
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3037, 850)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@128
-				location   	(2712, 810)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	651
-				justify    	0
-				label      	"ICashiersStationRuntime")
+				label      	"ITransaction")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	4227327
-			    quidu      	"61ADB71200C0"
-			    width      	669
-			    height     	281
+			    quidu      	"5C6BBD69034C"
+			    width      	458
+			    height     	318
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::CashierStation" @129
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    location   	(2485, 1396)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@129
-				location   	(2122, 1240)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	726
-				justify    	0
-				label      	"CashierStation")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"5C66B8670182"
-			    compartment 	(object Compartment
-				Parent_View 	@129
-				location   	(2122, 1301)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	28
-				max_width  	2759)
-			    width      	744
-			    height     	337
-			    annotation 	8)
-			(object RealizeView "" @130
+			(object RealizeView "" @134
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    quidu      	"61ADBC2E019D"
-			    client     	@129
-			    supplier   	@128
+			    quidu      	"5C6CEA910034"
+			    client     	@119
+			    supplier   	@133
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::FinanceFacade::Transaction" @131
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1315, 1634)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@131
-				location   	(1061, 1524)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	508
-				justify    	0
-				label      	"Transaction")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"5C6CE6AD03E4"
-			    width      	526
-			    height     	244
-			    annotation 	8)
-			(object RealizeView "" @132
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"61A79F2D018A"
-			    client     	@127
-			    supplier   	@119
-			    line_style 	3
-			    origin_attachment 	(4715, 1313)
-			    terminal_attachment 	(4715, 601))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashierStation" @133
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashierStation" @135
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -11919,7 +11937,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@133
+				Parent_View 	@135
 				location   	(2112, 352)
 				fill_color 	13434879
 				nlines     	1
@@ -11931,28 +11949,10 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
-			    compartment 	(object Compartment
-				Parent_View 	@133
-				location   	(2112, 457)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	787)
 			    width      	788
 			    height     	426
 			    annotation 	8)
-			(object AssociationViewNew "ServiceContextCashierStation" @134
+			(object AssociationViewNew "ServiceContextCashierStation" @136
 			    location   	(1467, 509)
 			    font       	(object Font
 				size       	10
@@ -11964,8 +11964,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @135
-				Parent_View 	@134
+			    label      	(object SegLabel @137
+				Parent_View 	@136
 				location   	(1373, 370)
 				font       	(object Font
 				    size       	10
@@ -11990,8 +11990,8 @@
 			    line_color 	3342489
 			    quidu      	"5C66B5ED0255"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @136
-				    Parent_View 	@134
+				(object RoleView "" @138
+				    Parent_View 	@136
 				    location   	(-27, 228)
 				    font       	(object Font
 					size       	10
@@ -12003,8 +12003,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @137
-					Parent_View 	@136
+				    label      	(object SegLabel @139
+					Parent_View 	@138
 					location   	(958, 468)
 					font       	(object Font
 					    size       	10
@@ -12029,13 +12029,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5C66B5EE0223"
-				    client     	@134
-				    supplier   	@115
+				    client     	@136
+				    supplier   	@122
 				    line_style 	3
 				    origin_attachment 	(1467, 509)
 				    terminal_attachment 	(831, 509))
-				(object RoleView "CashierStations" @138
-				    Parent_View 	@134
+				(object RoleView "CashierStations" @140
+				    Parent_View 	@136
 				    location   	(-27, 228)
 				    font       	(object Font
 					size       	10
@@ -12047,8 +12047,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @139
-					Parent_View 	@138
+				    label      	(object SegLabel @141
+					Parent_View 	@140
 					location   	(1748, 449)
 					font       	(object Font
 					    size       	10
@@ -12072,13 +12072,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5C66B5EE021E"
-				    client     	@134
-				    supplier   	@133
+				    client     	@136
+				    supplier   	@135
 				    line_style 	3
 				    origin_attachment 	(1467, 509)
 				    terminal_attachment 	(2103, 509)
-				    label      	(object SegLabel @140
-					Parent_View 	@138
+				    label      	(object SegLabel @142
+					Parent_View 	@140
 					location   	(2039, 563)
 					font       	(object Font
 					    size       	10
@@ -12099,16 +12099,16 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
-			(object RealizeView "" @141
+			(object RealizeView "" @143
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5C66B8B001A0"
-			    client     	@129
-			    supplier   	@133
+			    client     	@117
+			    supplier   	@135
 			    line_style 	3
 			    origin_attachment 	(2491, 1228)
 			    terminal_attachment 	(2491, 678))
-			(object AssociationViewNew "CashierOwner" @142
+			(object AssociationViewNew "CashierOwner" @144
 			    location   	(3166, 472)
 			    font       	(object Font
 				size       	10
@@ -12120,8 +12120,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @143
-				Parent_View 	@142
+			    label      	(object SegLabel @145
+				Parent_View 	@144
 				location   	(3154, 373)
 				font       	(object Font
 				    size       	10
@@ -12146,8 +12146,8 @@
 			    line_color 	3342489
 			    quidu      	"61A7327D0091"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @144
-				    Parent_View 	@142
+				(object RoleView "" @146
+				    Parent_View 	@144
 				    location   	(148, 81)
 				    font       	(object Font
 					size       	10
@@ -12159,8 +12159,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @145
-					Parent_View 	@144
+				    label      	(object SegLabel @147
+					Parent_View 	@146
 					location   	(2946, 431)
 					font       	(object Font
 					    size       	10
@@ -12185,13 +12185,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7327E00D2"
-				    client     	@142
-				    supplier   	@133
+				    client     	@144
+				    supplier   	@135
 				    line_style 	3
 				    origin_attachment 	(3166, 472)
 				    terminal_attachment 	(2891, 472))
-				(object RoleView "Issuer" @146
-				    Parent_View 	@142
+				(object RoleView "Issuer" @148
+				    Parent_View 	@144
 				    location   	(148, 81)
 				    font       	(object Font
 					size       	10
@@ -12203,8 +12203,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @147
-					Parent_View 	@146
+				    label      	(object SegLabel @149
+					Parent_View 	@148
 					location   	(3328, 426)
 					font       	(object Font
 					    size       	10
@@ -12228,13 +12228,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7327E00C7"
-				    client     	@142
-				    supplier   	@117
+				    client     	@144
+				    supplier   	@124
 				    line_style 	3
 				    origin_attachment 	(3166, 472)
 				    terminal_attachment 	(3442, 472)
-				    label      	(object SegLabel @148
-					Parent_View 	@146
+				    label      	(object SegLabel @150
+					Parent_View 	@148
 					location   	(3414, 526)
 					font       	(object Font
 					    size       	10
@@ -12255,42 +12255,6 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
-			(object ClassView "Class" "Logical View::FinanceFacade::ITransaction" @149
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1313, 843)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@149
-				location   	(1093, 784)
-				fill_color 	13434879
-				nlines     	2
-				max_width  	440
-				justify    	0
-				label      	"ITransaction")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"5C6BBD69034C"
-			    width      	458
-			    height     	318
-			    annotation 	8)
-			(object RealizeView "" @150
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"5C6CEA910034"
-			    client     	@131
-			    supplier   	@149
-			    line_style 	0)
 			(object AssociationViewNew "CahsierStationTransactions" @151
 			    location   	(1822, 678)
 			    font       	(object Font
@@ -12368,7 +12332,7 @@
 				    line_color 	3342489
 				    quidu      	"61BF2C5701D9"
 				    client     	@151
-				    supplier   	@149
+				    supplier   	@133
 				    line_style 	0
 				    label      	(object SegLabel @155
 					Parent_View 	@153
@@ -12409,7 +12373,7 @@
 				    line_color 	3342489
 				    quidu      	"61BF2C5701E2"
 				    client     	@151
-				    supplier   	@133
+				    supplier   	@135
 				    line_style 	0
 				    label      	(object SegLabel @157
 					Parent_View 	@156
@@ -13633,7 +13597,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	997
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient" @197
@@ -13754,7 +13718,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(551, 982)
+			    location   	(551, 981)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13767,7 +13731,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@201
-				location   	(178, 819)
+				location   	(178, 818)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	746
@@ -13778,6 +13742,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@201
+				location   	(178, 923)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	2031)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -13789,7 +13771,7 @@
 			    supplier   	@201
 			    line_style 	3
 			    origin_attachment 	(553, 1840)
-			    terminal_attachment 	(553, 1245))
+			    terminal_attachment 	(553, 1244))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClient" @203
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeOperation 	TRUE
@@ -13860,7 +13842,7 @@
 			    height     	318
 			    annotation 	8)
 			(object AssociationViewNew "ServicePointSesions" @206
-			    location   	(1388, 1611)
+			    location   	(1388, 1609)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13873,7 +13855,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @207
 				Parent_View 	@206
-				location   	(1388, 1552)
+				location   	(1388, 1550)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13899,7 +13881,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "ServicePoint" @208
 				    Parent_View 	@206
-				    location   	(766, 1199)
+				    location   	(766, 1197)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -13912,7 +13894,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @209
 					Parent_View 	@208
-					location   	(2188, 1570)
+					location   	(2188, 1568)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13938,11 +13920,11 @@
 				    client     	@206
 				    supplier   	@205
 				    line_style 	3
-				    origin_attachment 	(1388, 1611)
-				    terminal_attachment 	(2388, 1611)
+				    origin_attachment 	(1388, 1609)
+				    terminal_attachment 	(2388, 1609)
 				    label      	(object SegLabel @210
 					Parent_View 	@208
-					location   	(2287, 1665)
+					location   	(2287, 1663)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13964,7 +13946,7 @@
 					orientation 	1))
 				(object RoleView "ServiceSessions" @211
 				    Parent_View 	@206
-				    location   	(766, 1199)
+				    location   	(766, 1197)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -13977,7 +13959,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @212
 					Parent_View 	@211
-					location   	(796, 1445)
+					location   	(795, 1444)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14003,15 +13985,15 @@
 				    client     	@206
 				    supplier   	@201
 				    vertices   	(list Points
-					(1388, 1611)
-					(754, 1611)
-					(754, 1245))
+					(1388, 1609)
+					(753, 1609)
+					(753, 1244))
 				    line_style 	3
-				    origin_attachment 	(1388, 1611)
-				    terminal_attachment 	(754, 1245)
+				    origin_attachment 	(1388, 1609)
+				    terminal_attachment 	(753, 1244)
 				    label      	(object SegLabel @213
 					Parent_View 	@211
-					location   	(701, 1346)
+					location   	(700, 1345)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14044,7 +14026,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(1879, 948)
+			    location   	(1875, 950)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14057,7 +14039,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@215
-				location   	(1569, 864)
+				location   	(1565, 866)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	620
@@ -14068,11 +14050,29 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@215
+				location   	(1565, 971)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	32
+				max_width  	1321)
 			    width      	638
 			    height     	369
 			    annotation 	8)
 			(object AssociationViewNew "FoodServiceSession" @216
-			    location   	(1246, 979)
+			    location   	(1244, 982)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14085,7 +14085,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @217
 				Parent_View 	@216
-				location   	(1216, 847)
+				location   	(1214, 850)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14111,7 +14111,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "MainSession" @218
 				    Parent_View 	@216
-				    location   	(-663, 576)
+				    location   	(-665, 579)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14124,7 +14124,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @219
 					Parent_View 	@218
-					location   	(1046, 936)
+					location   	(1046, 939)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14150,11 +14150,11 @@
 				    client     	@216
 				    supplier   	@201
 				    line_style 	3
-				    origin_attachment 	(1246, 979)
-				    terminal_attachment 	(933, 979)
+				    origin_attachment 	(1244, 982)
+				    terminal_attachment 	(933, 982)
 				    label      	(object SegLabel @220
 					Parent_View 	@218
-					location   	(964, 1033)
+					location   	(965, 1036)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14176,7 +14176,7 @@
 					orientation 	0))
 				(object RoleView "PartialClientSessions" @221
 				    Parent_View 	@216
-				    location   	(-663, 576)
+				    location   	(-665, 579)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14189,7 +14189,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @222
 					Parent_View 	@221
-					location   	(1383, 943)
+					location   	(1380, 946)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14215,11 +14215,11 @@
 				    client     	@216
 				    supplier   	@215
 				    line_style 	3
-				    origin_attachment 	(1246, 979)
-				    terminal_attachment 	(1560, 979)
+				    origin_attachment 	(1244, 982)
+				    terminal_attachment 	(1556, 982)
 				    label      	(object SegLabel @223
 					Parent_View 	@221
-					location   	(1529, 1033)
+					location   	(1524, 1036)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14240,7 +14240,7 @@
 					height     	54
 					orientation 	1))))
 			(object AssociationViewNew "SessionClient" @224
-			    location   	(2944, 829)
+			    location   	(2942, 832)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14253,7 +14253,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @225
 				Parent_View 	@224
-				location   	(2924, 725)
+				location   	(2922, 728)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14279,7 +14279,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "Client" @226
 				    Parent_View 	@224
-				    location   	(868, 426)
+				    location   	(866, 429)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14292,7 +14292,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @227
 					Parent_View 	@226
-					location   	(3453, 796)
+					location   	(3452, 799)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14318,11 +14318,11 @@
 				    client     	@224
 				    supplier   	@203
 				    line_style 	3
-				    origin_attachment 	(2944, 829)
-				    terminal_attachment 	(3690, 829)
+				    origin_attachment 	(2942, 832)
+				    terminal_attachment 	(3690, 832)
 				    label      	(object SegLabel @228
 					Parent_View 	@226
-					location   	(3615, 883)
+					location   	(3615, 886)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14344,7 +14344,7 @@
 					orientation 	1))
 				(object RoleView "" @229
 				    Parent_View 	@224
-				    location   	(868, 426)
+				    location   	(866, 429)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14361,11 +14361,11 @@
 				    client     	@224
 				    supplier   	@215
 				    line_style 	3
-				    origin_attachment 	(2944, 829)
-				    terminal_attachment 	(2198, 829)
+				    origin_attachment 	(2942, 832)
+				    terminal_attachment 	(2194, 832)
 				    label      	(object SegLabel @230
 					Parent_View 	@229
-					location   	(2329, 829)
+					location   	(2325, 832)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14386,7 +14386,7 @@
 					height     	12
 					orientation 	1))))
 			(object AssociationViewNew "ServicePointClientSesions" @231
-			    location   	(2074, 1519)
+			    location   	(2069, 1482)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14399,7 +14399,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @232
 				Parent_View 	@231
-				location   	(2087, 1371)
+				location   	(2082, 1334)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14425,7 +14425,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "" @233
 				    Parent_View 	@231
-				    location   	(-969, 744)
+				    location   	(-974, 707)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14438,7 +14438,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @234
 					Parent_View 	@233
-					location   	(2183, 1228)
+					location   	(2178, 1222)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14465,15 +14465,15 @@
 				    client     	@231
 				    supplier   	@215
 				    vertices   	(list Points
-					(2074, 1519)
-					(2014, 1519)
-					(2014, 1132))
+					(2069, 1482)
+					(2009, 1482)
+					(2009, 1134))
 				    line_style 	3
-				    origin_attachment 	(2074, 1519)
-				    terminal_attachment 	(2014, 1132)
+				    origin_attachment 	(2069, 1482)
+				    terminal_attachment 	(2009, 1134)
 				    label      	(object SegLabel @235
 					Parent_View 	@233
-					location   	(1961, 1177)
+					location   	(1956, 1175)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14495,7 +14495,7 @@
 					orientation 	0))
 				(object RoleView "ServicePoint" @236
 				    Parent_View 	@231
-				    location   	(-969, 744)
+				    location   	(-974, 707)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14508,7 +14508,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @237
 					Parent_View 	@236
-					location   	(2245, 1476)
+					location   	(2243, 1439)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14534,11 +14534,11 @@
 				    client     	@231
 				    supplier   	@205
 				    line_style 	3
-				    origin_attachment 	(2074, 1519)
-				    terminal_attachment 	(2388, 1519)
+				    origin_attachment 	(2069, 1482)
+				    terminal_attachment 	(2388, 1482)
 				    label      	(object SegLabel @238
 					Parent_View 	@236
-					location   	(2357, 1573)
+					location   	(2355, 1536)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14565,8 +14565,8 @@
 			    client     	@200
 			    supplier   	@215
 			    line_style 	3
-			    origin_attachment 	(1683, 1729)
-			    terminal_attachment 	(1683, 1131))
+			    origin_attachment 	(1681, 1729)
+			    terminal_attachment 	(1681, 1133))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IWaiter" @240
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3320, 1092)
@@ -14598,7 +14598,7 @@
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object AssociationViewNew "WaterServiceSession" @241
-			    location   	(2637, 1041)
+			    location   	(2635, 1044)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14611,7 +14611,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @242
 				Parent_View 	@241
-				location   	(2643, 939)
+				location   	(2641, 942)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14637,7 +14637,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "$UNNAMED$9" @243
 				    Parent_View 	@241
-				    location   	(-654, 485)
+				    location   	(-656, 488)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14650,7 +14650,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @244
 					Parent_View 	@243
-					location   	(2371, 1000)
+					location   	(2367, 1003)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14677,11 +14677,11 @@
 				    client     	@241
 				    supplier   	@215
 				    line_style 	3
-				    origin_attachment 	(2637, 1041)
-				    terminal_attachment 	(2198, 1041)
+				    origin_attachment 	(2635, 1044)
+				    terminal_attachment 	(2194, 1044)
 				    label      	(object SegLabel @245
 					Parent_View 	@243
-					location   	(2242, 1095)
+					location   	(2238, 1098)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14703,7 +14703,7 @@
 					orientation 	0))
 				(object RoleView "Waiter" @246
 				    Parent_View 	@241
-				    location   	(-654, 485)
+				    location   	(-656, 488)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -14716,7 +14716,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @247
 					Parent_View 	@246
-					location   	(2989, 1000)
+					location   	(2989, 1003)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14742,11 +14742,11 @@
 				    client     	@241
 				    supplier   	@240
 				    line_style 	3
-				    origin_attachment 	(2637, 1041)
-				    terminal_attachment 	(3077, 1041)
+				    origin_attachment 	(2635, 1044)
+				    terminal_attachment 	(3077, 1044)
 				    label      	(object SegLabel @248
 					Parent_View 	@246
-					location   	(3032, 1095)
+					location   	(3033, 1098)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14851,8 +14851,8 @@
 			    client     	@215
 			    supplier   	@250
 			    line_style 	3
-			    origin_attachment 	(1878, 764)
-			    terminal_attachment 	(1878, 553)
+			    origin_attachment 	(1875, 766)
+			    terminal_attachment 	(1875, 553)
 			    drawSupplier 	@251)
 			(object RealizeView "" @254
 			    stereotype 	TRUE
@@ -15488,7 +15488,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"25")
+			    value      	"26")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -15636,7 +15636,7 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"61BC22DB003E"
+				    quid       	"61ECF1C00141"
 				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
@@ -15713,6 +15713,25 @@
 			    parameters 	(list Parameters
 				(object Parameter "state"
 				    quid       	"61BC22DA0229"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsIntheSameOrFollowingState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b1802d54-39e2-45cc-b67e-4c8740ae9445}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ECF1BF030A"))
+			    quid       	"61ECF1BF030A"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"61ECF1BF031F"
 				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
@@ -16511,8 +16530,62 @@
 				(object Attribute
 				    tool       	"Persistent"
 				    name       	"Persistent"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+25"))
 			    quid       	"61BC22DC00EB"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "FullName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ecaa0fc6-d491-4b06-a904-c07f2222d96e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ECF1C100B9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"61ECF1C100B9"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "TransferTracking"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{175b996d-0c6e-4786-b7f0-fcdaae06bf96}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ECF1C1022D")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
+			    quid       	"61ECF1C1022D"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
@@ -16916,7 +16989,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"9")
+			    value      	"11")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -17477,7 +17550,119 @@
 				    name       	"As Property"
 				    value      	FALSE))
 			    quid       	"614887830306"
-			    type       	"System.Threading.Tasks.Task"))
+			    type       	"System.Threading.Tasks.Task")
+			(object ClassAttribute "ServicesContextRunTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{24245794-ee06-463c-b027-318f36b4ea57}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED503E0029")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"61ED503E0029"
+			    type       	"FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "CashierStation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{51a1551b-e290-414a-87be-c8c5096ca437}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED51B80142")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"61ED51B80142"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime"
+			    exportControl 	"Public")
+			(object ClassAttribute "Menu"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{083c5981-bcc1-4a67-b17e-75600727da9a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED51B80367")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"61ED51B80367"
+			    type       	"FlavourBusinessFacade.OrganizationStorageRef"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContextRuntime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ce6a2e61-2404-47a8-a373-8059c48001b8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED51B900E5")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+10"))
+			    quid       	"61ED51B900E5"
+			    type       	"FlavourBusinessFacade.IFlavoursServicesContextRuntime"
+			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A0C6A40060"
 			states     	(list States
@@ -18211,7 +18396,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"23")
+			    value      	"24")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -18296,7 +18481,7 @@
 			    quid       	"5D22326D01D5"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"60A1451E0383"
+				    quid       	"61ED483501CF"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18423,10 +18608,10 @@
 			    quid       	"5D31519500B6"
 			    parameters 	(list Parameters
 				(object Parameter "clientSessionToken"
-				    quid       	"60A1451E00D9"
+				    quid       	"61ED483500AF"
 				    type       	"string")
 				(object Parameter "messmateClientSesion"
-				    quid       	"60A1451E00E9"
+				    quid       	"61ED483500C3"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18445,7 +18630,7 @@
 			    quid       	"5D3D2B980270"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"60A1451E034B"
+				    quid       	"61ED48350196"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -18464,7 +18649,7 @@
 			    quid       	"5D3D2B98029C"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"60A1451E0367"
+				    quid       	"61ED483501B3"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18602,7 +18787,7 @@
 			    quid       	"5D3D2B990111"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"60A1451F0170"
+				    quid       	"61ED483502A8"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18621,7 +18806,7 @@
 			    quid       	"5D3D2B99013B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"60A1451F019F"
+				    quid       	"61ED48350325"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18640,7 +18825,7 @@
 			    quid       	"5D46A46F035B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"60A1451F018A"
+				    quid       	"61ED483502C9"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18659,7 +18844,7 @@
 			    quid       	"5D46A46F03C7"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"60A1451F01D1"
+				    quid       	"61ED48350361"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18678,7 +18863,7 @@
 			    quid       	"5D46A470001A"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"60A1451F01E9"
+				    quid       	"61ED48350384"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18737,7 +18922,7 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
 			    uid        	0)
-			(object Operation "CheckDeviceConnectionStatus"
+			(object Operation "StartDeviceConnectionStatusCheck"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18765,7 +18950,7 @@
 			    quid       	"5FB8DAFC0039"
 			    parameters 	(list Parameters
 				(object Parameter "commitedItemsSessions"
-				    quid       	"60A1451E0315"
+				    quid       	"61ED4835015D"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18784,7 +18969,7 @@
 			    quid       	"5FB8DAFC0123"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"60A1451E03CD"
+				    quid       	"61ED48350209"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18803,10 +18988,10 @@
 			    quid       	"5FB8DAFC0265"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"60A1451F000C"
+				    quid       	"61ED48350241"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
 				(object Parameter "menuItemUri"
-				    quid       	"60A1451F001C"
+				    quid       	"61ED48350255"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18825,7 +19010,7 @@
 			    quid       	"5FB8DAFD0105"
 			    parameters 	(list Parameters
 				(object Parameter "itemUid"
-				    quid       	"60A1451F01B9"
+				    quid       	"61ED48350347"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    concurrency 	"Sequential"
@@ -18963,6 +19148,165 @@
 			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.RoomService.ItemPreparationState,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CatchStateEvents"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{97e0f480-8424-406d-9b4a-0c4f78c0d15c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED475102BF"))
+			    quid       	"61ED475102BF"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "UrgesToDecideRun"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a2a305b4-bcb6-4b8b-857c-48fa2559b2a8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED475102E9"))
+			    quid       	"61ED475102E9"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "CancelLastPreparationStep"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d80a1e26-a980-4b96-b32e-27d224114d05}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED4752013C"))
+			    quid       	"61ED4752013C"
+			    parameters 	(list Parameters
+				(object Parameter "clientSessionItems"
+				    quid       	"61ED4752014D"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "Items…nPreparation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b67224ba-a3e2-4082-afb9-aad69fb4cd59}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED47520172"))
+			    quid       	"61ED47520172"
+			    parameters 	(list Parameters
+				(object Parameter "clientSessionItems"
+				    quid       	"61ED47520184"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsPrepared"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{745dc176-3502-4bc3-873b-63ab74da4811}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED475201A8"))
+			    quid       	"61ED475201A8"
+			    parameters 	(list Parameters
+				(object Parameter "clientSessionItems"
+				    quid       	"61ED475201BC"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsRoasting"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4561c44c-792b-409a-9040-eeb1b5660b6d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED475201E5"))
+			    quid       	"61ED475201E5"
+			    parameters 	(list Parameters
+				(object Parameter "clientSessionItems"
+				    quid       	"61ED475201F7"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsServing"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ec53ead4-ac36-4984-b3cb-6b25f37c7ca4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED47520217"))
+			    quid       	"61ED47520217"
+			    parameters 	(list Parameters
+				(object Parameter "clientSessionItems"
+				    quid       	"61ED4752022C"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetSessionItem"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{881e0455-bb55-436d-a540-20ccac8a452a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED4752025E"))
+			    quid       	"61ED4752025E"
+			    parameters 	(list Parameters
+				(object Parameter "item"
+				    quid       	"61ED47520274"
+				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
+			    result     	"FlavourBusinessManager.RoomService.ItemPreparation"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "AllItemsCommited"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9db073fb-148b-4efe-99c6-2cb6f4e68f42}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED4752037A"))
+			    quid       	"61ED4752037A"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Client"
@@ -18978,7 +19322,7 @@
 			    quid       	"5C066A980143"
 			    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClient"
 			    exportControl 	"Public")
-			(object ClassAttribute "ClientIdentity"
+			(object ClassAttribute "UserIdentity"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18991,7 +19335,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	FALSE)
+				    value      	TRUE)
 				(object Attribute
 				    tool       	"Persistent"
 				    name       	"Persistent"
@@ -18999,9 +19343,18 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Identity"
-				    value      	"+1"))
+				    value      	"+1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
 			    quid       	"5C066A98022D"
-			    type       	"string")
+			    type       	"string"
+			    exportControl 	"Implementation")
 			(object ClassAttribute "MainSession"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -19543,31 +19896,6 @@
 			    quid       	"5FB89D710000"
 			    type       	"bool"
 			    exportControl 	"Public")
-			(object ClassAttribute "ServicesContextRunTime"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{c2cb0b6a-35b3-4191-b60c-92b793e1229e}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5FB8DAFF005F")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE))
-			    quid       	"5FB8DAFF005F"
-			    type       	"FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime"
-			    exportControl 	"Public")
 			(object ClassAttribute "PreviousYouMustDecideMessageTime"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -19662,7 +19990,23 @@
 				    value      	"+22"))
 			    quid       	"60A1452001AA"
 			    type       	"FlavourBusinessFacade.EndUsers.ClientSessionState"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "StateMachineLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{25bd041f-3397-4592-8590-0496d5b2d019}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61ED47540023")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"61ED47540023"
+			    type       	"object"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A747FC0350"
 			states     	(list States
@@ -20919,7 +21263,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	472
+		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @303
@@ -22385,7 +22729,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	2337
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @373
@@ -23714,7 +24058,7 @@
 			    quid       	"5FB8DA260308"
 			    parameters 	(list Parameters
 				(object Parameter "clientSession"
-				    quid       	"6188D50D02E4"
+				    quid       	"61EC476C00D1"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23733,7 +24077,7 @@
 			    quid       	"5FB8DA260336"
 			    parameters 	(list Parameters
 				(object Parameter "clientSession"
-				    quid       	"6188D50D0320"
+				    quid       	"61EC476C0112"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23812,13 +24156,13 @@
 			    quid       	"5FCBD769002E"
 			    parameters 	(list Parameters
 				(object Parameter "shiftWork"
-				    quid       	"6188D50D03A7"
+				    quid       	"61EC476C0199"
 				    type       	"FlavourBusinessFacade.HumanResources.IShiftWork")
 				(object Parameter "startedAt"
-				    quid       	"6188D50D03D4"
+				    quid       	"61EC476C01CC"
 				    type       	"System.DateTime")
 				(object Parameter "timespanInHours"
-				    quid       	"6188D50E0015"
+				    quid       	"61EC476C01F7"
 				    type       	"double"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23905,7 +24249,7 @@
 			    quid       	"5FCBD76902EF"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"6188D50D02A5"
+				    quid       	"61EC476C0087"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23954,7 +24298,7 @@
 			    quid       	"600A62B60209"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6188D50D0220"
+				    quid       	"61EC476B03E0"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -23973,13 +24317,13 @@
 			    quid       	"600A62B60265"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6188D50D0264"
+				    quid       	"61EC476C003B"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
-			(object Operation "GetItemsReadToServe"
+			(object Operation "GetServingBatches"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -23990,7 +24334,159 @@
 				    name       	"UniqueID"
 				    value      	"6188D50E0044"))
 			    quid       	"6188D50E0044"
-			    result     	"IList<IItemPreparation>"
+			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.RoomService.IServingBatch,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetServingUpdates"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f5de8f49-f437-4d88-8daa-403e6aefce51}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C0241"))
+			    quid       	"61EC476C0241"
+			    parameters 	(list Parameters
+				(object Parameter "servingItemsOnDevice"
+				    quid       	"61EC476C025F"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.ItemPreparationAbbreviation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"FlavourBusinessFacade.RoomService.ServingBatchUpdates"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignServingBatch"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{16d6364d-018c-425d-808a-b663578c95b8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C0293"))
+			    quid       	"61EC476C0293"
+			    parameters 	(list Parameters
+				(object Parameter "servingBatch"
+				    quid       	"61EC476C02B4"
+				    type       	"FlavourBusinessFacade.RoomService.IServingBatch"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "DeassignServingBatch"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e75ecf5b-3567-448e-8424-6ee02d26f10f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C02E9"))
+			    quid       	"61EC476C02E9"
+			    parameters 	(list Parameters
+				(object Parameter "servingBatch"
+				    quid       	"61EC476C0306"
+				    type       	"FlavourBusinessFacade.RoomService.IServingBatch"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RaiseServingBatchesChangedEvent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{63737ce6-b491-4fe4-a179-4fc82c6063f6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C0348"))
+			    quid       	"61EC476C0348"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ServingBatchesCommit"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{13795273-fe1b-4d00-b840-bb8bdcfda520}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C0375"))
+			    quid       	"61EC476C0375"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CommitServingBatches"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C0398"))
+			    quid       	"61EC476C0398"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "TransferItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{47d8cdac-cb47-4f92-8fc1-79816021480c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476C03C0"))
+			    quid       	"61EC476C03C0"
+			    parameters 	(list Parameters
+				(object Parameter "foodServiceSession"
+				    quid       	"61EC476C03E1"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession")
+				(object Parameter "itemsPreparationsIDs"
+				    quid       	"61EC476D0028"
+				    type       	"System.Collections.Generic.List`1[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]")
+				(object Parameter "targetServicePointIdentity"
+				    quid       	"61EC476D0053"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "TransferSession"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7adedeba-6042-4f69-99c9-bf6718e17f60}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61EC476D0086"))
+			    quid       	"61EC476D0086"
+			    parameters 	(list Parameters
+				(object Parameter "foodServiceSession"
+				    quid       	"61EC476D00A1"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession")
+				(object Parameter "sourceServicePointIdentity"
+				    quid       	"61EC476D00CF"
+				    type       	"string")
+				(object Parameter "targetServicePointIdentity"
+				    quid       	"61EC476D00FB"
+				    type       	"string"))
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))

@@ -82,6 +82,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{553a6bb9-bbb1-483b-9e4e-d00945788d1f}</MetaDataID>
         IHallLayout GetHallLayout(string servicePointIdentity);
 
+        /// <MetaDataID>{5c2d341d-66d6-4120-9092-f413edd32d87}</MetaDataID>
         IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls { get; }
 
         /// <MetaDataID>{fe9ebf62-b446-4fd0-9475-416c4ec2f2bd}</MetaDataID>
@@ -149,14 +150,19 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{18e6acdd-c608-4181-9a3b-64464d21dc8f}</MetaDataID>
         RoomService.IMealsController MealsController { get; }
+        /// <MetaDataID>{d1367132-f0be-47db-8063-dd840f4756de}</MetaDataID>
         IList<IFisicalParty> FisicalParties { get; }
 
+        /// <MetaDataID>{25381c19-c35a-4d5a-b5cd-469f99929a73}</MetaDataID>
         IFisicalParty NewFisicalParty();
+        /// <MetaDataID>{3357f691-ce3e-4822-911e-08a60a5433b7}</MetaDataID>
         void RemoveFisicalParty(IFisicalParty fisicalParty);
+        /// <MetaDataID>{ee584ef4-bf14-429c-8b13-a27222d54532}</MetaDataID>
         void UpdateFisicalParty(IFisicalParty fisicalParty);
+        /// <MetaDataID>{2eb4a008-d3a3-4fc9-ad3f-4c0e9031b71d}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
 
 
-        
+
     }
 }

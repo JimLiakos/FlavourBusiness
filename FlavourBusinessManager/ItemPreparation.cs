@@ -645,6 +645,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{ecaa0fc6-d491-4b06-a904-c07f2222d96e}</MetaDataID>
         public string FullName
         {
             get
@@ -855,6 +856,10 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
         }
+
+
+        /// <MetaDataID>{175b996d-0c6e-4786-b7f0-fcdaae06bf96}</MetaDataID>
+        public string TransferTracking { get; set; }
 
         /// <MetaDataID>{3393c0e9-7404-4097-be16-5d9e678a9bdb}</MetaDataID>
         public bool IsCooked { get; set; }

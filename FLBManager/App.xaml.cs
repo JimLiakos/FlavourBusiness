@@ -77,6 +77,7 @@ namespace FLBManager
 
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
+            Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
             //string storageName = "jimliakosgmailcom";
             //string storageLocation = "DevStorage";
@@ -418,42 +419,42 @@ namespace FLBManager
             string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
 
 
-            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
-            OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            demoStorage.Backup(archive);
+            //var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            //OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
+            //demoStorage.Backup(archive);
 
-            storageName = "FlavourBusinessesResources";
-            demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
-            archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            demoStorage.Backup(archive);
+            //storageName = "FlavourBusinessesResources";
+            //demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            //archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
+            //demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
-            demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
-            archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
+            var demoStorage = ObjectStorage.OpenStorage(storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
+            var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
             demoStorage.Backup(archive);
         }
         private static void Restore(string backupFolder, string storageLocation, string accountName, string accountKey)
         {
-            try
-            {
-                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinesses"));
-                ObjectStorage.Restore(archive, "FlavourBusinesses", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
+            //try
+            //{
+            //    var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinesses"));
+            //    ObjectStorage.Restore(archive, "FlavourBusinesses", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
 
-            }
-            catch (Exception error)
-            {
-            }
+            //}
+            //catch (Exception error)
+            //{
+            //}
 
 
-            try
-            {
-                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinessesResources"));
-                ObjectStorage.Restore(archive, "FlavourBusinessesResources", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
+            //try
+            //{
+            //    var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinessesResources"));
+            //    ObjectStorage.Restore(archive, "FlavourBusinessesResources", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
 
-            }
-            catch (Exception error)
-            {
-            }
+            //}
+            //catch (Exception error)
+            //{
+            //}
             try
             {
                 var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "jimliakosgmailcom"));

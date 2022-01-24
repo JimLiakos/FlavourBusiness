@@ -191,6 +191,12 @@ namespace DontWaitApp
         /// <MetaDataID>{f7534611-0be9-4b2b-93f7-9cb0ff64d602}</MetaDataID>
         IList<ItemPreparation> PreparationItems { get; }
 
+
+        void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity);
+
+        /// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
+        void TransferSession( string targetServicePointIdentity);
+
         /// <MetaDataID>{397f6f36-da35-4f39-9e7e-0512e87b8b79}</MetaDataID>
         void AddItem(FlavourBusinessManager.RoomService.ItemPreparation item);
 
