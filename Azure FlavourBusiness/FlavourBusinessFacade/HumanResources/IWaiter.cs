@@ -81,7 +81,7 @@ namespace FlavourBusinessFacade.HumanResources
 
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
-        event ServicesPointChangeStateHandler ServicesPointChangeState;
+    
 
         /// <MetaDataID>{bc8e1dff-883d-4487-8b67-e4c7fdcbb2b7}</MetaDataID>
         void CommitServingBatches();
@@ -90,6 +90,6 @@ namespace FlavourBusinessFacade.HumanResources
     
     public delegate void ServingBatchesChangedHandler();
 
-    public delegate void ServicesPointChangeStateHandler(string servicesPointIdentity, ServicePointState newState);
+    
 
 }

@@ -94,7 +94,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
             foreach (var servicePointPreparationItems in (from openSession in ServicesContextRunTime.Current.OpenSessions
-                                                          where openSession.CashierStation == this&& openSession.Meal!=null
+                                                          where openSession.CashierStation == this && openSession.Meal != null
                                                           //from sessionPart in openSession.PartialClientSessions
                                                           from mealCourse in openSession.Meal.Courses
                                                           from itemPreparation in mealCourse.FoodItems
@@ -294,7 +294,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            
+
                             if (objectStorage == null)
                                 objectStorage = ObjectStorage.GetStorageOfObject(this);
                             transaction = new FinanceFacade.Transaction();
@@ -470,7 +470,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             lock (DeviceUpdateLock)
             {
                 var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
-                if (!servicePointPreparationItems.PreparationItems.Contains(flavourItem))
+                if (servicePointPreparationItems == null || !servicePointPreparationItems.PreparationItems.Contains(flavourItem))
                 {
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                     if (servicePointPreparationItems == null)

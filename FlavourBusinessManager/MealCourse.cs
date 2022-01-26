@@ -301,12 +301,13 @@ namespace FlavourBusinessManager.RoomService
         public readonly MealCourseType mealCourseType;
 
         /// <MetaDataID>{e6899983-8b85-4e28-84f4-8a8199511318}</MetaDataID>
-        public MealCourse(MealCourseType mealCourseType, List<ItemPreparation> itemPreparations)
+        public MealCourse(MealCourseType mealCourseType, List<ItemPreparation> itemPreparations, Meal meal)
         {
             this.mealCourseType = mealCourseType;
             _MealCourseTypeUri = ObjectStorage.GetStorageOfObject(mealCourseType).GetPersistentObjectUri(mealCourseType);
             _DurationInMinutes = mealCourseType.DurationInMinutes;
             _Name = mealCourseType.Name;
+            _Meal.Value = meal;
             foreach (var flavourItem in itemPreparations)
                 AddItem(flavourItem);
 

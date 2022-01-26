@@ -101,6 +101,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{7187498f-52cf-4f19-84a2-1fd301986c46}</MetaDataID>
         [PersistentMember(nameof(_ServicesPointIdentity))]
         [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
         public string ServicesPointIdentity
         {
             get
@@ -130,6 +131,45 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                 }
 
+            }
+        }
+
+        internal void UpdateState()
+        {
+            var servicePointOpenSessions = ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.ServicePoint == this).ToList();
+
+            if (servicePointOpenSessions.Count == 0)
+                ChangeServicePointState(ServicePointState.Free);
+            else
+            {
+
+
+
+                var mealCourses = (from servicePointOpenSession in servicePointOpenSessions
+                                   where servicePointOpenSession.Meal != null
+                                   from mealCourse in servicePointOpenSession.Meal.Courses
+                                   where mealCourse.FoodItems.OfType<RoomService.ItemPreparation>().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
+                                   select mealCourse).ToList();
+
+                var overTimeMealCourses = mealCourses.Where(mealCourse => mealCourse.ServedAtForecast <= DateTime.UtcNow).ToList();
+                var inTimeMealCourses = mealCourses.Where(mealCourse => mealCourse.ServedAtForecast > DateTime.UtcNow).ToList();
+                if (overTimeMealCourses.Count > 0)
+                    ChangeServicePointState(ServicePointState.MealCourseOvertime);
+                else if (inTimeMealCourses.Count > 0)
+                    ChangeServicePointState(ServicePointState.MealCoursePreparation);
+                else
+                {
+                    if ((from servicePointOpenSession in servicePointOpenSessions
+                         where servicePointOpenSession.Meal != null
+                         from mealCourse in servicePointOpenSession.Meal.Courses
+                         select mealCourse).All(x => x.PreparationState == FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
+                    {
+
+                        ChangeServicePointState(ServicePointState.Served);
+                    }
+                    else
+                        ChangeServicePointState(ServicePointState.Conversation);
+                }
             }
         }
 
@@ -489,7 +529,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        ServicePointType _ServicePointType=ServicePointType.HallServicePoint;
+        ServicePointType _ServicePointType = ServicePointType.HallServicePoint;
         /// <MetaDataID>{95d60c6b-ecf6-42f4-b9fc-87c79c614974}</MetaDataID>
         [PersistentMember(nameof(_ServicePointType))]
         [BackwardCompatibilityID("+11")]
@@ -562,7 +602,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{c7d46722-ff23-48b3-a51e-3a7e3bbe7e3a}</MetaDataID>
-        private void ChangeServicePointState(ServicePointState newState)
+        internal void ChangeServicePointState(ServicePointState newState)
         {
             if (State != newState)
             {
@@ -577,6 +617,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             break;
                         }
                     default:
+                        _ObjectChangeState?.Invoke(this, nameof(State));
                         break;
                 }
             }

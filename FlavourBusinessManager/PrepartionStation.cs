@@ -151,7 +151,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //else if (itemsCategory.Parent != null)
             //    return GetPreparationTimeSpanInMinForCategoryItems(itemsCategory.Parent);
             //else
-                return 0;
+            return 0;
         }
         /// <MetaDataID>{da579ee2-870e-4fd5-accd-08c2ca57fa4a}</MetaDataID>
         public bool CanPrepareItemsOfCategory(IItemsCategory itemsCategory)
@@ -456,13 +456,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var servicesContextRunTime = ServicesContextRunTime.Current;// GetServicesContextRunTime(ObjectStorage.GetStorageOfObject(this), this.ServicesContextIdentity);
 
-            foreach (var servicePointPreparationItems in  (from  openSession  in servicesContextRunTime.OpenSessions
-             from mealCourse in openSession.Meal.Courses
-             from itemPreparation in mealCourse.FoodItems
-             orderby itemPreparation.PreparedAtForecast
-            //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-            group itemPreparation by openSession into ServicePointItems
-             select ServicePointItems))
+            foreach (var servicePointPreparationItems in (from openSession in servicesContextRunTime.OpenSessions
+                                                          where openSession.Meal != null
+                                                          from mealCourse in openSession.Meal.Courses
+                                                          from itemPreparation in mealCourse.FoodItems
+                                                          orderby itemPreparation.PreparedAtForecast
+                                                          //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
+                                                          group itemPreparation by openSession into ServicePointItems
+                                                          select ServicePointItems))
 
             //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
             //                                                                           //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
@@ -515,7 +516,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     System.Threading.Thread.Sleep(500);
                 }
-                
+
             });
         }
 
@@ -550,7 +551,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
 
-            
+
             return ServicePointsPreparationItems.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList();
         }
 
@@ -584,7 +585,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (flavourItem.PreparationStation != this)
                 {
                     flavourItem.PreparationStation = this;
-                    flavourItem.IsCooked= this.IsCooked(flavourItem.MenuItem);
+                    flavourItem.IsCooked = this.IsCooked(flavourItem.MenuItem);
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
                     var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
@@ -784,7 +785,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     stateTransition.Consistent = true;
                 }
             }
-            
+
         }
     }
 

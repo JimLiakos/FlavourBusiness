@@ -189,7 +189,8 @@ namespace FlavourBusinessManager.RoomService
                     }
 
 
-                    Transaction.RunOnTransactionCompleted(() => {
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
 
                         ObjectChangeState?.Invoke(this, nameof(State));
                     });

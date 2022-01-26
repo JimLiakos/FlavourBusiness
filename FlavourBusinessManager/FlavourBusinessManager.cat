@@ -9761,24 +9761,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(1321, 1248)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	13
-				max_width  	1646)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -9865,24 +9847,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(2843, 2102)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1284)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -9943,24 +9907,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@44
-				location   	(52, 457)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	19
-				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -10001,24 +9947,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@46
-				location   	(1333, 515)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -10228,24 +10156,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@56
-				location   	(4249, 608)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	8
-				max_width  	2031)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -10425,24 +10335,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@65
-				location   	(2986, 583)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	21
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -13742,24 +13634,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@201
-				location   	(178, 923)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	8
-				max_width  	2031)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -14050,24 +13924,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@215
-				location   	(1565, 971)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	32
-				max_width  	1321)
 			    width      	638
 			    height     	369
 			    annotation 	8)

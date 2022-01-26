@@ -10,13 +10,16 @@ namespace WaiterApp.ViewModel
 
     public delegate void LaytheTableRequestHandle(IWaiterPresentation waiterPresentation, string messageID,string servicePointIdentity);
     public delegate void ItemsReadyToServeRequesttHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
-
+    public delegate void ServicePointChangeStateHandle(IWaiterPresentation waiterPresentation, string servicePointIdentity, ServicePointState newState);
     /// <MetaDataID>{981df64d-06d2-47af-9900-792dd6492ef0}</MetaDataID>
     [HttpVisible]
     public interface IWaiterPresentation
     {
         [GenerateEventConsumerProxy]
         event LaytheTableRequestHandle LayTheTableRequest;
+
+        [GenerateEventConsumerProxy]
+        event ServicePointChangeStateHandle ServicePointChangeState;
 
         [GenerateEventConsumerProxy]
         event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;

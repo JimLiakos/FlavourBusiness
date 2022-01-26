@@ -81,6 +81,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{dac5d02b-367f-41b4-ba49-efd0801c3565}</MetaDataID>
         IFoodServiceSession NewFoodServiceSession();
+       
 
 
         /// <MetaDataID>{884effc8-0f67-4ffb-b9df-668065fa3d7e}</MetaDataID>
@@ -140,8 +141,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Conversation = 2,
         MealCoursePreparation = 3,
         MealCourseOvertime = 4,
-        TakeAway = 5,
-        Delivery = 6
+        Served=5,
+        TakeAway = 6,
+        Delivery = 7
     }
 
     /// <MetaDataID>{46658b97-1a57-4911-ab0e-ebd3235dcc5c}</MetaDataID>

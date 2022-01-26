@@ -696,6 +696,28 @@ namespace FlavourBusinessManager.ServicePointRunTime
             foreach (var a_Waiter in activeWaiters)
                 a_Waiter.RaiseServingBatchesChangedEvent();
         }
+        internal void OnNewServingBatch(List<IMealCourse> mealCourses)
+        {
+
+
+            var mealCoursesToServe = (from mealCourse in mealCourses
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) 
+                                      select mealCourse).Distinct().ToList();
+            var servicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
+            List<HumanResources.Waiter> activeWaiters = new List<HumanResources.Waiter>();
+
+            foreach (var servicePoint in servicesPoints)
+            {
+                activeWaiters.AddRange( (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) 
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>());
+            }
+
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+        }
 
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {

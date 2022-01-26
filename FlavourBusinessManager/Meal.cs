@@ -108,11 +108,12 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{1d0598fe-a193-451d-a1f4-38a330388d26}</MetaDataID>
-        internal Meal(MenuModel.MealType mealType, List<ItemPreparation> mealItems)
+        internal Meal(MenuModel.MealType mealType, List<ItemPreparation> mealItems, ServicesContextResources.FoodServiceSession foodServiceSession)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                _Session.Value = foodServiceSession;
                 _Name = mealType.Name;
                 _MealTypeUri = ObjectStorage.GetStorageOfObject(mealType).GetPersistentObjectUri(mealType);
                 foreach (var mealCourseItems in (from mealItem in mealItems
@@ -120,7 +121,7 @@ namespace FlavourBusinessManager.RoomService
                                                  select mealCourseItems))
                 {
                     var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
-                    MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
+                    MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
                     _Courses.Add(mealCourse);
                 }
 
@@ -161,13 +162,6 @@ namespace FlavourBusinessManager.RoomService
                                     if (DateTime.UtcNow + preparationData.Duration > preparationItem.PreparedAtForecast)
                                         preparationItem.State = ItemPreparationState.PendingPreparation;
                                 }
-
-                                var mealCourse = Courses.OfType<MealCourse>().Where(x => x.StartsAt == null).FirstOrDefault();
-
-                                if (mealCourse != null && mealCourse.ServedAtForecast != null && mealCourse.ServedAtForecast < DateTime.UtcNow)
-                                    this.Session.ServicePoint.State = ServicePointState.MealCourseOvertime;
-                                else if (this.Session.ServicePoint.State == ServicePointState.MealCourseOvertime)
-                                    this.Session.ServicePoint.State = ServicePointState.MealCoursePreparation;
 
 
 
@@ -224,7 +218,7 @@ namespace FlavourBusinessManager.RoomService
                                 ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message + Environment.NewLine + error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
                             }
 
-
+                            (Session?.ServicePoint as ServicesContextResources.ServicePoint)?.UpdateState();
 
                             System.Threading.Thread.Sleep(1000);
                             sesionState = Session.SessionState;
@@ -265,7 +259,7 @@ namespace FlavourBusinessManager.RoomService
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList());
+                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
                             newMealCourses.Add(mealCourse);
 
                             _Courses.Add(mealCourse);

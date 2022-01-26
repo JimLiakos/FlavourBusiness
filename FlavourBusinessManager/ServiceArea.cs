@@ -42,6 +42,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         private void ServicePoint_ObjectChangeState(object _object, string member)
         {
+            if (_object is ServicePoint && member == nameof(ServicePoint.State))
+                this.ServicePointChangeState?.Invoke(this, _object as ServicePoint);
 
         }
 

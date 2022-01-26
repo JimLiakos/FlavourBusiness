@@ -716,7 +716,6 @@ namespace FlavourBusinessManager.HumanResources
         }
         public event ServingBatchesChangedHandler ServingBatchesChanged;
 
-        public event ServicesPointChangeStateHandler ServicesPointChangeState;
 
         /// <MetaDataID>{63737ce6-b491-4fe4-a179-4fc82c6063f6}</MetaDataID>
         internal void RaiseServingBatchesChangedEvent()

@@ -74,15 +74,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 if (_ServicePoint != value)
                 {
+                    var oldServicePoint = _ServicePoint;
+
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
 
                         if (_ServicePoint != null)
                         {
-                            var currentServicePoint = _ServicePoint;
                             _ServicePoint.RemoveFoodServiceSession(this);
-                            if (ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.ServicePoint == currentServicePoint).Count() == 0)
-                                currentServicePoint.State = ServicePointState.Free;
                         }
                         _ServicePoint = value;
 
@@ -91,6 +90,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         stateTransition.Consistent = true;
                     }
+
+                    if (oldServicePoint != null)
+                        (oldServicePoint as ServicePoint).UpdateState();
                 }
 
             }
@@ -334,7 +336,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Meal.Value = new Meal(mealType, itemsToPrepare);
+                _Meal.Value = new Meal(mealType, itemsToPrepare,this);
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal.Value);
                 stateTransition.Consistent = true;
             }

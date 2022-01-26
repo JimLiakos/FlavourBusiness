@@ -119,6 +119,8 @@ namespace WaiterApp.ViewModel
         public event LaytheTableRequestHandle LayTheTableRequest;
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
+        public event ServicePointChangeStateHandle ServicePointChangeState;
+
         /// <MetaDataID>{4d17380a-0570-480d-a1ec-b2140d0ca76a}</MetaDataID>
         internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
         {
@@ -735,6 +737,7 @@ namespace WaiterApp.ViewModel
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
         {
 
+            this.ServicePointChangeState.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
         }
 
         /// <MetaDataID>{dedbf193-f9e7-4d31-899b-1119b925b50e}</MetaDataID>

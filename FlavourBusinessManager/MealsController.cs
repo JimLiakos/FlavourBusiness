@@ -15,6 +15,7 @@ namespace FlavourBusinessManager.RoomService
             get
             {
                 var mealCourses = (from openSession in ServicesContextRunTime.OpenSessions
+                                   where openSession.Meal != null
                                    from mealCource in openSession.Meal.Courses
                                    orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
@@ -45,6 +46,8 @@ namespace FlavourBusinessManager.RoomService
         internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             NewMealCoursesInrogress?.Invoke(mealCourses);
+            
+            ServicesContextRunTime.OnNewServingBatch(mealCourses);
             //you have to  filter mealcourses by state.
         }
 

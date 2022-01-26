@@ -76,6 +76,7 @@ namespace FLBManager
 
 
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
+
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
             Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
@@ -429,7 +430,7 @@ namespace FLBManager
             //demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
-            var demoStorage = ObjectStorage.OpenStorage(storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
+            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType); // (storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
             var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
             demoStorage.Backup(archive);
         }
