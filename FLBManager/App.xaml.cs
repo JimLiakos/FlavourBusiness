@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessManager;
+using FlavourBusinessManager.RoomService;
 using OOAdvantech.Json;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
@@ -29,6 +30,19 @@ namespace FLBManager
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            
+            List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
+            FlavourBusinessManager.RoomService.ItemPreparation itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared };
+            itemPreparations.Add(itemPreparation);
+            itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Serving };
+            itemPreparations.Add(itemPreparation);
+            itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Committed };
+            itemPreparations.Add(itemPreparation);
+
+            var sdsd =itemPreparations.GetMinimumCommonItemPreparationState();
+            var ww = sdsd.ToString();
+
             //var start = DateTime.Now;
             //FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");
 
@@ -78,7 +92,7 @@ namespace FLBManager
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
-            Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
+            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
             //string storageName = "jimliakosgmailcom";
             //string storageLocation = "DevStorage";

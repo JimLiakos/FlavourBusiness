@@ -504,7 +504,7 @@ namespace FlavourBusinessManager.RoomService
     }
 
     /// <MetaDataID>{a4f7a4df-8b25-4fe0-9ed1-046806c3ee5d}</MetaDataID>
-    internal static class ItemPreparationContextHelper
+    public static class ItemPreparationContextHelper
     {
         public static ItemsPreparationContext FindItemsPreparationContext(this IItemPreparation itemPreparation)
         {
@@ -520,9 +520,9 @@ namespace FlavourBusinessManager.RoomService
         {
             var ss = Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderByDescending(x => (int)x).ToArray();
             ItemPreparationState commonState = ItemPreparationState.New;
-            foreach (int i in Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderByDescending(x=>(int)x))
+            foreach (int i in Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderBy(x=>(int)x))
             {
-                if (foodItems.OfType<ItemPreparation>().All(x => x.IsInTheSameOrPreviousState((ItemPreparationState)i)))
+                if (foodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState((ItemPreparationState)i)))
                     commonState = (ItemPreparationState)i;
                 else
                     break;
