@@ -231,6 +231,12 @@ namespace FlavourBusinessManager.RoomService
             //previous
             return ((int)this.State) < ((int)state);
         }
+        public bool IsInTheSameOrPreviousState(ItemPreparationState state)
+        {
+            //previous
+            return ((int)this.State) <= ((int)state);
+        }
+
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 

@@ -189,29 +189,11 @@ namespace FlavourBusinessManager.RoomService
                              
 
 
-                                //bool Sendmessage = false;
-                                //if (Sendmessage)
-                                //{
-                                //    var activeWaiter = (from shiftWork in ServicePointRunTime.ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                //                        where shiftWork.Worker is IWaiter
-                                //                        select shiftWork.Worker).OfType<HumanResources.Waiter>().FirstOrDefault();
-
-                                //    if (activeWaiter != null)
-                                //        activeWaiter.PushMessage(null);
-
-                                //}
+                          
 
                                 foreach (var mealCourse in Courses.ToList())
-                                {
-                                    if (mealCourse.FoodItems.Where(x => x.State == ItemPreparationState.Serving).Count() == mealCourse.FoodItems.Count)
-                                    {
-                                        if ((System.DateTime.Now - mealCourse.FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
-                                        {
-                                            if (mealCourse.PreparationState != ItemPreparationState.Serving)
-                                                mealCourse.PreparationState = ItemPreparationState.Serving;
-                                        }
-                                    }
-                                }
+                                    (mealCourse as MealCourse) .Monitoring();
+                                  
                             }
                             catch (Exception error)
                             {

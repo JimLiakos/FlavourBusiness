@@ -23,7 +23,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{b6e7eb8b-024d-496d-bfaf-a486b1840263}</MetaDataID>
         public string PreparationStationDescription { get; set; }
 
-
+        public const string TradeProductsStationIdentity = "772E94BEEA1C4A64B8FE5D808A9CDC61";
 #if !FlavourBusinessDevice
 
         /// <summary>
@@ -47,11 +47,14 @@ namespace FlavourBusinessFacade.RoomService
                 this.PreparationStationIdentity = preparationStation.PreparationStationIdentity;
                 PreparationStationDescription = preparationStation.Description;
 
-                
+
                 Description = preparationStation.Description;
             }
             else
+            {
                 Description = Resource.FoodItemInstantlyAvailable;
+                this.PreparationStationIdentity = TradeProductsStationIdentity;
+            }
             this.PreparationItems = preparationItems;
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
 
@@ -63,5 +66,13 @@ namespace FlavourBusinessFacade.RoomService
         {
 
         }
+
+
+        
+        public ItemPreparationState PreparationState;
+
+        
     }
+
+ 
 }

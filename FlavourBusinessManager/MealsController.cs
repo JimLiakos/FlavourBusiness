@@ -1,4 +1,6 @@
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting;
@@ -47,7 +49,7 @@ namespace FlavourBusinessManager.RoomService
         {
             NewMealCoursesInrogress?.Invoke(mealCourses);
             
-            ServicesContextRunTime.OnNewServingBatch(mealCourses);
+            (ServicesContextRunTime.MealsController as MealsController).ReadyToServeMealcoursesCheck(mealCourses);
             //you have to  filter mealcourses by state.
         }
 
@@ -57,6 +59,134 @@ namespace FlavourBusinessManager.RoomService
             
             //you have to  filter mealcourses by state.
         }
+
+
+
+
+        Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
+
+        internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
+        {
+
+            var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
+
+            List<ServingBatch> servingBatches = new List<ServingBatch>();
+            if (waiter.ActiveShiftWork != null)
+            {
+
+                var sdsd = (from mealCourse in MealCoursesInProgress
+                            from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                            from itemPreparation in itemsPreparationContext.PreparationItems
+                            select new { itemPreparation.Name, itemPreparation.State, itemPreparation }).ToList();
+
+                var mealCoursesToServe = (from mealCourse in MealCoursesInProgress
+                                          from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                          from itemPreparation in itemsPreparationContext.PreparationItems
+                                          where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
+                                          (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          select mealCourse).Distinct().ToList();
+
+                foreach (var mealCourse in mealCoursesToServe)
+                {
+
+
+                    IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                    where itemsPreparationContext.PreparationItems.All(x => (x.State == ItemPreparationState.Serving || x.State == ItemPreparationState.OnRoad))
+                                                                    select itemsPreparationContext).ToList();
+
+                    IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                            where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                                            x.State == ItemPreparationState.ÉnPreparation ||
+                                                                            x.State == ItemPreparationState.IsRoasting ||
+                                                                            x.State == ItemPreparationState.IsPrepared)
+                                                                            select itemsPreparationContext).ToList();
+
+                    var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
+
+                    var serviceBatch = (from itemsPreparationContext in preparedItems
+                                        from itemPreparation in itemsPreparationContext.PreparationItems
+                                        where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
+                                        select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
+                    if (serviceBatch != null)
+                    {
+                        if (serviceBatch.ShiftWork.Worker == waiter)
+                        {
+                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                            servingBatches.Add(serviceBatch);
+                        }
+                    }
+                    else
+                    {
+                        UnassignedMealCourses.TryGetValue(mealCourse, out serviceBatch);
+                        if (serviceBatch == null)
+                            servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                        else
+                        {
+                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                            servingBatches.Add(serviceBatch);
+                        }
+                    }
+                }
+            }
+
+            int i = 0;
+            foreach (var servingBatch in servingBatches)
+                servingBatch.SortID = i++;
+
+            return servingBatches;
+        }
+
+        internal void ServingBatchDeassigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
+        {
+
+            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+
+            var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+        }
+        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses)
+        {
+
+
+            var mealCoursesToServe = (from mealCourse in mealCourses
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
+                                      select mealCourse).Distinct().ToList();
+            var servicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
+            List<HumanResources.Waiter> activeWaiters = new List<HumanResources.Waiter>();
+
+            foreach (var servicePoint in servicesPoints)
+            {
+                activeWaiters.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                        where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                        select shiftWork.Worker).OfType<HumanResources.Waiter>());
+            }
+
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+        }
+
+        internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
+        {
+         
+            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+
+            var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+            foreach (var a_Waiter in activeWaiters)
+                a_Waiter.RaiseServingBatchesChangedEvent();
+
+        }
+
+
+
     }
 
 

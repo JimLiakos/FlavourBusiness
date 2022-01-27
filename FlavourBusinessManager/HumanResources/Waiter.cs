@@ -649,14 +649,14 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
         public IList<IServingBatch> GetServingBatches()
         {
-            return ServicesContextRunTime.GetServingBatches(this).OfType<IServingBatch>().ToList();
+            return (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
         }
 
         /// <MetaDataID>{f5de8f49-f437-4d88-8daa-403e6aefce51}</MetaDataID>
         public ServingBatchUpdates GetServingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
 
-            List<RoomService.ServingBatch> servingBatches = ServicesContextRunTime.GetServingBatches(this).ToList();
+            List<RoomService.ServingBatch> servingBatches = (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).ToList();
 
             var itemsToServe = (from servingBatch in servingBatches
                                 from itemsContext in servingBatch.ContextsOfPreparedItems
@@ -691,7 +691,7 @@ namespace FlavourBusinessManager.HumanResources
                     if (!servingBatch.IsAssigned)
                         (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
                 }
-                ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchAssigned(this, servingBatch);
+                (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchAssigned(this, servingBatch);
             }
 
 
@@ -707,7 +707,7 @@ namespace FlavourBusinessManager.HumanResources
             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
 
             (servingBatch as RoomService.ServingBatch).Update(mealCourse, preparedItems, underPreparationItems);
-            ServicePointRunTime.ServicesContextRunTime.Current.ServingBatchDeassigned(this, servingBatch);
+            (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchDeassigned(this, servingBatch);
 
 
 
