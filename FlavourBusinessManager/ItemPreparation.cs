@@ -797,6 +797,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{3733d472-f996-4129-a609-2571974cec56}</MetaDataID>
         [JsonIgnore]
         [PersistentMember(nameof(_MealCourse))]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+16")]
         public FlavourBusinessFacade.RoomService.IMealCourse MealCourse
         {
