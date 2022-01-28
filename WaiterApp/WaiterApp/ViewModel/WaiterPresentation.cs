@@ -1368,6 +1368,7 @@ namespace WaiterApp.ViewModel
                         {
                             if (message != null && InActiveShiftWork)
                             {
+                                GetServingUpdates();
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
                                 ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
@@ -1378,6 +1379,16 @@ namespace WaiterApp.ViewModel
                     }
                 }
             }
+        }
+
+        public void ItemsReadyToServeMessageReceived(string messageID)
+        {
+            Waiter.RemoveMessage(messageID);
+        }
+
+        public void LayTheTableMessageReceived(string messageID)
+        {
+            Waiter.RemoveMessage(messageID);
         }
 
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
@@ -1571,5 +1582,7 @@ namespace WaiterApp.ViewModel
             return json;
 
         }
+
+       
     }
 }

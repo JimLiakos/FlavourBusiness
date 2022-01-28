@@ -79,5 +79,12 @@ namespace WaiterApp.ViewModel
 
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+
+        void ItemsReadyToServeMessageReceived(string messageID);
+
+        void LayTheTableMessageReceived(string messageID);
+
+
     }
 }

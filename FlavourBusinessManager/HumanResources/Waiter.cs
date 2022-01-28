@@ -161,9 +161,13 @@ namespace FlavourBusinessManager.HumanResources
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
                 {
+                    
                     message.MessageTimestamp = DateTime.UtcNow;
-                    _Messages.Add(message);
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
+                    if (!_Messages.Contains(message))
+                    {
+                        _Messages.Add(message);
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
+                    }
 
                     stateTransition.Consistent = true;
                 }

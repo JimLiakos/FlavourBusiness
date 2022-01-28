@@ -679,10 +679,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
                 {
-                    var clientMessage = new Message();
-                    clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
-                    clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                    clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
+                    var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                    if (clientMessage == null)
+                    {
+                        clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
+                    }
                     waiter.PushMessage(clientMessage);
 
                     if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
