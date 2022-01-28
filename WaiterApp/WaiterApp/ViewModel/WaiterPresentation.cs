@@ -372,7 +372,12 @@ namespace WaiterApp.ViewModel
             }
             if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
             {
-                GetMessages();
+                Task.Run(async () =>
+                {
+                    await Task.Delay(5000);
+                    GetMessages();
+                });
+                
                 ObjectChangeState?.Invoke(this, null);
                 return true;
             }

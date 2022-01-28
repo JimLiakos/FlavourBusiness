@@ -25,6 +25,7 @@ namespace FlavourBusinessFacade.RoomService
 
         [RoleAMultiplicityRange(1)]
         [Association("ServiceSectionFoodItems", Roles.RoleA, true, "170a4e1d-1241-4efd-a037-01a2c2a3456b")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         System.Collections.Generic.IList<IItemPreparation> FoodItems { get; }
 
         /// <MetaDataID>{f8309b8a-8d4b-491a-9af9-bab1fc04fb67}</MetaDataID>

@@ -685,7 +685,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         clientMessage = new Message();
                         clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
                         clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "There are items read to serve" };
+                        clientMessage.Notification = new Notification() { Title = "There are items read to serve",Body="Check items ready to serve List" };
                     }
                     waiter.PushMessage(clientMessage);
 
