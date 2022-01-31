@@ -4331,6 +4331,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ServicePointState> HallsServicePointsState
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "get_HallsServicePointsState", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ServicePointState>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession> ClientSessions
         {
             get
