@@ -11,7 +11,8 @@
 		"MessmatesCommandLabel":"Συνδαιτυμόνες",
         "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο",
 		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
-		"PartialTransferCommandLabel":"Μεταφορά ειδών"
+		"PartialTransferCommandLabel":"Μεταφορά ειδών",
+		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα"
 
 	}
 

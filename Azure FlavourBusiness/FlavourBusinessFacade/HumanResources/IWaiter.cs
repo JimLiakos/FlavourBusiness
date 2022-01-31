@@ -28,6 +28,9 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{79a921fc-7507-410d-bb75-57d83658cb91}</MetaDataID>
         IList<IHallLayout> GetServiceHalls();
 
+        Dictionary<string, ServicePointState> HallsServicePointsState { get; }
+
+
         /// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
         void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
 

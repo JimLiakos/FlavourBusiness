@@ -9,7 +9,8 @@
 		"MessmatesCommandLabel":"Messmates",
         "TableAvailableCommandLabel":"Make Available",
 		"TransferAllCommandLabel":"Transfer table",
-		"PartialTransferCommandLabel":"Partial transfer"
+		"PartialTransferCommandLabel":"Partial transfer",
+		"ItemsReadyToServeMessage":"There are items on the counter for serving"
 	}
 
 }

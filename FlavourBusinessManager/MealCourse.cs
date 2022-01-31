@@ -356,9 +356,10 @@ namespace FlavourBusinessManager.RoomService
                 var commonItemPreparationState = itemsPreparationContext.PreparationItems.GetMinimumCommonItemPreparationState();
                 if (commonItemPreparationState == ItemPreparationState.Serving && itemsPreparationContext.PreparationState < ItemPreparationState.Serving)
                 {
-                    itemsPreparationContext.PreparationState = commonItemPreparationState;
+                    //itemsPreparationContext.PreparationState = commonItemPreparationState;
                     ServicePointRunTime.ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
                 }
+                itemsPreparationContext.PreparationState = commonItemPreparationState;
             }
 
             //foreach(var itemsPreparationContext in this.FoodItemsInProgress)

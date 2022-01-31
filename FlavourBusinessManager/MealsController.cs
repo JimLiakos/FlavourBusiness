@@ -109,7 +109,7 @@ namespace FlavourBusinessManager.RoomService
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                     if (serviceBatch != null)
                     {
-                        if (serviceBatch.ShiftWork.Worker == waiter)
+                        if (serviceBatch.ShiftWork?.Worker == waiter)
                         {
                             serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
                             servingBatches.Add(serviceBatch);

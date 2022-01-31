@@ -781,6 +781,7 @@ namespace DontWaitApp
                             MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                             ClientSessionID = FoodServiceClientSession.SessionID,
                             ServicePointIdentity = clientSessionData.ServicePointIdentity,
+                            ServicesPointName = clientSessionData.ServicesPointName,
                             DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
                             ServedMealTypesUris = clientSessionData.ServedMealTypesUris
 
@@ -2025,6 +2026,18 @@ namespace DontWaitApp
             }
         }
 
+        public void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState)
+        {
+            foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
+            {
+                foreach (var shape in hall.Shapes)
+                {
+                    if (!string.IsNullOrWhiteSpace(shape.ServicesPointIdentity) && hallsServicePointsState.ContainsKey(shape.ServicesPointIdentity))
+                        shape.ServicesPointState = hallsServicePointsState[shape.ServicesPointIdentity];
+                }
+            }
+            _ObjectChangeState?.Invoke(this, nameof(Halls));
+        }
         /// <MetaDataID>{7fd664dc-cdda-488a-ab38-6670e874af11}</MetaDataID>
         public Task<bool> CheckPermissionsPassivePushNotification()
         {

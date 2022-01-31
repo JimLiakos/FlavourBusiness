@@ -33,6 +33,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System;
 using MenuModel;
+using FlavourBusinessFacade.ServicesContextResources;
 #endif
 
 #if FlavourBusinessDevice
@@ -229,8 +230,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
         void CancelMealInvitation(Messmate messmate);
-
-
+        void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
     }
 
 

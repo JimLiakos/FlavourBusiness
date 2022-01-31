@@ -62,7 +62,7 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
         protected WaiterPresentation()
         {
-            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true,Halls=_Halls };
+            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true, Halls = _Halls };
         }
         /// <MetaDataID>{94887bc2-fef8-4fcc-af96-24e9ef4e71c3}</MetaDataID>
         static WaiterPresentation _Current;
@@ -124,7 +124,13 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{4d17380a-0570-480d-a1ec-b2140d0ca76a}</MetaDataID>
         internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
         {
-            ObjectChangeState?.Invoke(this, "ServingBatches");
+            if (servingBatchPresentation.ContextsOfPreparedItems == null || servingBatchPresentation.ContextsOfPreparedItems.Count == 0)
+            {
+                _ServingBatches.Remove(servingBatchPresentation.ServingBatch);
+                servingBatchPresentation.Dispose();
+            }
+
+            ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
 
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
@@ -377,7 +383,7 @@ namespace WaiterApp.ViewModel
                     await Task.Delay(5000);
                     GetMessages();
                 });
-                
+
                 ObjectChangeState?.Invoke(this, null);
                 return true;
             }
@@ -438,7 +444,7 @@ namespace WaiterApp.ViewModel
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                             }
                             this.FlavoursOrderServer.Halls = _Halls;
-                            
+
 
 
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
@@ -681,7 +687,10 @@ namespace WaiterApp.ViewModel
                         }
                     }
                     if (allItemsRemoved)
+                    {
                         _ServingBatches.Remove(servingBatch.ServingBatch);
+                        servingBatch.Dispose();
+                    }
 
                 }
             }
@@ -931,7 +940,7 @@ namespace WaiterApp.ViewModel
             {
             }
         }
-
+        public Dictionary<string, ServicePointState> HallsServicePointsState { get; set; }
         /// <MetaDataID>{d3502416-55ad-482e-875b-f19d27f520a4}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
@@ -942,8 +951,27 @@ namespace WaiterApp.ViewModel
                 GetMessages();
             }
 
-        }
+            if (member == nameof(IWaiter.HallsServicePointsState))
+            {
+                HallsServicePointsState = this.Waiter.HallsServicePointsState;
 
+                foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
+                {
+                    foreach (var shape in hall.Shapes)
+                    {
+                        if (!string.IsNullOrWhiteSpace(shape.ServicesPointIdentity) && HallsServicePointsState.ContainsKey(shape.ServicesPointIdentity))
+                            shape.ServicesPointState = HallsServicePointsState[shape.ServicesPointIdentity];
+                    }
+                }
+                if (this.FlavoursOrderServer != null)
+                {
+                    this.FlavoursOrderServer.UpdateHallsServicePointStates(HallsServicePointsState);
+                    
+                }
+
+                ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+            }
+        }
 
         /// <MetaDataID>{d38d4827-a9a7-48bb-b272-1f897c86cf1b}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
@@ -1588,6 +1616,6 @@ namespace WaiterApp.ViewModel
 
         }
 
-       
+
     }
 }

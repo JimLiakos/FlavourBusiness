@@ -38,6 +38,8 @@ namespace WaiterApp.ViewModel
 
         public void Dispose()
         {
+            ServingBatch.ObjectChangeState -= ServingBatchChangeState;
+            ServingBatch.ItemsStateChanged -= ServingBatch_ItemsStateChanged;
 
         }
         public string ServiceBatchIdentity { get; set; }

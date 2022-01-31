@@ -161,7 +161,7 @@ namespace FlavourBusinessManager.HumanResources
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
                 {
-                    
+
                     message.MessageTimestamp = DateTime.UtcNow;
                     if (!_Messages.Contains(message))
                     {
@@ -205,14 +205,14 @@ namespace FlavourBusinessManager.HumanResources
         {
             List<IHallLayout> halls = new System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHallLayout>();
 
-            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
+            //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
 
-            var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
-                                          where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
-                                          select theServicePointRun).FirstOrDefault();
+            //var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
+            //                              where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
+            //                              select theServicePointRun).FirstOrDefault();
 
-            foreach (var serviceArea in (from aServiceArea in storage.GetObjectCollection<ServicesContextResources.ServiceArea>()
-                                         select aServiceArea))
+
+            foreach (var serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas.OfType<ServicesContextResources.ServiceArea>())
             {
                 if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
                 {
@@ -237,6 +237,24 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
             return halls;
+        }
+
+
+        public Dictionary<string, ServicePointState> HallsServicePointsState
+        {
+            get
+            {
+                Dictionary<string, ServicePointState> hallsServicePointsStates = new Dictionary<string, ServicePointState>();
+
+                foreach (var servicePoint in (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
+                                              from servicePoint in serviceArea.ServicePoints
+                                              select servicePoint))
+                {
+                    hallsServicePointsStates[servicePoint.ServicesPointIdentity] = servicePoint.State;
+                }
+
+                return hallsServicePointsStates;
+            }
         }
 
         /// <MetaDataID>{ee04afcf-db5b-40db-ba95-b5a0b416e255}</MetaDataID>
@@ -531,6 +549,10 @@ namespace FlavourBusinessManager.HumanResources
         [BackwardCompatibilityID("+14")]
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks.ToThreadSafeList();
 
+
+
+        List<ShiftWork> RecentlyShiftWorks;
+
         /// <MetaDataID>{7943daf2-7520-4f77-a801-ce925d7f689b}</MetaDataID>
         public IShiftWork ActiveShiftWork
         {
@@ -540,18 +562,21 @@ namespace FlavourBusinessManager.HumanResources
                 var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
                 if (objectStorage != null)
                 {
-                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
-                    var shiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
-                                      where shiftWork.StartsAt > mileStoneDate && shiftWork.Worker == this
-                                      select shiftWork).ToList();
+                    if (RecentlyShiftWorks == null)
+                    {
+                        OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                        RecentlyShiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                              where shiftWork.StartsAt > mileStoneDate && shiftWork.Worker == this
+                                              select shiftWork).ToList();
+                    }
 
-                    if (shiftWorks.Count > 0)
+                    if (RecentlyShiftWorks.Count > 0)
                     {
 
                     }
 
 
-                    return shiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
+                    return RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
                 }
                 else
                     return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).Last();
@@ -565,8 +590,10 @@ namespace FlavourBusinessManager.HumanResources
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _ShiftWorks.Add(shiftWork);
+
                 stateTransition.Consistent = true;
             }
+            RecentlyShiftWorks = null;
 
         }
 
@@ -611,6 +638,8 @@ namespace FlavourBusinessManager.HumanResources
                 _ShiftWorks.Remove(shiftWork);
                 stateTransition.Consistent = true;
             }
+            RecentlyShiftWorks = null;
+
         }
 
 
@@ -672,7 +701,7 @@ namespace FlavourBusinessManager.HumanResources
                                    select new { servingBatch, itemsContext, itemPreparation }).ToList());
             foreach (var itemToServe in itemsToServe.ToList())
             {
-                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid && x.StateTimestamp.ToOADate() == itemToServe.itemPreparation.StateTimestamp.ToOADate()).FirstOrDefault();
+                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid).FirstOrDefault();
                 if (servingItemOnDevice != null)
                 {
                     itemsToServe.Remove(itemToServe);
@@ -769,13 +798,13 @@ namespace FlavourBusinessManager.HumanResources
         public void TransferItems(IFoodServiceSession foodServiceSession, List<string> itemsPreparationsIDs, string targetServicePointIdentity)
         {
 
-            
 
 
+            ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
         }
 
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
-        public void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity)
+        public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         {
             if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
                 return;
@@ -790,6 +819,9 @@ namespace FlavourBusinessManager.HumanResources
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
                 (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+
+
+            ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
 
         }
 
