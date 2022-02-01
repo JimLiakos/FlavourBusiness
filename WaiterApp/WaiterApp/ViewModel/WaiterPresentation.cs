@@ -534,6 +534,9 @@ namespace WaiterApp.ViewModel
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
+                            HallsServicePointsState = Waiter.HallsServicePointsState;
+
+
 
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -752,6 +755,21 @@ namespace WaiterApp.ViewModel
         {
 
             this.ServicePointChangeState.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
+            HallsServicePointsState[servicePoint.ServicesPointIdentity] = servicePoint.State;
+            foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
+            {
+                foreach (var shape in hall.Shapes)
+                {
+                    if (!string.IsNullOrWhiteSpace(shape.ServicesPointIdentity) && HallsServicePointsState.ContainsKey(shape.ServicesPointIdentity))
+                        shape.ServicesPointState = HallsServicePointsState[shape.ServicesPointIdentity];
+                }
+            }
+            if (this.FlavoursOrderServer != null)
+                this.FlavoursOrderServer.UpdateHallsServicePointStates(HallsServicePointsState);
+
+            ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+
+
         }
 
         /// <MetaDataID>{dedbf193-f9e7-4d31-899b-1119b925b50e}</MetaDataID>
@@ -951,26 +969,23 @@ namespace WaiterApp.ViewModel
                 GetMessages();
             }
 
-            if (member == nameof(IWaiter.HallsServicePointsState))
-            {
-                HallsServicePointsState = this.Waiter.HallsServicePointsState;
+            //if (member == nameof(IWaiter.HallsServicePointsState))
+            //{
+            //    HallsServicePointsState = this.Waiter.HallsServicePointsState;
 
-                foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
-                {
-                    foreach (var shape in hall.Shapes)
-                    {
-                        if (!string.IsNullOrWhiteSpace(shape.ServicesPointIdentity) && HallsServicePointsState.ContainsKey(shape.ServicesPointIdentity))
-                            shape.ServicesPointState = HallsServicePointsState[shape.ServicesPointIdentity];
-                    }
-                }
-                if (this.FlavoursOrderServer != null)
-                {
-                    this.FlavoursOrderServer.UpdateHallsServicePointStates(HallsServicePointsState);
-                    
-                }
+            //    foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
+            //    {
+            //        foreach (var shape in hall.Shapes)
+            //        {
+            //            if (!string.IsNullOrWhiteSpace(shape.ServicesPointIdentity) && HallsServicePointsState.ContainsKey(shape.ServicesPointIdentity))
+            //                shape.ServicesPointState = HallsServicePointsState[shape.ServicesPointIdentity];
+            //        }
+            //    }
+            //    if (this.FlavoursOrderServer != null)
+            //        this.FlavoursOrderServer.UpdateHallsServicePointStates(HallsServicePointsState);
 
-                ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
-            }
+            //    ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+            //}
         }
 
         /// <MetaDataID>{d38d4827-a9a7-48bb-b272-1f897c86cf1b}</MetaDataID>

@@ -800,7 +800,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
-            ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+            //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
         }
 
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
@@ -813,15 +813,25 @@ namespace FlavourBusinessManager.HumanResources
             var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
                                       from servicePoint in serviceArea.ServicePoints
                                       where servicePoint.ServicesPointIdentity == targetServicePointIdentity
-                                      select servicePoint).FirstOrDefault();
+                                      select servicePoint).OfType<ServicesContextResources.ServicePoint>().FirstOrDefault();
 
             if (targetServicePoint == null)
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
+            {
                 (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
 
+                targetServicePoint.UpdateState();
+                
+                if(foodServiceSession.Meal!=null)
+                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
 
-            ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+
+            }
+
+
+
+            //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
 
         }
 

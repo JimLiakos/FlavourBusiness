@@ -37,6 +37,8 @@ namespace WaiterApp.ViewModel
         {
             get;
         }
+
+        Dictionary<string, ServicePointState> HallsServicePointsState { get; }
         /// <MetaDataID>{030650aa-927d-4f55-bfc3-5c6b03a2a01f}</MetaDataID>
         List<ServingBatchPresentation> ServingBatches
         {

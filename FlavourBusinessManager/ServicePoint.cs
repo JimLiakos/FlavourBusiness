@@ -350,7 +350,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (user != null)
             {
                 fsClientSession = (from session in ActiveFoodServiceClientSessions.OfType<EndUsers.FoodServiceClientSession>()
-                                   where session.ServicePoint == this && (session.ClientDeviceID == clientDeviceID || session.UserIdentity == user.Identity)
+                                   where session.ServicePoint == this &&  session.UserIdentity == user.Identity
                                    select session).FirstOrDefault();
 
             }

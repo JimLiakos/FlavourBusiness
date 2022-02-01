@@ -87,6 +87,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         foreach (var sessionPart in this.PartialClientSessions)
                             sessionPart.ServicePoint = value;
+                            
 
                         stateTransition.Consistent = true;
                     }
