@@ -10,6 +10,7 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
 using System.Threading.Tasks;
 using FlavourBusinessFacade;
+using OOAdvantech;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -53,6 +54,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public event ObjectChangeStateHandle ObjectChangeState;
+
         /// <exclude>Excluded</exclude>
         IServicePoint _ServicePoint;
 
@@ -95,6 +98,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     if (oldServicePoint != null)
                         (oldServicePoint as ServicePoint).UpdateState();
                 }
+                ObjectChangeState?.Invoke(this, nameof(ServicePoint));
 
             }
         }

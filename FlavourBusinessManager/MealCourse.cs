@@ -335,7 +335,12 @@ namespace FlavourBusinessManager.RoomService
                 itemsPreparationContext.PreparationState = commonItemPreparationState;
             }
 
+            (meal.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
+        }
 
+        private void MealSession_ObjectChangeState(object _object, string member)
+        {
+            ObjectChangeState?.Invoke(this, member);
         }
 
 
@@ -491,7 +496,11 @@ namespace FlavourBusinessManager.RoomService
                 }
 
             }
+
+            (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
         }
+
+        
 
 
 

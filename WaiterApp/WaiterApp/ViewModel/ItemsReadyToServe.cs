@@ -123,5 +123,10 @@ namespace WaiterApp.ViewModel
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; private set; }
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
         public ServicePointType ServicePointType { get; private set; }
+
+        internal void Update()
+        {
+            ServingBatchChangeState(ServingBatch, null);
+        }
     }
 }

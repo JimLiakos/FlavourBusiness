@@ -30,19 +30,19 @@ namespace FlavoursServicesWorkerRole
             Trace.TraceInformation("FlavoursServicesWorkerRole is running");
             FlavoursServicesContextManagment.Init();
 
-            string message = "Role instance run ";
-            try
-            {
-                var roleName = Environment.MachineName;
-                if (RoleEnvironment.IsAvailable)
-                    roleName = RoleEnvironment.CurrentRoleInstance.Id;
-                message += ": " + roleName;
-            }
-            catch (Exception error)
-            {
-            }
+            //string message = "Role instance run ";
+            //try
+            //{
+            //    var roleName = Environment.MachineName;
+            //    if (RoleEnvironment.IsAvailable)
+            //        roleName = RoleEnvironment.CurrentRoleInstance.Id;
+            //    message += ": " + roleName;
+            //}
+            //catch (Exception error)
+            //{
+            //}
 
-            LogMessage.WriteLog(message);
+            //LogMessage.WriteLog(message);
 
 
             try
@@ -236,7 +236,7 @@ namespace FlavoursServicesWorkerRole
             while (!cancellationToken.IsCancellationRequested)
             {
                 Trace.TraceInformation("Working");
-                await Task.Delay(1000);
+                await Task.Delay(10000);
             }
         }
     }

@@ -230,7 +230,7 @@ namespace FlavourBusinessManager.RoomService
         private void MealCourseChangeState(object _object, string member)
         {
 
-
+            
             IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
                                                             where itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(ItemPreparationState.Serving))
                                                             select itemsPreparationContext).ToList();
@@ -270,7 +270,14 @@ namespace FlavourBusinessManager.RoomService
                 else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
                     servingBatchChanged = true;
             }
-            if (servingBatchChanged)
+            if(nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
+            {
+                this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
+                Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
+                this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
+                
+            }
+            if (servingBatchChanged|| nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
             {
                 ContextsOfPreparedItems = preparedItems;
                 ContextsOfUnderPreparationItems = underPreparationItems;

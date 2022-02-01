@@ -667,12 +667,19 @@ namespace WaiterApp.ViewModel
 
             var servingBatches = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in servingBatches)
-                _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
+            {
+                var servingBatchPresentation = _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
+                servingBatchPresentation.Update();
+            }
 
             var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).ToList();
 
             foreach (var assignedServingBatch in asignedServingBatches)
-                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+            {
+                var servingBatchPresentation = _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+                servingBatchPresentation.Update();
+            }
+
 
             if (servingBatchUpdates.RemovedServingItems.Count > 0)
             {
