@@ -351,32 +351,32 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                foreach (var foodServiceClientSession in OpenClientSessions/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
-                {
-                    var mainSession = foodServiceClientSession.MainSession;
-                    if (mainSession != null)
-                        mainSession.RemovePartialSession(foodServiceClientSession);
+            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //{
+            //    foreach (var foodServiceClientSession in OpenClientSessions/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
+            //    {
+            //        var mainSession = foodServiceClientSession.MainSession;
+            //        if (mainSession != null)
+            //            mainSession.RemovePartialSession(foodServiceClientSession);
 
-                    RemoveServicePointClientSesion(foodServiceClientSession);
-                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
+            //        RemoveServicePointClientSesion(foodServiceClientSession);
+            //        OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
 
-                    if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Inactive))
-                    {
-                        using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            foreach (var partialClientSession in mainSession.PartialClientSessions)
-                                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
-                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
-                            innerStateTransition.Consistent = true;
-                        }
-                    }
+            //        if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Inactive))
+            //        {
+            //            using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
+            //            {
+            //                foreach (var partialClientSession in mainSession.PartialClientSessions)
+            //                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
+            //                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+            //                innerStateTransition.Consistent = true;
+            //            }
+            //        }
 
 
-                }
-                stateTransition.Consistent = true;
-            }
+            //    }
+            //    stateTransition.Consistent = true;
+            //}
 
 
 
