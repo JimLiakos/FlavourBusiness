@@ -18,9 +18,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
         void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
 
-        /// <MetaDataID>{26e7cbcc-041c-4ac4-a9af-ee76b63c9193}</MetaDataID>
-        void ServingBatchesCommit();
-
+   
         /// <MetaDataID>{aa6ffdd8-59a3-4253-940f-ce7c4e0d1135}</MetaDataID>
         /// <summary>This token is the identity of device for push notification mechanism</summary>
         [BackwardCompatibilityID("+10")]
@@ -85,8 +83,10 @@ namespace FlavourBusinessFacade.HumanResources
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
     
-
-        /// <MetaDataID>{bc8e1dff-883d-4487-8b67-e4c7fdcbb2b7}</MetaDataID>
+        /// <summary>
+        /// 
+        /// </summary>
+        // <MetaDataID>{bc8e1dff-883d-4487-8b67-e4c7fdcbb2b7}</MetaDataID>
         void CommitServingBatches();
     }
 

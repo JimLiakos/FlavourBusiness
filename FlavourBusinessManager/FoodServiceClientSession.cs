@@ -1376,7 +1376,12 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        public bool Inactive { 
+            get {
 
+                return (FlavourItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10||_MessageReceived==null));
+            } 
+        }
 
         public void Items…nPreparation(List<IItemPreparation> flavourItems)
         {

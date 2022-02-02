@@ -679,10 +679,15 @@ namespace FlavourBusinessManager.HumanResources
             ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
         }
 
+        List<IServingBatch> AssignedServingBatches = new List<IServingBatch>();
+        List<IServingBatch> ServingBatches = new List<IServingBatch>();
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
         public IList<IServingBatch> GetServingBatches()
         {
-            return (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            var servingBatches  =(ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            AssignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
+            ServingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
+            return servingBatches;
         }
 
         /// <MetaDataID>{f5de8f49-f437-4d88-8daa-403e6aefce51}</MetaDataID>
@@ -749,19 +754,32 @@ namespace FlavourBusinessManager.HumanResources
         }
         public event ServingBatchesChangedHandler ServingBatchesChanged;
 
-
+        /// <summary>
+        /// Checks servingBatches for waiter 
+        /// if there are changes on assigned serving batches or on unassigned serving batches raise ServingBatchesChanged event
+        /// </summary>
         /// <MetaDataID>{63737ce6-b491-4fe4-a179-4fc82c6063f6}</MetaDataID>
-        internal void RaiseServingBatchesChangedEvent()
+        internal void FindServingBatchesChanged()
         {
-            ServingBatchesChanged?.Invoke();
+            var servingBatches = (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            var assignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
+            var unAssignedservingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
+            
+            if(assignedServingBatches.Count!=AssignedServingBatches.Count||
+                unAssignedservingBatches.Count != ServingBatches.Count)
+            {
+                ServingBatchesChanged?.Invoke();
+            }
+            if(AssignedServingBatches.Count>0&& !AssignedServingBatches.ContainsAll(assignedServingBatches))
+                ServingBatchesChanged?.Invoke();
+
+            if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
+                ServingBatchesChanged?.Invoke();
+
         }
 
 
-        /// <MetaDataID>{13795273-fe1b-4d00-b840-bb8bdcfda520}</MetaDataID>
-        public void ServingBatchesCommit()
-        {
-
-        }
+     
 
         /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>
         public void CommitServingBatches()
@@ -777,10 +795,6 @@ namespace FlavourBusinessManager.HumanResources
                         {
                             foreach (var servingBatch in GetServingBatches().OfType<RoomService.ServingBatch>().Where(x => x.State == ItemPreparationState.Serving && x.IsAssigned && x.ShiftWork.Worker == this))
                                 servingBatch.OnTheRoad();
-
-
-                            //foreach (var servingBatch in (ActiveShiftWork as ServingShiftWork).ServingBatches.Where(x => x.State == ItemPreparationState.Serving))
-                            //    servingBatch.OnTheRoad();
 
                             stateTransition.Consistent = true;
                         }
@@ -819,14 +833,38 @@ namespace FlavourBusinessManager.HumanResources
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
+                foreach(var foodServiceClientSession in  targetServicePoint.OpenClientSessions.Where(x=>x.Waiter==this).Where(x=>x.FlavourItems.Count==0&&x.SharedItems.Count==0))
+                {
+                    var mainSession = foodServiceClientSession.MainSession;
+                    if (mainSession != null)
+                        mainSession.RemovePartialSession(foodServiceClientSession);
+
+                    targetServicePoint.RemoveServicePointClientSesion(foodServiceClientSession);
+                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
+
+                    if(mainSession!=null&& mainSession.PartialClientSessions.All(x=>x.Inactive))
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var partialClientSession in mainSession.PartialClientSessions)
+                                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
+                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+                            stateTransition.Consistent = true;
+                        }
+                    }
+
+
+                }
                 (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
 
                 targetServicePoint.UpdateState();
-                
-                if(foodServiceSession.Meal!=null)
+
+                if (foodServiceSession.Meal != null)
+                {
+                    //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+
                     (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
-
-
+                }
             }
 
 

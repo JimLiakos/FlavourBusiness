@@ -305,7 +305,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         List<EndUsers.FoodServiceClientSession> _OpenClientSessions;
         /// <MetaDataID>{b6321911-81bf-401b-93fe-a0b4277bc301}</MetaDataID>
-        List<EndUsers.FoodServiceClientSession> OpenClientSessions
+        public List<EndUsers.FoodServiceClientSession> OpenClientSessions
         {
             get
             {
@@ -620,46 +620,49 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             if (newState == ServicePointState.Laying)
             {
-                var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+                //if (servicePoint.OpenClientSessions.Where(x => !x.IsWaiterSession).FirstOrDefault() != null)
+                //{
+                    var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                         where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                         select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
-                foreach (var waiter in activeWaiters)
-                {
-                    var waiterActiveShiftWork = waiter.ActiveShiftWork;
-                    if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
+                    foreach (var waiter in activeWaiters)
                     {
-                        var clientMessage = new Message();
-                        clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
-                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "Lay the Table" };
-                        waiter.PushMessage(clientMessage);
-
-                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                        var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                        if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+                            var clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
+                            clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                            clientMessage.Notification = new Notification() { Title = "Lay the Table" };
+                            waiter.PushMessage(clientMessage);
 
-                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
                             {
-                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
+                                CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+
+                                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                                 {
-                                    message.NotificationsNum += 1;
-                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                    foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
+                                    {
+                                        message.NotificationsNum += 1;
+                                        message.NotificationTimestamp = DateTime.UtcNow;
+                                    }
+
+                                    stateTransition.Consistent = true;
+                                }
+                                lock (ServiceContextRTLock)
+                                {
+                                    WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                                   from message in activeWaiter.Messages
+                                                                   where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
+                                                                   select activeWaiter).ToList();
                                 }
 
-                                stateTransition.Consistent = true;
-                            }
-                            lock (ServiceContextRTLock)
-                            {
-                                WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                               from message in activeWaiter.Messages
-                                                               where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
-                                                               select activeWaiter).ToList();
                             }
 
                         }
-
-                    }
+                    //}
                 }
             }
         }

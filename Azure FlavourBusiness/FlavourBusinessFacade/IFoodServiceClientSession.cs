@@ -178,6 +178,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
         ClientSessionState SessionState { get; set; }
+        bool Inactive { get; }
 
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
         void Items…nPreparation(List<IItemPreparation> clientSessionItems);

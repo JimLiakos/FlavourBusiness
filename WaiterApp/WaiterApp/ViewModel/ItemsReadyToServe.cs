@@ -91,7 +91,6 @@ namespace WaiterApp.ViewModel
                                           select preparedItem))
             {
                 preparedItem.State = newItemsState[preparedItem.uid];
-                
             }
             WaiterPresentation.ServingBatchUpdated(this);
         }

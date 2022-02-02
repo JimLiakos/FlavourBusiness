@@ -24,7 +24,7 @@ namespace FlavourBusinessManager.RoomService
                 //you have to  filter mealcourses by state. 
 
 
-                
+
                 //(from foodServiceSession in ServicesContextRunTime.OpenSessions
                 // from ss in foodServiceSession.PartialClientSessions
                 return mealCourses;
@@ -48,7 +48,7 @@ namespace FlavourBusinessManager.RoomService
         internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             NewMealCoursesInrogress?.Invoke(mealCourses);
-            
+
             (ServicesContextRunTime.MealsController as MealsController).ReadyToServeMealcoursesCheck(mealCourses);
             //you have to  filter mealcourses by state.
         }
@@ -56,7 +56,7 @@ namespace FlavourBusinessManager.RoomService
         internal void OnRemoveMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
-            
+
             //you have to  filter mealcourses by state.
         }
 
@@ -109,6 +109,7 @@ namespace FlavourBusinessManager.RoomService
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                     if (serviceBatch != null)
                     {
+
                         if (serviceBatch.ShiftWork?.Worker == waiter)
                         {
                             serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
@@ -146,9 +147,19 @@ namespace FlavourBusinessManager.RoomService
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
             foreach (var a_Waiter in activeWaiters)
-                a_Waiter.RaiseServingBatchesChangedEvent();
+                a_Waiter.FindServingBatchesChanged();
         }
-        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses)
+
+        /// <summary>
+        /// This method finds all waiter which can serve the meal courses and update them for changes
+        /// </summary>
+        /// <param name="mealCourses">
+        /// Defines the meal courses which are ready for serving
+        /// </param>
+        /// <param name="excludeWaiter">
+        /// This parameter defines the waiter where exclude from waiters list
+        /// </param>
+        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses, HumanResources.Waiter excludeWaiter=null)
         {
 
 
@@ -157,23 +168,26 @@ namespace FlavourBusinessManager.RoomService
                                       from itemPreparation in itemsPreparationContext.PreparationItems
                                       where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
                                       select mealCourse).Distinct().ToList();
-            var servicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
-            List<HumanResources.Waiter> activeWaiters = new List<HumanResources.Waiter>();
+            var mealCoursesServicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
+            List<HumanResources.Waiter> activeWaitersFormealCoursesServing = new List<HumanResources.Waiter>();
 
-            foreach (var servicePoint in servicesPoints)
+            foreach (var servicePoint in mealCoursesServicesPoints)
             {
-                activeWaiters.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                        where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                        select shiftWork.Worker).OfType<HumanResources.Waiter>());
+                activeWaitersFormealCoursesServing.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                             where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                                             select shiftWork.Worker).OfType<HumanResources.Waiter>());
             }
 
-            foreach (var a_Waiter in activeWaiters)
-                a_Waiter.RaiseServingBatchesChangedEvent();
+            if (excludeWaiter != null && activeWaitersFormealCoursesServing.Contains(excludeWaiter))
+                activeWaitersFormealCoursesServing.Remove(excludeWaiter); 
+
+            foreach (var a_Waiter in activeWaitersFormealCoursesServing)
+                a_Waiter.FindServingBatchesChanged();
         }
 
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
-         
+
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
@@ -181,7 +195,7 @@ namespace FlavourBusinessManager.RoomService
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
             foreach (var a_Waiter in activeWaiters)
-                a_Waiter.RaiseServingBatchesChangedEvent();
+                a_Waiter.FindServingBatchesChanged();
 
         }
 

@@ -129,7 +129,7 @@ namespace WaiterApp.ViewModel
                 _ServingBatches.Remove(servingBatchPresentation.ServingBatch);
                 servingBatchPresentation.Dispose();
             }
-
+            
             ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
 
