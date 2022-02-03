@@ -904,7 +904,8 @@ namespace FlavourBusinessManager.RoomService
                         stateTransition.Consistent = true;
                     }
                 }
-
+                ItemPreparationState mss;
+                
             }
         }
 
@@ -914,5 +915,34 @@ namespace FlavourBusinessManager.RoomService
         //public string Timestamp;
     }
 
+
+    public static class ItemPreparationStateEx
+    {
+        /// <MetaDataID>{52d16497-7a11-47e5-9020-8517e3d26493}</MetaDataID>
+       static public bool IsInFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //following 
+            return ((int)thisState) > ((int)state);
+        }
+        /// <MetaDataID>{b1802d54-39e2-45cc-b67e-4c8740ae9445}</MetaDataID>
+        static public bool IsIntheSameOrFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //following 
+            return ((int)thisState) >= ((int)state);
+        }
+
+        /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
+        static public bool IsInPreviousState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //previous
+            return ((int)thisState) < ((int)state);
+        }
+        static public bool IsInTheSameOrPreviousState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //previous
+            return ((int)thisState) <= ((int)state);
+        }
+
+    }
 
 }
