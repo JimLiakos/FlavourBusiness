@@ -13634,6 +13634,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@201
+				location   	(178, 923)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	1528)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -13924,6 +13942,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@215
+				location   	(1565, 971)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	32
+				max_width  	1321)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -14745,7 +14781,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"11")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -15322,6 +15358,39 @@
 				    value      	"+10"))
 			    quid       	"619CA0410231"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Synchronized"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"61FB8E670351")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{18314fb4-00f4-46d1-a89f-93b54bb013d5}"))
+			    quid       	"61FB8E670351"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -22585,8 +22654,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	2337
-		    origin_y   	0
+		    origin_x   	237
+		    origin_y   	369
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @373
 			    ShowCompartmentStereotypes 	TRUE
@@ -22647,7 +22716,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::MealCourse" @375
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(2560, 1621)
+			    location   	(2559, 1621)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -22660,7 +22729,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@375
-				location   	(2313, 1520)
+				location   	(2312, 1521)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	495
@@ -23265,8 +23334,8 @@
 			    client     	@375
 			    supplier   	@394
 			    line_style 	3
-			    origin_attachment 	(2579, 1509)
-			    terminal_attachment 	(2579, 1099))
+			    origin_attachment 	(2580, 1508)
+			    terminal_attachment 	(2580, 1099))
 			(object AssociationViewNew "ControlledMealCourses" @404
 			    location   	(1570, 637)
 			    font       	(object Font

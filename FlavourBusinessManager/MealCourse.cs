@@ -26,6 +26,26 @@ namespace FlavourBusinessManager.RoomService
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
 
+        bool _Synchronized;
+        /// <MetaDataID>{18314fb4-00f4-46d1-a89f-93b54bb013d5}</MetaDataID>
+        [PersistentMember(nameof(_Synchronized))]
+        [BackwardCompatibilityID("+11")]
+        public bool Synchronized
+        {
+            get => _Synchronized;
+            set
+            {
+                if (_Synchronized != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Synchronized = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         double _DurationInMinutes;
 
@@ -226,8 +246,10 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+9")]
         public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
 
+        /// <MetaDataID>{26dac4e7-b61f-4d79-af69-4402b30d02a9}</MetaDataID>
         List<ItemsPreparationContext> _FoodItemsInProgress;
 
+        /// <MetaDataID>{e1c88e32-243d-4257-82a0-5a8119bf34e7}</MetaDataID>
         object FoodItemsInProgressLock = new object();
 
         /// <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
@@ -253,6 +275,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{d5bb9342-16b0-4c93-8b7b-07b0c5c5eb36}</MetaDataID>
         internal void Monitoring()
         {
             if (FoodItems.Where(x => x.State == ItemPreparationState.Serving).Count() == FoodItems.Count)
@@ -311,6 +334,9 @@ namespace FlavourBusinessManager.RoomService
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
+        /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>
+        public bool IsTooLateToAddItem { get; internal set; }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <MetaDataID>{7b6700b2-c8a4-4548-be19-657614416518}</MetaDataID>
@@ -338,6 +364,7 @@ namespace FlavourBusinessManager.RoomService
             (meal.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
         }
 
+        /// <MetaDataID>{cebbd65d-3108-47bf-933a-371f815eacbe}</MetaDataID>
         private void MealSession_ObjectChangeState(object _object, string member)
         {
             ObjectChangeState?.Invoke(this, member);

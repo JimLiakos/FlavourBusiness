@@ -604,7 +604,7 @@ namespace FlavourBusinessManager.EndUsers
         public string SessionID => _SessionID;
 
 
-        
+
 
 
         /// <MetaDataID>{b9282b8c-95a4-4d24-a711-dcc4abf87df6}</MetaDataID>
@@ -1376,11 +1376,13 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
-        public bool Inactive { 
-            get {
+        public bool Inactive
+        {
+            get
+            {
 
-                return (FlavourItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10||_MessageReceived==null));
-            } 
+                return (FlavourItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10 || _MessageReceived == null));
+            }
         }
 
         public void Items…nPreparation(List<IItemPreparation> flavourItems)
@@ -1833,7 +1835,12 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (_MainSession.Value == null)
                 {
-                    var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                    FoodServiceSession foodServiceSession = null;
+                    if (IsWaiterSession)
+                        foodServiceSession = (ServicePoint as ServicePoint).OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
+
+                    if (foodServiceSession == null)
+                        foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
                     foodServiceSession.AddPartialSession(this);
                     if (this.Menu != null)
                         foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;

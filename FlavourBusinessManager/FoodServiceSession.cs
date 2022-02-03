@@ -19,6 +19,11 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
+
+        public FoodServiceSession()
+        {
+
+        }
         /// <MetaDataID>{cee5f973-18ba-4776-95d8-3ddd2915d3d1}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]

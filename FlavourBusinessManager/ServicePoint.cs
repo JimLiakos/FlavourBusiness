@@ -480,6 +480,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
 
                         }
+
+
+                        if (waiter != null&& fsClientSession.Waiter==null)
+                        {
+                            fsClientSession.IsWaiterSession = true;
+                            (user as HumanResources.Waiter).AddClientSession(fsClientSession);
+
+                        }
+                        if (user != null && user.Identity != fsClientSession.UserIdentity)
+                            fsClientSession.UserIdentity = user.Identity;
+
+
                         fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
                         if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
                             messmateClientSesion.MakePartOfMeal(fsClientSession);
@@ -684,9 +696,15 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
             var collection = (from foodServiceClient in storage.GetObjectCollection<FoodServiceClientSession>()
-                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession && !foodServiceClient.IsWaiterSession
+                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession 
                               select foodServiceClient).ToList();
 
+            if (!serviceClientSession.IsWaiterSession)
+            {
+                collection = (from foodServiceClient in collection
+                              where !foodServiceClient.IsWaiterSession
+                              select foodServiceClient).ToList();
+            }
 
 
 
