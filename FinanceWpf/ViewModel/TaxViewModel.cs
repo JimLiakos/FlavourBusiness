@@ -31,11 +31,7 @@ namespace Finance.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
-                Task.Run(() =>
-                {
-
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FeePerUnit)));
-                });
+               
 
             });
         }
