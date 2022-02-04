@@ -11,6 +11,51 @@ namespace FinanceFacade
     [Persistent()]
     public class Tax : ITax
     {
+        /// <exclude>Excluded</exclude>
+        decimal _Fee;
+
+        /// <MetaDataID>{ec3ca16f-5707-43b1-8f80-4daec085113d}</MetaDataID>
+        [PersistentMember(nameof(_Fee))]
+        [BackwardCompatibilityID("+6")]
+        public decimal Fee
+        {
+            get => _Fee;
+            set
+            {
+                if (_Fee != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Fee = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _FeePerUnit;
+
+        /// <MetaDataID>{3bb75918-482e-4f51-b1b1-0bc8bfad79f3}</MetaDataID>
+        [PersistentMember(nameof(_FeePerUnit))]
+        [BackwardCompatibilityID("+5")]
+        public bool FeePerUnit
+        {
+            get => _FeePerUnit;
+            set
+            {
+                if (_FeePerUnit != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FeePerUnit = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

@@ -937,6 +937,7 @@ namespace FlavourBusinessManager.RoomService
             //previous
             return ((int)thisState) < ((int)state);
         }
+        /// <MetaDataID>{16e68989-ae1e-4f10-9ac7-08cf7c3c8f76}</MetaDataID>
         static public bool IsInTheSameOrPreviousState(this ItemPreparationState thisState, ItemPreparationState state)
         {
             //previous

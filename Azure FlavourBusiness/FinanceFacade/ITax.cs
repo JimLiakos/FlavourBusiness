@@ -7,6 +7,17 @@ namespace FinanceFacade
     [BackwardCompatibilityID("{cde10026-ea3b-407e-bd5a-b4976499a44e}")]
     public interface ITax
     {
+        /// <MetaDataID>{8456a5ad-a46e-47ef-b15a-3071863d59dd}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
+        bool FeePerUnit { get; set; }
+
+        /// <MetaDataID>{ac295a8c-13f0-4223-a3bb-a059c76cdea3}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        decimal Fee { get; set; }
+
+
+
+
         /// <MetaDataID>{6e27d6f4-fdf7-4c72-81cb-29fd82ce6a7e}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         double TaxRate { get; set; }

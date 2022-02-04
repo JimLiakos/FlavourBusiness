@@ -26,6 +26,7 @@ namespace FlavourBusinessManager.RoomService
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
 
+        /// <MetaDataID>{b73a66b3-2ab9-418c-939b-f22fee687ee3}</MetaDataID>
         bool _Synchronized;
         /// <MetaDataID>{18314fb4-00f4-46d1-a89f-93b54bb013d5}</MetaDataID>
         [PersistentMember(nameof(_Synchronized))]
@@ -550,6 +551,7 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{a4f7a4df-8b25-4fe0-9ed1-046806c3ee5d}</MetaDataID>
     public static class ItemPreparationContextHelper
     {
+        /// <MetaDataID>{2ff27f48-6c0e-463b-993b-34fbb35cc52a}</MetaDataID>
         public static ItemsPreparationContext FindItemsPreparationContext(this IItemPreparation itemPreparation)
         {
             if (itemPreparation.MealCourse == null || itemPreparation.MealCourse.FoodItemsInProgress == null)
@@ -560,11 +562,12 @@ namespace FlavourBusinessManager.RoomService
                 return itemPreparation.MealCourse.FoodItemsInProgress.Where(x => x.PreparationStationIdentity == ItemsPreparationContext.TradeProductsStationIdentity).FirstOrDefault();
         }
 
+        /// <MetaDataID>{e8a414af-4141-45ef-bc7a-5c7081052f7b}</MetaDataID>
         public static ItemPreparationState GetMinimumCommonItemPreparationState(this List<IItemPreparation> foodItems)
         {
             var ss = Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderByDescending(x => (int)x).ToArray();
             ItemPreparationState commonState = ItemPreparationState.New;
-            foreach (int i in Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderBy(x=>(int)x))
+            foreach (int i in Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderBy(x => (int)x))
             {
                 if (foodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState((ItemPreparationState)i)))
                     commonState = (ItemPreparationState)i;

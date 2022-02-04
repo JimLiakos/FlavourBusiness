@@ -31,6 +31,12 @@ namespace Finance.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
+                Task.Run(() =>
+                {
+
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FeePerUnit)));
+                });
+
             });
         }
 
@@ -60,6 +66,37 @@ namespace Finance.ViewModel
                 Tax.TaxRate = value/100;
             }
         }
+
+        public decimal TaxFee
+        {
+            get
+            {
+                if (Tax == null)
+                    return default(decimal);
+                return Tax.Fee;
+            }
+            set
+            {
+                Tax.Fee = value;
+            }
+        }
+
+        public bool FeePerUnit
+        {
+            get
+            {
+                //if (!IsMaximized)
+                //    return false;
+                if (Tax == null)
+                    return default(bool);
+                return Tax.FeePerUnit;
+            }
+            set
+            {
+                Tax.FeePerUnit = value;
+            }
+        }
+
 
         //public string MaxMinImage
         //{
@@ -104,6 +141,12 @@ namespace Finance.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMaximized)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMimized)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxMinImage)));
+                Task.Run(() =>
+                {
+
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FeePerUnit)));
+                });
+                
                 AccountIDErrorBorder = 1;
                 return false;
             }
@@ -133,5 +176,7 @@ namespace Finance.ViewModel
 
             }
         }
+
+
     }
 }

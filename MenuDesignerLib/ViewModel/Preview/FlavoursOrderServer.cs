@@ -263,5 +263,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -21,8 +21,10 @@ namespace FinanceFacade
         IList<ITax> Taxes { get; }
 
 
+        /// <MetaDataID>{8407a389-b642-4db3-b4e5-0f87206a6e00}</MetaDataID>
         ITax NewTax();
 
+        /// <MetaDataID>{5f52d968-974c-4d83-a06a-f5e5eb1d04a5}</MetaDataID>
         void RemoveTax(ITax tax);
     }
 }

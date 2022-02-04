@@ -100,7 +100,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4")
+		    value      	"6")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -154,7 +154,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{7ee333f1-83f2-4da7-b021-c06b21768582}")
+			    value      	"{fb56d83b-c6ef-4265-b462-7b028473f002}")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"As Property"
@@ -187,7 +187,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{525bb340-089d-4b3d-9c7b-c3a70f549a26}")
+			    value      	"{6e27d6f4-fdf7-4c72-81cb-29fd82ce6a7e}")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Generate Backward ID"
@@ -210,6 +210,72 @@
 			    value      	"+3"))
 		    quid       	"5C6BDEEA0276"
 		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Fee"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ac295a8c-13f0-4223-a3bb-a059c76cdea3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61FCB0F000B2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"61FCB0F000B2"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "FeePerUnit"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61FCB1140121")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8456a5ad-a46e-47ef-b15a-3071863d59dd}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"61FCB1140121"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -1882,7 +1948,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5")
+		    value      	"7")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -2021,6 +2087,72 @@
 			    value      	"+4"))
 		    quid       	"5C6E640C01E4"
 		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Fee"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ec3ca16f-5707-43b1-8f80-4daec085113d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61FCB24E0080")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"61FCB24E0080"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "FeePerUnit"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"61FCB24E0082")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3bb75918-482e-4f51-b1b1-0bc8bfad79f3}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE))
+		    quid       	"61FCB24E0082"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -3377,6 +3509,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D3E021D"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(2093, 1301)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	0)
 		    width      	550
 		    height     	332
 		    annotation 	8)
@@ -3536,6 +3686,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6160024B"
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(2101, 717)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	0)
 		    width      	538
 		    height     	388
 		    annotation 	8)
@@ -4436,6 +4604,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6AD03E4"
+		    compartment 	(object Compartment
+			Parent_View 	@53
+			location   	(212, 1266)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	24
+			max_width  	0)
 		    width      	569
 		    height     	368
 		    annotation 	8)
