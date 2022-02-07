@@ -126,6 +126,15 @@
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
       <Link>ApplicationSettings.cs</Link>
     </Compile>
+    <EmbeddedResource Include="..\..\angularprojects\dont-wait\projects\waiterweb\src\assets\i18n\el.json">
+      <Link>i18n\el.json</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\angularprojects\dont-wait\projects\waiterweb\src\assets\i18n\en.json">
+      <Link>i18n\en.json</Link>
+    </EmbeddedResource>
+    <None Include="..\..\MenuModel\JsonViewModel\Tag.cs">
+      <Link>MenuModel\Tag.cs</Link>
+    </None>
     <Compile Include="WaitView\Block.xaml.cs">
       <DependentUpon>Block.xaml</DependentUpon>
     </Compile>
@@ -166,27 +175,27 @@
     <Compile Include="..\..\FlavourBusinessManager\OptionChange.cs">
       <Link>OptionChange.cs</Link>
     </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\CustomazedPrice.cs">
+    <None Include="..\..\MenuModel\JsonViewModel\CustomazedPrice.cs">
       <Link>MenuModel\CustomazedPrice.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\itemPreparation.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\itemPreparation.cs">
       <Link>MenuModel\itemPreparation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\ItemSelectorOption.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\ItemSelectorOption.cs">
       <Link>MenuModel\ItemSelectorOption.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\Option.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\Option.cs">
       <Link>MenuModel\Option.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\OptionGroup.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\OptionGroup.cs">
       <Link>MenuModel\OptionGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\OptionMenuItemSpecific.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\OptionMenuItemSpecific.cs">
       <Link>MenuModel\OptionMenuItemSpecific.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MenuModel\JsonViewModel\TypedObject.cs">
+    </None>
+    <None Include="..\..\MenuModel\JsonViewModel\TypedObject.cs">
       <Link>MenuModel\TypedObject.cs</Link>
-    </Compile>
+    </None>
     <None Include="..\..\MenuPresentationModel\IPriceHeading.cs">
       <Link>MenuCanvas\IPriceHeading.cs</Link>
     </None>
@@ -389,6 +398,14 @@
     <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
       <Project>{0A6DBBC9-D8D3-4466-9A4E-80AE0582EB0A}</Project>
       <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FlavourBusinessManager\FlavourBusinessManager.csproj">
+      <Project>{25aec1bf-1882-41c8-8b4a-b3b3e1ef624d}</Project>
+      <Name>FlavourBusinessManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MenuModel\MenuModel.csproj">
+      <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
+      <Name>MenuModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
       <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>

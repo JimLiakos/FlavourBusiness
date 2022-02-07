@@ -36,6 +36,28 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
+        /// <exclude>Excluded</exclude>
+        bool _ImplicitMealParticipation;
+
+        /// <MetaDataID>{d7711e10-32f3-43d6-bc37-0005e7a4f1ed}</MetaDataID>
+        [PersistentMember(nameof(_ImplicitMealParticipation))]
+        [BackwardCompatibilityID("+24")]
+        public bool ImplicitMealParticipation
+        {
+            get => _ImplicitMealParticipation;
+            set
+            {
+
+                if (_ImplicitMealParticipation != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ImplicitMealParticipation = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -339,7 +361,9 @@ namespace FlavourBusinessManager.EndUsers
             });
         }
 
+        /// <MetaDataID>{46b3cc48-30d4-4776-99ef-a8359bfdddb8}</MetaDataID>
         object StateMachineLock = new object();
+        /// <MetaDataID>{24a297e4-0669-4061-8ec1-a8d781982ace}</MetaDataID>
         private void CatchStateEvents()
         {
             lock (StateMachineLock)
@@ -444,6 +468,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{5d67c1ab-dc97-4fd4-9685-d9a485f81642}</MetaDataID>
         internal void UrgesToDecideRun()
         {
 
@@ -1173,6 +1198,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{7c6021ec-9897-4ba8-834b-78a4000f0e21}</MetaDataID>
         void IObjectStateEventsConsumer.OnActivate()
         {
+            var ssd = OOAdvantech.PersistenceLayer.StorageInstanceRef.GetStorageInstanceRef(this)?.ObjectID;
             if (SessionState != ClientSessionState.Closed)
                 StartDeviceConnectionStatusCheck();
         }
@@ -1341,6 +1367,7 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
+        /// <MetaDataID>{fe6d766e-7a01-4f68-9163-fcab7bdbfc21}</MetaDataID>
         public void CancelLastPreparationStep(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
@@ -1376,15 +1403,17 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{6b965aed-f7e7-42c3-b155-51b8013f2cca}</MetaDataID>
         public bool Inactive
         {
             get
             {
 
-                return (FlavourItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10 || _MessageReceived == null));
+                return (FlavourItems.Count == 0 && SharedItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10 || _MessageReceived == null));
             }
         }
 
+        /// <MetaDataID>{407f40f2-a77e-4c4e-b445-3a5e1f155639}</MetaDataID>
         public void Items…nPreparation(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
@@ -1408,6 +1437,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{93d66d3c-7ca4-4a3b-88a1-3aec137f028f}</MetaDataID>
         public void ItemsPrepared(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
@@ -1432,6 +1462,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{34f48801-e58a-4f3b-9308-5b3b690be5f4}</MetaDataID>
         public void ItemsRoasting(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
@@ -1457,6 +1488,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{cd81e265-e605-4a8b-8582-590fe342cb5f}</MetaDataID>
         public void ItemsServing(List<IItemPreparation> flavourItems)
         {
 
@@ -1484,6 +1516,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        /// <MetaDataID>{1bd18663-e4f7-45a1-9233-6edf3a462ed1}</MetaDataID>
         private ItemPreparation GetSessionItem(IItemPreparation item)
         {
             ItemPreparation existingItem;

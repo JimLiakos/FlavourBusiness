@@ -99,7 +99,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                           from mealCourse in openSession.Meal.Courses
                                                           from itemPreparation in mealCourse.FoodItems
                                                           orderby itemPreparation.PreparedAtForecast
-                                                          group itemPreparation by openSession into ServicePointItems
+                                                          group itemPreparation by mealCourse into ServicePointItems
                                                           select ServicePointItems))
 
 
@@ -474,7 +474,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse.Meal.Session, new List<IItemPreparation>() { flavourItem }));
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem }));
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
                 }

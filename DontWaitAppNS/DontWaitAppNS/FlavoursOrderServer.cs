@@ -19,6 +19,8 @@ using OOAdvantech;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.HumanResources;
+using OOAdvantech.Json.Linq;
+using System.Reflection;
 
 
 
@@ -2115,10 +2117,35 @@ namespace DontWaitApp
         {
             return "";
         }
+        Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
 
         public string GetTranslation(string langCountry)
         {
-            throw new NotImplementedException();
+            if (Translations.ContainsKey(langCountry))
+                return Translations[langCountry].ToString();
+            string json = "{}";
+            var assembly = Assembly.GetExecutingAssembly();
+
+#if DeviceDotNet
+            string path = "DontWaitApp.i18n";
+#else
+            string path = "DontWaitApp.i18n";
+#endif
+            //var ssd = assembly.GetManifestResourceNames();
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains(path) && x.Contains(langCountry + ".json")).FirstOrDefault();
+
+            //string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(jsonName))
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))
+                {
+                    json = reader.ReadToEnd();
+                    Translations[langCountry] = JObject.Parse(json);
+                    // Do something with the value
+                }
+            }
+            return json;
+
         }
 
         public void SetString(string langCountry, string key, string newValue)

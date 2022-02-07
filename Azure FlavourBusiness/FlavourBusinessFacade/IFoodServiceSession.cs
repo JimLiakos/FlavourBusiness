@@ -10,6 +10,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        /// <MetaDataID>{47ec6550-33af-4b17-9d14-fc5b9f3dca9f}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
+        string SessionID { get; }
+
         /// <MetaDataID>{34f182d7-6290-458b-896f-9b83e3e53444}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         IFlavoursServicesContextRuntime ServicesContextRuntime { get; }

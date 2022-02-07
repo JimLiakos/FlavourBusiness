@@ -18,6 +18,7 @@ namespace DontWaitApp
             Name = ClientSession.ClientName;
             DateTimeOfLastRequest = ClientSession.DateTimeOfLastRequest;
             ClientSessionID = ClientSession.SessionID;
+            MainSessionID = ClientSession.MainSession?.SessionID;
             WaiterSession = ClientSession.IsWaiterSession;
 
             foreach (var preparationItem in ClientSession.FlavourItems.OfType<ItemPreparation>().ToList())
@@ -105,6 +106,8 @@ namespace DontWaitApp
         public string Name { get; set; }
         public DateTime DateTimeOfLastRequest { get; set; }
         public string ClientSessionID { get; set; }
+
+        public string MainSessionID { get; set; }
 
         public bool WaiterSession { get; set; }
 

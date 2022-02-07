@@ -327,6 +327,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
 
         }
+
+
+        internal void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
+        {
+            lock (ObjLock)
+            {
+                if (_OpenClientSessions != null && _OpenClientSessions.Contains(foodServiceClientSession))
+                    _OpenClientSessions.Remove(foodServiceClientSession);
+
+            }
+        }
         /// <MetaDataID>{843f5047-930f-4a7a-8287-885b16d56317}</MetaDataID>
         internal List<FoodServiceSession> OpenSessions
         {
@@ -421,8 +432,23 @@ namespace FlavourBusinessManager.ServicePointRunTime
             SessionsMonitoringTimer.Start();
         }
 
-        /// <exclude>Excluded</exclude>
-        string _OrganizationIdentity;
+        internal void AddOpenServiceClientSession(FoodServiceClientSession fsClientSession)
+        {
+            lock (ObjLock)
+            {
+                if (_OpenClientSessions == null)
+                {
+                    _OpenClientSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<EndUsers.FoodServiceClientSession>()
+                                           select session).ToList();
+
+                }
+                _OpenClientSessions.Add(fsClientSession);
+                fsClientSession.ServicesContextRunTime = this;
+            }
+        }
+
+            /// <exclude>Excluded</exclude>
+            string _OrganizationIdentity;
 
         /// <MetaDataID>{4bd8b124-6792-425c-ae02-81f80954be42}</MetaDataID>
         [PersistentMember(nameof(_OrganizationIdentity))]
@@ -516,6 +542,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return _PreparationStationRuntimes;
             }
         }
+
+
 
         //internal static ServicesContextRunTime GetServicesContextRunTime(OOAdvantech.PersistenceLayer.ObjectStorage objectStorage, string servicesContextIdentity)
         //{
@@ -622,46 +650,46 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 //if (servicePoint.OpenClientSessions.Where(x => !x.IsWaiterSession).FirstOrDefault() != null)
                 //{
-                    var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                         where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                         select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+                var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
-                    foreach (var waiter in activeWaiters)
+                foreach (var waiter in activeWaiters)
+                {
+                    var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                    if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        var waiterActiveShiftWork = waiter.ActiveShiftWork;
-                        if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
+                        var clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Notification = new Notification() { Title = "Lay the Table" };
+                        waiter.PushMessage(clientMessage);
+
+                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
                         {
-                            var clientMessage = new Message();
-                            clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
-                            clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                            clientMessage.Notification = new Notification() { Title = "Lay the Table" };
-                            waiter.PushMessage(clientMessage);
+                            CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
 
-                            if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
-
-                                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
                                 {
-                                    foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
-                                    {
-                                        message.NotificationsNum += 1;
-                                        message.NotificationTimestamp = DateTime.UtcNow;
-                                    }
-
-                                    stateTransition.Consistent = true;
-                                }
-                                lock (ServiceContextRTLock)
-                                {
-                                    WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                                   from message in activeWaiter.Messages
-                                                                   where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
-                                                                   select activeWaiter).ToList();
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
                                 }
 
+                                stateTransition.Consistent = true;
+                            }
+                            lock (ServiceContextRTLock)
+                            {
+                                WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                               from message in activeWaiter.Messages
+                                                               where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
+                                                               select activeWaiter).ToList();
                             }
 
                         }
+
+                    }
                     //}
                 }
             }
@@ -688,7 +716,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         clientMessage = new Message();
                         clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
                         clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "There are items read to serve",Body="Check items ready to serve List" };
+                        clientMessage.Notification = new Notification() { Title = "There are items read to serve", Body = "Check items ready to serve List" };
                     }
                     waiter.PushMessage(clientMessage);
 
@@ -768,7 +796,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                   where storage.FlavourStorageType == OrganizationStorages.GraphicMenu
                                   select storage).ToList();
 
-                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri ;
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri;
                 foreach (var fbStorage in fbstorages)
                 {
                     var storageUrl = urlRoot + fbStorage.Url;
@@ -1362,17 +1390,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //                  select aServicePoint).FirstOrDefault();
 
             var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create);
-            if (create)
-            {
-                lock (ObjLock)
-                {
-                    if (!_OpenClientSessions.Contains(clientSession))
-                    {
-                        _OpenClientSessions.Add(clientSession as EndUsers.FoodServiceClientSession);
-                        (clientSession as FoodServiceClientSession).ServicesContextRunTime = this;
-                    }
-                }
-            }
+          
             if (clientSession == null)
                 return new ClientSessionData();
 
@@ -1616,23 +1634,30 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{cc310316-0d1f-477a-a360-e7fdc5f55a79}</MetaDataID>
         public IHallLayout GetHallLayout(string servicePointIdentity)
         {
-            var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+            return (from hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>()
+             from shape in hall.Shapes
+             where shape.ServicesPointIdentity == servicePointIdentity
+             select hall).FirstOrDefault();
 
-            var servicesContextIdentity = ServicesContextIdentity;
-            var serviceArea = (from aServiceArea in servicesContextStorage.GetObjectCollection<ServicesContextResources.ServiceArea>()
-                               from aServicePoint in aServiceArea.ServicePoints
-                               where aServicePoint.ServicesPointIdentity == servicePointIdentity
-                               select aServiceArea).FirstOrDefault();
+            //var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
-            if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
-            {
-                IHallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as IHallLayout;
-                return hallLayout;
-            }
-            else
-                return null;
+            //OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+            //var servicesContextIdentity = ServicesContextIdentity;
+            //var serviceArea = (from aServiceArea in servicesContextStorage.GetObjectCollection<ServicesContextResources.ServiceArea>()
+            //                   from aServicePoint in aServiceArea.ServicePoints
+            //                   where aServicePoint.ServicesPointIdentity == servicePointIdentity
+            //                   select aServiceArea).FirstOrDefault();
+
+            //return Halls.Where(x => x.HallLayoutUri == serviceArea.HallLayoutUri).FirstOrDefault();
+            //if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
+            //{
+            //    IHallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as IHallLayout;
+            //    return hallLayout;
+            //}
+            //else
+            //    return null;
 
         }
 

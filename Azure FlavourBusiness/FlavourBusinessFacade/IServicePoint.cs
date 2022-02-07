@@ -84,11 +84,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
        
 
 
-        /// <MetaDataID>{884effc8-0f67-4ffb-b9df-668065fa3d7e}</MetaDataID>
-        void AddServicePointClientSesion(IFoodServiceClientSession FoodServiceClientSession);
 
-        /// <MetaDataID>{8279b247-8e56-4a6d-ba0e-e31da0c49f1c}</MetaDataID>
-        void RemoveServicePointClientSesion(IFoodServiceClientSession FoodServiceClientSession);
 
         /// <MetaDataID>{5faee0ed-1a08-41b3-8e4b-8339a588df90}</MetaDataID>
         IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID);

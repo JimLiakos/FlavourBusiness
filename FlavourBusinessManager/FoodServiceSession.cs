@@ -19,7 +19,16 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
+        /// <exclude>Excluded</exclude>
+        string _SessionID= Guid.NewGuid().ToString("N");
 
+        /// <MetaDataID>{978b61ff-99f3-4e93-9923-f88005ed6315}</MetaDataID>
+        [PersistentMember(nameof(_SessionID))]
+        [CachingDataOnClientSide]
+        [BackwardCompatibilityID("+11")]
+        public string SessionID => _SessionID;
+
+        /// <MetaDataID>{d6ea50e8-e300-41c7-8a97-7ff69f0bc9e3}</MetaDataID>
         public FoodServiceSession()
         {
 
@@ -95,7 +104,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         foreach (var sessionPart in this.PartialClientSessions)
                             sessionPart.ServicePoint = value;
-                            
+
+
+                        foreach (var itemPreparation in (from sessionPart in this.PartialClientSessions
+                                                         from itemPreparation in sessionPart.FlavourItems.OfType<ItemPreparation>()
+                                                         select itemPreparation))
+                        {
+                            itemPreparation.StateTimestamp = DateTime.UtcNow;
+                        }
 
                         stateTransition.Consistent = true;
                     }
@@ -346,12 +362,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Meal.Value = new Meal(mealType, itemsToPrepare,this);
+                _Meal.Value = new Meal(mealType, itemsToPrepare, this);
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Meal.Value);
                 stateTransition.Consistent = true;
             }
 
-            
+
 
         }
 

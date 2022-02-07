@@ -28,7 +28,7 @@ namespace FlavourBusinessManager.RoomService
             get => _Without;
             set
             {
-
+                
                 if (_Without != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

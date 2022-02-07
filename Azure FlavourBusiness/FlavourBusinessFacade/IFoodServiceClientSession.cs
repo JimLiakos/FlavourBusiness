@@ -11,6 +11,9 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+        /// <MetaDataID>{0251075a-b9d0-47c0-b664-36acf13674ac}</MetaDataID>
+        [BackwardCompatibilityID("+10")]
+        bool ImplicitMealParticipation { get; set; }
 
         ///// <MetaDataID>{4a6cfe26-2795-4345-85e5-f518c066e86c}</MetaDataID>
         //Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations);
@@ -178,6 +181,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
         ClientSessionState SessionState { get; set; }
+        /// <MetaDataID>{bb4dd357-c34b-462e-b5d4-2ed725f5123a}</MetaDataID>
         bool Inactive { get; }
 
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>

@@ -60,6 +60,9 @@
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
       <Link>ApplicationSettings.cs</Link>
     </Compile>
+    <None Include="..\MenuModel\JsonViewModel\Tag.cs">
+      <Link>MenuModel\Tag.cs</Link>
+    </None>
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\ApplicationSettings.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\ApplicationSettings.cs</Link>
     </Compile>

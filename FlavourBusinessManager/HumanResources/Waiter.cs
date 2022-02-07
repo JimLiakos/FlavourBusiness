@@ -820,6 +820,8 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
         public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         {
+            if (foodServiceSession == null)
+                return;
             if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
                 return;
 
@@ -833,30 +835,8 @@ namespace FlavourBusinessManager.HumanResources
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
-                foreach(var foodServiceClientSession in  targetServicePoint.OpenClientSessions.Where(x=>x.Waiter==this).Where(x=>x.FlavourItems.Count==0&&x.SharedItems.Count==0))
-                {
-                    var mainSession = foodServiceClientSession.MainSession;
-                    if (mainSession != null)
-                        mainSession.RemovePartialSession(foodServiceClientSession);
-
-                    targetServicePoint.RemoveServicePointClientSesion(foodServiceClientSession);
-                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
-
-                    if(mainSession!=null&& mainSession.PartialClientSessions.All(x=>x.Inactive))
-                    {
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            foreach (var partialClientSession in mainSession.PartialClientSessions)
-                                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
-                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
-                            stateTransition.Consistent = true;
-                        }
-                    }
-
-
-                }
+                
                 (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
-
                 targetServicePoint.UpdateState();
 
                 if (foodServiceSession.Meal != null)

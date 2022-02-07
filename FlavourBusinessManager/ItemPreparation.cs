@@ -742,6 +742,12 @@ namespace FlavourBusinessManager.RoomService
                 _CustomItemEnabled = item.CustomItemEnabled;
                 _SelectedMealCourseTypeUri = item.SelectedMealCourseTypeUri;
                 _State = item._State;
+                if(_StateTimestamp!=item.StateTimestamp)
+                {
+                    _StateTimestamp = item.StateTimestamp;
+                    changed = true;
+                }
+
 
                 List<OptionChange> removedOptions = new List<OptionChange>(_OptionsChanges.OfType<OptionChange>());
 
@@ -916,10 +922,11 @@ namespace FlavourBusinessManager.RoomService
     }
 
 
+    /// <MetaDataID>{02a0de31-8f78-40f0-92cf-9a6cc11846f1}</MetaDataID>
     public static class ItemPreparationStateEx
     {
         /// <MetaDataID>{52d16497-7a11-47e5-9020-8517e3d26493}</MetaDataID>
-       static public bool IsInFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
+        static public bool IsInFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
         {
             //following 
             return ((int)thisState) > ((int)state);

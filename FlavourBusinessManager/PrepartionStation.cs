@@ -462,7 +462,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                           from itemPreparation in mealCourse.FoodItems
                                                           orderby itemPreparation.PreparedAtForecast
                                                           //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-                                                          group itemPreparation by openSession into ServicePointItems
+                                                          group itemPreparation by mealCourse into ServicePointItems
                                                           select ServicePointItems))
 
             //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
@@ -487,7 +487,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                         item.ObjectChangeState += FlavourItem_ObjectChangeState;
                     }
                 }
-                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
+
+                var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
+                ServicePointsPreparationItems.Add(preparationSession);
+                preparationSession.ObjectChangeState += PreparationSessionChangeState;
             }
 
             Task.Run(() =>
@@ -520,7 +523,13 @@ namespace FlavourBusinessManager.ServicesContextResources
             });
         }
 
+        private void PreparationSessionChangeState(object _object, string member)
+        {
 
+            lock (DeviceUpdateLock)
+                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
+        }
 
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
 
@@ -588,9 +597,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                     flavourItem.IsCooked = this.IsCooked(flavourItem.MenuItem);
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
-                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
+                    var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse.Meal.Session, new List<IItemPreparation>() { flavourItem }));
+                    {
+                        var preparationSession = new ServicePointPreparationItems(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem });
+                        ServicePointsPreparationItems.Add(preparationSession);
+                        preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                    }
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
 
@@ -607,56 +620,58 @@ namespace FlavourBusinessManager.ServicesContextResources
         internal static PreparationData GetPreparationData(ItemPreparation itemPreparation)
         {
             itemPreparation.LoadMenuItem();
-            PreparationData preparationData = new PreparationData();
+            PreparationData preparationData = null;
             if (itemPreparation.PreparationStation != null)
             {
-                preparationData.ItemPreparation = itemPreparation;
-                preparationData.PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime;  //ServicesContextRunTime.Current.GetPreparationStationRuntime(itemPreparation.PreparationStation.PreparationStationIdentity);
-                preparationData.Duration = TimeSpan.FromMinutes((itemPreparation.PreparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
-                return preparationData;
+                //the item has already been assigned to the prep station
+                preparationData = new PreparationData()
+                {
+                    ItemPreparation = itemPreparation,
+                    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime
+                };
             }
+            else
+            {
 
-            foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
-            {
-                if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
                 {
-                    preparationData.PreparationStationRuntime = preparationStation;
-                    preparationData.Duration = TimeSpan.FromMinutes((preparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
-                    preparationData.ItemPreparation = itemPreparation;
-                }
-            }
-            if (preparationData.PreparationStationRuntime == null)
-            {
-                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
-                {
-                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    //Look for the dedicated for service point  prep station to prepare the item 
+                    if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
                     {
-                        preparationData.PreparationStationRuntime = preparationStation;
-                        preparationData.Duration = TimeSpan.FromMinutes((preparationStation as ServicesContextResources.PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
-                        preparationData.ItemPreparation = itemPreparation;
+                        preparationData = new PreparationData()
+                        {
+                            ItemPreparation = itemPreparation,
+                            PreparationStationRuntime = preparationStation
+                        };
                     }
                 }
-            }
-            if (preparationData.PreparationStationRuntime == null)
-            {
-                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>())
+                if (preparationData.PreparationStationRuntime == null)
                 {
-                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    //Look for the general  prep station to prepare the item 
+                    foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
                     {
-                        preparationData.PreparationStationRuntime = preparationStation;
-                        preparationData.Duration = TimeSpan.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
-                        preparationData.ItemPreparation = itemPreparation;
+                        if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                        {
+                            preparationData = new PreparationData()
+                            {
+                                ItemPreparation = itemPreparation,
+                                PreparationStationRuntime = preparationStation
+                            };
+                        }
                     }
                 }
+
             }
-
-
-
-
-
-
-
-
+            if (preparationData == null)
+            {
+                preparationData = new PreparationData()
+                {
+                    ItemPreparation = itemPreparation,
+                    Duration = TimeSpan.FromMinutes(0.5)
+                };
+            }
+            else
+                preparationData.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
             return preparationData;
         }
 
@@ -665,7 +680,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
             lock (DeviceUpdateLock)
+            {
                 DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            }
             if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
@@ -794,8 +811,13 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
     /// <MetaDataID>{0241f6f2-d035-4ec2-91ee-f2b41613abe3}</MetaDataID>
-    struct PreparationData
+    [BackwardCompatibilityID("{0241f6f2-d035-4ec2-91ee-f2b41613abe3}")]
+    class PreparationData
     {
+        public PreparationData()
+        {
+
+        }
         /// <MetaDataID>{a3a3dd1c-2b8f-494e-a91b-7662e37b40b8}</MetaDataID>
         public ItemPreparation ItemPreparation;
 

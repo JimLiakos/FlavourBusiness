@@ -89,46 +89,64 @@ namespace PreparationStationDevice
         public Task<List<PreparationItemsPerServicePoint>> WebUIAttached()
         {
 
+
             return Task<List<PreparationItemsPerServicePoint>>.Run(() =>
             {
-                if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
+                int tries = 30;
+                while (tries > 0)
                 {
-
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                    string serverUrl = AzureServerUrl;
-                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
-                    if (PreparationStation != null)
+                    try
                     {
+                        if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
+                        {
 
-                        var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
-                        HttpClient httpClient = new HttpClient();
-                        var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
-                        getJsonTask.Wait();
-                        var json = getJsonTask.Result;
-                        var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                        MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+                            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                            string serverUrl = AzureServerUrl;
+                            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                            PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                            if (PreparationStation != null)
+                            {
 
-                        // servicesContextManagment.
-                        Title = PreparationStation.Description;
+                                var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                                HttpClient httpClient = new HttpClient();
+                                var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                                getJsonTask.Wait();
+                                var json = getJsonTask.Result;
+                                var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                                MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
-                        PreparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
-                        ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                                // servicesContextManagment.
+                                Title = PreparationStation.Description;
+
+                                PreparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
+                                ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                            }
+
+                            //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
+                        }
+                        var preparationItemsPerServicePoint = (from servicePointItems in ServicePointsPreparationItems
+                                                               select new PreparationItemsPerServicePoint()
+                                                               {
+                                                                   Description = servicePointItems.Description,
+                                                                   ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
+                                                                   ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
+                                                                   Uri = servicePointItems.Uri,
+                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()
+                                                               }).ToList();
+
+                        return preparationItemsPerServicePoint;
                     }
-
-                    //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
+                    catch (Exception error)
+                    {
+                        tries--;
+                        if (tries == 0)
+                            throw;
+                        
+                    }
                 }
-                var preparationItemsPerServicePoint = (from servicePointItems in ServicePointsPreparationItems
-                                                       select new PreparationItemsPerServicePoint()
-                                                       {
-                                                           Description = servicePointItems.Description,
-                                                           ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
-                                                           ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
-                                                           Uri = servicePointItems.Uri,
-                                                           PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()
-                                                       }).ToList();
-                return preparationItemsPerServicePoint;
+                return null;
+                
             });
         }
 
