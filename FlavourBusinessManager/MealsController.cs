@@ -60,6 +60,10 @@ namespace FlavourBusinessManager.RoomService
             //you have to  filter mealcourses by state.
         }
 
+        public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
+        {
+
+        }
 
 
 
