@@ -519,7 +519,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
             ServicePointRunTime.ServicesContextRunTime.Current.RemoveClientSession(foodServiceClientSession);
 
-            if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Inactive))
+            if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Forgotten))
             {
                 using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                 {

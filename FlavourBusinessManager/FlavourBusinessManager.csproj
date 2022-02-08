@@ -284,6 +284,7 @@
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />
+    <Compile Include="Settings.cs" />
     <None Include="app.config" />
     <None Include="FlavourBusinessManager.cat" />
     <None Include="FlavourBusinessManager.sub" />

@@ -12,6 +12,8 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        [Association("FlavoursServicesContextSettings", Roles.RoleA, "b09368df-ec34-4529-ab3d-bce7037059db")]
+        List<ISettings> Settings { get; }
         [Association("ServiceContextPreparationStation", Roles.RoleA, "a73cc7de-ca5d-44dd-bc94-4bd2e0b3c5b3")]
         System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IPreparationStation> PreparationStations { get; }
 
@@ -26,6 +28,7 @@ namespace FlavourBusinessFacade
         IList<ICashierStation> CashierStations { get; }
 
 
+        /// <MetaDataID>{9a803c21-e6d5-492f-b674-121198f0e2e3}</MetaDataID>
         IList<FinanceFacade.IFisicalParty> FisicalParties { get; }
 
 
@@ -38,10 +41,13 @@ namespace FlavourBusinessFacade
 
 
 
+        /// <MetaDataID>{1f3cafb1-d5b3-4ef7-ac70-4e864193bb1b}</MetaDataID>
         FinanceFacade.IFisicalParty NewFisicalParty();
 
+        /// <MetaDataID>{067cb138-5b45-485d-869b-9cbb4f6a96d8}</MetaDataID>
         void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty);
 
+        /// <MetaDataID>{40be539c-d860-4329-b9aa-62e1bc9a7ece}</MetaDataID>
         void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty);
 
 

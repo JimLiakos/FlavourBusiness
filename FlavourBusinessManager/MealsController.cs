@@ -12,6 +12,7 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{c31eb292-1b39-4081-9516-0e0e9e97b10a}</MetaDataID>
     public class MealsController : System.MarshalByRefObject, IExtMarshalByRefObject, IMealsController
     {
+        /// <MetaDataID>{0a7aeeab-712e-4d32-b84b-4de237e3192c}</MetaDataID>
         public List<IMealCourse> MealCoursesInProgress
         {
             get
@@ -31,20 +32,24 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{2545475d-7f8d-4eb5-b7ec-12ca0dc59bfa}</MetaDataID>
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
 
         public event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
+        /// <MetaDataID>{678886b6-415d-4058-8264-0847b0872a3a}</MetaDataID>
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
             ServicesContextRunTime = servicesContextRunTime;
         }
+        /// <MetaDataID>{6570680d-a627-47c1-b385-2919e07bb359}</MetaDataID>
         ~MealsController()
         {
             System.Diagnostics.Debug.WriteLine("MealsController");
         }
 
+        /// <MetaDataID>{287105f2-4956-4515-b8f8-a1b06d4d5092}</MetaDataID>
         internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             NewMealCoursesInrogress?.Invoke(mealCourses);
@@ -53,6 +58,7 @@ namespace FlavourBusinessManager.RoomService
             //you have to  filter mealcourses by state.
         }
 
+        /// <MetaDataID>{31cd58c7-882d-4902-9d94-8b63c8ee71bc}</MetaDataID>
         internal void OnRemoveMealCoursesInrogress(List<IMealCourse> mealCourses)
         {
             ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
@@ -60,15 +66,27 @@ namespace FlavourBusinessManager.RoomService
             //you have to  filter mealcourses by state.
         }
 
+        /// <MetaDataID>{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}</MetaDataID>
         public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
         {
+            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).Last();
 
+            if (foodServiceSession.Progresses < ServicePointRunTime.ServicesContextRunTime.Current.CallerIDServer)
+                if (foodServiceSession == null)
+                    foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+            foodServiceSession.AddPartialSession(referencClientSession);
+            if (referencClientSession.Menu != null)
+                foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
+
+            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
         }
 
 
 
+        /// <MetaDataID>{cd97524c-d96b-4469-8ad1-dbc709729bb4}</MetaDataID>
         Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
 
+        /// <MetaDataID>{e7cf8250-6b70-4095-bf94-bf087a79d362}</MetaDataID>
         internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
         {
 
@@ -141,6 +159,7 @@ namespace FlavourBusinessManager.RoomService
             return servingBatches;
         }
 
+        /// <MetaDataID>{cad5c370-7874-46bf-a785-93efc6d68ed7}</MetaDataID>
         internal void ServingBatchDeassigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 
@@ -163,7 +182,8 @@ namespace FlavourBusinessManager.RoomService
         /// <param name="excludeWaiter">
         /// This parameter defines the waiter where exclude from waiters list
         /// </param>
-        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses, HumanResources.Waiter excludeWaiter=null)
+        /// <MetaDataID>{17792be3-f73c-4e93-b382-6848fcef9521}</MetaDataID>
+        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses, HumanResources.Waiter excludeWaiter = null)
         {
 
 
@@ -183,12 +203,13 @@ namespace FlavourBusinessManager.RoomService
             }
 
             if (excludeWaiter != null && activeWaitersFormealCoursesServing.Contains(excludeWaiter))
-                activeWaitersFormealCoursesServing.Remove(excludeWaiter); 
+                activeWaitersFormealCoursesServing.Remove(excludeWaiter);
 
             foreach (var a_Waiter in activeWaitersFormealCoursesServing)
                 a_Waiter.FindServingBatchesChanged();
         }
 
+        /// <MetaDataID>{eb9a6c0c-3a5e-4115-a6e2-c1aaee2b0fb9}</MetaDataID>
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 

@@ -472,6 +472,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+10")]
         public IFlavoursServicesContextRuntime ServicesContextRuntime => FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current;
 
+        /// <MetaDataID>{3dac55f5-abb7-4017-b370-16eefdbd91a0}</MetaDataID>
+        public double Progresses { get; internal set; }
+
         /// <MetaDataID>{ce6107e5-bd9c-4f9f-bc82-e2070d163bf6}</MetaDataID>
         public void RemovePartialSession(IFoodServiceClientSession partialSession)
         {

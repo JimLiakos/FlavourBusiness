@@ -1404,7 +1404,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{6b965aed-f7e7-42c3-b155-51b8013f2cca}</MetaDataID>
-        public bool Inactive
+        public bool Forgotten
         {
             get
             {
@@ -1870,15 +1870,21 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     FoodServiceSession foodServiceSession = null;
                     if (IsWaiterSession)
+                    {
                         foodServiceSession = (ServicePoint as ServicePoint).OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
-                    if (foodServiceSession == null)
-                        foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
-                    foodServiceSession.AddPartialSession(this);
-                    if (this.Menu != null)
-                        foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
+                        if (foodServiceSession == null)
+                            foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                        foodServiceSession.AddPartialSession(this);
+                        if (this.Menu != null)
+                            foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
 
-                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                    }
+                    else
+                    {
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+                    }
                 }
 
                 AllItemsCommited();

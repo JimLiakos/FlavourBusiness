@@ -185,7 +185,11 @@
 		(object Realize_Relationship
 		    quid       	"61ADB835020B"
 		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime"
-		    quidu      	"61ADB71200C0"))
+		    quidu      	"61ADB71200C0")
+		(object Realize_Relationship
+		    quid       	"6202153802ED"
+		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::ISettings"
+		    quidu      	"620214A90260"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -1752,4 +1756,36 @@
 		    quidu      	"61ADB835020B"
 		    client     	@1
 		    supplier   	@87
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::ServicesContextResources::ISettings" @89
+		    location   	(2369, 2643)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@89
+			location   	(2368, 2751)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ISettings")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"620214A90260")
+		(object RealizeView "" @90
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"6202153802ED"
+		    client     	@1
+		    supplier   	@89
 		    line_style 	0)))))
