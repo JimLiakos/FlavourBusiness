@@ -15,17 +15,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// Defines the minimum lifespan of the session that can be marked as forgotten
         /// </summary>
         /// <MetaDataID>{2802ce16-4fc0-4c15-a4e0-59dacb93443c}</MetaDataID>
-        TimeSpan ForgottenSessionLifeTimeSpan { get; set; }
+        double ForgottenSessionLifeTimeSpanInMin { get; set; }
         /// <summary>
         ///  Defines the minimum sleep duration of the device app that can be marked as forgotten
         /// </summary>
-        TimeSpan ForgottenSessionDeviceSleepTimeSpan { get; set; }
+        /// <MetaDataID>{27134864-4f08-40b4-9e69-0d19bc6b3791}</MetaDataID>
+        double ForgottenSessionDeviceSleepTimeSpanInMin { get; set; }
 
         /// <summary>
         ///  Defines the minimum time since the last change in session that can be marked as forgotten
         /// </summary>
         /// <MetaDataID>{261708e9-3e50-4ed3-b733-801e22b46ff5}</MetaDataID>
-        TimeSpan ForgottenSessionLastChangeTimeSpan { get; set; }
+        double ForgottenSessionLastChangeTimeSpanInMin { get; set; }
     }
     
 }

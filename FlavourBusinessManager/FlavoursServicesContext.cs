@@ -625,5 +625,14 @@ namespace FlavourBusinessManager
 
         /// <MetaDataID>{1900ac60-fd30-4922-b07b-a93d61875010}</MetaDataID>
         public IUploadService UploadService { get => GetRunTime() as IUploadService; }
+
+        public ISettings Settings
+        {
+            get
+            {
+                return GetRunTime().Settings;
+            }
+        }
+    
     }
 }

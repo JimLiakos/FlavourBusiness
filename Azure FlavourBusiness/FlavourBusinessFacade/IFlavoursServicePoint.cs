@@ -12,8 +12,13 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        [RoleAMultiplicityRange(1, 1)]
         [Association("FlavoursServicesContextSettings", Roles.RoleA, "b09368df-ec34-4529-ab3d-bce7037059db")]
-        List<ISettings> Settings { get; }
+        ISettings Settings { get; }
+
+
+
+
         [Association("ServiceContextPreparationStation", Roles.RoleA, "a73cc7de-ca5d-44dd-bc94-4bd2e0b3c5b3")]
         System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IPreparationStation> PreparationStations { get; }
 

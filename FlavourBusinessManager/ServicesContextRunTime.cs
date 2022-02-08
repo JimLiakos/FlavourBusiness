@@ -447,8 +447,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-            /// <exclude>Excluded</exclude>
-            string _OrganizationIdentity;
+        /// <exclude>Excluded</exclude>
+        string _OrganizationIdentity;
 
         /// <MetaDataID>{4bd8b124-6792-425c-ae02-81f80954be42}</MetaDataID>
         [PersistentMember(nameof(_OrganizationIdentity))]
@@ -1305,6 +1305,45 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        ISettings _Settings;
+
+        public ISettings Settings
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_Settings == null)
+                    {
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        _Settings = (from settings in servicesContextStorage.GetObjectCollection<ISettings>()
+                                     select settings).FirstOrDefault();
+                        if (_Settings == null)
+                        {
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                _Settings = new Settings() {
+                                    AutoAssignMaxMealProgress=50,
+                                    ForgottenSessionDeviceSleepTimeSpanInMin=3, 
+                                    ForgottenSessionLastChangeTimeSpanInMin=10,
+                                    ForgottenSessionLifeTimeSpanInMin=20
+                                };
+                                
+                                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Settings);
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                    return _Settings;
+                }
+            }
+        }
+
+
         /// <MetaDataID>{65920937-f6f4-4472-870b-ff1b9081ed7f}</MetaDataID>
         public void LaunchCallerIDServer()
         {
@@ -1390,7 +1429,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //                  select aServicePoint).FirstOrDefault();
 
             var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create);
-          
+
             if (clientSession == null)
                 return new ClientSessionData();
 
@@ -1636,9 +1675,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
 
             return (from hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>()
-             from shape in hall.Shapes
-             where shape.ServicesPointIdentity == servicePointIdentity
-             select hall).FirstOrDefault();
+                    from shape in hall.Shapes
+                    where shape.ServicesPointIdentity == servicePointIdentity
+                    select hall).FirstOrDefault();
 
             //var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
