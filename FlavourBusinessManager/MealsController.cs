@@ -4,6 +4,7 @@ using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting;
+using OOAdvantech.Transactions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,21 +70,51 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}</MetaDataID>
         public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
         {
-            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).Last();
+            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
 
 
-            if (foodServiceSession != null && foodServiceSession.Progresses < ServicePointRunTime.ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
+            if (foodServiceSession != null && foodServiceSession.Progresses < ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
                 foodServiceSession = null;
 
             if (foodServiceSession == null)
-                foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+            {
 
-            foodServiceSession.AddPartialSession(referencClientSession);
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                    ObjectStorage.GetStorageOfObject(ServicesContextRunTime.Current).CommitTransientObjectState(foodServiceSession);
+                    if (referencClientSession.Menu != null)
+                        foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
+
+
+                    foodServiceSession.AddPartialSession(referencClientSession);
+                    referencClientSession.ImplicitMealParticipation = true;
+
+
+                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null))
+                    {
+                        foodServiceSession.AddPartialSession(unAssignedClientSession);
+                        unAssignedClientSession.ImplicitMealParticipation = true;
+                    }
+                    
+                    stateTransition.Consistent = true;
+                }
+
+
+            }
+            else
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foodServiceSession.AddPartialSession(referencClientSession);
+                    stateTransition.Consistent = true;
+                }
+            }
+
             //referencClientSession.
-            if (referencClientSession.Menu != null)
-                foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
 
-            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+            
         }
 
 

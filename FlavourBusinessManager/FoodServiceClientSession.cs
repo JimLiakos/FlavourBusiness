@@ -1402,7 +1402,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                bool forgotten = ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
+                bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
                     (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin) &&
                     (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin) &&
                     (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin);

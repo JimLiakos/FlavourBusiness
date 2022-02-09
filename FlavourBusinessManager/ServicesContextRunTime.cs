@@ -324,39 +324,46 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
 
                     }
-                    try
-                    {
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            List<FoodServiceClientSession> forgottenClientSessions  = _OpenClientSessions.Where(x => x.Forgotten).ToList();
-                            foreach (var forgottenClientSession in forgottenClientSessions)
-                                DeleteClientSession(forgottenClientSession);
-                                
-                            stateTransition.Consistent = true;
-                        }
-
-                    }
-                    catch (Exception error)
-                    {
-                    }
+                    CollectGarbageClientSessions();
                     return _OpenClientSessions;
                 }
             }
 
         }
 
-        internal void DeleteClientSession(FoodServiceClientSession foodServiceClientSession)
+        /// <summary>
+        ///Removes all forgotten food client session.
+        /// </summary>
+        private void CollectGarbageClientSessions()
         {
-            var mainSession = foodServiceClientSession.MainSession;
-            if (mainSession != null)
-                mainSession.RemovePartialSession(foodServiceClientSession);
+            try
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    List<FoodServiceClientSession> forgottenClientSessions = _OpenClientSessions.Where(x => x.Forgotten).ToList();
+                    foreach (var forgottenClientSession in forgottenClientSessions)
+                    {
+                        var mainSession = forgottenClientSession.MainSession;
+                        if (mainSession != null)
+                            mainSession.RemovePartialSession(forgottenClientSession);
 
-            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
-            
-            if (mainSession != null && mainSession.PartialClientSessions.Count==0)
-                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+                        OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
+
+                        if (mainSession != null && mainSession.PartialClientSessions.Count == 0)
+                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+
+            }
+            catch (Exception error)
+            {
+            }
         }
 
+ 
 
         internal void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
         {

@@ -340,7 +340,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             FoodServiceClientSession messmateClientSesion = null;
 
 
-            CollectGarbageClientSessions(user, clientDeviceID);
+            //CollectGarbageClientSessions(user, clientDeviceID);
 
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
             if (user != null)
@@ -464,50 +464,50 @@ namespace FlavourBusinessManager.ServicesContextResources
             return fsClientSession;
         }
 
-        /// <summary>
-        /// Removes all inactive food client session.
-        /// There is case where user open a session with service point but 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="clientDeviceID"></param>
-        private void CollectGarbageClientSessions(FlavourBusinessFacade.IUser user, string clientDeviceID)
-        {
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                List<FoodServiceClientSession> openClientSessions = new List<FoodServiceClientSession>();
+        ///// <summary>
+        ///// Removes all inactive food client session.
+        ///// There is case where user open a session with service point but 
+        ///// </summary>
+        ///// <param name="user"></param>
+        ///// <param name="clientDeviceID"></param>
+        //private void CollectGarbageClientSessions(FlavourBusinessFacade.IUser user, string clientDeviceID)
+        //{
+        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //    {
+        //        List<FoodServiceClientSession> openClientSessions = new List<FoodServiceClientSession>();
 
-                if(user!=null)
-                    OpenClientSessions.Where(x => x.UserIdentity == user.Identity).ToList();
-                if (openClientSessions.Count > 0)
-                {
-                    foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
-                    {
-                        if (openClientSessions.Count > 1)
-                        {
-                            //all sessions without items are garbage, except the last one 
-                            RemoveClientSession(foodServiceClientSession);
-                            openClientSessions.Remove(foodServiceClientSession);
-                        }
-                    }
-                }
-                //visitor client sessions
-                openClientSessions = OpenClientSessions.Where(x => x.ClientDeviceID == clientDeviceID).ToList();
-                if (openClientSessions.Count > 0)
-                {
-                    foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
-                    {
-                        if (openClientSessions.Count > 1)
-                        {
-                            //all sessions without items are garbage except the last one 
-                            RemoveClientSession(foodServiceClientSession);
-                            openClientSessions.Remove(foodServiceClientSession);
-                        }
-                    }
-                }
+        //        if(user!=null)
+        //            OpenClientSessions.Where(x => x.UserIdentity == user.Identity).ToList();
+        //        if (openClientSessions.Count > 0)
+        //        {
+        //            foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
+        //            {
+        //                if (openClientSessions.Count > 1)
+        //                {
+        //                    //all sessions without items are garbage, except the last one 
+        //                    RemoveClientSession(foodServiceClientSession);
+        //                    openClientSessions.Remove(foodServiceClientSession);
+        //                }
+        //            }
+        //        }
+        //        //visitor client sessions
+        //        openClientSessions = OpenClientSessions.Where(x => x.ClientDeviceID == clientDeviceID).ToList();
+        //        if (openClientSessions.Count > 0)
+        //        {
+        //            foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
+        //            {
+        //                if (openClientSessions.Count > 1)
+        //                {
+        //                    //all sessions without items are garbage except the last one 
+        //                    RemoveClientSession(foodServiceClientSession);
+        //                    openClientSessions.Remove(foodServiceClientSession);
+        //                }
+        //            }
+        //        }
 
-                stateTransition.Consistent = true;
-            }
-        }
+        //        stateTransition.Consistent = true;
+        //    }
+        //}
 
         private void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
         {
