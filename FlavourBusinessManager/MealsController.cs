@@ -71,10 +71,15 @@ namespace FlavourBusinessManager.RoomService
         {
             FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).Last();
 
-            if (foodServiceSession.Progresses < ServicePointRunTime.ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
-                if (foodServiceSession == null)
-                    foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+
+            if (foodServiceSession != null && foodServiceSession.Progresses < ServicePointRunTime.ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
+                foodServiceSession = null;
+
+            if (foodServiceSession == null)
+                foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+
             foodServiceSession.AddPartialSession(referencClientSession);
+            //referencClientSession.
             if (referencClientSession.Menu != null)
                 foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
 

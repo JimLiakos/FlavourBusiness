@@ -720,10 +720,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{34345d6f-bc61-494d-9814-7644ba581c12}</MetaDataID>
         public IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
-            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
 
-
-            var collection = (from foodServiceClient in storage.GetObjectCollection<FoodServiceClientSession>()
+            
+            var collection = (from foodServiceClient in ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions
                               where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession
                               select foodServiceClient).ToList();
 

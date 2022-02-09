@@ -1000,14 +1000,6 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                foreach (var item in _FlavourItems)
-                {
-                    if (item.ClientSession == null)
-                    {
-
-                    }
-
-                }
                 return _FlavourItems.ToThreadSafeList();
             }
         }
@@ -1201,6 +1193,8 @@ namespace FlavourBusinessManager.EndUsers
             var ssd = OOAdvantech.PersistenceLayer.StorageInstanceRef.GetStorageInstanceRef(this)?.ObjectID;
             if (SessionState != ClientSessionState.Closed)
                 StartDeviceConnectionStatusCheck();
+            var servicPoint = this.ServicePoint?.Description;
+            var forgotten = Forgotten;
         }
 
         /// <MetaDataID>{35842787-d9d9-428e-b02b-4c1c668082b3}</MetaDataID>
@@ -1408,8 +1402,14 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
+                bool forgotten = ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
+                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin) &&
+                    (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin) &&
+                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin);
 
-                return (FlavourItems.Count == 0 && SharedItems.Count == 0 && ((DateTime.UtcNow - SessionStarts).TotalMinutes > 10 || _MessageReceived == null));
+
+
+                return forgotten;
             }
         }
 
@@ -1826,6 +1826,7 @@ namespace FlavourBusinessManager.EndUsers
                 DeviceAppState = DeviceAppLifecycle.InUse;
                 stateTransition.Consistent = true;
             }
+
         }
 
 

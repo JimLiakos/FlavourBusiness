@@ -309,6 +309,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
+                
+                
                 lock (ObjLock)
                 {
                     if (_OpenClientSessions == null)
@@ -322,10 +324,37 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
 
                     }
+                    try
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            List<FoodServiceClientSession> forgottenClientSessions  = _OpenClientSessions.Where(x => x.Forgotten).ToList();
+                            foreach (var forgottenClientSession in forgottenClientSessions)
+                                DeleteClientSession(forgottenClientSession);
+                                
+                            stateTransition.Consistent = true;
+                        }
+
+                    }
+                    catch (Exception error)
+                    {
+                    }
                     return _OpenClientSessions;
                 }
             }
 
+        }
+
+        internal void DeleteClientSession(FoodServiceClientSession foodServiceClientSession)
+        {
+            var mainSession = foodServiceClientSession.MainSession;
+            if (mainSession != null)
+                mainSession.RemovePartialSession(foodServiceClientSession);
+
+            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
+            
+            if (mainSession != null && mainSession.PartialClientSessions.Count==0)
+                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
         }
 
 

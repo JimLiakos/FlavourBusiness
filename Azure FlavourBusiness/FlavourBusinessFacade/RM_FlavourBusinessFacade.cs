@@ -483,6 +483,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.ISettings Settings
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_Settings", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ISettings>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IPreparationStation> PreparationStations
         {
             get
@@ -1175,6 +1187,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_FisicalParties", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FinanceFacade.IFisicalParty>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.ISettings Settings
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_Settings", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ISettings>(retValue);
             }
         }
         
@@ -2391,13 +2415,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public bool Inactive
+        public bool Forgotten
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Inactive", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Forgotten", args, argsTypes);
                 return this.Proxy.GetValue<bool>(retValue);
             }
         }
