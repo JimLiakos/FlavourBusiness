@@ -184,6 +184,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{bb4dd357-c34b-462e-b5d4-2ed725f5123a}</MetaDataID>
         bool Forgotten { get; }
 
+        bool LongTimeForgotten { get; }
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
         void Items…nPreparation(List<IItemPreparation> clientSessionItems);
         /// <MetaDataID>{b08a831f-e2cb-4a7d-9c27-0b2d34653629}</MetaDataID>

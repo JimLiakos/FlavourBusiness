@@ -241,6 +241,10 @@ namespace FlavourBusinessManager.EndUsers
                         _MainSession.Value.SessionStarts = partialSession.SessionStarts;
 
                 }
+                
+                messmateClientSesion.ImplicitMealParticipation = false;
+                ImplicitMealParticipation = false;
+
 
                 stateTransition.Consistent = true;
             }
@@ -793,7 +797,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{b8a58af5-a44e-4c7e-986a-f55fa05cff3c}</MetaDataID>
         [PersistentMember(nameof(_ServicePoint))]
         [BackwardCompatibilityID("+3")]
-        public FlavourBusinessFacade.ServicesContextResources.IServicePoint ServicePoint
+        public IServicePoint ServicePoint
         {
             get
             {
@@ -1079,11 +1083,21 @@ namespace FlavourBusinessManager.EndUsers
             return peopole;
         }
 
+        /// <summary>
+        /// This method returns the service point meal participants
+        /// </summary>
+        /// <returns></returns>
         /// <MetaDataID>{091f9ca8-3349-4530-b0a8-33624ca619a1}</MetaDataID>
         public IList<IFoodServiceClientSession> GetMealParticipants()
         {
             if (MainSession != null)
-                return MainSession.PartialClientSessions.Where(x => x != this).ToList();
+            {
+                if(IsWaiterSession) //For waiter returns all implicit meal participants and meal invitation participants
+                    return MainSession.PartialClientSessions.Where(x => x != this).ToList();
+                else
+                    return MainSession.PartialClientSessions.Where(x => x != this&&!x.ImplicitMealParticipation).ToList();// All participant which participate with meal invitation
+
+            }
             else
                 return new List<IFoodServiceClientSession>();
         }
@@ -1406,6 +1420,21 @@ namespace FlavourBusinessManager.EndUsers
                     (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin) &&
                     (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin) &&
                     (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin);
+
+
+
+                return forgotten;
+            }
+        }
+
+        public bool LongTimeForgotten
+        {
+            get
+            {
+                bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
+                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin*3) &&
+                    (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin*3) &&
+                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin*3);
 
 
 

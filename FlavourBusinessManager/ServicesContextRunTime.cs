@@ -340,7 +340,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    List<FoodServiceClientSession> forgottenClientSessions = _OpenClientSessions.Where(x => x.Forgotten).ToList();
+                    List<FoodServiceClientSession> forgottenClientSessions = _OpenClientSessions.Where(x => x.LongTimeForgotten).ToList();
                     foreach (var forgottenClientSession in forgottenClientSessions)
                     {
                         var mainSession = forgottenClientSession.MainSession;

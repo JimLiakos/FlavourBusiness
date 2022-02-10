@@ -91,7 +91,8 @@ namespace FlavourBusinessManager.RoomService
                     referencClientSession.ImplicitMealParticipation = true;
 
 
-                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null))
+                    //Add all individual active sessions to service point session
+                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null&&!x.Forgotten))
                     {
                         foodServiceSession.AddPartialSession(unAssignedClientSession);
                         unAssignedClientSession.ImplicitMealParticipation = true;

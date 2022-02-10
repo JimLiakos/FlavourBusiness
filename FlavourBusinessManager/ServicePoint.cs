@@ -509,27 +509,27 @@ namespace FlavourBusinessManager.ServicesContextResources
         //    }
         //}
 
-        private void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
-        {
-            var mainSession = foodServiceClientSession.MainSession;
-            if (mainSession != null)
-                mainSession.RemovePartialSession(foodServiceClientSession);
+        //private void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
+        //{
+        //    var mainSession = foodServiceClientSession.MainSession;
+        //    if (mainSession != null)
+        //        mainSession.RemovePartialSession(foodServiceClientSession);
 
 
-            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
-            ServicePointRunTime.ServicesContextRunTime.Current.RemoveClientSession(foodServiceClientSession);
+        //    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
+        //    ServicePointRunTime.ServicesContextRunTime.Current.RemoveClientSession(foodServiceClientSession);
 
-            if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Forgotten))
-            {
-                using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    foreach (var partialClientSession in mainSession.PartialClientSessions)
-                        OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
-                    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
-                    innerStateTransition.Consistent = true;
-                }
-            }
-        }
+        //    if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Forgotten))
+        //    {
+        //        using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
+        //        {
+        //            foreach (var partialClientSession in mainSession.PartialClientSessions)
+        //                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
+        //            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+        //            innerStateTransition.Consistent = true;
+        //        }
+        //    }
+        //}
 
         /// <exclude>Excluded</exclude>
         ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;
@@ -729,7 +729,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (!serviceClientSession.IsWaiterSession)
             {
                 collection = (from foodServiceClient in collection
-                              where !foodServiceClient.IsWaiterSession
+                              where !foodServiceClient.IsWaiterSession&&!foodServiceClient.LongTimeForgotten
                               select foodServiceClient).ToList();
             }
 
