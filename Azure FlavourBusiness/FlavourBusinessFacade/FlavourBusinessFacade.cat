@@ -6036,7 +6036,7 @@
 			    
 			    type       	"double"
 			    exportControl 	"Public")
-			(object ClassAttribute "ForgottenSessionDeviceSleepTimeSpan"
+			(object ClassAttribute "ForgottenSessionDeviceSleepTimeSpanInMin"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6064,7 +6064,7 @@
 | Defines the minimum sleep duration of the device app that can be marked as forgotten
 |
 			    
-			    type       	"System.TimeSpan"
+			    type       	"double"
 			    exportControl 	"Public")
 			(object ClassAttribute "ForgottenSessionLastChangeTimeSpanInMin"
 			    attributes 	(list Attribute_Set
@@ -6094,6 +6094,31 @@
 | Defines the minimum time since the last change in session that can be marked as forgotten
 |
 			    
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "MealConversationTimeoutWaitersUpdateTimeSpanInMin"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3b1b42ac-62c6-4dc1-b174-eb2155bfd1aa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6205351B02D2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6205351B02D2"
 			    type       	"double"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
@@ -6990,7 +7015,36 @@
 			    width      	569
 			    height     	300
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint" @10
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime" @10
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1821, 2656)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@10
+				location   	(1496, 2616)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	651
+				justify    	0
+				label      	"ICashiersStationRuntime")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"61ADB71200C0"
+			    width      	669
+			    height     	281
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint" @11
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7006,7 +7060,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@10
+				Parent_View 	@11
 				location   	(2637, 153)
 				fill_color 	13434879
 				nlines     	1
@@ -7021,7 +7075,7 @@
 			    width      	706
 			    height     	394
 			    annotation 	8)
-			(object AssociationViewNew "ServicePointSesions" @11
+			(object AssociationViewNew "ServicePointSesions" @12
 			    location   	(3669, 262)
 			    font       	(object Font
 				size       	10
@@ -7033,8 +7087,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @12
-				Parent_View 	@11
+			    label      	(object SegLabel @13
+				Parent_View 	@12
 				location   	(3699, 89)
 				font       	(object Font
 				    size       	10
@@ -7059,8 +7113,8 @@
 			    line_color 	3342489
 			    quidu      	"5BF914960134"
 			    roleview_list 	(list RoleViews
-				(object RoleView "ServiceSessions" @13
-				    Parent_View 	@11
+				(object RoleView "ServiceSessions" @14
+				    Parent_View 	@12
 				    location   	(674, -388)
 				    font       	(object Font
 					size       	10
@@ -7072,8 +7126,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @14
-					Parent_View 	@13
+				    label      	(object SegLabel @15
+					Parent_View 	@14
 					location   	(3829, 197)
 					font       	(object Font
 					    size       	10
@@ -7097,13 +7151,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5BF914980078"
-				    client     	@11
+				    client     	@12
 				    supplier   	@9
 				    line_style 	3
 				    origin_attachment 	(3669, 262)
 				    terminal_attachment 	(4005, 262)
-				    label      	(object SegLabel @15
-					Parent_View 	@13
+				    label      	(object SegLabel @16
+					Parent_View 	@14
 					location   	(3971, 316)
 					font       	(object Font
 					    size       	10
@@ -7124,8 +7178,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "ServicePoint" @16
-				    Parent_View 	@11
+				(object RoleView "ServicePoint" @17
+				    Parent_View 	@12
 				    location   	(674, -388)
 				    font       	(object Font
 					size       	10
@@ -7137,8 +7191,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @17
-					Parent_View 	@16
+				    label      	(object SegLabel @18
+					Parent_View 	@17
 					location   	(3500, 222)
 					font       	(object Font
 					    size       	10
@@ -7162,13 +7216,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5BF914980082"
-				    client     	@11
-				    supplier   	@10
+				    client     	@12
+				    supplier   	@11
 				    line_style 	3
 				    origin_attachment 	(3669, 262)
 				    terminal_attachment 	(3334, 262)
-				    label      	(object SegLabel @18
-					Parent_View 	@16
+				    label      	(object SegLabel @19
+					Parent_View 	@17
 					location   	(3368, 316)
 					font       	(object Font
 					    size       	10
@@ -7189,7 +7243,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDLine" @19
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDLine" @20
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7205,7 +7259,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@19
+				Parent_View 	@20
 				location   	(2643, 1694)
 				fill_color 	13434879
 				nlines     	1
@@ -7220,7 +7274,7 @@
 			    width      	500
 			    height     	275
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @20
+			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @21
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2887, 2267)
 			    font       	(object Font
@@ -7234,7 +7288,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@20
+				Parent_View 	@21
 				location   	(2580, 2205)
 				fill_color 	13434879
 				nlines     	1
@@ -7248,35 +7302,6 @@
 			    quidu      	"61A723C7032B"
 			    width      	632
 			    height     	325
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashiersStationRuntime" @21
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1821, 2656)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@21
-				location   	(1496, 2616)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	651
-				justify    	0
-				label      	"ICashiersStationRuntime")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"61ADB71200C0"
-			    width      	669
-			    height     	281
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServiceArea" @22
 			    ShowCompartmentStereotypes 	TRUE
@@ -7386,7 +7411,7 @@
 				    line_color 	3342489
 				    quidu      	"5B8BB98F002B"
 				    client     	@23
-				    supplier   	@10
+				    supplier   	@11
 				    line_style 	3
 				    origin_attachment 	(2307, 256)
 				    terminal_attachment 	(2628, 256)
@@ -7592,7 +7617,7 @@
 				    line_color 	3342489
 				    quidu      	"5C3D724D0005"
 				    client     	@33
-				    supplier   	@19
+				    supplier   	@20
 				    line_style 	3
 				    origin_attachment 	(2343, 1668)
 				    terminal_attachment 	(2634, 1668)
@@ -7800,7 +7825,7 @@
 				    line_color 	3342489
 				    quidu      	"61A7327E00C7"
 				    client     	@42
-				    supplier   	@20
+				    supplier   	@21
 				    line_style 	3
 				    origin_attachment 	(2362, 2268)
 				    terminal_attachment 	(2571, 2268)
@@ -21406,6 +21431,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B1600111"
+		    compartment 	(object Compartment
+			Parent_View 	@414
+			location   	(1514, 642)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	19
+			max_width  	2062)
 		    width      	475
 		    height     	231
 		    annotation 	8)
@@ -21635,6 +21678,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B208CEF0007"
+		    compartment 	(object Compartment
+			Parent_View 	@424
+			location   	(2781, 1269)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	346)
 		    width      	569
 		    height     	262
 		    annotation 	8)
@@ -21666,6 +21727,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B68E02DD"
+		    compartment 	(object Compartment
+			Parent_View 	@425
+			location   	(2589, 651)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	637)
 		    width      	675
 		    height     	487
 		    annotation 	8)
@@ -22158,6 +22237,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B4B225E006D"
+		    compartment 	(object Compartment
+			Parent_View 	@450
+			location   	(1277, 1812)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	42
+			max_width  	2384)
 		    width      	1006
 		    height     	443
 		    annotation 	8)
@@ -22215,6 +22312,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5BB21F630373"
+		    compartment 	(object Compartment
+			Parent_View 	@452
+			location   	(2715, 1989)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	634)
 		    width      	926
 		    height     	343
 		    annotation 	8)

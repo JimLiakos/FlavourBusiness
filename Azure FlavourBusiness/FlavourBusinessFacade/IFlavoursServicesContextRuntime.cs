@@ -152,6 +152,7 @@ namespace FlavourBusinessFacade
         RoomService.IMealsController MealsController { get; }
         /// <MetaDataID>{d1367132-f0be-47db-8063-dd840f4756de}</MetaDataID>
         IList<IFisicalParty> FisicalParties { get; }
+        /// <MetaDataID>{310f17fa-17ec-4821-8abe-abe6c2bd39b9}</MetaDataID>
         ISettings Settings { get; }
 
         /// <MetaDataID>{25381c19-c35a-4d5a-b5cd-469f99929a73}</MetaDataID>

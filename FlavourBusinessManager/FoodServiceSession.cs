@@ -11,6 +11,7 @@ using FlavourBusinessManager.EndUsers;
 using System.Threading.Tasks;
 using FlavourBusinessFacade;
 using OOAdvantech;
+using FlavourBusinessManager.ServicePointRunTime;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -20,7 +21,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
         /// <exclude>Excluded</exclude>
-        string _SessionID= Guid.NewGuid().ToString("N");
+        string _SessionID = Guid.NewGuid().ToString("N");
 
         /// <MetaDataID>{978b61ff-99f3-4e93-9923-f88005ed6315}</MetaDataID>
         [PersistentMember(nameof(_SessionID))]
@@ -512,11 +513,25 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{a9c1e448-ba0d-4491-8520-0dc47dfdc530}</MetaDataID>
         public void MonitorTick()
         {
-
+            #region check for long time meal conversation and update the waiters
+            var firstItemPreparation = (from partialClientSession in PartialClientSessions
+                                        from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
+                                        orderby itemPreparation.StateTimestamp
+                                        select itemPreparation).FirstOrDefault();
+            if (firstItemPreparation != null && 
+                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && 
+                Meal == null && (DateTime.UtcNow- UrgesToDecideToWaiterTimeStamp)>TimeSpan.FromMinutes( ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+            {
+                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
+            }
+            #endregion
 
         }
 
 
+        /// <MetaDataID>{09474811-aa43-4545-88a7-ffb0285b2fcd}</MetaDataID>
+        DateTime UrgesToDecideToWaiterTimeStamp = DateTime.MinValue;
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>

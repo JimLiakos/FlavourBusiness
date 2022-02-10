@@ -100,5 +100,27 @@ namespace FlavourBusinessManager
                 }
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        double _MealConversationTimeoutWaitersUpdateTimeSpanInMin;
+
+
+        /// <MetaDataID>{5839ae5a-abaa-4bf7-94d7-f9ff16f8fb6c}</MetaDataID>
+        [PersistentMember(nameof(_MealConversationTimeoutWaitersUpdateTimeSpanInMin))]
+        [BackwardCompatibilityID("+5")]
+        public double MealConversationTimeoutWaitersUpdateTimeSpanInMin { get=> _MealConversationTimeoutWaitersUpdateTimeSpanInMin;
+            set
+            {
+                if (_MealConversationTimeoutWaitersUpdateTimeSpanInMin != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MealConversationTimeoutWaitersUpdateTimeSpanInMin = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

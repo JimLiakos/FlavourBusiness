@@ -332,8 +332,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <summary>
-        ///Removes all forgotten food client session.
-        /// </summary>
+        /// Removes all forgotten food client session.
+        ///  </summary>
+        /// <MetaDataID>{2375e405-a15c-4144-b361-936dca75755f}</MetaDataID>
         private void CollectGarbageClientSessions()
         {
             try
@@ -345,9 +346,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
                         var mainSession = forgottenClientSession.MainSession;
                         if (mainSession != null)
+                        {
                             mainSession.RemovePartialSession(forgottenClientSession);
+                        }
 
                         OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
+                        RemoveClientSession(forgottenClientSession);
 
                         if (mainSession != null && mainSession.PartialClientSessions.Count == 0)
                             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
@@ -363,8 +367,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
- 
 
+
+        /// <MetaDataID>{ffcc6736-cc7f-4cfe-b777-b38edd3143d4}</MetaDataID>
         internal void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
         {
             lock (ObjLock)
@@ -389,7 +394,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         private void SessionsMonitoringTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
-            {
+            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try
@@ -468,6 +473,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             SessionsMonitoringTimer.Start();
         }
 
+        /// <MetaDataID>{3a59a851-5bfb-4a61-afd8-cca6d4bdb045}</MetaDataID>
         internal void AddOpenServiceClientSession(FoodServiceClientSession fsClientSession)
         {
             lock (ObjLock)
@@ -640,6 +646,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
+        /// <MetaDataID>{72cdeed6-b146-405e-97dd-d1ef21dd72fb}</MetaDataID>
         internal void WaiterSiftWorkUpdated(HumanResources.Waiter waiter)
         {
             if (waiter.ActiveShiftWork != null && !ActiveShiftWorks.Contains(waiter.ActiveShiftWork))
@@ -675,6 +682,53 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
+        internal void MealConversationTimeout(ServicePoint servicePoint)
+        {
+            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+            foreach (var waiter in activeWaiters)
+            {
+                var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
+                {
+                    var clientMessage = new Message();
+                    clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                    clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                    clientMessage.Notification = new Notification() { Title = "Meal conversation exceed time" };
+                    waiter.PushMessage(clientMessage);
+                    //
+                    if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                    {
+                        CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            {
+                                message.NotificationsNum += 1;
+                                message.NotificationTimestamp = DateTime.UtcNow;
+                            }
+
+                            stateTransition.Consistent = true;
+                        }
+                        lock (ServiceContextRTLock)
+                        {
+                            WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                           from message in activeWaiter.Messages
+                                                           where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !message.MessageReaded
+                                                           select activeWaiter).ToList();
+                        }
+
+                    }
+
+                }
+                //}
+            }
+
+        }
 
 
         /// <MetaDataID>{c1f668e1-a630-46cf-9797-3569d2e193b2}</MetaDataID>
@@ -734,6 +788,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
+        /// <MetaDataID>{d718d244-0e50-4ac9-b66a-495fc9f91b43}</MetaDataID>
         internal void MealItemsReadyToServe(ServicePoint servicePoint)
         {
 
@@ -782,6 +837,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{8828ea17-8bb9-42c6-b5e1-36270c0ae343}</MetaDataID>
         [CachingDataOnClientSide]
         public IList<IHallLayout> Halls
         {
@@ -1122,6 +1178,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        /// <MetaDataID>{5beee6e4-0f02-4127-8e9d-679d34553969}</MetaDataID>
         internal MenuModel.FixedMealType GetTowcoursesMealType()
         {
             if (OperativeRestaurantMenu != null)
@@ -1199,6 +1256,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
 
         }
+        /// <MetaDataID>{d134e638-dbd1-48af-8051-35d64d569422}</MetaDataID>
         public IList<FinanceFacade.IFisicalParty> FisicalParties
         {
             get
@@ -1234,6 +1292,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{37b1908b-a3e7-4a4e-a710-8ef5a0145ae0}</MetaDataID>
         List<IShiftWork> ActiveShiftWorks;
 
         /// <MetaDataID>{a82e0e64-72d8-4c6c-bc2d-6c30c4737337}</MetaDataID>
@@ -1341,8 +1400,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{43a48158-e9c5-4be3-9813-4433f3d0c580}</MetaDataID>
         ISettings _Settings;
 
+        /// <MetaDataID>{a219ef11-d9cb-4af1-886e-ea14f9e844d9}</MetaDataID>
         public ISettings Settings
         {
             get
@@ -1362,13 +1423,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         {
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                _Settings = new Settings() {
-                                    AutoAssignMaxMealProgress=50,
-                                    ForgottenSessionDeviceSleepTimeSpanInMin=3, 
-                                    ForgottenSessionLastChangeTimeSpanInMin=10,
-                                    ForgottenSessionLifeTimeSpanInMin=20
+                                _Settings = new Settings()
+                                {
+                                    AutoAssignMaxMealProgress = 50,
+                                    ForgottenSessionDeviceSleepTimeSpanInMin = 3,
+                                    ForgottenSessionLastChangeTimeSpanInMin = 10,
+                                    ForgottenSessionLifeTimeSpanInMin = 20,
+                                    MealConversationTimeoutWaitersUpdateTimeSpanInMin=4
                                 };
-                                
+
                                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Settings);
                                 stateTransition.Consistent = true;
                             }
@@ -1584,6 +1647,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{16f0ecc7-44cf-47b9-b628-c6ddbcc99d60}</MetaDataID>
         public ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
         {
 
@@ -1854,6 +1918,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{0c807eee-86a7-4c7d-b523-0ee2767e2062}</MetaDataID>
         public FinanceFacade.IFisicalParty NewFisicalParty()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -1867,10 +1932,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return fisicalParty;
         }
 
+        /// <MetaDataID>{f4b6e660-beb0-4236-828b-7836a4ab1966}</MetaDataID>
         public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             ObjectStorage.DeleteObject(fisicalParty);
         }
+        /// <MetaDataID>{d53bbd80-aea0-44bb-bc30-903daffa974f}</MetaDataID>
         public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             ObjectStorage.GetObjectFromUri<FisicalParty>((fisicalParty as FisicalParty).FisicalPartyUri).Update(fisicalParty as FisicalParty);

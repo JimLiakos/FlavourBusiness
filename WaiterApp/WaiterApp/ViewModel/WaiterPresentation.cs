@@ -117,9 +117,12 @@ namespace WaiterApp.ViewModel
         public event ObjectChangeStateHandle ObjectChangeState;
 
         public event LaytheTableRequestHandle LayTheTableRequest;
+
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
+
+        public event MealConversationTimeoutHandle MealConversationTimeout;
 
         /// <MetaDataID>{4d17380a-0570-480d-a1ec-b2140d0ca76a}</MetaDataID>
         internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
@@ -1432,6 +1435,23 @@ namespace WaiterApp.ViewModel
                             }
                         }
                     }
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout)
+                    {
+                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                            Waiter.RemoveMessage(message.MessageID);
+                        else
+                        {
+                            if (message != null && InActiveShiftWork)
+                            {
+                                
+
+                                string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+                                ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                //PartOfMealRequestMessageForward(message);
+                                return;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1441,6 +1461,12 @@ namespace WaiterApp.ViewModel
             Waiter.RemoveMessage(messageID);
         }
 
+        public void MealConversationTimeoutReceived(string messageID)
+        {
+            Waiter.RemoveMessage(messageID);
+        }
+
+        
         public void LayTheTableMessageReceived(string messageID)
         {
             Waiter.RemoveMessage(messageID);

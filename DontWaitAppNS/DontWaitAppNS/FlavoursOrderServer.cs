@@ -189,7 +189,7 @@ namespace DontWaitApp
                             }
                             catch (MissingServerObjectException error)
                             {
-                                return  await ConnectToServicePoint(this.MenuData.ServicePointIdentity);
+                                return await ConnectToServicePoint(this.MenuData.ServicePointIdentity);
                             }
                         }
                         GetMessages();
@@ -870,15 +870,16 @@ namespace DontWaitApp
             {
                 try
                 {
-
                     var messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
                                      select new Messmate(clientSession, OrderItems)).ToList();
-
 
                     messmates = (from messmate in messmates
                                  from preparationItem in messmate.PreparationItems
                                  where preparationItem.State == ItemPreparationState.Committed
                                  select messmate).ToList();
+
+                    while (_MessmatesWaitForYouToDecide == null)
+                        System.Threading.Thread.Sleep(1000);
 
                     _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
                 }

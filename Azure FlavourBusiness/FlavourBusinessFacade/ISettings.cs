@@ -27,6 +27,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// </summary>
         /// <MetaDataID>{261708e9-3e50-4ed3-b733-801e22b46ff5}</MetaDataID>
         double ForgottenSessionLastChangeTimeSpanInMin { get; set; }
+
+
+        /// <MetaDataID>{3b1b42ac-62c6-4dc1-b174-eb2155bfd1aa}</MetaDataID>
+        double MealConversationTimeoutWaitersUpdateTimeSpanInMin { get; set; }
     }
     
 }

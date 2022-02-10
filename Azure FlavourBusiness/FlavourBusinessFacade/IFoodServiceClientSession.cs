@@ -71,7 +71,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
-        
+
 
 
         /// <MetaDataID>{fd43be80-69fc-44d3-8624-a95ed5810848}</MetaDataID>
@@ -132,7 +132,7 @@ namespace FlavourBusinessFacade.EndUsers
         [OOAdvantech.MetaDataRepository.RoleBMultiplicityRange(1, 1)]
         IFoodServiceSession MainSession { get; }
 
-        
+
         ///// <MetaDataID>{00bd07cb-55bb-4fe5-b45e-e5f3f4e82235}</MetaDataID>
         //[BackwardCompatibilityID("+1")]
         //string ClientDeviceID { get; set; }
@@ -220,7 +220,8 @@ namespace FlavourBusinessFacade.EndUsers
         MenuItemProposal = 2,
         ShareItemHasChange = 3,
         LaytheTable = 4,
-        ItemsReadyToServe = 5
+        ItemsReadyToServe = 5,
+        MealConversationTimeout = 6
     }
 
 

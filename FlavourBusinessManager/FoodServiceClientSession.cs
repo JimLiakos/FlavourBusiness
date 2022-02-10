@@ -241,7 +241,7 @@ namespace FlavourBusinessManager.EndUsers
                         _MainSession.Value.SessionStarts = partialSession.SessionStarts;
 
                 }
-                
+
                 messmateClientSesion.ImplicitMealParticipation = false;
                 ImplicitMealParticipation = false;
 
@@ -1092,10 +1092,10 @@ namespace FlavourBusinessManager.EndUsers
         {
             if (MainSession != null)
             {
-                if(IsWaiterSession) //For waiter returns all implicit meal participants and meal invitation participants
+                if (IsWaiterSession) //For waiter returns all implicit meal participants and meal invitation participants
                     return MainSession.PartialClientSessions.Where(x => x != this).ToList();
                 else
-                    return MainSession.PartialClientSessions.Where(x => x != this&&!x.ImplicitMealParticipation).ToList();// All participant which participate with meal invitation
+                    return MainSession.PartialClientSessions.Where(x => x != this && !x.ImplicitMealParticipation).ToList();// All participant which participate with meal invitation
 
             }
             else
@@ -1419,9 +1419,7 @@ namespace FlavourBusinessManager.EndUsers
                 bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
                     (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin) &&
                     (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin) &&
-                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin);
-
-
+                    (DateTime.UtcNow - DeviceAppSleepTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin);
 
                 return forgotten;
             }
@@ -1432,11 +1430,9 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
-                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin*3) &&
-                    (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin*3) &&
-                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin*3);
-
-
+                    (DateTime.UtcNow - SessionStarts) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin * 3) &&
+                    (DateTime.UtcNow - ModificationTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin * 3) &&
+                    (DateTime.UtcNow - DeviceAppSleepTime) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin * 3);
 
                 return forgotten;
             }
