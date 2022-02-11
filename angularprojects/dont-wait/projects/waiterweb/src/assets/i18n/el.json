@@ -12,7 +12,8 @@
         "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο",
 		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
 		"PartialTransferCommandLabel":"Μεταφορά ειδών",
-		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα"
+		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα",
+		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας"
 
 	}
 

@@ -1446,7 +1446,7 @@ namespace WaiterApp.ViewModel
                                 
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
-                                ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                MealConversationTimeout?.Invoke(this, message.MessageID, servicesPointIdentity);
                                 //PartOfMealRequestMessageForward(message);
                                 return;
                             }

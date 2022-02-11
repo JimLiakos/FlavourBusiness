@@ -10,7 +10,8 @@
         "TableAvailableCommandLabel":"Make Available",
 		"TransferAllCommandLabel":"Transfer table",
 		"PartialTransferCommandLabel":"Partial transfer",
-		"ItemsReadyToServeMessage":"There are items on the counter for serving"
+		"ItemsReadyToServeMessage":"There are items on the counter for serving",
+		"MealConversationTimeoutMessage": "Meal conversation timeoutMessage"
 	}
 
 }

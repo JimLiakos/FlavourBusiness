@@ -89,11 +89,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
+            Task.Run(() =>
+            {
 
-
-            foreach (var servicePointPreparationItems in (from openSession in ServicesContextRunTime.Current.OpenSessions
+                foreach (var servicePointPreparationItems in (from openSession in ServicesContextRunTime.Current.OpenSessions
                                                           where openSession.CashierStation == this && openSession.Meal != null
                                                           //from sessionPart in openSession.PartialClientSessions
                                                           from mealCourse in openSession.Meal.Courses
@@ -133,8 +133,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 transaction.ObjectChangeState += Transaction_ObjectChangeState;
             }
-            Task.Run(() =>
-            {
+         
                 System.Threading.Thread.Sleep(500);
                 foreach (var preparationItem in (from servicePointPreparationItems in ServicePointsPreparationItems
                                                  from preparationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()

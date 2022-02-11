@@ -519,8 +519,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         orderby itemPreparation.StateTimestamp
                                         select itemPreparation).FirstOrDefault();
             if (firstItemPreparation != null && 
-                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && 
-                Meal == null && (DateTime.UtcNow- UrgesToDecideToWaiterTimeStamp)>TimeSpan.FromMinutes( ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
+                (DateTime.UtcNow - firstItemPreparation.StateTimestamp) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin)&&
+                 (DateTime.UtcNow- UrgesToDecideToWaiterTimeStamp)>TimeSpan.FromMinutes( ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
             {
                 UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
                 ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);

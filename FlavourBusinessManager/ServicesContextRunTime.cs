@@ -324,7 +324,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
 
                     }
-                    CollectGarbageClientSessions();
+                    //CollectGarbageClientSessions();
                     return _OpenClientSessions;
                 }
             }
@@ -353,7 +353,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
                         RemoveClientSession(forgottenClientSession);
 
-                        if (mainSession != null && mainSession.PartialClientSessions.Count == 0)
+                        if (mainSession != null && mainSession.PartialClientSessions.Count == 0&& mainSession.Meal!=null)
                             OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
 
                     }
@@ -1429,6 +1429,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                     ForgottenSessionDeviceSleepTimeSpanInMin = 3,
                                     ForgottenSessionLastChangeTimeSpanInMin = 10,
                                     ForgottenSessionLifeTimeSpanInMin = 20,
+                                    MealConversationTimeoutInMin=10,
                                     MealConversationTimeoutWaitersUpdateTimeSpanInMin=4
                                 };
 

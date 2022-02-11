@@ -94,6 +94,33 @@ namespace WaiterApp.ViewModel.Proxies
         }
     }
     
+    public sealed class CNSPr_IWaiterPresentation_MealConversationTimeout : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(WaiterApp.ViewModel.IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = waiterPresentation;
+            argsTypes[0] = typeof(WaiterApp.ViewModel.IWaiterPresentation);
+            args[1] = messageID;
+            argsTypes[1] = typeof(string);
+            args[2] = servicePointIdentity;
+            argsTypes[2] = typeof(string);
+            object retValue = this.Invoke(typeof(WaiterApp.ViewModel.MealConversationTimeoutHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new WaiterApp.ViewModel.MealConversationTimeoutHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new WaiterApp.ViewModel.MealConversationTimeoutHandle(this.Invoke));
+        }
+    }
+    
     public sealed class CNSPr_IWaiterPresentation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         

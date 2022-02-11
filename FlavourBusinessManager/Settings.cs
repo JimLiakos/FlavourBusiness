@@ -9,6 +9,34 @@ namespace FlavourBusinessManager
     [Persistent()]
     public class Settings :MarshalByRefObject,OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ISettings
     {
+
+        /// <exclude>Excluded</exclude> 
+        double _MealConversationTimeoutInMin;
+
+
+        /// <summary>
+        /// Defines the max time of meal conversation
+        /// Is the time between the time where the first item selected and present
+        /// </summary>
+        /// <MetaDataID>{5d73813e-4080-45d8-aa97-f0fc84971158}</MetaDataID>
+        [PersistentMember(nameof(_MealConversationTimeoutInMin))]
+        [BackwardCompatibilityID("+6")]
+        public double MealConversationTimeoutInMin
+        {
+            get => _MealConversationTimeoutInMin;
+            set
+            {
+                if (_MealConversationTimeoutInMin != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MealConversationTimeoutInMin = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
@@ -109,7 +137,9 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{5839ae5a-abaa-4bf7-94d7-f9ff16f8fb6c}</MetaDataID>
         [PersistentMember(nameof(_MealConversationTimeoutWaitersUpdateTimeSpanInMin))]
         [BackwardCompatibilityID("+5")]
-        public double MealConversationTimeoutWaitersUpdateTimeSpanInMin { get=> _MealConversationTimeoutWaitersUpdateTimeSpanInMin;
+        public double MealConversationTimeoutWaitersUpdateTimeSpanInMin
+        {
+            get => _MealConversationTimeoutWaitersUpdateTimeSpanInMin;
             set
             {
                 if (_MealConversationTimeoutWaitersUpdateTimeSpanInMin != value)

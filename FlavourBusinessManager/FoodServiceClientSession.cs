@@ -1912,6 +1912,7 @@ namespace FlavourBusinessManager.EndUsers
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
                     }
                 }
+                var sds = MainSession.PartialClientSessions.Count;
 
                 AllItemsCommited();
 
