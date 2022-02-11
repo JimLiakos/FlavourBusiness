@@ -1935,7 +1935,12 @@ namespace FlavourBusinessManager.EndUsers
                 SessionState = ClientSessionState.ItemsCommited;
         }
 
-
+        public void TableIsLay()
+        {
+            if (IsWaiterSession&& this.ServicePoint.State==ServicePointState.Laying)
+                (this.ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.Conversation);
+            
+        }
 
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
 

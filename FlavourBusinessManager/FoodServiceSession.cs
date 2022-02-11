@@ -518,13 +518,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
                                         orderby itemPreparation.StateTimestamp
                                         select itemPreparation).FirstOrDefault();
-            if (firstItemPreparation != null && 
+            if (firstItemPreparation != null &&
                 (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
-                (DateTime.UtcNow - firstItemPreparation.StateTimestamp) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin)&&
-                 (DateTime.UtcNow- UrgesToDecideToWaiterTimeStamp)>TimeSpan.FromMinutes( ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                (DateTime.UtcNow - firstItemPreparation.StateTimestamp) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
             {
-                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
+                if (ServicePoint.State == ServicePointState.Conversation)
+                    (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
+
+                if (ServicePoint.State == ServicePointState.ConversationTimeout&&(DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                {
+                    //UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                    //ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
+                }
             }
             #endregion
 

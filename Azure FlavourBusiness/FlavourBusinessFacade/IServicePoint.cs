@@ -135,11 +135,12 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Free = 0,
         Laying = 1,
         Conversation = 2,
-        MealCoursePreparation = 3,
-        MealCourseOvertime = 4,
-        Served=5,
-        TakeAway = 6,
-        Delivery = 7
+        ConversationTimeout = 3,
+        MealCoursePreparation = 4,
+        MealCourseOvertime = 5,
+        Served=6,
+        TakeAway = 7,
+        Delivery = 8
     }
 
     /// <MetaDataID>{46658b97-1a57-4911-ab0e-ebd3235dcc5c}</MetaDataID>

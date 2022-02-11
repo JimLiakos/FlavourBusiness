@@ -465,6 +465,26 @@ namespace DontWaitApp
         /// <MetaDataID>{9da82eed-28ed-4ce5-8ed0-5f28130b64df}</MetaDataID>
         public bool WaiterView { get; set; }
 
+
+        ServicePointState _ServicePointState= ServicePointState.Laying;
+        public ServicePointState ServicePointState 
+        {
+            get
+            {
+                return _ServicePointState;
+            }
+        }
+        public void TableIsLay()
+        {
+            if(WaiterView)
+                this.FoodServiceClientSession.TableIsLay();
+            _ServicePointState = ServicePointState.Conversation;
+            this._ObjectChangeState.Invoke(this, nameof(ServicePointState));
+            
+
+
+        }
+
         /// <MetaDataID>{63add039-3bee-4d8b-8d15-002e6e67aa63}</MetaDataID>
         public IList<ItemPreparation> PreparationItems => OrderItems.ToList();
 
@@ -630,6 +650,7 @@ namespace DontWaitApp
                 menuData.OrderItems = OrderItems.ToList();
                 MenuData = menuData;
                 ApplicationSettings.Current.LastServicePoinMenuData = menuData;
+                _ServicePointState = clientSessionData.ServicePointState;
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
 
                 return true;
@@ -801,6 +822,7 @@ namespace DontWaitApp
                         menuData.OrderItems = OrderItems.ToList();
                         //var s = menuData.OrderItems[0].OptionsChanges[0].ItemPreparation;
                         MenuData = menuData;
+                        _ServicePointState = clientSessionData.ServicePointState;
                         _ObjectChangeState?.Invoke(this, nameof(MenuData));
 
                         GetMessages();

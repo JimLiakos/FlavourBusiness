@@ -66,7 +66,9 @@ namespace DontWaitApp
         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
+        ServicePointState ServicePointState { get; }
 
+        void TableIsLay();
 
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }

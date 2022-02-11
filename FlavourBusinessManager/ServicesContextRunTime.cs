@@ -337,34 +337,34 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{2375e405-a15c-4144-b361-936dca75755f}</MetaDataID>
         private void CollectGarbageClientSessions()
         {
-            try
-            {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    List<FoodServiceClientSession> forgottenClientSessions = _OpenClientSessions.Where(x => x.LongTimeForgotten).ToList();
-                    foreach (var forgottenClientSession in forgottenClientSessions)
-                    {
-                        var mainSession = forgottenClientSession.MainSession;
-                        if (mainSession != null)
-                        {
-                            mainSession.RemovePartialSession(forgottenClientSession);
-                        }
+            //try
+            //{
+            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //    {
+            //        List<FoodServiceClientSession> forgottenClientSessions = _OpenClientSessions.Where(x => x.LongTimeForgotten).ToList();
+            //        foreach (var forgottenClientSession in forgottenClientSessions)
+            //        {
+            //            var mainSession = forgottenClientSession.MainSession;
+            //            if (mainSession != null)
+            //            {
+            //                mainSession.RemovePartialSession(forgottenClientSession);
+            //            }
 
-                        OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
-                        RemoveClientSession(forgottenClientSession);
+            //            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
+            //            RemoveClientSession(forgottenClientSession);
 
-                        if (mainSession != null && mainSession.PartialClientSessions.Count == 0&& mainSession.Meal!=null)
-                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
+            //            if (mainSession != null && mainSession.PartialClientSessions.Count == 0&& mainSession.Meal!=null)
+            //                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
 
-                    }
+            //        }
 
-                    stateTransition.Consistent = true;
-                }
+            //        stateTransition.Consistent = true;
+            //    }
 
-            }
-            catch (Exception error)
-            {
-            }
+            //}
+            //catch (Exception error)
+            //{
+            //}
         }
 
 
@@ -1574,7 +1574,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 servedMealTypesUris = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
             }
 
-            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri };
+            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri,ServicePointState= servicePoint.State };
         }
 
         /// <MetaDataID>{7be35e44-04e6-418d-b29e-100f9c6f71b0}</MetaDataID>

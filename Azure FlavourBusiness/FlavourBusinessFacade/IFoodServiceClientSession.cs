@@ -196,8 +196,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
-
-
+        void TableIsLay();
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>
@@ -250,6 +249,8 @@ namespace FlavourBusinessFacade.EndUsers
         public string DefaultMealTypeUri;
         /// <MetaDataID>{be004c8b-e151-43ee-af44-06ccfb191b27}</MetaDataID>
         public List<string> ServedMealTypesUris;
+
+        public ServicePointState ServicePointState;
     }
 
 
