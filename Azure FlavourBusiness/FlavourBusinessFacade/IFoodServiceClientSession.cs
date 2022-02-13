@@ -28,6 +28,10 @@ namespace FlavourBusinessFacade.EndUsers
         [Association("WaterServiceSession", Roles.RoleB, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
         HumanResources.IWaiter Waiter { get; }
 
+        /// <MetaDataID>{5836e2e7-7c37-421b-b576-64fa7d361f43}</MetaDataID>
+        [BackwardCompatibilityID("+11")]
+        bool MealConversationTimeout { get; }
+
 
 
         /// <MetaDataID>{6bb4647d-2291-403c-9330-cae0a44d9015}</MetaDataID>
@@ -184,6 +188,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{bb4dd357-c34b-462e-b5d4-2ed725f5123a}</MetaDataID>
         bool Forgotten { get; }
 
+        /// <MetaDataID>{71269afe-98d1-44e5-9065-1a5189f18053}</MetaDataID>
         bool LongTimeForgotten { get; }
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
         void Items…nPreparation(List<IItemPreparation> clientSessionItems);
@@ -196,7 +201,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
-        void TableIsLay();
+       
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>

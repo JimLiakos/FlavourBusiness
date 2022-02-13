@@ -10,7 +10,10 @@ namespace FlavourBusinessFacade.EndUsers
     [Persistent()]
     public class Message
     {
+        public Message()
+        {
 
+        }
         /// <exclude>Excluded</exclude>
         DateTime _NotificationTimestamp;
 
@@ -138,7 +141,14 @@ namespace FlavourBusinessFacade.EndUsers
             }
 
         }
-
+        public bool HasDataValue<T>(string property,T value)
+        {
+            object dataValue = null;
+            Data.TryGetValue(property, out dataValue);
+            if(dataValue is T)
+                return  EqualityComparer<T>.Default.Equals((T)dataValue, value);
+            return (dataValue == null && value == null);
+        }
         /// <MetaDataID>{b01f8750-cb6f-4279-b2ea-685d8fb4fdde}</MetaDataID>
         public Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
 

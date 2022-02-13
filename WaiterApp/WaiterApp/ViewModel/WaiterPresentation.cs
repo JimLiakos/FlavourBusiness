@@ -1466,7 +1466,10 @@ namespace WaiterApp.ViewModel
             Waiter.RemoveMessage(messageID);
         }
 
-        
+        public void TableIsLay(string servicesPointIdentity)
+        {
+            Waiter.TableIsLay(servicesPointIdentity);
+        }
         public void LayTheTableMessageReceived(string messageID)
         {
             Waiter.RemoveMessage(messageID);

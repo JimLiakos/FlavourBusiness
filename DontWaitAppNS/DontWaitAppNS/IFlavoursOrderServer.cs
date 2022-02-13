@@ -68,7 +68,7 @@ namespace DontWaitApp
 
         ServicePointState ServicePointState { get; }
 
-        void TableIsLay();
+        //void TableIsLay();
 
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }

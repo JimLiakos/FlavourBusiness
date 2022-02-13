@@ -82,7 +82,8 @@ namespace FlavourBusinessFacade.HumanResources
 
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
-    
+        void TableIsLay(string servicesPointIdentity);
+
         /// <summary>
         /// 
         /// </summary>

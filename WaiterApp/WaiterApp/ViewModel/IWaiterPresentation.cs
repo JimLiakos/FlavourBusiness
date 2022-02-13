@@ -97,5 +97,8 @@ namespace WaiterApp.ViewModel
         void LayTheTableMessageReceived(string messageID);
 
 
+        void TableIsLay(string servicesPointIdentity);
+
+
     }
 }

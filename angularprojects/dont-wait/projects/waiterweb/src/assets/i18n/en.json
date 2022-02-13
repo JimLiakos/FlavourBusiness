@@ -11,7 +11,16 @@
 		"TransferAllCommandLabel":"Transfer table",
 		"PartialTransferCommandLabel":"Partial transfer",
 		"ItemsReadyToServeMessage":"There are items on the counter for serving",
-		"MealConversationTimeoutMessage": "Meal conversation timeoutMessage"
+		"MealConversationTimeoutMessage": "Meal conversation timeoutMessage",
+		"WillLayTheTableMessage":"'{0}'\nwill lay the table '{1}'",
+		"LayTableMessageDialogTitle" :"Table laying"
+	},
+	"ModalDialog":
+	{
+		"OKButtonLabel":"ΟΚ",
+		"CancelButtonLabel":"Cancel",
+		"YesButtonLabel":"Yes",
+		"NoButtonLabel":"No"
 	}
 
 }

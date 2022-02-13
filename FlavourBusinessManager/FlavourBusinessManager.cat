@@ -11047,24 +11047,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@89
-				location   	(975, 1313)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	1243)
 			    width      	619
 			    height     	531
 			    annotation 	8)
@@ -14370,6 +14352,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@224
+				location   	(1562, 1035)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	41
+				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -18857,7 +18857,7 @@
 			    quid       	"5D22326D01D5"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"620207A00353"
+				    quid       	"6208E0A30352"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18984,10 +18984,10 @@
 			    quid       	"5D31519500B6"
 			    parameters 	(list Parameters
 				(object Parameter "clientSessionToken"
-				    quid       	"620207A00214"
+				    quid       	"6208E0A10279"
 				    type       	"string")
 				(object Parameter "messmateClientSesion"
-				    quid       	"620207A0021E"
+				    quid       	"6208E0A1028D"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19006,7 +19006,7 @@
 			    quid       	"5D3D2B980270"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"620207A0031E"
+				    quid       	"6208E0A302F8"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -19025,7 +19025,7 @@
 			    quid       	"5D3D2B98029C"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"620207A0033C"
+				    quid       	"6208E0A30323"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19163,7 +19163,7 @@
 			    quid       	"5D3D2B990111"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"620207A10032"
+				    quid       	"6208E0A50072"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19182,7 +19182,7 @@
 			    quid       	"5D3D2B99013B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"620207A10165"
+				    quid       	"6208E0A60060"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19201,7 +19201,7 @@
 			    quid       	"5D46A46F035B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"620207A10048"
+				    quid       	"6208E0A5009B"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19220,7 +19220,7 @@
 			    quid       	"5D46A46F03C7"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"620207A10192"
+				    quid       	"6208E0A600B5"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19239,7 +19239,7 @@
 			    quid       	"5D46A470001A"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"620207A101A7"
+				    quid       	"6208E0A600D8"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19326,7 +19326,7 @@
 			    quid       	"5FB8DAFC0039"
 			    parameters 	(list Parameters
 				(object Parameter "commitedItemsSessions"
-				    quid       	"620207A002EA"
+				    quid       	"6208E0A3028D"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19345,7 +19345,7 @@
 			    quid       	"5FB8DAFC0123"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"620207A0038B"
+				    quid       	"6208E0A303C9"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19364,10 +19364,10 @@
 			    quid       	"5FB8DAFC0265"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"620207A003B1"
+				    quid       	"6208E0A4002D"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
 				(object Parameter "menuItemUri"
-				    quid       	"620207A003BF"
+				    quid       	"6208E0A40048"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19386,7 +19386,7 @@
 			    quid       	"5FB8DAFD0105"
 			    parameters 	(list Parameters
 				(object Parameter "itemUid"
-				    quid       	"620207A1017C"
+				    quid       	"6208E0A60096"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    concurrency 	"Sequential"
@@ -19825,6 +19825,27 @@
 				    quid       	"620207A1014C"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"FlavourBusinessManager.RoomService.ItemPreparation"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "CheckForMealConversationTimeout"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{49299fee-7bcb-4053-92c1-73eab19a4d1f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6208E0A2027D"))
+			    quid       	"6208E0A2027D"
+			    documentation 	
+|
+|Checks for long time meal conversation and update the waiters
+|Meal conversation timeout check, occurs only when there isn't main session
+|
+			    
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Private"
 			    uid        	0))
@@ -20616,6 +20637,57 @@
 				    name       	"UniqueID"
 				    value      	"620207A20243"))
 			    quid       	"620207A20243"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "LongTimeForgotten"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a585165a-d688-49f1-8813-2bf0870e2247}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6208E0A70289"))
+			    quid       	"6208E0A70289"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "UrgesToDecideToWaiterTimeStamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{aa278977-7c30-42d9-a365-31cdf6dd8fbb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6208E0A70346")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6208E0A70346"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "MealConversationTimeout"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5cf89fdd-c567-4d62-8037-c06f3a83cf97}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6208E0A703C6"))
+			    quid       	"6208E0A703C6"
 			    type       	"bool"
 			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
@@ -30443,7 +30515,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@543
-			location   	(56, 184)
+			location   	(56, 179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -30451,7 +30523,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@543
-			location   	(56, 134)
+			location   	(56, 133)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

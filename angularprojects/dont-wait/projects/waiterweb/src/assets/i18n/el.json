@@ -13,8 +13,17 @@
 		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
 		"PartialTransferCommandLabel":"Μεταφορά ειδών",
 		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα",
-		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας"
+		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας",
+		"WillLayTheTableMessage":"'Ο {0}' \nΘα στρώσει το τραπέζι\n'{1}'",
+		"LayTableMessageDialogTitle":"Στρώσιμο τραπεζιού"
 
+	},
+	"ModalDialog":
+	{
+		"OKButtonLabel":"Εντάξει",
+		"CancelButtonLabel":"Άκυρο",
+		"YesButtonLabel":"Ναι",
+		"NoButtonLabel":"Όχι"
 	}
 
 }

@@ -808,6 +808,20 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+
+
+        public void TableIsLay(string servicesPointIdentity)
+        {
+            var servicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
+                                from servicesPoint in serviceArea.ServicePoints
+                                where servicesPoint.ServicesPointIdentity == servicesPointIdentity
+                                select servicesPoint).FirstOrDefault();
+            if (servicePoint == null)
+                throw new ArgumentException(string.Format("there isn't services point with identity '{0}'", servicesPointIdentity));
+            if (servicePoint.State == ServicePointState.Laying)
+                (servicePoint as ServicesContextResources.ServicePoint).ChangeServicePointState(ServicePointState.Conversation);
+
+        }
         /// <MetaDataID>{47d8cdac-cb47-4f92-8fc1-79816021480c}</MetaDataID>
         public void TransferItems(IFoodServiceSession foodServiceSession, List<string> itemsPreparationsIDs, string targetServicePointIdentity)
         {

@@ -20,7 +20,7 @@ namespace DontWaitApp
             ClientSessionID = ClientSession.SessionID;
             MainSessionID = ClientSession.MainSession?.SessionID;
             WaiterSession = ClientSession.IsWaiterSession;
-
+            MealConversationTimeout = clientSession.MealConversationTimeout;
             foreach (var preparationItem in ClientSession.FlavourItems.OfType<ItemPreparation>().ToList())
             {
                 var sessionOrderItem = sessionOrderItems.Where(x => x.uid == preparationItem.uid).FirstOrDefault();
@@ -110,6 +110,7 @@ namespace DontWaitApp
         public string MainSessionID { get; set; }
 
         public bool WaiterSession { get; set; }
+        public bool MealConversationTimeout { get; private set; }
 
         public IList<ItemPreparation> Items
         {
@@ -125,6 +126,11 @@ namespace DontWaitApp
                 return true;
             else
                 return false;
+        }
+
+        internal void UpdateMealConversationTimeout()
+        {
+            MealConversationTimeout = ClientSession.MealConversationTimeout;
         }
     }
 }

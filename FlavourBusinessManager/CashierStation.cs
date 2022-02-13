@@ -215,7 +215,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 DateTime myDate = new DateTime(numberOfTicks);
                                 if ((DateTime.Now - myDate).TotalSeconds > 0.5)
                                 {
-                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
+                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value.ToUniversalTime()).TotalSeconds > 30)
                                     {
                                         _OpenTransactions?.Invoke(this, DeviceUpdateEtag);
                                         RaiseEventTimeStamp = DateTime.UtcNow;

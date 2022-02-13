@@ -421,10 +421,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 lock (ServicePointLock)
                 {
 
-                    if ( !fsClientSession.IsWaiterSession)
+                    if ( !fsClientSession.IsWaiterSession&& State==ServicePointState.Free)
                         ChangeServicePointState(ServicePointState.Laying);
-
-
 
                 }
             }

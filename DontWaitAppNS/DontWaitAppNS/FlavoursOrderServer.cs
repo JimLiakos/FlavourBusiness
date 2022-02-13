@@ -474,16 +474,14 @@ namespace DontWaitApp
                 return _ServicePointState;
             }
         }
-        public void TableIsLay()
-        {
-            if(WaiterView)
-                this.FoodServiceClientSession.TableIsLay();
-            _ServicePointState = ServicePointState.Conversation;
-            this._ObjectChangeState.Invoke(this, nameof(ServicePointState));
-            
+        //public void TableIsLay()
+        //{
+        //    if(WaiterView)
+        //        this.FoodServiceClientSession.TableIsLay();
+        //    _ServicePointState = ServicePointState.Conversation;
+        //    this._ObjectChangeState.Invoke(this, nameof(ServicePointState));
 
-
-        }
+        //}
 
         /// <MetaDataID>{63add039-3bee-4d8b-8d15-002e6e67aa63}</MetaDataID>
         public IList<ItemPreparation> PreparationItems => OrderItems.ToList();
@@ -1096,6 +1094,7 @@ namespace DontWaitApp
                 {
 
                     var oldPreparationItem = messmate.PreparationItems.Where(x => x.uid == itemUid).FirstOrDefault();
+                    messmate.UpdateMealConversationTimeout();
                     if (oldPreparationItem == null)
                         messmate.AddPreparationItem(preparationItem);
                     else

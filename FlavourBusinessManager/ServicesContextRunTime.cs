@@ -309,8 +309,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                
-                
+
+
                 lock (ObjLock)
                 {
                     if (_OpenClientSessions == null)
@@ -324,7 +324,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
 
                     }
-                    //CollectGarbageClientSessions();
+                    CollectGarbageClientSessions();
                     return _OpenClientSessions;
                 }
             }
@@ -353,7 +353,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(forgottenClientSession);
             //            RemoveClientSession(forgottenClientSession);
 
-            //            if (mainSession != null && mainSession.PartialClientSessions.Count == 0&& mainSession.Meal!=null)
+            //            if (mainSession != null && mainSession.PartialClientSessions.Count == 0 && mainSession.Meal != null)
             //                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
 
             //        }
@@ -394,7 +394,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         private void SessionsMonitoringTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
-            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+            {
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try
@@ -694,12 +694,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 var waiterActiveShiftWork = waiter.ActiveShiftWork;
                 if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                 {
-                    var clientMessage = new Message();
-                    clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
-                    clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                    clientMessage.Notification = new Notification() { Title = "Meal conversation exceed time" };
+                    Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.MealConversationTimeout) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
+                    if (clientMessage == null)
+                    {
+                        clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Notification = new Notification() { Title = "Meal conversation exceed time" };
+                    }
                     waiter.PushMessage(clientMessage);
-                    //
                     if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
                     {
                         CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
@@ -749,10 +752,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var waiterActiveShiftWork = waiter.ActiveShiftWork;
                     if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        var clientMessage = new Message();
-                        clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
-                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "Lay the Table" };
+                        Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.LaytheTable) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
+
+                        if (clientMessage == null)
+                        {
+                            clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
+                            clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                            clientMessage.Notification = new Notification() { Title = "Lay the Table" };
+                        }
                         waiter.PushMessage(clientMessage);
 
                         if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
@@ -1429,8 +1437,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                     ForgottenSessionDeviceSleepTimeSpanInMin = 3,
                                     ForgottenSessionLastChangeTimeSpanInMin = 10,
                                     ForgottenSessionLifeTimeSpanInMin = 20,
-                                    MealConversationTimeoutInMin=10,
-                                    MealConversationTimeoutWaitersUpdateTimeSpanInMin=4
+                                    MealConversationTimeoutInMin = 10,
+                                    MealConversationTimeoutWaitersUpdateTimeSpanInMin = 4
                                 };
 
                                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Settings);
@@ -1574,7 +1582,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 servedMealTypesUris = clientSession.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
             }
 
-            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri,ServicePointState= servicePoint.State };
+            return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = servicePoint.State };
         }
 
         /// <MetaDataID>{7be35e44-04e6-418d-b29e-100f9c6f71b0}</MetaDataID>
