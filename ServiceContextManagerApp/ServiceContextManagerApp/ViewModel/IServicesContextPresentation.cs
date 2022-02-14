@@ -37,6 +37,8 @@ namespace ServiceContextManagerApp
         [GenerateEventConsumerProxy]
         event MealCoursesUpdatedHandle MealCoursesUpdated;
 
+        [GenerateEventConsumerProxy]
+        event ServicePointChangeStateHandle ServicePointChangeState;
 
         /// <MetaDataID>{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}</MetaDataID>
         NewSupervisorCode GetNewWaiterQRCode(string color);
@@ -47,4 +49,5 @@ namespace ServiceContextManagerApp
     }
 
     public delegate void MealCoursesUpdatedHandle(IList<MealCourse> mealCourses);
+    public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
 }

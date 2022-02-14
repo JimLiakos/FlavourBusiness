@@ -527,8 +527,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 if (ServicePoint.State == ServicePointState.ConversationTimeout&&(DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                 {
-                    //UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    //ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
+                    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
                 }
             }
             #endregion

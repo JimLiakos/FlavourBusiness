@@ -210,13 +210,21 @@ namespace ServiceContextManagerApp
                     {
                         hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                         (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
-                        //(hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
+                        (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
                     }
                 }
 
                 return _Halls;
             }
         }
+
+        public event ServicePointChangeStateHandle ServicePointChangeState;
+
+        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
+        {
+            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
+        }
+
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
 

@@ -270,7 +270,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{49299fee-7bcb-4053-92c1-73eab19a4d1f}</MetaDataID>
         private bool CheckForMealConversationTimeout()
         {
-            if (MainSession == null)
+            if (MainSession == null||SessionState == ClientSessionState.ConversationStandy)
             {
                 var firstItemPreparation = (from itemPreparation in FlavourItems.OfType<ItemPreparation>()
                                             orderby itemPreparation.StateTimestamp

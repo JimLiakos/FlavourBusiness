@@ -764,7 +764,7 @@ namespace WaiterApp.ViewModel
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
         {
 
-            this.ServicePointChangeState.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
+            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
             HallsServicePointsState[servicePoint.ServicesPointIdentity] = servicePoint.State;
             foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
             {
