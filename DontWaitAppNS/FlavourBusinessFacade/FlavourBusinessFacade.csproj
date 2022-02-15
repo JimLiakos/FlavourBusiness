@@ -15,6 +15,11 @@
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IComputingCluster.cs" Link="IComputingCluster.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IComputingResource.cs" Link="IComputingResource.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IIsolatedComputingContext.cs" Link="IIsolatedComputingContext.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IAddress.cs" Link="IAddress.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IFisicalParty.cs" Link="IFisicalParty.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ITem.cs" Link="ITem.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\TaxAmount.cs" Link="TaxAmount.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ΙTransaction.cs" Link="ΙTransaction.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndPoint.cs" Link="EndPoint.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndUserData.cs" Link="EndUserData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IActivity.cs" Link="HumanResources\IActivity.cs" />
@@ -28,6 +33,8 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAzureInstancesManager.cs" Link="IAzureInstancesManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDLine.cs" Link="ICallerIDLine.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDServer.cs" Link="ICallerIDServer.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICashierStationRuntime.cs" Link="ICashierStationRuntime.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ISettings.cs" Link="ISettings.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICashierStation.cs" Link="ICashierStation.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFlavourBusinessManager.cs" Link="IFlavourBusinessManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFlavoursServicePoint.cs" Link="IFlavoursServicePoint.cs" />
@@ -71,6 +78,8 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ΙHallLayout.cs" Link="ΙHallLayout.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="IMealCourseType.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="IMealType.cs" />
+    <Compile Include="..\..\MicronemeCommon\IUnitMeasure.cs" Link="IUnitMeasure.cs" />
+    <Compile Include="..\..\MicronemeCommon\Quantity.cs" Link="Quantity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />

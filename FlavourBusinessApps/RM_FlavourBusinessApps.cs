@@ -247,6 +247,33 @@ namespace ServiceContextManagerApp.Proxies
         }
     }
     
+    public sealed class CNSPr_IServicesContextPresentation_ServicePointChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(ServiceContextManagerApp.IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, FlavourBusinessFacade.ServicesContextResources.ServicePointState newState)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = servicesContextPresentation;
+            argsTypes[0] = typeof(ServiceContextManagerApp.IServicesContextPresentation);
+            args[1] = servicePointIdentity;
+            argsTypes[1] = typeof(string);
+            args[2] = newState;
+            argsTypes[2] = typeof(FlavourBusinessFacade.ServicesContextResources.ServicePointState);
+            object retValue = this.Invoke(typeof(ServiceContextManagerApp.ServicePointChangeStateHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new ServiceContextManagerApp.ServicePointChangeStateHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new ServiceContextManagerApp.ServicePointChangeStateHandle(this.Invoke));
+        }
+    }
+    
     public sealed class CNSPr_ISecureUser_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         

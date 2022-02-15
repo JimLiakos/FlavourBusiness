@@ -595,6 +595,7 @@ namespace WaiterApp.ViewModel
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
+                                
                             }
                             this.FlavoursOrderServer.Halls = _Halls;
                             GetMessages();
@@ -761,11 +762,11 @@ namespace WaiterApp.ViewModel
         }
 
         /// <MetaDataID>{b4d7c3bf-4a36-4111-aa8d-b33709d3f35e}</MetaDataID>
-        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
+        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint, ServicePointState newState)
         {
 
-            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
-            HallsServicePointsState[servicePoint.ServicesPointIdentity] = servicePoint.State;
+            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, newState);
+            HallsServicePointsState[servicePoint.ServicesPointIdentity] = newState;
             foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
             {
                 foreach (var shape in hall.Shapes)

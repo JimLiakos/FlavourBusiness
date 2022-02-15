@@ -709,9 +709,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                             break;
                         }
                     default:
-                        _ObjectChangeState?.Invoke(this, nameof(State));
                         break;
                 }
+                _ObjectChangeState?.Invoke(this, nameof(State));
             }
         }
 

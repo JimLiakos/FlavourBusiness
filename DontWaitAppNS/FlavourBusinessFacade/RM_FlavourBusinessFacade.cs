@@ -249,6 +249,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.ISettings Settings
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_Settings", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ISettings>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IPreparationStation> PreparationStations
         {
             get
@@ -269,6 +281,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_CashierStations", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ICashierStation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_FisicalParties", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FinanceFacade.IFisicalParty>>(retValue);
             }
         }
         
@@ -458,6 +482,32 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveCashierStation", args, argsTypes);
         }
         
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "NewFisicalParty", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.IFisicalParty>(retValue);
+        }
+        
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveFisicalParty", args, argsTypes);
+        }
+        
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "UpdateFisicalParty", args, argsTypes);
+        }
+        
         public void LaunchCallerIDServer()
         {
             object[] args = new object[0];
@@ -606,6 +656,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[5] = typeof(bool);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetServicesContextRuntime", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetCashiersStationRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
         }
         
         public FlavourBusinessFacade.EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, string deviceFirebaseToken, bool create)
@@ -881,6 +941,30 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_MealsController", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealsController>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FinanceFacade.IFisicalParty> FisicalParties
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_FisicalParties", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FinanceFacade.IFisicalParty>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.ISettings Settings
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_Settings", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ISettings>(retValue);
             }
         }
         
@@ -1164,6 +1248,42 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignWaiterUser", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+        }
+        
+        public FinanceFacade.IFisicalParty NewFisicalParty()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewFisicalParty", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.IFisicalParty>(retValue);
+        }
+        
+        public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveFisicalParty", args, argsTypes);
+        }
+        
+        public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = fisicalParty;
+            argsTypes[0] = typeof(FinanceFacade.IFisicalParty);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "UpdateFisicalParty", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetCashiersStationRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
         }
     }
     
@@ -2210,6 +2330,30 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime ServicesContextRunTime
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "get_ServicesContextRunTime", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "get_ServicesContext", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContext>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks
         {
             get
@@ -2473,6 +2617,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
+public event FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler ServingBatchesChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "add_ServingBatchesChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "remove_ServingBatchesChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.ServingBatchesChangedHandler)});
+                }
+            }
 public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceived
             {
                 add
@@ -2507,6 +2662,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "set_DeviceFirebaseToken", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ServicePointState> HallsServicePointsState
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "get_HallsServicePointsState", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ServicePointState>>(retValue);
             }
         }
         
@@ -2826,6 +2993,30 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public void TransferItems(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession, System.Collections.Generic.List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = foodServiceSession;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession);
+            args[1] = itemsPreparationsIDs;
+            argsTypes[1] = typeof(System.Collections.Generic.List<string>);
+            args[2] = targetServicePointIdentity;
+            argsTypes[2] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferItems", args, argsTypes);
+        }
+        
+        public void TransferSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = foodServiceSession;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession);
+            args[1] = targetServicePointIdentity;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferSession", args, argsTypes);
+        }
+        
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls()
         {
             object[] args = new object[0];
@@ -2860,13 +3051,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
         }
         
-        public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetServingUpdate(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
+        public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetServingUpdates(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = servingItemsOnDevice;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingUpdate", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServingUpdates", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ServingBatchUpdates>(retValue);
         }
         
@@ -2886,6 +3077,22 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = servingBatch;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IServingBatch);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "DeassignServingBatch", args, argsTypes);
+        }
+        
+        public void TableIsLay(string servicesPointIdentity)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servicesPointIdentity;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TableIsLay", args, argsTypes);
+        }
+        
+        public void CommitServingBatches()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "CommitServingBatches", args, argsTypes);
         }
         
         public void RemoveMessage(string messageId)
@@ -2997,6 +3204,30 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public string SessionID
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_SessionID", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime ServicesContextRuntime
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_ServicesContextRuntime", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string Description
         {
             get
@@ -3041,14 +3272,6 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_ServicePoint", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_ServicePoint", args, argsTypes);
             }
         }
         
@@ -3735,24 +3958,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession>(retValue);
         }
         
-        public void AddServicePointClientSesion(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServiceClientSession)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = FoodServiceClientSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "AddServicePointClientSesion", args, argsTypes);
-        }
-        
-        public void RemoveServicePointClientSesion(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServiceClientSession)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = FoodServiceClientSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "RemoveServicePointClientSesion", args, argsTypes);
-        }
-        
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID)
         {
             object[] args = new object[2];
@@ -4046,6 +4251,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public bool ImplicitMealParticipation
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_ImplicitMealParticipation", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(bool);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_ImplicitMealParticipation", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public bool IsWaiterSession
         {
             get
@@ -4066,6 +4291,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Waiter", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool MealConversationTimeout
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_MealConversationTimeout", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
             }
         }
         
@@ -4306,6 +4543,30 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 args[0] = value;
                 argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.ClientSessionState);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_SessionState", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool Forgotten
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Forgotten", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool LongTimeForgotten
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_LongTimeForgotten", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
             }
         }
         
@@ -5097,6 +5358,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
+public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+            }
         
         public Pr_IServingBatch(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
@@ -5257,6 +5529,13 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void PrintReceiptAgain()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "PrintReceiptAgain", args, argsTypes);
         }
     }
 }

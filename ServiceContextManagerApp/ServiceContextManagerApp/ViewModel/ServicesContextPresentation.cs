@@ -90,7 +90,7 @@ namespace ServiceContextManagerApp
 
         internal void OnMealCourseUpdated(MealCourse mealCourse)
         {
-            if(mealCourse.FoodItemsInProgress.Count==0)
+            if (mealCourse.FoodItemsInProgress.Count == 0)
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
             else
                 MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
@@ -220,9 +220,18 @@ namespace ServiceContextManagerApp
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
-        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint)
+        private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint, ServicePointState newState)
         {
-            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, servicePoint.State);
+            this.ServicePointChangeState?.Invoke(this, servicePoint.ServicesPointIdentity, newState);
+
+            var shape = (from hall in _Halls.OfType<RestaurantHallLayoutModel.HallLayout>()
+                         from hallShape in hall.Shapes
+                         where hallShape.ServicesPointIdentity == servicePoint.ServicesPointIdentity
+                         select hallShape).FirstOrDefault();
+
+            if (shape != null)
+                shape.ServicesPointState = newState;
+
         }
 
         private void ServicesContext_ObjectChangeState(object _object, string member)

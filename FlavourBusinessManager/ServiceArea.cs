@@ -43,7 +43,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void ServicePoint_ObjectChangeState(object _object, string member)
         {
             if (_object is ServicePoint && member == nameof(ServicePoint.State))
-                this.ServicePointChangeState?.Invoke(this, _object as ServicePoint);
+                this._ServicePointChangeState?.Invoke(this, _object as ServicePoint, (_object as ServicePoint).State);
 
         }
 
@@ -199,7 +199,19 @@ namespace FlavourBusinessManager.ServicesContextResources
         List<IMealType> _ServesMealTypes = null;
 
         public event ObjectChangeStateHandle ObjectChangeState;
-        public event ServicePointChangeStateHandle ServicePointChangeState;
+        event ServicePointChangeStateHandle _ServicePointChangeState;
+
+        public event ServicePointChangeStateHandle ServicePointChangeState
+        {
+            add
+            {
+                _ServicePointChangeState += value;
+            }
+            remove
+            {
+                _ServicePointChangeState -= value;
+            }
+        }
 
         /// <MetaDataID>{b6136504-398d-4f72-8a67-d9018931d582}</MetaDataID>
         [BackwardCompatibilityID("+5")]

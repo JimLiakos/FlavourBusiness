@@ -676,15 +676,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         _Description = value;
                         stateTransition.Consistent = true;
                     }
+                    ObjectChangeState?.Invoke(this, nameof(Description));
                 }
 
-                ObjectChangeState?.Invoke(this, nameof(Description));
+                
             }
         }
 
         /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
         internal void MealConversationTimeout(ServicePoint servicePoint)
         {
+            
             var activeWaiters = (from shiftWork in GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
@@ -846,7 +848,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{8828ea17-8bb9-42c6-b5e1-36270c0ae343}</MetaDataID>
-        [CachingDataOnClientSide]
         public IList<IHallLayout> Halls
         {
             get

@@ -60,8 +60,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{aa692cf4-56de-4e86-abda-d690ce7a5465}</MetaDataID>
         List<IServicePoint> GetUnassignedServicePoints(List<string> hallServicesPoints);
+        
     }
 
-    public delegate void ServicePointChangeStateHandle(object _object, IServicePoint servicePoint);
+    public delegate void ServicePointChangeStateHandle(object _object, IServicePoint servicePoint, ServicePointState newState);
 
 }
