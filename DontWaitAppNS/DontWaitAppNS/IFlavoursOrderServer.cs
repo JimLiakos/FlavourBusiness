@@ -28,6 +28,7 @@ using ZXing.Net.Mobile.Forms;
 using ZXing;
 using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+using FlavourBusinessFacade.ServicesContextResources;
 #else
 using System.IO;
 using System.Drawing.Imaging;

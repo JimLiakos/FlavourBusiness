@@ -362,6 +362,7 @@ namespace FlavourBusinessManager.RoomService
         public IMenuItem MenuItem { get => _MenuItem; }
         //#endif
 
+#if !FlavourBusinessDevice
         /// <MetaDataID>{da441ccb-5f5b-4ee2-8c2b-1ce95b5a5b19}</MetaDataID>
         public IMenuItem LoadMenuItem()
         {
@@ -389,6 +390,7 @@ namespace FlavourBusinessManager.RoomService
 
             return _MenuItem;
         }
+#endif
 
         /// <MetaDataID>{08cd685b-2f14-4812-ab5f-af170874b642}</MetaDataID>
         public IMenuItem LoadMenuItem(Dictionary<string, MenuFoodItem> menuItems)
@@ -664,8 +666,9 @@ namespace FlavourBusinessManager.RoomService
                     if (string.IsNullOrWhiteSpace(name))
                         name = _MenuItem.Name;
                 }
+                // x.Option is MenuModel.IPricingContext => ItemSelectorOption
 
-                var optionChange = this.OptionsChanges.OfType<OptionChange>().Where(x => x.PriceDif == 1 && x.Option is MenuModel.ItemSelectorOption).FirstOrDefault();
+                var optionChange = this.OptionsChanges.OfType<OptionChange>().Where(x => x.PriceDif == 1 && x.Option is MenuModel.IPricingContext).FirstOrDefault();
                 if (optionChange != null)
                     return name + " " + optionChange.OptionName;
                 else
@@ -742,7 +745,7 @@ namespace FlavourBusinessManager.RoomService
                 _CustomItemEnabled = item.CustomItemEnabled;
                 _SelectedMealCourseTypeUri = item.SelectedMealCourseTypeUri;
                 _State = item._State;
-                if(_StateTimestamp!=item.StateTimestamp)
+                if (_StateTimestamp != item.StateTimestamp)
                 {
                     _StateTimestamp = item.StateTimestamp;
                     changed = true;
@@ -911,7 +914,7 @@ namespace FlavourBusinessManager.RoomService
                     }
                 }
                 ItemPreparationState mss;
-                
+
             }
         }
 
