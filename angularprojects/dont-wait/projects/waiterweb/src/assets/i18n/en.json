@@ -6,21 +6,20 @@
 	"RoomService": {
 		"BillCommandLabel": "Bill",
 		"BillLabel": "Bill",
-		"MessmatesCommandLabel":"Messmates",
-        "TableAvailableCommandLabel":"Make Available",
-		"TransferAllCommandLabel":"Transfer table",
-		"PartialTransferCommandLabel":"Partial transfer",
-		"ItemsReadyToServeMessage":"There are items on the counter for serving",
-		"MealConversationTimeoutMessage": "Meal conversation timeoutMessage",
-		"WillLayTheTableMessage":"'{0}'\nwill lay the table '{1}'",
-		"LayTableMessageDialogTitle" :"Table laying"
+		"MessmatesCommandLabel": "Messmates",
+		"TableAvailableCommandLabel": "Make Available",
+		"TransferAllCommandLabel": "Transfer table",
+		"PartialTransferCommandLabel": "Partial transfer",
+		"ItemsReadyToServeMessage": "There are items on the counter for serving",
+		"MealConversationTimeoutMessage": "Meal conversation is over time at {0}",
+		"WillLayTheTableMessage": "'{0}'\nwill lay the table '{1}'",
+		"LayTableMessageDialogTitle": "Table laying",
+		"WillTakeCareLabel":"I will take care"
 	},
-	"ModalDialog":
-	{
-		"OKButtonLabel":"ΟΚ",
-		"CancelButtonLabel":"Cancel",
-		"YesButtonLabel":"Yes",
-		"NoButtonLabel":"No"
+	"ModalDialog": {
+		"OKButtonLabel": "ΟΚ",
+		"CancelButtonLabel": "Cancel",
+		"YesButtonLabel": "Yes",
+		"NoButtonLabel": "No"
 	}
-
 }

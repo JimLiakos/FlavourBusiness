@@ -780,6 +780,10 @@ namespace FlavourBusinessManager.HumanResources
 
 
      
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity)
+        {
+
+        }
 
         /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>
         public void CommitServingBatches()

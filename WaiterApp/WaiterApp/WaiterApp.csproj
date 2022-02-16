@@ -13,7 +13,7 @@
     <None Remove="ViewModel\vssver.scc" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\ViewModelWrappers.cs" Link="ViewModelWrappers.cs" />
+    <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\ViewModelWrappers.cs" Link="UIBaseEx\ViewModelWrappers.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs" Link="ViewModel\FoodServiceClientVM.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs" Link="ViewModel\IFlavoursOrderServer.cs" />

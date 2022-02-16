@@ -702,7 +702,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         clientMessage = new Message();
                         clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
                         clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "Meal conversation exceed time" };
+                        clientMessage.Notification = new Notification() { Title = "Meal conversation is over time" };
                     }
                     waiter.PushMessage(clientMessage);
                     if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))

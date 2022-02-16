@@ -4834,6 +4834,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "CommitServingBatches", args, argsTypes);
         }
         
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servicePointIdentity;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "WillTakeCareMealConversationTimeout", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

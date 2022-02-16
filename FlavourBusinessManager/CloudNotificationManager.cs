@@ -74,7 +74,7 @@ namespace FlavourBusinessManager
             // registration token.
             try
             {
-                string response = await FirebaseMessaging.DefaultInstance.SendAsync(fireBaseMessage);
+                //string response = await FirebaseMessaging.DefaultInstance.SendAsync(fireBaseMessage);
             }
             catch (Exception error)
             {

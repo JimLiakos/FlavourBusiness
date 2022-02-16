@@ -29,6 +29,8 @@ namespace WaiterApp.ViewModel
         [GenerateEventConsumerProxy]
         event MealConversationTimeoutHandle MealConversationTimeout;
 
+        void WillTakeCareMealConversationTimeout(string servicePointIdentity);
+
         /// <MetaDataID>{d89e355f-0e0e-4267-b36b-209817f2ad4c}</MetaDataID>
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
 

@@ -135,6 +135,10 @@ namespace WaiterApp.ViewModel
             
             ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity)
+        {
+            this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity);
+        }
 
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
         string _SignInProvider;
