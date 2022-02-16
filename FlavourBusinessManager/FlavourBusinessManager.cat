@@ -10134,6 +10134,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@44
+				location   	(4505, 695)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	0)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -14071,6 +14089,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@211
+				location   	(178, 1073)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	0)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -14354,7 +14390,7 @@
 			    quidu      	"5C06122402B6"
 			    compartment 	(object Compartment
 				Parent_View 	@224
-				location   	(1562, 1035)
+				location   	(1562, 1042)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14368,7 +14404,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	41
+				nlines     	42
 				max_width  	0)
 			    width      	638
 			    height     	369
@@ -17333,7 +17369,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"12")
+			    value      	"14")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -17537,6 +17573,43 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "FoodServiceSession"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d6ea50e8-e300-41c7-8a97-7ff69f0bc9e3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A00384"))
+			    quid       	"620D19A00384"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddCaregiver"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5bb24d64-6784-4f87-948f-e37b638d423c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A2019E"))
+			    quid       	"620D19A2019E"
+			    parameters 	(list Parameters
+				(object Parameter "caregiver"
+				    quid       	"620D19A201BE"
+				    type       	"FlavourBusinessFacade.HumanResources.IServicesContextWorker")
+				(object Parameter "caregivingType"
+				    quid       	"620D19A201DE"
+				    type       	"FlavourBusinessManager.EndUsers.Caregiver.CaregivingType"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "ServicePoint"
@@ -18035,7 +18108,142 @@
 				    value      	"+11"))
 			    quid       	"620013E20307"
 			    type       	"string"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "Progresses"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3dac55f5-abb7-4017-b370-16eefdbd91a0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A302DF")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"620D19A302DF"
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "WillTakeCareTimestamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{11154b0f-0798-4d5d-af09-b2ea1690f07b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A303CF")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+12"))
+			    quid       	"620D19A303CF"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "Caregivers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2a450ea3-c23a-42dd-9eac-3a8e1fcb327d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A400FB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"620D19A400FB"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.EndUsers.Caregiver>"
+			    exportControl 	"Public")
+			(object ClassAttribute "UrgesToDecideToWaiterTimeStamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{09474811-aa43-4545-88a7-ffb0285b2fcd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A40292")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"620D19A40292"
+			    type       	"System.DateTime")
+			(object ClassAttribute "CaregiversLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{90895d63-996c-4aaa-a041-d9621efcf018}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A4031D")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"620D19A4031D"
+			    type       	"object")
+			(object ClassAttribute "WillTakeCareWorkersJson"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3a9025c3-c195-4acb-be73-340396fa65c4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620D19A403A9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+13"))
+			    quid       	"620D19A403A9"
+			    type       	"string"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A0C6A40060"
 			states     	(list States
@@ -18772,7 +18980,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"25")
+			    value      	"27")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -18857,7 +19065,7 @@
 			    quid       	"5D22326D01D5"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"6208E0A30352"
+				    quid       	"620CF5230197"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -18984,10 +19192,10 @@
 			    quid       	"5D31519500B6"
 			    parameters 	(list Parameters
 				(object Parameter "clientSessionToken"
-				    quid       	"6208E0A10279"
+				    quid       	"620CF5230022"
 				    type       	"string")
 				(object Parameter "messmateClientSesion"
-				    quid       	"6208E0A1028D"
+				    quid       	"620CF5230039"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19006,7 +19214,7 @@
 			    quid       	"5D3D2B980270"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6208E0A302F8"
+				    quid       	"620CF5230149"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -19025,7 +19233,7 @@
 			    quid       	"5D3D2B98029C"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6208E0A30323"
+				    quid       	"620CF523016D"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19163,7 +19371,7 @@
 			    quid       	"5D3D2B990111"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6208E0A50072"
+				    quid       	"620CF52302C1"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19182,7 +19390,7 @@
 			    quid       	"5D3D2B99013B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6208E0A60060"
+				    quid       	"620CF523036C"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19201,7 +19409,7 @@
 			    quid       	"5D46A46F035B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6208E0A5009B"
+				    quid       	"620CF52302E1"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19220,7 +19428,7 @@
 			    quid       	"5D46A46F03C7"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6208E0A600B5"
+				    quid       	"620CF52303BB"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19239,7 +19447,7 @@
 			    quid       	"5D46A470001A"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6208E0A600D8"
+				    quid       	"620CF52303D7"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19326,7 +19534,7 @@
 			    quid       	"5FB8DAFC0039"
 			    parameters 	(list Parameters
 				(object Parameter "commitedItemsSessions"
-				    quid       	"6208E0A3028D"
+				    quid       	"620CF5230106"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19345,7 +19553,7 @@
 			    quid       	"5FB8DAFC0123"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"6208E0A303C9"
+				    quid       	"620CF52301E5"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19364,10 +19572,10 @@
 			    quid       	"5FB8DAFC0265"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"6208E0A4002D"
+				    quid       	"620CF5230223"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
 				(object Parameter "menuItemUri"
-				    quid       	"6208E0A40048"
+				    quid       	"620CF5230235"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19386,7 +19594,7 @@
 			    quid       	"5FB8DAFD0105"
 			    parameters 	(list Parameters
 				(object Parameter "itemUid"
-				    quid       	"6208E0A60096"
+				    quid       	"620CF523039B"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    concurrency 	"Sequential"
@@ -19845,9 +20053,61 @@
 |Meal conversation timeout check, occurs only when there isn't main session
 |
 			    
-			    result     	"void"
+			    result     	"bool"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "AddCaregiver"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b3869d58-92cd-4522-bf59-32c60cc7844c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF52503CE"))
+			    quid       	"620CF52503CE"
+			    parameters 	(list Parameters
+				(object Parameter "caregiver"
+				    quid       	"620CF5260008"
+				    type       	"FlavourBusinessFacade.HumanResources.IServicesContextWorker")
+				(object Parameter "caregivingType"
+				    quid       	"620CF526001C"
+				    type       	"FlavourBusinessManager.EndUsers.Caregiver.CaregivingType"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "OnActivated"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{574ebd32-b1a2-4182-9d8a-95afe1ac15d9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF5260044"))
+			    quid       	"620CF5260044"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "OnBeforeObjectStateCommited"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bb3c90bc-b3bc-49c1-a7bc-3ec102d79e4e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF52600F9"))
+			    quid       	"620CF52600F9"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Client"
@@ -19913,7 +20173,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Identity"
-				    value      	"+2"))
+				    value      	"+2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
 			    quid       	"5C066BD50332"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"
 			    exportControl 	"Public")
@@ -20689,7 +20957,89 @@
 				    value      	"6208E0A703C6"))
 			    quid       	"6208E0A703C6"
 			    type       	"bool"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "WillTakeCareTimestamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{941cf7d4-3c5e-4589-87cf-a01362e26dc0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CE993021E")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+25"))
+			    quid       	"620CE993021E"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "Caregivers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a981dbd8-72be-48b0-90ba-606940b4f3e5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF52502E9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"620CF52502E9"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.EndUsers.Caregiver>"
+			    exportControl 	"Public")
+			(object ClassAttribute "WillTakeCareWorkersJson"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{afe80e14-7b7f-45a3-a8ac-3ef3850740b2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF526015E")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+26"))
+			    quid       	"620CF526015E"
+			    type       	"string")
+			(object ClassAttribute "CaregiversLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f0df519b-0f4b-4647-9031-7f59614e69df}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"620CF52601CE")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"620CF52601CE"
+			    type       	"object"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A747FC0350"
 			states     	(list States
@@ -28393,6 +28743,24 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F550D3B0057"
+			    compartment 	(object Compartment
+				Parent_View 	@443
+				location   	(2003, 1220)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	0)
 			    width      	769
 			    height     	544
 			    annotation 	8)
@@ -30515,7 +30883,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@543
-			location   	(56, 179)
+			location   	(56, 184)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -30523,7 +30891,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@543
-			location   	(56, 133)
+			location   	(56, 134)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
