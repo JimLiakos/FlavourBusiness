@@ -684,7 +684,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
         public IList<IServingBatch> GetServingBatches()
         {
-            var servingBatches  =(ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            var servingBatches = (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
             AssignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
             ServingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
             return servingBatches;
@@ -764,13 +764,13 @@ namespace FlavourBusinessManager.HumanResources
             var servingBatches = (ServicesContextRunTime.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
             var assignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
             var unAssignedservingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
-            
-            if(assignedServingBatches.Count!=AssignedServingBatches.Count||
+
+            if (assignedServingBatches.Count != AssignedServingBatches.Count ||
                 unAssignedservingBatches.Count != ServingBatches.Count)
             {
                 ServingBatchesChanged?.Invoke();
             }
-            if(AssignedServingBatches.Count>0&& !AssignedServingBatches.ContainsAll(assignedServingBatches))
+            if (AssignedServingBatches.Count > 0 && !AssignedServingBatches.ContainsAll(assignedServingBatches))
                 ServingBatchesChanged?.Invoke();
 
             if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
@@ -779,10 +779,25 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
-     
-        public void WillTakeCareMealConversationTimeout(string servicePointIdentity)
-        {
 
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionID)
+        {
+            var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
+            if (session == null)
+            {
+                var clientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
+                if (clientSession != null)
+                {
+                    if (clientSession.Caregivers.Where(x => x.Worker == this && x.Caregiving == EndUsers.Caregiver.CaregivingType.ConversationCheck).Count() == 0)
+                        clientSession.AddCaregiver(this, EndUsers.Caregiver.CaregivingType.ConversationCheck);
+                }
+            }
+            else
+            {
+                
+                if (session.Caregivers.Where(x => x.Worker == this && x.Caregiving == EndUsers.Caregiver.CaregivingType.ConversationCheck).Count() == 0)
+                    session.AddCaregiver(this, EndUsers.Caregiver.CaregivingType.ConversationCheck);
+            }
         }
 
         /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>
@@ -853,7 +868,7 @@ namespace FlavourBusinessManager.HumanResources
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
-                
+
                 (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
                 targetServicePoint.UpdateState();
 

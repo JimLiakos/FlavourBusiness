@@ -135,9 +135,9 @@ namespace WaiterApp.ViewModel
             
             ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
-        public void WillTakeCareMealConversationTimeout(string servicePointIdentity)
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity)
         {
-            this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity);
+            this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity,sessionIdentity);
         }
 
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
@@ -1451,7 +1451,8 @@ namespace WaiterApp.ViewModel
                                 
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
-                                MealConversationTimeout?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                string sessionIdentity = message.GetDataValue<string>("SessionIdentity");
+                                MealConversationTimeout?.Invoke(this, message.MessageID, servicesPointIdentity, sessionIdentity);
                                 //PartOfMealRequestMessageForward(message);
                                 return;
                             }

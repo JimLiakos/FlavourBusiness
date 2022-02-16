@@ -13,7 +13,7 @@
 		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
 		"PartialTransferCommandLabel":"Μεταφορά ειδών",
 		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα",
-		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας {0}",
+		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας στο τρσπέζι {0}",
 		"WillLayTheTableMessage":"'Ο {0}' \nΘα στρώσει το τραπέζι\n'{1}'",
 		"LayTableMessageDialogTitle":"Στρώσιμο τραπεζιού",
 		"WillTakeCareLabel":"Θα φροντίσω"

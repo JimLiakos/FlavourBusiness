@@ -26,6 +26,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{79a921fc-7507-410d-bb75-57d83658cb91}</MetaDataID>
         IList<IHallLayout> GetServiceHalls();
 
+        /// <MetaDataID>{68e377ff-5d13-448b-ac74-5ea71044ae75}</MetaDataID>
         Dictionary<string, ServicePointState> HallsServicePointsState { get; }
 
 
@@ -82,17 +83,18 @@ namespace FlavourBusinessFacade.HumanResources
 
         event ServingBatchesChangedHandler ServingBatchesChanged;
 
+        /// <MetaDataID>{14db7294-fc48-453c-8f4c-bc9029b1c84f}</MetaDataID>
         void TableIsLay(string servicesPointIdentity);
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary></summary>
+        /// <MetaDataID>{669c2345-01db-40c9-b76b-48c313968acc}</MetaDataID>
         // <MetaDataID>{bc8e1dff-883d-4487-8b67-e4c7fdcbb2b7}</MetaDataID>
         void CommitServingBatches();
-        void WillTakeCareMealConversationTimeout(string servicePointIdentity);
+        /// <MetaDataID>{83e301d6-ada6-4731-b494-5729b217b500}</MetaDataID>
+        void WillTakeCareMealConversationTimeout(string servicePointIdentity,string sessionID);
     }
 
-    
+
     public delegate void ServingBatchesChangedHandler();
 
     

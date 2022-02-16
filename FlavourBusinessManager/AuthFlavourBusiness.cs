@@ -483,7 +483,7 @@ namespace FlavourBusinessManager
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new System.Security.Authentication.AuthenticationException();
-            
+
             string userId = authUser.User_ID;
             AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
             {

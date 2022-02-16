@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using FlavourBusinessFacade;
 using OOAdvantech;
 using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessFacade.HumanResources;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -506,10 +507,24 @@ namespace FlavourBusinessManager.ServicesContextResources
             else
                 StateMachineMonitoring();
 
+            lock (CaregiversLock)
+            {
+                if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
+                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(WillTakeCareWorkersJson);
+
+            }
 
 
         }
+        [BeforeCommitObjectStateInStorageCall]
+        internal void OnBeforeObjectStateCommited()
+        {
+            lock (CaregiversLock)
+            {
+                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
 
+            }
+        }
         /// <MetaDataID>{a9c1e448-ba0d-4491-8520-0dc47dfdc530}</MetaDataID>
         public void MonitorTick()
         {
@@ -525,10 +540,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (ServicePoint.State == ServicePointState.Conversation)
                     (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
 
-                if (ServicePoint.State == ServicePointState.ConversationTimeout&&(DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                if (Caregivers.Where(x => x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Count() > 0)
+                {
+                    if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                    {
+                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                        {
+                            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                            ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                        }
+                    }
+
+                }
+                else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                 {
                     UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint);
+                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                 }
             }
             #endregion
@@ -538,6 +565,78 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{09474811-aa43-4545-88a7-ffb0285b2fcd}</MetaDataID>
         DateTime UrgesToDecideToWaiterTimeStamp = DateTime.MinValue;
+
+
+
+        /// <MetaDataID>{90895d63-996c-4aaa-a041-d9621efcf018}</MetaDataID>
+        object CaregiversLock = new object();
+
+
+        /// <MetaDataID>{3a9025c3-c195-4acb-be73-340396fa65c4}</MetaDataID>
+        [BackwardCompatibilityID("+13")]
+        [PersistentMember()]
+
+        string WillTakeCareWorkersJson;
+
+
+
+        /// <exclude>Excluded</exclude>
+        DateTime _WillTakeCareTimestamp;
+
+
+        /// <MetaDataID>{11154b0f-0798-4d5d-af09-b2ea1690f07b}</MetaDataID>
+        [BackwardCompatibilityID("+12")]
+        [PersistentMember(nameof(_WillTakeCareTimestamp))]
+
+        public System.DateTime WillTakeCareTimestamp
+        {
+            get => _WillTakeCareTimestamp; set
+            {
+                if (_WillTakeCareTimestamp != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _WillTakeCareTimestamp = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+
+        /// <MetaDataID>{5bb24d64-6784-4f87-948f-e37b638d423c}</MetaDataID>
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CaregivingType caregivingType)
+        {
+            lock (CaregiversLock)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, Caregiving = caregivingType });
+                    if (caregivingType == Caregiver.CaregivingType.ConversationCheck)
+                        WillTakeCareTimestamp = DateTime.UtcNow;
+
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        List<Caregiver> _Caregivers = new List<Caregiver>();
+
+
+        /// <MetaDataID>{2a450ea3-c23a-42dd-9eac-3a8e1fcb327d}</MetaDataID>
+        public List<Caregiver> Caregivers
+        {
+            get
+            {
+                lock (CaregiversLock)
+                {
+                    return _Caregivers.ToList();
+                }
+            }
+        }
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>

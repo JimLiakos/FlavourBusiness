@@ -38,6 +38,10 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+8")]
         DateTime ModificationTime { get; set; }
 
+        /// <MetaDataID>{ef8859a3-d4d8-4daf-93e5-0154cf3a541b}</MetaDataID>
+        [BackwardCompatibilityID("+12")]
+        DateTime WillTakeCareTimestamp { get; set; }
+
         /// <MetaDataID>{3ee751a4-b32a-442d-a159-67ce755c127e}</MetaDataID>
         void RemoveSharingItem(IItemPreparation item);
 
@@ -255,6 +259,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{be004c8b-e151-43ee-af44-06ccfb191b27}</MetaDataID>
         public List<string> ServedMealTypesUris;
 
+        /// <MetaDataID>{eea67de5-e4ff-44f5-9bd8-3de929b95c3c}</MetaDataID>
         public ServicePointState ServicePointState;
     }
 

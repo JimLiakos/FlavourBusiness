@@ -97,16 +97,18 @@ namespace WaiterApp.ViewModel.Proxies
     public sealed class CNSPr_IWaiterPresentation_MealConversationTimeout : OOAdvantech.Remoting.EventConsumerHandler
     {
         
-        public void Invoke(WaiterApp.ViewModel.IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity)
+        public void Invoke(WaiterApp.ViewModel.IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity, string sessionIdentity)
         {
-            object[] args = new object[3];
-            System.Type[] argsTypes = new System.Type[3];
+            object[] args = new object[4];
+            System.Type[] argsTypes = new System.Type[4];
             args[0] = waiterPresentation;
             argsTypes[0] = typeof(WaiterApp.ViewModel.IWaiterPresentation);
             args[1] = messageID;
             argsTypes[1] = typeof(string);
             args[2] = servicePointIdentity;
             argsTypes[2] = typeof(string);
+            args[3] = sessionIdentity;
+            argsTypes[3] = typeof(string);
             object retValue = this.Invoke(typeof(WaiterApp.ViewModel.MealConversationTimeoutHandle), "Invoke", args, argsTypes);
         }
         

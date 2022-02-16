@@ -10,7 +10,7 @@ namespace WaiterApp.ViewModel
 
     public delegate void LaytheTableRequestHandle(IWaiterPresentation waiterPresentation, string messageID,string servicePointIdentity);
     public delegate void ItemsReadyToServeRequesttHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
-    public delegate void MealConversationTimeoutHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
+    public delegate void MealConversationTimeoutHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity, string sessionIdentity);
     public delegate void ServicePointChangeStateHandle(IWaiterPresentation waiterPresentation, string servicePointIdentity, ServicePointState newState);
     /// <MetaDataID>{981df64d-06d2-47af-9900-792dd6492ef0}</MetaDataID>
     [HttpVisible]
@@ -29,7 +29,7 @@ namespace WaiterApp.ViewModel
         [GenerateEventConsumerProxy]
         event MealConversationTimeoutHandle MealConversationTimeout;
 
-        void WillTakeCareMealConversationTimeout(string servicePointIdentity);
+        void WillTakeCareMealConversationTimeout(string servicePointIdentity,string  sessionIdentity);
 
         /// <MetaDataID>{d89e355f-0e0e-4267-b36b-209817f2ad4c}</MetaDataID>
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }

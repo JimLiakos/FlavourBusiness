@@ -679,17 +679,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     ObjectChangeState?.Invoke(this, nameof(Description));
                 }
 
-                
+
             }
         }
 
         /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
-        internal void MealConversationTimeout(ServicePoint servicePoint)
+        internal void MealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
         {
-            
-            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+            var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
+            if (activeWaiters.Count == 0)
+                activeWaiters = (from shiftWork in GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
 
             foreach (var waiter in activeWaiters)
             {
@@ -702,6 +704,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         clientMessage = new Message();
                         clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
                         clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Data["SessionIdentity"] = sessionIdentity;
+
                         clientMessage.Notification = new Notification() { Title = "Meal conversation is over time" };
                     }
                     waiter.PushMessage(clientMessage);

@@ -10,6 +10,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        /// <MetaDataID>{57dcf2ab-8af0-470f-a50a-b6c812373164}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        DateTime WillTakeCareTimestamp { get; set; }
+
         /// <MetaDataID>{47ec6550-33af-4b17-9d14-fc5b9f3dca9f}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         string SessionID { get; }
@@ -58,10 +62,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
 
-     
-
-
-
     }
 
     /// <MetaDataID>{e95ad745-80af-4906-8191-1962f605d70b}</MetaDataID>
@@ -72,4 +72,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         MealValidationDelay = 2,
         MealMonitoring = 3
     }
+
+
+    /// <MetaDataID>{a529cabc-8c45-43c5-b46b-40493cca6641}</MetaDataID>
+    
 }
