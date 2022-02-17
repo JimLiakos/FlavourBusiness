@@ -428,7 +428,8 @@ namespace FLBManager
         private static void Backup(string backupFolder)
         {
 
-
+            if (!System.IO.Directory.Exists(backupFolder))
+                System.IO.Directory.CreateDirectory(backupFolder);
             string storageName = "FlavourBusinesses";
             string storageLocation = "DevStorage";
             string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";

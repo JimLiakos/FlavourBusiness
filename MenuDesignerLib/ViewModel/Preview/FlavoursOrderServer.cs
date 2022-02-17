@@ -47,6 +47,8 @@ namespace MenuDesigner.ViewModel.Preview
 
         public IList<IHallLayout> Halls { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public ServicePointState ServicePointState => throw new NotImplementedException();
+
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
         public event SharedItemChangedHandle SharedItemChanged;

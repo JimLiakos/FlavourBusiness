@@ -270,7 +270,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <summary>
-        /// Defines Main session which defined explicitly
+        /// Defines Main session which defined explicitly from meal invitation
         /// </summary>
         private IFoodServiceSession ExplicitMainSession
         {
@@ -283,6 +283,14 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+
+
+        /// <summary>
+        /// This method makes messmateClientSesion part of the explicitly defined MainSession
+        /// </summary>
+        /// <param name="messmateClientSesion">
+        /// Defines the client session which will be part of the explicitly defined MainSession
+        /// </param>
         /// <MetaDataID>{bce5f9e3-648f-4e89-8d76-fae5e3b3d0bd}</MetaDataID>
         internal void MakePartOfMeal(IFoodServiceClientSession messmateClientSesion)
         {
@@ -294,6 +302,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 if (ExplicitMainSession == null)
                 {
+                    var implicitMainSession = _MainSession.Value;
                     if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
                     {
                         _MainSession.Value = null;
@@ -311,18 +320,27 @@ namespace FlavourBusinessManager.EndUsers
                         foodServiceSession.AddPartialSession(this);
                         //_MainSession.Value = ServicePoint.NewFoodServiceSession();
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                        var implicitMainSessionMainSession = messmateClientSesion.MainSession;
+                        if (implicitMainSessionMainSession != null)
+                            implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
+
+                        if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
+                            ObjectStorage.DeleteObject(implicitMainSessionMainSession);
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
 
-                    
+                    if (implicitMainSession != null && implicitMainSession.PartialClientSessions.Count == 0)
+                        ObjectStorage.DeleteObject(implicitMainSession);
+
+
                 }
                 else
                 {
                     if (ExplicitMainSession != (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession)
                     {
 
-                        if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
-                        {a
+                        if (messmateClientSesion .MainSession != null)
+                        {
                             var partialClientSessions = (messmateClientSesion as FoodServiceClientSession).MainSession.PartialClientSessions.ToList();
                             IFoodServiceSession foodServiceSession = messmateClientSesion.MainSession;
                             foreach (var clientSession in partialClientSessions)
