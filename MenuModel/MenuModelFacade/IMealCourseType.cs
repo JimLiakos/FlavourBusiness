@@ -28,5 +28,10 @@ namespace MenuModel
         /// <MetaDataID>{8d8bec0f-5c00-4a1f-a87f-02eb7dff8fd6}</MetaDataID>
         [BackwardCompatibilityID("+4")]
         bool IsDefault { get; set; }
+
+
+        /// <MetaDataID>{0c2711fe-112f-4e82-9d7a-f8fc0eda8183}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
+        bool AutoStart { get; set; }
     }
 }

@@ -267,6 +267,22 @@ namespace FlavourBusinessManager.EndUsers
             ObjectChangeState?.Invoke(this, nameof(MainSession));
         }
 
+
+
+        /// <summary>
+        /// Defines Main session which defined explicitly
+        /// </summary>
+        private IFoodServiceSession ExplicitMainSession
+        {
+            get
+            {
+                if (!ImplicitMealParticipation)
+                    return _MainSession.Value;
+                else
+                    return null;
+            }
+        }
+
         /// <MetaDataID>{bce5f9e3-648f-4e89-8d76-fae5e3b3d0bd}</MetaDataID>
         internal void MakePartOfMeal(IFoodServiceClientSession messmateClientSesion)
         {
@@ -276,15 +292,19 @@ namespace FlavourBusinessManager.EndUsers
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                if (_MainSession.Value == null)
+                if (ExplicitMainSession == null)
                 {
-                    if (messmateClientSesion.MainSession != null)
+                    if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
                     {
-                        // _MainSession.Value = messmateClientSesion.MainSession;
-                        messmateClientSesion.MainSession.AddPartialSession(this);
+                        _MainSession.Value = null;
+                        ImplicitMealParticipation = false;
+
+                        (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession.AddPartialSession(this);
                     }
                     else
                     {
+                        _MainSession.Value = null;
+                        ImplicitMealParticipation = false;
                         var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
                         if (this.Menu != null)
                             foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
@@ -293,15 +313,17 @@ namespace FlavourBusinessManager.EndUsers
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
+
+                    
                 }
                 else
                 {
-                    if (_MainSession.Value != messmateClientSesion.MainSession)
+                    if (ExplicitMainSession != (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession)
                     {
 
-                        if (messmateClientSesion.MainSession != null)
-                        {
-                            var partialClientSessions = messmateClientSesion.MainSession.PartialClientSessions.ToList();
+                        if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
+                        {a
+                            var partialClientSessions = (messmateClientSesion as FoodServiceClientSession).MainSession.PartialClientSessions.ToList();
                             IFoodServiceSession foodServiceSession = messmateClientSesion.MainSession;
                             foreach (var clientSession in partialClientSessions)
                             {
@@ -1781,6 +1803,11 @@ namespace FlavourBusinessManager.EndUsers
                     //ObjectChangeState?.Invoke(this, nameof(FlavourItems));
                 }
                 ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+
+                if(MainSession==null&&(ServicePoint as ServicePoint).OpenSessions.Count>0)
+                {
+                    (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+                }
             }
 
 

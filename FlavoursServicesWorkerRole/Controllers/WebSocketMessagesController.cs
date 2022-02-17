@@ -134,21 +134,20 @@ namespace FlavoursServicesWorkerRole.Controllers
 
 
                     WebSocketReceiveResult webSocketResultTuple = await wsRecieveAsync(buffer, CancellationToken.None);
-                    int count = webSocketResultTuple.Item3;
+                    if(webSocketResultTuple==null)
+                    {
+
+                    }
+                    int count = webSocketResultTuple.Item3; //received bytes
                     memoryStream.Write(buffer.Array, 0, count);
-                    if (webSocketResultTuple.Item2)
+                    if (webSocketResultTuple.Item2) //endOfMessage
                     {
                         memoryStream.Position = 0;
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Dispose();
                         memoryStream = new System.IO.MemoryStream();
                         if (bytes.Length > 0)
-                        {
-
                             handler.OnMessage(Encoding.UTF8.GetString(bytes, 0, bytes.Length));
-
-
-                        }
                     }
                 }
             }

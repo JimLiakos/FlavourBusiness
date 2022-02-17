@@ -70,11 +70,11 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}</MetaDataID>
         public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
         {
-            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
+            if (referencClientSession.MainSession != null)
+                return;
+            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null&&(x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
 
 
-            if (foodServiceSession != null && foodServiceSession.Progresses < ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
-                foodServiceSession = null;
 
             if (foodServiceSession == null)
             {
@@ -109,6 +109,7 @@ namespace FlavourBusinessManager.RoomService
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     foodServiceSession.AddPartialSession(referencClientSession);
+                    referencClientSession.ImplicitMealParticipation = true;
                     stateTransition.Consistent = true;
                 }
             }

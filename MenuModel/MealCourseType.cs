@@ -110,6 +110,26 @@ namespace MenuModel
         [BackwardCompatibilityID("+4")]
         public MenuModel.IMealType Meal => _Meal.Value;
 
-        
+
+        /// <exclude>Excluded</exclude>
+        bool _AutoStart=true;
+
+        /// <MetaDataID>{b9b01d92-e482-4f92-a76d-e616e802fb5b}</MetaDataID>
+        [PersistentMember(nameof(_AutoStart))]
+        [BackwardCompatibilityID("+5")]
+        public bool AutoStart
+        {
+            get => _AutoStart; set
+            {
+                if (_AutoStart != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AutoStart = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

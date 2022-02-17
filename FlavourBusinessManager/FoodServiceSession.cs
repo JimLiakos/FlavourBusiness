@@ -126,6 +126,43 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        internal bool CanIncludeAsPart(FoodServiceClientSession referencClientSession)
+        {
+            if (referencClientSession.MainSession != null && referencClientSession.MainSession != this)
+                return false;
+
+
+            if (Meal != null)
+            {
+
+               var mealCourse=  Meal.Courses.Where(x=> (x as MealCourse).MealCourseType.AutoStart&& x.ServedAtForecast!=null).OrderBy(x => x.ServedAtForecast).LastOrDefault();
+                if (mealCourse == null)
+                    return true;
+
+                var mealStartsAt = Meal.Courses.Where(x => x.StartsAt != null&&(x as MealCourse).MealCourseType.AutoStart).OrderBy(x => x.StartsAt).FirstOrDefault()?.StartsAt;
+                if (mealStartsAt == null)
+                    mealStartsAt = SessionStarts;
+
+
+                var durationInMin = (mealCourse.ServedAtForecast - mealStartsAt).Value.TotalMinutes;
+
+                var progressInMin = (DateTime.UtcNow - mealStartsAt).Value.TotalMinutes;
+                if(durationInMin>0&&progressInMin>0)
+                {
+                    
+                    var progressPercentage = (100 * progressInMin) / durationInMin;
+                    if (progressPercentage < ServicesContextRunTime.Current.Settings.AutoAssignMaxMealProgress)
+                        return true;
+                }
+                return false;
+
+
+            }
+
+            return true;
+                
+        }
+
         /// <exclude>Excluded</exclude>
         DateTime _SessionStarts;
         /// <MetaDataID>{4bb0bd71-bead-41de-a054-9e612487691e}</MetaDataID>

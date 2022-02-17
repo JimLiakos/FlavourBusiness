@@ -155,7 +155,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-
+        
         /// <exclude>Excluded</exclude>
         System.DateTime? _ServedAtForecast;
 
@@ -204,6 +204,14 @@ namespace FlavourBusinessManager.RoomService
                 return _MealCourseTypeOrder.Value;
             }
 
+        }
+
+        public MealCourseType MealCourseType
+        {
+            get
+            {
+                return (Meal as Meal).MealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x).GetPersistentObjectUri(x) == _MealCourseTypeUri).FirstOrDefault();
+            }
         }
 
         /// <exclude>Excluded</exclude>

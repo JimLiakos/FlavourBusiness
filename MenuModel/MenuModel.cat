@@ -6645,7 +6645,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5")
+		    value      	"6")
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"BackwardCompatibilityIDTransfered"
@@ -6781,8 +6781,50 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
-			    value      	"+4"))
+			    value      	"+4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
 		    quid       	"60A207DD033A"
+		    documentation 	
+|
+|All menu items where are not parts o of meal type assigned to meal course of default meal course type
+|
+		    
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "AutoStart"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0c2711fe-112f-4e82-9d7a-f8fc0eda8183}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"620DEB2802E1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"620DEB2802E1"
 		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModelFacade"
@@ -6805,7 +6847,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5")
+		    value      	"6")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -6996,6 +7038,27 @@
 			    value      	"+4"))
 		    quid       	"60DA9BEB01F3"
 		    type       	"MenuModel.IMealType"
+		    exportControl 	"Public")
+		(object ClassAttribute "AutoStart"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b9b01d92-e482-4f92-a76d-e616e802fb5b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"620DEC340120")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"620DEC340120"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModel"
 	    quidu      	"5721E69F03B9"
@@ -14294,7 +14357,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	905
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::MealCourseType" @235

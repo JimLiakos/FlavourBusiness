@@ -17,6 +17,7 @@ namespace MenuModel.JsonViewModel
             mappedObject[mealCourseType] = this;
             _Name = new Multilingual(mealCourseType.MultilingualName);
             IsDefault = mealCourseType.IsDefault;
+            AutoStart = mealCourseType.AutoStart;
             DurationInMinutes = mealCourseType.DurationInMinutes;
             Uri = ObjectStorage.GetStorageOfObject(mealCourseType)?.GetPersistentObjectUri(mealCourseType);
         }
@@ -50,5 +51,7 @@ namespace MenuModel.JsonViewModel
 
         [JsonIgnore]
         public IMealType Meal => throw new NotImplementedException();
+
+        public bool AutoStart { get ; set ; }
     }
 }

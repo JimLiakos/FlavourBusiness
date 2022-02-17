@@ -242,6 +242,7 @@ namespace FlavourBusinessManager.RoomService
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
+                            mealCourse.StartsAt = DateTime.UtcNow;
                             newMealCourses.Add(mealCourse);
 
                             _Courses.Add(mealCourse);
