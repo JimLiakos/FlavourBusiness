@@ -3095,6 +3095,17 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "CommitServingBatches", args, argsTypes);
         }
         
+        public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionID)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = servicePointIdentity;
+            argsTypes[0] = typeof(string);
+            args[1] = sessionID;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "WillTakeCareMealConversationTimeout", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];
@@ -3201,6 +3212,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         public Pr_IFoodServiceSession(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.DateTime WillTakeCareTimestamp
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_WillTakeCareTimestamp", args, argsTypes);
+                return this.Proxy.GetValue<System.DateTime>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(System.DateTime);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_WillTakeCareTimestamp", args, argsTypes);
+            }
         }
         
         // The Width property for the object.
@@ -4323,6 +4354,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 args[0] = value;
                 argsTypes[0] = typeof(System.DateTime);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_ModificationTime", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.DateTime WillTakeCareTimestamp
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_WillTakeCareTimestamp", args, argsTypes);
+                return this.Proxy.GetValue<System.DateTime>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(System.DateTime);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_WillTakeCareTimestamp", args, argsTypes);
             }
         }
         
