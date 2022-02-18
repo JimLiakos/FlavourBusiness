@@ -421,7 +421,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 lock (ServicePointLock)
                 {
 
-                    if ( !fsClientSession.IsWaiterSession&& State==ServicePointState.Free)
+                    if (!fsClientSession.IsWaiterSession && State == ServicePointState.Free)
                         ChangeServicePointState(ServicePointState.Laying);
 
                 }
@@ -719,7 +719,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
 
-            
+
             var collection = (from foodServiceClient in ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions
                               where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession
                               select foodServiceClient).ToList();
@@ -727,7 +727,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (!serviceClientSession.IsWaiterSession)
             {
                 collection = (from foodServiceClient in collection
-                              where !foodServiceClient.IsWaiterSession&&!foodServiceClient.LongTimeForgotten
+                              where !foodServiceClient.IsWaiterSession && !foodServiceClient.LongTimeForgotten
                               select foodServiceClient).ToList();
             }
 
@@ -742,6 +742,34 @@ namespace FlavourBusinessManager.ServicesContextResources
             return true;
         }
 
+        internal void TransferPartialSession(string partialSessionID, string targetSessionID)
+        {
+            lock (ServicePointLock)
+            {
+                var partialSession = ServicesContextRunTime.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
+                var targetSession = ServicesContextRunTime.OpenSessions.Where(x => x.SessionID == targetSessionID).First();
+                var sourceSession = partialSession.MainSession;
+                if (partialSession.ServicePoint != this || targetSession.ServicePoint != this)
+                    throw new ArgumentException("Invalid partial session transfer.");
+
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    if (sourceSession != null)
+                        sourceSession.RemovePartialSession(partialSession);
+                    targetSession.AddPartialSession(partialSession);
+                    if (sourceSession.Meal == null && sourceSession.PartialClientSessions.Count == 0)
+                        ObjectStorage.DeleteObject(sourceSession);
+
+                    stateTransition.Consistent = true;
+                }
+            }
+
+
+
+        }
     }
 
 

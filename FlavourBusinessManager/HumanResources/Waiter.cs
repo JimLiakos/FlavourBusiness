@@ -6,8 +6,10 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using RestaurantHallLayoutModel;
 
@@ -794,10 +796,16 @@ namespace FlavourBusinessManager.HumanResources
             }
             else
             {
-                
+
                 if (session.Caregivers.Where(x => x.Worker == this && x.Caregiving == EndUsers.Caregiver.CaregivingType.ConversationCheck).Count() == 0)
                     session.AddCaregiver(this, EndUsers.Caregiver.CaregivingType.ConversationCheck);
             }
+        }
+
+        public void TransferPartialSession(string partialSessionID, string targetSessionID)
+        {
+            var partialSession = ServicesContextRunTime.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
+            (partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSessionID, targetSessionID);
         }
 
         /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>

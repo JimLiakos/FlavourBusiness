@@ -92,6 +92,7 @@ namespace FlavourBusinessFacade.HumanResources
         void CommitServingBatches();
         /// <MetaDataID>{83e301d6-ada6-4731-b494-5729b217b500}</MetaDataID>
         void WillTakeCareMealConversationTimeout(string servicePointIdentity,string sessionID);
+        void TransferPartialSession(string partialSessionID, string targetSessionID);
     }
 
 

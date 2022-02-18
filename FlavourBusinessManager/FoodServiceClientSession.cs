@@ -324,12 +324,12 @@ namespace FlavourBusinessManager.EndUsers
                         if (implicitMainSessionMainSession != null)
                             implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
 
-                        if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
+                        if (implicitMainSessionMainSession != null && implicitMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
                             ObjectStorage.DeleteObject(implicitMainSessionMainSession);
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
 
-                    if (implicitMainSession != null && implicitMainSession.PartialClientSessions.Count == 0)
+                    if (implicitMainSession != null && implicitMainSession.Meal==null&& implicitMainSession.PartialClientSessions.Count == 0)
                         ObjectStorage.DeleteObject(implicitMainSession);
 
 

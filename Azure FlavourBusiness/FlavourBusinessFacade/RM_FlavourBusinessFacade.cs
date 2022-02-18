@@ -4885,6 +4885,17 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "WillTakeCareMealConversationTimeout", args, argsTypes);
         }
         
+        public void TransferPartialSession(string partialSessionID, string targetSessionID)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = partialSessionID;
+            argsTypes[0] = typeof(string);
+            args[1] = targetSessionID;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferPartialSession", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

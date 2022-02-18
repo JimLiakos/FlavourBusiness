@@ -16,6 +16,7 @@ using System.Reflection;
 using OOAdvantech.Json.Linq;
 using FlavourBusinessFacade.RoomService;
 using UIBaseEx;
+using RestaurantHallLayoutModel;
 
 
 
@@ -56,13 +57,13 @@ namespace WaiterApp.ViewModel
     }
 
     /// <MetaDataID>{5ec91d09-d693-4c4e-9dca-858a9e09a233}</MetaDataID>
-    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, ISecureUser, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
         /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
         protected WaiterPresentation()
         {
-            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true, Halls = _Halls,EndUser=this };
+            this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { WaiterView = true, Halls = _Halls, EndUser = this };
         }
         /// <MetaDataID>{94887bc2-fef8-4fcc-af96-24e9ef4e71c3}</MetaDataID>
         static WaiterPresentation _Current;
@@ -132,12 +133,12 @@ namespace WaiterApp.ViewModel
                 _ServingBatches.Remove(servingBatchPresentation.ServingBatch);
                 servingBatchPresentation.Dispose();
             }
-            
+
             ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
         public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity)
         {
-            this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity,sessionIdentity);
+            this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity, sessionIdentity);
         }
 
         /// <MetaDataID>{ad37da77-4203-47d2-af7e-094cd499c17a}</MetaDataID>
@@ -599,7 +600,7 @@ namespace WaiterApp.ViewModel
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
-                                
+
                             }
                             this.FlavoursOrderServer.Halls = _Halls;
                             GetMessages();
@@ -1448,7 +1449,7 @@ namespace WaiterApp.ViewModel
                         {
                             if (message != null && InActiveShiftWork)
                             {
-                                
+
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
                                 string sessionIdentity = message.GetDataValue<string>("SessionIdentity");
@@ -1553,6 +1554,8 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{269fc5a7-5b40-4aac-80a2-b55d55e41dc4}</MetaDataID>
         public MarshalByRefObject GetObjectFromUri(string uri)
         {
+            if (uri == "./ServicePointSupervisor")
+                return this;
             return FlavoursOrderServer as MarshalByRefObject;
         }
         /// <MetaDataID>{07acf9b5-7184-48c8-ae68-99b9073851ca}</MetaDataID>
@@ -1673,6 +1676,37 @@ namespace WaiterApp.ViewModel
 
         }
 
+        public void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+        {
 
+        }
+
+        public async void TransferSession(string targetServicePointIdentity)
+        {
+
+
+            string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+                                                     from shape in hall.Shapes
+                                                     where shape.ServicesPointIdentity == targetServicePointIdentity
+                                                     select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+
+            this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
+
+            await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
+
+
+        }
+
+        public void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TransferPartialSession(string partialSessionID, string targetSessionID)
+        {
+            this.Waiter.TransferPartialSession(partialSessionID, targetSessionID);
+
+
+        }
     }
 }

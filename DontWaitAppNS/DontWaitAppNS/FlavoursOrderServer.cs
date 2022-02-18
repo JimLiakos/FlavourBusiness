@@ -2062,6 +2062,8 @@ namespace DontWaitApp
             }
         }
 
+        public IFoodServiceSession MainSession => this.FoodServiceClientSession?.MainSession;
+
         public void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState)
         {
             foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())

@@ -59,11 +59,11 @@ namespace DontWaitApp
 
 
     /// <MetaDataID>{90fe460d-7996-49ca-a085-054466973111}</MetaDataID>
-    [OOAdvantech.MetaDataRepository.HttpVisible]
+    [HttpVisible]
     public interface IFlavoursOrderServer
     {
-
-
+        [HttpInVisible]
+        IFoodServiceSession MainSession { get; }
         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
@@ -378,6 +378,18 @@ namespace DontWaitApp
 
     }
 
+
+
+    [HttpVisible]
+
+    public interface IServicePointSupervisor
+    {
+        void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity);
+        void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
+
+        void TransferPartialSession(string partialSessionID, string targetSessionID);
+
+    }
 
 }
 
