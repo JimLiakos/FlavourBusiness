@@ -24,7 +24,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             PreparationItems = preparationItems;
             _Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
-            Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse).GetPersistentObjectUri(mealCourse);
+            _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
+
+            
         }
 
         private void MealCourse_ObjectChangeState(object _object, string member)
@@ -45,10 +47,22 @@ namespace FlavourBusinessFacade.ServicesContextResources
             ServicePoint = servicePoint;
             PreparationItems = preparationItems;
             Description = description;
-            Uri = uri;
+           _Uri = uri;
         }
-        /// <MetaDataID>{af49f5f9-05be-45b4-9422-603d3346bc91}</MetaDataID>
-        public string Uri;
+
+        /// <exclude>Excluded</exclude>
+        [OOAdvantech.Json.JsonIgnore]
+        string _Uri;
+
+        public string Uri
+        {
+            get
+            {
+                if(_Uri==null)
+                    _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(MealCourse)?.GetPersistentObjectUri(MealCourse);
+                return _Uri;
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>

@@ -13494,7 +13494,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"4"))
+			    value      	"5"))
 		    quid       	"6073C95302E6"
 		    stereotype 	"Interface"
 		    used_nodes 	(list uses_relationship_list
@@ -13539,6 +13539,25 @@
 				    quid       	"6073CDC002B7"
 				    type       	"IItemPreparation"
 				    quidu      	"5D024DF603A6"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RaiseItemsStateChanged"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5e6117fe-6aad-4b88-8aea-5ca123480287}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62132CD7021D"))
+			    quid       	"62132CD7021D"
+			    parameters 	(list Parameters
+				(object Parameter "newItemsState"
+				    quid       	"62132D4B026D"
+				    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -13687,7 +13706,62 @@
 				    name       	"GenerateGetOperation"
 				    value      	TRUE))
 			    quid       	"6140195E0032"
+			    documentation 	
+|
+|Defines the meal course items grouped by state of items
+|
+			    
 			    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"
+			    exportControl 	"Public")
+			(object ClassAttribute "SessionData"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{314d0217-3182-440d-8da4-5405eb86c0bd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62132CD800E5")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"62132CD800E5"
+			    type       	"FlavourBusinessFacade.EndUsers.SessionData"
+			    exportControl 	"Public")
+			(object ClassAttribute "HeaderCourse"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{81761951-6699-42f8-aef3-19c407cf14e2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62132D4B02CB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
+			    quid       	"62132D4B02CB"
+			    type       	"FlavourBusinessFacade.RoomService.IMealCourse"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -14777,7 +14851,15 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{924eaf23-3848-4f7f-8bf6-48efcdbe2fe7}"))
+				    value      	"{924eaf23-3848-4f7f-8bf6-48efcdbe2fe7}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"ContainerClass"
+				    value      	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"619C9AC5023B"
 			    label      	"ServingBatches"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IServingBatch"
@@ -14801,7 +14883,11 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{8061c02d-f942-4224-b4a7-e5c072da305f}"))
+				    value      	"{8061c02d-f942-4224-b4a7-e5c072da305f}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"619C9AC5024E"
 			    label      	"MealCourse"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
@@ -14990,6 +15076,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@175
+				location   	(22, 599)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	1528)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -15050,6 +15154,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@177
+				location   	(1409, 712)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	42
+				max_width  	1321)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -16140,8 +16262,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1662
-		    origin_y   	50
+		    origin_x   	0
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::MenuModel::IMenuItem" @229
 			    ShowCompartmentStereotypes 	TRUE

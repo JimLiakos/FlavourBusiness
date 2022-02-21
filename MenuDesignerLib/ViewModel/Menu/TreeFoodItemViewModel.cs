@@ -171,6 +171,16 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 MenuItemsEditor.ViewModel.MenuItemViewModel itemViewModel = new MenuItemsEditor.ViewModel.MenuItemViewModel(MenuCanvasFoodItem.MenuItem);
                 menuItemPage.GetObjectContext().SetContextInstance(itemViewModel);
 
+
+                try
+                {
+                    System.IO.File.AppendAllLines(@"f:\Order.xml", new List<string> { "<Item Quantity = \"1\"  Uri = \"" + OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(MenuCanvasFoodItem.MenuItem).GetPersistentObjectUri(MenuCanvasFoodItem.MenuItem) + "\"  Name = \"" + MenuCanvasFoodItem.MenuItem.Name + "\"/>" }, Encoding.UTF8);
+                }
+                catch (Exception error)
+                {
+
+                    
+                }
                 if (frame.RootPage is Views.MenuDesignerPage)
                 {
                     frame.ShowDialogPageAfter(frame.RootPage, menuItemPage);

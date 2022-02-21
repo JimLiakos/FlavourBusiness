@@ -888,8 +888,6 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
 
-
-
             //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
 
         }

@@ -26,7 +26,7 @@ namespace FlavourBusinessManager.RoomService
     public class MealCourse : System.MarshalByRefObject, IMealCourse
     {
 
-        /// <MetaDataID>{b73a66b3-2ab9-418c-939b-f22fee687ee3}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         bool _Synchronized;
         /// <MetaDataID>{18314fb4-00f4-46d1-a89f-93b54bb013d5}</MetaDataID>
         [PersistentMember(nameof(_Synchronized))]
@@ -155,7 +155,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        
+
         /// <exclude>Excluded</exclude>
         System.DateTime? _ServedAtForecast;
 
@@ -192,7 +192,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        /// <MetaDataID>{716e1a7a-9abf-43a1-9d52-e49af11c518c}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         int? _MealCourseTypeOrder;
         /// <MetaDataID>{b5c8f968-c936-4c77-aef2-a4d107446aaf}</MetaDataID>
         public int MealCourseTypeOrder
@@ -206,6 +206,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{a5d66845-0435-4312-9423-6f482b945eb8}</MetaDataID>
         public MealCourseType MealCourseType
         {
             get
@@ -255,7 +256,7 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+9")]
         public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
 
-        /// <MetaDataID>{26dac4e7-b61f-4d79-af69-4402b30d02a9}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         List<ItemsPreparationContext> _FoodItemsInProgress;
 
         /// <MetaDataID>{e1c88e32-243d-4257-82a0-5a8119bf34e7}</MetaDataID>
@@ -344,7 +345,7 @@ namespace FlavourBusinessManager.RoomService
         public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>
-        public bool IsTooLateToAddItem
+        public bool ItsTooLateForChange
         {
             get
             {
@@ -352,6 +353,30 @@ namespace FlavourBusinessManager.RoomService
                 return this._FoodItems.ToThreadSafeList().Any(x => x.State.IsInFollowingState(ItemPreparationState.PendingPreparation));
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        IMealCourse _Previous;
+        /// <MetaDataID>{1135b8be-43f3-465a-ba4a-7d1861e7b3d7}</MetaDataID>
+        [PersistentMember(nameof(_Previous))]
+        [BackwardCompatibilityID("+12")]
+        public IMealCourse Previous
+        {
+            get => _Previous;
+            set
+            {
+                if (_Previous != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Previous = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{d91b18f4-9d77-4881-8cf6-1777b356c2c6}</MetaDataID>
+        public IMealCourse HeaderCourse => throw new NotImplementedException();
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -370,7 +395,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var flavourItem in itemPreparations)
                 AddItem(flavourItem);
 
-           
+
             foreach (var itemsPreparationContext in this.FoodItemsInProgress)
             {
                 var commonItemPreparationState = itemsPreparationContext.PreparationItems.GetMinimumCommonItemPreparationState();
@@ -492,19 +517,24 @@ namespace FlavourBusinessManager.RoomService
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
+
+                    lock (FoodItemsInProgressLock)
+                    {
+                        var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
+                        if (itemsPreparationContext.PreparationItems.Contains(itemPreparation))
+                            itemsPreparationContext.PreparationItems.Remove(itemPreparation);
+                    }
+
                     _FoodItems.Remove(itemPreparation);
                     (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
+
+
+
                     stateTransition.Consistent = true;
                 }
 
 
-                lock (FoodItemsInProgressLock)
-                {
-                    var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
 
-                    if(itemsPreparationContext.PreparationItems.Contains(itemPreparation))
-                        itemsPreparationContext.PreparationItems.Remove(itemPreparation);
-                }
 
                 ObjectChangeState?.Invoke(this, nameof(FoodItems));
             }
@@ -514,13 +544,13 @@ namespace FlavourBusinessManager.RoomService
         [ObjectActivationCall]
         void ObjectActivation()
         {
-
+            _FoodItemsInProgress = new List<ItemsPreparationContext>();
             foreach (var foodItem in _FoodItems.OfType<ItemPreparation>())
                 foodItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
             lock (FoodItemsInProgressLock)
             {
-                foreach(var itemPreparation in _FoodItems )
+                foreach (var itemPreparation in _FoodItems)
                 {
                     var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
                     if (itemsPreparationContext == null)
@@ -543,7 +573,7 @@ namespace FlavourBusinessManager.RoomService
             (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
         }
 
-        
+
 
 
 

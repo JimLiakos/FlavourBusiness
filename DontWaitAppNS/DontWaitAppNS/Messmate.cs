@@ -8,7 +8,7 @@ namespace DontWaitApp
 {
     /// <MetaDataID>{47a4f14f-cb85-4ae5-ad57-619bc3fb319e}</MetaDataID>
     public class Messmate
-    { 
+    {
 
         [JsonIgnore]
         public readonly FlavourBusinessFacade.EndUsers.IFoodServiceClientSession ClientSession;
@@ -16,27 +16,36 @@ namespace DontWaitApp
         {
             ClientSession = clientSession;
             Name = ClientSession.ClientName;
-            DateTimeOfLastRequest = ClientSession.DateTimeOfLastRequest;
+            LastChangeTimestamp = DateTime.MinValue;//  ClientSession.DateTimeOfLastRequest;
+            SessionStartsAt = ClientSession.SessionStarts;
             ClientSessionID = ClientSession.SessionID;
             MainSessionID = ClientSession.MainSession?.SessionID;
             WaiterSession = ClientSession.IsWaiterSession;
             MealConversationTimeout = clientSession.MealConversationTimeout;
             foreach (var preparationItem in ClientSession.FlavourItems.OfType<ItemPreparation>().ToList())
             {
+
+
                 var sessionOrderItem = sessionOrderItems.Where(x => x.uid == preparationItem.uid).FirstOrDefault();
 
-                if (sessionOrderItem!=null)
+                if (sessionOrderItem != null)
                     OrderItems[preparationItem.uid] = sessionOrderItem;
                 else
                     OrderItems[preparationItem.uid] = preparationItem;
+
+                if (LastChangeTimestamp < OrderItems[preparationItem.uid].StateTimestamp)
+                    LastChangeTimestamp = OrderItems[preparationItem.uid].StateTimestamp;
+
             }
 
 
             foreach (var preparationItem in ClientSession.SharedItems.OfType<ItemPreparation>().ToList())
             {
+
+
                 var sessionOrderItem = sessionOrderItems.Where(x => x.uid == preparationItem.uid).FirstOrDefault();
 
-                if (sessionOrderItem!=null)
+                if (sessionOrderItem != null)
                     OrderItems[preparationItem.uid] = sessionOrderItem;
                 else
                     OrderItems[preparationItem.uid] = preparationItem;
@@ -60,6 +69,10 @@ namespace DontWaitApp
                     OrderItems[preparationItem.uid] = sessionOrderItems[preparationItem.uid];
                 else
                     OrderItems[preparationItem.uid] = preparationItem;
+
+                if (LastChangeTimestamp < OrderItems[preparationItem.uid].StateTimestamp)
+                    LastChangeTimestamp = OrderItems[preparationItem.uid].StateTimestamp;
+
             }
 
 
@@ -104,7 +117,10 @@ namespace DontWaitApp
         /// <exclude>Excluded</exclude>
 
         public string Name { get; set; }
-        public DateTime DateTimeOfLastRequest { get; set; }
+        public DateTime LastChangeTimestamp { get; set; }
+
+        public DateTime SessionStartsAt { get; set; }
+
         public string ClientSessionID { get; set; }
 
         public string MainSessionID { get; set; }

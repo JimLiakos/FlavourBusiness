@@ -10,7 +10,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{8b5f1668-5da4-4e06-a565-03b8a622c502}</MetaDataID>
         public string PreparationStationIdentity { get; set; }
         /// <MetaDataID>{e3ab05aa-5f0e-4c56-b91a-c5cd2937684f}</MetaDataID>
-        public List<IItemPreparation> PreparationItems { get; set; }
+        public List<IItemPreparation> PreparationItems { get;  set; }
 
         /// <MetaDataID>{41c8c8ed-0445-4e08-a995-cb44fe6d1837}</MetaDataID>
         public string Description { get; set; }

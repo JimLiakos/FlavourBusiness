@@ -49,6 +49,8 @@ namespace MenuDesigner.ViewModel.Preview
 
         public ServicePointState ServicePointState => throw new NotImplementedException();
 
+        public IFoodServiceSession MainSession => throw new NotImplementedException();
+
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
         public event SharedItemChangedHandle SharedItemChanged;

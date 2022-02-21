@@ -16,7 +16,10 @@
 		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας στο τρσπέζι {0}",
 		"WillLayTheTableMessage":"'Ο {0}' \nΘα στρώσει το τραπέζι\n'{1}'",
 		"LayTableMessageDialogTitle":"Στρώσιμο τραπεζιού",
-		"WillTakeCareLabel":"Θα φροντίσω"
+		"WillTakeCareLabel":"Θα φροντίσω",
+		"MealSessionStartedAtLabel":"Ξεκίνησε : ",
+		"LastMealSessionChangesAtLabel":"΄Άλλαξε :"
+		
 
 	},
 	"ModalDialog":
@@ -25,6 +28,16 @@
 		"CancelButtonLabel":"Άκυρο",
 		"YesButtonLabel":"Ναι",
 		"NoButtonLabel":"Όχι"
+	},
+	"DatePrompt": {
+		"YesterdayPrompt": "Χτές",
+		"DaysPrompt": "{0} μέρες πριν",
+		"WeekPrompt": "{0} εβδομάδα πριν",
+		"WeeksPrompt": "{0} εβδομάδες πριν",
+		"MonthPrompt": "{0} μήνα πριν",
+		"MonthsPrompt": "{0} μήνες πριν",
+		"YearPrompt": "{0} χρόνο πριν",
+		"YearsPrompt": "{0} χρόνια πριν"
 	}
 
 }

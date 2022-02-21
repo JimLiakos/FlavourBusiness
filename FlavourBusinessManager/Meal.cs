@@ -96,6 +96,7 @@ namespace FlavourBusinessManager.RoomService
         /// <exclude>Excluded</exclude>
         [OOAdvantech.Json.JsonIgnore]
         MenuModel.MealType _MealType;
+        /// <MetaDataID>{5f6ff876-551a-47e2-ba91-7456465a3b99}</MetaDataID>
         [OOAdvantech.Json.JsonIgnore]
         public MenuModel.MealType MealType
         {
@@ -236,9 +237,8 @@ namespace FlavourBusinessManager.RoomService
 
 
                     MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
-                    if (mealCourse == null|| mealCourse.IsTooLateToAddItem)
+                    if (mealCourse == null|| mealCourse.ItsTooLateForChange)
                     {
-
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
@@ -248,9 +248,6 @@ namespace FlavourBusinessManager.RoomService
                             _Courses.Add(mealCourse);
                             stateTransition.Consistent = true;
                         }
-
-
-
                     }
                     else
                     {

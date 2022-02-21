@@ -645,7 +645,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         };
                     }
                 }
-                if (preparationData.PreparationStationRuntime == null)
+                if (preparationData==null||preparationData.PreparationStationRuntime == null)
                 {
                     //Look for the general  prep station to prepare the item 
                     foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))

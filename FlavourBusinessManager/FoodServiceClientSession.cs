@@ -170,26 +170,8 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-        /// <MetaDataID>{574ebd32-b1a2-4182-9d8a-95afe1ac15d9}</MetaDataID>
-        [ObjectActivationCall]
-        internal void OnActivated()
-        {
-            lock (CaregiversLock)
-            {
-                if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
-                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(WillTakeCareWorkersJson);
-            }
-        }
+    
 
-        /// <MetaDataID>{bb3c90bc-b3bc-49c1-a7bc-3ec102d79e4e}</MetaDataID>
-        [BeforeCommitObjectStateInStorageCall]
-        internal void OnBeforeObjectStateCommited()
-        {
-            lock (CaregiversLock)
-            {
-                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
-            }
-        }
 
         /// <MetaDataID>{f0df519b-0f4b-4647-9031-7f59614e69df}</MetaDataID>
         object CaregiversLock = new object();
@@ -1381,6 +1363,12 @@ namespace FlavourBusinessManager.EndUsers
                 StartDeviceConnectionStatusCheck();
             var servicPoint = this.ServicePoint?.Description;
             var forgotten = Forgotten;
+
+            lock (CaregiversLock)
+            {
+                if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
+                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(WillTakeCareWorkersJson);
+            }
         }
 
         /// <MetaDataID>{35842787-d9d9-428e-b02b-4c1c668082b3}</MetaDataID>
@@ -1419,7 +1407,10 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{5308ec61-d82b-47fc-bd9c-df622e3a86a6}</MetaDataID>
         void IObjectStateEventsConsumer.BeforeCommitObjectState()
         {
-
+            lock (CaregiversLock)
+            {
+                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
+            }
         }
 
 
@@ -1436,11 +1427,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-
-                    if (flavourItem.PreparationStation != null)
-                        (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
-
-                    _FlavourItems.Remove(flavourItem);
+                   
                     if (MainSession != null && MainSession.Meal != null)
                     {
                         var flavourItemMealCourse = (from mealCourse in MainSession.Meal.Courses
@@ -1452,7 +1439,10 @@ namespace FlavourBusinessManager.EndUsers
                         //if(flavourItemMealCourse.FoodItems.Count==0)
 
                     }
+                    if (flavourItem.PreparationStation != null)
+                        (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
 
+                    _FlavourItems.Remove(flavourItem);
                     flavourItem.SessionID = null;
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
@@ -1541,7 +1531,7 @@ namespace FlavourBusinessManager.EndUsers
                         clientSession.RaiseItemStateChanged(item.uid, existingItem.SessionID, SessionID, existingItem.IsShared, existingItem.SharedInSessions);
                 }
 
-                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
+                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && x != this && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(item.uid, existingItem.SessionID, SessionID, existingItem.IsShared, existingItem.SharedInSessions);
 
 
@@ -1812,7 +1802,7 @@ namespace FlavourBusinessManager.EndUsers
                     foreach (var clientSession in MainSession.PartialClientSessions.Where(x => x != this))
                         clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
                 }
-                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
+                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession&& x != this && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
 
                 if (sharingFlavourItem != null)

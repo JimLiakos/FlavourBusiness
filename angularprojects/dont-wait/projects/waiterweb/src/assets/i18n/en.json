@@ -14,12 +14,24 @@
 		"MealConversationTimeoutMessage": "Meal conversation is over time at {0}",
 		"WillLayTheTableMessage": "'{0}'\nwill lay the table '{1}'",
 		"LayTableMessageDialogTitle": "Table laying",
-		"WillTakeCareLabel":"I will take care"
+		"WillTakeCareLabel":"I will take care",
+		"MealSessionStartedAtLabel":"Started at: ",
+		"LastMealSessionChangesAtLabel":"Last change: "
 	},
 	"ModalDialog": {
-		"OKButtonLabel": "ΟΚ",
+		"OKButtonLabel": "OK",
 		"CancelButtonLabel": "Cancel",
 		"YesButtonLabel": "Yes",
 		"NoButtonLabel": "No"
+	},
+	"DatePrompt": {
+		"YesterdayPrompt": "Yesterday",
+		"DaysPrompt": "{0} days ago",
+		"WeekPrompt": "{0} week ago",
+		"WeeksPrompt": "{0} weeks ago",
+		"MonthPrompt": "{0} month ago",
+		"MonthsPrompt": "{0} months ago",
+		"YearPrompt": "{0} year ago",
+		"YearsPrompt": "{0} years ago"
 	}
 }

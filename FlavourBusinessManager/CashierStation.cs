@@ -249,7 +249,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{5fb73605-0c1b-4106-9abc-26c71c953de7}</MetaDataID>
         private void PrintReceiptCheck(ItemPreparation itemPreparation)
         {
-            if (string.IsNullOrWhiteSpace(itemPreparation.TransactionUri))
+            if (string.IsNullOrWhiteSpace(itemPreparation.TransactionUri)&& itemPreparation.State!=ItemPreparationState.Canceled)
             {
                 var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
                 if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
