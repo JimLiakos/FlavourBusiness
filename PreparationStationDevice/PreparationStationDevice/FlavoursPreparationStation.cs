@@ -405,7 +405,7 @@ namespace PreparationStationDevice
             return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically",true);
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
                     return false;
@@ -452,7 +452,7 @@ namespace PreparationStationDevice
         public async void AssignCodeCardsToSessions()
         {
 #if DeviceDotNet
-            var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+            var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically",true);
             if (PreparationStation != null)
             {
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))

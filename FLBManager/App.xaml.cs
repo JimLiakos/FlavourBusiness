@@ -93,6 +93,7 @@ namespace FLBManager
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
 
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "",true);
+            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
