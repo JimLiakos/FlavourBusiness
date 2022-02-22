@@ -28,9 +28,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string Description { get; }
         [Association("SessionMeal", Roles.RoleA, "b11e0deb-6ec0-4653-a06b-02610d68abcb")]
         [RoleAMultiplicityRange(1, 1)]
-        RoomService.IMeal Meal { get;  }
+        RoomService.IMeal Meal { get; }
 
-         
+
         [RoleAMultiplicityRange(0)]
         [Association("FoodServiceSession", Roles.RoleA, "93808acd-1c78-45da-8c44-dd7666ae0128")]
         System.Collections.Generic.IList<IFoodServiceClientSession> PartialClientSessions { get; }
@@ -39,7 +39,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [Association("ServicePointSesions", Roles.RoleB, "08fdaee2-f871-4200-9856-8d2cc9754909")]
         [RoleBMultiplicityRange(1, 1)]
         [CachingDataOnClientSide]
-        IServicePoint ServicePoint { get;  }
+        IServicePoint ServicePoint { get; }
 
 
         /// <MetaDataID>{45ae4db3-87ca-4a6e-b867-bb5f33886b05}</MetaDataID>
@@ -74,6 +74,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
 
-    /// <MetaDataID>{a529cabc-8c45-43c5-b46b-40493cca6641}</MetaDataID>
-    
+
+
 }

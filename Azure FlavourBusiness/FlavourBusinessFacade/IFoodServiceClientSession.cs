@@ -188,7 +188,7 @@ namespace FlavourBusinessFacade.EndUsers
         void MenuItemProposal(IFoodServiceClientSession messmateClientSesion, string menuItemUri);
 
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
-        ClientSessionState SessionState { get; set; }
+        ClientSessionState SessionState { get;  }
         /// <MetaDataID>{bb4dd357-c34b-462e-b5d4-2ed725f5123a}</MetaDataID>
         bool Forgotten { get; }
 
@@ -287,5 +287,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
     }
+
+
 
 }

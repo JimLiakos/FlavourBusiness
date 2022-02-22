@@ -462,61 +462,88 @@ namespace FlavourBusinessManager.EndUsers
         internal DateTime? PreviousYouMustDecideMessageTime;
 
 
+        bool DeviceConnectionStatusCheckActive;
         /// <MetaDataID>{b448d9b4-451c-4d2c-a064-71a9b59a635a}</MetaDataID>
         int DeviceConnectionStatusChecksNumber;
         /// <MetaDataID>{b80540b1-2b19-4fbd-887f-58039a11d111}</MetaDataID>
         void StartDeviceConnectionStatusCheck()
         {
-            Task.Run(() =>
+            bool deviceConnectionStatusCheckActive = false;
+            lock (StateMachineLock)
             {
-                ClientSessionState sessionState;
+                deviceConnectionStatusCheckActive = DeviceConnectionStatusCheckActive;
+            }
+            if (deviceConnectionStatusCheckActive)
+                System.Threading.Thread.Sleep(200);
 
-                lock (StateMachineLock)
+            if (!deviceConnectionStatusCheckActive)
+            {
+                Task.Run(() =>
                 {
-                    sessionState = SessionState;
-                }
 
-                while (sessionState != ClientSessionState.Closed)
-                {
                     try
                     {
-                        #region DeviceAppLifecycle
-                        if (DeviceAppState == DeviceAppLifecycle.InUse && _MessageReceived == null)
+                        lock (StateMachineLock)
                         {
-                            //with _MessageReceived system knows indirectly when there is active connection with client device
-                            //when communication session with client device closed the server session part drops all event consumers
-                            if (DeviceConnectionStatusChecksNumber > 5)
-                            {
-                                DeviceSleep();
-                                DeviceConnectionStatusChecksNumber = 0;
-                            }
-                            else
-                                DeviceConnectionStatusChecksNumber++;
+                            DeviceConnectionStatusCheckActive = true;
                         }
-                        else
-                            DeviceConnectionStatusChecksNumber = 0;
-                        #endregion
-
-                        CatchStateEvents();
-
+                        ClientSessionState sessionState;
 
                         lock (StateMachineLock)
                         {
                             sessionState = SessionState;
                         }
 
-                        if (sessionState == ClientSessionState.UrgesToDecide)
-                            UrgesToDecideRun();
+                        while (sessionState != ClientSessionState.Closed)
+                        {
+                            try
+                            {
+                                #region DeviceAppLifecycle
+                                if (DeviceAppState == DeviceAppLifecycle.InUse && _MessageReceived == null)
+                                {
+                                    //with _MessageReceived system knows indirectly when there is active connection with client device
+                                    //when communication session with client device closed the server session part drops all event consumers
+                                    if (DeviceConnectionStatusChecksNumber > 5)
+                                    {
+                                        DeviceSleep();
+                                        DeviceConnectionStatusChecksNumber = 0;
+                                    }
+                                    else
+                                        DeviceConnectionStatusChecksNumber++;
+                                }
+                                else
+                                    DeviceConnectionStatusChecksNumber = 0;
+                                #endregion
 
+                                CatchStateEvents();
+
+
+                                lock (StateMachineLock)
+                                {
+                                    sessionState = SessionState;
+                                }
+
+                                if (sessionState == ClientSessionState.UrgesToDecide)
+                                    UrgesToDecideRun();
+
+                            }
+                            catch (Exception error)
+                            {
+
+
+                            }
+                            System.Threading.Thread.Sleep(5000);
+                        }
                     }
-                    catch (Exception error)
+                    finally
                     {
-
-
+                        lock (StateMachineLock)
+                        {
+                            DeviceConnectionStatusCheckActive = false;
+                        }
                     }
-                    System.Threading.Thread.Sleep(5000);
-                }
-            });
+                });
+            }
         }
 
         /// <MetaDataID>{46b3cc48-30d4-4776-99ef-a8359bfdddb8}</MetaDataID>
@@ -713,6 +740,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     partialSession.RemoveItemForMerge(itemPreparation);
                     AddItemForMerge(itemPreparation);
+                    
                 }
 
                 foreach (var itemPreparation in partialSession.SharedItems.OfType<ItemPreparation>())
@@ -726,8 +754,25 @@ namespace FlavourBusinessManager.EndUsers
                 if (SessionEnds < partialSession.SessionEnds)
                     SessionEnds = partialSession.SessionEnds;
 
+                if (DateTimeOfLastRequest < partialSession.DateTimeOfLastRequest)
+                    DateTimeOfLastRequest = partialSession.DateTimeOfLastRequest;
 
-                
+
+                if (WillTakeCareTimestamp < partialSession.WillTakeCareTimestamp)
+                    WillTakeCareTimestamp = partialSession.WillTakeCareTimestamp;
+
+
+                if (UrgesToDecideToWaiterTimeStamp < partialSession.UrgesToDecideToWaiterTimeStamp)
+                    UrgesToDecideToWaiterTimeStamp = partialSession.UrgesToDecideToWaiterTimeStamp;
+
+
+
+                foreach (var message in partialSession.Messages)
+                {
+                    partialSession.RemoveMessage(message.MessageID);
+                    _Messages.Add(message);
+                }
+
 
                 stateTransition.Consistent = true;
             }
@@ -1244,7 +1289,16 @@ namespace FlavourBusinessManager.EndUsers
                         _SessionState = value;
                         stateTransition.Consistent = true;
                     }
+                    if (_SessionState == ClientSessionState.Closed && Transaction.Current != null)
+                    {
+                        Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                        {
 
+                            if (transaction.Status == TransactionStatus.Aborted)
+                                StartDeviceConnectionStatusCheck();
+
+                        };
+                    }
                     ObjectChangeState?.Invoke(this, nameof(SessionState));
                 }
             }
@@ -1464,7 +1518,7 @@ namespace FlavourBusinessManager.EndUsers
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _FlavourItems.Add(flavourItem);
-                flavourItem.SessionID = this.SessionID; 
+                flavourItem.SessionID = this.SessionID;
 
                 stateTransition.Consistent = true;
             }
@@ -1476,7 +1530,7 @@ namespace FlavourBusinessManager.EndUsers
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _SharedItems.Remove(flavourItem);
-                flavourItem.SessionID = null;
+                
 
                 stateTransition.Consistent = true;
             }
@@ -1486,8 +1540,6 @@ namespace FlavourBusinessManager.EndUsers
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _SharedItems.Add(flavourItem);
-                flavourItem.SessionID = this.SessionID;
-
                 stateTransition.Consistent = true;
             }
         }

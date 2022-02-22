@@ -701,6 +701,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                         var mergeInPartialSession = partialClientSessions.OfType<FoodServiceClientSession>().Where(x => x.ClientDeviceID == partialSession.ClientDeviceID && x.UserIdentity == partialSession.UserIdentity).FirstOrDefault();
                         mergeInPartialSession.Merge(partialSession);
                     }
+
+                    foreach(var sharedItem in    (from partialSesion in PartialClientSessions
+                     from itemPreration in partialSesion.SharedItems
+                     select itemPreration))
+                    {
+                        if (sharedItem.ClientSession.MainSession != this)
+                            throw new FlavourBusinessFacade.Exceptions.TransferException("There are shared items left in the old session",801);
+                    }
+                        
                     //stateTransition.Consistent = true;
                 }
             }

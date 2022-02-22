@@ -92,7 +92,7 @@ namespace FLBManager
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
 
-            //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "",true);
+            Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
@@ -483,7 +483,7 @@ namespace FLBManager
             //}
             try
             {
-                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "jimliakosgmailcom"));
+                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}1.dat", backupFolder, "jimliakosgmailcom"));
                 ObjectStorage.Restore(archive, "jimliakosgmailcom", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey, overrideObjectStorage);
 
             }
