@@ -688,5 +688,24 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        object PartialSessionsLock = new object();
+        internal void Merge(IFoodServiceSession foodServiceSession)
+        {
+            lock (PartialSessionsLock)
+            {
+                var partialClientSessions = PartialClientSessions;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    foreach (var partialSession in foodServiceSession.PartialClientSessions.OfType<FoodServiceClientSession>())
+                    {
+                        var mergeInPartialSession = partialClientSessions.OfType<FoodServiceClientSession>().Where(x => x.ClientDeviceID == partialSession.ClientDeviceID && x.UserIdentity == partialSession.UserIdentity).FirstOrDefault();
+                        mergeInPartialSession.Merge(partialSession);
+                    }
+                    //stateTransition.Consistent = true;
+                }
+            }
+
+
+        }
     }
 }

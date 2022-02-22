@@ -876,15 +876,23 @@ namespace FlavourBusinessManager.HumanResources
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
+                var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
-                (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
-                targetServicePoint.UpdateState();
-
-                if (foodServiceSession.Meal != null)
+                if (servicePointLastOpenSession == null)
                 {
-                    //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+                    (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+                    targetServicePoint.UpdateState();
 
-                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+                    if (foodServiceSession.Meal != null)
+                    {
+                        //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+
+                        (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+                    }
+                }
+                else
+                {
+                    servicePointLastOpenSession.Merge(foodServiceSession);
                 }
             }
 

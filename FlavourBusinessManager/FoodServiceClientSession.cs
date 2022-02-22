@@ -170,7 +170,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-    
+
 
 
         /// <MetaDataID>{f0df519b-0f4b-4647-9031-7f59614e69df}</MetaDataID>
@@ -311,7 +311,7 @@ namespace FlavourBusinessManager.EndUsers
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
 
-                    if (implicitMainSession != null && implicitMainSession.Meal==null&& implicitMainSession.PartialClientSessions.Count == 0)
+                    if (implicitMainSession != null && implicitMainSession.Meal == null && implicitMainSession.PartialClientSessions.Count == 0)
                         ObjectStorage.DeleteObject(implicitMainSession);
 
 
@@ -321,7 +321,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (ExplicitMainSession != (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession)
                     {
 
-                        if (messmateClientSesion .MainSession != null)
+                        if (messmateClientSesion.MainSession != null)
                         {
                             var partialClientSessions = (messmateClientSesion as FoodServiceClientSession).MainSession.PartialClientSessions.ToList();
                             IFoodServiceSession foodServiceSession = messmateClientSesion.MainSession;
@@ -405,7 +405,7 @@ namespace FlavourBusinessManager.EndUsers
                     else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                     {
                         UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID,Caregivers);
+                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                     }
                     return true;
                 }
@@ -703,6 +703,38 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        internal void Merge(FoodServiceClientSession partialSession)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                partialSession.SessionState = ClientSessionState.Closed;
+                foreach (var itemPreparation in partialSession.FlavourItems.OfType<ItemPreparation>())
+                {
+                    partialSession.RemoveItemForMerge(itemPreparation);
+                    AddItemForMerge(itemPreparation);
+                }
+
+                foreach (var itemPreparation in partialSession.SharedItems.OfType<ItemPreparation>())
+                {
+                    partialSession.RemoveSharedItemForMerge(itemPreparation);
+                    AddSharedItemForMerge(itemPreparation);
+                }
+                if (ModificationTime < partialSession.ModificationTime)
+                    ModificationTime = partialSession.ModificationTime;
+
+                if (SessionEnds < partialSession.SessionEnds)
+                    SessionEnds = partialSession.SessionEnds;
+
+
+                
+
+                stateTransition.Consistent = true;
+            }
+
+
+        }
+
 
         /// <MetaDataID>{2a6c5a7e-109b-4483-8e38-87ef7843ad5a}</MetaDataID>
         internal void YouMustDecide(List<IFoodServiceClientSession> commitedItemsSessions)
@@ -841,6 +873,8 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
+
+
 
 
         /// <MetaDataID>{be22a961-fcc2-4687-8ffe-2f88939cbfbb}</MetaDataID>
@@ -1201,7 +1235,7 @@ namespace FlavourBusinessManager.EndUsers
         public ClientSessionState SessionState
         {
             get => _SessionState;
-            set
+            internal set
             {
                 if (_SessionState != value)
                 {
@@ -1415,6 +1449,49 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        private void RemoveItemForMerge(ItemPreparation flavourItem)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _FlavourItems.Remove(flavourItem);
+                flavourItem.SessionID = null;
+
+                stateTransition.Consistent = true;
+            }
+        }
+        private void AddItemForMerge(ItemPreparation flavourItem)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _FlavourItems.Add(flavourItem);
+                flavourItem.SessionID = this.SessionID; 
+
+                stateTransition.Consistent = true;
+            }
+        }
+
+
+        private void RemoveSharedItemForMerge(ItemPreparation flavourItem)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _SharedItems.Remove(flavourItem);
+                flavourItem.SessionID = null;
+
+                stateTransition.Consistent = true;
+            }
+        }
+        private void AddSharedItemForMerge(ItemPreparation flavourItem)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _SharedItems.Add(flavourItem);
+                flavourItem.SessionID = this.SessionID;
+
+                stateTransition.Consistent = true;
+            }
+        }
+
         /// <MetaDataID>{6f13d1e2-be82-48fc-a0d6-c7404bdb448f}</MetaDataID>
         public void RemoveItem(IItemPreparation item)
         {
@@ -1427,7 +1504,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                   
+
                     if (MainSession != null && MainSession.Meal != null)
                     {
                         var flavourItemMealCourse = (from mealCourse in MainSession.Meal.Courses
@@ -1802,7 +1879,7 @@ namespace FlavourBusinessManager.EndUsers
                     foreach (var clientSession in MainSession.PartialClientSessions.Where(x => x != this))
                         clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
                 }
-                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession&& x != this && (MainSession != x.MainSession || MainSession == null)))
+                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && x != this && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
 
                 if (sharingFlavourItem != null)
@@ -1812,7 +1889,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 ObjectChangeState?.Invoke(this, nameof(FlavourItems));
 
-                if(MainSession==null&&(ServicePoint as ServicePoint).OpenSessions.Count>0)
+                if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
                 {
                     (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
                 }
@@ -2176,7 +2253,7 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 if (_Worker == null)
-                    _Worker = ObjectStorage.GetObjectFromUri<IServicesContextWorker>(WorkerUri)  ;
+                    _Worker = ObjectStorage.GetObjectFromUri<IServicesContextWorker>(WorkerUri);
                 return _Worker;
             }
             set

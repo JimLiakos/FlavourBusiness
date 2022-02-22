@@ -376,7 +376,17 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{d91b18f4-9d77-4881-8cf6-1777b356c2c6}</MetaDataID>
-        public IMealCourse HeaderCourse => throw new NotImplementedException();
+        public IMealCourse HeaderCourse
+        {
+            get
+            {
+                if (Previous == null)
+                    return this;
+                else
+                    return Previous.HeaderCourse;
+            }
+        }
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -468,7 +478,10 @@ namespace FlavourBusinessManager.RoomService
                         flavourItem.State = ItemPreparationState.PreparationDelay;
                     }
                     else
+                    {
                         flavourItem.State = ItemPreparationState.Serving;
+                        flavourItem.PreparedAtForecast = DateTime.UtcNow;
+                    }
 
                     CashierStation cashierStation = (Meal.Session as FoodServiceSession).CashierStation as CashierStation;
                     cashierStation.AssignItemPreparation(flavourItem);

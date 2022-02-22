@@ -123,7 +123,9 @@ namespace FlavourBusinessManager.RoomService
                 {
                     var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
                     MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
+                    mealCourse.Previous = _Courses.LastOrDefault();
                     _Courses.Add(mealCourse);
+                    
                 }
 
                 stateTransition.Consistent = true;
@@ -310,8 +312,11 @@ namespace FlavourBusinessManager.RoomService
 
                     foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
                     {
-                        foodITem.State = ItemPreparationState.PreparationDelay;
-                        foodITem.PreparedAtForecast = course.ServedAtForecast;
+                        if (foodITem.State == ItemPreparationState.Committed)
+                        {
+                            foodITem.State = ItemPreparationState.PreparationDelay;
+                            foodITem.PreparedAtForecast = course.ServedAtForecast;
+                        }
                     }
                 }
                 stateTransition.Consistent = true;
