@@ -243,6 +243,8 @@ namespace FlavourBusinessManager.RoomService
             if (excludeWaiter != null && activeWaitersFormealCoursesServing.Contains(excludeWaiter))
                 activeWaitersFormealCoursesServing.Remove(excludeWaiter);
 
+            activeWaitersFormealCoursesServing = activeWaitersFormealCoursesServing.Distinct().ToList();
+
             foreach (var a_Waiter in activeWaitersFormealCoursesServing)
                 a_Waiter.FindServingBatchesChanged();
         }

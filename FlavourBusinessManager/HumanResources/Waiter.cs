@@ -706,6 +706,7 @@ namespace FlavourBusinessManager.HumanResources
                                    from itemsContext in servingBatch.ContextsOfUnderPreparationItems
                                    from itemPreparation in itemsContext.PreparationItems
                                    select new { servingBatch, itemsContext, itemPreparation }).ToList());
+            var copy = itemsToServe.ToList();
             foreach (var itemToServe in itemsToServe.ToList())
             {
                 var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid).FirstOrDefault();
@@ -714,8 +715,17 @@ namespace FlavourBusinessManager.HumanResources
                     itemsToServe.Remove(itemToServe);
                     servingItemsOnDevice.Remove(servingItemOnDevice);
                 }
+                else
+                {
+
+                }
+            }
+            if (servingItemsOnDevice.Count > 0)
+            {
+
             }
             servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
+           
 
             return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
         }
@@ -774,8 +784,7 @@ namespace FlavourBusinessManager.HumanResources
             }
             if (AssignedServingBatches.Count > 0 && !AssignedServingBatches.ContainsAll(assignedServingBatches))
                 ServingBatchesChanged?.Invoke();
-
-            if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
+            else if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
                 ServingBatchesChanged?.Invoke();
 
         }
@@ -870,7 +879,7 @@ namespace FlavourBusinessManager.HumanResources
             var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
                                       from servicePoint in serviceArea.ServicePoints
                                       where servicePoint.ServicesPointIdentity == targetServicePointIdentity
-                                      select servicePoint).OfType<ServicesContextResources.ServicePoint>().FirstOrDefault();
+                                      select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
             if (targetServicePoint == null)
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
@@ -897,10 +906,15 @@ namespace FlavourBusinessManager.HumanResources
                     {
                         servicePointLastOpenSession.Merge(foodServiceSession);
 
+                        (foodServiceSession.ServicePoint as ServicePoint).UpdateState();
                         ObjectStorage.DeleteObject(foodServiceSession);
                         //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
 
-                        (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+                        Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                        {
+                            if (transaction.Status == TransactionStatus.Committed)
+                                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+                        };
 
                         stateTransition.Consistent = true;
                     }

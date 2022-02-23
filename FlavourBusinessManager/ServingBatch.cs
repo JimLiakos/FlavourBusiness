@@ -270,7 +270,7 @@ namespace FlavourBusinessManager.RoomService
                 else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
                     servingBatchChanged = true;
             }
-            if(nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
+            if(nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member|| nameof(RoomService.MealCourse.Meal) == member)
             {
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
