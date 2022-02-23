@@ -17,5 +17,6 @@ namespace FlavourBusinessFacade.RoomService
         [Association("MealCourses", Roles.RoleA, true, "3c1213a5-f6e9-4d34-8802-72a4f051472b")]
         [RoleAMultiplicityRange(1)]
         System.Collections.Generic.List<IMealCourse> Courses { get; }
+
     }
 }

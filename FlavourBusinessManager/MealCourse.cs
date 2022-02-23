@@ -246,6 +246,33 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        object MealLock = new object();
+
+        internal void ChangeMeal(Meal meal)
+        {
+            lock(MealLock)
+            {
+                if (_Meal.Value != null)
+                    _Meal.Value = meal;
+            }
+
+            if (Transaction.Current != null)
+            {
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    if (transaction.Status == TransactionStatus.Committed)
+                    {
+                        ObjectChangeState?.Invoke(this, nameof(Meal));
+                    }
+                };
+            }
+            else
+            {
+                ObjectChangeState?.Invoke(this, nameof(Meal));
+            }
+
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<IMeal> _Meal = new OOAdvantech.Member<IMeal>();
 

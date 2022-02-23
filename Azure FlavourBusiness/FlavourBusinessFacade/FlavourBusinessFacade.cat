@@ -3650,6 +3650,72 @@
 		    quid       	"5B25D6A600FF"
 		    supplier   	"Logical View::ComputationalResources::IComputingResource"
 		    quidu      	"5B16B3A10091")))
+	(object Association "MealCourseSequence"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"621328C50043")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"3f8daafd-1296-452b-a9d6-1d9cd00f242e"))
+	    quid       	"621328C50043"
+	    roles      	(list role_list
+		(object Role "Previous"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"621328CB01E6")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{50f53517-c14b-42c5-a5dd-aeeaa99c0cb5}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"621328CB01E6"
+		    label      	"Previous"
+		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
+		    quidu      	"6073C95302E6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"621328CB01F1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1f6d77c9-b68c-4ab6-b8a9-19aa27b887c3}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
+		    quid       	"621328CB01F1"
+		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
+		    quidu      	"6073C95302E6"
+		    client_cardinality 	(value cardinality "0..1"))))
 	(object Class_Category "ServicesContextResources"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -6325,7 +6391,7 @@
 			    quidu      	"5B8BB0B8006B"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$2"
+			(object Role "$UNNAMED$3"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6475,7 +6541,7 @@
 			    quidu      	"5C3D722E01C3"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$3"
+			(object Role "$UNNAMED$4"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6541,7 +6607,7 @@
 			    quidu      	"5C3D71BB026B"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$4"
+			(object Role "$UNNAMED$5"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6606,7 +6672,7 @@
 			    quidu      	"5C66ABEF02DB"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$5"
+			(object Role "$UNNAMED$6"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6671,7 +6737,7 @@
 			    quidu      	"5D56D11C002D"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$6"
+			(object Role "$UNNAMED$7"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6720,7 +6786,7 @@
 			    quidu      	"6073C95302E6"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$7"
+			(object Role "$UNNAMED$8"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6777,7 +6843,7 @@
 			    quidu      	"61A723C7032B"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$8"
+			(object Role "$UNNAMED$9"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -6834,7 +6900,7 @@
 			    quidu      	"620214A90260"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$9"
+			(object Role "$UNNAMED$10"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -7728,7 +7794,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$3" @38
+				(object RoleView "$UNNAMED$4" @38
 				    Parent_View 	@33
 				    location   	(775, 291)
 				    font       	(object Font
@@ -7936,7 +8002,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$8" @47
+				(object RoleView "$UNNAMED$9" @47
 				    Parent_View 	@42
 				    location   	(537, -13)
 				    stereotype 	TRUE
@@ -8115,7 +8181,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$2" @56
+				(object RoleView "$UNNAMED$3" @56
 				    Parent_View 	@51
 				    location   	(664, 149)
 				    font       	(object Font
@@ -8257,7 +8323,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$4" @63
+				(object RoleView "$UNNAMED$5" @63
 				    Parent_View 	@58
 				    location   	(654, 821)
 				    stereotype 	TRUE
@@ -8367,7 +8433,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$6" @69
+				(object RoleView "$UNNAMED$7" @69
 				    Parent_View 	@64
 				    location   	(668, 58)
 				    stereotype 	TRUE
@@ -8477,7 +8543,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$5" @75
+				(object RoleView "$UNNAMED$6" @75
 				    Parent_View 	@70
 				    location   	(695, 1153)
 				    stereotype 	TRUE
@@ -8587,7 +8653,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$9" @81
+				(object RoleView "$UNNAMED$10" @81
 				    Parent_View 	@76
 				    location   	(81, -453)
 				    stereotype 	TRUE
@@ -10367,7 +10433,7 @@
 				    documentation 	"ClientIdentity defines the identity of client which has create session.  "))
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$10"
+			(object Role "$UNNAMED$11"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10436,7 +10502,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$11"
+			(object Role "$UNNAMED$12"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10466,7 +10532,7 @@
 			    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClientSession"
 			    quidu      	"5C06122402B6"
 			    client_cardinality 	(value cardinality "0..*"))))
-		(object Association "$UNNAMED$12"
+		(object Association "$UNNAMED$13"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -10498,7 +10564,7 @@
 			    quidu      	"5D1715990311"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$13"
+			(object Role "$UNNAMED$14"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10555,7 +10621,7 @@
 			    quidu      	"5D17154F0388"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$14"
+			(object Role "$UNNAMED$15"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10661,7 +10727,7 @@
 			    value      	"WaterServiceSession"))
 		    quid       	"6072CEF90049"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$15"
+			(object Role "$UNNAMED$16"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10735,12 +10801,12 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$16"
+			(object Object "$UNNAMED$17"
 			    quid       	"5CFF278800A6"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D0074BE029A"
-				    supplier   	"$UNNAMED$17"
+				    supplier   	"$UNNAMED$18"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
 					(object Message "GetClientSession(          )"
@@ -10762,7 +10828,7 @@
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5CFF280E0110"
-				    supplier   	"$UNNAMED$16"
+				    supplier   	"$UNNAMED$17"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
 					(object Message "GetClientSession(       )"
@@ -10779,12 +10845,12 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$17"
+			(object Object "$UNNAMED$18"
 			    quid       	"5D0074A9012A"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D00868D03A6"
-				    supplier   	"$UNNAMED$18"
+				    supplier   	"$UNNAMED$19"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
 					(object Message "GetFoodServiceClientSession(     )"
@@ -10801,7 +10867,7 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$18"
+			(object Object "$UNNAMED$19"
 			    quid       	"5D0085810266"
 			    class      	"Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint"
 			    quidu      	"5B8BB60401E2"
@@ -11263,7 +11329,7 @@
 			    line_color 	3342489
 			    quidu      	"5C0634D0013E"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$10" @98
+				(object RoleView "$UNNAMED$11" @98
 				    Parent_View 	@96
 				    location   	(-550, 393)
 				    font       	(object Font
@@ -11497,7 +11563,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$11" @109
+				(object RoleView "$UNNAMED$12" @109
 				    Parent_View 	@104
 				    location   	(-155, 845)
 				    font       	(object Font
@@ -11628,7 +11694,7 @@
 			    width      	575
 			    height     	250
 			    annotation 	8)
-			(object AssociationViewNew "$UNNAMED$12" @114
+			(object AssociationViewNew "$UNNAMED$13" @114
 			    location   	(3592, 312)
 			    font       	(object Font
 				size       	10
@@ -11709,7 +11775,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$13" @118
+				(object RoleView "$UNNAMED$14" @118
 				    Parent_View 	@114
 				    location   	(707, -1266)
 				    stereotype 	TRUE
@@ -11853,7 +11919,7 @@
 					pctDist    	0.926429
 					height     	70
 					orientation 	0))
-				(object RoleView "$UNNAMED$14" @125
+				(object RoleView "$UNNAMED$15" @125
 				    Parent_View 	@120
 				    location   	(433, -453)
 				    font       	(object Font
@@ -12017,7 +12083,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$16" @131
+			(object ObjectView "$UNNAMED$17" @131
 			    location   	(1088, 1278)
 			    font       	(object Font
 				size       	10
@@ -12079,7 +12145,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$17" @133
+			(object ObjectView "$UNNAMED$18" @133
 			    location   	(2409, 1284)
 			    font       	(object Font
 				size       	10
@@ -12110,7 +12176,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$18" @134
+			(object ObjectView "$UNNAMED$19" @134
 			    location   	(3545, 1306)
 			    font       	(object Font
 				size       	10
@@ -14478,7 +14544,7 @@
 			    quidu      	"5D024DF603A6"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$19"
+			(object Role "$UNNAMED$20"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -14584,7 +14650,7 @@
 			    value      	"e7e482f4-cfba-45a5-8270-8346af757d7a"))
 		    quid       	"60E0180B00F8"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$20"
+			(object Role "$UNNAMED$21"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -14678,7 +14744,7 @@
 			    quidu      	"6073C95302E6"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$21"
+			(object Role "$UNNAMED$22"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -14800,7 +14866,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$22"
+			(object Role "$UNNAMED$23"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -16043,7 +16109,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$19" @219
+				(object RoleView "$UNNAMED$20" @219
 				    Parent_View 	@214
 				    location   	(323, -809)
 				    font       	(object Font
@@ -16151,7 +16217,7 @@
 			    line_color 	3342489
 			    quidu      	"60F580F702BB"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$7" @224
+				(object RoleView "$UNNAMED$8" @224
 				    Parent_View 	@222
 				    location   	(-28, 235)
 				    font       	(object Font
@@ -17086,7 +17152,7 @@
 			    line_color 	3342489
 			    quidu      	"60E0180B00F8"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$20" @266
+				(object RoleView "$UNNAMED$21" @266
 				    Parent_View 	@264
 				    location   	(1690, 104)
 				    font       	(object Font
@@ -17737,7 +17803,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$21" @296
+				(object RoleView "$UNNAMED$22" @296
 				    Parent_View 	@291
 				    location   	(760, -298)
 				    font       	(object Font
@@ -17986,6 +18052,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@307
+				location   	(46, 640)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	1528)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -18017,6 +18101,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@308
+				location   	(1634, 796)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	42
+				max_width  	1321)
 			    width      	719
 			    height     	431
 			    annotation 	8)

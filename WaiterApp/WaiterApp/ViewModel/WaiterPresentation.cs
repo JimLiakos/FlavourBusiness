@@ -1697,9 +1697,18 @@ namespace WaiterApp.ViewModel
 
         }
 
-        public void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity)
+        public async void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity)
         {
-            throw new NotImplementedException();
+            if(this.FlavoursOrderServer.MenuData.ServicePointIdentity== sourceServicePointIdentity)
+            {
+                string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+                                                         from shape in hall.Shapes
+                                                         where shape.ServicesPointIdentity == targetServicePointIdentity
+                                                         select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+
+                this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
+                await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
+            }
         }
 
         public void TransferPartialSession(string partialSessionID, string targetSessionID)

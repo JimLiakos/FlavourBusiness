@@ -122,10 +122,10 @@ namespace FlavourBusinessManager.RoomService
                                                  select mealCourseItems))
                 {
                     var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
-                    MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
+                    MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
                     mealCourse.Previous = _Courses.LastOrDefault();
                     _Courses.Add(mealCourse);
-                    
+
                 }
 
                 stateTransition.Consistent = true;
@@ -189,14 +189,14 @@ namespace FlavourBusinessManager.RoomService
 
                                 if (removedMealCourses.Count > 0)
                                     (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnRemoveMealCoursesInrogress(removedMealCourses);
-                             
 
 
-                          
+
+
 
                                 foreach (var mealCourse in Courses.ToList())
-                                    (mealCourse as MealCourse) .Monitoring();
-                                  
+                                    (mealCourse as MealCourse).Monitoring();
+
                             }
                             catch (Exception error)
                             {
@@ -239,11 +239,11 @@ namespace FlavourBusinessManager.RoomService
 
 
                     MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
-                    if (mealCourse == null|| mealCourse.ItsTooLateForChange)
+                    if (mealCourse == null || mealCourse.ItsTooLateForChange)
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(),this);
+                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
                             mealCourse.StartsAt = DateTime.UtcNow;
                             newMealCourses.Add(mealCourse);
 
@@ -336,7 +336,20 @@ namespace FlavourBusinessManager.RoomService
                     OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(course);
             }
         }
-        ///// <MetaDataID>{df1bef38-aa51-450a-a6c2-bdb6b6f960a5}</MetaDataID>
-        //public IFoodServiceSession Session => throw new System.NotImplementedException();
+
+        internal void Merge(Meal meal)
+        {
+            lock (MealLock)
+            {
+
+                foreach (var mealCourse in meal.Courses.OfType<MealCourse>())
+                {
+                    mealCourse.ChangeMeal(this);
+                    var courses = meal.Courses.ToArray();
+                }
+            }
+            ///// <MetaDataID>{df1bef38-aa51-450a-a6c2-bdb6b6f960a5}</MetaDataID>
+            //public IFoodServiceSession Session => throw new System.NotImplementedException();
+        }
     }
 }

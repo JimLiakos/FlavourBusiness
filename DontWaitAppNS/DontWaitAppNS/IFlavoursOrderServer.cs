@@ -380,6 +380,7 @@ namespace DontWaitApp
 
 
 
+    /// <MetaDataID>{8cada9df-78e0-4eef-9482-ae9093cef026}</MetaDataID>
     [HttpVisible]
 
     public interface IServicePointSupervisor

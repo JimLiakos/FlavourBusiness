@@ -70,7 +70,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Conversation = 0,
         UrgesToDecide = 1,
         MealValidationDelay = 2,
-        MealMonitoring = 3
+        MealMonitoring = 3,
+        Closed=4
     }
 
 

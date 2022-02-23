@@ -892,10 +892,18 @@ namespace FlavourBusinessManager.HumanResources
                 }
                 else
                 {
-                    servicePointLastOpenSession.Merge(foodServiceSession);
-                    //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
 
-                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        servicePointLastOpenSession.Merge(foodServiceSession);
+
+                        ObjectStorage.DeleteObject(foodServiceSession);
+                        //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+
+                        (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+
+                        stateTransition.Consistent = true;
+                    }
 
                 }
             }

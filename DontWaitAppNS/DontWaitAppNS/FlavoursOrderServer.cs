@@ -187,7 +187,7 @@ namespace DontWaitApp
                             {
                                 this.FoodServiceClientSession.DeviceResume();
                             }
-                            catch (MissingServerObjectException error)
+                            catch (OOAdvantech.Remoting. MissingServerObjectException error)
                             {
                                 return await ConnectToServicePoint(this.MenuData.ServicePointIdentity);
                             }

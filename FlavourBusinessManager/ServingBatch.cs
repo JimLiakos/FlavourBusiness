@@ -283,6 +283,15 @@ namespace FlavourBusinessManager.RoomService
                 ContextsOfUnderPreparationItems = underPreparationItems;
                 ObjectChangeState?.Invoke(this, null);
             }
+            if (servingBatchChanged || nameof(RoomService.MealCourse.Meal) == member)
+            {
+                
+                ContextsOfPreparedItems = preparedItems;
+                ContextsOfUnderPreparationItems = underPreparationItems;
+                ObjectChangeState?.Invoke(this, null);
+            }
+
+            
         }
 
         /// <MetaDataID>{7ddeada1-2762-4aea-812a-6486231344be}</MetaDataID>

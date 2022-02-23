@@ -22525,73 +22525,7 @@
 			    supplier   	"Logical View::FlavourBusinessManager::HumanResources::ServingShiftWork"
 			    quidu      	"6195EE3D0029"
 			    client_cardinality 	(value cardinality "0..1")
-			    is_navigable 	TRUE)))
-		(object Association "MealCourseSequence"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"621328C50043")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Identity"
-			    value      	"3f8daafd-1296-452b-a9d6-1d9cd00f242e"))
-		    quid       	"621328C50043"
-		    roles      	(list role_list
-			(object Role "Previous"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"621328CB01E6")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{50f53517-c14b-42c5-a5dd-aeeaa99c0cb5}")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Indexer"
-				    value      	FALSE))
-			    quid       	"621328CB01E6"
-			    label      	"Previous"
-			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
-			    quidu      	"6073C95302E6"
-			    client_cardinality 	(value cardinality "0..1")
-			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$10"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"621328CB01F1")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{1f6d77c9-b68c-4ab6-b8a9-19aa27b887c3}")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	FALSE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Indexer"
-				    value      	FALSE))
-			    quid       	"621328CB01F1"
-			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
-			    quidu      	"6073C95302E6"
-			    client_cardinality 	(value cardinality "1")))))
+			    is_navigable 	TRUE))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"5CDA64C103C8"
@@ -22599,7 +22533,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	109
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @313
@@ -24065,8 +23999,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	237
-		    origin_y   	369
+		    origin_x   	0
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @383
 			    ShowCompartmentStereotypes 	TRUE
@@ -25325,7 +25259,7 @@
 					height     	54
 					orientation 	0))))
 			(object AssociationViewNew "MealCourseSequence" @442
-			    location   	(3070, 1215)
+			    location   	(3130, 1155)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -25338,7 +25272,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @443
 				Parent_View 	@442
-				location   	(3070, 1156)
+				location   	(3130, 1096)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -25364,7 +25298,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "Previous" @444
 				    Parent_View 	@442
-				    location   	(490, 253)
+				    location   	(550, 193)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -25377,7 +25311,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @445
 					Parent_View 	@444
-					location   	(2999, 914)
+					location   	(2975, 914)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -25403,16 +25337,15 @@
 				    client     	@442
 				    supplier   	@416
 				    vertices   	(list Points
-					(3070, 1215)
-					(3130, 1215)
+					(3130, 1155)
 					(3130, 955)
 					(2885, 955))
 				    line_style 	3
-				    origin_attachment 	(3070, 1215)
+				    origin_attachment 	(3130, 1155)
 				    terminal_attachment 	(2885, 955)
 				    label      	(object SegLabel @446
 					Parent_View 	@444
-					location   	(2943, 1009)
+					location   	(2930, 1009)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -25432,9 +25365,9 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$10" @447
+				(object RoleView "" @447
 				    Parent_View 	@442
-				    location   	(490, 253)
+				    location   	(550, 193)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -25451,15 +25384,16 @@
 				    client     	@442
 				    supplier   	@416
 				    vertices   	(list Points
-					(3070, 1215)
+					(3130, 1155)
+					(3130, 1215)
 					(2727, 1215)
 					(2727, 1099))
 				    line_style 	3
-				    origin_attachment 	(3070, 1215)
+				    origin_attachment 	(3130, 1155)
 				    terminal_attachment 	(2727, 1099)
 				    label      	(object SegLabel @448
 					Parent_View 	@447
-					location   	(2781, 1146)
+					location   	(2781, 1157)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -25475,7 +25409,7 @@
 					nlines     	1
 					max_width  	15
 					justify    	0
-					label      	"1"
+					label      	"0..1"
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))))))
