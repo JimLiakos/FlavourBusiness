@@ -421,7 +421,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{8d538032-0365-42f6-a71a-176cf8a85f38}</MetaDataID>
         [PersistentMember(nameof(_Meal))]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
         [BackwardCompatibilityID("+6")]
         public IMeal Meal
         {

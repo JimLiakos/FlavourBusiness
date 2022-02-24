@@ -472,7 +472,7 @@ namespace FlavourBusinessManager.RoomService
             }
             get
             {
-                return _OptionsChanges.AsReadOnly();
+                return _OptionsChanges.ToThreadSafeList();
             }
         }
 

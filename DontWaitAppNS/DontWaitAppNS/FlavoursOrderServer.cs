@@ -1342,30 +1342,31 @@ namespace DontWaitApp
             {
                 try
                 {
-                    if (WaiterView)
+                    if (FoodServiceClientSession != null)
                     {
+                        if (WaiterView)
+                        {
+                            var messmates = (from clientSession in FoodServiceClientSession?.GetServicePointParticipants()
+                                             where clientSession != this._FoodServiceClientSession
+                                             select new Messmate(clientSession, OrderItems)).ToList();
+                            Messmates = messmates;
+                            MessmatesLoaded = true;
 
+                        }
+                        else
+                        {
+                            var messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
+                                             select new Messmate(clientSession, OrderItems)).ToList();
+                            var candidateMessmates = (from clientSession in FoodServiceClientSession?.GetPeopleNearMe()
+                                                      select new Messmate(clientSession, OrderItems)).ToList();
+                            Messmates = messmates;
+                            CandidateMessmates = candidateMessmates;
 
-                        var messmates = (from clientSession in FoodServiceClientSession.GetServicePointParticipants()
-                                         where clientSession != this._FoodServiceClientSession
-                                         select new Messmate(clientSession, OrderItems)).ToList();
-                        Messmates = messmates;
-                        MessmatesLoaded = true;
-
+                            MessmatesLoaded = true;
+                            GetMessages();
+                        }
+                        _ObjectChangeState?.Invoke(this, null);
                     }
-                    else
-                    {
-                        var messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
-                                         select new Messmate(clientSession, OrderItems)).ToList();
-                        var candidateMessmates = (from clientSession in FoodServiceClientSession.GetPeopleNearMe()
-                                                  select new Messmate(clientSession, OrderItems)).ToList();
-                        Messmates = messmates;
-                        CandidateMessmates = candidateMessmates;
-
-                        MessmatesLoaded = true;
-                        GetMessages();
-                    }
-                    _ObjectChangeState?.Invoke(this, null);
                 }
                 catch (Exception error)
                 {
@@ -1951,12 +1952,16 @@ namespace DontWaitApp
                                  where theMessmate.ClientSessionID == messmate.ClientSessionID
                                  select theMessmate.ClientSession).FirstOrDefault();
 
+            if (clientSession == null && this.Messmates.Where(x => x.ClientSessionID == messmate.ClientSessionID).FirstOrDefault() != null)
+                return;
+
             var ss = clientSession.ClientName;
 
             try
             {
-                this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
                 FoodServiceClientSession.RemoveMessage(messageID);
+                this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+                
                 GetMessages();
             }
             catch (Exception authenticationError)
@@ -2108,6 +2113,7 @@ namespace DontWaitApp
         }
         /// <MetaDataID>{cebd99a0-8d4c-420a-a861-5aabc396dae5}</MetaDataID>
         Message PartOfMealMessage;
+        Message PartOfMealAcceptedMessage;
 
         /// <MetaDataID>{d048d779-11d6-4c80-b308-24e58a0359f8}</MetaDataID>
         Message MenuItemProposalMessage;

@@ -230,9 +230,7 @@ namespace DontWaitApp
         /// <MetaDataID>{ddc0de45-90e3-4ad6-ad3b-ba01880aef0a}</MetaDataID>
         void SuggestMenuItem(Messmate messmate, string menuItemUri);
 
-        DateTime LastChangeTimestamp { get; }
-        DateTime SessionStartsAt { get; }
-
+    
         /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
         void CancelMealInvitation(Messmate messmate);
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);

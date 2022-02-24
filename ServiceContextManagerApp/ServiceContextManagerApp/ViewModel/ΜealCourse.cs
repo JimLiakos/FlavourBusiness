@@ -20,7 +20,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType { get; set; }
 
 
-        public string Description { get; }
+        public string Description { get; private set; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; set; }
 
         public DontWaitApp.MenuData MenuData { get; set; }
@@ -71,6 +71,12 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             if (member == nameof(IMealCourse.FoodItems))
             {
                 FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
+                ServicesContextPresentation.OnMealCourseUpdated(this);
+            }
+            if (member == nameof(IMealCourse.Meal))
+            {
+                Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
+                ServicePointType = ServerSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
                 ServicesContextPresentation.OnMealCourseUpdated(this);
             }
         }

@@ -485,7 +485,7 @@ namespace FLBManager
             //}
             try
             {
-                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}1.dat", backupFolder, "jimliakosgmailcom"));
+                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "jimliakosgmailcom"));
                 ObjectStorage.Restore(archive, "jimliakosgmailcom", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey, overrideObjectStorage);
 
             }
