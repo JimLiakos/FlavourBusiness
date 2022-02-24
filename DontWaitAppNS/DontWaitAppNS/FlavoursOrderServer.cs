@@ -2035,7 +2035,7 @@ namespace DontWaitApp
 
                     if (hallLayout is HallLayout)
                     {
-                        (hallLayout as HallLayout).SetShapesImagesRoot("http://192.168.2.8/devstoreaccount1/halllayoutsresources/Shapes/");
+                        (hallLayout as HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                         var sds = hallLayout.Name;
                     }
 

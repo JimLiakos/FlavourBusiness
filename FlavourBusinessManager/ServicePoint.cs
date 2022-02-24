@@ -751,7 +751,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 var sourceSession = partialSession.MainSession;
                 if (partialSession.ServicePoint != this || targetSession.ServicePoint != this)
                     throw new ArgumentException("Invalid partial session transfer.");
-
+                if (targetSession == sourceSession)
+                    return;
 
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
