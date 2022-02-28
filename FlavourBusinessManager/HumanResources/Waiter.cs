@@ -879,7 +879,7 @@ namespace FlavourBusinessManager.HumanResources
                         sessionsForTransfer.Add(session);
                     else
                     {
-                        constrainErrors.Add(string.Format( "Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName);
+                        constrainErrors.Add(string.Format( "Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName));
                         continue;
                     }
                 }
@@ -988,3 +988,4 @@ namespace FlavourBusinessManager.HumanResources
         //}
     }
 }
+

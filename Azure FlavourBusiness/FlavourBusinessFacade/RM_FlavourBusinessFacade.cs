@@ -4796,19 +4796,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public void TransferItems(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession, System.Collections.Generic.List<string> itemsPreparationsIDs, string targetServicePointIdentity)
-        {
-            object[] args = new object[3];
-            System.Type[] argsTypes = new System.Type[3];
-            args[0] = foodServiceSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession);
-            args[1] = itemsPreparationsIDs;
-            argsTypes[1] = typeof(System.Collections.Generic.List<string>);
-            args[2] = targetServicePointIdentity;
-            argsTypes[2] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferItems", args, argsTypes);
-        }
-        
         public void TransferSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         {
             object[] args = new object[2];
@@ -4918,6 +4905,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[1] = targetSessionID;
             argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferPartialSession", args, argsTypes);
+        }
+        
+        public void TransferItems(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation> itemPreparations)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemPreparations;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferItems", args, argsTypes);
         }
         
         public void RemoveMessage(string messageId)
