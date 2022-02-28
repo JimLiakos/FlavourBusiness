@@ -14,6 +14,17 @@ namespace FlavourBusinessFacade
 
         public DateTime StateTimestamp;
 
+    }
+   
+    public class SessionItemPreparationAbbreviation
+    {
+        public string SessionID;
+
+        public string uid;
+
+        public DateTime StateTimestamp;
+
+        public bool IsShared;
 
     }
 }

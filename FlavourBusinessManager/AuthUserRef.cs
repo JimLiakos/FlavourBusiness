@@ -390,7 +390,7 @@ namespace FlavourBusinessManager
             lock (rolesLock)
             {
                 GetRoles();
-                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName&&x.ComputingContextID== ComputationalResources.IsolatedComputingContext.CurrentContextID).FirstOrDefault();
+                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName&&x.ComputingContextID== ComputationalResources.IsolatedComputingContext.CurrentContextID&& x.RoleObject!=null).FirstOrDefault();
                 
                 if (role != null)
                     return role.RoleObject as T;

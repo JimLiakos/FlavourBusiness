@@ -725,7 +725,7 @@ namespace FlavourBusinessManager.HumanResources
 
             }
             servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
-           
+
 
             return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
         }
@@ -858,15 +858,61 @@ namespace FlavourBusinessManager.HumanResources
                 (servicePoint as ServicesContextResources.ServicePoint).ChangeServicePointState(ServicePointState.Conversation);
 
         }
-        /// <MetaDataID>{47d8cdac-cb47-4f92-8fc1-79816021480c}</MetaDataID>
-        public void TransferItems(IFoodServiceSession foodServiceSession, List<string> itemsPreparationsIDs, string targetServicePointIdentity)
+
+        public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations)
         {
 
+            List<string> constrainErrors = new List<string>();
+            List<EndUsers.FoodServiceClientSession> sessionsForTransfer = new List<EndUsers.FoodServiceClientSession>();
+            List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
 
+            foreach (var sessionitemsEntry in (from itemPreparation in itemPreparations
+                                               group itemPreparation by itemPreparation.SessionID into SessionItems
+                                               select SessionItems))
+            {
 
-            //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+                var itemsUids = sessionitemsEntry.Select(x => x.uid).ToList();
+                var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
+                if (!session.IsWaiterSession)
+                {
+                    if (session.FlavourItems.Union(session.SharedItems).Distinct().All(x => itemsUids.Contains(x.uid)))
+                        sessionsForTransfer.Add(session);
+                    else
+                    {
+                        constrainErrors.Add(string.Format( "Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName);
+                        continue;
+                    }
+                }
+                var sessionItems = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().ToList();
+
+                var itemsSharings = (from itemPreparation in sessionItems
+                                     from sessionID in itemPreparation.SharedInSessions
+                                     select new { sessionID, itemPreparation.uid, itemPreparation }).ToList();
+
+                foreach (var itemSharing in itemsSharings)
+                {
+                    if (!itemPreparations.Any(x => x.SessionID == itemSharing.sessionID && x.uid == itemSharing.uid))
+                    {
+                        constrainErrors.Add(string.Format("Partial transfer of the sharing item {0} is not possible", itemSharing.itemPreparation.Name));
+                        var sessionItem = sessionItems.Where(x => x.uid == itemSharing.uid).FirstOrDefault();
+                        if (sessionItem != null)
+                            sessionItems.Remove(sessionItem);
+                    }
+                }
+                itemsForTransfer.AddRange(sessionItems);
+            }
+            if(constrainErrors.Count>0)
+            {
+                string message = null;
+                foreach(var constrainError in constrainErrors)
+                {
+                    if (message != null)
+                        message += Environment.NewLine;
+                    message += constrainError;
+                }
+                throw new ArgumentException(message);
+            }
         }
-
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
         public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         {
@@ -874,7 +920,6 @@ namespace FlavourBusinessManager.HumanResources
                 return;
             if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
                 return;
-
 
             var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
                                       from servicePoint in serviceArea.ServicePoints
@@ -925,6 +970,8 @@ namespace FlavourBusinessManager.HumanResources
             //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
 
         }
+
+
 
         //public IShifWork NewShifWork(System.DateTime startedAt, double timespanInHours)
         //{

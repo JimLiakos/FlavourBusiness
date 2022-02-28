@@ -2195,13 +2195,7 @@ namespace DontWaitApp
             throw new NotImplementedException();
         }
 
-        public void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity)
-        {
-            if (CurrentUser is IWaiter)
-            {
-
-            }
-        }
+   
 
         public async void TransferSession(string targetServicePointIdentity)
         {

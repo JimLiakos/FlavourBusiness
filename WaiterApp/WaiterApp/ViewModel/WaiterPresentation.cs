@@ -1676,10 +1676,7 @@ namespace WaiterApp.ViewModel
 
         }
 
-        public void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity)
-        {
-
-        }
+      
 
         public async void TransferSession(string targetServicePointIdentity)
         {
@@ -1716,6 +1713,11 @@ namespace WaiterApp.ViewModel
             this.Waiter.TransferPartialSession(partialSessionID, targetSessionID);
 
 
+        }
+
+        public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
+        {
+            this.Waiter.TransferItems(itemPreparations);
         }
     }
 }

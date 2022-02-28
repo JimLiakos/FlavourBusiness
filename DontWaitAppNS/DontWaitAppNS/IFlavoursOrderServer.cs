@@ -196,10 +196,6 @@ namespace DontWaitApp
         IList<ItemPreparation> PreparationItems { get; }
 
 
-        void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity);
-
-        /// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
-        void TransferSession( string targetServicePointIdentity);
 
         /// <MetaDataID>{397f6f36-da35-4f39-9e7e-0512e87b8b79}</MetaDataID>
         void AddItem(FlavourBusinessManager.RoomService.ItemPreparation item);
@@ -385,7 +381,7 @@ namespace DontWaitApp
 
     public interface IServicePointSupervisor
     {
-        void TransferItems(List<string> itemsPreparationsIDs, string targetServicePointIdentity);
+        void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
         void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
 
         void TransferPartialSession(string partialSessionID, string targetSessionID);
