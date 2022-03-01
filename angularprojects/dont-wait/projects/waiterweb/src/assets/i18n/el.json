@@ -18,7 +18,9 @@
 		"LayTableMessageDialogTitle":"Στρώσιμο τραπεζιού",
 		"WillTakeCareLabel":"Θα φροντίσω",
 		"MealSessionStartedAtLabel":"Ξεκίνησε : ",
-		"LastMealSessionChangesAtLabel":"΄Άλλαξε :"
+		"LastMealSessionChangesAtLabel":"΄Άλλαξε :",
+		"SessionTransferErrorMessage":"Partial transfer of the '{0}' session is not possible",
+		"TransferErrorMessageOKButton":"OK"
 		
 
 	},
