@@ -31,7 +31,8 @@ namespace CashierStationDTDevice
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            CashierStationDevice.aadeUtil.VatPartyInfo.GetPartyInfo("800696676", "800696676ARION", "800696676arion", "047362769");
+            var aadeFiscalParty = CashierStationDevice.aadeUtil.aadeFiscalParty.GetPartyInfo("800696676", "800696676ARION", "800696676arion", "800696676");
+
             //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");

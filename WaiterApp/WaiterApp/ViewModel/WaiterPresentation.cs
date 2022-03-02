@@ -1717,7 +1717,7 @@ namespace WaiterApp.ViewModel
 
         public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
         {
-            this.Waiter.TransferItems(itemPreparations);
+            this.Waiter.TransferItems(itemPreparations, targetServicePointIdentity);
         }
     }
 }

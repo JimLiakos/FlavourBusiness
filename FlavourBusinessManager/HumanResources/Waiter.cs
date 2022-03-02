@@ -859,7 +859,7 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
-        public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations)
+        public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
         {
 
             List<string> constrainErrors = new List<string>();
@@ -899,7 +899,11 @@ namespace FlavourBusinessManager.HumanResources
                             sessionItems.Remove(sessionItem);
                     }
                 }
-                itemsForTransfer.AddRange(sessionItems);
+                foreach (var sessionItem in sessionItems)
+                {
+                    if (!sessionsForTransfer.Contains(sessionItem.ClientSession))
+                        itemsForTransfer.Add(sessionItem);
+                }
             }
             if(constrainErrors.Count>0)
             {
@@ -911,6 +915,18 @@ namespace FlavourBusinessManager.HumanResources
                     message += constrainError;
                 }
                 throw new ArgumentException(message);
+            }
+            var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
+                                      from servicePoint in serviceArea.ServicePoints
+                                      where servicePoint.ServicesPointIdentity == targetServicePointIdentity
+                                      select servicePoint).OfType<ServicePoint>().FirstOrDefault();
+
+
+            foreach (var session in sessionsForTransfer)
+            {
+                targetServicePoint.OpenSessions
+                session.MainSession
+
             }
         }
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>

@@ -4907,12 +4907,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferPartialSession", args, argsTypes);
         }
         
-        public void TransferItems(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation> itemPreparations)
+        public void TransferItems(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
         {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
             args[0] = itemPreparations;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>);
+            args[1] = targetServicePointIdentity;
+            argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferItems", args, argsTypes);
         }
         
