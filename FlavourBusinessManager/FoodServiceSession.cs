@@ -685,8 +685,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                             throw new FlavourBusinessFacade.Exceptions.TransferException("There are shared items left in the old session", 801);
                     }
                     var sessions = foodServiceSession.PartialClientSessions;
-
-                    (Meal as Meal).Merge(foodServiceSession.Meal as Meal);
+                    if(Meal!=null)
+                        (Meal as Meal).Merge(foodServiceSession.Meal as Meal);
                     
                     stateTransition.Consistent = true;
                 }

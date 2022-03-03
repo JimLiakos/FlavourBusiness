@@ -339,6 +339,8 @@ namespace FlavourBusinessManager.RoomService
 
         internal void Merge(Meal meal)
         {
+            if (meal == null)
+                return;
             lock (MealLock)
             {
 

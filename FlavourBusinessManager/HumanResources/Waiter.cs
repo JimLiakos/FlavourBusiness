@@ -873,18 +873,19 @@ namespace FlavourBusinessManager.HumanResources
 
                 var itemsUids = sessionitemsEntry.Select(x => x.uid).ToList();
                 var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
-                if (!session.IsWaiterSession)
+
+
+                if (session.FlavourItems.Union(session.SharedItems).Distinct().All(x => itemsUids.Contains(x.uid)))
+                    partialSessionsForTransfer.Add(session);
+                else if (!session.IsWaiterSession)
                 {
-                    if (session.FlavourItems.Union(session.SharedItems).Distinct().All(x => itemsUids.Contains(x.uid)))
-                        partialSessionsForTransfer.Add(session);
-                    else
-                    {
-                        constrainErrors.Add(string.Format("Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName));
-                        continue;
-                    }
+                    constrainErrors.Add(string.Format("Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName));
+                    continue;
                 }
 
-                var sessionItemsForTransfer = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().Where(sessionItem => itemPreparations.Any(x=>x.uid== sessionItem .uid)).ToList();
+
+
+                var sessionItemsForTransfer = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().Where(sessionItem => itemPreparations.Any(x => x.uid == sessionItem.uid)).ToList();
 
                 var itemsSharings = (from sessionItem in sessionItemsForTransfer
                                      from sessionID in sessionItem.SharedInSessions
@@ -892,7 +893,7 @@ namespace FlavourBusinessManager.HumanResources
 
                 foreach (var itemSharing in itemsSharings)
                 {
-                    if ( !itemPreparations.Any(x => x.SessionID == itemSharing.sessionID && x.uid == itemSharing.uid))
+                    if (!itemPreparations.Any(x => x.SessionID == itemSharing.sessionID && x.uid == itemSharing.uid))
                     {
                         constrainErrors.Add(string.Format("Partial transfer of the sharing item {0} is not possible", itemSharing.sessionItem.Name));
                         var sessionItem = sessionItemsForTransfer.Where(x => x.uid == itemSharing.uid).FirstOrDefault();
@@ -933,7 +934,7 @@ namespace FlavourBusinessManager.HumanResources
                 var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
                 foreach (var session in partialSessionsForTransfer.ToList())
                 {
-                    if (session.MainSession != null&& !sessionsForTransfer.Contains(session.MainSession))
+                    if (session.MainSession != null && !sessionsForTransfer.Contains(session.MainSession))
                     {
                         var movingItemsuids = itemPreparations.Select(x => x.uid).ToList();
 
@@ -945,9 +946,9 @@ namespace FlavourBusinessManager.HumanResources
                             sessionsForTransfer.Add(session.MainSession as FoodServiceSession);
                     }
                 }
-                foreach(var session in sessionsForTransfer)
+                foreach (var session in sessionsForTransfer)
                 {
-                    foreach(var partialSession in session.PartialClientSessions.OfType<EndUsers.FoodServiceClientSession>())
+                    foreach (var partialSession in session.PartialClientSessions.OfType<EndUsers.FoodServiceClientSession>())
                     {
                         if (partialSessionsForTransfer.Contains(partialSession))
                             partialSessionsForTransfer.Remove(partialSession);
@@ -955,9 +956,42 @@ namespace FlavourBusinessManager.HumanResources
                 }
 
 
-                if (servicePointLastOpenSession == null)
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
 
+                    
+                    foreach (var session in sessionsForTransfer)
+                        TransferSession(session, targetServicePointIdentity);
+
+                    foreach (var partialSession in partialSessionsForTransfer)
+                    {
+                        if (partialSession.MainSession != null && servicePointLastOpenSession == null)
+                        {
+                            servicePointLastOpenSession = targetServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                            ObjectStorage.GetStorageOfObject(targetServicePoint).CommitTransientObjectState(servicePointLastOpenSession);
+                        }
+
+                        partialSession.ServicePoint = targetServicePoint;
+                        if (partialSession.MainSession != null)
+                            partialSession.MainSession.RemovePartialSession(partialSession);
+                        servicePointLastOpenSession.AddPartialSession(partialSession);
+                    }
+
+                    foreach (var item in itemsForTransfer)
+                    {
+
+                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken, true) as EndUsers.FoodServiceClientSession;
+                        foodServiceClientSession.Merge(item);
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+
+                targetServicePoint.OpenClientSessions.Where(X => X.UserIdentity == (this as IUser).Identity).FirstOrDefault()?.RaiseMainSessionChange();
+
+
+                if (servicePointLastOpenSession == null)
+                {
 
                     //(foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
                     //targetServicePoint.UpdateState();
@@ -1036,7 +1070,7 @@ namespace FlavourBusinessManager.HumanResources
 
                         Transaction.Current.TransactionCompleted += (Transaction transaction) =>
                         {
-                            if (transaction.Status == TransactionStatus.Committed)
+                            if (transaction.Status == TransactionStatus.Committed&& servicePointLastOpenSession.Meal!=null)
                                 (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
                         };
 

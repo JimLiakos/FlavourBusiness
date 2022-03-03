@@ -730,6 +730,19 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        internal void Merge(ItemPreparation item)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                item.ClientSession.RemoveItem(item);
+                AddItemForMerge(item); 
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+
         internal void Merge(FoodServiceClientSession partialSession)
         {
 
@@ -976,6 +989,12 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
+
+        internal void RaiseMainSessionChange()
+        {
+            ObjectChangeState?.Invoke(this, nameof(MainSession));
+        }
+
 
 
         /// <exclude>Excluded</exclude>
