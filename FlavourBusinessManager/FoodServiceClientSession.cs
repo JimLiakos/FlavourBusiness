@@ -1556,24 +1556,27 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-
-                    if (MainSession != null && MainSession.Meal != null)
-                    {
-                        var flavourItemMealCourse = (from mealCourse in MainSession.Meal.Courses
-                                                     from mealCourseItem in mealCourse.FoodItems
-                                                     where mealCourseItem.uid == flavourItem.uid
-                                                     select mealCourse).FirstOrDefault();
-
-                        flavourItemMealCourse?.RemoveItem(flavourItem);
-                        //if(flavourItemMealCourse.FoodItems.Count==0)
-
-                    }
-                    if (flavourItem.PreparationStation != null)
-                        (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
-
                     _FlavourItems.Remove(flavourItem);
                     flavourItem.SessionID = null;
                     ModificationTime = DateTime.UtcNow;
+
+                    if (flavourItem.SharedInSessions.Count == 0)
+                    {
+                        if (MainSession != null && MainSession.Meal != null)
+                        {
+                            var flavourItemMealCourse = (from mealCourse in MainSession.Meal.Courses
+                                                         from mealCourseItem in mealCourse.FoodItems
+                                                         where mealCourseItem.uid == flavourItem.uid
+                                                         select mealCourse).FirstOrDefault();
+
+                            flavourItemMealCourse?.RemoveItem(flavourItem);
+                            //if(flavourItemMealCourse.FoodItems.Count==0)
+
+                        }
+                        if (flavourItem.PreparationStation != null)
+                            (flavourItem.PreparationStation as PreparationStation).RemoveItemPreparation(flavourItem);
+                    }
+
                     stateTransition.Consistent = true;
                 }
                 CatchStateEvents();

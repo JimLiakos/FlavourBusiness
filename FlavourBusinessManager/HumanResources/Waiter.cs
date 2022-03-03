@@ -863,7 +863,7 @@ namespace FlavourBusinessManager.HumanResources
         {
 
             List<string> constrainErrors = new List<string>();
-            List<EndUsers.FoodServiceClientSession> sessionsForTransfer = new List<EndUsers.FoodServiceClientSession>();
+            List<EndUsers.FoodServiceClientSession> partialSessionsForTransfer = new List<EndUsers.FoodServiceClientSession>();
             List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
 
             foreach (var sessionitemsEntry in (from itemPreparation in itemPreparations
@@ -876,39 +876,40 @@ namespace FlavourBusinessManager.HumanResources
                 if (!session.IsWaiterSession)
                 {
                     if (session.FlavourItems.Union(session.SharedItems).Distinct().All(x => itemsUids.Contains(x.uid)))
-                        sessionsForTransfer.Add(session);
+                        partialSessionsForTransfer.Add(session);
                     else
                     {
-                        constrainErrors.Add(string.Format( "Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName));
+                        constrainErrors.Add(string.Format("Partial transfer of the '{0}' FoodServiceClientSession is not possible", session.ClientName));
                         continue;
                     }
                 }
-                var sessionItems = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().ToList();
 
-                var itemsSharings = (from itemPreparation in sessionItems
-                                     from sessionID in itemPreparation.SharedInSessions
-                                     select new { sessionID, itemPreparation.uid, itemPreparation }).ToList();
+                var sessionItemsForTransfer = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().Where(sessionItem => itemPreparations.Any(x=>x.uid== sessionItem .uid)).ToList();
+
+                var itemsSharings = (from sessionItem in sessionItemsForTransfer
+                                     from sessionID in sessionItem.SharedInSessions
+                                     select new { sessionID, sessionItem.uid, sessionItem }).ToList();
 
                 foreach (var itemSharing in itemsSharings)
                 {
-                    if (!itemPreparations.Any(x => x.SessionID == itemSharing.sessionID && x.uid == itemSharing.uid))
+                    if ( !itemPreparations.Any(x => x.SessionID == itemSharing.sessionID && x.uid == itemSharing.uid))
                     {
-                        constrainErrors.Add(string.Format("Partial transfer of the sharing item {0} is not possible", itemSharing.itemPreparation.Name));
-                        var sessionItem = sessionItems.Where(x => x.uid == itemSharing.uid).FirstOrDefault();
+                        constrainErrors.Add(string.Format("Partial transfer of the sharing item {0} is not possible", itemSharing.sessionItem.Name));
+                        var sessionItem = sessionItemsForTransfer.Where(x => x.uid == itemSharing.uid).FirstOrDefault();
                         if (sessionItem != null)
-                            sessionItems.Remove(sessionItem);
+                            sessionItemsForTransfer.Remove(sessionItem);
                     }
                 }
-                foreach (var sessionItem in sessionItems)
+                foreach (var sessionItem in sessionItemsForTransfer)
                 {
-                    if (!sessionsForTransfer.Contains(sessionItem.ClientSession))
+                    if (!partialSessionsForTransfer.Contains(sessionItem.ClientSession))
                         itemsForTransfer.Add(sessionItem);
                 }
             }
-            if(constrainErrors.Count>0)
+            if (constrainErrors.Count > 0)
             {
                 string message = null;
-                foreach(var constrainError in constrainErrors)
+                foreach (var constrainError in constrainErrors)
                 {
                     if (message != null)
                         message += Environment.NewLine;
@@ -922,12 +923,74 @@ namespace FlavourBusinessManager.HumanResources
                                       select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
 
-            foreach (var session in sessionsForTransfer)
+            if (targetServicePoint == null)
+                throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
+            else
             {
-                targetServicePoint.OpenSessions
-                session.MainSession
+                List<FoodServiceSession> sessionsForTransfer = new List<FoodServiceSession>();
 
+
+                var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
+                foreach (var session in partialSessionsForTransfer.ToList())
+                {
+                    if (session.MainSession != null&& !sessionsForTransfer.Contains(session.MainSession))
+                    {
+                        var movingItemsuids = itemPreparations.Select(x => x.uid).ToList();
+
+                        var sessionItems = (from partialSession in session.MainSession.PartialClientSessions
+                                            from flavourItem in partialSession.FlavourItems
+                                            select flavourItem);
+
+                        if (sessionItems.All(x => movingItemsuids.Contains(x.uid))) //all session item will be transfered
+                            sessionsForTransfer.Add(session.MainSession as FoodServiceSession);
+                    }
+                }
+                foreach(var session in sessionsForTransfer)
+                {
+                    foreach(var partialSession in session.PartialClientSessions.OfType<EndUsers.FoodServiceClientSession>())
+                    {
+                        if (partialSessionsForTransfer.Contains(partialSession))
+                            partialSessionsForTransfer.Remove(partialSession);
+                    }
+                }
+
+
+                if (servicePointLastOpenSession == null)
+                {
+
+
+                    //(foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+                    //targetServicePoint.UpdateState();
+
+                    //if (foodServiceSession.Meal != null)
+                    //{
+                    //    //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+                    //    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+                    //}
+                }
+                else
+                {
+
+                    //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    //{
+                    //    servicePointLastOpenSession.Merge(foodServiceSession);
+                    //    (foodServiceSession.ServicePoint as ServicePoint).UpdateState();
+                    //    ObjectStorage.DeleteObject(foodServiceSession);
+                    //    //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+                    //    Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                    //    {
+                    //        if (transaction.Status == TransactionStatus.Committed)
+                    //            (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+                    //    };
+                    //    stateTransition.Consistent = true;
+                    //}
+
+                }
             }
+
+
+
+
         }
         /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
         public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
