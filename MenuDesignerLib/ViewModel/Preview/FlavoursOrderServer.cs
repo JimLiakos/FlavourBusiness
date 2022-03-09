@@ -277,5 +277,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        Task<bool> IFlavoursOrderServer.GetServicePointDataEx(string foodServiceClientSessionUri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

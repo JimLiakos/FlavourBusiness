@@ -1265,14 +1265,26 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-
+        OrganizationStorageRef _Menu;
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
         public OrganizationStorageRef Menu
         {
             get
             {
-                return null;
+                if(_Menu==null)
+                {
+                    var graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
+                    string versionSuffix = "";
+                    if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
+                        versionSuffix = "/" + graphicMenu.Version;
+                    else
+                        versionSuffix = "";
+                    graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", ServicesContextRunTime.OrganizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
+                    _Menu = graphicMenu;
+                }
+                return _Menu;
             }
+           
         }
 
 

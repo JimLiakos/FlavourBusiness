@@ -2151,6 +2151,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.EndUsers.ClientSessionData ClientSessionData
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_ClientSessionData", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.ClientSessionData>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public bool IsWaiterSession
         {
             get

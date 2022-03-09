@@ -1549,24 +1549,24 @@ namespace FlavourBusinessManager.ServicePointRunTime
             string token = null;
             var graphicMenu = graphicMenus.FirstOrDefault();
 
-            if ((clientSession.Menu == null || clientSession.Menu.Version != graphicMenu.Version))
-            {
+            //if ((clientSession.Menu == null || clientSession.Menu.Version != graphicMenu.Version))
+            //{
 
 
-                //graphicMenu = (from gMenu in graphicMenus where gMenu.StorageIdentity == flavoursServicesContexGraphicMenu.StorageIdentity select gMenu).FirstOrDefault();
+            //    //graphicMenu = (from gMenu in graphicMenus where gMenu.StorageIdentity == flavoursServicesContexGraphicMenu.StorageIdentity select gMenu).FirstOrDefault();
 
-                string versionSuffix = "";
-                if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
-                    versionSuffix = "/" + graphicMenu.Version;
-                else
-                    versionSuffix = "";
+            //    string versionSuffix = "";
+            //    if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
+            //        versionSuffix = "/" + graphicMenu.Version;
+            //    else
+            //        versionSuffix = "";
 
-                graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
-                (clientSession as EndUsers.FoodServiceClientSession).Menu = graphicMenu;
-                if ((clientSession as EndUsers.FoodServiceClientSession).MainSession != null)
-                    ((clientSession as EndUsers.FoodServiceClientSession).MainSession as FoodServiceSession).MenuStorageIdentity = graphicMenu.StorageIdentity;
+            //    graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
+            //    (clientSession as EndUsers.FoodServiceClientSession).Menu = graphicMenu;
+            //    if ((clientSession as EndUsers.FoodServiceClientSession).MainSession != null)
+            //        ((clientSession as EndUsers.FoodServiceClientSession).MainSession as FoodServiceSession).MenuStorageIdentity = graphicMenu.StorageIdentity;
 
-            }
+            //}
             return clientSession.ClientSessionData;
             //token = GetToken(clientSession, token);
             //var defaultMealTypeUri = clientSession.ServicePoint.ServesMealTypesUris.FirstOrDefault();
