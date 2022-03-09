@@ -33,7 +33,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
         public MealCourse(IMealCourse serverSideMealCourse, ServiceContextManagerApp.ServicesContextPresentation servicesContextPresentation)
         {
-            MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetObjectPersistentUri(serverSideMealCourse);
+            MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
             ServicesContextPresentation = servicesContextPresentation;
 

@@ -60,6 +60,25 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
+
+        public ClientSessionData ClientSessionData
+        {
+            get
+            {
+                var defaultMealTypeUri = this.ServicePoint.ServesMealTypesUris.FirstOrDefault();
+                var servedMealTypesUris = this.ServicePoint.ServesMealTypesUris.ToList();
+
+                if (defaultMealTypeUri == null)
+                {
+                    defaultMealTypeUri = this.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
+                    servedMealTypesUris = this.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
+                }
+
+                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
+
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
 
@@ -735,8 +754,8 @@ namespace FlavourBusinessManager.EndUsers
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                item.ClientSession.RemoveItem(item);
-                AddItemForMerge(item); 
+                (item.ClientSession as FoodServiceClientSession).RemoveItemForMerge(item);
+                AddItemForMerge(item);
                 stateTransition.Consistent = true;
             }
 
@@ -753,7 +772,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     partialSession.RemoveItemForMerge(itemPreparation);
                     AddItemForMerge(itemPreparation);
-                    
+
                 }
 
                 foreach (var itemPreparation in partialSession.SharedItems.OfType<ItemPreparation>())
@@ -992,6 +1011,8 @@ namespace FlavourBusinessManager.EndUsers
 
         internal void RaiseMainSessionChange()
         {
+
+
             ObjectChangeState?.Invoke(this, nameof(MainSession));
         }
 
@@ -1063,6 +1084,11 @@ namespace FlavourBusinessManager.EndUsers
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _ServicePoint.Value = value;
+
+                        Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                        {
+                            ObjectChangeState?.Invoke(this, nameof(ServicePoint));
+                        };
                         stateTransition.Consistent = true;
                     }
                 }
@@ -1241,7 +1267,13 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
-        public OrganizationStorageRef Menu { get; set; }
+        public OrganizationStorageRef Menu
+        {
+            get
+            {
+                return null;
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -1528,6 +1560,10 @@ namespace FlavourBusinessManager.EndUsers
             {
                 _FlavourItems.Remove(flavourItem);
                 flavourItem.SessionID = null;
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+                };
 
                 stateTransition.Consistent = true;
             }
@@ -1539,6 +1575,11 @@ namespace FlavourBusinessManager.EndUsers
                 _FlavourItems.Add(flavourItem);
                 flavourItem.SessionID = this.SessionID;
 
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+                };
+
                 stateTransition.Consistent = true;
             }
         }
@@ -1549,8 +1590,11 @@ namespace FlavourBusinessManager.EndUsers
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _SharedItems.Remove(flavourItem);
-                
 
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+                };
                 stateTransition.Consistent = true;
             }
         }
@@ -1559,6 +1603,10 @@ namespace FlavourBusinessManager.EndUsers
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _SharedItems.Add(flavourItem);
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+                };
                 stateTransition.Consistent = true;
             }
         }

@@ -121,7 +121,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                     if (oldServicePoint != null)
                         (oldServicePoint as ServicePoint).UpdateState();
                 }
-                ObjectChangeState?.Invoke(this, nameof(ServicePoint));
+                Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(ServicePoint));
+                };
 
             }
         }
@@ -674,6 +677,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
                             foodServiceSession.RemovePartialSession(partialSession);
                             AddPartialSession(partialSession);
+                            partialSession.ServicePoint = ServicePoint;
                         }
                     }
 

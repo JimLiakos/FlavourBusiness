@@ -187,7 +187,7 @@ namespace DontWaitApp
                             {
                                 this.FoodServiceClientSession.DeviceResume();
                             }
-                            catch (OOAdvantech.Remoting. MissingServerObjectException error)
+                            catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
                                 return await ConnectToServicePoint(this.MenuData.ServicePointIdentity);
                             }
@@ -466,8 +466,8 @@ namespace DontWaitApp
         public bool WaiterView { get; set; }
 
 
-        ServicePointState _ServicePointState= ServicePointState.Laying;
-        public ServicePointState ServicePointState 
+        ServicePointState _ServicePointState = ServicePointState.Laying;
+        public ServicePointState ServicePointState
         {
             get
             {
@@ -638,6 +638,7 @@ namespace DontWaitApp
                     MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                     MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                     ClientSessionID = FoodServiceClientSession.SessionID,
+                    FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
                     ServicePointIdentity = clientSessionData.ServicePointIdentity,
                     ServicesPointName = clientSessionData.ServicesPointName,
                     ServicesContextLogo = clientSessionData.ServicesContextLogo,
@@ -679,10 +680,10 @@ namespace DontWaitApp
                     return true;
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity))
+                    if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
                     {
 
-                        while (!await GetServicePointData(MenuData.ServicePointIdentity))
+                        while (!await GetServicePointDataEx(MenuData.FoodServiceClientSessionUri))//!await GetServicePointData(MenuData.ServicePointIdentity))
                         {
                             if (string.IsNullOrWhiteSpace(Path) || Path.Split('/')[0] != MenuData.ServicePointIdentity)
                                 break;
@@ -811,6 +812,7 @@ namespace DontWaitApp
                             MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                             MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                             ClientSessionID = FoodServiceClientSession.SessionID,
+                            FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
                             ServicePointIdentity = clientSessionData.ServicePointIdentity,
                             ServicesPointName = clientSessionData.ServicesPointName,
                             DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
@@ -839,6 +841,140 @@ namespace DontWaitApp
 
 
         }
+
+        public Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri)
+        {
+
+            lock (ClientSessionLock)
+            {
+                if (foodServiceClientSessionUri != DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri)
+                {
+                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData();
+                    OrderItems.Clear();
+                }
+
+
+                Task<bool> getServicePointDataTask = null;
+                GetServicePointDataTasks.TryGetValue(foodServiceClientSessionUri, out getServicePointDataTask);
+                if (getServicePointDataTask != null && !getServicePointDataTask.IsCompleted)
+                    return getServicePointDataTask; // returns the active task to get service point data
+
+                //There isn't active task.
+                //Starts task to get service point data
+                getServicePointDataTask = Task<bool>.Run(async () =>
+                {
+
+                    try
+                    {
+                        DateTime start = DateTime.UtcNow;
+                        var foodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, foodServiceClientSessionUri);
+
+                        var clientSessionData = foodServiceClientSession.ClientSessionData;
+                        if (FoodServiceClientSession != null)
+                        {
+                            FoodServiceClientSession.MessageReceived -= MessageReceived;
+                            FoodServiceClientSession.ObjectChangeState -= FoodServiceClientSessionChangeState;
+                            FoodServiceClientSession.ItemStateChanged -= FoodServiceClientSessionItemStateChanged;
+                            FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
+                        }
+                        FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
+                        if (FoodServiceClientSession == null)
+                        {
+                            //There isn't active session for service point and client
+                            //Clear cache  the last session has ended
+                            OrderItems.Clear();
+                            this.MenuData = new MenuData();
+                            return true;
+                        }
+
+                        SessionID = clientSessionData.FoodServiceClientSession.SessionID;
+                        if (ApplicationSettings.Current.LastClientSessionID != SessionID)
+                            OrderItems.Clear(); //Clear cache for new session
+
+
+
+                        ApplicationSettings.Current.LastClientSessionID = SessionID;
+
+
+                        #region synchronize cached order items
+                        foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
+                        {
+                            var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
+                            if (cachedOrderItem != null)
+                                OrderItems.Remove(cachedOrderItem);
+                            OrderItems.Add(flavourItem as ItemPreparation);
+                        }
+                        var cou = FoodServiceClientSession.FlavourItems.Count;
+                        foreach (var orderItem in OrderItems.Where(x => x.SessionID == SessionID))
+                        {
+                            var flavourItem = FoodServiceClientSession.FlavourItems.Where(x => x.uid == orderItem.uid).FirstOrDefault();
+                            if (flavourItem == null)
+                                FoodServiceClientSession.AddItem(orderItem);
+                        }
+
+                        cou = FoodServiceClientSession.FlavourItems.Count;
+
+                        foreach (var flavourItem in FoodServiceClientSession.SharedItems)
+                        {
+                            var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
+                            if (cachedOrderItem != null)
+                                OrderItems.Remove(cachedOrderItem);
+                            OrderItems.Add(flavourItem as ItemPreparation);
+                        }
+                        #endregion
+
+                        RefreshMessmates();
+
+                        ClientSessionToken = clientSessionData.Token;
+                        FoodServiceClientSession.MessageReceived += MessageReceived;
+                        FoodServiceClientSession.ObjectChangeState += FoodServiceClientSessionChangeState;
+                        FoodServiceClientSession.ItemStateChanged += FoodServiceClientSessionItemStateChanged;
+                        FoodServiceClientSession.ItemsStateChanged += FoodServiceClientSession_ItemsStateChanged;
+
+
+                        var storeRef = FoodServiceClientSession.Menu;
+#if !DeviceDotNet
+                        storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
+#endif
+
+                        MenuData menuData = new MenuData()
+                        {
+                            MenuName = storeRef.Name,
+                            MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
+                            MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                            ClientSessionID = FoodServiceClientSession.SessionID,
+                            FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
+                            ServicePointIdentity = clientSessionData.ServicePointIdentity,
+                            ServicesPointName = clientSessionData.ServicesPointName,
+                            DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
+                            ServedMealTypesUris = clientSessionData.ServedMealTypesUris
+
+                        };
+                        menuData.OrderItems = OrderItems.ToList();
+                        //var s = menuData.OrderItems[0].OptionsChanges[0].ItemPreparation;
+                        MenuData = menuData;
+                        _ServicePointState = clientSessionData.ServicePointState;
+                        _ObjectChangeState?.Invoke(this, nameof(MenuData));
+
+                        GetMessages();
+                    }
+                    catch (Exception error)
+                    {
+
+                        return false;
+                    }
+                    return true;
+
+                });
+                GetServicePointDataTasks[foodServiceClientSessionUri] = getServicePointDataTask;
+                return getServicePointDataTask;
+            }
+
+
+        }
+
+
+
 
         /// <MetaDataID>{6133970c-efe1-4c70-a5c0-2162b7b2dda9}</MetaDataID>
         Message ActivePartOfMealMessage;
@@ -1199,6 +1335,19 @@ namespace DontWaitApp
 
 
             }
+            else if (member == nameof(IFoodServiceClientSession.MainSession))
+            {
+                RefreshMessmates();
+            }
+            else if (member == nameof(IFoodServiceClientSession.ServicePoint))
+            {
+                var servicePoint = FoodServiceClientSession.ServicePoint;
+                string targetFullServicePointIdentity = servicePoint.ServicesContextIdentity + ";" + servicePoint.ServicesContextIdentity;
+
+                var foodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession);
+                GetServicePointDataEx(foodServiceClientSessionUri);
+                //GetServicePointData(targetFullServicePointIdentity);
+            }
             else
                 RefreshMessmates();
 
@@ -1408,6 +1557,7 @@ namespace DontWaitApp
         /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
         Task<ClientSessionData> GetFoodServiceSession(string servicePointID, bool create = true)
         {
+
             return Task<IFoodServiceClientSession>.Run(async () =>
             {
                 try
@@ -1427,6 +1577,10 @@ namespace DontWaitApp
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                     string serverUrl = AzureServerUrl;
+
+
+                    var waiter = RemotingServices.GetPersistentObject(serverUrl, @"0470e076603e47b6a82556fe4c1bf335;3bdea2dc-3185-4331-bdb9-f17c535f2965\18\c6c9bce7-9c46-4f0b-8587-fc03526f6546") as IWaiter;
+                    var ee = RemotingServices.GetComputingContextPersistentUri(waiter);
                     IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
                     servicesContextManagment.ObjectChangeState += ServicesContextManagment_ObjectChangeState;
 
@@ -1961,7 +2115,7 @@ namespace DontWaitApp
             {
                 FoodServiceClientSession.RemoveMessage(messageID);
                 this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-                
+
                 GetMessages();
             }
             catch (Exception authenticationError)
@@ -2126,9 +2280,11 @@ namespace DontWaitApp
         {
             if (MenuData.OrderItems != null)
                 OrderItems = MenuData.OrderItems.ToList();
-            if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity))
+            if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
             {
-                while (!await GetServicePointData(MenuData.ServicePointIdentity))
+                this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);
+                
+                while (!await GetServicePointDataEx(MenuData.FoodServiceClientSessionUri))    //while (!await GetServicePointData(MenuData.ServicePointIdentity))
                 {
                     if (string.IsNullOrWhiteSpace(Path) || Path.Split('/')[0] != MenuData.ServicePointIdentity)
                         break;
@@ -2195,23 +2351,23 @@ namespace DontWaitApp
             throw new NotImplementedException();
         }
 
-   
 
-        public async void TransferSession(string targetServicePointIdentity)
-        {
-            if (CurrentUser is IWaiter)
-            {
 
-                string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
-                                                         from shape in hall.Shapes
-                                                         where shape.ServicesPointIdentity == targetServicePointIdentity
-                                                         select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+        //public async void TransferSession(string targetServicePointIdentity)
+        //{
+        //    if (CurrentUser is IWaiter)
+        //    {
 
-                (CurrentUser as IWaiter).TransferSession(FoodServiceClientSession.MainSession, targetServicePointIdentity);
+        //        string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+        //                                                 from shape in hall.Shapes
+        //                                                 where shape.ServicesPointIdentity == targetServicePointIdentity
+        //                                                 select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
-                await GetServicePointData(targetFullServicePointIdentity);
+        //        (CurrentUser as IWaiter).TransferSession(FoodServiceClientSession.MainSession, targetServicePointIdentity);
 
-            }
-        }
+        //        await GetServicePointData(targetFullServicePointIdentity);
+
+        //    }
+        //}
     }
 }

@@ -37,7 +37,7 @@ namespace FlavourBusinessManager
                             string channelUri = string.Format("{0}({1})", RemotingServices.ServerPublicUrl, this.ComputingContextID);
                             _RoleObject = RemotingServices.GetPersistentObject(channelUri, ObjectUri);
                         }
-
+                        
                     }
                     else if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
                         _RoleObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ObjectUri);

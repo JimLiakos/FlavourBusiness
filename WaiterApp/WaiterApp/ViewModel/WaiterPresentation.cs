@@ -1688,8 +1688,8 @@ namespace WaiterApp.ViewModel
                                                      select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
             this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
-
-            await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
+           
+            await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
 
 
         }
@@ -1704,7 +1704,9 @@ namespace WaiterApp.ViewModel
                                                          select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
                 this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
-                await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
+                await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
+
+                //await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
             }
         }
 
