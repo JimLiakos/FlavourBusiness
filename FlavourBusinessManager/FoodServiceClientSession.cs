@@ -264,8 +264,17 @@ namespace FlavourBusinessManager.EndUsers
 
             MakePartOfMeal(messmateClientSesion);
 
-            (messmateClientSesion as FoodServiceClientSession).MealInvitationAccepted(this);
-            ObjectChangeState?.Invoke(this, nameof(MainSession));
+            foreach (var waiterFoodServiceClientSession in (ServicePoint as ServicePoint)  .OpenClientSessions.Where(x => x.IsWaiterSession))
+            {
+                try
+                {
+                    waiterFoodServiceClientSession.RaiseMainSessionChange();
+                }
+                catch (Exception error)
+                {
+                }
+            }
+
         }
 
 
@@ -375,12 +384,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <MetaDataID>{8e3f84e8-e9aa-4590-972f-053a864069be}</MetaDataID>
-        private void MealInvitationAccepted(FoodServiceClientSession foodServiceClientSession)
-        {
-            ObjectChangeState?.Invoke(this, nameof(MainSession));
-        }
-
+    
         /// <MetaDataID>{9d7c7058-1582-4dbf-8727-14540094ec56}</MetaDataID>
         internal void MonitorTick()
         {

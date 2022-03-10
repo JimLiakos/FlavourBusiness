@@ -463,6 +463,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{9da82eed-28ed-4ce5-8ed0-5f28130b64df}</MetaDataID>
+        [CachingDataOnClientSide]
         public bool WaiterView { get; set; }
 
 
