@@ -256,13 +256,18 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{56afdc1c-d6ee-42f0-9b81-44125cc8a57a}</MetaDataID>
         public void AcceptMealInvitation(string clientSessionToken, IFoodServiceClientSession messmateClientSesion)
         {
-
+            bool mainSessionUpdate = MainSession != null;
             string token = null;
             ServicePointRunTime.ServicesContextRunTime.FoodServiceClientSessionsTokens.TryGetValue(this, out token);
             if (string.IsNullOrWhiteSpace(token) || token != clientSessionToken)
                 throw new AuthenticationException("invalid token or token expired");
 
             MakePartOfMeal(messmateClientSesion);
+
+            if(mainSessionUpdate)
+                ObjectChangeState?.Invoke(this, nameof(MainSession));
+
+            (messmateClientSesion as FoodServiceClientSession).MealInvitationAccepted(this);
 
             foreach (var waiterFoodServiceClientSession in (ServicePoint as ServicePoint)  .OpenClientSessions.Where(x => x.IsWaiterSession))
             {
@@ -277,6 +282,11 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{8e3f84e8-e9aa-4590-972f-053a864069be}</MetaDataID>
+        private void MealInvitationAccepted(FoodServiceClientSession foodServiceClientSession)
+        {
+            ObjectChangeState?.Invoke(this, nameof(MainSession));
+        }
 
 
         /// <summary>
@@ -334,7 +344,7 @@ namespace FlavourBusinessManager.EndUsers
                         if (implicitMainSessionMainSession != null)
                             implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
 
-                        if (implicitMainSessionMainSession != null && implicitMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
+                        if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
                             ObjectStorage.DeleteObject(implicitMainSessionMainSession);
                     }
                     _MainSession.Value.AddPartialSession(messmateClientSesion);
