@@ -137,16 +137,16 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         internal void UpdateState()
         {
-            var servicePointOpenSessions = ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.ServicePoint == this).ToList();
 
-            if (servicePointOpenSessions.Count == 0)
+
+            if (OpenClientSessions.Count == 0)
                 ChangeServicePointState(ServicePointState.Free);
             else
             {
 
 
 
-                var mealCourses = (from servicePointOpenSession in servicePointOpenSessions
+                var mealCourses = (from servicePointOpenSession in OpenSessions
                                    where servicePointOpenSession.Meal != null
                                    from mealCourse in servicePointOpenSession.Meal.Courses
                                    where mealCourse.FoodItems.OfType<RoomService.ItemPreparation>().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
@@ -160,11 +160,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                     ChangeServicePointState(ServicePointState.MealCoursePreparation);
                 else
                 {
-                  var servicePointMealCourses =  (from servicePointOpenSession in servicePointOpenSessions
-                     where servicePointOpenSession.Meal != null
-                     from mealCourse in servicePointOpenSession.Meal.Courses
-                     select mealCourse).ToList();
-                    if (servicePointMealCourses.Count>0&& servicePointMealCourses. All(x => x.PreparationState == FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
+                    var servicePointMealCourses = (from servicePointOpenSession in OpenSessions
+                                                   where servicePointOpenSession.Meal != null
+                                                   from mealCourse in servicePointOpenSession.Meal.Courses
+                                                   select mealCourse).ToList();
+                    if (servicePointMealCourses.Count > 0 && servicePointMealCourses.All(x => x.PreparationState == FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
                     {
 
                         ChangeServicePointState(ServicePointState.Served);
@@ -748,7 +748,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (ServicePointLock)
             {
-               
+
                 var targetSession = ServicesContextRunTime.OpenSessions.Where(x => x.SessionID == targetSessionID).First();
                 var sourceSession = partialSession.MainSession;
                 if (partialSession.ServicePoint != this || targetSession.ServicePoint != this)
@@ -1019,8 +1019,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                     stateTransition.Consistent = true;
                 }
 
-           
-           
+
+
             }
 
 
@@ -1031,7 +1031,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         public static void TransferPartialSession(string partialSessionID, string targetSessionID)
         {
-            var partialSession =ServicePointRunTime. ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
+            var partialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
             (partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSession, targetSessionID);
         }
 

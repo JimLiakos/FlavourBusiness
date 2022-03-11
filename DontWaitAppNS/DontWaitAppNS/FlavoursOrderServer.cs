@@ -274,14 +274,9 @@ namespace DontWaitApp
             {
 
 
-                string path = ApplicationSettings.Current.Path;
-                if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
-                {
-                    if (MenuData.ServicePointIdentity != path.Split('/')[0])
-                        path = "";
-                }
+                return ApplicationSettings.Current.Path;
+              
 
-                return path;
             }
             set
             {
@@ -880,19 +875,13 @@ namespace DontWaitApp
                                 FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
                             }
                             FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-
-                            if (FoodServiceClientSession == null)
+                            string path = Path;
+                            if (!string.IsNullOrWhiteSpace(this.MenuData.ServicePointIdentity)&& this.MenuData.ServicePointIdentity!= clientSessionData.ServicePointIdentity)
                             {
-                                //There isn't active session for service point and client
-                                //Clear cache  the last session has ended
-                                OrderItems.Clear();
-                                this.MenuData = new MenuData();
-                                return true;
+                                //The session has  moved to other service point
+                                if (path != null && path.IndexOf(this.MenuData.ServicePointIdentity) != -1)
+                                    path = path.Replace(this.MenuData.ServicePointIdentity, clientSessionData.ServicePointIdentity);
                             }
-
-
-
-
 
                             ApplicationSettings.Current.LastClientSessionID = SessionID;
 
@@ -954,6 +943,7 @@ namespace DontWaitApp
                             menuData.OrderItems = OrderItems.ToList();
                             //var s = menuData.OrderItems[0].OptionsChanges[0].ItemPreparation;
                             MenuData = menuData;
+                             Path= path;
                             _ServicePointState = clientSessionData.ServicePointState;
                             _ObjectChangeState?.Invoke(this, nameof(MenuData));
 
@@ -964,6 +954,7 @@ namespace DontWaitApp
                             //Clear cache  the last session has ended
                             OrderItems.Clear();
                             this.MenuData = new MenuData();
+                            Path = "";
                             return true;
                         }
                     }
@@ -2289,6 +2280,14 @@ namespace DontWaitApp
         {
             if (MenuData.OrderItems != null)
                 OrderItems = MenuData.OrderItems.ToList();
+            
+            string path = ApplicationSettings.Current.Path;
+            if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
+            {
+                if (MenuData.ServicePointIdentity != path.Split('/')[0])
+                    Path = "";
+            }
+
             if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
             {
                 this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);

@@ -16,8 +16,10 @@
 		"LayTableMessageDialogTitle": "Table laying",
 		"WillTakeCareLabel":"I will take care",
 		"MealSessionStartedAtLabel":"Started at: ",
-		"LastMealSessionChangesAtLabel":"Last change: ",
+		"LastMealSessionChangesAtLabel": "Last change:",
 		"SessionTransferErrorMessage":"Partial transfer of the '{0}' session is not possible",
+		"SharedItemsTransferErrorMessage":"Partial transfer of the sharing item '{0}' is not possible",
+		"TransferItemsWillBeDoneMessage":"The items will be transferred to table {0}",
 		"TransferErrorMessageOKButton":"OK"
 	},
 	"ModalDialog": {
