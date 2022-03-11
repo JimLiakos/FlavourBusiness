@@ -73,8 +73,15 @@ namespace DontWaitApp
 
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
-        string GetClientSessionQRCode(string color);
+        string GetMealInvitationQRCode(string color);
 
         /// <MetaDataID>{71dba63a-ee1a-457e-aa4a-dc758bc11a06}</MetaDataID>
         string ISOCurrencySymbol { get; }
@@ -99,8 +106,7 @@ namespace DontWaitApp
         string Path { get; set; }
 
 
-        /// <MetaDataID>{b8471872-dce0-4470-b000-b0d9a05c85d1}</MetaDataID>
-        string Foo();
+      
         /// <MetaDataID>{9006f63a-f41f-4ca5-81ba-91578660d4d4}</MetaDataID>
         void Speak(string text);
         /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
@@ -116,9 +122,7 @@ namespace DontWaitApp
         /// <MetaDataID>{e7762c6c-3f6e-49b7-b795-ade0e705aac8}</MetaDataID>
         Task<bool> ConnectToServicePoint(string servicePointIdentity = "");
 
-        /// <MetaDataID>{284c1a58-ccfb-4fb3-942c-fd85415d37ab}</MetaDataID>
-        Task<bool> GetServicePointData(string servicePointIdentity);
-
+        
         /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
         Task<HallLayout> GetHallLayout();
 
@@ -319,8 +323,6 @@ namespace DontWaitApp
         public string ServicesContextLogo;
 
 
-
-
         /// <MetaDataID>{da3211d2-7ef0-46ae-9279-66491523d95e}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+1")]
@@ -389,7 +391,7 @@ namespace DontWaitApp
     public interface IServicePointSupervisor
     {
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
-        void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
+        //void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
 
         void TransferPartialSession(string partialSessionID, string targetSessionID);
 

@@ -4808,17 +4808,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public void TransferSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
-        {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
-            args[0] = foodServiceSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession);
-            args[1] = targetServicePointIdentity;
-            argsTypes[1] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferSession", args, argsTypes);
-        }
-        
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls()
         {
             object[] args = new object[0];

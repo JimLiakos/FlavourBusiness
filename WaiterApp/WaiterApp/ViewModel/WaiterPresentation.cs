@@ -1678,37 +1678,37 @@ namespace WaiterApp.ViewModel
 
       
 
-        public async void TransferSession(string targetServicePointIdentity)
-        {
+        //public async void TransferSession(string targetServicePointIdentity)
+        //{
 
 
-            string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
-                                                     from shape in hall.Shapes
-                                                     where shape.ServicesPointIdentity == targetServicePointIdentity
-                                                     select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+        //    string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+        //                                             from shape in hall.Shapes
+        //                                             where shape.ServicesPointIdentity == targetServicePointIdentity
+        //                                             select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
-            this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
+        //    this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
            
-            await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
+        //    await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
 
 
-        }
+        //}
 
-        public async void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity)
-        {
-            if(this.FlavoursOrderServer.MenuData.ServicePointIdentity== sourceServicePointIdentity)
-            {
-                string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
-                                                         from shape in hall.Shapes
-                                                         where shape.ServicesPointIdentity == targetServicePointIdentity
-                                                         select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
+        //public async void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity)
+        //{
+        //    if(this.FlavoursOrderServer.MenuData.ServicePointIdentity== sourceServicePointIdentity)
+        //    {
+        //        string targetFullServicePointIdentity = (from hall in Halls.OfType<HallLayout>()
+        //                                                 from shape in hall.Shapes
+        //                                                 where shape.ServicesPointIdentity == targetServicePointIdentity
+        //                                                 select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
-                this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
-                await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
+        //        this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
+        //        await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
 
-                //await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
-            }
-        }
+        //        //await this.FlavoursOrderServer.GetServicePointData(targetFullServicePointIdentity);
+        //    }
+        //}
 
         public void TransferPartialSession(string partialSessionID, string targetSessionID)
         {

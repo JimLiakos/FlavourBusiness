@@ -1071,68 +1071,68 @@ namespace FlavourBusinessManager.HumanResources
 
 
         }
-        /// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
-        public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
-        {
+        ///// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
+        //public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
+        //{
 
-            ServicePoint.TransferSession(foodServiceSession, targetServicePointIdentity);
+        //    ServicePoint.TransferSession(foodServiceSession, targetServicePointIdentity);
 
 
 
-            //if (foodServiceSession == null)
-            //    return;
-            //if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
-            //    return;
+        //    //if (foodServiceSession == null)
+        //    //    return;
+        //    //if (foodServiceSession.ServicePoint.ServicesPointIdentity == targetServicePointIdentity)
+        //    //    return;
 
-            //var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
-            //                          from servicePoint in serviceArea.ServicePoints
-            //                          where servicePoint.ServicesPointIdentity == targetServicePointIdentity
-            //                          select servicePoint).OfType<ServicePoint>().FirstOrDefault();
+        //    //var targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
+        //    //                          from servicePoint in serviceArea.ServicePoints
+        //    //                          where servicePoint.ServicesPointIdentity == targetServicePointIdentity
+        //    //                          select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
-            //if (targetServicePoint == null)
-            //    throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
-            //else
-            //{
-            //    var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
+        //    //if (targetServicePoint == null)
+        //    //    throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
+        //    //else
+        //    //{
+        //    //    var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
-            //    if (servicePointLastOpenSession == null)
-            //    {
-            //        (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
-            //        targetServicePoint.UpdateState();
+        //    //    if (servicePointLastOpenSession == null)
+        //    //    {
+        //    //        (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+        //    //        targetServicePoint.UpdateState();
 
-            //        if (foodServiceSession.Meal != null)
-            //        {
-            //            //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+        //    //        if (foodServiceSession.Meal != null)
+        //    //        {
+        //    //            //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
 
-            //            (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
-            //        }
-            //    }
-            //    else
-            //    {
+        //    //            (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+        //    //        }
+        //    //    }
+        //    //    else
+        //    //    {
 
-            //        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //        {
-            //            servicePointLastOpenSession.Merge(foodServiceSession);
+        //    //        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //    //        {
+        //    //            servicePointLastOpenSession.Merge(foodServiceSession);
 
-            //            (foodServiceSession.ServicePoint as ServicePoint).UpdateState();
-            //            ObjectStorage.DeleteObject(foodServiceSession);
-            //            //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
+        //    //            (foodServiceSession.ServicePoint as ServicePoint).UpdateState();
+        //    //            ObjectStorage.DeleteObject(foodServiceSession);
+        //    //            //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
 
-            //            Transaction.Current.TransactionCompleted += (Transaction transaction) =>
-            //            {
-            //                if (transaction.Status == TransactionStatus.Committed && servicePointLastOpenSession.Meal != null)
-            //                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
-            //            };
+        //    //            Transaction.Current.TransactionCompleted += (Transaction transaction) =>
+        //    //            {
+        //    //                if (transaction.Status == TransactionStatus.Committed && servicePointLastOpenSession.Meal != null)
+        //    //                    (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+        //    //            };
 
-            //            stateTransition.Consistent = true;
-            //        }
+        //    //            stateTransition.Consistent = true;
+        //    //        }
 
-            //    }
-            //}
+        //    //    }
+        //    //}
 
-            //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
+        //    //ObjectChangeState?.Invoke(this, nameof(HallsServicePointsState));
 
-        }
+        //}
 
 
 

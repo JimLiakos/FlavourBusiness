@@ -63,11 +63,7 @@ namespace DontWaitApp
         /// <MetaDataID>{cc704161-f4c2-454b-9ff6-010d1e190a4b}</MetaDataID>
         public FlavoursOrderServer()
         {
-
-
-
             _EndUser = new FoodServiceClientVM();
-
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
@@ -272,11 +268,7 @@ namespace DontWaitApp
         {
             get
             {
-
-
                 return ApplicationSettings.Current.Path;
-              
-
             }
             set
             {
@@ -287,7 +279,6 @@ namespace DontWaitApp
                         path = "";
                 }
                 ApplicationSettings.Current.Path = path;
-
             }
         }
 
@@ -302,78 +293,6 @@ namespace DontWaitApp
             //{
             //    var clientSessionData = await GetFoodServiceSession(ApplicationSettings.Current.LastServicePointIdentity, false);
             //}
-
-        }
-        /// <MetaDataID>{61a707f3-a8c3-4528-8171-0f505f779c28}</MetaDataID>
-        public string GetClientSessionQRCode(string color)
-        {
-
-            if (ApplicationSettings.Current.LastServicePoinMenuData == null)
-                return null;
-            string SigBase64 = "";
-            string codeValue = "MealInvitation;" + ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity + ";" + ApplicationSettings.Current.LastServicePoinMenuData.ClientSessionID;
-#if DeviceDotNet
-            var barcodeWriter = new BarcodeWriterGeneric()
-            {
-                Format = ZXing.BarcodeFormat.QR_CODE,
-                Options = new ZXing.Common.EncodingOptions
-                {
-                    Height = 400,
-                    Width = 400
-                }
-            };
-
-
-            var bitmapMatrix = barcodeWriter.Encode(codeValue);
-            var width = bitmapMatrix.Width;
-            var height = bitmapMatrix.Height;
-            int[] pixelsImage = new int[width * height];
-            SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
-
-            SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
-            if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
-                fgColor = SkiaSharp.SKColors.Black;
-
-            var pixels = qrCodeImage.Pixels;
-            int k = 0;
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    if (bitmapMatrix[j, i])
-                        pixels[k++] = fgColor;
-                    else
-                        pixels[k++] = SkiaSharp.SKColors.White;
-                }
-            }
-            qrCodeImage.Pixels = pixels;
-
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-            {
-                SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-                d.SaveTo(ms);
-                byte[] byteImage = ms.ToArray();
-                SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
-            }
-
-
-
-#else
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            var qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
-
-            using (System.IO.MemoryStream ms = new MemoryStream())
-            {
-                qrCodeImage.Save(ms, ImageFormat.Png);
-                byte[] byteImage = ms.ToArray();
-                SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
-            }
-#endif
-
-            return SigBase64;
-            //return @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA0QAAANEBqyQtcAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAhUlEQVQ4T+2MsQ2AMAwEEQVVFmCjVAzBFMxGhcQ2bEBlHL9DCDwLIIqT7Pf7GhHhjH1QZifQjkJDf14VcdJMJY/AinjYlc1JM5VUixXK86AsTpqp5P0ZGQSYqeQqiF7AM7IiwJ4lMWdXQat0546sFiDrrOt7OTCY4AYNT37BRwSTwW6GNAdnJbxPs8oKKwAAAABJRU5ErkJggg==";
 
         }
 
@@ -399,6 +318,9 @@ namespace DontWaitApp
                 _Identity = value;
             }
         }
+
+        #region Client
+
         /// <MetaDataID>{3786f954-db74-4151-af46-e70e04c9c3c8}</MetaDataID>
         string _Name;
         /// <MetaDataID>{303dedc3-0c36-40b0-aab6-c5ee74dee937}</MetaDataID>
@@ -408,14 +330,62 @@ namespace DontWaitApp
             {
                 return _Name;
             }
-
             set
             {
                 _Name = value;
             }
         }
-        /// <MetaDataID>{f3f6b6b1-bc55-4fa7-9fd9-f17fbcd7b9e8}</MetaDataID>
-        int count = 0;
+
+
+        /// <MetaDataID>{75fc6cad-1e29-4aa3-97fa-14462e970f67}</MetaDataID>
+        public Task<string> GetFriendlyName()
+        {
+            return Task.Run<string>(() =>
+            {
+                var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                //string sdfd= device.
+                string friendlyName = ApplicationSettings.Current.FriendlyName;
+                return friendlyName;
+            });
+            //return ApplicationSettings.Current.FriendlyName;
+            //return "";
+
+        }
+
+        /// <MetaDataID>{60462cb1-1349-470d-87c9-923b2e7fe825}</MetaDataID>
+        public void SetFriendlyName(string friendlyName)
+        {
+            ApplicationSettings.Current.FriendlyName = friendlyName;
+
+            if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
+            {
+                #region Sets client name of active session a sync for unstable connection 
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30; //try for 30 time 
+                    while (tries > 0)
+                    {
+                        try
+                        {
+                            if (this.FoodServiceClientSession != null)
+                                this.FoodServiceClientSession.ClientName = friendlyName;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
+                        }
+                        catch (Exception error)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
+                        }
+                    }
+                    return true;
+                });
+                #endregion
+            }
+
+        }
 
         /// <MetaDataID>{8854bfe2-67ed-42ca-964b-f4b37a1493c1}</MetaDataID>
         string _Trademark;
@@ -424,8 +394,7 @@ namespace DontWaitApp
         {
             get
             {
-                count++;
-                return _Trademark + count.ToString();
+                return _Trademark;
             }
             set
             {
@@ -446,7 +415,8 @@ namespace DontWaitApp
             {
                 _EndUser = value;
             }
-        }
+        } 
+        #endregion
 
         /// <MetaDataID>{1756d916-aa99-42fa-83f8-b0d19447c13a}</MetaDataID>
         public string ISOCurrencySymbol
@@ -463,6 +433,10 @@ namespace DontWaitApp
 
 
         ServicePointState _ServicePointState = ServicePointState.Laying;
+
+        /// <summary>
+        /// Defines the state of service point  
+        /// </summary>
         public ServicePointState ServicePointState
         {
             get
@@ -470,45 +444,11 @@ namespace DontWaitApp
                 return _ServicePointState;
             }
         }
-        //public void TableIsLay()
-        //{
-        //    if(WaiterView)
-        //        this.FoodServiceClientSession.TableIsLay();
-        //    _ServicePointState = ServicePointState.Conversation;
-        //    this._ObjectChangeState.Invoke(this, nameof(ServicePointState));
-
-        //}
-
-        /// <MetaDataID>{63add039-3bee-4d8b-8d15-002e6e67aa63}</MetaDataID>
-        public IList<ItemPreparation> PreparationItems => OrderItems.ToList();
-
-        /// <MetaDataID>{dafbd4cf-83a8-4890-9196-10a75bfd3529}</MetaDataID>
-        public string Foo()
-        {
-
-            //MessmateAdded?.Invoke(this, "Liakos");
-
-            //try
-            //{
-
-            //    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            //    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-            //    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-            //    serverUrl = "http://localhost:8090/api/"; //"http://192.168.2.7:8090/api/"
-            //    IFlavoursServicesContextManagment pAuthFlavourBusines = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-            //    var storeRef = pAuthFlavourBusines.GetMenu("sd");
-
-            //    pAuthFlavourBusines = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-            //    storeRef = pAuthFlavourBusines.GetMenu("sd");
 
 
-            //}
-            //catch (Exception error)
-            //{
+    
 
-            //}
-            return "Liakos";
-        }
+
         //static string AzureServerUrl = "http://localhost:8090/api/";
         //static string AzureServerUrl = "http://192.168.2.5:8090/api/";
         //static string AzureServerUrl = "http://192.168.2.8:8090/api/";
@@ -527,11 +467,19 @@ namespace DontWaitApp
 #if DeviceDotNet
         public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
-        /// <MetaDataID>{c6516b08-c06b-457c-bf15-f69621afd9f8}</MetaDataID>
-        //TaskCompletionSource<bool> ConnectToServicePointTask;
-        //var taskCompletionSource = new TaskCompletionSource<ResponseData>();
-        /// <MetaDataID>{659129a5-1d1a-4845-97be-6d2ceb6c84d8}</MetaDataID>
-        //bool OnScan = false;
+
+
+
+        /// <summary>
+        /// Open a new or get existing session for service point (servicePointIdentity)
+        /// This object is the proxy of server side client session 
+        /// </summary>
+        /// <param name="servicePointIdentity">
+        /// Defines the service point identity. 
+        /// Service point identity can be two part identity service context identity and service point identity
+        /// or meal invitation identity with three parts service context identity and service point identity and invitation client session
+        /// </param>
+        /// <returns></returns>
         /// <MetaDataID>{47842b22-c95e-4a09-8f5b-a1eaaba8b014}</MetaDataID>
         public Task<bool> ConnectToServicePoint(string servicePointIdentity = "")
         {
@@ -700,6 +648,8 @@ namespace DontWaitApp
                 }
             });
         }
+
+
         /// <summary>
         /// this method gets data from service point for client and synchronize caching data 
         /// </summary>
@@ -708,136 +658,6 @@ namespace DontWaitApp
         /// true when device connected to server successfully 
         /// otherwise return false
         /// </returns>
-        /// <MetaDataID>{f877c152-061c-4142-aed6-50cc431a1a05}</MetaDataID>
-        public Task<bool> GetServicePointData(string servicePointIdentity)
-        {
-
-            lock (ClientSessionLock)
-            {
-                if (servicePointIdentity != DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity)
-                {
-                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData();
-                    OrderItems.Clear();
-                }
-
-
-                Task<bool> getServicePointDataTask = null;
-                GetServicePointDataTasks.TryGetValue(servicePointIdentity, out getServicePointDataTask);
-                if (getServicePointDataTask != null && !getServicePointDataTask.IsCompleted)
-                    return getServicePointDataTask; // returns the active task to get service point data
-
-                //There isn't active task.
-                //Starts task to get service point data
-                getServicePointDataTask = Task<bool>.Run(async () =>
-                {
-
-                    try
-                    {
-                        DateTime start = DateTime.UtcNow;
-                        var clientSessionData = await GetFoodServiceSession(servicePointIdentity, false);
-                        if (FoodServiceClientSession != null)
-                        {
-                            FoodServiceClientSession.MessageReceived -= MessageReceived;
-                            FoodServiceClientSession.ObjectChangeState -= FoodServiceClientSessionChangeState;
-                            FoodServiceClientSession.ItemStateChanged -= FoodServiceClientSessionItemStateChanged;
-                            FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
-                        }
-                        FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-                        if (FoodServiceClientSession == null)
-                        {
-                            //There isn't active session for service point and client
-                            //Clear cache  the last session has ended
-                            OrderItems.Clear();
-                            this.MenuData = new MenuData();
-                            return true;
-                        }
-
-                        SessionID = clientSessionData.FoodServiceClientSession.SessionID;
-                        if (ApplicationSettings.Current.LastClientSessionID != SessionID)
-                            OrderItems.Clear(); //Clear cache for new session
-
-
-
-                        ApplicationSettings.Current.LastClientSessionID = SessionID;
-
-
-                        #region synchronize cached order items
-                        foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
-                        {
-                            var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
-                            if (cachedOrderItem != null)
-                                OrderItems.Remove(cachedOrderItem);
-                            OrderItems.Add(flavourItem as ItemPreparation);
-                        }
-                        var cou = FoodServiceClientSession.FlavourItems.Count;
-                        foreach (var orderItem in OrderItems.Where(x => x.SessionID == SessionID))
-                        {
-                            var flavourItem = FoodServiceClientSession.FlavourItems.Where(x => x.uid == orderItem.uid).FirstOrDefault();
-                            if (flavourItem == null)
-                                FoodServiceClientSession.AddItem(orderItem);
-                        }
-
-                        cou = FoodServiceClientSession.FlavourItems.Count;
-
-                        foreach (var flavourItem in FoodServiceClientSession.SharedItems)
-                        {
-                            var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
-                            if (cachedOrderItem != null)
-                                OrderItems.Remove(cachedOrderItem);
-                            OrderItems.Add(flavourItem as ItemPreparation);
-                        }
-                        #endregion
-
-                        RefreshMessmates();
-
-                        ClientSessionToken = clientSessionData.Token;
-                        FoodServiceClientSession.MessageReceived += MessageReceived;
-                        FoodServiceClientSession.ObjectChangeState += FoodServiceClientSessionChangeState;
-                        FoodServiceClientSession.ItemStateChanged += FoodServiceClientSessionItemStateChanged;
-                        FoodServiceClientSession.ItemsStateChanged += FoodServiceClientSession_ItemsStateChanged;
-
-
-                        var storeRef = FoodServiceClientSession.Menu;
-#if !DeviceDotNet
-                        storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
-#endif
-
-                        MenuData menuData = new MenuData()
-                        {
-                            MenuName = storeRef.Name,
-                            MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
-                            MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
-                            ClientSessionID = FoodServiceClientSession.SessionID,
-                            FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
-                            ServicePointIdentity = clientSessionData.ServicePointIdentity,
-                            ServicesPointName = clientSessionData.ServicesPointName,
-                            DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
-                            ServedMealTypesUris = clientSessionData.ServedMealTypesUris
-
-                        };
-                        menuData.OrderItems = OrderItems.ToList();
-                        //var s = menuData.OrderItems[0].OptionsChanges[0].ItemPreparation;
-                        MenuData = menuData;
-                        _ServicePointState = clientSessionData.ServicePointState;
-                        _ObjectChangeState?.Invoke(this, nameof(MenuData));
-
-                        GetMessages();
-                    }
-                    catch (Exception error)
-                    {
-
-                        return false;
-                    }
-                    return true;
-
-                });
-                GetServicePointDataTasks[servicePointIdentity] = getServicePointDataTask;
-                return getServicePointDataTask;
-            }
-
-
-        }
-
         public Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri)
         {
 
@@ -876,7 +696,7 @@ namespace DontWaitApp
                             }
                             FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
                             string path = Path;
-                            if (!string.IsNullOrWhiteSpace(this.MenuData.ServicePointIdentity)&& this.MenuData.ServicePointIdentity!= clientSessionData.ServicePointIdentity)
+                            if (!string.IsNullOrWhiteSpace(this.MenuData.ServicePointIdentity) && this.MenuData.ServicePointIdentity != clientSessionData.ServicePointIdentity)
                             {
                                 //The session has  moved to other service point
                                 if (path != null && path.IndexOf(this.MenuData.ServicePointIdentity) != -1)
@@ -943,7 +763,7 @@ namespace DontWaitApp
                             menuData.OrderItems = OrderItems.ToList();
                             //var s = menuData.OrderItems[0].OptionsChanges[0].ItemPreparation;
                             MenuData = menuData;
-                             Path= path;
+                            Path = path;
                             _ServicePointState = clientSessionData.ServicePointState;
                             _ObjectChangeState?.Invoke(this, nameof(MenuData));
 
@@ -976,8 +796,9 @@ namespace DontWaitApp
 
 
 
+        #region Messages
         /// <MetaDataID>{6133970c-efe1-4c70-a5c0-2162b7b2dda9}</MetaDataID>
-        Message ActivePartOfMealMessage;
+        Message PendingPartOfMealMessage;
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
         private void GetMessages()
         {
@@ -1061,44 +882,254 @@ namespace DontWaitApp
             FoodServiceClientSession.RemoveMessage(message.MessageID);
         }
 
-        /// <MetaDataID>{1ad75d89-e702-4d8e-8577-316b6b2a7977}</MetaDataID>
-        private void MenuItemProposalMessageForword(Message message)
+        /// <MetaDataID>{837f1943-f15c-49d8-a50b-2832acab8771}</MetaDataID>
+        private void MessageReceived(IMessageConsumer sender)
         {
-            if (_MenuItemProposal != null)
-            {
-                if (MessmatesLoaded)
-                {
-                    var messmate = (from theMessmate in this.Messmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-                    if (messmate == null)
-                    {
-                        messmate = (from theMessmate in this.Messmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-                        if (messmate != null)
-                            FoodServiceClientSession.RemoveMessage(message.MessageID);
-                        return;
-                    }
-                    string menuItemUri = message.GetDataValue<string>("MenuItemUri");
+            GetMessages();
+        }
+        #endregion
 
-                    _MenuItemProposal?.Invoke(this, messmate, menuItemUri, message.MessageID);
+
+
+        #region Meal Invitation code
+
+
+        /// <summary>
+        /// Makes meal invitation to candidate messmate
+        /// </summary>
+        /// <param name="messmate">
+        /// Defines the messmate who will be invited for meal.
+        /// </param>
+        /// <MetaDataID>{61c4b585-5ae6-4b38-8922-b9e56fe6d335}</MetaDataID>
+        public void MealInvitation(Messmate messmate)
+        {
+            Task.Run(() =>
+            {
+                var clientSession = (from theMessmate in this.CandidateMessmates
+                                     where theMessmate.ClientSessionID == messmate.ClientSessionID
+                                     select theMessmate.ClientSession).FirstOrDefault();
+
+
+                clientSession.MealInvitation(this.FoodServiceClientSession);
+            });
+        }
+
+        /// <summary>
+        /// Cancel the previous invitation
+        /// </summary>
+        /// <param name="messmate">
+        /// Defines the messmate who has been invited for meal.
+        /// </param>
+        /// <MetaDataID>{15847442-73d8-4818-a521-954119101cb7}</MetaDataID>
+        public void CancelMealInvitation(Messmate messmate)
+        {
+            Task.Run(() =>
+            {
+                var clientSession = (from theMessmate in this.CandidateMessmates
+                                     where theMessmate.ClientSessionID == messmate.ClientSessionID
+                                     select theMessmate.ClientSession).FirstOrDefault();
+
+                if (clientSession != null)
+                    clientSession.CancelMealInvitation(this.FoodServiceClientSession);
+            });
+        }
+
+        /// <summary>
+        /// Creates and return a qr code image as base64 string with meal invitation code
+        /// </summary>
+        /// <param name="color">
+        /// Defines the color of qr code image
+        /// </param>
+        /// <returns>
+        /// Returns qr code image as base64 string
+        /// </returns>
+        /// <MetaDataID>{61a707f3-a8c3-4528-8171-0f505f779c28}</MetaDataID>
+        public string GetMealInvitationQRCode(string color)
+        {
+
+            if (ApplicationSettings.Current.LastServicePoinMenuData == null)
+                return null;
+            string SigBase64 = "";
+            string codeValue = "MealInvitation;" + ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity + ";" + ApplicationSettings.Current.LastServicePoinMenuData.ClientSessionID;
+#if DeviceDotNet
+            var barcodeWriter = new BarcodeWriterGeneric()
+            {
+                Format = ZXing.BarcodeFormat.QR_CODE,
+                Options = new ZXing.Common.EncodingOptions
+                {
+                    Height = 400,
+                    Width = 400
+                }
+            };
+
+
+            var bitmapMatrix = barcodeWriter.Encode(codeValue);
+            var width = bitmapMatrix.Width;
+            var height = bitmapMatrix.Height;
+            int[] pixelsImage = new int[width * height];
+            SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
+
+            SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
+            if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
+                fgColor = SkiaSharp.SKColors.Black;
+
+            var pixels = qrCodeImage.Pixels;
+            int k = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (bitmapMatrix[j, i])
+                        pixels[k++] = fgColor;
+                    else
+                        pixels[k++] = SkiaSharp.SKColors.White;
                 }
             }
-            else
-                MenuItemProposalMessage = message;
+            qrCodeImage.Pixels = pixels;
+
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+                d.SaveTo(ms);
+                byte[] byteImage = ms.ToArray();
+                SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
+            }
+
+
+
+#else
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            var qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
+
+            using (System.IO.MemoryStream ms = new MemoryStream())
+            {
+                qrCodeImage.Save(ms, ImageFormat.Png);
+                byte[] byteImage = ms.ToArray();
+                SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
+            }
+#endif
+
+            return SigBase64;
+            //return @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA0QAAANEBqyQtcAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAhUlEQVQ4T+2MsQ2AMAwEEQVVFmCjVAzBFMxGhcQ2bEBlHL9DCDwLIIqT7Pf7GhHhjH1QZifQjkJDf14VcdJMJY/AinjYlc1JM5VUixXK86AsTpqp5P0ZGQSYqeQqiF7AM7IiwJ4lMWdXQat0546sFiDrrOt7OTCY4AYNT37BRwSTwW6GNAdnJbxPs8oKKwAAAABJRU5ErkJggg==";
+
         }
+
+        /// <MetaDataID>{cebd99a0-8d4c-420a-a861-5aabc396dae5}</MetaDataID>
+        Message PartOfMealMessage;
+
+
+        [HttpInVisible]
+        event PartOfMealRequestHandle _PartOfMealRequest;
+
+        [HttpInVisible]
+        public event PartOfMealRequestHandle PartOfMealRequest
+        {
+            add
+            {
+                _PartOfMealRequest += value;
+
+                if (PartOfMealMessage != null)
+                {
+                    var message = PartOfMealMessage;
+                    PartOfMealMessage = null;
+                    Task.Run(() =>
+                    {
+                        if (MessmatesLoaded)
+                        {
+                            GetCandidateMessmates();
+                            var messmate = (from theMessmate in this.CandidateMessmates
+                                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                            select theMessmate).FirstOrDefault();
+
+                            if (messmate == null)
+                            {
+                                messmate = (from theMessmate in this.Messmates
+                                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                            select theMessmate).FirstOrDefault();
+                                if (messmate != null)
+                                    FoodServiceClientSession.RemoveMessage(message.MessageID);
+
+                                return;
+                            }
+
+                            _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
+                        }
+                    });
+                }
+
+            }
+            remove
+            {
+                _PartOfMealRequest -= value;
+            }
+        }
+
+        /// <MetaDataID>{546af2d0-8204-44e9-83fc-4d0d782e30f3}</MetaDataID>
+        public void AcceptInvitation(Messmate messmate, string messageID)
+        {
+
+
+            if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
+                PendingPartOfMealMessage = null;
+
+            var clientSession = (from theMessmate in this.CandidateMessmates
+                                 where theMessmate.ClientSessionID == messmate.ClientSessionID
+                                 select theMessmate.ClientSession).FirstOrDefault();
+
+            if (clientSession == null && this.Messmates.Where(x => x.ClientSessionID == messmate.ClientSessionID).FirstOrDefault() != null)
+                return;
+
+            try
+            {
+                FoodServiceClientSession.RemoveMessage(messageID);
+                this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+
+                GetMessages();
+            }
+            catch (Exception authenticationError)
+            {
+
+                Task<MenuData>.Run(async () =>
+                {
+                    var clientSessionData = await GetFoodServiceSession("");
+                    this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
+                    RefreshMessmates();
+                    this.ClientSessionToken = clientSessionData.Token;
+                    this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+                });
+            }
+
+        }
+
+        /// <MetaDataID>{a4bed371-81f6-45e5-bd80-e825438ff80e}</MetaDataID>
+        public void DenyInvitation(Messmate messmate, string messageID)
+        {
+            if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
+                PendingPartOfMealMessage = null;
+
+
+            FoodServiceClientSession.RemoveMessage(messageID);
+            var clientSession = (from theMessmate in this.CandidateMessmates
+                                 where theMessmate.ClientSessionID == messmate.ClientSessionID
+                                 select theMessmate.ClientSession).FirstOrDefault();
+            clientSession.MealInvitationDenied(FoodServiceClientSession);
+            GetMessages();
+        }
+
 
         /// <MetaDataID>{61e17863-b7ff-4963-9d5b-12ab551a9369}</MetaDataID>
         private void PartOfMealRequestMessageForward(Message message)
         {
             if (_PartOfMealRequest != null)
             {
-                if (ActivePartOfMealMessage != null && ActivePartOfMealMessage.MessageID == message.MessageID)
+                //
+                if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == message.MessageID)
                     return;
                 if (MessmatesLoaded)
                 {
-                    ActivePartOfMealMessage = message;
+                    PendingPartOfMealMessage = message;
                     var messmate = (from theMessmate in this.CandidateMessmates
                                     where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
                                     select theMessmate).FirstOrDefault();
@@ -1161,6 +1192,8 @@ namespace DontWaitApp
             return;
         }
 
+        #endregion
+
         /// <MetaDataID>{2784806b-281e-44df-af8d-dd847bb7c8a9}</MetaDataID>
         private void FoodServiceClientSession_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
@@ -1210,10 +1243,6 @@ namespace DontWaitApp
                 if (preparationItem == null)
                     throw new NullReferenceException("There isn't item to update");
                 //updates order items
-
-
-
-
 
                 if (shareInSessions.Contains(FoodServiceClientSession.SessionID))
                 {
@@ -1269,43 +1298,7 @@ namespace DontWaitApp
 
         }
 
-        /// <MetaDataID>{6a9b4e5b-be1a-40c7-bc79-3d3a86e8ad87}</MetaDataID>
-        private ItemPreparation GetItemFromOwner(string itemUid, string itemOwnerSession)
-        {
-
-            if (FoodServiceClientSession.SessionID == itemOwnerSession)
-                return FoodServiceClientSession.GetItem(itemUid) as ItemPreparation;
-            else
-            {
-
-                var messmate = (from theMessmate in this.Messmates
-                                where theMessmate.ClientSessionID == itemOwnerSession
-                                select theMessmate).FirstOrDefault();
-                return messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
-            }
-
-        }
-
-        /// <MetaDataID>{d00b0aa2-02b8-4a14-8736-7f83e78c53b9}</MetaDataID>
-        private ItemPreparation GetItemFromOwning(string itemUid, string itemOwningSession)
-        {
-            ItemPreparation preparationItem = null;
-            if (!string.IsNullOrWhiteSpace(itemOwningSession))
-            {
-                if (FoodServiceClientSession.SessionID == itemOwningSession)
-                    preparationItem = FoodServiceClientSession.GetItem(itemUid) as ItemPreparation;
-                else
-                {
-
-                    var messmate = (from theMessmate in this.Messmates
-                                    where theMessmate.ClientSessionID == itemOwningSession
-                                    select theMessmate).FirstOrDefault();
-                    preparationItem = messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
-                }
-            }
-
-            return preparationItem;
-        }
+      
 
         /// <MetaDataID>{0dce1877-b96f-4558-98b6-66fb704a80f1}</MetaDataID>
         private void FoodServiceClientSessionChangeState(object _object, string member)
@@ -1355,11 +1348,7 @@ namespace DontWaitApp
 
         }
 
-        /// <MetaDataID>{837f1943-f15c-49d8-a50b-2832acab8771}</MetaDataID>
-        private void MessageReceived(IMessageConsumer sender)
-        {
-            GetMessages();
-        }
+       
 
 
         /// <MetaDataID>{e31b5e23-a2de-4d2e-879b-727f7ff1dc41}</MetaDataID>
@@ -1390,23 +1379,6 @@ namespace DontWaitApp
         }
 
 
-        public string LocalGet()
-        {
-            try
-            {
-                HttpClient httpClient = new HttpClient();
-                var responseTask = httpClient.GetStringAsync("http://localhost/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/v109/Marzano Phone.json");
-                responseTask.Wait();
-                string data = responseTask.Result;
-                return data;
-
-            }
-            catch (Exception error)
-            {
-
-                throw;
-            }
-        }
 
 
         public string AppIdentity => throw new NotImplementedException();
@@ -1442,6 +1414,8 @@ namespace DontWaitApp
         /// <MetaDataID>{2cb552e5-2926-44aa-a051-93f9d81d4045}</MetaDataID>
         string ClientSessionToken;
 
+
+        #region Messmates
         /// <MetaDataID>{9e5492a1-32f6-4fb9-929d-f0d7a65fd727}</MetaDataID>
         IList<Messmate> CandidateMessmates = new List<Messmate>();
         /// <MetaDataID>{50126694-0421-469a-980e-029ead5df9e4}</MetaDataID>
@@ -1453,14 +1427,6 @@ namespace DontWaitApp
             if (!MessmatesLoaded)
                 GetMessmatesFromServer().Wait(2);
             return CandidateMessmates;
-            //return Task<MenuData>.Run(async () =>
-            //{
-
-            //    CandidateMessmates = (from clientSession in FoodServiceClientSession.GetPeopleNearMe()
-            //                          select new Messmate(clientSession, OrderItems)).ToList();
-            //    return CandidateMessmates;
-
-            //});
 
         }
 
@@ -1471,13 +1437,6 @@ namespace DontWaitApp
         public IList<Messmate> GetMessmates()
         {
             return Messmates;
-            //return Task<IList<Messmate>>.Run(async () =>
-            //{
-            //    Messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
-            //                 select new Messmate(clientSession, OrderItems)).ToList();
-            //    return Messmates;
-            //});
-
         }
 
         public void RefreshMessmates()
@@ -1523,33 +1482,7 @@ namespace DontWaitApp
             });
         }
 
-        /// <MetaDataID>{61c4b585-5ae6-4b38-8922-b9e56fe6d335}</MetaDataID>
-        public void MealInvitation(Messmate messmate)
-        {
-            Task.Run(() =>
-            {
-                var clientSession = (from theMessmate in this.CandidateMessmates
-                                     where theMessmate.ClientSessionID == messmate.ClientSessionID
-                                     select theMessmate.ClientSession).FirstOrDefault();
-
-
-                clientSession.MealInvitation(this.FoodServiceClientSession);
-            });
-        }
-
-        /// <MetaDataID>{15847442-73d8-4818-a521-954119101cb7}</MetaDataID>
-        public void CancelMealInvitation(Messmate messmate)
-        {
-            Task.Run(() =>
-            {
-                var clientSession = (from theMessmate in this.CandidateMessmates
-                                     where theMessmate.ClientSessionID == messmate.ClientSessionID
-                                     select theMessmate.ClientSession).FirstOrDefault();
-
-                if (clientSession != null)
-                    clientSession.CancelMealInvitation(this.FoodServiceClientSession);
-            });
-        }
+        #endregion
 
         /// <MetaDataID>{afbf90c0-ee2f-4692-9ef0-8ed3c80f7bd2}</MetaDataID>
         public IUser CurrentUser;
@@ -1638,51 +1571,6 @@ namespace DontWaitApp
         }
 
 
-        [OOAdvantech.MetaDataRepository.HttpInVisible]
-        event PartOfMealRequestHandle _PartOfMealRequest;
-
-        [OOAdvantech.MetaDataRepository.HttpInVisible]
-        public event PartOfMealRequestHandle PartOfMealRequest
-        {
-            add
-            {
-                _PartOfMealRequest += value;
-
-                if (PartOfMealMessage != null)
-                {
-                    var message = PartOfMealMessage;
-                    PartOfMealMessage = null;
-                    Task.Run(() =>
-                    {
-                        if (MessmatesLoaded)
-                        {
-                            GetCandidateMessmates();
-                            var messmate = (from theMessmate in this.CandidateMessmates
-                                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                            select theMessmate).FirstOrDefault();
-
-                            if (messmate == null)
-                            {
-                                messmate = (from theMessmate in this.Messmates
-                                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                            select theMessmate).FirstOrDefault();
-                                if (messmate != null)
-                                    FoodServiceClientSession.RemoveMessage(message.MessageID);
-
-                                return;
-                            }
-
-                            _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
-                        }
-                    });
-                }
-
-            }
-            remove
-            {
-                _PartOfMealRequest -= value;
-            }
-        }
 
         [OOAdvantech.MetaDataRepository.HttpInVisible]
         event SharedItemChangedHandle _SharedItemChanged;
@@ -1704,7 +1592,7 @@ namespace DontWaitApp
         [OOAdvantech.MetaDataRepository.HttpInVisible]
         event MessmatesWaitForYouToDecideHandle _MessmatesWaitForYouToDecide;
 
-        [OOAdvantech.MetaDataRepository.HttpInVisible]
+        [HttpInVisible]
         public event MessmatesWaitForYouToDecideHandle MessmatesWaitForYouToDecide
         {
             add
@@ -1716,11 +1604,6 @@ namespace DontWaitApp
                 _MessmatesWaitForYouToDecide -= value;
             }
         }
-
-
-
-
-
 
 
         [OOAdvantech.MetaDataRepository.HttpInVisible]
@@ -1791,73 +1674,7 @@ namespace DontWaitApp
 
         }
 
-        /// <MetaDataID>{75fc6cad-1e29-4aa3-97fa-14462e970f67}</MetaDataID>
-        public Task<string> GetFriendlyName()
-        {
-            return Task.Run<string>(() =>
-            {
-                var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-                OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                //string sdfd= device.
-                string friendlyName = ApplicationSettings.Current.FriendlyName;
-                return friendlyName;
-            });
-            //return ApplicationSettings.Current.FriendlyName;
-            //return "";
-
-        }
-
-        /// <MetaDataID>{60462cb1-1349-470d-87c9-923b2e7fe825}</MetaDataID>
-        public void SetFriendlyName(string friendlyName)
-        {
-            ApplicationSettings.Current.FriendlyName = friendlyName;
-
-            if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
-            {
-                #region Sets client name of active session a sync for unstable connection 
-                SerializeTaskScheduler.AddTask(async () =>
-                  {
-                      int tries = 30; //try for 30 time 
-                      while (tries > 0)
-                      {
-                          try
-                          {
-                              if (this.FoodServiceClientSession != null)
-                                  this.FoodServiceClientSession.ClientName = friendlyName;
-                          }
-                          catch (System.Net.WebException commError)
-                          {
-                              await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
-                          }
-                          catch (Exception error)
-                          {
-                              await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
-                          }
-                      }
-                      return true;
-                  });
-                #endregion
-            }
-
-        }
-        /// <MetaDataID>{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}</MetaDataID>
-        public async Task<bool> SendItemForPreparation()
-        {
-            Dictionary<string, ItemPreparationState> itemsNewState = null;
-
-            //if (!WaiterView)
-            itemsNewState = this.FoodServiceClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
-            //else
-            //    itemsNewState = this.FoodServiceClientSession.Prepare(OrderItems.OfType<IItemPreparation>().ToList());
-
-            foreach (var itemNewState in itemsNewState)
-            {
-                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                item.State = item.State;
-            }
-            return true;
-        }
-
+     
         /// <MetaDataID>{11b11a15-ce5b-4d4f-aaaf-ff6e6427b9f1}</MetaDataID>
         public async Task<bool> CheckPermissionsForServicePointScan()
         {
@@ -1897,6 +1714,32 @@ namespace DontWaitApp
 #else
             return true;
 #endif
+        }
+
+
+        #region Items to prepare
+
+
+        /// <MetaDataID>{63add039-3bee-4d8b-8d15-002e6e67aa63}</MetaDataID>
+        public IList<ItemPreparation> PreparationItems => OrderItems.ToList();
+
+
+        /// <MetaDataID>{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}</MetaDataID>
+        public async Task<bool> SendItemForPreparation()
+        {
+            Dictionary<string, ItemPreparationState> itemsNewState = null;
+
+            //if (!WaiterView)
+            itemsNewState = this.FoodServiceClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            //else
+            //    itemsNewState = this.FoodServiceClientSession.Prepare(OrderItems.OfType<IItemPreparation>().ToList());
+
+            foreach (var itemNewState in itemsNewState)
+            {
+                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
+                item.State = item.State;
+            }
+            return true;
         }
 
         /// <MetaDataID>{67a87990-9414-48bc-8d1d-bc20335eb6ea}</MetaDataID>
@@ -2023,8 +1866,6 @@ namespace DontWaitApp
                 //OrderItems.ToDictionary(x => x.uid);
             }
         }
-
-
         /// <MetaDataID>{ea4782f3-0b61-4478-a9e0-9deaac39207e}</MetaDataID>
         public void RemoveItem(ItemPreparation item)
         {
@@ -2094,59 +1935,67 @@ namespace DontWaitApp
 
         }
 
-        /// <MetaDataID>{546af2d0-8204-44e9-83fc-4d0d782e30f3}</MetaDataID>
-        public void AcceptInvitation(Messmate messmate, string messageID)
+        /// <summary>
+        /// Gets itemPreparation
+        /// </summary>
+        /// <param name="itemUid">
+        /// Defines the item unique identity
+        /// </param>
+        /// <param name="itemOwnerSession">
+        /// Defines the session where item created
+        /// </param>
+        /// <returns>
+        /// returns the itemPreparation object
+        /// </returns>
+        /// <MetaDataID>{6a9b4e5b-be1a-40c7-bc79-3d3a86e8ad87}</MetaDataID>
+        private ItemPreparation GetItemFromOwner(string itemUid, string itemOwnerSession)
         {
-
-
-            if (ActivePartOfMealMessage != null && ActivePartOfMealMessage.MessageID == messageID)
-                ActivePartOfMealMessage = null;
-
-            var clientSession = (from theMessmate in this.CandidateMessmates
-                                 where theMessmate.ClientSessionID == messmate.ClientSessionID
-                                 select theMessmate.ClientSession).FirstOrDefault();
-
-            if (clientSession == null && this.Messmates.Where(x => x.ClientSessionID == messmate.ClientSessionID).FirstOrDefault() != null)
-                return;
-
-            var ss = clientSession.ClientName;
-
-            try
+            if (FoodServiceClientSession.SessionID == itemOwnerSession)
+                return FoodServiceClientSession.GetItem(itemUid) as ItemPreparation;
+            else
             {
-                FoodServiceClientSession.RemoveMessage(messageID);
-                this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-
-                GetMessages();
+                var messmate = (from theMessmate in this.Messmates
+                                where theMessmate.ClientSessionID == itemOwnerSession
+                                select theMessmate).FirstOrDefault();
+                return messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
             }
-            catch (Exception authenticationError)
-            {
+        }
 
-                Task<MenuData>.Run(async () =>
+
+        #endregion
+
+
+
+        #region Menu item proposal
+        /// <MetaDataID>{1ad75d89-e702-4d8e-8577-316b6b2a7977}</MetaDataID>
+        private void MenuItemProposalMessageForword(Message message)
+        {
+            if (_MenuItemProposal != null)
+            {
+                if (MessmatesLoaded)
                 {
-                    var clientSessionData = await GetFoodServiceSession("");
-                    this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-                    RefreshMessmates();
-                    this.ClientSessionToken = clientSessionData.Token;
-                    this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-                });
+                    var messmate = (from theMessmate in this.Messmates
+                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                    select theMessmate).FirstOrDefault();
+                    if (messmate == null)
+                    {
+                        messmate = (from theMessmate in this.Messmates
+                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                    select theMessmate).FirstOrDefault();
+                        if (messmate != null)
+                            FoodServiceClientSession.RemoveMessage(message.MessageID);
+                        return;
+                    }
+                    string menuItemUri = message.GetDataValue<string>("MenuItemUri");
+
+                    _MenuItemProposal?.Invoke(this, messmate, menuItemUri, message.MessageID);
+                }
             }
-
+            else
+                MenuItemProposalMessage = message;
         }
 
-        /// <MetaDataID>{a4bed371-81f6-45e5-bd80-e825438ff80e}</MetaDataID>
-        public void DenyInvitation(Messmate messmate, string messageID)
-        {
-            if (ActivePartOfMealMessage != null && ActivePartOfMealMessage.MessageID == messageID)
-                ActivePartOfMealMessage = null;
 
-
-            FoodServiceClientSession.RemoveMessage(messageID);
-            var clientSession = (from theMessmate in this.CandidateMessmates
-                                 where theMessmate.ClientSessionID == messmate.ClientSessionID
-                                 select theMessmate.ClientSession).FirstOrDefault();
-            clientSession.MealInvitationDenied(FoodServiceClientSession);
-            GetMessages();
-        }
         /// <MetaDataID>{50033e95-3a4d-492d-98ba-f14f0e359418}</MetaDataID>
         public void EndOfMenuItemProposal(Messmate messmate, string messageID)
         {
@@ -2204,6 +2053,7 @@ namespace DontWaitApp
             });
         }
 
+        #endregion
 
         /// <exclude>Excluded</exclude>
         IList<IHallLayout> _Halls;
@@ -2265,9 +2115,7 @@ namespace DontWaitApp
 
 
         }
-        /// <MetaDataID>{cebd99a0-8d4c-420a-a861-5aabc396dae5}</MetaDataID>
-        Message PartOfMealMessage;
-        Message PartOfMealAcceptedMessage;
+        
 
         /// <MetaDataID>{d048d779-11d6-4c80-b308-24e58a0359f8}</MetaDataID>
         Message MenuItemProposalMessage;
@@ -2280,7 +2128,7 @@ namespace DontWaitApp
         {
             if (MenuData.OrderItems != null)
                 OrderItems = MenuData.OrderItems.ToList();
-            
+
             string path = ApplicationSettings.Current.Path;
             if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
             {

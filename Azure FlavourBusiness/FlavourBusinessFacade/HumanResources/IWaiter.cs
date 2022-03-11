@@ -12,10 +12,10 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IWaiter : EndUsers.IMessageConsumer, IServicesContextWorker, IUser
     {
-        /// <MetaDataID>{9d5dfa9d-7c42-414f-b9c8-be802f878bb6}</MetaDataID>
+        ///// <MetaDataID>{9d5dfa9d-7c42-414f-b9c8-be802f878bb6}</MetaDataID>
 
-        /// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
-        void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
+        ///// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
+        //void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
 
    
         /// <MetaDataID>{aa6ffdd8-59a3-4253-940f-ce7c4e0d1135}</MetaDataID>
