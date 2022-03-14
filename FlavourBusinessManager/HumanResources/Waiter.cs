@@ -813,8 +813,15 @@ namespace FlavourBusinessManager.HumanResources
 
         public void TransferPartialSession(string partialSessionID, string targetSessionID)
         {
+            if (string.IsNullOrWhiteSpace(targetSessionID))
+            {
+                var partialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
+                var waiterPartialSession= ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.UserIdentity == this.Identity).First();
+                partialSession.MakePartOfMeal(waiterPartialSession);
+            }
+            else
+                ServicePoint.TransferPartialSession(partialSessionID, targetSessionID);
 
-            ServicePoint.TransferPartialSession(partialSessionID, targetSessionID);
             //var partialSession = ServicesContextRunTime.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
             //(partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSessionID, targetSessionID);
         }
@@ -856,6 +863,11 @@ namespace FlavourBusinessManager.HumanResources
                                 select servicesPoint).FirstOrDefault();
             if (servicePoint == null)
                 throw new ArgumentException(string.Format("there isn't services point with identity '{0}'", servicesPointIdentity));
+
+            var message = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && x.GetDataValue<string>("ServicesPointIdentity") == servicePoint.ServicesPointIdentity).FirstOrDefault();
+
+            if (message != null)
+                RemoveMessage(message.MessageID);
             if (servicePoint.State == ServicePointState.Laying)
                 (servicePoint as ServicesContextResources.ServicePoint).ChangeServicePointState(ServicePointState.Conversation);
 
@@ -868,16 +880,16 @@ namespace FlavourBusinessManager.HumanResources
             var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == itemPreparations[0].SessionID).First();
             ServicePoint sourceServicePoint = session.ServicePoint as ServicePoint;
             ServicePoint targetServicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
-                                      from servicePoint in serviceArea.ServicePoints
-                                      where servicePoint.ServicesPointIdentity == targetServicePointIdentity
-                                      select servicePoint).OfType<ServicePoint>().FirstOrDefault();
+                                               from servicePoint in serviceArea.ServicePoints
+                                               where servicePoint.ServicesPointIdentity == targetServicePointIdentity
+                                               select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
 
             ServicePoint.TransferItems(itemPreparations, targetServicePointIdentity);
 
             sourceServicePoint.OpenClientSessions.Where(X => X.UserIdentity == (this as IUser).Identity).FirstOrDefault()?.RaiseMainSessionChange();
             targetServicePoint.OpenClientSessions.Where(X => X.UserIdentity == (this as IUser).Identity).FirstOrDefault()?.RaiseMainSessionChange();
-       
+
 
             //List<string> constrainErrors = new List<string>();
             //List<EndUsers.FoodServiceClientSession> partialSessionsForTransfer = new List<EndUsers.FoodServiceClientSession>();

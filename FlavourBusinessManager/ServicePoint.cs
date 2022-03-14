@@ -744,14 +744,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             return true;
         }
 
-        internal void TransferPartialSession(FoodServiceClientSession partialSession, string targetSessionID)
+        internal void TransferPartialSession(FoodServiceClientSession partialSessionToTransfer, string targetSessionID)
         {
             lock (ServicePointLock)
             {
 
                 var targetSession = ServicesContextRunTime.OpenSessions.Where(x => x.SessionID == targetSessionID).First();
-                var sourceSession = partialSession.MainSession;
-                if (partialSession.ServicePoint != this || targetSession.ServicePoint != this)
+                var sourceSession = partialSessionToTransfer.MainSession;
+                if (partialSessionToTransfer.ServicePoint != this || targetSession.ServicePoint != this)
                     throw new ArgumentException("Invalid partial session transfer.");
                 if (targetSession == sourceSession)
                     return;
@@ -761,13 +761,19 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
 
                     if (sourceSession != null)
-                        sourceSession.RemovePartialSession(partialSession);
-                    targetSession.AddPartialSession(partialSession);
-                    if (sourceSession.Meal == null && sourceSession.PartialClientSessions.Count == 0)
+                        sourceSession.RemovePartialSession(partialSessionToTransfer);
+                    targetSession.AddPartialSession(partialSessionToTransfer);
+                    if (sourceSession != null && sourceSession.Meal == null && sourceSession.PartialClientSessions.Count == 0)
                         ObjectStorage.DeleteObject(sourceSession);
 
                     stateTransition.Consistent = true;
                 }
+                foreach(var partialSession in targetSession.PartialClientSessions.OfType<FoodServiceClientSession>() )
+                {
+                    partialSession.RaiseMainSessionChange();
+                }
+
+
             }
 
 
@@ -1032,6 +1038,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public static void TransferPartialSession(string partialSessionID, string targetSessionID)
         {
             var partialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
+
             (partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSession, targetSessionID);
         }
 

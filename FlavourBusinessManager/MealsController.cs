@@ -66,15 +66,18 @@ namespace FlavourBusinessManager.RoomService
 
             //you have to  filter mealcourses by state.
         }
-
+        /// <summary>
+        /// In case where the prerequisites fulfilled, assigns all unassigned partial sessions to a meal session 
+        /// </summary>
+        /// <param name="referencClientSession">
+        /// Defines a partial session as reference to identify service point meal
+        /// </param>
         /// <MetaDataID>{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}</MetaDataID>
         public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
         {
             if (referencClientSession.MainSession != null)
                 return;
             FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null&&(x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
-
-
 
             if (foodServiceSession == null)
             {

@@ -281,6 +281,11 @@ namespace DontWaitApp
         public string FoodServiceClientSessionUri;
 
         [PersistentMember()]
+        [BackwardCompatibilityID("+11")]
+        public string MainSessionID;
+
+
+        [PersistentMember()]
         [BackwardCompatibilityID("+9")]
         string ServedMealTypesUrisStream;
 
@@ -363,6 +368,7 @@ namespace DontWaitApp
                 left.MenuFile == right.MenuFile &&
                 left.MenuRoot == right.MenuRoot &&
                 left.ClientSessionID == right.ClientSessionID &&
+                left.MainSessionID == right.MainSessionID &&
                 left.GetOrderItems().Count == right.GetOrderItems().Count;
             if (!equal)
                 return false;
@@ -393,7 +399,7 @@ namespace DontWaitApp
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
         //void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
 
-        void TransferPartialSession(string partialSessionID, string targetSessionID);
+        bool TransferPartialSession(string partialSessionID, string targetSessionID);
 
     }
 

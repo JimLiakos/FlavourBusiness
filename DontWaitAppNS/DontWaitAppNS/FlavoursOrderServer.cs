@@ -415,7 +415,7 @@ namespace DontWaitApp
             {
                 _EndUser = value;
             }
-        } 
+        }
         #endregion
 
         /// <MetaDataID>{1756d916-aa99-42fa-83f8-b0d19447c13a}</MetaDataID>
@@ -446,7 +446,7 @@ namespace DontWaitApp
         }
 
 
-    
+
 
 
         //static string AzureServerUrl = "http://localhost:8090/api/";
@@ -582,6 +582,7 @@ namespace DontWaitApp
                     MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                     MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                     ClientSessionID = FoodServiceClientSession.SessionID,
+                    MainSessionID = FoodServiceClientSession.MainSession?.SessionID,
                     FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
                     ServicePointIdentity = clientSessionData.ServicePointIdentity,
                     ServicesPointName = clientSessionData.ServicesPointName,
@@ -753,7 +754,8 @@ namespace DontWaitApp
                                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                                 ClientSessionID = FoodServiceClientSession.SessionID,
-                                FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
+                                MainSessionID= FoodServiceClientSession.MainSession?.SessionID,
+                            FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
                                 ServicePointIdentity = clientSessionData.ServicePointIdentity,
                                 ServicesPointName = clientSessionData.ServicesPointName,
                                 DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
@@ -1083,8 +1085,21 @@ namespace DontWaitApp
 
             try
             {
-                FoodServiceClientSession.RemoveMessage(messageID);
+                if (messageID != null)
+                    FoodServiceClientSession.RemoveMessage(messageID);
+
                 this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+                var ss = this.FoodServiceClientSession.MainSession;
+                var ss1 = this.FoodServiceClientSession.MainSession?.SessionID;
+                if (MenuData.MainSessionID != FoodServiceClientSession.MainSession?.SessionID)
+                {
+                    var menuData = MenuData;
+                    menuData.MainSessionID = FoodServiceClientSession.MainSession?.SessionID;
+                    MenuData = menuData;
+                    _ObjectChangeState?.Invoke(this, nameof(MenuData));
+                }
+
+                
 
                 GetMessages();
             }
@@ -1220,7 +1235,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{eaba9b2e-24d1-40c9-a56c-245a47e9c3cb}</MetaDataID>
-        private void FoodServiceClientSessionItemStateChanged(string itemUid, string itemOwnerSession, bool isShared, List<string> shareInSessions)
+        private async void FoodServiceClientSessionItemStateChanged(string itemUid, string itemOwnerSession, bool isShared, List<string> shareInSessions)
         {
             #region the item removed and isn't shared
 
@@ -1239,7 +1254,7 @@ namespace DontWaitApp
             #region the item state changed
             if (!string.IsNullOrWhiteSpace(itemOwnerSession) && shareInSessions.Count > 0)
             {
-                ItemPreparation preparationItem = GetItemFromOwner(itemUid, itemOwnerSession);
+                ItemPreparation preparationItem = await GetItemFromOwner(itemUid, itemOwnerSession);
                 if (preparationItem == null)
                     throw new NullReferenceException("There isn't item to update");
                 //updates order items
@@ -1298,7 +1313,7 @@ namespace DontWaitApp
 
         }
 
-      
+
 
         /// <MetaDataID>{0dce1877-b96f-4558-98b6-66fb704a80f1}</MetaDataID>
         private void FoodServiceClientSessionChangeState(object _object, string member)
@@ -1348,14 +1363,14 @@ namespace DontWaitApp
 
         }
 
-       
+
 
 
         /// <MetaDataID>{e31b5e23-a2de-4d2e-879b-727f7ff1dc41}</MetaDataID>
         IFoodServiceClientSession _FoodServiceClientSession;
 
         /// <MetaDataID>{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}</MetaDataID>
-        IFoodServiceClientSession FoodServiceClientSession
+        public IFoodServiceClientSession FoodServiceClientSession
         {
             get
             {
@@ -1452,16 +1467,16 @@ namespace DontWaitApp
                 {
                     if (FoodServiceClientSession != null)
                     {
-                        if (WaiterView)
-                        {
-                            var messmates = (from clientSession in FoodServiceClientSession?.GetServicePointParticipants()
-                                             where clientSession != this._FoodServiceClientSession
-                                             select new Messmate(clientSession, OrderItems)).ToList();
-                            Messmates = messmates;
-                            MessmatesLoaded = true;
+                        //if (WaiterView)
+                        //{
+                        //    var messmates = (from clientSession in FoodServiceClientSession?.GetServicePointParticipants()
+                        //                     where clientSession != this._FoodServiceClientSession
+                        //                     select new Messmate(clientSession, OrderItems)).ToList();
+                        //    Messmates = messmates;
+                        //    MessmatesLoaded = true;
 
-                        }
-                        else
+                        //}
+                        //else
                         {
                             var messmates = (from clientSession in FoodServiceClientSession.GetMealParticipants()
                                              select new Messmate(clientSession, OrderItems)).ToList();
@@ -1674,7 +1689,7 @@ namespace DontWaitApp
 
         }
 
-     
+
         /// <MetaDataID>{11b11a15-ce5b-4d4f-aaaf-ff6e6427b9f1}</MetaDataID>
         public async Task<bool> CheckPermissionsForServicePointScan()
         {
@@ -1948,7 +1963,7 @@ namespace DontWaitApp
         /// returns the itemPreparation object
         /// </returns>
         /// <MetaDataID>{6a9b4e5b-be1a-40c7-bc79-3d3a86e8ad87}</MetaDataID>
-        private ItemPreparation GetItemFromOwner(string itemUid, string itemOwnerSession)
+        private async Task<ItemPreparation> GetItemFromOwner(string itemUid, string itemOwnerSession)
         {
             if (FoodServiceClientSession.SessionID == itemOwnerSession)
                 return FoodServiceClientSession.GetItem(itemUid) as ItemPreparation;
@@ -1957,7 +1972,19 @@ namespace DontWaitApp
                 var messmate = (from theMessmate in this.Messmates
                                 where theMessmate.ClientSessionID == itemOwnerSession
                                 select theMessmate).FirstOrDefault();
-                return messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
+                if (messmate != null)
+                    return messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
+                else
+                {
+                    await GetMessmatesFromServer();
+                    messmate = (from theMessmate in this.Messmates
+                                where theMessmate.ClientSessionID == itemOwnerSession
+                                select theMessmate).FirstOrDefault();
+                    if (messmate != null)
+                        return messmate.ClientSession.GetItem(itemUid) as ItemPreparation;
+
+                    return null;
+                }
             }
         }
 
@@ -2115,7 +2142,7 @@ namespace DontWaitApp
 
 
         }
-        
+
 
         /// <MetaDataID>{d048d779-11d6-4c80-b308-24e58a0359f8}</MetaDataID>
         Message MenuItemProposalMessage;

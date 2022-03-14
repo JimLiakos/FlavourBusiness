@@ -264,12 +264,12 @@ namespace FlavourBusinessManager.EndUsers
 
             MakePartOfMeal(messmateClientSesion);
 
-            if(mainSessionUpdate)
+            if (mainSessionUpdate)
                 ObjectChangeState?.Invoke(this, nameof(MainSession));
 
             (messmateClientSesion as FoodServiceClientSession).MealInvitationAccepted(this);
 
-            foreach (var waiterFoodServiceClientSession in (ServicePoint as ServicePoint)  .OpenClientSessions.Where(x => x.IsWaiterSession))
+            foreach (var waiterFoodServiceClientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession))
             {
                 try
                 {
@@ -325,6 +325,11 @@ namespace FlavourBusinessManager.EndUsers
                     var implicitMainSession = _MainSession.Value;
                     if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
                     {
+                        
+                        // Makes this partial session with implicit main session part of messmate session explicitly
+                        if (_MainSession.Value != null)
+                            _MainSession.Value.RemovePartialSession(this);
+
                         _MainSession.Value = null;
                         ImplicitMealParticipation = false;
 
@@ -332,22 +337,70 @@ namespace FlavourBusinessManager.EndUsers
                     }
                     else
                     {
-                        _MainSession.Value = null;
-                        ImplicitMealParticipation = false;
-                        var foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
-                        if (this.Menu != null)
-                            foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
-                        foodServiceSession.AddPartialSession(this);
-                        //_MainSession.Value = ServicePoint.NewFoodServiceSession();
-                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
                         var implicitMainSessionMainSession = messmateClientSesion.MainSession;
-                        if (implicitMainSessionMainSession != null)
-                            implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
+                        FoodServiceSession foodServiceSession = null;
+                        //Tries to find a session which can host  both this and the messmate, partial sessions
 
-                        if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
-                            ObjectStorage.DeleteObject(implicitMainSessionMainSession);
+                        //Session where all partial session participate  implicitly can used to  host both this and messmate, partial session explicitly
+
+                        if (implicitMainSession != null && implicitMainSession.PartialClientSessions.All(x => x.ImplicitMealParticipation))
+                            foodServiceSession = implicitMainSession as FoodServiceSession;
+                        else if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.PartialClientSessions.All(x => x.ImplicitMealParticipation))
+                            foodServiceSession = implicitMainSessionMainSession as FoodServiceSession;
+
+                        if (foodServiceSession!=null)
+                        {
+                            // if all partial session are participate to main session implicitly then keep the main session and
+                            // add messmate and this partial session to main session explicitly
+
+                            if (implicitMainSession != null && implicitMainSession != foodServiceSession)
+                            {
+                                implicitMainSession.RemovePartialSession(this);
+                                if (implicitMainSession != null && implicitMainSession.Meal == null && implicitMainSession.PartialClientSessions.Count == 0)
+                                    ObjectStorage.DeleteObject(implicitMainSession);
+                            }
+
+                            if (implicitMainSessionMainSession != null && implicitMainSessionMainSession != foodServiceSession)
+                            {
+                                implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
+                                if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
+                                    ObjectStorage.DeleteObject(implicitMainSessionMainSession);
+                            }
+                            ImplicitMealParticipation = false;
+                            messmateClientSesion.ImplicitMealParticipation = false;
+
+                            if(foodServiceSession!=MainSession)
+                                foodServiceSession.AddPartialSession(this);
+
+                            if (foodServiceSession != messmateClientSesion.MainSession)
+                                foodServiceSession.AddPartialSession(messmateClientSesion);
+                        }
+                        else
+                        {
+                            //there isn't  main session which can host both this and messmate partial session
+                            //new session must be created to host this and messmate partial session
+
+                            ImplicitMealParticipation = false;
+                            if (_MainSession.Value != null)
+                                _MainSession.Value.RemovePartialSession(this);
+
+                            _MainSession.Value = null;
+
+                            foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                            if (this.Menu != null)
+                                foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
+                            foodServiceSession.AddPartialSession(this);
+
+                            if (implicitMainSessionMainSession != null)
+                                implicitMainSessionMainSession.RemovePartialSession(messmateClientSesion);
+
+                            if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.Meal == null && implicitMainSessionMainSession.PartialClientSessions.Count == 0)
+                                ObjectStorage.DeleteObject(implicitMainSessionMainSession);
+                            foodServiceSession.AddPartialSession(messmateClientSesion);
+                        }
                     }
-                    _MainSession.Value.AddPartialSession(messmateClientSesion);
+
 
                     if (implicitMainSession != null && implicitMainSession.Meal == null && implicitMainSession.PartialClientSessions.Count == 0)
                         ObjectStorage.DeleteObject(implicitMainSession);
@@ -358,18 +411,9 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (ExplicitMainSession != (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession)
                     {
-
                         if (messmateClientSesion.MainSession != null)
                         {
-                            var partialClientSessions = (messmateClientSesion as FoodServiceClientSession).MainSession.PartialClientSessions.ToList();
-                            IFoodServiceSession foodServiceSession = messmateClientSesion.MainSession;
-                            foreach (var clientSession in partialClientSessions)
-                            {
-                                foodServiceSession.RemovePartialSession(clientSession);
-                                _MainSession.Value.AddPartialSession(clientSession);
-                            }
-
-                            ObjectStorage.DeleteObject(foodServiceSession);
+                            (MainSession as FoodServiceSession).Merge(messmateClientSesion.MainSession);
                         }
                         else
                         {
@@ -394,7 +438,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-    
+
         /// <MetaDataID>{9d7c7058-1582-4dbf-8727-14540094ec56}</MetaDataID>
         internal void MonitorTick()
         {
@@ -402,51 +446,6 @@ namespace FlavourBusinessManager.EndUsers
                 CheckForMealConversationTimeout();
         }
 
-        /// <summary>
-        /// Checks for long time meal conversation and update the waiters
-        /// Meal conversation timeout check, occurs only when there isn't main session
-        /// </summary>
-        /// <MetaDataID>{49299fee-7bcb-4053-92c1-73eab19a4d1f}</MetaDataID>
-        private bool CheckForMealConversationTimeout()
-        {
-            if (MainSession == null || SessionState == ClientSessionState.ConversationStandy)
-            {
-                var firstItemPreparation = (from itemPreparation in FlavourItems.OfType<ItemPreparation>()
-                                            orderby itemPreparation.StateTimestamp
-                                            select itemPreparation).FirstOrDefault();
-                if (firstItemPreparation != null &&
-                    (SessionState == ClientSessionState.ConversationStandy) &&
-                    (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
-                {
-
-
-                    if (ServicePoint.State == ServicePointState.Conversation)
-                        (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
-
-                    if (Caregivers.Where(x => x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Count() > 0)
-                    {
-                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
-                        {
-                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                            {
-                                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                            }
-                        }
-
-                    }
-                    else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                    {
-                        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                    }
-                    return true;
-                }
-                return false;
-            }
-            else
-                return SessionState == ClientSessionState.UrgesToDecide;
-        }
 
         ///// <MetaDataID>{56afdc1c-d6ee-42f0-9b81-44125cc8a57a}</MetaDataID>
         //public void AcceptMealInvitation(string sessionID, FlavourBusinessFacade.EndUsers.IFoodServiceClientSession messmateClientSesion)
@@ -614,7 +613,7 @@ namespace FlavourBusinessManager.EndUsers
                         }
                     }
 
-                    if (SessionState == ClientSessionState.Conversation && MainSession != null &&
+                    if (SessionState == ClientSessionState.Conversation && MainSession != null && !ImplicitMealParticipation &&
                                     MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                                     DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -626,7 +625,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
                     #region  ClientSessionState.ConversationStandy
-                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null &&
+                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null && !ImplicitMealParticipation &&
                       MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                       DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -686,6 +685,54 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <summary>
+        /// Checks for long time meal conversation and update the waiters
+        /// Meal conversation timeout check, occurs only when there isn't main session
+        /// </summary>
+        /// <MetaDataID>{49299fee-7bcb-4053-92c1-73eab19a4d1f}</MetaDataID>
+        private bool CheckForMealConversationTimeout()
+        {
+            if (MainSession == null || SessionState == ClientSessionState.ConversationStandy)
+            {
+                var firstItemPreparation = (from itemPreparation in FlavourItems.OfType<ItemPreparation>()
+                                            orderby itemPreparation.StateTimestamp
+                                            select itemPreparation).FirstOrDefault();
+                if (firstItemPreparation != null &&
+                    (SessionState == ClientSessionState.ConversationStandy) &&
+                    (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
+                {
+                    if (ServicePoint.State == ServicePointState.Conversation)
+                        (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
+
+                    if (Caregivers.Where(x => x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Count() > 0)
+                    {
+                        //When there is care giving the reminding message is sent after extra time interval from care giving time stamp   
+                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                        {
+                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                            {
+                                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                            }
+                        }
+                    }
+                    else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                    {
+                        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else
+                return SessionState == ClientSessionState.UrgesToDecide;
+        }
+
+        /// <summary>
+        /// Urges client to decide when session is in this state and
+        /// time intervals prerequisites is met
+        /// </summary>
         /// <MetaDataID>{5d67c1ab-dc97-4fd4-9685-d9a485f81642}</MetaDataID>
         internal void UrgesToDecideRun()
         {
@@ -770,11 +817,44 @@ namespace FlavourBusinessManager.EndUsers
             {
                 (item.ClientSession as FoodServiceClientSession).RemoveItemForMerge(item);
                 AddItemForMerge(item);
+
+                if (_MainSession.Value == null)
+                    AutoMealParticipation();
                 stateTransition.Consistent = true;
             }
 
         }
+        /// <summary>
+        /// In case where the prerequisites fulfilled, assign partial session to a meal session 
+        /// </summary>
+        private void AutoMealParticipation()
+        {
+            if (_MainSession.Value == null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    FoodServiceSession foodServiceSession = null;
+                    if (this.FlavourItems.All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed)))
+                    {
+                        //if (IsWaiterSession)
+                        //{
+                        //    foodServiceSession = (ServicePoint as ServicePoint).OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
+                        //    if (foodServiceSession == null)
+                        //        foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                        //    foodServiceSession.AddPartialSession(this);
+                        //    if (this.Menu != null)
+                        //        foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
+
+                        //    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
+                        //}
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
 
         internal void Merge(FoodServiceClientSession partialSession)
         {
@@ -820,6 +900,10 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
 
+                if (_MainSession.Value == null)
+                    AutoMealParticipation();
+
+
                 stateTransition.Consistent = true;
             }
 
@@ -827,78 +911,6 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-        /// <MetaDataID>{2a6c5a7e-109b-4483-8e38-87ef7843ad5a}</MetaDataID>
-        internal void YouMustDecide(List<IFoodServiceClientSession> commitedItemsSessions)
-        {
-
-
-
-
-
-            double fromFirstCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                            orderby session.ModificationTime
-                                                                            select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
-
-            double fromLastCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                           orderby session.ModificationTime
-                                                                           select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
-
-            double fromDeviceSleep = 0;
-            if (DeviceAppState != DeviceAppLifecycle.InUse)
-                fromDeviceSleep = (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()).TotalMinutes;
-
-            double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
-
-            bool fromLastCommitedItemsSessionExpired = fromLastCommitedItemsSessionInMin > 3;
-            bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
-
-            TimeSpan mealConversetionTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
-            TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
-            TimeSpan fromLastRequest = DateTime.UtcNow - DateTimeOfLastRequest.ToUniversalTime();
-
-
-
-
-            if (fromLastCommitedItemsSessionExpired && fromDeviceSleepExpired)
-            {
-
-                if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 2)
-                {
-
-                    var clientMessage = Messages.Where(x => ((ClientMessages)(int)x.Data["ClientMessageType"]) == ClientMessages.YouMustDecide).FirstOrDefault();
-
-
-                    if (clientMessage == null)
-                    {
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                        {
-
-                            clientMessage = new Message();
-                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(clientMessage);
-                            clientMessage.Data["ClientMessageType"] = ClientMessages.YouMustDecide;
-                            clientMessage.Data["ClientSessionID"] = SessionID;
-                            clientMessage.Notification = new Notification() { Title = "Don't wait the waiter", Body = "You must press send button to send order" };
-                            PushMessage(clientMessage);
-                            if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                                YouMustDecideMessagesNumber += 1;
-                            stateTransition.Consistent = true;
-                        }
-
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                            YouMustDecideMessagesNumber += 1;
-                    }
-                    if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                        CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
-                    _MessageReceived?.Invoke(this);
-                    PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
-
-                }
-            }
-
-        }
 
         /// <exclude>Excluded</exclude>
         string _SessionID;
@@ -1285,7 +1297,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                if(_Menu==null)
+                if (_Menu == null)
                 {
                     var graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
                     string versionSuffix = "";
@@ -1298,7 +1310,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 return _Menu;
             }
-           
+
         }
 
 
@@ -2038,9 +2050,7 @@ namespace FlavourBusinessManager.EndUsers
                 ObjectChangeState?.Invoke(this, nameof(FlavourItems));
 
                 if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
-                {
                     (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                }
             }
 
 
@@ -2335,25 +2345,8 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
                 if (_MainSession.Value == null)
-                {
-                    FoodServiceSession foodServiceSession = null;
-                    if (IsWaiterSession)
-                    {
-                        foodServiceSession = (ServicePoint as ServicePoint).OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
+                    AutoMealParticipation();
 
-                        if (foodServiceSession == null)
-                            foodServiceSession = ServicePoint.NewFoodServiceSession() as FoodServiceSession;
-                        foodServiceSession.AddPartialSession(this);
-                        if (this.Menu != null)
-                            foodServiceSession.MenuStorageIdentity = this.Menu.StorageIdentity;
-
-                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodServiceSession);
-                    }
-                    else
-                    {
-                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                    }
-                }
                 var sds = MainSession.PartialClientSessions.Count;
 
                 AllItemsCommited();

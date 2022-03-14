@@ -282,5 +282,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public string GetMealInvitationQRCode(string color)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

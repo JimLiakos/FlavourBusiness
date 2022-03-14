@@ -1418,8 +1418,12 @@ namespace WaiterApp.ViewModel
                             {
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
-                                LayTheTableRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                if (HallsServicePointsState[servicesPointIdentity] == ServicePointState.Laying)
+                                    LayTheTableRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                else
+                                    Waiter.RemoveMessage(message.MessageID);
                                 //PartOfMealRequestMessageForward(message);
+
                                 return;
                             }
                         }
@@ -1676,7 +1680,7 @@ namespace WaiterApp.ViewModel
 
         }
 
-      
+
 
         //public async void TransferSession(string targetServicePointIdentity)
         //{
@@ -1688,7 +1692,7 @@ namespace WaiterApp.ViewModel
         //                                             select hall).FirstOrDefault().ServicesContextIdentity + ";" + targetServicePointIdentity;
 
         //    this.Waiter.TransferSession(this.FlavoursOrderServer.MainSession, targetServicePointIdentity);
-           
+
         //    await this.FlavoursOrderServer.GetServicePointDataEx(this.FlavoursOrderServer.MenuData.FoodServiceClientSessionUri);
 
 
@@ -1710,9 +1714,36 @@ namespace WaiterApp.ViewModel
         //    }
         //}
 
-        public void TransferPartialSession(string partialSessionID, string targetSessionID)
+        public bool TransferPartialSession(string partialSessionID, string targetSessionID)
         {
-            this.Waiter.TransferPartialSession(partialSessionID, targetSessionID);
+            if (targetSessionID == "WaiterSession")
+            {
+                if (string.IsNullOrWhiteSpace(this.FlavoursOrderServer.MenuData.MainSessionID))
+                {
+                    var messmate = this.FlavoursOrderServer.GetCandidateMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
+
+                    if (messmate == null)
+                        messmate = this.FlavoursOrderServer.GetMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
+
+                    this.FlavoursOrderServer.AcceptInvitation(messmate, null);
+
+                    return true;
+                }
+                else
+                {
+                    this.Waiter.TransferPartialSession(partialSessionID, this.FlavoursOrderServer.MenuData.MainSessionID);
+                    return true;
+
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(targetSessionID))
+            {
+                this.Waiter.TransferPartialSession(partialSessionID, targetSessionID);
+                return true;
+            }
+            return false;
+
+
 
 
         }
