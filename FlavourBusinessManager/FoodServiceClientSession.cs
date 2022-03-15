@@ -210,7 +210,8 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+25")]
         public System.DateTime WillTakeCareTimestamp
         {
-            get => _WillTakeCareTimestamp; set
+            get => _WillTakeCareTimestamp; 
+            set
             {
                 if (_WillTakeCareTimestamp != value)
                 {

@@ -1096,7 +1096,7 @@ namespace DontWaitApp
                     var menuData = MenuData;
                     menuData.MainSessionID = FoodServiceClientSession.MainSession?.SessionID;
                     MenuData = menuData;
-                    _ObjectChangeState?.Invoke(this, nameof(MenuData));
+                    
                 }
 
                 

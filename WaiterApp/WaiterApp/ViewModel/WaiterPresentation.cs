@@ -1720,25 +1720,21 @@ namespace WaiterApp.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(this.FlavoursOrderServer.MenuData.MainSessionID))
                 {
-                    var messmate = this.FlavoursOrderServer.GetCandidateMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
-
+                    var messmate = FlavoursOrderServer.GetCandidateMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
                     if (messmate == null)
-                        messmate = this.FlavoursOrderServer.GetMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
-
-                    this.FlavoursOrderServer.AcceptInvitation(messmate, null);
-
+                        messmate = FlavoursOrderServer.GetMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
+                    FlavoursOrderServer.AcceptInvitation(messmate, null);
                     return true;
                 }
                 else
                 {
-                    this.Waiter.TransferPartialSession(partialSessionID, this.FlavoursOrderServer.MenuData.MainSessionID);
+                    Waiter.TransferPartialSession(partialSessionID, this.FlavoursOrderServer.MenuData.MainSessionID);
                     return true;
-
                 }
             }
             else if (!string.IsNullOrWhiteSpace(targetSessionID))
             {
-                this.Waiter.TransferPartialSession(partialSessionID, targetSessionID);
+                Waiter.TransferPartialSession(partialSessionID, targetSessionID);
                 return true;
             }
             return false;
