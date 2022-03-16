@@ -321,6 +321,8 @@ namespace MenuItemsEditor.ViewModel
                 else if (PreparationOptionsGroup is ItemSelectorOptionsGroup)
                     (PreparationOptionsGroup as ItemSelectorOptionsGroup).AlwaysInDescription = value; ;
 
+                _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysInDescriptionFontWeight)));
+
             }
 
         }
