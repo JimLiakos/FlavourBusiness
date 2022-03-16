@@ -11,6 +11,31 @@ namespace MenuModel
     [Persistent()]
     public class ItemSelectorOptionsGroup : PreparationOptionsGroup
     {
+        /// <exclude>Excluded</exclude>
+        bool _AlwaysInDescription;
+
+        /// <MetaDataID>{39974c8a-73bd-4b47-99b3-016b420b39b7}</MetaDataID>
+        [PersistentMember(nameof(_AlwaysInDescription))]
+        [BackwardCompatibilityID("+3")]
+        public bool AlwaysInDescription
+        {
+            get
+            {
+                return _AlwaysInDescription;
+            }
+            set
+            {
+                if (_AlwaysInDescription != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AlwaysInDescription = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{cd722275-fd49-4065-842d-9ad8e5ffbca7}</MetaDataID>
         public ItemSelectorOptionsGroup()
         {

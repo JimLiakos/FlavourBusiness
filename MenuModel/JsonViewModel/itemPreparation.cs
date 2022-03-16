@@ -47,7 +47,7 @@ namespace MenuModel.JsonViewModel
             PreparationTags = (from menuItemType in menuItem.Types
                                from preparationTag in menuItemType.PreparationTags
                                select new MenuModel.JsonViewModel.Tag(preparationTag)).OfType<ITag>().ToList();
-            
+
 
             mappedObject[menuItem] = this;
             foreach (var menuItemPrice in menuItem.Prices)
@@ -129,8 +129,8 @@ namespace MenuModel.JsonViewModel
                 _Name = value;
             }
         }
-        /// <MetaDataID>{dc1df6b0-5184-431d-8ceb-47eb8ac23653}</MetaDataID>
 
+        /// <MetaDataID>{dc1df6b0-5184-431d-8ceb-47eb8ac23653}</MetaDataID>
         public Multilingual MultilingualFullName
         {
             get
@@ -197,8 +197,6 @@ namespace MenuModel.JsonViewModel
             }
         }
 
-
-
         /// <MetaDataID>{0489f198-f0eb-44fb-a9b5-7177ead9dc76}</MetaDataID>
         public IMenuItemType DedicatedType { get; set; }
 
@@ -229,6 +227,7 @@ namespace MenuModel.JsonViewModel
         public bool Stepper { get; set; }
 
         public IList<IPartofMeal> PartofMeals { get; set; }
+        public bool SelectorAlwaysInDescription { get; set; }
 
 
 

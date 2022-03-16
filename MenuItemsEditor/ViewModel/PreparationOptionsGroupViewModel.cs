@@ -70,7 +70,7 @@ namespace MenuItemsEditor.ViewModel
                     OOAdvantech.PersistenceLayer.ObjectStorage objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(PreparationOptionsGroup);
                     if (objectStorage != null)
                         objectStorage.CommitTransientObjectState(preparationOption);
-                    
+
                     stateTransition.Consistent = true;
                 }
                 _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupedOptions)));
@@ -244,7 +244,7 @@ namespace MenuItemsEditor.ViewModel
                 if (this.PreparationOptionsGroup is StepperOptionsGroup)
                 {
                     foreach (var preparationOptionsGroupViewModel in GroupedOptions.OfType<PreparationOptionsGroupViewModel>())
-                        preparationOptionsGroupViewModel.SelectedPriceContext=_SelectedPriceContext;
+                        preparationOptionsGroupViewModel.SelectedPriceContext = _SelectedPriceContext;
                 }
 
 
@@ -289,12 +289,46 @@ namespace MenuItemsEditor.ViewModel
                 // PreparationOptionsGroup.SelectionType = value;
             }
         }
+        public Visibility SelectorAlwaysInDescriptionIsVisible
+        {
+            get
+            {
+                if (PreparationOptionsGroup is ItemSelectorOptionsGroup)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+        public  FontWeight AlwaysInDescriptionFontWeight => MenuItemViewModel!=null&& (MenuItemViewModel.MenuItem as  MenuModel.MenuItem).SelectorAlwaysInDescriptionOverriden ? FontWeights.Bold : base.FontWeight;
 
+
+        public bool SelectorAlwaysInDescription
+        {
+            get
+            {
+
+                if (MenuItemViewModel != null)
+                    return MenuItemViewModel.MenuItem.SelectorAlwaysInDescription;
+
+                if (PreparationOptionsGroup is ItemSelectorOptionsGroup)
+                    return (PreparationOptionsGroup as ItemSelectorOptionsGroup).AlwaysInDescription;
+                return false;
+            }
+            set
+            {
+                if (MenuItemViewModel != null)
+                    MenuItemViewModel.MenuItem.SelectorAlwaysInDescription = value;
+                else if (PreparationOptionsGroup is ItemSelectorOptionsGroup)
+                    (PreparationOptionsGroup as ItemSelectorOptionsGroup).AlwaysInDescription = value; ;
+
+            }
+
+        }
 
         /// <MetaDataID>{b4fb5205-60e7-4072-ae1a-590f14ea7def}</MetaDataID>
         private void SetSelectedOptionCheckUncheck()
         {
-            if (SelectedScaledOption!=null&& SelectedScaledOption.PreparationScaledOption.Initial != null)
+            if (SelectedScaledOption != null && SelectedScaledOption.PreparationScaledOption.Initial != null)
             {
                 SelectedScaledOption.ToggleUncheckOtption();
                 PreparationOptionChanged(SelectedOption);
@@ -312,7 +346,7 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
-      
+
         /// <MetaDataID>{484a5c8b-3a50-4cec-a13a-1ff6806892cb}</MetaDataID>
         private void MoveDownSelectedOption()
         {
@@ -323,7 +357,7 @@ namespace MenuItemsEditor.ViewModel
                     PreparationOptionsGroup.MovePreparationOption(SelectedScaledOption.PreparationScaledOption, pos + 1);
                 _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupedOptions)));
             }
-            if(SelectedOption is PreparationOptionsGroupViewModel&& (PreparationOptionsGroup is StepperOptionsGroup))
+            if (SelectedOption is PreparationOptionsGroupViewModel && (PreparationOptionsGroup is StepperOptionsGroup))
             {
                 var stepperOptionsGroup = PreparationOptionsGroup as StepperOptionsGroup;
                 var selectedOptionsGroup = (SelectedOption as PreparationOptionsGroupViewModel).PreparationOptionsGroup as PreparationOptionsGroup;
@@ -387,9 +421,9 @@ namespace MenuItemsEditor.ViewModel
 
 
 
-                if(PreparationOptionsGroup is StepperOptionsGroup)
-                    optionsViewModels= optionsViewModels.Union((from optionGroup in  (PreparationOptionsGroup as StepperOptionsGroup).NestedOptionsGroups
-                                            select OptionsGroupWrappers.GetViewModelFor(optionGroup, optionGroup, this, IsEditable)).OfType<PreparationOptionViewModel>()).ToList();
+                if (PreparationOptionsGroup is StepperOptionsGroup)
+                    optionsViewModels = optionsViewModels.Union((from optionGroup in (PreparationOptionsGroup as StepperOptionsGroup).NestedOptionsGroups
+                                                                 select OptionsGroupWrappers.GetViewModelFor(optionGroup, optionGroup, this, IsEditable)).OfType<PreparationOptionViewModel>()).ToList();
 
 
 

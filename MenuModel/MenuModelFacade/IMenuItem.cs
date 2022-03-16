@@ -7,6 +7,9 @@ namespace MenuModel
     /// <MetaDataID>{5b1dc307-2ce6-4339-ab21-a69b6c4a71ec}</MetaDataID>
     public interface IMenuItem
     {
+        [BackwardCompatibilityID("+12")]
+        bool SelectorAlwaysInDescription { get; set; }
+
         /// <MetaDataID>{c18d15b6-1506-4e96-8ee0-91658db67cd9}</MetaDataID>
         void RemoveMealType(IPartofMeal partofMeal);
 

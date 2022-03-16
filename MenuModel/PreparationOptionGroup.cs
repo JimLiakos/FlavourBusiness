@@ -65,6 +65,7 @@ namespace MenuModel
             _Name.Value = name;
         }
 
+        /// <MetaDataID>{5d1f8c41-6f9f-43b4-ab0f-d1b9d9da8568}</MetaDataID>
         public PreparationOptionsGroup(IPreparationOptionsGroup preparationOptionsGroup, IMenuItemType menuItemType)
         {
 

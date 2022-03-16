@@ -16,6 +16,52 @@ namespace MenuModel
     public class MenuItem : FinanceFacade.ITaxable, IClassified, IMenuItem, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
 
+        
+        public bool SelectorAlwaysInDescriptionOverriden
+        {
+            get
+            {
+                return _SelectorAlwaysInDescription.HasValue;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool? _SelectorAlwaysInDescription;
+        /// <MetaDataID>{1b741074-ac97-4e93-8ebb-d7f804602fc3}</MetaDataID>
+        [PersistentMember(nameof(_SelectorAlwaysInDescription))]
+        [BackwardCompatibilityID("+20")]
+        public bool SelectorAlwaysInDescription
+        {
+
+            get
+            {
+                ItemSelectorOption ItemSelector = Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null&& x.ItemSelector.OptionGroup is ItemSelectorOptionsGroup).Select(x => x.ItemSelector).FirstOrDefault();
+                if (ItemSelector != null && !_SelectorAlwaysInDescription.HasValue)
+                    return (ItemSelector.OptionGroup as ItemSelectorOptionsGroup).AlwaysInDescription;
+                if (!_SelectorAlwaysInDescription.HasValue)
+                    return default(bool);
+
+                return _SelectorAlwaysInDescription.Value;
+            }
+
+            set
+            {
+                if (_SelectorAlwaysInDescription != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SelectorAlwaysInDescription = value;
+                        stateTransition.Consistent = true;
+                    }
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectorAlwaysInDescription)));
+                }
+            }
+
+        }
+
+
+      
+
 
         /// <exclude>Excluded</exclude>
         bool _Stepper;
@@ -518,6 +564,7 @@ namespace MenuModel
 
         }
 
+        
 
 
 
