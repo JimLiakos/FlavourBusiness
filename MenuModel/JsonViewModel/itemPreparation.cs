@@ -16,7 +16,6 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{7ba12cf1-2fc2-4462-9549-e79e0cabac4b}</MetaDataID>
         public MenuFoodItem()
         {
-
         }
 
 
@@ -38,6 +37,7 @@ namespace MenuModel.JsonViewModel
             Description = menuItem.Description;
             ExtrasDescription = menuItem.ExtrasDescription;
 
+            SelectorAlwaysInDescription = menuItem.SelectorAlwaysInDescription;
 
             ISOCurrencySymbol = RegionInfo.CurrentRegion.ISOCurrencySymbol;
             CurrencySymbol = RegionInfo.CurrentRegion.CurrencySymbol;

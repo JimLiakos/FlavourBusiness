@@ -31,7 +31,7 @@ namespace FLBManager
         protected override void OnStartup(StartupEventArgs e)
         {
 
-            
+
             List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
             FlavourBusinessManager.RoomService.ItemPreparation itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared };
             itemPreparations.Add(itemPreparation);
@@ -40,7 +40,7 @@ namespace FLBManager
             itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Committed };
             itemPreparations.Add(itemPreparation);
 
-            var sdsd =itemPreparations.GetMinimumCommonItemPreparationState();
+            var sdsd = itemPreparations.GetMinimumCommonItemPreparationState();
             var ww = sdsd.ToString();
 
             //var start = DateTime.Now;
@@ -119,7 +119,7 @@ namespace FLBManager
             base.OnStartup(e);
         }
 
-   
+
         void CreateQRCodeCards()
         {
 
@@ -199,7 +199,7 @@ namespace FLBManager
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += CurrentDomain_UnhandledException;
             OOAdvantech.PersistenceLayer.StorageServerInstanceLocatorEx.SetStorageInstanceLocationServerUrl(string.Format("http://{0}:8090/api/Storages", FlavourBusinessFacade.ComputingResources.EndPoint.Server));
-            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl =string.Format( "http://{0}:8090/api/",FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+            OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
             var FontFamilies = System.Windows.Media.Fonts.GetFontFamilies(@"C:\ProgramData\Microneme\DontWaitWater\FontFiles\").ToList();
 
 
@@ -280,6 +280,12 @@ namespace FLBManager
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.ShapesGroup)] = "RestaurantHallLayoutModel.ShapesGroup";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
+
+            SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MenuFoodItem)] = "MenuModel.JsonViewModel.MenuFoodItem";
+            SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MenuItemPrice)] = "MenuModel.JsonViewModel.MenuItemPrice";
+            SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific)] = "MenuModel.JsonViewModel.OptionMenuItemSpecific";
+            SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.Option)] = "MenuModel.JsonViewModel.Option";
+
         }
 
 
@@ -458,10 +464,10 @@ namespace FLBManager
                 suffix = (i++).ToString();
 
             var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType); // (storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
-            var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName+ suffix));
+            var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName + suffix));
             demoStorage.Backup(archive);
         }
-        private static void Restore(string backupFolder, string storageLocation, string accountName, string accountKey,bool overrideObjectStorage)
+        private static void Restore(string backupFolder, string storageLocation, string accountName, string accountKey, bool overrideObjectStorage)
         {
             //try
             //{

@@ -45,7 +45,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         public string AppIdentity => throw new NotImplementedException();
 
-        public IList<IHallLayout> Halls { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IList<IHallLayout> Halls { get => new List<IHallLayout>(); set { } }
 
         public ServicePointState ServicePointState => throw new NotImplementedException();
 
@@ -134,7 +134,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         public Task<string> GetFriendlyName()
         {
-            throw new NotImplementedException();
+            return Task.FromResult("Preview");
         }
 
         public Task<HallLayout> GetHallLayout()
@@ -245,7 +245,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         public string GetTranslation(string langCountry)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public string GetString(string langCountry, string key)
