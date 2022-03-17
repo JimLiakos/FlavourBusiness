@@ -607,7 +607,6 @@ namespace FlavourBusinessManager.RoomService
                     var commonItemPreparationState = itemsPreparationContext.PreparationItems.GetMinimumCommonItemPreparationState();
                     itemsPreparationContext.PreparationState = commonItemPreparationState;
                 }
-
             }
 
             (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
