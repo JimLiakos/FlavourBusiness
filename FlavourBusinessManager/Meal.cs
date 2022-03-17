@@ -239,7 +239,7 @@ namespace FlavourBusinessManager.RoomService
 
 
                     MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
-                    if (mealCourse == null || mealCourse.ItsTooLateForChange)
+                    if (mealCourse == null || mealCourseItems.Any(x=> mealCourse.ItsTooLateForChange(x)))
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {

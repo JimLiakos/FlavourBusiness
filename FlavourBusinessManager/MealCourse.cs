@@ -372,9 +372,9 @@ namespace FlavourBusinessManager.RoomService
         public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>
-        public bool ItsTooLateForChange
+        public bool ItsTooLateForChange(ItemPreparation itemPreparation)
         {
-            get
+            
             {
                 // if there is at least on item with state above  ÉnPreparation the course is closed to changes
                 return this._FoodItems.ToThreadSafeList().Any(x => x.State.IsInFollowingState(ItemPreparationState.PendingPreparation));
