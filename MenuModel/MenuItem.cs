@@ -243,6 +243,11 @@ namespace MenuModel
             }
         }
 
+        public void ClearSelectorAlwaysInDescription()
+        {
+            _SelectorAlwaysInDescription = null;
+        }
+
         /// <exclude>Excluded</exclude>
         Set<IOptionMenuItemSpecific> _OptionsMenuItemSpecifics = new Set<IOptionMenuItemSpecific>();
 

@@ -14,6 +14,7 @@
                 mc:Ignorable="d"  d:DesignWidth="398.571"  >
     <ContentControl.Resources>
         <ResourceDictionary>
+            <ViewModel:PreparationOptionsGroupViewModel x:Key="D_PreparationOptionsGroupViewModel"/>
             <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Metro.Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>-->
@@ -331,7 +332,8 @@
             <ControlTemplate x:Key="MaxPreparationOptionsGroupView" TargetType="{x:Type ContentControl}">
 
 
-                <Grid Margin="4" >
+
+                <Grid Margin="4"  d:DataContext="{d:DesignInstance ViewModel:PreparationOptionsGroupViewModel, IsDesignTimeCreatable=True}">
                     <Border BorderThickness="5" BorderBrush="{StaticResource ListBoxBackgroundBrush}"  >
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" ShadowDepth="7"/>
@@ -431,7 +433,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Label  Content="{x:Static resx:Resources.OptionGroupNameLabel}"/>
                                         <Grid Grid.Column="1" HorizontalAlignment="Right">
-                                            <CheckBox Margin="0,0,15,0" IsChecked="{Binding HideName}" IsEnabled="{Binding IsEditable}" HorizontalAlignment="Right" Content="Hidden"/>
+                                            <CheckBox Margin="0,0,15,0" IsChecked="{Binding HideName}" IsEnabled="{Binding IsEditable}" HorizontalAlignment="Right" Content="{x:Static resx:Resources.HideOptionsGroupHeader}"/>
                                         </Grid>
                                     </Grid>
 
@@ -546,8 +548,16 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.OptionsLabel}"></Label>
-                                    <CheckBox Grid.Column="1" Visibility="{Binding SelectorAlwaysInDescriptionIsVisible}" HorizontalAlignment="Left"  Content="{x:Static resx:Resources.CustomMenuItemCheckBoxLabel}" VerticalAlignment="Center" IsChecked="{Binding SelectorAlwaysInDescription}" FontWeight="{Binding AlwaysInDescriptionFontWeight}" />
+                                    
                                     <CheckBox  HorizontalAlignment="Center" Visibility="{Binding PriceContextsVisibility}" Margin="5,0,5,0" Grid.Row="2"  Grid.Column="1"   VerticalAlignment="Center" IsChecked="{Binding IsRecipeIngredient}"  Content="{x:Static resx:Resources.GroupOtionsIngredientCheckBoxLabel}"></CheckBox>
+                                    <Grid Grid.Column="1">
+                                        <CheckBox  Visibility="{Binding SelectorAlwaysInDescriptionIsVisible}" HorizontalAlignment="Left"  Content="{x:Static resx:Resources.AlwaysPartOfDescription}" VerticalAlignment="Center" IsChecked="{Binding SelectorAlwaysInDescription}" FontWeight="{Binding AlwaysInDescriptionFontWeight}" />
+                                        <Grid.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Clear" Command="{Binding ClearSelectorAlwaysInDescriptionCommand}"></MenuItem>
+                                            </ContextMenu>
+                                        </Grid.ContextMenu>
+                                    </Grid>
                                     <ListBox SelectedValue="{Binding SelectedOption}" Grid.ColumnSpan="2"
                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                              Grid.Row="1" ItemsSource="{Binding GroupedOptions}"
@@ -563,7 +573,7 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
 
-                                    <Grid Grid.Row="2" Background="WhiteSmoke" Margin="0,0,0,2">
+                                    <Grid Grid.Row="2" Background="WhiteSmoke" Margin="0,0,0,2" Grid.ColumnSpan="2">
                                         <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
                                             <Grid  Visibility="{Binding OptionsListViewButtonsVisible}" >
@@ -928,7 +938,7 @@
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
                             <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4"  Content="{x:Static resx:Resources.PriceContextLabel}" Grid.ColumnSpan="2"/>
-
+                            
                             <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                   ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
                         </Grid>

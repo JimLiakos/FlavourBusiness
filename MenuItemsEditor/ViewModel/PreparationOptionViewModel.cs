@@ -187,7 +187,7 @@ namespace MenuItemsEditor.ViewModel
         }
 
 
-        /// <MetaDataID>{1e2c8d33-4a94-4d17-a9e7-dc34ee1a8885}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         bool _IsEditable;
         /// <MetaDataID>{f4defe1b-3606-492f-8e0b-20fe2e501349}</MetaDataID>
         public bool IsEditable
@@ -195,6 +195,14 @@ namespace MenuItemsEditor.ViewModel
             get
             {
                 return _IsEditable;
+            }
+        }
+
+        public bool HideCheckBoxIsEnabled
+        {
+            get
+            {
+                return !_IsEditable;
             }
         }
 

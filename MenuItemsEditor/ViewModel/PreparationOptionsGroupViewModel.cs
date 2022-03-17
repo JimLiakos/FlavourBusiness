@@ -62,6 +62,8 @@ namespace MenuItemsEditor.ViewModel
                 _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupedOptions)));
             });
 
+
+
             AddOptionsGroupCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -148,6 +150,13 @@ namespace MenuItemsEditor.ViewModel
                     new SelectionTypeViewModel (PreparationOptionsGroup,   MenuModel.SelectionType.MultiSelection)
                 };
             }
+
+
+            ClearSelectorAlwaysInDescriptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { 
+                (MenuItemViewModel.MenuItem as MenuModel.MenuItem).ClearSelectorAlwaysInDescription();
+                _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysInDescriptionFontWeight)));
+                _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectorAlwaysInDescription)));
+            }, (object sender) => MenuItemViewModel != null && (MenuItemViewModel.MenuItem as MenuModel.MenuItem).SelectorAlwaysInDescriptionOverriden);
             _SelectionType = new ViewModel.SelectionTypeViewModel(PreparationOptionsGroup);
         }
 
@@ -306,6 +315,7 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
+
 
                 if (MenuItemViewModel != null)
                     return MenuItemViewModel.MenuItem.SelectorAlwaysInDescription;
@@ -475,6 +485,8 @@ namespace MenuItemsEditor.ViewModel
 
         /// <MetaDataID>{48409cd0-cdbf-4efb-9922-77bf84d8fde2}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand AddOptionCommand { get; protected set; }
+
+        public WPFUIElementObjectBind.RelayCommand ClearSelectorAlwaysInDescriptionCommand { get; protected set; }
 
         public WPFUIElementObjectBind.RelayCommand AddOptionsGroupCommand { get; protected set; }
 

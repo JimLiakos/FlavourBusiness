@@ -3,6 +3,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
+using OOAdvantech.MetaDataRepository;
 using RestaurantHallLayoutModel;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace MenuDesigner.ViewModel.Preview
         {
             return this;
         }
+
+        [CachingDataOnClientSide]
         public bool WaiterView => false;
 
         public string ISOCurrencySymbol => System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol;

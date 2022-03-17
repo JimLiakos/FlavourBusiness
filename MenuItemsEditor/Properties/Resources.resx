@@ -389,4 +389,11 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="TaxesMenuItemHeader" xml:space="preserve">
     <value>Menu Taxes</value>
   </data>
+  <data name="AlwaysPartOfDescription" xml:space="preserve">
+    <value>Always appears in the item description</value>
+    <comment>Always appears in the product description</comment>
+  </data>
+  <data name="HideOptionsGroupHeader" xml:space="preserve">
+    <value>Hide options group header</value>
+  </data>
 </root>
