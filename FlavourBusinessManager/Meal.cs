@@ -247,6 +247,7 @@ namespace FlavourBusinessManager.RoomService
                         {
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
                             mealCourse.StartsAt = DateTime.UtcNow;
+                            mealCourse.SortID= (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).GetNextSortingID();
                             newMealCourses.Add(mealCourse);
 
                             _Courses.Add(mealCourse);

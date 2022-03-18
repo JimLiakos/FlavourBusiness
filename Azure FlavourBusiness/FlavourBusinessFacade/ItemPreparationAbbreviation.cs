@@ -15,7 +15,8 @@ namespace FlavourBusinessFacade
         public DateTime StateTimestamp;
 
     }
-   
+
+    /// <MetaDataID>{e9560d4a-6ddf-4200-a06c-9a2ee2f6798d}</MetaDataID>
     public class SessionItemPreparationAbbreviation
     {
         public string SessionID;

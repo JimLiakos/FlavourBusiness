@@ -247,8 +247,10 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{a071224d-7336-4f53-a34f-69e48fc81c43}</MetaDataID>
         object MealLock = new object();
 
+        /// <MetaDataID>{c89e44cf-2f2a-4632-a055-bb05232b5c23}</MetaDataID>
         internal void ChangeMeal(Meal meal)
         {
             lock (MealLock)
@@ -388,8 +390,9 @@ namespace FlavourBusinessManager.RoomService
                     PreparationStation.GetPreparedAtForecast(itemPreparation, this);
                     itemPreparation.PreparedAtForecast
                     PreparationStation.GetPreparationData(itemPreparation).Duration
-                    
-                    this.FoodItems.Any(x=>x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation))
+
+
+                    this.FoodItems.Any(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation))
                 }
 
 
@@ -449,6 +452,28 @@ namespace FlavourBusinessManager.RoomService
                     return this;
                 else
                     return Previous.HeaderCourse;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        int _SortID;
+
+        /// <MetaDataID>{4d905191-7c6c-48a3-902d-5596c9a92a67}</MetaDataID>
+        [PersistentMember(nameof(_SortID))]
+        [BackwardCompatibilityID("+13")]
+        public int SortID
+        {
+            get => _SortID;
+            set
+            {
+                if (_SortID != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SortID = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 

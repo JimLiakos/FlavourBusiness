@@ -61,6 +61,7 @@ namespace FlavourBusinessFacade.RoomService
 
         event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
+        /// <MetaDataID>{bc2b1779-43d0-44e6-adf2-91341b2d47b4}</MetaDataID>
         void PrintReceiptAgain();
 
     }

@@ -9,6 +9,9 @@ namespace FlavourBusinessFacade.RoomService
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IMealCourse
     {
+        [BackwardCompatibilityID("+5")]
+        int SortID { get; }
+
         [Association("MealCourseSequence", Roles.RoleA, "3f8daafd-1296-452b-a9d6-1d9cd00f242e")]
         [RoleBMultiplicityRange(1, 1)]
         IMealCourse Previous { get;set; }

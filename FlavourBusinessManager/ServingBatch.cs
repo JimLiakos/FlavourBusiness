@@ -15,14 +15,15 @@ namespace FlavourBusinessManager.RoomService
     public class ServingBatch : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IServingBatch
     {
 
+        /// <MetaDataID>{f7e6bbea-e018-4ed1-83a3-5814ef9c1eb7}</MetaDataID>
         public void PrintReceiptAgain()
         {
             var transactionUri = PreparedItems.OfType<ItemPreparation>().Where(x => !string.IsNullOrWhiteSpace(x.TransactionUri)).FirstOrDefault()?.TransactionUri;
-            if(!string.IsNullOrWhiteSpace(transactionUri))
+            if (!string.IsNullOrWhiteSpace(transactionUri))
             {
                 var transaction = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<FinanceFacade.Transaction>(transactionUri);
                 transaction.PrintAgain = true;
-             
+
             }
         }
         /// <MetaDataID>{0892df45-97cf-424c-9294-05700287fe9c}</MetaDataID>

@@ -214,6 +214,19 @@ namespace FlavourBusinessManager.RoomService
                 a_Waiter.FindServingBatchesChanged();
         }
 
+        internal int GetNextSortingID()
+        {
+            var lastMealCourse = (from openSession in ServicesContextRunTime.OpenSessions
+                               where openSession.Meal != null
+                               from mealCource in openSession.Meal.Courses
+                               orderby mealCource.SortID
+                               select mealCource).LastOrDefault();
+            if (lastMealCourse == null)
+                return 0;
+            else
+                return lastMealCourse.SortID+1;
+        }
+
         /// <summary>
         /// This method finds all waiter which can serve the meal courses and update them for changes
         /// </summary>
