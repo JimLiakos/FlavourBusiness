@@ -231,6 +231,8 @@ namespace FlavourBusinessManager.RoomService
             if (mealItems.Count > 0)
             {
                 MenuModel.MealType mealType = ObjectStorage.GetObjectFromUri<MenuModel.MealType>(_MealTypeUri);
+
+
                 foreach (var mealCourseItems in (from mealItem in mealItems
                                                  group mealItem by mealItem.SelectedMealCourseTypeUri into mealCourseItems
                                                  select mealCourseItems))
@@ -286,7 +288,7 @@ namespace FlavourBusinessManager.RoomService
                 if (headCourse.ServedAtForecast == null)
                 {
                     var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
-                    headCourse.ServedAtForecast = System.DateTime.UtcNow + foodItemsPreparatioData[0].duration;
+                    headCourse.ServedAtForecast = DateTime.UtcNow + foodItemsPreparatioData[0].duration;
                     foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
                     {
                         foodITem.State = ItemPreparationState.PreparationDelay;

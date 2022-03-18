@@ -400,6 +400,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        internal static void GetPreparedAtForecast(ItemPreparation itemPreparation, MealCourse mealCourse)
+        {
+            
+        }
+
         /// <MetaDataID>{624df837-5606-4bbe-b471-5735642e9fec}</MetaDataID>
         public IPreparationForInfo NewServiceAreaPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType preparationForInfoType)
         {

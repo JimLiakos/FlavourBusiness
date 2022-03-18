@@ -349,11 +349,8 @@ namespace PreparationStationDevice
                     ServicePointsPreparationItems = servicePointsPreparationItems;
                     PreparationItemsLoaded?.Invoke(this);
                     break;
-
                 }
-
             }
-
         }
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
