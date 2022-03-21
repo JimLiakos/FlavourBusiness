@@ -286,16 +286,36 @@ namespace FLBManager.ViewModel.Preparation
 
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
-                if (itemsPreparationInfo.IsCooked != null)
+                var des = itemsPreparationInfo.Description;
+                if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
             return 1;
-
-            //if (itemsPreparationInfo.Count > 0)
-            //    return itemsPreparationInfo[0].PreparationTimeSpanInMin;
-            //else
-            //    return 1;
         }
+
+
+        internal double GetCookingTimeSpanInMin(IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+
+
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                var des = itemsPreparationInfo.Description;
+                if (itemsPreparationInfo.CookingTimeSpanInMin != null)
+                {
+                    
+                    var sss = itemsPreparationInfo.CookingTimeSpanInMin;
+                    return itemsPreparationInfo.CookingTimeSpanInMin.Value;
+                }
+            }
+            return 1;
+        }
+
+
+   
+
+
 
         internal double GetPreparationTimeSpanInMin(IItemsCategory itemsCategory)
         {
@@ -303,23 +323,31 @@ namespace FLBManager.ViewModel.Preparation
 
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
-                if (itemsPreparationInfo.IsCooked != null)
+                if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
             return 1;
-
-
-            //if (itemsPreparationInfos.Count > 0)
-            //    return itemsPreparationInfos[0].PreparationTimeSpanInMin;
-            //else
-            //    return 1;
         }
+
+        internal double GetCookingTimeSpanInMin(IItemsCategory itemsCategory)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.CookingTimeSpanInMin != null)
+                    return itemsPreparationInfo.CookingTimeSpanInMin.Value;
+            }
+            return 1;
+        }
+
+        
 
         /// <MetaDataID>{3e3ed675-1337-4698-8101-ed0a7a87e08b}</MetaDataID>
         internal void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
         {
             GetOrCreateItemsPreparationInfo(menuItem).PreparationTimeSpanInMin = timeSpanInMinutes;
 
+
             //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
             //    itemsPreparationInfoPresentation.Refresh();
             //if (PreparationStationItems != null)
@@ -327,17 +355,26 @@ namespace FLBManager.ViewModel.Preparation
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
+
+        internal void SetCookingTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
+        {
+            GetOrCreateItemsPreparationInfo(menuItem).CookingTimeSpanInMin = timeSpanInMinutes;
+        }
+
         /// <MetaDataID>{7de79e26-376c-47dd-8df7-88508d2bc2e0}</MetaDataID>
         internal void SetPreparationTimeSpanInMin(IItemsCategory itemsCategory, double timeSpanInMinutes)
         {
-
             GetOrCreateItemsPreparationInfo(itemsCategory).PreparationTimeSpanInMin = timeSpanInMinutes;
-
             //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
             //    itemsPreparationInfoPresentation.Refresh();
             //if (PreparationStationItems != null)
             //    PreparationStationItems.Refresh();
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        }
+
+        internal void SetCookingTimeSpanInMin(IItemsCategory itemsCategory, double timeSpanInMinutes)
+        {
+            GetOrCreateItemsPreparationInfo(itemsCategory).CookingTimeSpanInMin = timeSpanInMinutes;
         }
 
 

@@ -96,7 +96,15 @@ namespace FLBManager.Views.Preparation
                 PreviewMouseDown -= GlobalPreviewMouseDown;
                 var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
                 if (itemsPreparationInfo != null)
-                    itemsPreparationInfo.Edit = false;
+                {
+
+                    this.Focus();
+                    Task.Run(() =>
+                    {
+                        this.Dispatcher.Invoke(new Action(() => { itemsPreparationInfo.Edit = false; }));
+                    });
+           
+                }
             }
         }
 

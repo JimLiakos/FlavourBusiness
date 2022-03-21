@@ -129,8 +129,9 @@ namespace FLBManager.ViewModel
 
                 try
                 {
-                    ServiceContextResources = ServicesContext.ServiceContextResources;
-                    ServiceContextHumanResources = ServicesContext.ServiceContextHumanResources;
+                    FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+                    ServiceContextResources = FlavoursServicesContextRuntime.ServiceContextResources;
+                    ServiceContextHumanResources = FlavoursServicesContextRuntime.ServiceContextHumanResources;
 
                     foreach (var serviceArea in ServiceContextResources.ServiceAreas)
                         ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this,this));
@@ -143,7 +144,7 @@ namespace FLBManager.ViewModel
 
                     //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
 
-                    FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+                    
 
                     //FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
                     FlavoursServicesContextRuntime.Description = FlavoursServicesContextRuntime.Description;

@@ -2958,6 +2958,30 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMealCourse Next
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Next", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public int SortID
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_SortID", args, argsTypes);
+                return this.Proxy.GetValue<int>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.RoomService.IMealCourse Previous
         {
             get
@@ -4242,6 +4266,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         public Pr_IItemsPreparationInfo(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Nullable<double> CookingTimeSpanInMin
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "get_CookingTimeSpanInMin", args, argsTypes);
+                return this.Proxy.GetValue<System.Nullable<double>>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(System.Nullable<double>);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "set_CookingTimeSpanInMin", args, argsTypes);
+            }
         }
         
         // The Width property for the object.

@@ -33,6 +33,20 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+        /// <MetaDataID>{05e0750f-3947-4c50-b0b7-28b7ecc6f434}</MetaDataID>
+        internal void RecalculateServedAtForecast()
+        {
+
+            var mealCoursesUnderPreparation = (from openSession in ServicesContextRunTime.OpenSessions
+                                               where openSession.Meal != null
+                                               from mealCource in openSession.Meal.Courses
+                                               where mealCource.PreparationState.IsInPreviousState(ItemPreparationState.Serving)
+                                               orderby mealCource.SortID
+                                               select mealCource).ToList();
+
+        }
+
         /// <MetaDataID>{2545475d-7f8d-4eb5-b7ec-12ca0dc59bfa}</MetaDataID>
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
 
@@ -77,7 +91,7 @@ namespace FlavourBusinessManager.RoomService
         {
             if (referencClientSession.MainSession != null)
                 return;
-            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null&&(x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
+            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null && (x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
 
             if (foodServiceSession == null)
             {
@@ -95,12 +109,12 @@ namespace FlavourBusinessManager.RoomService
 
 
                     //Add all individual active sessions to service point session
-                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null&&!x.Forgotten))
+                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null && !x.Forgotten))
                     {
                         foodServiceSession.AddPartialSession(unAssignedClientSession);
                         unAssignedClientSession.ImplicitMealParticipation = true;
                     }
-                    
+
                     stateTransition.Consistent = true;
                 }
 
@@ -119,7 +133,7 @@ namespace FlavourBusinessManager.RoomService
 
             //referencClientSession.
 
-            
+
         }
 
 
@@ -214,17 +228,42 @@ namespace FlavourBusinessManager.RoomService
                 a_Waiter.FindServingBatchesChanged();
         }
 
+        /// <MetaDataID>{2cdcccbe-599b-4ebd-8c71-a5e7db5a1bed}</MetaDataID>
+        object MealsControllerLock = new object();
+        /// <MetaDataID>{4786b94c-efed-46cf-93d2-307a2343de57}</MetaDataID>
         internal int GetNextSortingID()
         {
-            var lastMealCourse = (from openSession in ServicesContextRunTime.OpenSessions
-                               where openSession.Meal != null
-                               from mealCource in openSession.Meal.Courses
-                               orderby mealCource.SortID
-                               select mealCource).LastOrDefault();
-            if (lastMealCourse == null)
-                return 0;
-            else
-                return lastMealCourse.SortID+1;
+            lock (MealsControllerLock)
+            {
+                MealCourseSortID++;
+            }
+            return MealCourseSortID;
+        }
+
+        /// <MetaDataID>{8dd7566f-8b5f-4107-b93f-913139929d09}</MetaDataID>
+        int MealCourseSortID;
+        /// <MetaDataID>{b5895f92-f271-4868-aaf6-dbbd158d4558}</MetaDataID>
+        internal void Init()
+        {
+            lock (MealsControllerLock)
+            {
+                var lastMealCourse = (from openSession in ServicesContextRunTime.OpenSessions
+                                      where openSession.Meal != null
+                                      from mealCource in openSession.Meal.Courses
+                                      orderby mealCource.SortID
+                                      select mealCource).LastOrDefault();
+
+                if (lastMealCourse == null)
+                    MealCourseSortID = 0;
+                else
+                    MealCourseSortID = lastMealCourse.SortID + 1;
+
+                bool recalculate = false;
+
+                if (recalculate)
+                    RecalculateServedAtForecast();
+
+            }
         }
 
         /// <summary>

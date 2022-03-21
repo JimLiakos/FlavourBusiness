@@ -64,6 +64,19 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        internal List<IMealCourse> MealCoursesSequences
+        {
+            get
+            {
+                return Courses.Select(x => x.HeaderCourse).Distinct().ToList();
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IMealCourse> _Courses = new OOAdvantech.Collections.Generic.Set<IMealCourse>();
 
@@ -247,7 +260,7 @@ namespace FlavourBusinessManager.RoomService
                         {
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
                             mealCourse.StartsAt = DateTime.UtcNow;
-                            mealCourse.SortID= (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).GetNextSortingID();
+                            
                             newMealCourses.Add(mealCourse);
 
                             _Courses.Add(mealCourse);
@@ -285,7 +298,7 @@ namespace FlavourBusinessManager.RoomService
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                MealCourse headCourse = Courses[0] as MealCourse;
+                MealCourse headCourse = Courses.FirstOrDefault()?.HeaderCourse as MealCourse;
                 if (headCourse.ServedAtForecast == null)
                 {
                     var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();

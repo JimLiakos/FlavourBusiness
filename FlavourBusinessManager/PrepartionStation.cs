@@ -400,9 +400,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        internal static void GetPreparedAtForecast(ItemPreparation itemPreparation, MealCourse mealCourse)
+        internal static DateTime GetPreparedAtForecast(ItemPreparation itemPreparation, MealCourse mealCourse)
         {
-            
+            return DateTime.UtcNow;
         }
 
         /// <MetaDataID>{624df837-5606-4bbe-b471-5735642e9fec}</MetaDataID>

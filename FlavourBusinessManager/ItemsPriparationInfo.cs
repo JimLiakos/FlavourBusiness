@@ -151,6 +151,30 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
+        double? _CookingTimeSpanInMin;
+
+        /// <MetaDataID>{9e4ec1b0-9ea5-41e0-b1c2-472b320fddda}</MetaDataID>
+        [PersistentMember(nameof(_CookingTimeSpanInMin))]
+        [BackwardCompatibilityID("+8")]
+        [CachingDataOnClientSide]
+        public double? CookingTimeSpanInMin
+        {
+            get => _CookingTimeSpanInMin;
+            set
+            {
+                if (_CookingTimeSpanInMin != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CookingTimeSpanInMin = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
         int _LearningCurveCount;
         /// <MetaDataID>{a518b44c-b08a-4d65-b804-cacd8f57c351}</MetaDataID>
         [PersistentMember(nameof(_LearningCurveCount))]
@@ -199,6 +223,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{745b3dd4-59b8-409e-82e4-0dd1ed0e0ab4}</MetaDataID>
         [PersistentMember(nameof(_IsCooked))]
         [BackwardCompatibilityID("+7")]
+        [CachingDataOnClientSide]
         public bool? IsCooked
         {
             get => _IsCooked;
@@ -216,6 +241,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+
+
+
     }
 }
 

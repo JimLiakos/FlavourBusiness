@@ -293,8 +293,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             Task.Run(() =>
             {
+
+                (MealsController as MealsController) .Init();
+
                 //Load CashierStations
                 var cashierStations = CashierStations;
+
             });
 
         }
@@ -1403,12 +1407,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
         FlavourBusinessFacade.RoomService.IMealsController _MealsController;
 
         /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
-        public FlavourBusinessFacade.RoomService.IMealsController MealsController
+        public IMealsController MealsController
         {
             get
             {
                 if (_MealsController == null)
-                    _MealsController = new RoomService.MealsController(this);
+                    _MealsController = new MealsController(this);
                 return _MealsController;
             }
         }
@@ -1581,6 +1585,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = servicePoint.State };
         }
 
+        /// <MetaDataID>{1f4f29a1-b453-4221-bdc0-dda0d3b40017}</MetaDataID>
         internal static string GetToken(IFoodServiceClientSession clientSession)
         {
             string token = null;

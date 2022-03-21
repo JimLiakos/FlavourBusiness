@@ -9,6 +9,10 @@ namespace FlavourBusinessFacade.RoomService
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IMealCourse
     {
+        [Association("MealCourseSequence", Roles.RoleB, "3f8daafd-1296-452b-a9d6-1d9cd00f242e")]
+        IMealCourse Next { get; }
+
+        /// <MetaDataID>{eb256350-044b-46d4-b050-a6863ed5b7af}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         int SortID { get; }
 

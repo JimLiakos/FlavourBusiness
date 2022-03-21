@@ -210,21 +210,63 @@ namespace FLBManager.ViewModel.Preparation
 
                 if (this.ItemsCategory != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.ItemsCategory);
-
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
-
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
                 return 1;
 
             }
             set
             {
+                if (ItemsCategory != null)
+                {
+                    PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
+                    Refresh();
+                }
+                if (MenuItem != null)
+                    PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
 
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+            }
+        }
+
+        public double CookingTimeSpanInMin
+        {
+            get
+            {
                 if (this.ItemsCategory != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
-
+                    return this.PreparationStationPresentation.GetCookingTimeSpanInMin(this.ItemsCategory);
                 if (this.MenuItem != null)
-                    this.PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
+                    return this.PreparationStationPresentation.GetCookingTimeSpanInMin(this.MenuItem);
+
+                return 1;
+            }
+            set
+            {
+                if (this.ItemsCategory != null)
+                {
+                    this.PreparationStationPresentation.SetCookingTimeSpanInMin(this.ItemsCategory, value);
+                    Refresh();
+                    
+                }
+                if (this.MenuItem != null)
+                    this.PreparationStationPresentation.SetCookingTimeSpanInMin(this.MenuItem, value);
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+            }
+        }
+
+        public double TotalPreparationTimeSpanInMin
+        {
+            get
+            {
+                if (IsCooked)
+                    return PreparationTimeSpanInMin + CookingTimeSpanInMin;
+                else
+                    return PreparationTimeSpanInMin;
+
+            }
+            set
+            {
             }
         }
 
@@ -298,6 +340,13 @@ namespace FLBManager.ViewModel.Preparation
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
                 
                 UpdatePresentationItems();
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CookingTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
+                
+
 
             }
         }
@@ -673,6 +722,7 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
 
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
@@ -681,6 +731,7 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IncludeAllItemsAllowed)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
 
         }
     }

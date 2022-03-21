@@ -853,9 +853,10 @@ namespace DontWaitApp
                                      select new Messmate(clientSession, OrderItems)).ToList();
 
                     messmates = (from messmate in messmates
+                                 where !messmate.WaiterSession
                                  from preparationItem in messmate.PreparationItems
                                  where preparationItem.State == ItemPreparationState.Committed
-                                 select messmate).ToList();
+                                 select messmate).Distinct().ToList();
 
                     while (_MessmatesWaitForYouToDecide == null)
                         System.Threading.Thread.Sleep(1000);

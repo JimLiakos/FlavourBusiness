@@ -9,6 +9,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IItemsPreparationInfo
     {
+        /// <MetaDataID>{b6ea89d7-7bb8-4efd-be66-886628f19dbf}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
+        double? CookingTimeSpanInMin { get; set; }
+
         /// <MetaDataID>{af070276-0111-4c31-a073-48493d0a2ea8}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         string ItemsInfoObjectUri { get; set; }
@@ -74,7 +78,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         }
 
 
-        public static List<IItemsPreparationInfo> GetItemsPreparationInfo(this IPreparationStation preparationStation,  IMenuItem menuItem)
+        /// <MetaDataID>{363235af-9772-4e3b-9c43-31d48fdf75cd}</MetaDataID>
+        public static List<IItemsPreparationInfo> GetItemsPreparationInfo(this IPreparationStation preparationStation, IMenuItem menuItem)
         {
             List<IItemsPreparationInfo> itemsPreparationInfoHierarchy = new List<IItemsPreparationInfo>();
 
@@ -111,7 +116,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
             return itemsPreparationInfoHierarchy;
         }
 
-        public static bool IsCooked(this IPreparationStation preparationStation,IMenuItem menuItem)
+        /// <MetaDataID>{abcf3581-0079-4d07-8429-f8779b711a94}</MetaDataID>
+        public static bool IsCooked(this IPreparationStation preparationStation, IMenuItem menuItem)
         {
             var itemsPreparationInfos = preparationStation.GetItemsPreparationInfo(menuItem);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)

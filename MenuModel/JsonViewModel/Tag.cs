@@ -18,7 +18,6 @@ namespace MenuModel.JsonViewModel
         }
         public Tag()
         {
-
         }
         /// <exclude>Excluded</exclude>
         protected Multilingual _Name = new Multilingual();

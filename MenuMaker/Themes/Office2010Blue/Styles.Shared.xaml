@@ -537,7 +537,7 @@
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="hover" d:IsOptimized="True"/>
-                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="hoverBoxMiddle" d:IsOptimized="True"/>
+                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="hoverBoxMiddle"  d:IsOptimized="True"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
