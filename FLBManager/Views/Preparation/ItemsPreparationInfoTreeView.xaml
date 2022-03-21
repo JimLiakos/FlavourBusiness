@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FLBManager.ViewModel.Preparation" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+             xmlns:local="clr-namespace:FLBManager.ViewModel.Preparation" 
+             xmlns:MenuItemsEditorViews="clr-namespace:MenuItemsEditor.Views;assembly=MenuItemsEditor"
+             xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
              mc:Ignorable="d" 
 
              d:DesignHeight="100" d:DesignWidth="800">
@@ -38,8 +40,44 @@
                         <Button x:Name="TagsToggle" Margin="5,0,0,0"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
                             <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
                         </Button>
-                        <Popup IsOpen="{Binding TagsPopupOpen}" Placement="Bottom" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="LanguagePopup"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
-                            <Grid Width="300" Height="100" Background="Bisque"></Grid>
+                        <Popup IsOpen="{Binding TagsPopupOpen}" Placement="Bottom"  AllowsTransparency="True"  PopupAnimation="Fade" x:Name="LanguagePopup"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
+                            <Grid MinWidth="400" >
+                                <Border  BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
+                                    <Grid Margin="5,0,5,0" IsEnabled="{Binding IsEditable}" Grid.Row="4" MinHeight="45">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label VerticalAlignment="Center"  Content="Tags:" Margin="4,0,0,4"></Label>
+                                        <Border Margin="8" Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
+
+                                            <ItemsControl ItemsSource="{Binding Tags}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <MenuItemsEditorViews:TagView></MenuItemsEditorViews:TagView>
+                                                    </DataTemplate>
+
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+
+
+                                        </Border>
+                                        <Button VerticalAlignment="Center" Grid.Column="2" Margin="10,1,1,1" Style="{StaticResource ListViewBarButtonStyle}" Width="26" Height="26" Command="{Binding Path= NewTagCommand}">
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+
+
+                            </Grid>
+                            
                         </Popup>
 
                     </StackPanel>

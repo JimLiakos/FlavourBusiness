@@ -9,6 +9,17 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IItemsPreparationInfo
     {
+
+        /// <MetaDataID>{ede86e3a-e789-4e0e-86a3-64629ec624bc}</MetaDataID>
+        ITag NewPrepatationTag();
+
+        /// <MetaDataID>{abd4769c-e51a-4590-bc26-d22416de5b84}</MetaDataID>
+        void RemovePreparationTag(ITag tag);
+
+        [RoleAMultiplicityRange(0)]
+        [Association("PreparationTag", Roles.RoleA, "9b2ce580-1a0f-4ee2-8a50-18c4dc6f49df")]
+        List<ITag> PreparationTags { get; }
+
         /// <MetaDataID>{b6ea89d7-7bb8-4efd-be66-886628f19dbf}</MetaDataID>
         [BackwardCompatibilityID("+8")]
         double? CookingTimeSpanInMin { get; set; }

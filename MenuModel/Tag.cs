@@ -37,5 +37,13 @@ namespace MenuModel
         }
 
         public Multilingual MultilingualName =>  new Multilingual(_Name);
+
+
+        public Tag()
+        {
+            Uid = System.Guid.NewGuid().ToString("N");
+
+        }
+        public string Uid;
     }
 }

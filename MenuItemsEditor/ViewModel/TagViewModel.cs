@@ -38,6 +38,7 @@ namespace MenuItemsEditor.ViewModel
             {
                 Tag.Name = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnTranslatedName)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
 
             }
         }

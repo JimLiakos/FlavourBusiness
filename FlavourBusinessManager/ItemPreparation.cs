@@ -22,6 +22,7 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+    
 
 
         /// <exclude>Excluded</exclude> 
@@ -231,6 +232,7 @@ namespace FlavourBusinessManager.RoomService
             //previous
             return ((int)this.State) < ((int)state);
         }
+        /// <MetaDataID>{3476fc80-8567-4993-b024-5772e5ace32e}</MetaDataID>
         public bool IsInTheSameOrPreviousState(ItemPreparationState state)
         {
             //previous
@@ -267,20 +269,7 @@ namespace FlavourBusinessManager.RoomService
         }
 #endif
 
-        /// <MetaDataID>{a6cc3ed1-24e7-4416-a62a-b11f0b9bd67a}</MetaDataID>
-        [BeforeCommitObjectStateInStorageCall]
-        void BeforeCommitObjectState()
-        {
-            var myStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-            {
-                foreach (var optionChange in this._OptionsChanges)
-                    myStorage.CommitTransientObjectState(optionChange);
-
-                stateTransition.Consistent = true;
-            }
-        }
-
+ 
 
 
         /// <exclude>Excluded</exclude> 

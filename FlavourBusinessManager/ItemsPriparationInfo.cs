@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
-using Newtonsoft.Json;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -12,6 +14,10 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class ItemsPreparationInfo : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IItemsPreparationInfo
     {
+        /// <MetaDataID>{ccdd24fd-e5c4-419d-8628-0c3c793d22bd}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+27")]
+        private string TagsJson;
 
         /// <MetaDataID>{75f7d359-4764-4ea6-af54-181b6f2ebeaf}</MetaDataID>
         protected ItemsPreparationInfo()
@@ -63,11 +69,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        [JsonIgnore]
+        [OOAdvantech.Json.JsonIgnore]
         IClassified _MenuModelObject;
 
         /// <MetaDataID>{b0673367-393f-48cc-a4b6-8fb6856d64d8}</MetaDataID>
-        [JsonIgnore]
+        [OOAdvantech.Json.JsonIgnore]
         public IClassified MenuModelObject
         {
             get
@@ -242,8 +248,68 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{a6cc3ed1-24e7-4416-a62a-b11f0b9bd67a}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        internal void OnBeforeCommitObjectState()
+        {
+            lock (PreparationTagLock)
+            {
+                TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PreparationTags);
+            }
+        }
+        /// <MetaDataID>{cf7a1312-160c-40e5-9477-7b7c7d7a0e24}</MetaDataID>
+        [ObjectActivationCall]
+        internal void OnActivated()
+        {
+            lock (PreparationTagLock)
+            {
+                if (!string.IsNullOrWhiteSpace(TagsJson))
+                    _PreparationTags = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.Tag>>(TagsJson).OfType<ITag>().ToList();
+                else
+                    _PreparationTags = new List<ITag>();
+            }
+            //Json.JsonConvert.DeserializeObject 
+        }
+
+        public ITag NewPrepatationTag()
+        {
+            lock (PreparationTagLock)
+            {
+                var tag = new Tag();
+                tag.Name = "new Tag";
+                _PreparationTags.Add(tag);
+                return tag;
+            }
+        }
+
+        object PreparationTagLock = new object();
+        public void RemovePreparationTag(ITag tag)
+        {
+
+            lock (PreparationTagLock)
+            {
+                var preparationTag = _PreparationTags.OfType<Tag>().Where(x => x.Uid == (tag as Tag).Uid).FirstOrDefault();
+                if (preparationTag != null)
+                    _PreparationTags.Remove(preparationTag);
+            }
 
 
+        }
+
+
+        /// <MetaDataID>{848fe936-d592-4479-a878-b8f779222438}</MetaDataID>
+        List<ITag> _PreparationTags = new List<ITag>();
+        /// <MetaDataID>{4427b61d-87f1-4cc8-a4d9-c45201e2f726}</MetaDataID>
+        public List<ITag> PreparationTags
+        {
+            get
+            {
+                lock (PreparationTagLock)
+                {
+                    return _PreparationTags.ToList();
+                }
+            }
+        }
     }
 }
 

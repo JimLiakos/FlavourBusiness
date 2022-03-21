@@ -101,6 +101,7 @@ namespace FLBManager.Views.Preparation
                     this.Focus();
                     Task.Run(() =>
                     {
+                        System.Threading.Thread.Sleep(300);
                         this.Dispatcher.Invoke(new Action(() => { itemsPreparationInfo.Edit = false; }));
                     });
            

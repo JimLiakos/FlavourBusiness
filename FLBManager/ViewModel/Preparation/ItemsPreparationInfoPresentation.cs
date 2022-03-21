@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using MenuItemsEditor.ViewModel;
 using MenuModel;
 using UIBaseEx;
 using WPFUIElementObjectBind;
@@ -107,12 +108,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-        private void ToggleTags()
-        {
-            TagsPopupOpen = !TagsPopupOpen;
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TagsPopupOpen)));
-        }
-
+    
         /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent)
         {
@@ -148,6 +144,10 @@ namespace FLBManager.ViewModel.Preparation
                 Delete();
             });
             ToggleTagsCommand = new RelayCommand((object sender) =>
+            {
+                ToggleTags();
+            });
+            NewTagCommand = new RelayCommand((object sender) =>
             {
                 ToggleTags();
             });
@@ -427,7 +427,66 @@ namespace FLBManager.ViewModel.Preparation
             {
             }
         }
-        public RelayCommand ToggleTagsCommand { get; protected set; } 
+        public RelayCommand ToggleTagsCommand { get; protected set; }
+
+        public RelayCommand NewTagCommand { get; protected set; }
+
+        List<TagViewModel> _Tags;
+
+        public List<TagViewModel> Tags
+        {
+            get
+            {
+                if (_Tags == null)
+                {
+                    List<TagViewModel> tags = new List<TagViewModel>();
+
+                    if (ItemsPreparationInfo.PreparationTags != null)
+                    {
+                        foreach (var tag in ItemsPreparationInfo.PreparationTags)
+                        {
+                            var tagPresentation = new TagViewModel(tag);
+                            tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+                            tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
+                            tags.Add(tagPresentation);
+                        }
+                    }
+                    _Tags = tags;
+                }
+
+                return _Tags;
+            }
+        }
+
+        private void TagPresentation_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TagViewModel.Name))
+            {
+                TagViewModel tag = sender as TagViewModel;
+            }
+        }
+
+
+        private void ToggleTags()
+        {
+            TagsPopupOpen = !TagsPopupOpen;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TagsPopupOpen)));
+        }
+
+        private void NewTag()
+        {
+
+        }
+
+        private void TagPresentation_TagDeleted(TagViewModel tag)
+        {
+            _Tags.Remove(tag);
+            tag.TagDeleted -= TagPresentation_TagDeleted;
+            ItemsPreparationInfo.RemovePreparationTag(tag.Tag);
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
+
+        }
+
         /// <MetaDataID>{5b29545c-fe12-4953-ae37-58f532044a8c}</MetaDataID>
         public override ImageSource TreeImage
         {

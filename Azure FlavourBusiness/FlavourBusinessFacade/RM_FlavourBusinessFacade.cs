@@ -4269,6 +4269,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<MenuModel.ITag> PreparationTags
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "get_PreparationTags", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<MenuModel.ITag>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Nullable<double> CookingTimeSpanInMin
         {
             get
@@ -4414,6 +4426,23 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public MenuModel.ITag NewPrepatationTag()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "NewPrepatationTag", args, argsTypes);
+            return this.Proxy.GetValue<MenuModel.ITag>(retValue);
+        }
+        
+        public void RemovePrepatationTag(MenuModel.ITag tag)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = tag;
+            argsTypes[0] = typeof(MenuModel.ITag);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "RemovePrepatationTag", args, argsTypes);
         }
     }
     

@@ -9,6 +9,7 @@ namespace MenuModel
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
         string Name { get; set; }
 
+        /// <MetaDataID>{5d4f737b-05d3-4648-8460-4b07130196b9}</MetaDataID>
         Multilingual MultilingualName { get; }
     }
 }
