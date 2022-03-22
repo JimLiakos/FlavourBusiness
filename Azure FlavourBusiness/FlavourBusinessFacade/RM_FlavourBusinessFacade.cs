@@ -4436,13 +4436,13 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             return this.Proxy.GetValue<MenuModel.ITag>(retValue);
         }
         
-        public void RemovePrepatationTag(MenuModel.ITag tag)
+        public void RemovePreparationTag(MenuModel.ITag tag)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = tag;
             argsTypes[0] = typeof(MenuModel.ITag);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "RemovePrepatationTag", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "RemovePreparationTag", args, argsTypes);
         }
     }
     

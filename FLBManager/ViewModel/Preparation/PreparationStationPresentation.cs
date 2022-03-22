@@ -361,6 +361,28 @@ namespace FLBManager.ViewModel.Preparation
             GetOrCreateItemsPreparationInfo(menuItem).CookingTimeSpanInMin = timeSpanInMinutes;
         }
 
+        internal MenuModel.ITag NewTagFor(MenuModel.IMenuItem menuItem)
+        {
+            return GetOrCreateItemsPreparationInfo(menuItem).NewPrepatationTag();
+        }
+
+        internal void  RemoveTagFrom(MenuModel.IMenuItem menuItem, MenuModel.ITag tag)
+        {
+            GetOrCreateItemsPreparationInfo(menuItem).RemovePreparationTag(tag);
+        }
+
+
+        internal MenuModel.ITag NewTagFor(MenuModel.IItemsCategory itemsCategory)
+        {
+            return GetOrCreateItemsPreparationInfo(itemsCategory).NewPrepatationTag();
+        }
+
+        internal void RemoveTagFrom(MenuModel.IItemsCategory itemsCategory, MenuModel.ITag tag)
+        {
+            GetOrCreateItemsPreparationInfo(itemsCategory).RemovePreparationTag(tag);
+        }
+
+
         /// <MetaDataID>{7de79e26-376c-47dd-8df7-88508d2bc2e0}</MetaDataID>
         internal void SetPreparationTimeSpanInMin(IItemsCategory itemsCategory, double timeSpanInMinutes)
         {

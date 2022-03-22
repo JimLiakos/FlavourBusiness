@@ -67,7 +67,12 @@ namespace FLBManager
             //                                                                   select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
 
             // var sds = items[0].ClientSession;
+            var sAsdsd = new AuthFlavourBusiness();
 
+             var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
+            var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
+            var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
+            OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";

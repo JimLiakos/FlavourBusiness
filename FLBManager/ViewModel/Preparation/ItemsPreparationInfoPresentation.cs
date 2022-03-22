@@ -149,7 +149,7 @@ namespace FLBManager.ViewModel.Preparation
             });
             NewTagCommand = new RelayCommand((object sender) =>
             {
-                ToggleTags();
+                NewTag();
             });
 
         }
@@ -475,7 +475,24 @@ namespace FLBManager.ViewModel.Preparation
 
         private void NewTag()
         {
+            if (this.ItemsCategory != null)
+            {
+                var tag = this.PreparationStationPresentation.NewTagFor(this.ItemsCategory);
 
+                var tagPresentation = new TagViewModel(tag);
+                tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+                tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
+                _Tags.Add(tagPresentation);
+            }
+            if (this.MenuItem != null)
+            {
+                var tag = this.PreparationStationPresentation.NewTagFor(this.MenuItem);
+                var tagPresentation = new TagViewModel(tag);
+                tagPresentation.TagDeleted += TagPresentation_TagDeleted;
+                tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
+                _Tags.Add(tagPresentation);
+
+            }
         }
 
         private void TagPresentation_TagDeleted(TagViewModel tag)

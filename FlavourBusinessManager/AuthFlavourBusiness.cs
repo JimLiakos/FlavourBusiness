@@ -188,7 +188,7 @@ namespace FlavourBusinessManager
         static string lockObj = "lock";
 
         /// <MetaDataID>{9af4d2e0-c30c-451c-a932-5fff125e1467}</MetaDataID>
-        private static ObjectStorage OpenFlavourBusinessesStorage()
+        public static ObjectStorage OpenFlavourBusinessesStorage()
         {
             lock (lockObj)
             {
