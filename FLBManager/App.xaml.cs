@@ -67,12 +67,13 @@ namespace FLBManager
             //                                                                   select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
 
             // var sds = items[0].ClientSession;
-            var sAsdsd = new AuthFlavourBusiness();
+            //var sAsdsd = new AuthFlavourBusiness();
 
-             var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
-            var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
-            var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
-            OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
+            // var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
+            //var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
+            //var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
+            //var sdsdsss = comp.Residents;
+            //OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
@@ -100,7 +101,7 @@ namespace FLBManager
             //Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
 
-            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
+            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "",true);
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
