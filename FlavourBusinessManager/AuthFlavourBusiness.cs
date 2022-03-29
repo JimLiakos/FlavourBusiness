@@ -56,7 +56,12 @@ namespace FlavourBusinessManager
 
             var objectStorage = OpenFlavourBusinessesStorage();
             var ss = System.DateTime.Now - time;
-            
+            if (!System.Diagnostics.EventLog.SourceExists("PersistencySystem", "."))
+                System.Diagnostics.EventLog.CreateEventSource("PersistencySystem", "OOAdvance");
+            System.Diagnostics.EventLog myLog = new System.Diagnostics.EventLog();
+            myLog.Source = "PersistencySystem";
+            myLog.WriteEntry(string.Format("Open '{0}' storage timespan {1}", objectStorage.StorageMetaData.StorageName, ss.ToString()), System.Diagnostics.EventLogEntryType.Information);
+
             lock (objectStorage)
             {
                 try

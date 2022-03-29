@@ -370,7 +370,10 @@ namespace FLBManager.ViewModel.Preparation
         {
             GetOrCreateItemsPreparationInfo(menuItem).RemovePreparationTag(tag);
         }
-
+        public List<ITag> GetTagsFor(MenuModel.IMenuItem menuItem)
+        {
+            return GetOrCreateItemsPreparationInfo(menuItem).PreparationTags;
+        }
 
         internal MenuModel.ITag NewTagFor(MenuModel.IItemsCategory itemsCategory)
         {
@@ -380,6 +383,10 @@ namespace FLBManager.ViewModel.Preparation
         internal void RemoveTagFrom(MenuModel.IItemsCategory itemsCategory, MenuModel.ITag tag)
         {
             GetOrCreateItemsPreparationInfo(itemsCategory).RemovePreparationTag(tag);
+        }
+        public List<ITag> GetTagsFor(MenuModel.IItemsCategory itemsCategory)
+        {
+            return GetOrCreateItemsPreparationInfo(itemsCategory).PreparationTags;
         }
 
 

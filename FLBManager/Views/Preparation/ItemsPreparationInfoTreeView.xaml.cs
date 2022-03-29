@@ -28,6 +28,8 @@ namespace FLBManager.Views.Preparation
             InitializeComponent();
             Unloaded += ItemsPreparationInfoTreeView_Unloaded;
             Loaded += ItemsPreparationInfoTreeView_Loaded;
+
+            
         }
 
         private void ItemsPreparationInfoTreeView_Loaded(object sender, RoutedEventArgs e)
@@ -120,5 +122,29 @@ namespace FLBManager.Views.Preparation
 
 
     delegate void PreviewMouseDownHandle(object sender, MouseButtonEventArgs e);
+
+
+
+    //public class HalfConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //    {
+
+    //        if (value is double)
+    //            return ((double)value) / 2;
+
+
+    //        if (value is int)
+    //            return ((int)value) / 2;
+
+    //        return 0;
+
+    //    }
+
+    //    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //    {
+    //        return DependencyProperty.UnsetValue;
+    //    }
+    //}
 
 }

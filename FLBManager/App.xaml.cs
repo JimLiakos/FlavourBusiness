@@ -78,7 +78,7 @@ namespace FLBManager
             // var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
             //var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
             //var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
-           //OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
+            //OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
@@ -100,8 +100,10 @@ namespace FLBManager
             //var obk= FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
-            Backup(@"F:\NewPc\Azure blob storage\Backup");
+            //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
+
+            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
             //Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
@@ -301,7 +303,7 @@ namespace FLBManager
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.OptionGroup)] = "MenuModel.JsonViewModel.OptionGroup";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.ItemSelectorOption)] = "MenuModel.JsonViewModel.ItemSelectorOption";
 
-            
+
 
 
 
@@ -488,26 +490,26 @@ namespace FLBManager
         }
         private static void Restore(string backupFolder, string storageLocation, string accountName, string accountKey, bool overrideObjectStorage)
         {
-            //try
-            //{
-            //    var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinesses"));
-            //    ObjectStorage.Restore(archive, "FlavourBusinesses", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
+            try
+            {
+                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinesses"));
+                ObjectStorage.Restore(archive, "FlavourBusinesses", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
 
-            //}
-            //catch (Exception error)
-            //{
-            //}
+            }
+            catch (Exception error)
+            {
+            }
 
 
-            //try
-            //{
-            //    var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinessesResources"));
-            //    ObjectStorage.Restore(archive, "FlavourBusinessesResources", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
+            try
+            {
+                var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "FlavourBusinessesResources"));
+                ObjectStorage.Restore(archive, "FlavourBusinessesResources", storageLocation, "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider", false, accountName, accountKey);
 
-            //}
-            //catch (Exception error)
-            //{
-            //}
+            }
+            catch (Exception error)
+            {
+            }
             try
             {
                 var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, "jimliakosgmailcom"));

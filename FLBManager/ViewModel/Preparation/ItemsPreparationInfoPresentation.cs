@@ -440,10 +440,15 @@ namespace FLBManager.ViewModel.Preparation
                 if (_Tags == null)
                 {
                     List<TagViewModel> tags = new List<TagViewModel>();
+                    List<ITag> preparationTags = null;
+                    if (this.ItemsCategory != null)
+                        preparationTags= this.PreparationStationPresentation.GetTagsFor(this.ItemsCategory);
+                    if (this.MenuItem != null)
+                        preparationTags= this.PreparationStationPresentation.GetTagsFor(this.MenuItem);
 
-                    if (ItemsPreparationInfo.PreparationTags != null)
+                    if (preparationTags != null)
                     {
-                        foreach (var tag in ItemsPreparationInfo.PreparationTags)
+                        foreach (var tag in preparationTags)
                         {
                             var tagPresentation = new TagViewModel(tag);
                             tagPresentation.TagDeleted += TagPresentation_TagDeleted;

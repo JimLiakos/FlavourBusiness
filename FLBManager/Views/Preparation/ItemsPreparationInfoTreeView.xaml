@@ -40,8 +40,8 @@
                         <Button x:Name="TagsToggle" Margin="5,0,0,0"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
                             <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
                         </Button>
-                        <Popup IsOpen="{Binding TagsPopupOpen}" Placement="Bottom"  AllowsTransparency="True"  PopupAnimation="Fade" x:Name="LanguagePopup"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
-                            <Grid MinWidth="400" >
+                        <Popup x:Name="TagsPopup" IsOpen="{Binding TagsPopupOpen}" HorizontalOffset="-200" Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
+                            <Grid x:Name="TagsArea" MinWidth="400" Background="{StaticResource WindowBackgroundBrush}">
                                 <Border  BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
                                     <Grid Margin="5,0,5,0" IsEnabled="{Binding IsEditable}" Grid.Row="4" MinHeight="45">
                                         <Grid.ColumnDefinitions>
