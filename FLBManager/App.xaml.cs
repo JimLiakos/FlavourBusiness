@@ -31,7 +31,13 @@ namespace FLBManager
         protected override void OnStartup(StartupEventArgs e)
         {
 
-
+            //try
+            //{
+            //    var auth = new AuthFlavourBusiness();
+            //}
+            //catch (Exception error)
+            //{
+            //}
             List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
             FlavourBusinessManager.RoomService.ItemPreparation itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared };
             itemPreparations.Add(itemPreparation);
@@ -67,12 +73,12 @@ namespace FLBManager
             //                                                                   select item.Fetching(item.ClientSession)).ToList();//.Select(x => x.item).ToList();
 
             // var sds = items[0].ClientSession;
-            var sAsdsd = new AuthFlavourBusiness();
+            //var sAsdsd = new AuthFlavourBusiness();
 
-             var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
-            var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
-            var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
-            OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
+            // var objSt= AuthFlavourBusiness.OpenFlavourBusinessesStorage();
+            //var sdsao= (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components.Select(x => x.Identity.ToString()).ToArray();
+            //var comp = (objSt.StorageMetaData as OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Components[6];
+           //OOAdvantech.Json.JsonConvert.SerializeObject(objSt.StorageMetaData);
 
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
@@ -94,13 +100,13 @@ namespace FLBManager
             //var obk= FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
-            //Backup(@"F:\NewPc\Azure blob storage\Backup");
+            Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
             //Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
-            //Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
+            //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
 
-            //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
+           // Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "",true);
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "angularhost", "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
@@ -461,14 +467,14 @@ namespace FLBManager
             string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
 
 
-            //var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
-            //OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            //demoStorage.Backup(archive);
+            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
+            demoStorage.Backup(archive);
 
-            //storageName = "FlavourBusinessesResources";
-            //demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
-            //archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            //demoStorage.Backup(archive);
+            storageName = "FlavourBusinessesResources";
+            demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
+            demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
             string suffix = "";
@@ -476,8 +482,8 @@ namespace FLBManager
             while (System.IO.File.Exists(string.Format(@"{0}\{1}.dat", backupFolder, storageName + suffix)))
                 suffix = (i++).ToString();
 
-            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType); // (storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
-            var archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName + suffix));
+            demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType); // (storageName, "angularhost", storageType, "angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==");
+            archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName + suffix));
             demoStorage.Backup(archive);
         }
         private static void Restore(string backupFolder, string storageLocation, string accountName, string accountKey, bool overrideObjectStorage)

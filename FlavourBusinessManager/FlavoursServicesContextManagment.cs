@@ -256,13 +256,14 @@ namespace FlavourBusinessManager
             ObjectStorage objectStorage = null;
             try
             {
+                var time = System.DateTime.Now;
+
                 objectStorage = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
                                                             storageType, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
 
+                var ss = System.DateTime.Now - time;
 
-                //var sss = OOAdvantech.MetaDataRepository.Classifier.GetClassifier(typeof(RoomService.ItemPreparation)).Features.Where(x => x.Name == "FlavourItems").FirstOrDefault() as OOAdvantech.MetaDataRepository.AssociationEndRealization;
-                var ss = ObjectStorage.GetStorageOfObject(objectStorage.StorageMetaData);
 
                 lock (objectStorage)
                 {

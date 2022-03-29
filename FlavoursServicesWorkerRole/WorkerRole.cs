@@ -74,6 +74,8 @@ namespace FlavoursServicesWorkerRole
 
             try
             {
+
+                
 #if DEBUG && !DeviceDotNet
                 RemotingServices.SetDebugLeaseTime();
 #else

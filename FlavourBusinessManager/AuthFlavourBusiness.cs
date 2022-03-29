@@ -52,7 +52,11 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{ed5a1afd-aa57-404a-ba84-10b0548bb57c}</MetaDataID>
         public AuthFlavourBusiness()
         {
+            var time = System.DateTime.Now;
+
             var objectStorage = OpenFlavourBusinessesStorage();
+            var ss = System.DateTime.Now - time;
+            
             lock (objectStorage)
             {
                 try
