@@ -15,6 +15,7 @@ namespace MenuModel.JsonViewModel
         public Tag(ITag copy)
         {
             _Name = copy.MultilingualName;
+            Uid = copy.Uid;
         }
         public Tag()
         {
@@ -36,5 +37,7 @@ namespace MenuModel.JsonViewModel
         }
 
         public Multilingual MultilingualName { get => new Multilingual(_Name); set { _Name = value; } }
+
+        public string Uid { get; set; }
     }
 }

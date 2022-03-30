@@ -254,7 +254,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (PreparationTagLock)
             {
-                TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PreparationTags);
+                if (_PreparationTags == null)
+                    TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(new List<ITag>());
+                else
+                    TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PreparationTags);
             }
         }
         /// <MetaDataID>{cf7a1312-160c-40e5-9477-7b7c7d7a0e24}</MetaDataID>
@@ -266,7 +269,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (!string.IsNullOrWhiteSpace(TagsJson))
                     _PreparationTags = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.Tag>>(TagsJson).OfType<ITag>().ToList();
                 else
-                    _PreparationTags = new List<ITag>();
+                    _PreparationTags = null;
             }
             //Json.JsonConvert.DeserializeObject 
         }
@@ -275,10 +278,19 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (PreparationTagLock)
             {
-                var tag = new Tag();
-                tag.Name = "new Tag";
-                _PreparationTags.Add(tag);
-                return tag;
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    var tag = new Tag();
+                    tag.Name = "new Tag";
+                    if (_PreparationTags == null)
+                        _PreparationTags = new List<ITag>();
+                    _PreparationTags.Add(tag);
+
+                    stateTransition.Consistent = true;
+                    return tag;
+                }
+
             }
         }
 
@@ -288,9 +300,37 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (PreparationTagLock)
             {
-                var preparationTag = _PreparationTags.OfType<Tag>().Where(x => x.Uid == (tag as Tag).Uid).FirstOrDefault();
-                if (preparationTag != null)
-                    _PreparationTags.Remove(preparationTag);
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    var preparationTag = _PreparationTags.OfType<Tag>().Where(x => x.Uid == (tag as Tag).Uid).FirstOrDefault();
+                    if (preparationTag != null)
+                        _PreparationTags.Remove(preparationTag);
+                    if (_PreparationTags == null && _PreparationTags.Count == 0)
+                        _PreparationTags = null;
+
+
+                    stateTransition.Consistent = true;
+                }
+
+            }
+
+
+        }
+
+        public void UpdateTag(ITag tag)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var existingTag = _PreparationTags.Where(x => x.Uid == tag.Uid).FirstOrDefault();
+                if (existingTag != null)
+                {
+                    var index = _PreparationTags.IndexOf(existingTag);
+                    _PreparationTags.RemoveAt(index);
+                    _PreparationTags.Insert(index, tag);
+                }
+                stateTransition.Consistent = true;
             }
 
 
@@ -298,7 +338,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{848fe936-d592-4479-a878-b8f779222438}</MetaDataID>
-        List<ITag> _PreparationTags = new List<ITag>();
+        List<ITag> _PreparationTags = null;
         /// <MetaDataID>{4427b61d-87f1-4cc8-a4d9-c45201e2f726}</MetaDataID>
         public List<ITag> PreparationTags
         {

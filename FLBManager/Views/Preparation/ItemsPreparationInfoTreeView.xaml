@@ -43,7 +43,7 @@
                         <Popup x:Name="TagsPopup" IsOpen="{Binding TagsPopupOpen}" HorizontalOffset="-200" Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
                             <Grid x:Name="TagsArea" MinWidth="400" Background="{StaticResource WindowBackgroundBrush}">
                                 <Border  BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
-                                    <Grid Margin="5,0,5,0" IsEnabled="{Binding IsEditable}" Grid.Row="4" MinHeight="45">
+                                    <Grid Margin="5,0,5,0"  Grid.Row="4" MinHeight="45">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="*"/>

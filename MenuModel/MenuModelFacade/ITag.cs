@@ -11,5 +11,7 @@ namespace MenuModel
 
         /// <MetaDataID>{5d4f737b-05d3-4648-8460-4b07130196b9}</MetaDataID>
         Multilingual MultilingualName { get; }
+
+        string Uid { get; }
     }
 }

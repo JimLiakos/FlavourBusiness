@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuItemsEditor.ViewModel;
 using MenuModel;
+using OOAdvantech.PersistenceLayer;
 using UIBaseEx;
 using WPFUIElementObjectBind;
 
@@ -94,6 +95,12 @@ namespace FLBManager.ViewModel.Preparation
                 ToggleTags();
             });
 
+            NewTagCommand = new RelayCommand((object sender) =>
+            {
+                NewTag();
+            });
+
+
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
                 AddSubPreparationStation();
@@ -108,7 +115,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-    
+
         /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent)
         {
@@ -125,6 +132,12 @@ namespace FLBManager.ViewModel.Preparation
             {
                 ToggleTags();
             });
+
+            NewTagCommand = new RelayCommand((object sender) =>
+            {
+                NewTag();
+            });
+
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
                 AddSubPreparationStation();
@@ -247,7 +260,7 @@ namespace FLBManager.ViewModel.Preparation
                 {
                     this.PreparationStationPresentation.SetCookingTimeSpanInMin(this.ItemsCategory, value);
                     Refresh();
-                    
+
                 }
                 if (this.MenuItem != null)
                     this.PreparationStationPresentation.SetCookingTimeSpanInMin(this.MenuItem, value);
@@ -338,14 +351,14 @@ namespace FLBManager.ViewModel.Preparation
 
 
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
-                
+
                 UpdatePresentationItems();
 
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CookingTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
-                
+
 
 
             }
@@ -439,24 +452,22 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (_Tags == null)
                 {
-                    List<TagViewModel> tags = new List<TagViewModel>();
-                    List<ITag> preparationTags = null;
-                    if (this.ItemsCategory != null)
-                        preparationTags= this.PreparationStationPresentation.GetTagsFor(this.ItemsCategory);
-                    if (this.MenuItem != null)
-                        preparationTags= this.PreparationStationPresentation.GetTagsFor(this.MenuItem);
+                    List<TagViewModel> tagsPresentations = new List<TagViewModel>();
 
-                    if (preparationTags != null)
+                    if (this.ItemsCategory != null)
+                        tagsPresentations = this.PreparationStationPresentation.GetTagsFor(this.ItemsCategory);
+                    if (this.MenuItem != null)
+                        tagsPresentations = this.PreparationStationPresentation.GetTagsFor(this.MenuItem);
+
+                    if (tagsPresentations != null)
                     {
-                        foreach (var tag in preparationTags)
+                        foreach (var tagPresentation in tagsPresentations)
                         {
-                            var tagPresentation = new TagViewModel(tag);
                             tagPresentation.TagDeleted += TagPresentation_TagDeleted;
                             tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
-                            tags.Add(tagPresentation);
                         }
                     }
-                    _Tags = tags;
+                    _Tags = tagsPresentations;
                 }
 
                 return _Tags;
@@ -482,17 +493,15 @@ namespace FLBManager.ViewModel.Preparation
         {
             if (this.ItemsCategory != null)
             {
-                var tag = this.PreparationStationPresentation.NewTagFor(this.ItemsCategory);
-
-                var tagPresentation = new TagViewModel(tag);
+                var tagPresentation = this.PreparationStationPresentation.NewTagFor(this.ItemsCategory);
                 tagPresentation.TagDeleted += TagPresentation_TagDeleted;
                 tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
                 _Tags.Add(tagPresentation);
             }
             if (this.MenuItem != null)
             {
-                var tag = this.PreparationStationPresentation.NewTagFor(this.MenuItem);
-                var tagPresentation = new TagViewModel(tag);
+                var tagPresentation = this.PreparationStationPresentation.NewTagFor(this.MenuItem);
+
                 tagPresentation.TagDeleted += TagPresentation_TagDeleted;
                 tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
                 _Tags.Add(tagPresentation);
@@ -502,9 +511,29 @@ namespace FLBManager.ViewModel.Preparation
 
         private void TagPresentation_TagDeleted(TagViewModel tag)
         {
-            _Tags.Remove(tag);
-            tag.TagDeleted -= TagPresentation_TagDeleted;
-            ItemsPreparationInfo.RemovePreparationTag(tag.Tag);
+
+            if (this.ItemsCategory != null)
+            {
+                string itemsCategoryUri = ObjectStorage.GetStorageOfObject(ItemsCategory).GetPersistentObjectUri(ItemsCategory);
+                if (itemsCategoryUri == tag.ItemsPreparationInfo.ItemsInfoObjectUri)
+                {
+
+                }
+            }
+
+            if (this.MenuItem != null)
+            {
+                string menuItemUri = ObjectStorage.GetStorageOfObject(MenuItem).GetPersistentObjectUri(MenuItem);
+                if (menuItemUri == tag.ItemsPreparationInfo.ItemsInfoObjectUri)
+                {
+
+                }
+            }
+
+            //_Tags.Remove(tag);
+            //tag.TagDeleted -= TagPresentation_TagDeleted;
+            //tag.PropertyChanged += TagPresentation_PropertyChanged;
+
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
 
         }
@@ -537,7 +566,7 @@ namespace FLBManager.ViewModel.Preparation
                     return _Members;
 
 
-          
+
                 List<FBResourceTreeNode> members = new List<FBResourceTreeNode>();
 
                 if (ItemsCategory != null)
@@ -582,7 +611,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
-    
+
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
@@ -731,7 +760,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
-        public bool TagsPopupOpen { get;  set; }
+        public bool TagsPopupOpen { get; set; }
 
         /// <MetaDataID>{68294fd3-55bc-4e63-ac2d-453faacd02d9}</MetaDataID>
         public void Refresh(MenuItem menuItemWithChanges)

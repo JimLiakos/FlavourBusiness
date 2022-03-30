@@ -32,6 +32,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+1")]
         string Description { get; set; }
 
+        void UpdateTag(ITag tag);
+
 
         ///// <MetaDataID>{edf34b1e-b6bb-45f1-a720-9d3242bf857c}</MetaDataID>
         //[BackwardCompatibilityID("+3")]

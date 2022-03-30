@@ -282,7 +282,7 @@ namespace FLBManager.ViewModel.Preparation
         internal double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
             var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
-            
+
 
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
@@ -304,7 +304,7 @@ namespace FLBManager.ViewModel.Preparation
                 var des = itemsPreparationInfo.Description;
                 if (itemsPreparationInfo.CookingTimeSpanInMin != null)
                 {
-                    
+
                     var sss = itemsPreparationInfo.CookingTimeSpanInMin;
                     return itemsPreparationInfo.CookingTimeSpanInMin.Value;
                 }
@@ -313,7 +313,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
-   
+
 
 
 
@@ -340,7 +340,7 @@ namespace FLBManager.ViewModel.Preparation
             return 1;
         }
 
-        
+
 
         /// <MetaDataID>{3e3ed675-1337-4698-8101-ed0a7a87e08b}</MetaDataID>
         internal void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
@@ -361,32 +361,72 @@ namespace FLBManager.ViewModel.Preparation
             GetOrCreateItemsPreparationInfo(menuItem).CookingTimeSpanInMin = timeSpanInMinutes;
         }
 
-        internal MenuModel.ITag NewTagFor(MenuModel.IMenuItem menuItem)
+        Dictionary<string, TagViewModel> Tags = new Dictionary<string, TagViewModel>();
+        TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo)
         {
-            return GetOrCreateItemsPreparationInfo(menuItem).NewPrepatationTag();
+            TagViewModel tagViewModel = null;
+            if (!Tags.TryGetValue(tag.Uid, out tagViewModel))
+            {
+                tagViewModel = new TagViewModel(tag, itemsPreparationInfo);
+                Tags[tag.Uid] = tagViewModel;
+            }
+            return tagViewModel;
         }
 
-        internal void  RemoveTagFrom(MenuModel.IMenuItem menuItem, MenuModel.ITag tag)
+        internal TagViewModel NewTagFor(MenuModel.IMenuItem menuItem)
         {
-            GetOrCreateItemsPreparationInfo(menuItem).RemovePreparationTag(tag);
-        }
-        public List<ITag> GetTagsFor(MenuModel.IMenuItem menuItem)
-        {
-            return GetOrCreateItemsPreparationInfo(menuItem).PreparationTags;
+            var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(menuItem);
+            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo);
         }
 
-        internal MenuModel.ITag NewTagFor(MenuModel.IItemsCategory itemsCategory)
+        internal void RemoveTagFrom(MenuModel.IMenuItem menuItem, TagViewModel tagPresentation)
         {
-            return GetOrCreateItemsPreparationInfo(itemsCategory).NewPrepatationTag();
+
+            GetOrCreateItemsPreparationInfo(menuItem).RemovePreparationTag(tagPresentation.Tag);
+            Tags.Remove(tagPresentation.Tag.Uid);
+        }
+        public List<TagViewModel> GetTagsFor(MenuModel.IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.PreparationTags != null)
+                {
+                    return (from tag in itemsPreparationInfo.PreparationTags
+                            select GetTagViewModel(tag, itemsPreparationInfo)).ToList();
+                }
+            }
+            return new List<TagViewModel>();
+
+            //var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(menuItem);
+            //return (from tag in itemsPreparationInfo.PreparationTags
+            //        select GetTagViewModel(tag, itemsPreparationInfo)).ToList();
         }
 
-        internal void RemoveTagFrom(MenuModel.IItemsCategory itemsCategory, MenuModel.ITag tag)
+        internal TagViewModel NewTagFor(MenuModel.IItemsCategory itemsCategory)
         {
-            GetOrCreateItemsPreparationInfo(itemsCategory).RemovePreparationTag(tag);
+            var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(itemsCategory);
+            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo);
         }
-        public List<ITag> GetTagsFor(MenuModel.IItemsCategory itemsCategory)
+
+        internal void RemoveTagFrom(MenuModel.IItemsCategory itemsCategory, TagViewModel tagPresentation)
         {
-            return GetOrCreateItemsPreparationInfo(itemsCategory).PreparationTags;
+            GetOrCreateItemsPreparationInfo(itemsCategory).RemovePreparationTag(tagPresentation.Tag);
+            Tags.Remove(tagPresentation.Tag.Uid);
+
+        }
+        public List<TagViewModel> GetTagsFor(MenuModel.IItemsCategory itemsCategory)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.PreparationTags != null)
+                {
+                    return (from tag in itemsPreparationInfo.PreparationTags
+                            select GetTagViewModel(tag, itemsPreparationInfo)).ToList();
+                }
+            }
+            return new List<TagViewModel>();
         }
 
 
@@ -453,7 +493,7 @@ namespace FLBManager.ViewModel.Preparation
 
             GetOrCreateItemsPreparationInfo(itemsCategory).IsCooked = isCooked;
 
-              foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+            foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
                 itemsPreparationInfoPresentation.Refresh();
 
             if (PreparationStationItems != null)
@@ -930,7 +970,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
- 
+
         /// <MetaDataID>{8354b66c-0c6a-451f-bb01-dbce66d0ac92}</MetaDataID>
         public bool StationPrepareAllItems(MenuModel.IItemsCategory itemsCategory)
         {
@@ -948,7 +988,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
-  
+
 
 
 

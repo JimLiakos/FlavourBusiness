@@ -1,4 +1,5 @@
 using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -11,14 +12,15 @@ namespace MenuModel
     {
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.MultilingualMember<string> _Name = new OOAdvantech.MultilingualMember<string>();
+        MultilingualMember<string> _Name = new OOAdvantech.MultilingualMember<string>();
         
         /// <MetaDataID>{ff0c0bbc-f0fd-40de-bf5b-682454e3bbd3}</MetaDataID>
         [PersistentMember(nameof(_Name))]
         [BackwardCompatibilityID("+1")]
+        [JsonIgnore]
         public string Name
         {
             get => _Name;
@@ -36,6 +38,8 @@ namespace MenuModel
             }
         }
 
+        
+
         public Multilingual MultilingualName =>  new Multilingual(_Name);
 
 
@@ -44,6 +48,12 @@ namespace MenuModel
             Uid = System.Guid.NewGuid().ToString("N");
 
         }
-        public string Uid;
+        [JsonConstructor]
+        public Tag(Multilingual multilingualName,string uid)
+        {
+            _Name = new MultilingualMember<string>( multilingualName.Values);
+            Uid = uid;
+        }
+        public string Uid { get; set; }
     }
 }

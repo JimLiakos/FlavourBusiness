@@ -4444,6 +4444,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             argsTypes[0] = typeof(MenuModel.ITag);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "RemovePreparationTag", args, argsTypes);
         }
+        
+        public void UpdateTag(MenuModel.ITag tag)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = tag;
+            argsTypes[0] = typeof(MenuModel.ITag);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "UpdateTag", args, argsTypes);
+        }
     }
     
     public sealed class CNSPr_IPreparationStationRuntime_PreparationItemsChangeState : OOAdvantech.Remoting.EventConsumerHandler
