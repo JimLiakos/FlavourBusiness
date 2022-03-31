@@ -31,9 +31,10 @@ namespace MenuItemsEditor.ViewModel
 
         }
 
-        public TagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo) : this(tag)
+        public TagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, string ownerUri) : this(tag)
         {
             this.ItemsPreparationInfo = itemsPreparationInfo;
+            this.OwnerUri = ownerUri;
         }
 
         public string Name
@@ -79,7 +80,8 @@ namespace MenuItemsEditor.ViewModel
 
         public WPFUIElementObjectBind.RelayCommand DeleteTagCommand { get; protected set; }
 
-        public IItemsPreparationInfo ItemsPreparationInfo;
+        public readonly IItemsPreparationInfo  ItemsPreparationInfo;
+        public readonly string OwnerUri;
 
         /// <exclude>Excluded</exclude>
         bool _Edit;

@@ -4436,6 +4436,13 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             return this.Proxy.GetValue<MenuModel.ITag>(retValue);
         }
         
+        public void ClearTags()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "ClearTags", args, argsTypes);
+        }
+        
         public void RemovePreparationTag(MenuModel.ITag tag)
         {
             object[] args = new object[1];
@@ -4452,6 +4459,16 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             args[0] = tag;
             argsTypes[0] = typeof(MenuModel.ITag);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "UpdateTag", args, argsTypes);
+        }
+        
+        public System.Collections.Generic.List<MenuModel.ITag> Copy(System.Collections.Generic.List<MenuModel.ITag> tags)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = tags;
+            argsTypes[0] = typeof(System.Collections.Generic.List<MenuModel.ITag>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "Copy", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<MenuModel.ITag>>(retValue);
         }
     }
     

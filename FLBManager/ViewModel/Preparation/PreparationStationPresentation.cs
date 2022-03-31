@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuItemsEditor.ViewModel;
 using MenuModel;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
 using StyleableWindow;
@@ -362,30 +363,63 @@ namespace FLBManager.ViewModel.Preparation
         }
 
         Dictionary<string, TagViewModel> Tags = new Dictionary<string, TagViewModel>();
-        TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo)
+        TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, IMenuItem menuItem)
         {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
             TagViewModel tagViewModel = null;
-            if (!Tags.TryGetValue(tag.Uid, out tagViewModel))
+            if (!Tags.TryGetValue(tag.Uid + menuItemUri, out tagViewModel))
             {
-                tagViewModel = new TagViewModel(tag, itemsPreparationInfo);
+                tagViewModel = new TagViewModel(tag, itemsPreparationInfo, menuItemUri);
+                Tags[tag.Uid + menuItemUri] = tagViewModel;
+            }
+            return tagViewModel;
+        }
+
+        TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, IItemsCategory itemsCategory)
+        {
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            TagViewModel tagViewModel = null;
+            if (!Tags.TryGetValue(tag.Uid + itemsCategoryUri, out tagViewModel))
+            {
+                tagViewModel = new TagViewModel(tag, itemsPreparationInfo, itemsCategoryUri);
                 Tags[tag.Uid] = tagViewModel;
             }
             return tagViewModel;
         }
 
-        internal TagViewModel NewTagFor(MenuModel.IMenuItem menuItem)
+
+
+        internal TagViewModel NewTagFor(IMenuItem menuItem)
         {
             var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(menuItem);
-            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo);
+            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo, menuItem);
         }
 
-        internal void RemoveTagFrom(MenuModel.IMenuItem menuItem, TagViewModel tagPresentation)
+        internal List<TagViewModel> RemoveTagFrom(IMenuItem menuItem, TagViewModel tagPresentation)
         {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            var itemsPreparationInfos = PreparationStation.ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri).FirstOrDefault();
 
-            GetOrCreateItemsPreparationInfo(menuItem).RemovePreparationTag(tagPresentation.Tag);
-            Tags.Remove(tagPresentation.Tag.Uid);
+            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.OwnerUri);
+
+            if (itemsPreparationInfos == tagPresentation.ItemsPreparationInfo)
+            {
+                itemsPreparationInfos.RemovePreparationTag(tagPresentation.Tag);
+                List<TagViewModel> tagsPresentations = Tags.Values.Where(x => x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x != tagPresentation).ToList();
+                return tagsPresentations;
+            }
+            else
+            {
+                var itemsInfoObjectUri = tagPresentation.ItemsPreparationInfo.ItemsInfoObjectUri;
+                var tags = Tags.Values.Where(x => x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x.Tag.Uid != tagPresentation.Tag.Uid).Select(x => x.Tag).ToList();
+                if (itemsPreparationInfos == null)
+                    itemsPreparationInfos = GetOrCreateItemsPreparationInfo(menuItem);
+
+                return (from tag in itemsPreparationInfos.Copy(tags)
+                        select GetTagViewModel(tag, itemsPreparationInfos, menuItem)).ToList();
+            }
         }
-        public List<TagViewModel> GetTagsFor(MenuModel.IMenuItem menuItem)
+        public List<TagViewModel> GetTagsFor(IMenuItem menuItem)
         {
             var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
@@ -393,7 +427,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (itemsPreparationInfo.PreparationTags != null)
                 {
                     return (from tag in itemsPreparationInfo.PreparationTags
-                            select GetTagViewModel(tag, itemsPreparationInfo)).ToList();
+                            select GetTagViewModel(tag, itemsPreparationInfo, menuItem)).ToList();
                 }
             }
             return new List<TagViewModel>();
@@ -406,14 +440,32 @@ namespace FLBManager.ViewModel.Preparation
         internal TagViewModel NewTagFor(MenuModel.IItemsCategory itemsCategory)
         {
             var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(itemsCategory);
-            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo);
+            return GetTagViewModel(itemsPreparationInfo.NewPrepatationTag(), itemsPreparationInfo, itemsCategory);
         }
 
-        internal void RemoveTagFrom(MenuModel.IItemsCategory itemsCategory, TagViewModel tagPresentation)
+        internal List<TagViewModel> RemoveTagFrom(IItemsCategory itemsCategory, TagViewModel tagPresentation)
         {
-            GetOrCreateItemsPreparationInfo(itemsCategory).RemovePreparationTag(tagPresentation.Tag);
-            Tags.Remove(tagPresentation.Tag.Uid);
 
+            string menuItemUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri).FirstOrDefault();
+
+            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.OwnerUri);
+
+            if (itemsPreparationInfos == tagPresentation.ItemsPreparationInfo)
+            {
+                itemsPreparationInfos.RemovePreparationTag(tagPresentation.Tag);
+                List<TagViewModel> tagsPresentations = Tags.Values.Where(x => x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x != tagPresentation).ToList();
+                return tagsPresentations;
+            }
+            else
+            {
+                var tags = Tags.Values.Where(x => x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x != tagPresentation).Select(x => x.Tag).ToList();
+                if (itemsPreparationInfos == null)
+                    itemsPreparationInfos = GetOrCreateItemsPreparationInfo(itemsCategory);
+
+                return (from tag in itemsPreparationInfos.Copy(tags)
+                        select GetTagViewModel(tag, itemsPreparationInfos, itemsCategory)).ToList();
+            }
         }
         public List<TagViewModel> GetTagsFor(MenuModel.IItemsCategory itemsCategory)
         {
@@ -423,7 +475,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (itemsPreparationInfo.PreparationTags != null)
                 {
                     return (from tag in itemsPreparationInfo.PreparationTags
-                            select GetTagViewModel(tag, itemsPreparationInfo)).ToList();
+                            select GetTagViewModel(tag, itemsPreparationInfo, itemsCategory)).ToList();
                 }
             }
             return new List<TagViewModel>();
@@ -643,17 +695,7 @@ namespace FLBManager.ViewModel.Preparation
                 string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
                 itemsPreparationInfo = this.PreparationStation.NewPreparationInfo(uri, ItemsPreparationInfoType.PreparationTime);
                 return itemsPreparationInfo;
-
-
-                //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-                //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
-                //    itemsPreparationInfoPresentation.Refresh();
             }
-
-            //if (PreparationStationItems != null)
-            //    PreparationStationItems.Refresh();
-            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-
         }
 
 

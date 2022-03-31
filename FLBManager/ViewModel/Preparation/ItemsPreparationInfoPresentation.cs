@@ -501,38 +501,23 @@ namespace FLBManager.ViewModel.Preparation
             if (this.MenuItem != null)
             {
                 var tagPresentation = this.PreparationStationPresentation.NewTagFor(this.MenuItem);
-
                 tagPresentation.TagDeleted += TagPresentation_TagDeleted;
                 tagPresentation.PropertyChanged += TagPresentation_PropertyChanged;
                 _Tags.Add(tagPresentation);
-
             }
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
         }
 
         private void TagPresentation_TagDeleted(TagViewModel tag)
         {
 
             if (this.ItemsCategory != null)
-            {
-                string itemsCategoryUri = ObjectStorage.GetStorageOfObject(ItemsCategory).GetPersistentObjectUri(ItemsCategory);
-                if (itemsCategoryUri == tag.ItemsPreparationInfo.ItemsInfoObjectUri)
-                {
-
-                }
-            }
-
+                _Tags = this.PreparationStationPresentation.RemoveTagFrom(this.ItemsCategory, tag);
             if (this.MenuItem != null)
-            {
-                string menuItemUri = ObjectStorage.GetStorageOfObject(MenuItem).GetPersistentObjectUri(MenuItem);
-                if (menuItemUri == tag.ItemsPreparationInfo.ItemsInfoObjectUri)
-                {
+                _Tags = this.PreparationStationPresentation.RemoveTagFrom(this.MenuItem, tag);
 
-                }
-            }
-
-            //_Tags.Remove(tag);
-            //tag.TagDeleted -= TagPresentation_TagDeleted;
-            //tag.PropertyChanged += TagPresentation_PropertyChanged;
+            tag.TagDeleted -= TagPresentation_TagDeleted;
+            tag.PropertyChanged -= TagPresentation_PropertyChanged;
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
 

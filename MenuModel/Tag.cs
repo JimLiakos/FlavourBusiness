@@ -54,6 +54,10 @@ namespace MenuModel
             _Name = new MultilingualMember<string>( multilingualName.Values);
             Uid = uid;
         }
+        public Tag(Tag copyTag):this()
+        {
+            _Name = new MultilingualMember<string>(copyTag._Name.Values);
+        }
         public string Uid { get; set; }
     }
 }

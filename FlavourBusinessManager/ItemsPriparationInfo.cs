@@ -201,6 +201,27 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+
+        public List<ITag> Copy(List<ITag> tags)
+        {
+            if (_PreparationTags != null && _PreparationTags.Count > 0)
+                throw new Exception("You can copy tags, only in items preparation info, with no tags.");
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _PreparationTags = new List<ITag>();
+                foreach (Tag copyTag in tags)
+                {
+                    Tag tag = new Tag(copyTag);
+                    _PreparationTags.Add(tag);
+                } 
+                stateTransition.Consistent = true;
+            }
+
+            return _PreparationTags.ToList();
+        }
+
+
         /// <exclude>Excluded</exclude>
         ItemsPreparationInfoType _ItemsPreparationInfoType;
 
@@ -255,7 +276,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             lock (PreparationTagLock)
             {
                 if (_PreparationTags == null)
-                    TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(new List<ITag>());
+                    TagsJson = null;
                 else
                     TagsJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PreparationTags);
             }
@@ -294,6 +315,17 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+
+        public void ClearTags()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _PreparationTags = null; 
+                stateTransition.Consistent = true;
+            }
+
+        }
         object PreparationTagLock = new object();
         public void RemovePreparationTag(ITag tag)
         {
