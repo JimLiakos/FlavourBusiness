@@ -215,6 +215,42 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        public System.Windows.FontWeight PreparationTimeFontWeight
+        {
+            get
+            {
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.PreparationTimeSpanInMinIsDefinedFor(this.ItemsCategory))
+                    return System.Windows.FontWeights.SemiBold;
+                if (this.MenuItem != null && this.PreparationStationPresentation.PreparationTimeSpanInMinIsDefinedFor(this.MenuItem))
+                    return System.Windows.FontWeights.SemiBold;
+                return System.Windows.FontWeights.Normal;
+            }
+        }
+
+        public bool HasPreparationTimeSpanValue
+        {
+            get
+            {
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.PreparationTimeSpanInMinIsDefinedFor(this.ItemsCategory))
+                    return true;
+                if (this.MenuItem != null && this.PreparationStationPresentation.PreparationTimeSpanInMinIsDefinedFor(this.MenuItem))
+                    return true;
+                return false;
+            }
+        }
+
+        public System.Windows.FontWeight CookingTimeFontWeight
+        {
+            get
+            {
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.CookingTimeSpanInMinIsDefinedFor(this.ItemsCategory))
+                    return System.Windows.FontWeights.SemiBold;
+                if (this.MenuItem != null && this.PreparationStationPresentation.CookingTimeSpanInMinIsDefinedFor(this.MenuItem))
+                    return System.Windows.FontWeights.SemiBold;
+                return System.Windows.FontWeights.Normal;
+            }
+        }
+
         /// <MetaDataID>{d37fedec-1f49-40c2-ad20-88b25bbaea54}</MetaDataID>
         public double PreparationTimeSpanInMin
         {
@@ -226,6 +262,8 @@ namespace FLBManager.ViewModel.Preparation
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+                
+                
                 return 1;
 
             }
@@ -240,6 +278,7 @@ namespace FLBManager.ViewModel.Preparation
                     PreparationStationPresentation.SetPreparationTimeSpanInMin(this.MenuItem, value);
 
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
             }
         }
 
@@ -358,6 +397,7 @@ namespace FLBManager.ViewModel.Preparation
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CookingTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
 
 
 

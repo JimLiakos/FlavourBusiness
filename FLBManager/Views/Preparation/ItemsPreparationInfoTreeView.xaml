@@ -33,10 +33,23 @@
                 <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Background="{StaticResource WindowBackgroundBrush}">
                     <StackPanel  Orientation="Horizontal" Margin="5,5,5,5">
                         <Label VerticalAlignment="Center"  Content="{Binding Name}" />
-                        <ControlsEx:TextBoxNumberWithUnit Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
+                        <ControlsEx:TextBoxNumberWithUnit FontWeight="{Binding PreparationTimeFontWeight}" Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min">
+                            <ControlsEx:TextBoxNumberWithUnit.Style>
+                                <Style  TargetType="{x:Type ControlsEx:TextBoxNumberWithUnit}" BasedOn="{StaticResource TextBoxStyle}">
+
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding HasPreparationTimeSpanValue}" Value="True">
+                                            <Setter Property="BorderThickness"  Value="2" />
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </ControlsEx:TextBoxNumberWithUnit.Style>
+                        </ControlsEx:TextBoxNumberWithUnit>
                         <!--<TextBlock Grid.Column="1" Margin="3,0,0,0"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>-->
                         <CheckBox Margin="5,0,0,0" Background="AliceBlue" VerticalAlignment="Center" Content="is cooked" IsChecked="{Binding IsCooked}" TabIndex="1"></CheckBox>
-                        <ControlsEx:TextBoxNumberWithUnit Width="60" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=CookingTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
+                        <ControlsEx:TextBoxNumberWithUnit Width="60"  FontWeight="{Binding CookingTimeFontWeight}" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=CookingTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
                         <Button x:Name="TagsToggle" Margin="5,0,0,0"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
                             <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
                         </Button>
@@ -77,7 +90,7 @@
 
 
                             </Grid>
-                            
+
                         </Popup>
 
                     </StackPanel>

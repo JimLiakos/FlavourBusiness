@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,10 +32,10 @@ namespace MenuItemsEditor.ViewModel
 
         }
 
-        public TagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, string ownerUri) : this(tag)
+        public TagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, string refersΤoUri) : this(tag)
         {
             this.ItemsPreparationInfo = itemsPreparationInfo;
-            this.OwnerUri = ownerUri;
+            this.RefersΤoUri = refersΤoUri;
         }
 
         public string Name
@@ -43,11 +44,20 @@ namespace MenuItemsEditor.ViewModel
             set
             {
 
-                Tag.Name = value;
+                
                 if (ItemsPreparationInfo != null)
                 {
-                    ItemsPreparationInfo.UpdateTag(Tag);
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                    {
+                        Tag.Name = value;
+                        ItemsPreparationInfo.UpdateTag(Tag);
+                        stateTransition.Consistent = true;
+                    }
+
                 }
+                else
+                    Tag.Name = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnTranslatedName)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
             }
@@ -81,7 +91,7 @@ namespace MenuItemsEditor.ViewModel
         public WPFUIElementObjectBind.RelayCommand DeleteTagCommand { get; protected set; }
 
         public readonly IItemsPreparationInfo  ItemsPreparationInfo;
-        public readonly string OwnerUri;
+        public readonly string RefersΤoUri;
 
         /// <exclude>Excluded</exclude>
         bool _Edit;

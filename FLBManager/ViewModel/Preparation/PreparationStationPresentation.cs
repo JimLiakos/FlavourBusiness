@@ -316,14 +316,64 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
+        internal bool PreparationTimeSpanInMinIsDefinedFor(IItemsCategory itemsCategory)
+        {
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            var isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == itemsCategoryUri && x.PreparationTimeSpanInMin != null).FirstOrDefault() != null;
+            return isDefined;
+        }
 
+        internal bool PreparationTimeSpanInMinIsDefinedFor(IMenuItem menuItem)
+        {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            List<IItemsPreparationInfo> itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            bool isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri && x.PreparationTimeSpanInMin != null).FirstOrDefault() != null;
+            return isDefined;
+        }
+
+
+
+        internal bool CookingTimeSpanInMinIsDefinedFor(IItemsCategory itemsCategory)
+        {
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            var isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == itemsCategoryUri && x.PreparationTimeSpanInMin != null).FirstOrDefault() != null;
+            return isDefined;
+        }
+
+        internal bool CookingTimeSpanInMinIsDefinedFor(IMenuItem menuItem)
+        {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            List<IItemsPreparationInfo> itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            bool isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri && x.CookingTimeSpanInMin != null).FirstOrDefault() != null;
+            return isDefined;
+        }
+
+        internal bool TagsAreDefinedFor(IItemsCategory itemsCategory)
+        {
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            var isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == itemsCategoryUri && x.PreparationTags != null).FirstOrDefault() != null;
+            return isDefined;
+        }
+
+        internal bool TagsAreDefinedFor(IMenuItem menuItem)
+        {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            List<IItemsPreparationInfo> itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            bool isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri && x.PreparationTags != null).FirstOrDefault() != null;
+            return isDefined;
+        }
 
         internal double GetPreparationTimeSpanInMin(IItemsCategory itemsCategory)
         {
             var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
 
+
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
+
                 if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
@@ -344,7 +394,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
         /// <MetaDataID>{3e3ed675-1337-4698-8101-ed0a7a87e08b}</MetaDataID>
-        internal void SetPreparationTimeSpanInMin(MenuModel.IMenuItem menuItem, double timeSpanInMinutes)
+        internal void SetPreparationTimeSpanInMin(IMenuItem menuItem, double timeSpanInMinutes)
         {
             GetOrCreateItemsPreparationInfo(menuItem).PreparationTimeSpanInMin = timeSpanInMinutes;
 
@@ -366,8 +416,7 @@ namespace FLBManager.ViewModel.Preparation
         TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, IMenuItem menuItem)
         {
             string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-            TagViewModel tagViewModel = null;
-            if (!Tags.TryGetValue(tag.Uid + menuItemUri, out tagViewModel))
+            if (!Tags.TryGetValue(tag.Uid + menuItemUri, out TagViewModel tagViewModel))
             {
                 tagViewModel = new TagViewModel(tag, itemsPreparationInfo, menuItemUri);
                 Tags[tag.Uid + menuItemUri] = tagViewModel;
@@ -378,11 +427,10 @@ namespace FLBManager.ViewModel.Preparation
         TagViewModel GetTagViewModel(ITag tag, IItemsPreparationInfo itemsPreparationInfo, IItemsCategory itemsCategory)
         {
             string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-            TagViewModel tagViewModel = null;
-            if (!Tags.TryGetValue(tag.Uid + itemsCategoryUri, out tagViewModel))
+            if (!Tags.TryGetValue(tag.Uid + itemsCategoryUri, out TagViewModel tagViewModel))
             {
                 tagViewModel = new TagViewModel(tag, itemsPreparationInfo, itemsCategoryUri);
-                Tags[tag.Uid] = tagViewModel;
+                Tags[tag.Uid + itemsCategoryUri] = tagViewModel;
             }
             return tagViewModel;
         }
@@ -400,7 +448,7 @@ namespace FLBManager.ViewModel.Preparation
             string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
             var itemsPreparationInfos = PreparationStation.ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri).FirstOrDefault();
 
-            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.OwnerUri);
+            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.RefersΤoUri);
 
             if (itemsPreparationInfos == tagPresentation.ItemsPreparationInfo)
             {
@@ -411,7 +459,7 @@ namespace FLBManager.ViewModel.Preparation
             else
             {
                 var itemsInfoObjectUri = tagPresentation.ItemsPreparationInfo.ItemsInfoObjectUri;
-                var tags = Tags.Values.Where(x => x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x.Tag.Uid != tagPresentation.Tag.Uid).Select(x => x.Tag).ToList();
+                var tags = Tags.Values.Where(x => x.ItemsPreparationInfo.ItemsInfoObjectUri == x.RefersΤoUri && x.ItemsPreparationInfo == tagPresentation.ItemsPreparationInfo && x.Tag.Uid != tagPresentation.Tag.Uid).Select(x => x.Tag).Distinct().ToList();
                 if (itemsPreparationInfos == null)
                     itemsPreparationInfos = GetOrCreateItemsPreparationInfo(menuItem);
 
@@ -446,10 +494,10 @@ namespace FLBManager.ViewModel.Preparation
         internal List<TagViewModel> RemoveTagFrom(IItemsCategory itemsCategory, TagViewModel tagPresentation)
         {
 
-            string menuItemUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-            var itemsPreparationInfos = PreparationStation.ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri).FirstOrDefault();
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == itemsCategoryUri).FirstOrDefault();
 
-            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.OwnerUri);
+            Tags.Remove(tagPresentation.Tag.Uid + tagPresentation.RefersΤoUri);
 
             if (itemsPreparationInfos == tagPresentation.ItemsPreparationInfo)
             {

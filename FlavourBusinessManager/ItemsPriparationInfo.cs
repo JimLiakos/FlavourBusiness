@@ -378,6 +378,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (PreparationTagLock)
                 {
+                    if (_PreparationTags == null)
+                        return null;
                     return _PreparationTags.ToList();
                 }
             }

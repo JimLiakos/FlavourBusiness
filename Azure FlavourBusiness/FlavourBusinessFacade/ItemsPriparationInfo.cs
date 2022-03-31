@@ -135,8 +135,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{abcf3581-0079-4d07-8429-f8779b711a94}</MetaDataID>
         public static bool IsCooked(this IPreparationStation preparationStation, IMenuItem menuItem)
         {
-            var itemsPreparationInfos = preparationStation.GetItemsPreparationInfo(menuItem);
-            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            List<IItemsPreparationInfo> itemsPreparationInfos = preparationStation.GetItemsPreparationInfo(menuItem);
+            foreach (IItemsPreparationInfo itemsPreparationInfo in itemsPreparationInfos)
             {
                 if (itemsPreparationInfo.IsCooked != null)
                     return itemsPreparationInfo.IsCooked.Value;
