@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resx="clr-namespace:FLBManager.Properties"
              xmlns:local="clr-namespace:FLBManager.ViewModel.Preparation" 
              xmlns:MenuItemsEditorViews="clr-namespace:MenuItemsEditor.Views;assembly=MenuItemsEditor"
              xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
@@ -16,9 +17,63 @@
                     <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
                     <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                     <ControlsEx:EditableTextBlock Background="Transparent" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
-                    <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=TotalPreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                    <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <ControlsEx:EditableTextBlock Width="30" Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"  Margin="5,0,0,0"  TextAlignment="Right"    HorizontalAlignment="Stretch"  TextBoxInputType="Decimal"  IsInEditMode="{Binding  Path=Edit,Mode=OneWay}" Text="{Binding Path=TotalPreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" >
+                            <ControlsEx:EditableTextBlock.Style>
+                                <Style TargetType="ControlsEx:EditableTextBlock" BasedOn="{StaticResource {x:Type ControlsEx:EditableTextBlock}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasPreparationTimeSpanValue}" Value="True">
+                                            <Setter Property="FontWeight"  Value="Medium" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ControlsEx:EditableTextBlock.Style>
+                        </ControlsEx:EditableTextBlock>
+                        <TextBlock Grid.Column="1"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasPreparationTimeSpanValue}" Value="True">
+                                            <Setter Property="FontWeight"  Value="Medium" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <StackPanel.ToolTip>
+                            <ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Static resx:Resources.PreparationTimeSpanLabel}" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding Path=PreparationTimeSpanInMin}"/>
+                                    <TextBlock  Text="min"></TextBlock>
+                                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                                        <TextBlock Text="{x:Static resx:Resources.CookingTimeSpanLabel}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="{Binding CookingTimeSpanInMin}"/>
+                                        <TextBlock  Text="min"></TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                                
+                            </ToolTip>
+                        </StackPanel.ToolTip>
+                    </StackPanel>
                     <Image Margin="5,0,0,0" Width="16" Height="16"  Source="/FLBManager;component/Resources/Images/Metro/bbq16.png" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                    <Image  Visibility="{Binding Path=HasTags, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5,0,0,0"  Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png">
+                        <Image.ToolTip>
+                            <ItemsControl ItemsSource="{Binding Tags}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" Margin="0,0,5,0" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Image.ToolTip>
+                    </Image>
+
 
                 </StackPanel>
             </ContentControl>
@@ -36,13 +91,10 @@
                         <ControlsEx:TextBoxNumberWithUnit FontWeight="{Binding PreparationTimeFontWeight}" Width="60"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min">
                             <ControlsEx:TextBoxNumberWithUnit.Style>
                                 <Style  TargetType="{x:Type ControlsEx:TextBoxNumberWithUnit}" BasedOn="{StaticResource TextBoxStyle}">
-
                                     <Style.Triggers>
-
                                         <DataTrigger Binding="{Binding HasPreparationTimeSpanValue}" Value="True">
-                                            <Setter Property="BorderThickness"  Value="2" />
+                                            <Setter Property="FontWeight"  Value="Medium" />
                                         </DataTrigger>
-
                                     </Style.Triggers>
                                 </Style>
                             </ControlsEx:TextBoxNumberWithUnit.Style>

@@ -147,6 +147,9 @@
   <data name="CompanyTitleLabel" xml:space="preserve">
     <value>Company Title :</value>
   </data>
+  <data name="CookingTimeSpanLabel" xml:space="preserve">
+    <value>Cooked in</value>
+  </data>
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
     <value>Main Room</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
@@ -268,6 +271,9 @@
   </data>
   <data name="PreparationStationWindowTitle" xml:space="preserve">
     <value>Preparation Station</value>
+  </data>
+  <data name="PreparationTimeSpanLabel" xml:space="preserve">
+    <value>Prepared in</value>
   </data>
   <data name="ProvidedProductsTitle" xml:space="preserve">
     <value>Provided products</value>

@@ -142,6 +142,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cooked in.
+        /// </summary>
+        public static string CookingTimeSpanLabel {
+            get {
+                return ResourceManager.GetString("CookingTimeSpanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Room.
         /// </summary>
         public static string DefaultServiceAreaDescription {
@@ -453,6 +462,15 @@ namespace FLBManager.Properties {
         public static string PreparationStationWindowTitle {
             get {
                 return ResourceManager.GetString("PreparationStationWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prepared in.
+        /// </summary>
+        public static string PreparationTimeSpanLabel {
+            get {
+                return ResourceManager.GetString("PreparationTimeSpanLabel", resourceCulture);
             }
         }
         

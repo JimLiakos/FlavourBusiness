@@ -239,6 +239,20 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+     
+
+        public bool HasTags
+        {
+            get
+            {
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.TagsAreDefinedFor(this.ItemsCategory))
+                    return true;
+                if (this.MenuItem != null && this.PreparationStationPresentation.TagsAreDefinedFor(this.MenuItem))
+                    return true;
+                return false;
+            }
+        }
+
         public System.Windows.FontWeight CookingTimeFontWeight
         {
             get
