@@ -51,7 +51,7 @@ namespace MenuModel
         [JsonConstructor]
         public Tag(Multilingual multilingualName,string uid)
         {
-            _Name = new MultilingualMember<string>( multilingualName.Values);
+            _Name = new MultilingualMember<string>( multilingualName);
             Uid = uid;
         }
         public Tag(Tag copyTag):this()
