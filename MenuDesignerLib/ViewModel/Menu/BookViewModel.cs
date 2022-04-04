@@ -578,23 +578,26 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
             get
             {
-                if (_SelectedMenuPage.Value == null)
+                using (var cultureConext = new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo, false))
                 {
-                    if (AllPages.Count > 0)
+                    if (_SelectedMenuPage.Value == null)
                     {
-                        _SelectedMenuPage.Value = AllPages[0];
-                        SelectedPageCulture = OOAdvantech.CultureContext.CurrentNeutralCultureInfo;
+                        if (AllPages.Count > 0)
+                        {
+                            _SelectedMenuPage.Value = AllPages[0];
+                            SelectedPageCulture = OOAdvantech.CultureContext.CurrentNeutralCultureInfo;
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
+                        }
+                    }
+                    if (SelectedPageCulture != OOAdvantech.CultureContext.CurrentCultureInfo || UseDefaultCultureValue != OOAdvantech.CultureContext.UseDefaultCultureValue)
+                    {
+                        SelectedPageCulture = OOAdvantech.CultureContext.CurrentCultureInfo;
+                        UseDefaultCultureValue = OOAdvantech.CultureContext.UseDefaultCultureValue;
+
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
                     }
+                    return _SelectedMenuPage;
                 }
-                if (SelectedPageCulture != OOAdvantech.CultureContext.CurrentCultureInfo || UseDefaultCultureValue != OOAdvantech.CultureContext.UseDefaultCultureValue)
-                {
-                    SelectedPageCulture = OOAdvantech.CultureContext.CurrentCultureInfo;
-                    UseDefaultCultureValue = OOAdvantech.CultureContext.UseDefaultCultureValue;
-
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
-                }
-                return _SelectedMenuPage;
             }
             set
             {

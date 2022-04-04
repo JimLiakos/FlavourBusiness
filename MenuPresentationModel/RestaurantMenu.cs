@@ -509,7 +509,10 @@ namespace MenuPresentationModel
         {
             get
             {
-                return _Pages.AsReadOnly();
+                using (var cultureConext = new OOAdvantech.CultureContext(OOAdvantech.CultureContext.CurrentCultureInfo, false))
+                {
+                    return _Pages.AsReadOnly();
+                }
             }
         }
 
