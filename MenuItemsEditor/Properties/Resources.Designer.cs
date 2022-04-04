@@ -223,6 +223,51 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string ListAddButtonTooltip {
+            get {
+                return ResourceManager.GetString("ListAddButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ListDelButtonTooltip {
+            get {
+                return ResourceManager.GetString("ListDelButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Down.
+        /// </summary>
+        public static string ListMoveDownButtonTooltip {
+            get {
+                return ResourceManager.GetString("ListMoveDownButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Up.
+        /// </summary>
+        public static string ListMoveUpButtonTooltip {
+            get {
+                return ResourceManager.GetString("ListMoveUpButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string ListRenameButtonTooltip {
+            get {
+                return ResourceManager.GetString("ListRenameButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Magnitude Options .
         /// </summary>
         public static string MagnitudeOptionsGroupDefaultName {
@@ -237,6 +282,15 @@ namespace MenuItemsEditor.Properties {
         public static string MealCourseDurationPrompt {
             get {
                 return ResourceManager.GetString("MealCourseDurationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set as default.
+        /// </summary>
+        public static string MealCourseListSetAsDefaultButtonTooltip {
+            get {
+                return ResourceManager.GetString("MealCourseListSetAsDefaultButtonTooltip", resourceCulture);
             }
         }
         
@@ -453,6 +507,15 @@ namespace MenuItemsEditor.Properties {
         public static string OrgPriceLabel {
             get {
                 return ResourceManager.GetString("OrgPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Predefined.
+        /// </summary>
+        public static string PredefinedTooltip {
+            get {
+                return ResourceManager.GetString("PredefinedTooltip", resourceCulture);
             }
         }
         

@@ -44,6 +44,13 @@ namespace MenuItemsEditor.ViewModel
         /// <MetaDataID>{ce000b22-2309-4259-b893-b3f6fc4dd07e}</MetaDataID>
         public readonly MealType MealType;
 
+        public bool IsFixedMealType
+        {
+            get
+            {
+                return MealType is MenuModel.FixedMealType;
+            }
+        }
         /// <MetaDataID>{4d05e7e3-2ac5-4411-9448-d5dd5093b529}</MetaDataID>
         public MealTypeViewModel(MealType mealType)
         {
@@ -105,7 +112,7 @@ namespace MenuItemsEditor.ViewModel
                      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Courses)));
                  }
 
-             }, (object sender) => !(MealType is MenuModel.FixedMealType));
+             }, (object sender) => !(MealType is FixedMealType));
 
             AddMealCourseTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {

@@ -134,10 +134,28 @@ namespace FlavourBusinessManager.RoomService
                                                  group mealItem by mealItem.SelectedMealCourseTypeUri into mealCourseItems
                                                  select mealCourseItems))
                 {
-                    var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
-                    MealCourse mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
-                    mealCourse.Previous = _Courses.LastOrDefault();
-                    _Courses.Add(mealCourse);
+                    var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).FirstOrDefault();
+                    if (mealCourseType == null)
+                        mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => x.IsDefault).FirstOrDefault();
+                    //if (mealCourseType == null)
+                    //    mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().First();
+
+                    if (mealCourseType == null)
+                        throw new Exception("Invalid meal course type");
+                    MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseType == mealCourseType).FirstOrDefault();
+                    if (mealCourse == null)
+                    {
+                        mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
+                        mealCourse.Previous = _Courses.LastOrDefault();
+                        _Courses.Add(mealCourse);
+                    }
+                    else
+                    {
+                        foreach (var mealCourseItem in mealCourseItems)
+                            mealCourse.AddItem(mealCourseItem);
+                    }
+                        
+
 
                 }
 
@@ -254,13 +272,13 @@ namespace FlavourBusinessManager.RoomService
 
 
                     MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
-                    if (mealCourse == null || mealCourseItems.Any(x=> mealCourse.ItsTooLateForChange(x)))
+                    if (mealCourse == null || mealCourseItems.Any(x => mealCourse.ItsTooLateForChange(x)))
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
                             mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
                             mealCourse.StartsAt = DateTime.UtcNow;
-                            
+
                             newMealCourses.Add(mealCourse);
 
                             _Courses.Add(mealCourse);

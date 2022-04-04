@@ -97,7 +97,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{a5d18eca-428e-410b-96f0-1d9ac050af07}</MetaDataID>
         bool IsCooked { get; }
 
-
+        
     }
 
 

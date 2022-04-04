@@ -21,6 +21,20 @@
     </Window.DataContext>
     <Window.Resources>
         <ViewModel:MealTypesViewModel x:Key="D_MealTypeViewModel"></ViewModel:MealTypesViewModel>
+        <Style TargetType="Button" BasedOn="{StaticResource ListViewBarButtonStyle}" x:Key="MealTypeCommandsStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{ Binding SelectedMealType.IsFixedMealType}" Value="true">
+                    <Setter Property="ToolTip" >
+                        <Setter.Value>
+                            <ToolTip>
+                                <TextBlock Text="{x:Static resx:Resources.PredefinedTooltip}"/>
+                            </ToolTip>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid>
@@ -79,7 +93,7 @@
                         </Grid>
 
                     </Grid>
-                    <GridSplitter VerticalAlignment="Stretch" Margin="0,30,0,3"  Grid.Column="0"></GridSplitter>
+                    <GridSplitter VerticalAlignment="Stretch" Margin="0,30,0,2"  Grid.Column="0"></GridSplitter>
 
                     <Grid Margin="3,0,0,0" Grid.Column="1">
                         <Grid.RowDefinitions>
@@ -88,7 +102,7 @@
                             <RowDefinition Height="44"/>
                         </Grid.RowDefinitions>
                         <Label Content="{x:Static resx:Resources.MealTypeCoursesListLabel}" VerticalAlignment="Bottom"  Margin="10,0,0,4" ></Label>
-                        <ListBox ItemsSource="{Binding Path=SelectedMealType.Courses}" SelectedValue="{Binding Path =SelectedMealType.SelectedCourse}"  Grid.Row="1" Grid.RowSpan="2" >
+                        <ListBox ItemsSource="{Binding Path=SelectedMealType.Courses}" SelectedValue="{Binding Path =SelectedMealType.SelectedCourse}"  Grid.Row="1"  >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid  Margin="0,0,5,0">
@@ -119,12 +133,23 @@
                                 <Grid>
                                     <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                        <Button Command="{Binding Path=SelectedMealType.DeleteSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Button Command="{Binding Path=SelectedMealType.DeleteSelectedMealCourseTypeCommand}"  Width="36" Height="36"   Margin="1" >
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MealTypeCommandsStyle}">
+                                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.ListDelButtonTooltip}"/>
+                                                </Style>
+                                            </Button.Style>
+                                            
                                         </Button>
 
-                                        <Button Command="{Binding Path=SelectedMealType.AddMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Button Command="{Binding Path=SelectedMealType.AddMealCourseTypeCommand}"    Width="36" Height="36"  Margin="1" >
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MealTypeCommandsStyle}">
+                                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.ListAddButtonTooltip}"/>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
                                     </StackPanel>
                                     <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -133,16 +158,26 @@
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/unchecked16.png"></Image>
                                         </Button>-->
                                         <Button  Command="{Binding Path=SelectedMealType.MakeSelectedSelectedMealCourseTypeDefaultCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
-                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedScaleTypeLevelUncheckTooltip}">
+                                            ToolTipService.ShowOnDisabled="True"  ToolTip="{x:Static resx:Resources.MealCourseListSetAsDefaultButtonTooltip}">
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
                                         </Button>
-                                        <Button Command="{Binding Path=SelectedMealType.MoveUpSelectedMealCourseTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Button Command="{Binding Path=SelectedMealType.MoveUpSelectedMealCourseTypeCommand}"  Width="36" Height="36"  Margin="1" >
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MealTypeCommandsStyle}">
+                                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.ListMoveUpButtonTooltip}"/>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Command="{Binding Path=SelectedMealType.MoveDownSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Button Command="{Binding Path=SelectedMealType.MoveDownSelectedMealCourseTypeCommand}"   Width="36" Height="36"  Margin="1">
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/movedown16.png"></Image>
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MealTypeCommandsStyle}">
+                                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.ListMoveDownButtonTooltip}"/>
+                                                </Style>
+                                            </Button.Style>
                                         </Button>
-                                        <Button Command="{Binding Path=SelectedMealType.RenameSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                        <Button Command="{Binding Path=SelectedMealType.RenameSelectedMealCourseTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1" ToolTip="{x:Static resx:Resources.ListRenameButtonTooltip}" >
                                             <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
                                         </Button>
                                         <!--<Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">

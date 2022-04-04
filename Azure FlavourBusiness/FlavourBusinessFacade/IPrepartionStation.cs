@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -10,7 +11,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [Association("PreparationSubStation", Roles.RoleA, "cd533f23-6824-4431-b904-818421f4eb42")]
         [RoleBMultiplicityRange(1, 1)]
         List<IPreparationStation> SubStations { get; }
-
 
         /// <MetaDataID>{a4bb2a23-cd26-445c-b582-b277e6100c83}</MetaDataID>
         IPreparationStation NewSubStation();
@@ -38,13 +38,13 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string Description { get; set; }
 
         /// <MetaDataID>{0d8307bb-48a8-4fb3-a327-c09d64ee426d}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
+        [BackwardCompatibilityID("+1")]
         string ServicesContextIdentity { get; set; }
 
         /// <MetaDataID>{7b55d81f-cd95-4b08-abef-85997e459a58}</MetaDataID>
         string PreparationStationIdentity { get;  }
 
-
+        
         ///// <MetaDataID>{e7c40cd7-9b03-4db2-9404-69ed0dee8e88}</MetaDataID>
         //IItemsPreparationInfo NewPreparationInfo(string itemsInfoObjectUri);
 
@@ -63,6 +63,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{7c1c1517-a551-4e9e-8a6f-0320fd0692ad}</MetaDataID>
         IPreparationForInfo NewServicePointPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType PreparationForInfoType);
 
+        
 
 #if !FlavourBusinessDevice
         /// <MetaDataID>{7b6f9f61-6a17-4fd3-b90e-5a89e46238d1}</MetaDataID>

@@ -323,6 +323,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, null);
+            UpdateItemsPreparationTags();
         }
 
         /// <MetaDataID>{5db58706-9b6c-4db0-bec6-fb3dc73bf6db}</MetaDataID>
@@ -387,6 +388,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, null);
+            UpdateItemsPreparationTags();
         }
 
         /// <MetaDataID>{5dd31a9b-d087-4ba9-be06-b2272f4fe231}</MetaDataID>
@@ -423,7 +425,52 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
                 return preparationForInfo;
             }
+        }
+        /// <exclude>Excluded</exclude>
+        Dictionary<string, List<ITag>> _ItemsPreparationTags;
+        public Dictionary<string, List<ITag>> ItemsPreparationTags
+        {
+            get
+            {
 
+                lock (DeviceUpdateLock)
+                {
+                    if (_ItemsPreparationTags == null)
+                    {
+                        _ItemsPreparationTags = GetitemsPreparationTags();
+                    }
+                }
+                return _ItemsPreparationTags;
+            }
+        }
+
+        private Dictionary<string, List<ITag>> GetitemsPreparationTags()
+        {
+            var itemsPreparationTags = new Dictionary<string, List<ITag>>();
+            IList<IMenuItem> menuItems = GetPreparationStationMenuItems(ServicesContextRunTime.Current.OperativeRestaurantMenu.RootCategory);
+            foreach (var menuItem in menuItems)
+            {
+                foreach (var itemsPreparationInfo in this.GetItemsPreparationInfo(menuItem))
+                {
+                    if (itemsPreparationInfo.PreparationTags != null)
+                    {
+                        string uri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+                        itemsPreparationTags[uri] = itemsPreparationInfo.PreparationTags;
+                        break;
+                    }
+                }
+            }
+
+            return itemsPreparationTags;
+        }
+
+        private IList<IMenuItem> GetPreparationStationMenuItems(IItemsCategory category)
+        {
+            List<IMenuItem> menuItems = category.MenuItems.Where(x => CanPrepareItem(x)).ToList();
+            foreach (var subCategory in category.SubCategories)
+                menuItems.AddRange(GetPreparationStationMenuItems(subCategory));
+
+            return menuItems;
         }
 
         /// <MetaDataID>{cc7b3a81-4bea-4a90-aace-5f019c0adbba}</MetaDataID>
@@ -459,7 +506,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
-            var servicesContextRunTime = ServicesContextRunTime.Current;// GetServicesContextRunTime(ObjectStorage.GetStorageOfObject(this), this.ServicesContextIdentity);
+            var servicesContextRunTime = ServicesContextRunTime.Current;
+            servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
 
             foreach (var servicePointPreparationItems in (from openSession in servicesContextRunTime.OpenSessions
                                                           where openSession.Meal != null
@@ -526,6 +574,49 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
 
             });
+        }
+
+        private void ServicesContextRunTime_ObjectChangeState(object _object, string member)
+        {
+            UpdateItemsPreparationTags();
+        }
+
+        private void UpdateItemsPreparationTags()
+        {
+            Dictionary<string, List<ITag>> itemsPreparationTags = GetitemsPreparationTags();
+            if (_ItemsPreparationTags != null)
+            {
+                lock (DeviceUpdateLock)
+                {
+                    if (!(itemsPreparationTags.Keys.All(x => _ItemsPreparationTags.ContainsKey(x)) && _ItemsPreparationTags.Keys.All(x => itemsPreparationTags.ContainsKey(x))))
+                    {
+                        _ItemsPreparationTags = null;
+                    }
+                    else
+                    {
+                        foreach (var key in _ItemsPreparationTags.Keys)
+                        {
+                            if (_ItemsPreparationTags[key].Count != itemsPreparationTags[key].Count)
+                            {
+                                _ItemsPreparationTags = null;
+                                break;
+                            }
+                            for (int i = 0; i < _ItemsPreparationTags[key].Count; i++)
+                            {
+                                if (_ItemsPreparationTags[key] != itemsPreparationTags[key])
+                                {
+                                    _ItemsPreparationTags = null;
+                                    break;
+                                }
+                            }
+                            if (_ItemsPreparationTags == null)
+                                break;
+                        }
+                    }
+                }
+                if (_ItemsPreparationTags != null)
+                    ObjectChangeState?.Invoke(this, nameof(ItemsPreparationTags));
+            }
         }
 
         private void PreparationSessionChangeState(object _object, string member)
@@ -613,7 +704,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
 
                     if (DeviceUpdateEtag == null)
-                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                        DeviceUpdateEtag = DateTime.Now.Ticks.ToString();
                 }
 
             }
@@ -650,7 +741,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         };
                     }
                 }
-                if (preparationData==null||preparationData.PreparationStationRuntime == null)
+                if (preparationData == null || preparationData.PreparationStationRuntime == null)
                 {
                     //Look for the general  prep station to prepare the item 
                     foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))

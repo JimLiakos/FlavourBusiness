@@ -293,6 +293,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
+
             }
         }
 
@@ -412,6 +413,8 @@ namespace FLBManager.ViewModel.Preparation
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
 
 
 

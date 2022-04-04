@@ -27,7 +27,7 @@ namespace PreparationStationDevice
 
 
         public ServicePointPreparationItems ServicePointPreparationItems;
-        public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems)
+        public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
         {
             ItemPreparation = itemPreparation;
 
@@ -39,6 +39,10 @@ namespace PreparationStationDevice
             MenuModel.JsonViewModel.MenuFoodItem menuFoodItem = ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem;
 
             Tags = menuFoodItem.PreparationTags.ToList();
+            if (itemsPreparationTags.ContainsKey(menuFoodItem.Uri))
+                Tags.AddRange(itemsPreparationTags[menuFoodItem.Uri].Select(x => new MenuModel.JsonViewModel.Tag(x)).ToList());
+
+
 
             //ItemPreparation.MenuItem.Types
 
@@ -49,9 +53,9 @@ namespace PreparationStationDevice
 
 
             var extraIngredients = (from optionGroup in (ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem).ItemOptions
-                           from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
-                           where !option.InitialInRecipe(ItemPreparation.MenuItem)
-                           select new Ingredient(option, ItemPreparation.MenuItem)).ToList();
+                                    from option in optionGroup.GroupedOptions.OfType<MenuModel.IPreparationScaledOption>()
+                                    where !option.InitialInRecipe(ItemPreparation.MenuItem)
+                                    select new Ingredient(option, ItemPreparation.MenuItem)).ToList();
 
 
             foreach (var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
@@ -74,7 +78,7 @@ namespace PreparationStationDevice
             {
                 foreach (var optionChange in itemPreparation.OptionsChanges.OfType<OptionChange>())
                 {
-                    if(extraIngredient.PreparationScaledOption== optionChange.itemSpecificOption.Option)
+                    if (extraIngredient.PreparationScaledOption == optionChange.itemSpecificOption.Option)
                     {
                         extraIngredient.IsExtra = true;
                         extraIngredient.OptionChange = optionChange;
@@ -104,9 +108,9 @@ namespace PreparationStationDevice
 
             var names = Ingredients.Select(x => x.Name).ToList();
 
-             Tags.AddRange(  (from ingredient in Ingredients
-                        from tag in ingredient.PreparationScaledOption.PreparationTags
-                        select tag).ToList());
+            Tags.AddRange((from ingredient in Ingredients
+                           from tag in ingredient.PreparationScaledOption.PreparationTags
+                           select tag).ToList());
 
 
 

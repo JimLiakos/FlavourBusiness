@@ -29,11 +29,11 @@ namespace MenuPresentationModel.MenuCanvas
                 return _FoodItemsGroup.AsReadOnly();
             }
         }
-        
+
         [DeleteObjectCall]
         void OnObjectDeleting()
         {
-            foreach(var foodItemsGroup in _FoodItemsGroup )
+            foreach (var foodItemsGroup in _FoodItemsGroup)
                 OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodItemsGroup);
         }
 
@@ -259,11 +259,22 @@ namespace MenuPresentationModel.MenuCanvas
                                 int previousAssignedPageItemIndex = 0;
                                 if (previousAssignedPage != null)
                                 {
+                                    var name = menuCanvasHeading.Description;
+                                    if (name == "Calzone")
+                                    {
+                                    }
+
                                     previousAssignedPageItemIndex = previousAssignedPage.MenuCanvasItems.IndexOf(menuCanvasHeading);
                                     previousAssignedPage.RemoveMenuItem(menuCanvasHeading);
+                                    if (menuCanvasHeading.Page != null)
+                                    {
+
+                                    }
+
+
                                 }
                                 var tt = menuCanvasHeading.Page;
-                                if(tt!=null)
+                                if (tt != null)
                                 {
 
                                 }
@@ -337,7 +348,7 @@ namespace MenuPresentationModel.MenuCanvas
                             else if (nextMenuCanvasItem is IMenuCanvasFoodItem)
                             {
                                 MenuCanvasFoodItemsGroup foodItemsGroop = null;
-                                if(availableFoodItemsGroups.Count>0)
+                                if (availableFoodItemsGroups.Count > 0)
                                 {
                                     foodItemsGroop = availableFoodItemsGroups[0] as MenuCanvasFoodItemsGroup;
                                     availableFoodItemsGroups.RemoveAt(0);
@@ -347,10 +358,10 @@ namespace MenuPresentationModel.MenuCanvas
 
                                 if (foodItemsFormatHeading != null)
                                 {
-                                    if(foodItemsGroop==null)
+                                    if (foodItemsGroop == null)
                                         foodItemsGroop = new MenuCanvas.MenuCanvasFoodItemsGroup(this);
                                     if (!(nextMenuCanvasItem as IMenuCanvasFoodItem).Span || foodItemsFormatHeading.NumberOfFoodColumns == 1)
-                                        foodItemsGroop. ItemsGroupHeading = foodItemsFormatHeading;
+                                        foodItemsGroop.ItemsGroupHeading = foodItemsFormatHeading;
 
                                     //if ((nextMenuCanvasItem as IMenuCanvasFoodItem).Span && foodItemsFormatHeading.NumberOfFoodColumns > 1)
                                     //    foodItemsGroop = new MenuCanvas.MenuCanvasFoodItemsGroup(this);
@@ -405,7 +416,7 @@ namespace MenuPresentationModel.MenuCanvas
                                         break;
                                 }
 
-                                foreach(var menuCanvasItem in foodItemsGroop.GroupedItems.OfType<IMenuCanvasFoodItem>().ToList())
+                                foreach (var menuCanvasItem in foodItemsGroop.GroupedItems.OfType<IMenuCanvasFoodItem>().ToList())
                                 {
                                     if ((menuCanvasItem as IMenuCanvasFoodItem).HostingArea != null)
                                         (menuCanvasItem as IMenuCanvasFoodItem).HostingArea.RemoveGroupedItem((menuCanvasItem as IMenuCanvasFoodItem));

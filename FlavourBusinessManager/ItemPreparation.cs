@@ -269,7 +269,21 @@ namespace FlavourBusinessManager.RoomService
         }
 #endif
 
- 
+        /// <MetaDataID>{a6cc3ed1-24e7-4416-a62a-b11f0b9bd67a}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        void BeforeCommitObjectState()
+        {
+            var myStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var optionChange in this._OptionsChanges)
+                    myStorage.CommitTransientObjectState(optionChange);
+
+                stateTransition.Consistent = true;
+            }
+        }
+
+
 
 
         /// <exclude>Excluded</exclude> 
@@ -928,7 +942,7 @@ namespace FlavourBusinessManager.RoomService
         {
             //following 
             return ((int)thisState) >= ((int)state);
-        }
+        } 
 
         /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
         static public bool IsInPreviousState(this ItemPreparationState thisState, ItemPreparationState state)

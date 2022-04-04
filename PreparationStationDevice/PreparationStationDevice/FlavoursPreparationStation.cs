@@ -14,6 +14,7 @@ using OOAdvantech;
 using Xamarin.Forms;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
+using MenuModel;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -107,6 +108,9 @@ namespace PreparationStationDevice
                             PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
                             if (PreparationStation != null)
                             {
+                                ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+                                PreparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
+
 
                                 var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                                 HttpClient httpClient = new HttpClient();
@@ -132,7 +136,7 @@ namespace PreparationStationDevice
                                                                    ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                                    ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
                                                                    Uri = servicePointItems.Uri,
-                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems)).ToList()
+                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems,ItemsPreparationTags)).ToList()
                                                                }).ToList();
 
                         return preparationItemsPerServicePoint;
@@ -142,15 +146,24 @@ namespace PreparationStationDevice
                         tries--;
                         if (tries == 0)
                             throw;
-                        
+
                     }
                 }
                 return null;
-                
+
             });
         }
 
+        private void PreparationStation_ObjectChangeState(object _object, string member)
+        {
 
+            if (member == nameof(IPreparationStationRuntime.ItemsPreparationTags))
+            {
+                ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+
+                PreparationItemsLoaded?.Invoke(this);
+            }
+        }
 
         [HttpVisible]
         public void CancelLastPreparationStep(List<ItemPreparation> itemPreparations)
@@ -482,6 +495,10 @@ namespace PreparationStationDevice
                         if (PreparationStation != null)
                         {
                             Title = PreparationStation.Description;
+
+                            ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+                            PreparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
+
                             var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                             HttpClient httpClient = new HttpClient();
                             var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
@@ -520,6 +537,7 @@ namespace PreparationStationDevice
 
 
         Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
+        private Dictionary<string, List<ITag>> ItemsPreparationTags;
 
         public string GetTranslation(string langCountry)
         {

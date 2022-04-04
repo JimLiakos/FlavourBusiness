@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FlavourBusinessFacade.RoomService;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -12,6 +13,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}</MetaDataID>
         void ItemsServing(List<string> itemPreparationUris);
 
+        event ObjectChangeStateHandle ObjectChangeState;
+
+        Dictionary<string, List<MenuModel.ITag>> ItemsPreparationTags { get; }
 
         /// <MetaDataID>{c819f9e6-21ed-4c0d-9c72-a240fbd8728d}</MetaDataID>
         //  List<MenuModel.IMenuItem> GetNewerRestaurandMenuData(DateTime newerFromDate);

@@ -3625,6 +3625,17 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
 public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChangeStateHandled PreparationItemsChangeState
             {
                 add
@@ -3640,6 +3651,18 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
         public Pr_IPreparationStationRuntime(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<MenuModel.ITag>> ItemsPreparationTags
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_ItemsPreparationTags", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<MenuModel.ITag>>>(retValue);
+            }
         }
         
         // The Width property for the object.

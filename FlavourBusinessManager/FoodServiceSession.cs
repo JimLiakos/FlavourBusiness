@@ -324,7 +324,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 MealValidationDelayTask = Task.Run(() =>
                  {
                      var allMessmetesCommitedTimeSpanInSeconds = FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.AllMessmetesCommitedTimeSpan;
-                     allMessmetesCommitedTimeSpanInSeconds = 8;
+                     allMessmetesCommitedTimeSpanInSeconds = 12;
                      while (allMessmetesCommitedTimeSpanInSeconds > 0)
                      {
                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
@@ -564,6 +564,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
             #endregion
+            if (firstItemPreparation != null &&SessionState == SessionState.MealValidationDelay&&MealValidationDelayTask!=null&& MealValidationDelayTask.Status==TaskStatus.Faulted)
+            {
+                MealValidationDelayTask = null;
+                MealValidationDelayRun();
+            }
 
         }
 

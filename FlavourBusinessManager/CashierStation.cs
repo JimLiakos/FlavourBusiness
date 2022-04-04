@@ -468,7 +468,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (DeviceUpdateLock)
             {
-                var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
+                ServicePointPreparationItems servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
                 if (servicePointPreparationItems == null || !servicePointPreparationItems.PreparationItems.Contains(flavourItem))
                 {
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;

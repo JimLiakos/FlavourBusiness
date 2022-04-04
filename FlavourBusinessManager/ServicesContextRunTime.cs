@@ -269,9 +269,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        MenuModel.Menu _OperativeRestaurantMenu;
 
         /// <MetaDataID>{54caa9a3-5612-44a1-a91d-91e7294825ba}</MetaDataID>
-        MenuModel.Menu OperativeRestaurantMenu;
+       public MenuModel.Menu OperativeRestaurantMenu
+        {
+            get
+            {
+                return _OperativeRestaurantMenu;
+            }
+        }
 
         /// <MetaDataID>{269a82d7-69e7-4e6c-9832-c50e7a1fa8b2}</MetaDataID>
         [ObjectActivationCall]
@@ -285,17 +293,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(storageRef, null);
                 OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
-
-                OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
+                _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
                                            select menu).FirstOrDefault();
-
             }
-
             Task.Run(() =>
             {
-
                 (MealsController as MealsController) .Init();
-
                 //Load CashierStations
                 var cashierStations = CashierStations;
 
@@ -1128,6 +1131,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             SetRestaurantMenusData(restaurantMenusDataStorageRef);
             ObjectStorage.UpdateOperativeOperativeObjects(restaurantMenusDataStorageRef.StorageIdentity);
+            ObjectChangeState?.Invoke(this, nameof(OperativeRestaurantMenu));
+            
             //PublishMenuRestaurantMenuData();
 
         }

@@ -496,7 +496,7 @@ namespace FlavoursServicesWorkerRole
                     typeof(OOAdvantech.WindowsAzureTablesPersistenceRunTime.Storage).Assembly
               };
 
-            OOAdvantech.PersistenceLayer.ObjectStorage.Init(assemblies);
+            OOAdvantech.ObjectsContext.Init(assemblies);
 
             string serverPublicUrl = "http://localhost:8090/api/";
             serverPublicUrl = WorkerRole.AzureServerUrl;
