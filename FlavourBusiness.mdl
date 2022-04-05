@@ -665,7 +665,7 @@
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::FlavourBusinessManager" @1
-			location   	(980, 1425)
+			location   	(980, 1393)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -678,7 +678,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(218, 1094)
+			    location   	(218, 1062)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	1524
@@ -743,7 +743,7 @@
 			width      	663
 			height     	256)
 		    (object CategoryView "Logical View::FlavourBusinessFacade" @4
-			location   	(966, 534)
+			location   	(966, 525)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -756,7 +756,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@4
-			    location   	(225, 206)
+			    location   	(225, 197)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	1482
@@ -899,7 +899,7 @@
 			width      	542
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @10
-			location   	(525, 662)
+			location   	(534, 662)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -912,7 +912,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@10
-			    location   	(260, 578)
+			    location   	(269, 578)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
@@ -984,7 +984,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessManager::EndUsers" @14
-			location   	(1297, 1281)
+			location   	(1300, 1284)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -997,7 +997,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@14
-			    location   	(1021, 1197)
+			    location   	(1024, 1200)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552

@@ -209,9 +209,15 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             get
             {
                 if (Visibility != Visibility.Visible)
+                {
+                    _Width = 0;
                     return 0;
+                }
                 if (_HeadingAccent == null || !IsValid)
+                {
+                    _Width = 0;
                     return 0;
+                }
                 return _HeadingAccent.GetAccentImageRect(_AccentIndex).Width;
             }
             set
