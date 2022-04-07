@@ -1136,7 +1136,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //PublishMenuRestaurantMenuData();
 
         }
-
+        ///Data Source=arion2017.database.windows.net;Initial Catalog=orderserver;Integrated Security=False;User ID=sotirnikol;Password=1Arionsapwd;Connect Timeout=350;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
 
         /// <exclude>Excluded</exclude>
         List<IServiceArea> _ServiceAreas;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
-
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -109,6 +109,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+        public event ObjectChangeStateHandle ObjectChangeState;
 
         ///// <exclude>Excluded</exclude>
         //bool _Exclude;
@@ -134,7 +135,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         //}
 
         /// <exclude>Excluded</exclude>
-        double? _PreparationTimeSpanInMin = 1;
+        double? _PreparationTimeSpanInMin ;
 
         /// <MetaDataID>{e02a922b-99e0-470a-807e-41039b2e963d}</MetaDataID>
         [PersistentMember(nameof(_PreparationTimeSpanInMin))]
@@ -239,8 +240,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _ItemsPreparationInfoType = value;
+
+
+                        if ((_ItemsPreparationInfoType & ItemsPreparationInfoType.Include)== ItemsPreparationInfoType.Include && _PreparationTimeSpanInMin == null)
+                            _PreparationTimeSpanInMin =1;
+
                         stateTransition.Consistent = true;
                     }
+                    ObjectChangeState?.Invoke(this, null);
                 }
             }
         }
