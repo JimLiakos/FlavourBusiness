@@ -273,7 +273,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         MenuModel.Menu _OperativeRestaurantMenu;
 
         /// <MetaDataID>{54caa9a3-5612-44a1-a91d-91e7294825ba}</MetaDataID>
-       public MenuModel.Menu OperativeRestaurantMenu
+        public MenuModel.Menu OperativeRestaurantMenu
         {
             get
             {
@@ -294,11 +294,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
                 _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
-                                           select menu).FirstOrDefault();
+                                            select menu).FirstOrDefault();
             }
             Task.Run(() =>
             {
-                (MealsController as MealsController) .Init();
+                (MealsController as MealsController).Init();
                 //Load CashierStations
                 var cashierStations = CashierStations;
 
@@ -1042,18 +1042,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
 
-            var fbstorage = (from servicesContextRunTimeStorage in Storages
-                             where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
-                             select servicesContextRunTimeStorage).FirstOrDefault();
-            var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
+            //var fbstorage = (from servicesContextRunTimeStorage in Storages
+            //                 where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
+            //                 select servicesContextRunTimeStorage).FirstOrDefault();
+            //var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
 
-            RawStorageData rawStorageData = new RawStorageData(storageRef, null);
+            //RawStorageData rawStorageData = new RawStorageData(storageRef, null);
+            //OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
+            var objectStorage = ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu);
+            OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(objectStorage);
 
-            OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
             Dictionary<object, object> mappedObject = new Dictionary<object, object>();
             List<MenuModel.IMenuItem> menuFoodItems = (from menuItem in restMenusData.GetObjectCollection<MenuModel.IMenuItem>()
                                                        select menuItem).ToList().Select(x => new MenuModel.JsonViewModel.MenuFoodItem(x, mappedObject)).OfType<MenuModel.IMenuItem>().ToList();
+
+            var meneuItemsNames = menuFoodItems.Select(X => X.Name).ToList();
 
             var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings;
             string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(menuFoodItems, jSetttings);
@@ -1129,10 +1133,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{e1d0f93c-b314-44dd-a9ba-41a73faf3a51}</MetaDataID>
         public void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef)
         {
-            SetRestaurantMenusData(restaurantMenusDataStorageRef);
+            var menuItem = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
             ObjectStorage.UpdateOperativeOperativeObjects(restaurantMenusDataStorageRef.StorageIdentity);
+            var menuItem2 = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
+            SetRestaurantMenusData(restaurantMenusDataStorageRef);
+
+
+            var menuItem3 = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
             ObjectChangeState?.Invoke(this, nameof(OperativeRestaurantMenu));
-            
+
             //PublishMenuRestaurantMenuData();
 
         }
