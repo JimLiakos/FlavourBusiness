@@ -15,6 +15,7 @@ using Xamarin.Forms;
 using System.Reflection;
 using OOAdvantech.Json.Linq;
 using MenuModel;
+using MenuModel.JsonViewModel;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -120,6 +121,7 @@ namespace PreparationStationDevice
                                 var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                                 MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
+                                GetMenuLanguages(MenuItems.Values.ToList());
                                 // servicesContextManagment.
                                 Title = PreparationStation.Description;
 
@@ -136,7 +138,7 @@ namespace PreparationStationDevice
                                                                    ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                                    ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
                                                                    Uri = servicePointItems.Uri,
-                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems,ItemsPreparationTags)).ToList()
+                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems, ItemsPreparationTags)).ToList()
                                                                }).ToList();
 
                         return preparationItemsPerServicePoint;
@@ -152,6 +154,24 @@ namespace PreparationStationDevice
                 return null;
 
             });
+        }
+
+        [HttpVisible]
+        public List<Language> MenuLanguages { get; set; }
+        private void GetMenuLanguages(List<MenuFoodItem> menuItems)
+        {
+            List<Language> menuLanguages = new List<Language>();
+            foreach (string langCode in (from menuItem in menuItems
+                                         from multiigualNameValue in menuItem.MultilingualName.Values
+                                         select multiigualNameValue.Key).Distinct())
+            {
+                menuLanguages.Add(new Language()
+                {
+                    Code = langCode,
+                    Name = System.Globalization.CultureInfo.GetCultureInfo(langCode).DisplayName
+                });
+            }
+            MenuLanguages = menuLanguages;
         }
 
         private void PreparationStation_ObjectChangeState(object _object, string member)
@@ -437,7 +457,7 @@ namespace PreparationStationDevice
                     var json = getJsonTask.Result;
                     var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                     MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
-
+                    GetMenuLanguages(MenuItems.Values.ToList());
                     ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
                     CommunicationCredentialKey = communicationCredentialKey;
                     return true;
@@ -506,7 +526,7 @@ namespace PreparationStationDevice
                             var json = getJsonTask.Result;
                             var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                             MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
-
+                            GetMenuLanguages(MenuItems.Values.ToList());
                             ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
                             return true;
                         }
@@ -656,6 +676,14 @@ namespace PreparationStationDevice
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);
+
+
+    public class Language
+    {
+        public string Code { get; set; }
+
+        public string Name { get; set; }
+    }
 
 
 }
