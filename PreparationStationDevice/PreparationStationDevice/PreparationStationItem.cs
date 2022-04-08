@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using MenuModel;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 
 namespace PreparationStationDevice
@@ -25,6 +26,37 @@ namespace PreparationStationDevice
 
 
 
+        public Multilingual MultilingualFullName
+        {
+            get
+            {
+                return new Multilingual(_FullName);
+            }
+            set
+            {
+                _FullName = value;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        Multilingual _Name = new Multilingual();
+
+
+        public Multilingual MultilingualName
+        {
+            get
+            {
+                return new Multilingual(_Name);
+            }
+            set
+            {
+                _Name = value;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        Multilingual _FullName = new Multilingual();
+
 
         public ServicePointPreparationItems ServicePointPreparationItems;
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
@@ -38,6 +70,8 @@ namespace PreparationStationDevice
 
             MenuModel.JsonViewModel.MenuFoodItem menuFoodItem = ItemPreparation.MenuItem as MenuModel.JsonViewModel.MenuFoodItem;
 
+            MultilingualFullName = menuFoodItem.MultilingualFullName;
+            MultilingualName = menuFoodItem.MultilingualName;
             Tags = menuFoodItem.PreparationTags.ToList();
             if (itemsPreparationTags.ContainsKey(menuFoodItem.Uri))
                 Tags.AddRange(itemsPreparationTags[menuFoodItem.Uri].Select(x => new MenuModel.JsonViewModel.Tag(x)).ToList());
