@@ -10,8 +10,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IPreparationStationRuntime
     {
+        /// <summary>
+        /// This method change state of itemPreparations to Serving
+        /// </summary>
+        /// <param name="itemPreparationUris">
+        /// Defines the items Uris which will be change state
+        /// </param>
+        /// <returns>
+        /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
+        /// where the items will be ready to serve
+        /// </returns>
         /// <MetaDataID>{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}</MetaDataID>
-        void ItemsServing(List<string> itemPreparationUris);
+        Dictionary<string, double> ItemsServing(List<string> itemPreparationUris);
 
         event ObjectChangeStateHandle ObjectChangeState;
 
@@ -38,21 +48,60 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         [GenerateEventConsumerProxy]
         event PreparationItemsChangeStateHandled PreparationItemsChangeState;
+        /// <summary>
+        /// This method change state of itemPreparations to …nPreparation
+        /// </summary>
+        /// <param name="itemPreparationUris">
+        /// Defines the items Uris which will be change state
+        /// </param>
+        /// <returns>
+        /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
+        /// where the items will be ready to serve
+        /// </returns>
+        // <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
+        Dictionary<string,double> Items…nPreparation(List<string> itemPreparationUris);
 
-        /// <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
-        void Items…nPreparation(List<string> itemPreparationUris);
 
+        /// <summary>
+        /// This method change state of itemPreparations to IsRoasting
+        /// </summary>
+        /// <param name="itemPreparationUris">
+        /// Defines the items Uris which will be change state
+        /// </param>
+        /// <returns>
+        /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
+        /// where the items will be ready to serve
+        /// </returns>
         /// <MetaDataID>{358c2943-5794-46d6-aacb-402ce2409085}</MetaDataID>
-        void ItemsRoasting(List<string> itemPreparationUris);
+        Dictionary<string, double>  ItemsRoasting(List<string> itemPreparationUris);
 
 
-
+        /// <summary>
+        /// This method change state of itemPreparations to IsPrepared
+        /// </summary>
+        /// <param name="itemPreparationUris">
+        /// Defines the items Uris which will be change state
+        /// </param>
+        /// <returns>
+        /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
+        /// where the items will be ready to serve
+        /// </returns>
         /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
-        void ItemsPrepared(List<string> itemPreparationUris);
+        Dictionary<string, double>  ItemsPrepared(List<string> itemPreparationUris);
 
 
+        /// <summary>
+        /// This method cancels the last state change of itemPreparations 
+        /// </summary>
+        /// <param name="itemPreparationUris">
+        /// Defines the items Uris which will be cancel change state
+        /// </param>
+        /// <returns>
+        /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
+        /// where the items will be ready to serve
+        /// </returns>
         /// <MetaDataID>{99ef195b-b347-42d7-b70d-adbcfdb0c54e}</MetaDataID>
-        void CancelLastPreparationStep(List<string> itemPreparationUris);
+        Dictionary<string, double> CancelLastPreparationStep(List<string> itemPreparationUris);
         /// <MetaDataID>{2d9ccb0f-821d-4469-8f74-9087c2be669b}</MetaDataID>
         void AssignCodeCardsToSessions(List<string> codeCards);
     }

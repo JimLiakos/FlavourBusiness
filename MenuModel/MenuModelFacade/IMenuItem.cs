@@ -7,6 +7,7 @@ namespace MenuModel
     /// <MetaDataID>{5b1dc307-2ce6-4339-ab21-a69b6c4a71ec}</MetaDataID>
     public interface IMenuItem
     {
+        /// <MetaDataID>{e5b82955-f736-45f9-8ad9-488d0759a9ba}</MetaDataID>
         [BackwardCompatibilityID("+12")]
         bool SelectorAlwaysInDescription { get; set; }
 

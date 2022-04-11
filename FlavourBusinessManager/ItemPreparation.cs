@@ -22,7 +22,16 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
-    
+
+
+        /// <MetaDataID>{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}</MetaDataID>
+        [BackwardCompatibilityID("+28")]
+        public double PreparationTimeSpanInMin { get; set; }
+
+
+        /// <MetaDataID>{1315d6ad-a380-49fd-946f-a1274fcd0f6c}</MetaDataID>
+        [BackwardCompatibilityID("+29")]
+        public double CookingTimeSpanInMin { get; set; }
 
 
         /// <exclude>Excluded</exclude> 

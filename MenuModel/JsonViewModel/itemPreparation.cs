@@ -164,6 +164,7 @@ namespace MenuModel.JsonViewModel
 
         /// <MetaDataID>{7b7e0fa3-d03b-4a63-aae4-218a0d0699a8}</MetaDataID>
         public IList<IMenuItemPrice> Prices { set; get; }
+        /// <MetaDataID>{71c24901-2337-4eab-8992-4f8e8a9f0ad9}</MetaDataID>
         public List<ITag> PreparationTags { get; set; }
 
         /// <MetaDataID>{2ed1e1fe-f97f-47cd-8b0d-7c254f2fb503}</MetaDataID>
@@ -207,26 +208,36 @@ namespace MenuModel.JsonViewModel
 
         /// <exclude>Excluded</exclude>
         Multilingual _PromptForCustom = new Multilingual();
+        /// <MetaDataID>{aca2c96d-21b6-4a56-8739-c19103efca0b}</MetaDataID>
         [JsonIgnore]
         public string PromptForCustom { get => _PromptForCustom.GetValue<string>(); set => _PromptForCustom.SetValue<string>(value); }
 
         /// <exclude>Excluded</exclude>
         Multilingual _PromptForDefault = new Multilingual();
+        /// <MetaDataID>{27de29b9-5dee-4e2e-a5fd-df6aa47911f4}</MetaDataID>
         [JsonIgnore]
         public string PromptForDefault { get => _PromptForDefault.GetValue<string>(); set => _PromptForDefault.SetValue<string>(value); }
+        /// <MetaDataID>{976af40a-1b40-4d0b-8eec-3efabf263c59}</MetaDataID>
         public bool AllowCustom { get; set; }
 
+        /// <MetaDataID>{301bab6a-0a97-4c55-9de8-411fd6181219}</MetaDataID>
         public Multilingual MultilingualPromptForCustom { get { return new Multilingual(_PromptForCustom); } set { _PromptForCustom = value; } }
 
+        /// <MetaDataID>{cd532631-fb67-4661-97df-28c6d0d0316e}</MetaDataID>
         public Multilingual MultilingualPromptForDefault { get { return new Multilingual(_PromptForDefault); } set { _PromptForDefault = value; } }
 
+        /// <MetaDataID>{e2ad98df-e1e1-40c6-8a0a-3491c38a7870}</MetaDataID>
         public Multilingual MultilingualDescription { get { return new Multilingual(_Description); } set { _Description = value; } }
 
+        /// <MetaDataID>{16ea71a6-be2d-4798-969a-3768fb00bcbb}</MetaDataID>
         public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { _ExtrasDescription = value; } }
 
+        /// <MetaDataID>{7764429b-4b51-45b6-8257-1dbad77f6509}</MetaDataID>
         public bool Stepper { get; set; }
 
+        /// <MetaDataID>{c02d66e9-21b6-4f1e-8d7c-3cfdb88bae42}</MetaDataID>
         public IList<IPartofMeal> PartofMeals { get; set; }
+        /// <MetaDataID>{31dbf330-3556-459f-8418-fd93f915aa70}</MetaDataID>
         public bool SelectorAlwaysInDescription { get; set; }
 
 
@@ -265,11 +276,13 @@ namespace MenuModel.JsonViewModel
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{474a22ba-4ae0-4b20-ac9f-b1453f1705dd}</MetaDataID>
         public void RemoveMealType(IPartofMeal partofMeal)
         {
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{168b35c2-7547-4570-82b7-283219d45184}</MetaDataID>
         public IPartofMeal AddMealType(IMealType mealType, IMealCourseType mealCourseType)
         {
             throw new NotImplementedException();

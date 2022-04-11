@@ -13,6 +13,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{ede86e3a-e789-4e0e-86a3-64629ec624bc}</MetaDataID>
         ITag NewPrepatationTag();
 
+        /// <MetaDataID>{30b1ecc7-e196-4390-8f5e-ac62d60e4cdf}</MetaDataID>
         void ClearTags();
 
         /// <MetaDataID>{abd4769c-e51a-4590-bc26-d22416de5b84}</MetaDataID>
@@ -34,6 +35,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+1")]
         string Description { get; set; }
 
+        /// <MetaDataID>{a58a0f6e-6629-4ab3-8dac-52b39101dbd9}</MetaDataID>
         void UpdateTag(ITag tag);
 
 
@@ -57,6 +59,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+6")]
         ItemsPreparationInfoType ItemsPreparationInfoType { get; set; }
 
+        /// <MetaDataID>{06005362-9761-4a86-9ff2-7ce1ee334368}</MetaDataID>
         List<ITag> Copy(List<ITag> tags);
     }
 

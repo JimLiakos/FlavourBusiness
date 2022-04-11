@@ -138,7 +138,7 @@ namespace PreparationStationDevice
                                                                    ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                                    ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
                                                                    Uri = servicePointItems.Uri,
-                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().Select(x => new PreparationStationItem(x, servicePointItems, MenuItems, ItemsPreparationTags)).ToList()
+                                                                   PreparationItems = servicePointItems.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, servicePointItems, MenuItems, ItemsPreparationTags)).ToList()
                                                                }).ToList();
 
                         return preparationItemsPerServicePoint;

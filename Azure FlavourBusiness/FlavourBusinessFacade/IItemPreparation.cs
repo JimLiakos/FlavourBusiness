@@ -9,6 +9,14 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{bdda9ee6-b111-4a50-b569-bbc73c0e203a}</MetaDataID>
+        [BackwardCompatibilityID("+17")]
+        double PreparationTimeSpanInMin { get; set; }
+
+        /// <MetaDataID>{865fa0cc-d3f1-4e1b-abc8-99f1a06a4d2a}</MetaDataID>
+        [BackwardCompatibilityID("+16")]
+        double CookingTimeSpanInMin { get; set; }
+
 
         /// <summary>
         /// Defines the tracking transfer.

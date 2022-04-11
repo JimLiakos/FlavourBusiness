@@ -92,22 +92,21 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
 
-            //string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            return 0;
+        }
+        public double GetCookingTimeSpanInMin(IMenuItem menuItem)
+        {
 
-            //var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
-            //if (itemsPreparationInfo != null)
-            //{
-            //    if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
-            //        return 0;
-            //    else
-            //        return itemsPreparationInfo.PreparationTimeSpanInMin;
-            //}
-            //if ((menuItem as MenuItem).Category != null)
-            //    return GetPreparationTimeSpanInMinForCategoryItems((menuItem as MenuItem).Category);
+            var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.CookingTimeSpanInMin != null)
+                    return itemsPreparationInfo.CookingTimeSpanInMin.Value;
+            }
+
 
             return 0;
         }
-
 
         /// <MetaDataID>{73462d69-7cf4-431d-aaec-49a611ad4f35}</MetaDataID>
         public bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint)
@@ -508,7 +507,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var servicesContextRunTime = ServicesContextRunTime.Current;
             servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
-
+            var sdsd = servicesContextRunTime.OpenSessions[0].Meal.Courses.ToList();
             foreach (var servicePointPreparationItems in (from openSession in servicesContextRunTime.OpenSessions
                                                           where openSession.Meal != null
                                                           from mealCourse in openSession.Meal.Courses
@@ -516,7 +515,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                           orderby itemPreparation.PreparedAtForecast
                                                           //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
                                                           group itemPreparation by mealCourse into ServicePointItems
-                                                          select ServicePointItems))
+                                                          select ServicePointItems).ToList())
 
             //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
             //                                                                           //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
@@ -532,11 +531,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     if (CanPrepareItem(item.MenuItem))
                     {
+                        item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
                         item.IsCooked = this.IsCooked(item.MenuItem);
+                        item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
 
                         //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
                         //itemPreparation.Update(item);
                         preparationItems.Add(item);
+
                         item.ObjectChangeState += FlavourItem_ObjectChangeState;
                     }
                 }
@@ -690,7 +692,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (flavourItem.PreparationStation != this)
                 {
                     flavourItem.PreparationStation = this;
+
+                    flavourItem.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(flavourItem.MenuItem);
                     flavourItem.IsCooked = this.IsCooked(flavourItem.MenuItem);
+                    flavourItem.CookingTimeSpanInMin = GetCookingTimeSpanInMin(flavourItem.MenuItem);
+
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
                     var servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
@@ -723,7 +729,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                 preparationData = new PreparationData()
                 {
                     ItemPreparation = itemPreparation,
-                    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime
+                    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime,
+                    PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                    CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                 };
             }
             else
@@ -737,7 +745,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                         preparationData = new PreparationData()
                         {
                             ItemPreparation = itemPreparation,
-                            PreparationStationRuntime = preparationStation
+                            PreparationStationRuntime = preparationStation,
+                            PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                            CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                         };
                     }
                 }
@@ -751,7 +761,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                             preparationData = new PreparationData()
                             {
                                 ItemPreparation = itemPreparation,
-                                PreparationStationRuntime = preparationStation
+                                PreparationStationRuntime = preparationStation,
+                                PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                                CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                             };
                         }
                     }
@@ -763,11 +775,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                 preparationData = new PreparationData()
                 {
                     ItemPreparation = itemPreparation,
-                    Duration = TimeSpan.FromMinutes(0.5)
+                    Duration = TimeSpan.FromMinutes(0.5),
+                    PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                    CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                 };
             }
             else
-                preparationData.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+            {
+                preparationData.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem)+ (preparationData.PreparationStationRuntime as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem));
+            }
             return preparationData;
         }
 
@@ -782,9 +798,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
-
+        Dictionary<string, double> GetItemToServingtimespanPredictions()
+        {
+            return new Dictionary<string, double>();
+        }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
-        public void Items…nPreparation(List<string> itemPreparationUris)
+        public Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -795,10 +814,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.Items…nPreparation(clientSessionItems.ClientSessionItems);
 
-
+            return GetItemToServingtimespanPredictions();
         }
 
-        public void ItemsRoasting(List<string> itemPreparationUris)
+        public Dictionary<string, double> ItemsRoasting(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -808,8 +827,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
+            return GetItemToServingtimespanPredictions();
         }
-        public void ItemsServing(List<string> itemPreparationUris)
+        public Dictionary<string, double> ItemsServing(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -819,11 +839,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
+            return GetItemToServingtimespanPredictions();
         }
 
 
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
-        public void ItemsPrepared(List<string> itemPreparationUris)
+        public Dictionary<string, double> ItemsPrepared(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -833,11 +854,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsPrepared(clientSessionItems.ClientSessionItems);
+            return GetItemToServingtimespanPredictions();
 
 
         }
         /// <MetaDataID>{70023458-eb6b-4245-8003-3668bc9253ec}</MetaDataID>
-        public void CancelLastPreparationStep(List<string> itemPreparationUris)
+        public Dictionary<string, double> CancelLastPreparationStep(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -847,6 +869,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.CancelLastPreparationStep(clientSessionItems.ClientSessionItems);
+            return GetItemToServingtimespanPredictions();
 
         }
 
@@ -923,5 +946,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
         public TimeSpan Duration;
 
+        public double CookingTimeSpanInMin { get; internal set; }
+        public double PreparationTimeSpanInMin { get; internal set; }
     }
 }

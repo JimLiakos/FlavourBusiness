@@ -358,6 +358,43 @@ There are preaparation oprtions with wrang, scale type.</target>
           <source>Menu Taxes</source>
           <target state="new">Menu Taxes</target>
         </trans-unit>
+        <trans-unit id="AlwaysPartOfDescription" translate="yes" xml:space="preserve">
+          <source>Always appears in the item description</source>
+          <target state="new">Always appears in the item description</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Always appears in the product description</note>
+        </trans-unit>
+        <trans-unit id="HideOptionsGroupHeader" translate="yes" xml:space="preserve">
+          <source>Hide options group header</source>
+          <target state="new">Hide options group header</target>
+        </trans-unit>
+        <trans-unit id="ListAddButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Add</source>
+          <target state="new">Add</target>
+        </trans-unit>
+        <trans-unit id="ListDelButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="ListMoveDownButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Move Down</source>
+          <target state="new">Move Down</target>
+        </trans-unit>
+        <trans-unit id="ListMoveUpButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Move Up</source>
+          <target state="new">Move Up</target>
+        </trans-unit>
+        <trans-unit id="ListRenameButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="new">Rename</target>
+        </trans-unit>
+        <trans-unit id="MealCourseListSetAsDefaultButtonTooltip" translate="yes" xml:space="preserve">
+          <source>Set as default</source>
+          <target state="new">Set as default</target>
+        </trans-unit>
+        <trans-unit id="PredefinedTooltip" translate="yes" xml:space="preserve">
+          <source>Predefined</source>
+          <target state="new">Predefined</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -203,6 +203,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{23efbf59-a1cb-4792-bc84-f62c5db8d0a5}</MetaDataID>
         public List<ITag> Copy(List<ITag> tags)
         {
             if (_PreparationTags != null && _PreparationTags.Count > 0)
@@ -215,7 +216,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     Tag tag = new Tag(copyTag);
                     _PreparationTags.Add(tag);
-                } 
+                }
                 stateTransition.Consistent = true;
             }
 
@@ -302,6 +303,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //Json.JsonConvert.DeserializeObject 
         }
 
+        /// <MetaDataID>{9ab3cf41-fa8f-4265-a8f2-08f46ad6ccf7}</MetaDataID>
         public ITag NewPrepatationTag()
         {
             lock (PreparationTagLock)
@@ -323,17 +325,20 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{85f39c09-2a51-47e0-9234-99ada490d340}</MetaDataID>
         public void ClearTags()
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _PreparationTags = null; 
+                _PreparationTags = null;
                 stateTransition.Consistent = true;
             }
 
         }
+        /// <MetaDataID>{27308509-7e60-4ffe-bd83-bec40c4df809}</MetaDataID>
         object PreparationTagLock = new object();
+        /// <MetaDataID>{5002bf1b-391a-4ce5-a9e4-11d1fe0e9671}</MetaDataID>
         public void RemovePreparationTag(ITag tag)
         {
 
@@ -357,6 +362,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{d971121c-a734-4e03-88aa-8bf86068ae8e}</MetaDataID>
         public void UpdateTag(ITag tag)
         {
 
