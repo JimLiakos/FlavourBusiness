@@ -23,33 +23,54 @@ namespace FlavourBusinessManager.RoomService
     public class ItemPreparation : IItemPreparation
     {
 
+        /// <exclude>Excluded</exclude>
+        DateTime? _CookingStartsAt;
+        /// <MetaDataID>{cc4d9fdb-0a34-4ae1-bb89-5c28a48bbcdf}</MetaDataID>
+        [PersistentMember(nameof(_CookingStartsAt))]
+        [BackwardCompatibilityID("+29")]
+        public System.DateTime? CookingStartsAt
+        {
+            get => _CookingStartsAt;
+            set
+            {
+                if (_CookingStartsAt != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CookingStartsAt = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
         /// <MetaDataID>{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}</MetaDataID>
-        [BackwardCompatibilityID("+28")]
+        [BackwardCompatibilityID("+30")]
         public double PreparationTimeSpanInMin { get; set; }
 
 
         /// <MetaDataID>{1315d6ad-a380-49fd-946f-a1274fcd0f6c}</MetaDataID>
-        [BackwardCompatibilityID("+29")]
+        [BackwardCompatibilityID("+31")]
         public double CookingTimeSpanInMin { get; set; }
 
 
         /// <exclude>Excluded</exclude> 
-        DateTime? _PreparedAt;
+        DateTime? _PreparationStartsAt;
 
         /// <MetaDataID>{ff683fa2-0ccd-42c5-af39-aa072d8fee05}</MetaDataID>
-        [PersistentMember(nameof(_PreparedAt))]
+        [PersistentMember(nameof(_PreparationStartsAt))]
         [BackwardCompatibilityID("+20")]
-        public DateTime? PreparedAt
+        public DateTime? PreparationStartsAt
         {
-            get => _PreparedAt;
+            get => _PreparationStartsAt;
             set
             {
-                if (_PreparedAt != value)
+                if (_PreparationStartsAt != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PreparedAt = value;
+                        _PreparationStartsAt = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -194,7 +215,25 @@ namespace FlavourBusinessManager.RoomService
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
+                        var previousState = _State;
                         _State = value;
+
+                        if (_State == ItemPreparationState.ÉnPreparation)
+                            _PreparationStartsAt = DateTime.UtcNow;
+                        if (_State.IsInPreviousState(ItemPreparationState.ÉnPreparation))
+                            _PreparationStartsAt = null;
+
+                        if (_State == ItemPreparationState.IsRoasting)
+                            _CookingStartsAt = DateTime.UtcNow;
+                        if (_State.IsInPreviousState(ItemPreparationState.IsRoasting))
+                            _CookingStartsAt = null;
+                        if (_State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && PreparationStartsAt != null)
+                            PreparationTimeSpanInMin = (DateTime.UtcNow - PreparationStartsAt.Value).TotalMinutes;
+
+                        if (IsCooked&& _State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && CookingStartsAt != null)
+                            CookingTimeSpanInMin = (DateTime.UtcNow - CookingStartsAt.Value).TotalMinutes;
+
+
                         stateTransition.Consistent = true;
                     }
 
@@ -215,7 +254,6 @@ namespace FlavourBusinessManager.RoomService
                     //        preparationStation.OnPreparationItemChangeState(this);
                     //}
 #endif
-
 
                 }
             }
@@ -932,6 +970,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+
         ///// <MetaDataID>{fdd3e18e-43b8-4c77-80b1-d7a17c1a9c8b}</MetaDataID>
         //public string Timestamp;
     }
@@ -951,7 +990,7 @@ namespace FlavourBusinessManager.RoomService
         {
             //following 
             return ((int)thisState) >= ((int)state);
-        } 
+        }
 
         /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
         static public bool IsInPreviousState(this ItemPreparationState thisState, ItemPreparationState state)

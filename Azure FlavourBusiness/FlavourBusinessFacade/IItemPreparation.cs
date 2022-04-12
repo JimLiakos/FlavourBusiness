@@ -9,6 +9,10 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{673ef44c-06a5-40f4-b2b0-4a8bdc3cb0ac}</MetaDataID>
+        [BackwardCompatibilityID("+18")]
+        DateTime? CookingStartsAt { get; }
+
         /// <MetaDataID>{bdda9ee6-b111-4a50-b569-bbc73c0e203a}</MetaDataID>
         [BackwardCompatibilityID("+17")]
         double PreparationTimeSpanInMin { get; set; }
@@ -38,7 +42,7 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{1f985a50-1044-4821-bcef-1e24a8f8eda1}</MetaDataID>
         [BackwardCompatibilityID("+12")]
-        DateTime? PreparedAt { get; }
+        DateTime? PreparationStartsAt { get; }
 
         /// <MetaDataID>{3ee58a43-e219-491d-aa71-f7531bd96a29}</MetaDataID>
         [BackwardCompatibilityID("+9")]

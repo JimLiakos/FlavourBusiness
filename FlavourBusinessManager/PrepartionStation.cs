@@ -647,7 +647,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         DateTime? RaiseEventTimeStamp;
 
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
-        public IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
+        public PreparationStationStatus GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
             if (deviceUpdateEtag == DeviceUpdateEtag)
             {
@@ -657,9 +657,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                     RaiseEventTimeStamp = null;
                 }
             }
+            return new PreparationStationStatus()
+            {
+                NewItemsUnderPreparationControl = ServicePointsPreparationItems.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList(),
+                ServingTimespanPredictions = GetItemToServingtimespanPredictions()
+            };
 
 
-            return ServicePointsPreparationItems.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList();
         }
 
         /// <MetaDataID>{8287dfb4-1de6-4bca-8e57-b72df3d7121f}</MetaDataID>
@@ -810,28 +814,24 @@ namespace FlavourBusinessManager.ServicesContextResources
             var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
             foreach (var itemInPreparation in itemsInPreparation)
             {
-                duration += itemInPreparation.PreparationTimeSpanInMin;
-                predictions[itemInPreparation.uid] = duration + itemInPreparation.CookingTimeSpanInMin;
+                duration += (DateTime.Now - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
+                predictions[itemInPreparation.uid] = duration;
             }
 
             foreach (var itemPendingToPrepare in itemsPendingToPrepare)
             {
                 duration += itemPendingToPrepare.PreparationTimeSpanInMin;
-                predictions[itemPendingToPrepare.uid] = duration + itemPendingToPrepare.CookingTimeSpanInMin;
+                predictions[itemPendingToPrepare.uid] = duration;
             }
             var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
 
             foreach (var roasting…tem in roasting…tems)
-                predictions[roasting…tem.uid] = roasting…tem.CookingTimeSpanInMin;
-
-
+                predictions[roasting…tem.uid] = (DateTime.UtcNow - roasting…tem.CookingStartsAt.Value).TotalMinutes;
 
             foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
                 predictions[prepared…tem.uid] = 0;
 
-
-
-            return new Dictionary<string, double>();
+            return predictions;
         }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
         public Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris)

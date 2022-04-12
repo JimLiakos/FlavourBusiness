@@ -3707,7 +3707,7 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
         }
         
-        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems> GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
+        public FlavourBusinessFacade.ServicesContextResources.PreparationStationStatus GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
@@ -3716,7 +3716,7 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             args[1] = deviceUpdateEtag;
             argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "GetPreparationItems", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>>(retValue);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.PreparationStationStatus>(retValue);
         }
         
         public System.Collections.Generic.Dictionary<string, double> ItemsΙnPreparation(System.Collections.Generic.List<string> itemPreparationUris)

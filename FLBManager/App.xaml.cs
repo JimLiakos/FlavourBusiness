@@ -38,16 +38,16 @@ namespace FLBManager
             //catch (Exception error)
             //{
             //}
-            List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
-            FlavourBusinessManager.RoomService.ItemPreparation itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared };
-            itemPreparations.Add(itemPreparation);
-            itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Serving };
-            itemPreparations.Add(itemPreparation);
-            itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Committed };
-            itemPreparations.Add(itemPreparation);
+            //List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
+            //FlavourBusinessManager.RoomService.ItemPreparation itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared };
+            //itemPreparations.Add(itemPreparation);
+            //itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Serving };
+            //itemPreparations.Add(itemPreparation);
+            //itemPreparation = new FlavourBusinessManager.RoomService.ItemPreparation() { State = FlavourBusinessFacade.RoomService.ItemPreparationState.Committed };
+            //itemPreparations.Add(itemPreparation);
 
-            var sdsd = itemPreparations.GetMinimumCommonItemPreparationState();
-            var ww = sdsd.ToString();
+            //var sdsd = itemPreparations.GetMinimumCommonItemPreparationState();
+            //var ww = sdsd.ToString();
 
             //var start = DateTime.Now;
             //FlavourBusinessManagerApp.Init("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost", "$web");

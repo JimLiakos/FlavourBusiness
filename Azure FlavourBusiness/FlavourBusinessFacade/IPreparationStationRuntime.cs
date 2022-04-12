@@ -40,7 +40,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string Description { get; }
 
         /// <MetaDataID>{806c57e3-5317-4955-9622-97b56e045b98}</MetaDataID>
-        IList<ServicePointPreparationItems> GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag);
+        PreparationStationStatus GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag);
 
         /// <MetaDataID>{734c631d-41d1-4cbc-bf4c-037cc82dbade}</MetaDataID>
         string RestaurantMenuDataSharedUri { get; }
@@ -59,7 +59,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         // <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
-        Dictionary<string,double> Items…nPreparation(List<string> itemPreparationUris);
+        Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{358c2943-5794-46d6-aacb-402ce2409085}</MetaDataID>
-        Dictionary<string, double>  ItemsRoasting(List<string> itemPreparationUris);
+        Dictionary<string, double> ItemsRoasting(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
-        Dictionary<string, double>  ItemsPrepared(List<string> itemPreparationUris);
+        Dictionary<string, double> ItemsPrepared(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -107,6 +107,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
     public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);
+
+
+    /// <MetaDataID>{fbe3b931-7627-4a81-ade7-0c279be64691}</MetaDataID>
+    public class PreparationStationStatus
+    {
+        public IList<ServicePointPreparationItems> NewItemsUnderPreparationControl;
+
+        public Dictionary<string, double> ServingTimespanPredictions;
+
+    }
 
 
 }

@@ -126,7 +126,9 @@ namespace PreparationStationDevice
                                 Title = PreparationStation.Description;
 
                                 PreparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
-                                ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                                PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                                ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                                ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                             }
 
                             //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
@@ -155,6 +157,9 @@ namespace PreparationStationDevice
 
             });
         }
+
+        [HttpVisible]
+        public Dictionary<string, double> ServingTimeSpanPredictions { get; private set; }
 
         [HttpVisible]
         public List<Language> MenuLanguages { get; set; }
@@ -202,7 +207,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions =PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -235,7 +240,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions = PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -299,7 +304,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions =PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -334,7 +339,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions = PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -360,7 +365,11 @@ namespace PreparationStationDevice
                                  from preparationItem in servicePointPreparationItems.PreparationItems
                                  select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
-            var servicePointsPreparationItems = sender.GetPreparationItems(itemsOnDevice, deviceUpdateEtag).ToList();
+            
+
+            PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+            var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+            ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
 
             var existingPreparationItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                             from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -527,7 +536,11 @@ namespace PreparationStationDevice
                             var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                             MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
                             GetMenuLanguages(MenuItems.Values.ToList());
-                            ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                            PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                            ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                            ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+
+
                             return true;
                         }
                         else
@@ -673,6 +686,8 @@ namespace PreparationStationDevice
         }
 
         public string AppIdentity => "com.microneme.preparationstationdevice";
+
+        
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);

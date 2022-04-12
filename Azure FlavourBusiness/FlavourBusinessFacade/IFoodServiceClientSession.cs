@@ -18,6 +18,7 @@ namespace FlavourBusinessFacade.EndUsers
         ///// <MetaDataID>{4a6cfe26-2795-4345-85e5-f518c066e86c}</MetaDataID>
         //Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations);
 
+        /// <MetaDataID>{4cb6fae1-3cb3-4a86-8fc5-2bd785deaf85}</MetaDataID>
         ClientSessionData ClientSessionData { get; }
 
 

@@ -61,6 +61,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        /// <MetaDataID>{93fe70c7-0ac7-4265-b46a-6b889127b1a2}</MetaDataID>
         public ClientSessionData ClientSessionData
         {
             get
@@ -293,6 +294,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <summary>
         /// Defines Main session which defined explicitly from meal invitation
         /// </summary>
+        /// <MetaDataID>{32b57809-617f-4da5-90cc-4b4b95278fbf}</MetaDataID>
         private IFoodServiceSession ExplicitMainSession
         {
             get
@@ -495,6 +497,7 @@ namespace FlavourBusinessManager.EndUsers
         internal DateTime? PreviousYouMustDecideMessageTime;
 
 
+        /// <MetaDataID>{08eb2650-5915-43b8-a130-374992f0985a}</MetaDataID>
         bool DeviceConnectionStatusCheckActive;
         /// <MetaDataID>{b448d9b4-451c-4d2c-a064-71a9b59a635a}</MetaDataID>
         int DeviceConnectionStatusChecksNumber;
@@ -811,6 +814,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{e0560b3d-7c5c-47d4-84de-2deb81334af0}</MetaDataID>
         internal void Merge(ItemPreparation item)
         {
 
@@ -828,6 +832,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <summary>
         /// In case where the prerequisites fulfilled, assign partial session to a meal session 
         /// </summary>
+        /// <MetaDataID>{e320ae17-5fee-481e-a6b6-4dec45d09e90}</MetaDataID>
         private void AutoMealParticipation()
         {
             if (_MainSession.Value == null)
@@ -857,6 +862,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{fa89d751-ac9e-44c4-81e1-2a7664a59419}</MetaDataID>
         internal void Merge(FoodServiceClientSession partialSession)
         {
 
@@ -1036,6 +1042,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{88294e65-17b3-470c-a8d5-dcfde3d6389b}</MetaDataID>
         internal void RaiseMainSessionChange()
         {
 
@@ -1292,6 +1299,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        /// <MetaDataID>{262738fd-4b34-4477-8517-044442d3dc19}</MetaDataID>
         OrganizationStorageRef _Menu;
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
         public OrganizationStorageRef Menu
@@ -1593,6 +1601,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        /// <MetaDataID>{30273f52-641c-45ec-b2ac-150c6fbad211}</MetaDataID>
         private void RemoveItemForMerge(ItemPreparation flavourItem)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1607,6 +1616,7 @@ namespace FlavourBusinessManager.EndUsers
                 stateTransition.Consistent = true;
             }
         }
+        /// <MetaDataID>{c8e68341-2f4e-4105-a4c2-8263f98c422f}</MetaDataID>
         private void AddItemForMerge(ItemPreparation flavourItem)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1624,6 +1634,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
+        /// <MetaDataID>{c52be7e9-d08f-43fa-9cba-a4215dd74f35}</MetaDataID>
         private void RemoveSharedItemForMerge(ItemPreparation flavourItem)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1637,6 +1648,7 @@ namespace FlavourBusinessManager.EndUsers
                 stateTransition.Consistent = true;
             }
         }
+        /// <MetaDataID>{f6cba177-607f-4994-b008-4fe4c013f249}</MetaDataID>
         private void AddSharedItemForMerge(ItemPreparation flavourItem)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

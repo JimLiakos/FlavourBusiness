@@ -12987,24 +12987,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
-			    compartment 	(object Compartment
-				Parent_View 	@174
-				location   	(3522, 491)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	8
-				max_width  	1946)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -13083,24 +13065,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
-			    compartment 	(object Compartment
-				Parent_View 	@178
-				location   	(1355, 455)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	15
-				max_width  	715)
 			    width      	819
 			    height     	425
 			    annotation 	8)
@@ -16125,7 +16089,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"28")
+			    value      	"32")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -16273,7 +16237,7 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"61ECF1C00141"
+				    quid       	"6254E69803B1"
 				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
@@ -16369,6 +16333,25 @@
 			    parameters 	(list Parameters
 				(object Parameter "state"
 				    quid       	"61ECF1BF031F"
+				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsInTheSameOrPreviousState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3476fc80-8567-4993-b024-5772e5ace32e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6254E69802F1"))
+			    quid       	"6254E69802F1"
+			    parameters 	(list Parameters
+				(object Parameter "state"
+				    quid       	"6254E698030A"
 				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
@@ -17248,7 +17231,82 @@
 				    name       	"MetaObjectID"
 				    value      	"{225e90a9-4647-492b-9dd0-aeb1abe06f20}"))
 			    quid       	"6238738A01AC"
-			    type       	"string"))
+			    type       	"string")
+			(object ClassAttribute "PreparationTimeSpanInMin"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6254E699000C")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+30"))
+			    quid       	"6254E699000C"
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "CookingTimeSpanInMin"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1315d6ad-a380-49fd-946f-a1274fcd0f6c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6254E699003A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+31"))
+			    quid       	"6254E699003A"
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "CookingStartsAt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cc4d9fdb-0a34-4ae1-bb89-5c28a48bbcdf}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6254E69A00FC")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+29"))
+			    quid       	"6254E69A00FC"
+			    type       	"System.Nullable<System.DateTime>"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
