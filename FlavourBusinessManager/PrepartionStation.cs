@@ -804,34 +804,44 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
         Dictionary<string, double> GetItemToServingtimespanPredictions()
         {
-            var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
-                                           from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
-                                           select preparationItem).ToList();
-
-            double duration = 0;
-            Dictionary<string, double> predictions = new Dictionary<string, double>();
-            var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).ToList();
-            var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
-            foreach (var itemInPreparation in itemsInPreparation)
+            try
             {
-                duration += (DateTime.Now - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
-                predictions[itemInPreparation.uid] = duration;
-            }
+                var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
+                                               from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                               select preparationItem).ToList();
 
-            foreach (var itemPendingToPrepare in itemsPendingToPrepare)
+                double duration = 0;
+                Dictionary<string, double> predictions = new Dictionary<string, double>();
+
+
+                var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).ToList();
+                var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
+                foreach (var itemInPreparation in itemsInPreparation)
+                {
+                    duration += itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
+                    predictions[itemInPreparation.uid] = duration;
+                }
+
+                foreach (var itemPendingToPrepare in itemsPendingToPrepare)
+                {
+                    duration += itemPendingToPrepare.PreparationTimeSpanInMin;
+                    predictions[itemPendingToPrepare.uid] = duration;
+                }
+                var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
+
+                foreach (var roasting…tem in roasting…tems)
+                    predictions[roasting…tem.uid] = (DateTime.UtcNow - roasting…tem.CookingStartsAt.Value).TotalMinutes;
+
+                foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
+                    predictions[prepared…tem.uid] = 0;
+
+                return predictions;
+            }
+            catch (Exception error)
             {
-                duration += itemPendingToPrepare.PreparationTimeSpanInMin;
-                predictions[itemPendingToPrepare.uid] = duration;
+
+                throw;
             }
-            var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
-
-            foreach (var roasting…tem in roasting…tems)
-                predictions[roasting…tem.uid] = (DateTime.UtcNow - roasting…tem.CookingStartsAt.Value).TotalMinutes;
-
-            foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
-                predictions[prepared…tem.uid] = 0;
-
-            return predictions;
         }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
         public Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris)
