@@ -208,6 +208,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions =PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
+                        ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -241,6 +242,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
+                        ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -273,6 +275,7 @@ namespace PreparationStationDevice
                     try
                     {
                         PreparationStation.ItemsServing(itemPreparations.Select(x => x.uid).ToList());
+                        ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -305,6 +308,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions =PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -340,6 +344,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
+                        ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -409,7 +414,9 @@ namespace PreparationStationDevice
         [GenerateEventConsumerProxy]
         public event PreparationItemsLoadedHandle PreparationItemsLoaded;
 
-
+        [HttpVisible]
+        [GenerateEventConsumerProxy]
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
         [HttpVisible]
         public bool IsTagsBarOpen
         {

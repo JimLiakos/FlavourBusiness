@@ -802,6 +802,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
+        Dictionary<string, double> predictions = new Dictionary<string, double>();
         Dictionary<string, double> GetItemToServingtimespanPredictions()
         {
             try
@@ -811,15 +812,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                select preparationItem).ToList();
 
                 double duration = 0;
-                Dictionary<string, double> predictions = new Dictionary<string, double>();
 
 
-                var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).ToList();
+
+                var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
                 var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
                 foreach (var itemInPreparation in itemsInPreparation)
                 {
-                    duration += itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
-                    predictions[itemInPreparation.uid] = duration;
+                    if (itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes > 0)
+                    {
+                        duration += itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
+                        if (itemInPreparation.PreparationStartsAt + TimeSpan.FromSeconds(5) > DateTime.UtcNow)
+                            predictions[itemInPreparation.uid] = duration;
+                        else
+                            predictions[itemInPreparation.uid] = predictions[itemInPreparation.uid] - itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes; ;
+
+                    }
                 }
 
                 foreach (var itemPendingToPrepare in itemsPendingToPrepare)
