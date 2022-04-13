@@ -3697,14 +3697,14 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, double> ItemsServing(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan> ItemsServing(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsServing", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>>(retValue);
         }
         
         public FlavourBusinessFacade.ServicesContextResources.PreparationStationStatus GetPreparationItems(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
@@ -3719,44 +3719,44 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.PreparationStationStatus>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, double> ItemsΙnPreparation(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan> ItemsΙnPreparation(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsΙnPreparation", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, double> ItemsRoasting(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan> ItemsRoasting(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsRoasting", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, double> ItemsPrepared(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan> ItemsPrepared(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsPrepared", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, double> CancelLastPreparationStep(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan> CancelLastPreparationStep(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "CancelLastPreparationStep", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, double>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>>(retValue);
         }
         
         public void AssignCodeCardsToSessions(System.Collections.Generic.List<string> codeCards)

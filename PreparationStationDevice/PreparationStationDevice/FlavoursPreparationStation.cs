@@ -159,7 +159,7 @@ namespace PreparationStationDevice
         }
 
         [HttpVisible]
-        public Dictionary<string, double> ServingTimeSpanPredictions { get; private set; }
+        public Dictionary<string, ItemPreparationPlan> ServingTimeSpanPredictions { get; private set; }
 
         [HttpVisible]
         public List<Language> MenuLanguages { get; set; }
@@ -372,7 +372,7 @@ namespace PreparationStationDevice
 
             
 
-            PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+            PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
             var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
 

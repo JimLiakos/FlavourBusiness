@@ -802,48 +802,55 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
-        Dictionary<string, double> predictions = new Dictionary<string, double>();
-        Dictionary<string, double> GetItemToServingtimespanPredictions()
+        Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
+        Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
         {
             try
             {
-                var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
-                                               from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
-                                               select preparationItem).ToList();
-
-                double duration = 0;
-
-
-
-                var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
-                var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
-                foreach (var itemInPreparation in itemsInPreparation)
+                lock (predictions)
                 {
-                    if (itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes > 0)
+                    var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
+                                                   from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                                   select preparationItem).ToList();
+
+                    double duration = 0;
+
+
+
+                    var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
+                    var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
+                    foreach (var itemInPreparation in itemsInPreparation)
                     {
-                        duration += itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes;
+
                         if (itemInPreparation.PreparationStartsAt + TimeSpan.FromSeconds(5) > DateTime.UtcNow)
-                            predictions[itemInPreparation.uid] = duration;
+                        {
+                            predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow + TimeSpan.FromMinutes(duration), Duration = itemInPreparation.PreparationTimeSpanInMin };
+                            duration += itemInPreparation.PreparationTimeSpanInMin;
+                        }
                         else
-                            predictions[itemInPreparation.uid] = predictions[itemInPreparation.uid] - itemInPreparation.PreparationTimeSpanInMin - (DateTime.UtcNow - itemInPreparation.PreparationStartsAt.Value).TotalMinutes; ;
+                        {
+                            if ((DateTime.UtcNow - predictions[itemInPreparation.uid].PreparationStart).TotalMinutes > 0)
+                                duration += (predictions[itemInPreparation.uid].PreparationStart - DateTime.UtcNow).TotalMinutes+ predictions[itemInPreparation.uid].Duration;
+                        }
+
 
                     }
+
+                    foreach (var itemPendingToPrepare in itemsPendingToPrepare)
+                    {
+                        predictions[itemPendingToPrepare.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow + TimeSpan.FromMinutes(duration), Duration = itemPendingToPrepare.PreparationTimeSpanInMin };
+                        duration += itemPendingToPrepare.PreparationTimeSpanInMin;
+                    }
+                    var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
+
+                    foreach (var roasting…tem in roasting…tems)
+                        predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
+
+                    foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
+                        predictions[prepared…tem.uid] = null;
+
+                    return predictions;
                 }
-
-                foreach (var itemPendingToPrepare in itemsPendingToPrepare)
-                {
-                    duration += itemPendingToPrepare.PreparationTimeSpanInMin;
-                    predictions[itemPendingToPrepare.uid] = duration;
-                }
-                var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
-
-                foreach (var roasting…tem in roasting…tems)
-                    predictions[roasting…tem.uid] = (DateTime.UtcNow - roasting…tem.CookingStartsAt.Value).TotalMinutes;
-
-                foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
-                    predictions[prepared…tem.uid] = 0;
-
-                return predictions;
             }
             catch (Exception error)
             {
@@ -852,7 +859,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
-        public Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -866,7 +873,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return GetItemToServingtimespanPredictions();
         }
 
-        public Dictionary<string, double> ItemsRoasting(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -878,7 +885,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
             return GetItemToServingtimespanPredictions();
         }
-        public Dictionary<string, double> ItemsServing(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -893,7 +900,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
-        public Dictionary<string, double> ItemsPrepared(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -908,7 +915,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
         /// <MetaDataID>{70023458-eb6b-4245-8003-3668bc9253ec}</MetaDataID>
-        public Dictionary<string, double> CancelLastPreparationStep(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> CancelLastPreparationStep(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                        from itemPreparation in servicePointPreparationItems.PreparationItems

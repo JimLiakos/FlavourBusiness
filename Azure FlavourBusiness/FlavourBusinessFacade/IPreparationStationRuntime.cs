@@ -21,7 +21,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}</MetaDataID>
-        Dictionary<string, double> ItemsServing(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris);
 
         event ObjectChangeStateHandle ObjectChangeState;
 
@@ -59,7 +59,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         // <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
-        Dictionary<string, double> Items…nPreparation(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{358c2943-5794-46d6-aacb-402ce2409085}</MetaDataID>
-        Dictionary<string, double> ItemsRoasting(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{ec0f68a2-87b3-4e9c-8c45-14915ca53830}</MetaDataID>
-        Dictionary<string, double> ItemsPrepared(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris);
 
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// where the items will be ready to serve
         /// </returns>
         /// <MetaDataID>{99ef195b-b347-42d7-b70d-adbcfdb0c54e}</MetaDataID>
-        Dictionary<string, double> CancelLastPreparationStep(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> CancelLastPreparationStep(List<string> itemPreparationUris);
         /// <MetaDataID>{2d9ccb0f-821d-4469-8f74-9087c2be669b}</MetaDataID>
         void AssignCodeCardsToSessions(List<string> codeCards);
     }
@@ -114,7 +114,14 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         public IList<ServicePointPreparationItems> NewItemsUnderPreparationControl;
 
-        public Dictionary<string, double> ServingTimespanPredictions;
+        public Dictionary<string, ItemPreparationPlan> ServingTimespanPredictions;
+
+    }
+
+    public class ItemPreparationPlan
+    {
+        public DateTime PreparationStart { get; set; }
+        public double  Duration { get; set; }
 
     }
 
