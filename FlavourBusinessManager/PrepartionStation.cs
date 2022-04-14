@@ -803,6 +803,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
         Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
+        List<IItemPreparation> ItemsInPreparation;
         Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
         {
             try
@@ -818,28 +819,43 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
                     var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
+                    if (ItemsInPreparation == null)
+                        ItemsInPreparation = itemsInPreparation;
+                    else
+                    {
+                        var removedItem = ItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
+                        if (removedItem != null && predictions.ContainsKey(removedItem.uid) && predictions[removedItem.uid].PreparationStart > DateTime.UtcNow)
+                        {
+                            for (int i = ItemsInPreparation.IndexOf(removedItem); i < ItemsInPreparation.Count; i++)
+                            {
+                                if (predictions.ContainsKey(ItemsInPreparation[i].uid))
+                                    predictions.Remove(ItemsInPreparation[i].uid);
+                            }
+                        }
+                    }
+
                     var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
+                    DateTime previousePreparationEndsAt = DateTime.UtcNow;
                     foreach (var itemInPreparation in itemsInPreparation)
                     {
 
-                        if (itemInPreparation.PreparationStartsAt + TimeSpan.FromSeconds(5) > DateTime.UtcNow)
-                        {
-                            predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow + TimeSpan.FromMinutes(duration), Duration = itemInPreparation.PreparationTimeSpanInMin };
-                            duration += itemInPreparation.PreparationTimeSpanInMin;
-                        }
-                        else
-                        {
-                            if ((DateTime.UtcNow - predictions[itemInPreparation.uid].PreparationStart).TotalMinutes > 0)
-                                duration += (predictions[itemInPreparation.uid].PreparationStart - DateTime.UtcNow).TotalMinutes+ predictions[itemInPreparation.uid].Duration;
-                        }
 
 
+                        if (itemInPreparation.PreparationStartsAt + TimeSpan.FromSeconds(5) > DateTime.UtcNow || !predictions.ContainsKey(itemInPreparation.uid))
+                        {
+                            if (previousePreparationEndsAt > DateTime.UtcNow)
+                                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                            else
+                                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                        }
+                        if (predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration) > previousePreparationEndsAt)
+                            previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
                     }
-
+                    ItemsInPreparation = itemsInPreparation;
                     foreach (var itemPendingToPrepare in itemsPendingToPrepare)
                     {
-                        predictions[itemPendingToPrepare.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow + TimeSpan.FromMinutes(duration), Duration = itemPendingToPrepare.PreparationTimeSpanInMin };
-                        duration += itemPendingToPrepare.PreparationTimeSpanInMin;
+                        predictions[itemPendingToPrepare.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemPendingToPrepare.PreparationTimeSpanInMin };
+                        previousePreparationEndsAt= previousePreparationEndsAt+TimeSpan.FromMinutes(itemPendingToPrepare.PreparationTimeSpanInMin);
                     }
                     var roastingÉtems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
 

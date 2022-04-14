@@ -9,6 +9,9 @@
     <DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="ITag.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="vssver.scc" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +81,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ΙHallLayout.cs" Link="ΙHallLayout.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="IMealCourseType.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="IMealType.cs" />
+    <Compile Include="..\..\MenuModel\MenuModelFacade\ITag.cs" Link="ITag.cs" />
     <Compile Include="..\..\MicronemeCommon\IUnitMeasure.cs" Link="IUnitMeasure.cs" />
     <Compile Include="..\..\MicronemeCommon\Quantity.cs" Link="Quantity.cs" />
   </ItemGroup>
