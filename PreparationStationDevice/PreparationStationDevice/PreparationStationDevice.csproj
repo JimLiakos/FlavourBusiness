@@ -52,7 +52,6 @@
 		<Compile Include="..\..\MenuModel\MenuModelFacade\IScaleType.cs">
 			<Link>MenuModel\IScaleType.cs</Link>
 		</Compile>
-		<Compile Include="..\..\MenuModel\MenuModelFacade\ITag.cs" Link="MenuModel\ITag.cs" />
 		<Compile Include="..\..\MenuModel\MenuModelFacade\SelectionType.cs" Link="MenuModel\SelectionType.cs" />
 		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayout.cs" Link="RestaurantHallLayoutModel\HallLayout.cs" />
 		<Compile Include="..\..\RestaurantHallLayoutModel\HallLayoutShape.cs" Link="RestaurantHallLayoutModel\HallLayoutShape.cs" />

@@ -24,7 +24,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 namespace PreparationStationDevice
 {
     /// <MetaDataID>{293c7b92-a89a-4179-a8ff-616948355d82}</MetaDataID>
-    public class FlavoursPreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ILocalization
+    public class FlavoursPreparationStation : MarshalByRefObject, IFlavoursPreparationStation, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ILocalization
     {
         public FlavoursPreparationStation()
         {
@@ -207,7 +207,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        ServingTimeSpanPredictions =PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions = PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -307,7 +307,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        ServingTimeSpanPredictions =PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions = PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -370,7 +370,7 @@ namespace PreparationStationDevice
                                  from preparationItem in servicePointPreparationItems.PreparationItems
                                  select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
-            
+
 
             PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
             var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
@@ -451,7 +451,7 @@ namespace PreparationStationDevice
             return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically",true);
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", true);
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
                     return false;
@@ -474,7 +474,9 @@ namespace PreparationStationDevice
                     var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
                     MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
                     GetMenuLanguages(MenuItems.Values.ToList());
-                    ServicePointsPreparationItems = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null).ToList();
+                    PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                    ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                    ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                     CommunicationCredentialKey = communicationCredentialKey;
                     return true;
                 }
@@ -498,7 +500,7 @@ namespace PreparationStationDevice
         public async void AssignCodeCardsToSessions()
         {
 #if DeviceDotNet
-            var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically",true);
+            var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", true);
             if (PreparationStation != null)
             {
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
@@ -694,17 +696,42 @@ namespace PreparationStationDevice
 
         public string AppIdentity => "com.microneme.preparationstationdevice";
 
-        
+
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);
 
 
+    /// <MetaDataID>{7b4504d8-bb4c-4b28-b953-1f01d996289d}</MetaDataID>
     public class Language
     {
         public string Code { get; set; }
 
         public string Name { get; set; }
+    }
+
+    /// <MetaDataID>{1a4833b0-ba26-4250-9c97-c71d2594dfe0}</MetaDataID>
+    [HttpVisible]
+    public interface IFlavoursPreparationStation
+    {
+        Task<List<PreparationItemsPerServicePoint>> WebUIAttached();
+        Dictionary<string, ItemPreparationPlan> ServingTimeSpanPredictions { get; }
+        List<Language> MenuLanguages { get; set; }
+        void CancelLastPreparationStep(List<ItemPreparation> itemPreparations);
+        void ItemsPrepared(List<ItemPreparation> itemPreparations);
+        void ItemsServing(List<ItemPreparation> itemPreparations);
+        void ItemsΙnPreparation(List<ItemPreparation> itemPreparations);
+
+        [GenerateEventConsumerProxy]
+        event PreparationItemsLoadedHandle PreparationItemsLoaded;
+
+        [GenerateEventConsumerProxy]
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+        bool IsTagsBarOpen { get; set; }
+        string CommunicationCredentialKey { get; set; }
+        void AssignCodeCardsToSessions();
+        Task<bool> AssignCommunicationCredentialKey(string credentialKey);
     }
 
 

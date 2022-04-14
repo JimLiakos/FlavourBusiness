@@ -301,6 +301,59 @@ namespace ServiceContextManagerApp.Proxies
         }
     }
 }
+namespace PreparationStationDevice.Proxies
+{
+    using System;
+    
+    
+    public sealed class CNSPr_IFlavoursPreparationStation_PreparationItemsLoaded : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(PreparationStationDevice.FlavoursPreparationStation sender)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = sender;
+            argsTypes[0] = typeof(PreparationStationDevice.FlavoursPreparationStation);
+            object retValue = this.Invoke(typeof(PreparationStationDevice.PreparationItemsLoadedHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new PreparationStationDevice.PreparationItemsLoadedHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new PreparationStationDevice.PreparationItemsLoadedHandle(this.Invoke));
+        }
+    }
+    
+    public sealed class CNSPr_IFlavoursPreparationStation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(object _object, string member)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = _object;
+            argsTypes[0] = typeof(object);
+            args[1] = member;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
+        }
+    }
+}
 namespace DontWaitApp.Proxies
 {
     using System;
