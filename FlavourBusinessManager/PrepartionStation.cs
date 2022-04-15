@@ -750,8 +750,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
                             ItemPreparation = itemPreparation,
                             PreparationStationRuntime = preparationStation,
-                            PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                            CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                            PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                            CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                         };
                     }
                 }
@@ -766,8 +766,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                             {
                                 ItemPreparation = itemPreparation,
                                 PreparationStationRuntime = preparationStation,
-                                PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                                CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                                PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                                CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                             };
                         }
                     }
@@ -779,9 +779,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 preparationData = new PreparationData()
                 {
                     ItemPreparation = itemPreparation,
-                    Duration = TimeSpan.FromMinutes(0.5),
-                    PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                    CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                    Duration = TimeSpan.FromMinutes(0.5)
                 };
             }
             else
