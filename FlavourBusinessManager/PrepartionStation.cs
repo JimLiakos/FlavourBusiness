@@ -675,9 +675,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     foreach (var preparationItem in servingSession.PreparationItems)
                     {
-                        DateTime itemReadyToServe = preparationStationStatus.ServingTimespanPredictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationItem.PreparationTimeSpanInMin + preparationItem.CookingTimeSpanInMin);
-                        if (servingSession.ServedAtForecast == null || servingSession.ServedAtForecast < itemReadyToServe)
-                            servingSession.ServedAtForecast = itemReadyToServe;
+                        if (preparationStationStatus.ServingTimespanPredictions.ContainsKey(preparationItem.uid))
+                        {
+                            DateTime itemReadyToServe = preparationStationStatus.ServingTimespanPredictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationItem.PreparationTimeSpanInMin + preparationItem.CookingTimeSpanInMin);
+                            if (servingSession.ServedAtForecast == null || servingSession.ServedAtForecast < itemReadyToServe)
+                                servingSession.ServedAtForecast = itemReadyToServe;
+                        }
                     }
                 }
 
@@ -1107,6 +1110,6 @@ namespace FlavourBusinessManager.ServicesContextResources
     {
         public DateTime PreparationEndsAt { get; set; }
         public double DurationDif { get; set; }
-        public double PreparationTimeSpanInMin { get; internal set; }
+        public double PreparationTimeSpanInMin { get;  set; }
     }
 }
