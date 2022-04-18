@@ -29,6 +29,7 @@ namespace PreparationStationDevice
         public FlavoursPreparationStation()
         {
             var communicationCredentialKey = this.CommunicationCredentialKey;
+            PreparationVelocity = 0;
         }
 
 
@@ -129,6 +130,7 @@ namespace PreparationStationDevice
                                 PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
                                 ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                                 ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+                                PreparationVelocity = PreparationStation.PreparationVelocity;
                             }
 
                             //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
@@ -137,6 +139,7 @@ namespace PreparationStationDevice
                                                                select new PreparationItemsPerServicePoint()
                                                                {
                                                                    Description = servicePointItems.Description,
+                                                                   MustBeServedAt= servicePointItems.ServedAtForecast,
                                                                    ServicesContextIdentity = servicePointItems.ServicePoint.ServicesContextIdentity,
                                                                    ServicesPointIdentity = servicePointItems.ServicePoint.ServicesPointIdentity,
                                                                    Uri = servicePointItems.Uri,
@@ -208,6 +211,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.CancelLastPreparationStep(itemPreparations.Select(x => x.uid).ToList());
+                        PreparationVelocity = PreparationStation.PreparationVelocity;
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -242,6 +246,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
+                        PreparationVelocity = PreparationStation.PreparationVelocity;
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -308,6 +313,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        PreparationVelocity = PreparationStation.PreparationVelocity;
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -324,7 +330,12 @@ namespace PreparationStationDevice
             });
         }
 
-
+        [HttpVisible]
+        public double PreparationVelocity
+        {
+            get;
+            private set;
+        } 
 
 
         [HttpVisible]
@@ -344,6 +355,7 @@ namespace PreparationStationDevice
                     try
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
+                        PreparationVelocity = PreparationStation.PreparationVelocity;
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -375,6 +387,7 @@ namespace PreparationStationDevice
             PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
             var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+            PreparationVelocity = PreparationStation.PreparationVelocity;
 
             var existingPreparationItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                             from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -548,7 +561,7 @@ namespace PreparationStationDevice
                             PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
                             ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
-
+                            PreparationVelocity = PreparationStation.PreparationVelocity;
 
                             return true;
                         }
@@ -732,6 +745,8 @@ namespace PreparationStationDevice
         string CommunicationCredentialKey { get; set; }
         void AssignCodeCardsToSessions();
         Task<bool> AssignCommunicationCredentialKey(string credentialKey);
+
+        double PreparationVelocity { get; }
     }
 
 

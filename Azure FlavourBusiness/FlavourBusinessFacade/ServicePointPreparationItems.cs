@@ -109,6 +109,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
             }
         }
 
+        public DateTime? ServedAtForecast { get; set; }
+
         /// <MetaDataID>{c65cde2f-17f7-4077-9b40-6d29e81dac5d}</MetaDataID>
         public void AddPreparationItem(IItemPreparation flavourItem)
         {

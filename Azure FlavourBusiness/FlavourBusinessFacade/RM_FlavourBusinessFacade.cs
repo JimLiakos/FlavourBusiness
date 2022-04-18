@@ -3689,6 +3689,18 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             }
         }
         
+        // The Width property for the object.
+        public double PreparationVelocity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_PreparationVelocity", args, argsTypes);
+                return this.Proxy.GetValue<double>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];

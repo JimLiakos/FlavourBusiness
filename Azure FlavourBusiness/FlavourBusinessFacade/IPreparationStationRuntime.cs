@@ -104,6 +104,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Dictionary<string, ItemPreparationPlan> CancelLastPreparationStep(List<string> itemPreparationUris);
         /// <MetaDataID>{2d9ccb0f-821d-4469-8f74-9087c2be669b}</MetaDataID>
         void AssignCodeCardsToSessions(List<string> codeCards);
+
+
+        double PreparationVelocity { get; }
     }
 
     public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);
@@ -122,8 +125,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         public DateTime PreparationStart { get; set; }
         public double  Duration { get; set; }
-
     }
+
+
+ 
 
 
 }

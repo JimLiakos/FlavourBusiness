@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.Remoting.RestApi.Serialization;
 
 namespace PreparationStationDevice.WPF
@@ -29,6 +30,10 @@ namespace PreparationStationDevice.WPF
 
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
+
+            var json = System.IO.File.ReadAllText(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity.json");
+
+            var ss = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
 
             base.OnStartup(e);
         }

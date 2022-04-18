@@ -14,5 +14,6 @@ namespace PreparationStationDevice
 
         public List<PreparationStationItem> PreparationItems { get; set; }
         public string Uri { get;  set; }
+        public DateTime? MustBeServedAt { get; internal set; }
     }
 }
