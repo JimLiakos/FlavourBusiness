@@ -991,7 +991,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var preparedItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
-                                 where itemPreparationUris.Contains(itemPreparation.uid)
+                                 where itemPreparationUris.Contains(itemPreparation.uid)&& itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.ÉnPreparation)
                                  select itemPreparation).ToList();
 
             ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
