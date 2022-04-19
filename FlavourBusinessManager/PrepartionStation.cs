@@ -88,7 +88,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
                 if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
-                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
+                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value/2;
             }
 
 
@@ -101,7 +101,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
                 if (itemsPreparationInfo.CookingTimeSpanInMin != null)
-                    return itemsPreparationInfo.CookingTimeSpanInMin.Value;
+                    return itemsPreparationInfo.CookingTimeSpanInMin.Value/2;
             }
 
 
@@ -854,20 +854,26 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
 
                     DateTime previousePreparationEndsAt = DateTime.UtcNow;
-                    foreach (var itemInPreparation in itemsInPreparation)
+                    foreach (var itemInPreparation in itemsInPreparation.Where(x => ItemsInPreparation.Contains(x) && predictions.ContainsKey(x.uid)))
                     {
-                        if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
-                        {
+                        if (predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration) > previousePreparationEndsAt)
+                            previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
+                    }
+                    foreach (var itemInPreparation in itemsInPreparation.Where(x => !ItemsInPreparation.Contains(x) || !predictions.ContainsKey(x.uid)))
+                    {
+
+                        //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
+                        //{
                             //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
 
                             if (previousePreparationEndsAt > DateTime.UtcNow)
                                 predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
                             else
                                 predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
-                        }
-                        if (predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration) > previousePreparationEndsAt)
-                            previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
+                        //}
+                        previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
                     }
+
                     ItemsInPreparation = itemsInPreparation;
 
                     var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
@@ -884,7 +890,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
 
                     foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
-                        predictions[prepared…tem.uid] = null;
+                        if (predictions.ContainsKey(prepared…tem.uid))
+                            predictions.Remove(prepared…tem.uid);
 
                     return predictions;
                 }
@@ -1110,6 +1117,6 @@ namespace FlavourBusinessManager.ServicesContextResources
     {
         public DateTime PreparationEndsAt { get; set; }
         public double DurationDif { get; set; }
-        public double PreparationTimeSpanInMin { get;  set; }
+        public double PreparationTimeSpanInMin { get; set; }
     }
 }
