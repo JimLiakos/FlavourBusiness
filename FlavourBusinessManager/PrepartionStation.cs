@@ -508,14 +508,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             var servicesContextRunTime = ServicesContextRunTime.Current;
             servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
             var sdsd = servicesContextRunTime.OpenSessions[0].Meal.Courses.ToList();
-            foreach (var servicePointPreparationItems in (from openSession in servicesContextRunTime.OpenSessions
-                                                          where openSession.Meal != null
-                                                          from mealCourse in openSession.Meal.Courses
-                                                          from itemPreparation in mealCourse.FoodItems
-                                                          orderby itemPreparation.PreparedAtForecast
-                                                          //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-                                                          group itemPreparation by mealCourse into ServicePointItems
-                                                          select ServicePointItems).ToList())
+            var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
+                                                   where openSession.Meal != null
+                                                   from mealCourse in openSession.Meal.Courses
+                                                   from itemPreparation in mealCourse.FoodItems
+                                                   orderby itemPreparation.PreparedAtForecast
+                                                   //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
+                                                   group itemPreparation by mealCourse into ServicePointItems
+                                                   select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
+
+            foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
 
             //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
             //                                                                           //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
@@ -994,16 +996,20 @@ namespace FlavourBusinessManager.ServicesContextResources
                                  where itemPreparationUris.Contains(itemPreparation.uid)&& itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.ÉnPreparation)
                                  select itemPreparation).ToList();
 
-            ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+            if (preparedItems.Count > 0)
             {
-                PreparationEndsAt = DateTime.UtcNow,
-                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
-            };
+                ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+                {
+                    PreparationEndsAt = DateTime.UtcNow,
+                    DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
+                    PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
+                };
 
 
-            this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
-            PrepartionVelocityMilestone = DateTime.UtcNow;
+                this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+                PrepartionVelocityMilestone = DateTime.UtcNow;
+            }
+            
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
             var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;

@@ -154,7 +154,7 @@ namespace FlavourBusinessManager.RoomService
                         foreach (var mealCourseItem in mealCourseItems)
                             mealCourse.AddItem(mealCourseItem);
                     }
-                        
+
 
 
                 }
@@ -193,7 +193,7 @@ namespace FlavourBusinessManager.RoomService
                                                                  select foodItem))
                                 {
                                     var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(preparationItem);
-                                    if (DateTime.UtcNow + preparationData.Duration > preparationItem.PreparedAtForecast)
+                                    if ((DateTime.UtcNow + preparationData.Duration).ToUniversalTime() > preparationItem.MealCourse.ServedAtForecast?.ToUniversalTime())
                                         preparationItem.State = ItemPreparationState.PendingPreparation;
                                 }
 
