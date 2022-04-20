@@ -927,15 +927,16 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
-                if (ItemsPreparationHistory.Count == 0)
-                    return 0;
+                return _PreparationVelocity;
+                //if (ItemsPreparationHistory.Count == 0)
+                //    return 0;
 
-                var averageDif = ItemsPreparationHistory.Sum(x => x.DurationDif) / ItemsPreparationHistory.Count;
-                var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
+                //var averageDif = ItemsPreparationHistory.Sum(x => x.DurationDif) / ItemsPreparationHistory.Count;
+                //var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
 
-                string json = OOAdvantech.Json.JsonConvert.SerializeObject(ItemsPreparationHistory);
+                //string json = OOAdvantech.Json.JsonConvert.SerializeObject(ItemsPreparationHistory);
 
-                return (averageDif / averagePreparationTimeSpanInMin) * 100;
+                //return (averageDif / averagePreparationTimeSpanInMin) * 100;
             }
         }
 
@@ -949,15 +950,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                                  where itemPreparationUris.Contains(itemPreparation.uid)
                                  select itemPreparation).ToList();
 
-            ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
-            {
-                PreparationEndsAt = DateTime.UtcNow,
-                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
-            };
+            UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
+     
 
-
-            this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+            
             PrepartionVelocityMilestone = DateTime.UtcNow;
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
@@ -971,6 +967,42 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
             return GetItemToServingtimespanPredictions();
         }
+        int _PreparationVelocity = 0;
+        int PreviousAveragePerc;
+        List<ItemPreparationTimeSpan> SmoothingItemsPreparationHistory = new List<ItemPreparationTimeSpan>();
+        private void UpdateItemPreparationHistory(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
+        {
+
+            ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+            {
+                PreparationEndsAt = DateTime.UtcNow,
+                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
+                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
+            };
+
+            this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+
+            var avargePerc = (int)Math.Ceiling((itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.PreparationTimeSpanInMin) * 100);
+            if (Math.Abs(avargePerc - PreviousAveragePerc) < 10)
+            {
+                SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+                var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
+                var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
+                var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
+                _PreparationVelocity = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+                PreviousAveragePerc = _PreparationVelocity;
+                SmoothingItemsPreparationHistory.Clear();
+
+            }
+            else
+            {
+                SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+                PreviousAveragePerc = avargePerc;
+            }
+
+
+        }
+
         public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
