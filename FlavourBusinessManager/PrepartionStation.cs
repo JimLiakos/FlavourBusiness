@@ -982,25 +982,20 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
 
-            var avargePerc = (int)Math.Ceiling((itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.PreparationTimeSpanInMin) * 100);
-            if (Math.Abs(avargePerc - PreviousAveragePerc) < 10)
+            SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+            var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
+            var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
+            var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
+            var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+
+            if (Math.Abs(avargePerc - PreviousAveragePerc) < 10|| Math.Abs(avargePerc - _PreparationVelocity) < 10)
             {
-                SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
-                var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
-                var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
-                var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
-                _PreparationVelocity = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+                _PreparationVelocity = avargePerc;
                 PreviousAveragePerc = _PreparationVelocity;
                 SmoothingItemsPreparationHistory.Clear();
-
             }
             else
-            {
-                SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
                 PreviousAveragePerc = avargePerc;
-            }
-
-
         }
 
         public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
@@ -1030,15 +1025,17 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (preparedItems.Count > 0)
             {
-                ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
-                {
-                    PreparationEndsAt = DateTime.UtcNow,
-                    DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                    PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
-                };
+                //ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+                //{
+                //    PreparationEndsAt = DateTime.UtcNow,
+                //    DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
+                //    PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
+                //};
 
 
-                this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+                //this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+
+                UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
                 PrepartionVelocityMilestone = DateTime.UtcNow;
             }
             

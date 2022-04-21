@@ -146,6 +146,7 @@ namespace FlavourBusinessManager.RoomService
                     if (mealCourse == null)
                     {
                         mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
+                        mealCourse.StartsAt = DateTime.UtcNow;
                         mealCourse.Previous = _Courses.LastOrDefault();
                         _Courses.Add(mealCourse);
                     }

@@ -31,80 +31,80 @@ namespace PreparationStationDevice.WPF
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
 
-            var json = System.IO.File.ReadAllText(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
+            //var json = System.IO.File.ReadAllText(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
 
-            List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
+            //List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
 
-            int prevDifPerc = 0;
-            List<int> averagePercs = new List<int>();
-            List<DateTime> samplingDateTime = new List<DateTime>();
-            List<ItemPreparationTimeSpan> temp = new List<ItemPreparationTimeSpan>();
+            //int prevDifPerc = 0;
+            //List<int> averagePercs = new List<int>();
+            //List<DateTime> samplingDateTime = new List<DateTime>();
+            //List<ItemPreparationTimeSpan> temp = new List<ItemPreparationTimeSpan>();
 
-            foreach (var itemPreparation in itemsPreparationHistory.ToList())
-            {
-                var avargePerc = (int)Math.Ceiling((itemPreparation.DurationDif / itemPreparation.PreparationTimeSpanInMin) * 100);
-                if (Math.Abs(avargePerc - prevDifPerc) < 10)
-                {
-                    temp.Add(itemPreparation);
-                    var itemsPreparationHistorypart = temp;
-                    var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
-                    var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
-                    prevDifPerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
-                    averagePercs.Add(prevDifPerc);
-                    temp.Clear();
+            //foreach (var itemPreparation in itemsPreparationHistory.ToList())
+            //{
+            //    var avargePerc = (int)Math.Ceiling((itemPreparation.DurationDif / itemPreparation.PreparationTimeSpanInMin) * 100);
+            //    if (Math.Abs(avargePerc - prevDifPerc) < 10)
+            //    {
+            //        temp.Add(itemPreparation);
+            //        var itemsPreparationHistorypart = temp;
+            //        var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
+            //        var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
+            //        prevDifPerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+            //        averagePercs.Add(prevDifPerc);
+            //        temp.Clear();
 
-                }
-                else
-                {
-                    temp.Add(itemPreparation);
-                    prevDifPerc = avargePerc;
-                }
-
-
-            }
+            //    }
+            //    else
+            //    {
+            //        temp.Add(itemPreparation);
+            //        prevDifPerc = avargePerc;
+            //    }
 
 
-            var calculator = new SimpleMovingAverage(k: 7);
-            int i = 1;
+            //}
+
+
+            //var calculator = new SimpleMovingAverage(k: 7);
+            //int i = 1;
             
-            List<int> smoothAveragePercs = new List<int>();
+            //List<int> smoothAveragePercs = new List<int>();
 
-            List<int> timespans = new List<int>();
-            while (itemsPreparationHistory.Count >= i)
-            {
-                var itemsPreparationHistorypart = itemsPreparationHistory.Take(i).ToList();
+            //List<int> timespans = new List<int>();
+            //while (itemsPreparationHistory.Count >= i)
+            //{
+            //    var itemsPreparationHistorypart = itemsPreparationHistory.Take(i).ToList();
 
-                if (itemsPreparationHistorypart.Count > 5)
-                    itemsPreparationHistorypart = itemsPreparationHistorypart.Skip(itemsPreparationHistorypart.Count - 5).ToList();
-                var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
-                var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
-                if (itemsPreparationHistorypart.Count == 1)
-                    timespans.Add(0);
-                else
-                {
-                    timespans.Add((int)Math.Ceiling((itemsPreparationHistorypart[itemsPreparationHistorypart.Count - 1].PreparationEndsAt - itemsPreparationHistorypart[itemsPreparationHistorypart.Count - 2].PreparationEndsAt).TotalMinutes));
-                }
-
-
-                var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
-                averagePercs.Add(avargePerc);
-
-                // smoothAveragePercs.Add((int)Math.Ceiling(calculator.Update((int)Math.Ceiling((itemsPreparationHistory[i-1].DurationDif / itemsPreparationHistory[i-1].PreparationTimeSpanInMin) * 100))));
+            //    if (itemsPreparationHistorypart.Count > 5)
+            //        itemsPreparationHistorypart = itemsPreparationHistorypart.Skip(itemsPreparationHistorypart.Count - 5).ToList();
+            //    var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
+            //    var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
+            //    if (itemsPreparationHistorypart.Count == 1)
+            //        timespans.Add(0);
+            //    else
+            //    {
+            //        timespans.Add((int)Math.Ceiling((itemsPreparationHistorypart[itemsPreparationHistorypart.Count - 1].PreparationEndsAt - itemsPreparationHistorypart[itemsPreparationHistorypart.Count - 2].PreparationEndsAt).TotalMinutes));
+            //    }
 
 
-                i++;
+            //    var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+            //    averagePercs.Add(avargePerc);
 
-            }
+            //    // smoothAveragePercs.Add((int)Math.Ceiling(calculator.Update((int)Math.Ceiling((itemsPreparationHistory[i-1].DurationDif / itemsPreparationHistory[i-1].PreparationTimeSpanInMin) * 100))));
+
+
+            //    i++;
+
+            //}
 
 
 
 
-            var input = averagePercs;
-            foreach (var value in input)
-            {
-                var sma = calculator.Update(value);
-                smoothAveragePercs.Add((int)Math.Ceiling(sma));
-            }
+            //var input = averagePercs;
+            //foreach (var value in input)
+            //{
+            //    var sma = calculator.Update(value);
+            //    smoothAveragePercs.Add((int)Math.Ceiling(sma));
+            //}
 
 
             base.OnStartup(e);

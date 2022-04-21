@@ -1886,7 +1886,10 @@ namespace FlavourBusinessManager.EndUsers
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var flavourItem in clientSessionItems)
+                {
+                    flavourItem.MealCourse.StartsAt = DateTime.UtcNow;
                     flavourItem.State = ItemPreparationState.ÉnPreparation;
+                }
 
                 stateTransition.Consistent = true;
             }
