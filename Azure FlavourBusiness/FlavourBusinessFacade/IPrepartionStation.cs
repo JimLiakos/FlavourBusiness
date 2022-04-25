@@ -8,6 +8,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
     public interface IPreparationStation
     {
+        /// <MetaDataID>{f5ae4b4f-ef6a-493e-9283-4f3ced15af67}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
+        double GroupingTimeSpan { get; set; }
         [Association("PreparationSubStation", Roles.RoleA, "cd533f23-6824-4431-b904-818421f4eb42")]
         [RoleBMultiplicityRange(1, 1)]
         List<IPreparationStation> SubStations { get; }

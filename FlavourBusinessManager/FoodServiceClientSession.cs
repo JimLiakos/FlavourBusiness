@@ -1887,7 +1887,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var flavourItem in clientSessionItems)
                 {
-                    flavourItem.MealCourse.StartsAt = DateTime.UtcNow;
+                    //flavourItem.MealCourse.StartsAt = DateTime.UtcNow;
                     flavourItem.State = ItemPreparationState.ÉnPreparation;
                 }
 

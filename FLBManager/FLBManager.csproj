@@ -684,6 +684,11 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\cashier32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\sort16.png" />
+    <Resource Include="Resources\Images\Metro\sort24.png" />
+    <Resource Include="Resources\Images\Metro\sort32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

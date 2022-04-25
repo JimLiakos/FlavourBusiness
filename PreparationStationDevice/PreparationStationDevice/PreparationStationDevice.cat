@@ -44,7 +44,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4"))
+		    value      	"5"))
 	    quid       	"5D821872026F"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "AppSettingsStorage"
@@ -216,6 +216,39 @@
 			    value      	"+3"))
 		    quid       	"617A380C00DC"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "GroupingTimeSpan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4fe7f93e-41c2-401f-b41f-d9aa2421c706}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6262EF4B0008")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"6262EF4B0008"
+		    type       	"double"
 		    exportControl 	"Public"))
 	    module     	"Component View::PreparationStationDevice::PreparationStationDevice"
 	    quidu      	"5D830A58019E"
@@ -309,7 +342,19 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"MetaObjectID"
-		    value      	"{293c7b92-a89a-4179-a8ff-616948355d82}"))
+		    value      	"{293c7b92-a89a-4179-a8ff-616948355d82}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"1"))
 	    quid       	"5D830AB70013"
 	    realized_interfaces 	(list realize_rel_list
 		(object Realize_Relationship

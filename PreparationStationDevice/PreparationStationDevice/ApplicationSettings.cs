@@ -11,6 +11,17 @@ namespace PreparationStationDevice
     [Persistent()]
     public class ApplicationSettings
     {
+        ///// <MetaDataID>{4fe7f93e-41c2-401f-b41f-d9aa2421c706}</MetaDataID>
+        //[PersistentMember(nameof(_GroupingTimeSpan))]
+        //[BackwardCompatibilityID("+4")]
+        //public double GroupingTimeSpan
+        //{
+        //    get => default;
+        //    set
+        //    {
+        //    }
+        //}
+
         /// <exclude>Excluded</exclude>
         string _CommunicationCredentialKey;
 

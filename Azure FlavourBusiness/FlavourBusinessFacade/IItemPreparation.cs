@@ -21,7 +21,7 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+16")]
         double CookingTimeSpanInMin { get; set; }
 
-
+        int AppearanceOrder { get; set; }
         /// <summary>
         /// Defines the tracking transfer.
         /// Any time where item is  transferred between service points

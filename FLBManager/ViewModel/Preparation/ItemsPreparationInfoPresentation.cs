@@ -100,6 +100,10 @@ namespace FLBManager.ViewModel.Preparation
                 NewTag();
             });
 
+            ToggleAppearanceOrderCommand = new RelayCommand((object sender) =>
+            {
+                ToggleAppearanceOrder();
+            });
 
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
@@ -137,7 +141,10 @@ namespace FLBManager.ViewModel.Preparation
             {
                 NewTag();
             });
-
+            ToggleAppearanceOrderCommand = new RelayCommand((object sender) =>
+            {
+                ToggleAppearanceOrder();
+            });
             NewSubPreparationStationCommand = new RelayCommand((object sender) =>
             {
                 AddSubPreparationStation();
@@ -164,7 +171,18 @@ namespace FLBManager.ViewModel.Preparation
             {
                 NewTag();
             });
+            ToggleAppearanceOrderCommand = new RelayCommand((object sender) =>
+            {
+                ToggleAppearanceOrder();
+            });
 
+
+        }
+
+        private void ToggleAppearanceOrder()
+        {
+            AppearanceOrderPopupOpen = !AppearanceOrderPopupOpen;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderPopupOpen)));
         }
 
 
@@ -238,8 +256,19 @@ namespace FLBManager.ViewModel.Preparation
                 return false;
             }
         }
+        public bool HasAppearanceOrderValue
+        {
+            get
+            {
+                if (this.ItemsCategory != null && this.PreparationStationPresentation.AppearanceOrderIsDefinedFor(this.ItemsCategory))
+                    return true;
+                if (this.MenuItem != null && this.PreparationStationPresentation.AppearanceOrderIsDefinedFor(this.MenuItem))
+                    return true;
+                return false;
+            }
+        }
 
-     
+
 
         public bool HasTags
         {
@@ -276,8 +305,8 @@ namespace FLBManager.ViewModel.Preparation
                 if (this.MenuItem != null)
                     return this.PreparationStationPresentation.GetPreparationTimeSpanInMin(this.MenuItem);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
-                
-                
+
+
                 return 1;
 
             }
@@ -296,6 +325,83 @@ namespace FLBManager.ViewModel.Preparation
 
             }
         }
+
+        public string AppearanceOrderText
+        {
+            get
+            {
+                return AppearanceOrder.ToString();
+            }
+        }
+
+
+        public override bool Edit
+        {
+            get => base.Edit;
+
+            set
+            {
+                if (value)
+                    _AppearanceOrderOld = _AppearanceOrder;
+                else if (_AppearanceOrderOld != _AppearanceOrder)
+                {
+                    if (ItemsCategory != null)
+                    {
+                        PreparationStationPresentation.SetAppearanceOrder(this.ItemsCategory, _AppearanceOrder.Value);
+                        Refresh();
+                    }
+                    if (MenuItem != null)
+                        PreparationStationPresentation.SetAppearanceOrder(this.MenuItem, _AppearanceOrder.Value);
+
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasAppearanceOrderValue)));
+
+                }
+                base.Edit = value;
+            }
+        }
+        int? _AppearanceOrderOld;
+
+        int? _AppearanceOrder;
+        public int AppearanceOrder
+        {
+            get
+            {
+                if (_AppearanceOrder == null)
+                {
+                    if (this.ItemsCategory != null)
+                        _AppearanceOrder = this.PreparationStationPresentation.GetAppearanceOrder(this.ItemsCategory);
+                    if (this.MenuItem != null)
+                        _AppearanceOrder = this.PreparationStationPresentation.GetAppearanceOrder(this.MenuItem);
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+                    if (_AppearanceOrder != null)
+                        return _AppearanceOrder.Value;
+                }
+                else 
+                    return _AppearanceOrder.Value;
+                return 1;
+
+            }
+            set
+            {
+                _AppearanceOrder = value;
+                //if (ItemsCategory != null)
+                //{
+                //    PreparationStationPresentation.SetAppearanceOrder(this.ItemsCategory, value);
+                //    Refresh();
+                //}
+                //if (MenuItem != null)
+                //    PreparationStationPresentation.SetAppearanceOrder(this.MenuItem, value);
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderText)));
+
+            }
+        }
+
+
+
+
+
+
 
         public double CookingTimeSpanInMin
         {
@@ -498,6 +604,8 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
         public RelayCommand ToggleTagsCommand { get; protected set; }
+
+        public RelayCommand ToggleAppearanceOrderCommand { get; protected set; }
 
         public RelayCommand NewTagCommand { get; protected set; }
 
@@ -803,7 +911,8 @@ namespace FLBManager.ViewModel.Preparation
         }
 
         public bool TagsPopupOpen { get; set; }
-
+        //AppearanceOrder
+        public bool AppearanceOrderPopupOpen { get; set; }
         /// <MetaDataID>{68294fd3-55bc-4e63-ac2d-453faacd02d9}</MetaDataID>
         public void Refresh(MenuItem menuItemWithChanges)
         {

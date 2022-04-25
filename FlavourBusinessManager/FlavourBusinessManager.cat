@@ -7689,7 +7689,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8"))
+			    value      	"9"))
 		    quid       	"5D57B5C30236"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
@@ -8504,7 +8504,40 @@
 				    name       	"As Property"
 				    value      	FALSE))
 			    quid       	"610B5B4A0165"
-			    type       	"System.Nullable<System.DateTime>"))
+			    type       	"System.Nullable<System.DateTime>")
+			(object ClassAttribute "GroupingTimeSpan"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{341dba31-809e-4e82-9ffb-e68e6953f8d0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6262F10D0348")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"6262F10D0348"
+			    type       	"double"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -8526,7 +8559,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"9")
+			    value      	"10")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -8855,7 +8888,40 @@
 				    name       	"MetaObjectID"
 				    value      	"{ccdd24fd-e5c4-419d-8628-0c3c793d22bd}"))
 			    quid       	"623878A00391"
-			    type       	"string"))
+			    type       	"string")
+			(object ClassAttribute "AppearanceOrder"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{777d0268-d850-413e-9f97-b08aa020c07e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62643A7F01DD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"62643A7F01DD"
+			    type       	"System.Nullable<int>"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -12785,7 +12851,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1162
+		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::FlavoursServicesContext" @168
@@ -12815,7 +12881,7 @@
 			    quidu      	"5B2CE9870228"
 			    compartment 	(object Compartment
 				Parent_View 	@168
-				location   	(50, 1051)
+				location   	(50, 1043)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -12987,6 +13053,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
+			    compartment 	(object Compartment
+				Parent_View 	@174
+				location   	(3522, 483)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	1868)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -13065,6 +13149,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@178
+				location   	(1355, 447)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	16
+				max_width  	703)
 			    width      	819
 			    height     	425
 			    annotation 	8)
@@ -31704,7 +31806,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@551
-			location   	(56, 184)
+			location   	(56, 179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -31712,7 +31814,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@551
-			location   	(56, 134)
+			location   	(56, 133)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

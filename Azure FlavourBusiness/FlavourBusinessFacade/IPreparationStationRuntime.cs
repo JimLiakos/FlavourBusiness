@@ -25,6 +25,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         event ObjectChangeStateHandle ObjectChangeState;
 
+        /// <MetaDataID>{db665dba-2fd6-4d32-a941-263cf60a5e18}</MetaDataID>
         Dictionary<string, List<MenuModel.ITag>> ItemsPreparationTags { get; }
 
         /// <MetaDataID>{c819f9e6-21ed-4c0d-9c72-a240fbd8728d}</MetaDataID>
@@ -58,6 +59,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// returns a dictionary with items Uris under the preparation station control and the predicted time span in minutes 
         /// where the items will be ready to serve
         /// </returns>
+        /// <MetaDataID>{d65ab68e-c18d-437d-80c4-f618fb068d7d}</MetaDataID>
         // <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
         Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris);
 
@@ -106,6 +108,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         void AssignCodeCardsToSessions(List<string> codeCards);
 
 
+        /// <MetaDataID>{f917b9bc-9cdb-4d58-958c-29a20f95d173}</MetaDataID>
         double PreparationVelocity { get; }
     }
 
@@ -121,14 +124,15 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     }
 
+    /// <MetaDataID>{035494c0-f39d-441e-b659-5dd7213ea78e}</MetaDataID>
     public class ItemPreparationPlan
     {
         public DateTime PreparationStart { get; set; }
-        public double  Duration { get; set; }
+        public double Duration { get; set; }
     }
 
 
- 
+
 
 
 }

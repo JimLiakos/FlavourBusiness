@@ -52,11 +52,21 @@
                                         <TextBlock  Text="min"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
-                                
+
                             </ToolTip>
                         </StackPanel.ToolTip>
                     </StackPanel>
                     <Image Margin="5,0,0,0" Width="16" Height="16"  Source="/FLBManager;component/Resources/Images/Metro/bbq16.png" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding Path=HasAppearanceOrderValue, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Label VerticalAlignment="Center"   Content="{Binding AppearanceOrderText}" Margin="7,0,0,0"></Label>
+                        <Image Width="20" Height="20" Source="/FLBManager;component/Resources/Images/Metro/sort24.png" >
+                            <Image.ToolTip>
+                                <TextBlock Text="Appearance Order"></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                    </StackPanel>
+
                     <Image  Visibility="{Binding Path=HasTags, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5,0,0,0"  Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png">
                         <Image.ToolTip>
                             <ItemsControl ItemsSource="{Binding Tags}" >
@@ -102,9 +112,20 @@
                         <!--<TextBlock Grid.Column="1" Margin="3,0,0,0"  Visibility="{Binding Path=PreparationTimeIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="min"></TextBlock>-->
                         <CheckBox Margin="5,0,0,0" Background="AliceBlue" VerticalAlignment="Center" Content="is cooked" IsChecked="{Binding IsCooked}" TabIndex="1"></CheckBox>
                         <ControlsEx:TextBoxNumberWithUnit Width="60"  FontWeight="{Binding CookingTimeFontWeight}" Visibility="{Binding Path=IsCooked, Converter={StaticResource BooleanToVisibilityConverter}}"   Margin="5,0,0,0"  TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=CookingTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min"/>
-                        <Button x:Name="TagsToggle" Margin="5,0,0,0"  Style="{StaticResource ListViewBarButtonStyle}" Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
+
+                        <StackPanel Orientation="Horizontal" Cursor="Hand">
+
+                            <Label VerticalAlignment="Center" Visibility="{Binding Path=HasAppearanceOrderValue, Converter={StaticResource BooleanToVisibilityConverter}}"  Content="{Binding AppearanceOrderText}" Margin="7,0,-4,0"></Label>
+                            <Button x:Name="AppearanceOrder" Margin="0,0,0,0"  Style="{DynamicResource ImageButton}"  Command="{Binding ToggleAppearanceOrderCommand}" >
+                                <Image Width="20" Height="20" Source="/FLBManager;component/Resources/Images/Metro/sort24.png" ></Image>
+                            </Button>
+
+                        </StackPanel>
+
+                        <Button x:Name="TagsToggle" Margin="5,0,0,0"   Width="30" Height="30"  Command="{Binding ToggleTagsCommand}" >
                             <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
                         </Button>
+
                         <Popup x:Name="TagsPopup" IsOpen="{Binding TagsPopupOpen}" HorizontalOffset="-200" Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=TagsToggle}"  >
                             <Grid x:Name="TagsArea" MinWidth="400" Background="{StaticResource WindowBackgroundBrush}">
                                 <Border  BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
@@ -145,6 +166,34 @@
 
                         </Popup>
 
+                        <Popup x:Name="AppearanceOrderPopup" IsOpen="{Binding AppearanceOrderPopupOpen}" HorizontalOffset="-150" Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=AppearanceOrder}"  >
+                            <Grid x:Name="AppearanceOrderArea" MinWidth="300"  Background="{StaticResource WindowBackgroundBrush}">
+                                <Border  BorderThickness="1" BorderBrush="{StaticResource ListBoxBorderBrush}">
+                                    <Grid Margin="15"   Grid.Row="4" MinHeight="45">
+                                        <!--<Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>-->
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
+                                            <Label VerticalAlignment="Center"  Content="Appearance Order:" Margin="4,0,0,0"></Label>
+                                            <TextBlock VerticalAlignment="Center" Grid.Column="1"  Text="{Binding AppearanceOrderText}" Margin="4,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                        <Slider Grid.Column="1" Grid.Row="1" Maximum="10" Minimum="1" TickFrequency="1"  VerticalAlignment="Center"  Value="{Binding AppearanceOrder}" Margin="5,0,0,0"></Slider>
+                                    </Grid>
+                                </Border>
+
+
+                            </Grid>
+
+                        </Popup>
+
+
+
                     </StackPanel>
                 </Border>
 
@@ -152,6 +201,32 @@
 
 
         </DataTemplate>
+        <Style x:Key="ImageButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border  BorderThickness="0" BorderBrush="{StaticResource ButtonBorderBrush}"
+                            Background="Transparent">
+                            <ContentPresenter Margin="4" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE6E6E6" />
+                                <Setter Property="Foreground" Value="#FF333333" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFE6E6E6" />
+                                <Setter Property="Foreground" Value="#FF333333" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </UserControl.Resources>
     <Grid MouseLeftButtonDown="MouseLeftButtonDown" x:Name="Grid" >
@@ -167,5 +242,6 @@
                 </Style>
             </ContentPresenter.Style>
         </ContentPresenter>
+
     </Grid>
 </UserControl>

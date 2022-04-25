@@ -332,7 +332,21 @@ namespace FLBManager.ViewModel.Preparation
             return isDefined;
         }
 
+        internal bool AppearanceOrderIsDefinedFor(IItemsCategory itemsCategory)
+        {
+            string itemsCategoryUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            var isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == itemsCategoryUri && x.AppearanceOrder != null).FirstOrDefault() != null;
+            return isDefined;
+        }
 
+        internal bool AppearanceOrderIsDefinedFor(IMenuItem menuItem)
+        {
+            string menuItemUri = ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+            List<IItemsPreparationInfo> itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            bool isDefined = itemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == menuItemUri && x.AppearanceOrder != null).FirstOrDefault() != null;
+            return isDefined;
+        }
 
         internal bool CookingTimeSpanInMinIsDefinedFor(IItemsCategory itemsCategory)
         {
@@ -547,8 +561,41 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+        internal void SetAppearanceOrder(IItemsCategory itemsCategory, int appearanceOrder)
+        {
+            GetOrCreateItemsPreparationInfo(itemsCategory).AppearanceOrder = appearanceOrder;
+        }
+
+        internal void SetAppearanceOrder(IMenuItem menuItem, int appearanceOrder)
+        {
+            GetOrCreateItemsPreparationInfo(menuItem).AppearanceOrder = appearanceOrder;
+        }
 
 
+        internal int? GetAppearanceOrder(IItemsCategory itemsCategory)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.AppearanceOrder != null)
+                {
+                    var value= itemsPreparationInfo.AppearanceOrder.Value;
+                    return value;
+                }
+            }
+            return null;
+        }
+
+        internal int? GetAppearanceOrder(IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.AppearanceOrder != null)
+                    return itemsPreparationInfo.AppearanceOrder.Value;
+            }
+            return null;
+        }
 
 
         /// <MetaDataID>{da0eb088-99e4-4619-afbc-ac6df013787d}</MetaDataID>

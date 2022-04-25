@@ -230,7 +230,7 @@ namespace FlavourBusinessManager.RoomService
                         if (_State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && PreparationStartsAt != null)
                             PreparationTimeSpanInMin = (DateTime.UtcNow - PreparationStartsAt.Value).TotalMinutes;
 
-                        if (IsCooked&& _State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && CookingStartsAt != null)
+                        if (IsCooked && _State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && CookingStartsAt != null)
                             CookingTimeSpanInMin = (DateTime.UtcNow - CookingStartsAt.Value).TotalMinutes;
 
 
@@ -899,6 +899,9 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+        public int AppearanceOrder { get; set; }
+
 
 
         /// <exclude>Excluded</exclude>

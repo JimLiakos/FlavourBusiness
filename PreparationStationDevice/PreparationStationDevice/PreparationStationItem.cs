@@ -57,13 +57,14 @@ namespace PreparationStationDevice
         /// <exclude>Excluded</exclude>
         Multilingual _FullName = new Multilingual();
 
+        public int AppearanceOrder { get; set; }
 
         public ServicePointPreparationItems ServicePointPreparationItems;
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
         {
             ItemPreparation = itemPreparation;
 
-
+            AppearanceOrder = itemPreparation.AppearanceOrder;
 
             if (ItemPreparation.MenuItem == null)
                 ItemPreparation.LoadMenuItem(menuItems);

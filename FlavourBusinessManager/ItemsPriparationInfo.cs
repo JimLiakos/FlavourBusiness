@@ -14,6 +14,29 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class ItemsPreparationInfo : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IItemsPreparationInfo
     {
+
+        /// <exclude>Excluded</exclude>
+        int? _AppearanceOrder;
+        /// <MetaDataID>{777d0268-d850-413e-9f97-b08aa020c07e}</MetaDataID>
+        [PersistentMember(nameof(_AppearanceOrder))]
+        [CachingDataOnClientSide]
+        [BackwardCompatibilityID("+9")]
+        public int? AppearanceOrder
+        {
+            get => _AppearanceOrder;
+            set
+            {
+                if (_AppearanceOrder != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AppearanceOrder = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{ccdd24fd-e5c4-419d-8628-0c3c793d22bd}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+27")]

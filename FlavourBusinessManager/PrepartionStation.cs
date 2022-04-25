@@ -20,6 +20,28 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+
+        /// <exclude>Excluded</exclude>
+        double _GroupingTimeSpan = 5;
+        /// <MetaDataID>{341dba31-809e-4e82-9ffb-e68e6953f8d0}</MetaDataID>
+        [PersistentMember(nameof(_GroupingTimeSpan))]
+        [BackwardCompatibilityID("+8")]
+        public double GroupingTimeSpan
+        {
+            get => _GroupingTimeSpan;
+            set
+            {
+                if (_GroupingTimeSpan != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _GroupingTimeSpan = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{11f57521-338b-4ca3-966a-ba467eaafb79}</MetaDataID>
         protected PreparationStation()
         {
@@ -88,25 +110,37 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
                 if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
-                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value/2;
+                    return itemsPreparationInfo.PreparationTimeSpanInMin.Value / 2;
             }
 
 
             return 0;
         }
+        /// <MetaDataID>{2bdbae01-4664-4da5-8528-a1d7ee402c7b}</MetaDataID>
         public double GetCookingTimeSpanInMin(IMenuItem menuItem)
         {
-
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
             {
                 if (itemsPreparationInfo.CookingTimeSpanInMin != null)
-                    return itemsPreparationInfo.CookingTimeSpanInMin.Value/2;
+                    return itemsPreparationInfo.CookingTimeSpanInMin.Value / 2;
             }
-
-
             return 0;
         }
+
+
+
+        public int GeAppearanceOrder(IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.AppearanceOrder != null)
+                    return itemsPreparationInfo.AppearanceOrder.Value;
+            }
+            return 0;
+        }
+
 
         /// <MetaDataID>{73462d69-7cf4-431d-aaec-49a611ad4f35}</MetaDataID>
         public bool CanPrepareItemFor(MenuModel.IMenuItem menuItem, IServicePoint servicePoint)
@@ -401,6 +435,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{17d272fa-ea15-4a97-a448-3cd33f624866}</MetaDataID>
         internal static DateTime GetPreparedAtForecast(ItemPreparation itemPreparation, MealCourse mealCourse)
         {
             return DateTime.UtcNow;
@@ -427,6 +462,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
         /// <exclude>Excluded</exclude>
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
+        /// <MetaDataID>{39ef62a3-cbec-4713-9edd-16f70a9a43c8}</MetaDataID>
         public Dictionary<string, List<ITag>> ItemsPreparationTags
         {
             get
@@ -443,6 +479,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{96af9e2b-3822-49d2-be45-0da2df603ce0}</MetaDataID>
         private Dictionary<string, List<ITag>> GetitemsPreparationTags()
         {
             var itemsPreparationTags = new Dictionary<string, List<ITag>>();
@@ -463,6 +500,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return itemsPreparationTags;
         }
 
+        /// <MetaDataID>{22e79fdc-5ec6-40c7-947d-ea86376e5388}</MetaDataID>
         private IList<IMenuItem> GetPreparationStationMenuItems(IItemsCategory category)
         {
             List<IMenuItem> menuItems = category.MenuItems.Where(x => CanPrepareItem(x)).ToList();
@@ -580,11 +618,13 @@ namespace FlavourBusinessManager.ServicesContextResources
             });
         }
 
+        /// <MetaDataID>{a16a4790-f7f7-471a-aed1-5fcf53ebe59c}</MetaDataID>
         private void ServicesContextRunTime_ObjectChangeState(object _object, string member)
         {
             UpdateItemsPreparationTags();
         }
 
+        /// <MetaDataID>{8d71bc56-c666-41a0-910e-d7a8ca3b2618}</MetaDataID>
         private void UpdateItemsPreparationTags()
         {
             Dictionary<string, List<ITag>> itemsPreparationTags = GetitemsPreparationTags();
@@ -623,6 +663,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}</MetaDataID>
         private void PreparationSessionChangeState(object _object, string member)
         {
 
@@ -649,6 +690,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         DateTime? RaiseEventTimeStamp;
 
 
+        /// <MetaDataID>{8ae5f7dd-9136-4cee-a183-060bf7120ae7}</MetaDataID>
         DateTime? PrepartionVelocityMilestone;
 
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
@@ -673,6 +715,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var servingSession in preparationStationStatus.NewItemsUnderPreparationControl)
             {
+                foreach (var preparationItem in servingSession.PreparationItems.OfType<ItemPreparation>())
+                    preparationItem.AppearanceOrder = this.GeAppearanceOrder(preparationItem.MenuItem);
+
+                servingSession.PreparationItems = servingSession.PreparationItems.OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem)).ToList();
                 if (servingSession.ServedAtForecast == null)
                 {
                     foreach (var preparationItem in servingSession.PreparationItems)
@@ -824,8 +870,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (member == null)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
+        /// <MetaDataID>{5a788c1a-199e-44b4-b0b0-bbe07baf672d}</MetaDataID>
         Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
+        /// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
         List<IItemPreparation> ItemsInPreparation;
+        /// <MetaDataID>{e8f2d2d9-d017-4c46-b82b-9ab788e46b0c}</MetaDataID>
         Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
         {
             try
@@ -866,12 +915,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
                         //{
-                            //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
+                        //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
 
-                            if (previousePreparationEndsAt > DateTime.UtcNow)
-                                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
-                            else
-                                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                        if (previousePreparationEndsAt > DateTime.UtcNow)
+                            predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                        else
+                            predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
                         //}
                         previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
                     }
@@ -923,6 +972,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{318ebf1b-cb44-4ae3-9f15-e4bb4403199a}</MetaDataID>
         public double PreparationVelocity
         {
             get
@@ -940,6 +990,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{baa4b223-d63e-4981-b948-b4be0a8b8dae}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)
         {
 
@@ -951,9 +1002,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                                  select itemPreparation).ToList();
 
             UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
-     
 
-            
+
+
             PrepartionVelocityMilestone = DateTime.UtcNow;
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
@@ -967,9 +1018,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
             return GetItemToServingtimespanPredictions();
         }
+        /// <MetaDataID>{5b510e03-e1ba-4905-abc7-b4438f510bd8}</MetaDataID>
         int _PreparationVelocity = 0;
+        /// <MetaDataID>{7c7f7b5b-6d47-4c63-b20b-67988fd41c61}</MetaDataID>
         int PreviousAveragePerc;
+        /// <MetaDataID>{b2f4de11-bcf7-499f-84e0-dc8d2b19297f}</MetaDataID>
         List<ItemPreparationTimeSpan> SmoothingItemsPreparationHistory = new List<ItemPreparationTimeSpan>();
+        /// <MetaDataID>{9992e845-e2d9-4d6c-864c-de2952762af6}</MetaDataID>
         private void UpdateItemPreparationHistory(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
         {
 
@@ -977,7 +1032,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 PreparationEndsAt = DateTime.UtcNow,
                 DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)
+                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin),
+                DurationDifPerc = (preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Sum(x => x.PreparationTimeSpanInMin)) * 100
+
             };
 
             this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
@@ -988,7 +1045,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
             var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
 
-            if (Math.Abs(avargePerc - PreviousAveragePerc) < 10|| Math.Abs(avargePerc - _PreparationVelocity) < 10)
+            if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
             {
                 _PreparationVelocity = avargePerc;
                 PreviousAveragePerc = _PreparationVelocity;
@@ -998,6 +1055,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 PreviousAveragePerc = avargePerc;
         }
 
+        /// <MetaDataID>{818687a0-bd81-48e6-8018-e6a99351c9eb}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
         {
             var clientSessionsItems = (from servicePointPreparationItems in ServicePointsPreparationItems
@@ -1012,6 +1070,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{a7dbebb6-dce3-49ac-993f-ca5bb5cd8023}</MetaDataID>
         Queue<ItemPreparationTimeSpan> ItemsPreparationHistory = new Queue<ItemPreparationTimeSpan>();
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris)
@@ -1020,7 +1079,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var preparedItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
-                                 where itemPreparationUris.Contains(itemPreparation.uid)&& itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.ÉnPreparation)
+                                 where itemPreparationUris.Contains(itemPreparation.uid) && itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.ÉnPreparation)
                                  select itemPreparation).ToList();
 
             if (preparedItems.Count > 0)
@@ -1038,7 +1097,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
                 PrepartionVelocityMilestone = DateTime.UtcNow;
             }
-            
+
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
             var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
@@ -1131,6 +1190,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     [BackwardCompatibilityID("{0241f6f2-d035-4ec2-91ee-f2b41613abe3}")]
     class PreparationData
     {
+        /// <MetaDataID>{b28846c4-32c3-4318-b3ad-03536e7cf5ee}</MetaDataID>
         public PreparationData()
         {
 
@@ -1144,14 +1204,21 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
         public TimeSpan Duration;
 
+        /// <MetaDataID>{587c172a-2068-4dbc-bcf6-3a0039d17506}</MetaDataID>
         public double CookingTimeSpanInMin { get; internal set; }
+        /// <MetaDataID>{e580c37e-f0b6-4f71-b0b6-0aa31e35e730}</MetaDataID>
         public double PreparationTimeSpanInMin { get; internal set; }
     }
 
+    /// <MetaDataID>{0653c6c7-137b-4a4a-b017-76c6fe24213c}</MetaDataID>
     public class ItemPreparationTimeSpan
     {
+        /// <MetaDataID>{00068a01-afa8-48bc-950c-feaa3d275a80}</MetaDataID>
         public DateTime PreparationEndsAt { get; set; }
+        /// <MetaDataID>{4360f9ec-d675-4931-809d-c955fd6263f7}</MetaDataID>
         public double DurationDif { get; set; }
+        /// <MetaDataID>{82313792-9e0b-4f23-a4b5-c7820353fd79}</MetaDataID>
         public double PreparationTimeSpanInMin { get; set; }
+        public double DurationDifPerc { get; internal set; }
     }
 }
