@@ -4309,6 +4309,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Nullable<int> AppearanceOrder
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "get_AppearanceOrder", args, argsTypes);
+                return this.Proxy.GetValue<System.Nullable<int>>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(System.Nullable<int>);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "set_AppearanceOrder", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<MenuModel.ITag> PreparationTags
         {
             get
