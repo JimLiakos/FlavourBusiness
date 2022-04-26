@@ -1030,16 +1030,24 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
             {
+                PreviousItemsPreparationUpdate = DateTime.UtcNow - preparationTimeSpan,
                 PreparationEndsAt = DateTime.UtcNow,
-                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin),
-                DurationDifPerc = (preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Sum(x => x.PreparationTimeSpanInMin)) * 100
+                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin)/ preparedItems.Count,
+                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin)/ preparedItems.Count,
+                
 
             };
 
+            itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.PreparationTimeSpanInMin) * 100;
             this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
 
+            
             SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+
+            var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.PreparationEndsAt - x.PreviousItemsPreparationUpdate).TotalMinutes < 15).ToList();
+            if (smoothingItemsPreparationHistory.Count > 0)
+                SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory
+
             var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
             var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
             var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
@@ -1219,6 +1227,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public double DurationDif { get; set; }
         /// <MetaDataID>{82313792-9e0b-4f23-a4b5-c7820353fd79}</MetaDataID>
         public double PreparationTimeSpanInMin { get; set; }
-        public double DurationDifPerc { get; internal set; }
+        public double DurationDifPerc { get; set; }
+        public DateTime PreviousItemsPreparationUpdate { get; set; }
     }
 }
