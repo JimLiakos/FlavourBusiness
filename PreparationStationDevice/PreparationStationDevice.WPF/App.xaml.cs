@@ -21,8 +21,8 @@ namespace PreparationStationDevice.WPF
         public event EventHandler ApplicationResuming;
         public event EventHandler ApplicationSleeping;
         OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
-
-
+        Queue<ItemPreparationTimeSpan> ItemsPreparationHistory = new Queue<ItemPreparationTimeSpan>();
+        List<ItemPreparationTimeSpan> SmoothingItemsPreparationHistory = new List<ItemPreparationTimeSpan>();
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -31,9 +31,38 @@ namespace PreparationStationDevice.WPF
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
 
-            //var json = System.IO.File.ReadAllText(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
+            var json = System.IO.File.ReadAllText(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
 
-            //List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
+            List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
+
+            foreach (var itemPreparationTimeSpan in itemsPreparationHistory)
+            {
+
+
+                if (itemPreparationTimeSpan.DurationDifPerc < -40)
+                {
+                    var delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.DurationDifPerc > 50).FirstOrDefault();
+                    if(delayedItemPreparation!=null&& delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
+                    {
+                        delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
+                        delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                        delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
+                        itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                        itemPreparationTimeSpan.DurationDif = 0;
+                        itemPreparationTimeSpan.DurationDifPerc = 0;
+                        for (int i=itemsPreparationHistory.IndexOf(delayedItemPreparation)+1;i< itemsPreparationHistory.IndexOf(itemPreparationTimeSpan);i++)
+                        {
+                            itemsPreparationHistory[i].PreviousItemsPreparationUpdate-= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                            itemsPreparationHistory[i].PreparationEndsAt-= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                        }
+                    }
+
+                }
+                this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+
+            }
+
+            json = OOAdvantech.Json.JsonConvert.SerializeObject(itemsPreparationHistory);
 
             //int prevDifPerc = 0;
             //List<int> averagePercs = new List<int>();
@@ -66,7 +95,7 @@ namespace PreparationStationDevice.WPF
 
             //var calculator = new SimpleMovingAverage(k: 7);
             //int i = 1;
-            
+
             //List<int> smoothAveragePercs = new List<int>();
 
             //List<int> timespans = new List<int>();

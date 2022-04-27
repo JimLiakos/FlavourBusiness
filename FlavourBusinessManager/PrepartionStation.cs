@@ -1046,7 +1046,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.PreparationEndsAt - x.PreviousItemsPreparationUpdate).TotalMinutes < 15).ToList();
             if (smoothingItemsPreparationHistory.Count > 0)
-                SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory
+                SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
 
             var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
             var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
