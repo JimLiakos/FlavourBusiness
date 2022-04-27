@@ -6,6 +6,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{bbb5694e-4424-4705-8edf-19067834682e}</MetaDataID>
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
+    [GenerateFacadeProxy]
     public interface IPreparationStation
     {
         /// <MetaDataID>{f5ae4b4f-ef6a-493e-9283-4f3ced15af67}</MetaDataID>

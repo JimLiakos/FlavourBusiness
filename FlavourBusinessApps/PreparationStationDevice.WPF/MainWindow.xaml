@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PreparationStationDevice.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="908">
-    <Grid  >
+        Title="MainWindow" Height="564" Width="1060">
+    <Grid>
         <Border  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="WebBrowserHost">
             <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
         </Border>

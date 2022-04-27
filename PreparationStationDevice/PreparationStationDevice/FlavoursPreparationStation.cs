@@ -448,8 +448,9 @@ namespace PreparationStationDevice
         public double GroupingTimeSpan
         {
 
-            get => (PreparationStation as IPreparationStation).GroupingTimeSpan;
-            set => (PreparationStation as IPreparationStation).GroupingTimeSpan = value;
+
+            get => RemotingServices.CastTransparentProxy <IPreparationStation>(PreparationStation).GroupingTimeSpan;
+            set => RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan = value;
         }
 
 
