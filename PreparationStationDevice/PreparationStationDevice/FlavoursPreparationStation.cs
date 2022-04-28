@@ -116,14 +116,17 @@ namespace PreparationStationDevice
                             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                             string serverUrl = AzureServerUrl;
                             IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                            PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
-                            if (PreparationStation != null)
+                            var preparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                            if (preparationStation != null)
                             {
-                                ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
-                                PreparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
+
+                                PreparationStationStatus preparationStationStatus = preparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+
+                                ItemsPreparationTags = preparationStation.ItemsPreparationTags;
+                                preparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
 
 
-                                var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                                var restaurantMenuDataSharedUri = preparationStation.RestaurantMenuDataSharedUri;
                                 HttpClient httpClient = new HttpClient();
                                 var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
                                 getJsonTask.Wait();
@@ -133,10 +136,10 @@ namespace PreparationStationDevice
 
                                 GetMenuLanguages(MenuItems.Values.ToList());
                                 // servicesContextManagment.
-                                Title = PreparationStation.Description;
+                                Title = preparationStation.Description;
 
-                                PreparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
-                                PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                                preparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
+                                PreparationStation = preparationStation;
                                 ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                                 ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                                 PreparationVelocity = PreparationStation.PreparationVelocity;
@@ -160,6 +163,7 @@ namespace PreparationStationDevice
                     }
                     catch (Exception error)
                     {
+
                         tries--;
                         if (tries == 0)
                             throw;

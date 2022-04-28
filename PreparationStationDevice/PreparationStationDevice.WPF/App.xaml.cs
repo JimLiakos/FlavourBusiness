@@ -109,39 +109,39 @@ namespace PreparationStationDevice.WPF
         }
         private void Canonicalization()
         {
-            var json = System.IO.File.ReadAllText(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
+            //var json = System.IO.File.ReadAllText(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup\StationVelocity-4.json");
 
-            List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
+            //List<ItemPreparationTimeSpan> itemsPreparationHistory = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemPreparationTimeSpan>>(json);
 
-            foreach (var itemPreparationTimeSpan in itemsPreparationHistory)
-            {
+            //foreach (var itemPreparationTimeSpan in itemsPreparationHistory)
+            //{
 
 
-                if (itemPreparationTimeSpan.DurationDifPerc < -40)
-                {
-                    var delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.DurationDifPerc > 50).FirstOrDefault();
-                    if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
-                    {
-                        delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
-                        delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                        delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
-                        itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+            //    if (itemPreparationTimeSpan.DurationDifPerc < -40)
+            //    {
+            //        var delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.DurationDifPerc > 50).FirstOrDefault();
+            //        if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
+            //        {
+            //            delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
+            //            delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+            //            delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
+            //            itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
               
-                        for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
-                        {
-                            itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                            itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                        }
-                        itemPreparationTimeSpan.DurationDif = 0;
-                        itemPreparationTimeSpan.DurationDifPerc = 0;
-                    }
+            //            for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
+            //            {
+            //                itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+            //                itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+            //            }
+            //            itemPreparationTimeSpan.DurationDif = 0;
+            //            itemPreparationTimeSpan.DurationDifPerc = 0;
+            //        }
 
-                }
-                this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+            //    }
+            //    this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
 
-            }
+            //}
 
-            json = OOAdvantech.Json.JsonConvert.SerializeObject(itemsPreparationHistory);
+            //json = OOAdvantech.Json.JsonConvert.SerializeObject(itemsPreparationHistory);
         }
         private void calculateVelocity()
         {

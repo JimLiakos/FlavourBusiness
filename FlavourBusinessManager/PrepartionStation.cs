@@ -1024,6 +1024,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         int PreviousAveragePerc;
         /// <MetaDataID>{b2f4de11-bcf7-499f-84e0-dc8d2b19297f}</MetaDataID>
         List<ItemPreparationTimeSpan> SmoothingItemsPreparationHistory = new List<ItemPreparationTimeSpan>();
+
+
         /// <MetaDataID>{9992e845-e2d9-4d6c-864c-de2952762af6}</MetaDataID>
         private void UpdateItemPreparationHistory(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
         {
@@ -1034,13 +1036,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 PreparationEndsAt = DateTime.UtcNow,
                 DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Count,
                 PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Count,
-
-
             };
 
             itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.PreparationTimeSpanInMin) * 100;
-            this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
-            CanonicalizePreparationHistory();
+            ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+            NormalizePreparationHistory();
 
 
             SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
@@ -1049,9 +1049,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (smoothingItemsPreparationHistory.Count > 0)
                 SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
 
-            var itemsPreparationHistorypart = SmoothingItemsPreparationHistory;
-            var averageDif = itemsPreparationHistorypart.Sum(x => x.DurationDif) / itemsPreparationHistorypart.Count;
-            var averagePreparationTimeSpanInMin = itemsPreparationHistorypart.Sum(x => x.PreparationTimeSpanInMin) / itemsPreparationHistorypart.Count;
+
+            var averageDif = SmoothingItemsPreparationHistory.Sum(x => x.DurationDif) / SmoothingItemsPreparationHistory.Count;
+            var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
             var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
 
             if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
@@ -1064,10 +1064,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 PreviousAveragePerc = avargePerc;
         }
 
-
-        private void CanonicalizePreparationHistory()
+        /// <summary>
+        /// This method normalize the preparation duration difs starts and end of preparation time of items where prepared as group 
+        /// </summary>
+        private void NormalizePreparationHistory()
         {
-
 
             List<ItemPreparationTimeSpan> itemsPreparationHistory = ItemsPreparationHistory.ToList();
 
@@ -1075,8 +1076,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
 
 
-                if (itemPreparationTimeSpan.DurationDifPerc < -40)
+                if (itemPreparationTimeSpan.DurationDifPerc < -40)//look like as items prepared as group
                 {
+
+                    // in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
+                    // and the next items prepared in very short time
+                    // the next code try to canonicalize this action. Transfer the negative preparation time difference to the delayed item and corrects
+                    // preparation start and ends time of items between current item and delayed item. 
+
                     var delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.DurationDifPerc > 50).FirstOrDefault();
                     if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
                     {
@@ -1087,9 +1094,11 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
                         {
+                            //corrects preparation start and ends time of items between current item and delayed item. 
                             itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
                             itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
                         }
+
                         itemPreparationTimeSpan.DurationDif = 0;
                         itemPreparationTimeSpan.DurationDifPerc = 0;
                     }
@@ -1144,7 +1153,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
             var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
-
+            preparedItems = (from servicePointPreparationItems in ServicePointsPreparationItems
+                             from itemPreparation in servicePointPreparationItems.PreparationItems
+                             where itemPreparationUris.Contains(itemPreparation.uid) 
+                             select itemPreparation).ToList();
 
             var clientSessionsItems = (from preparedItem in preparedItems
                                        group preparedItem by preparedItem.ClientSession into ClientSessionItems
