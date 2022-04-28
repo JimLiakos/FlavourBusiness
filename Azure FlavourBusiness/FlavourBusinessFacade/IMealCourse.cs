@@ -55,7 +55,7 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{ec3023f2-0cb5-4472-9a52-c171fdd905fe}</MetaDataID>
         [BackwardCompatibilityID("+2")]
-        DateTime? ServedAtForecast { get; set; }
+        DateTime? ServedAtForecast { get;  }
 
 
         /// <summary>

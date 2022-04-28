@@ -327,7 +327,6 @@ namespace FlavourBusinessManager.RoomService
                         foodITem.State = ItemPreparationState.PreparationDelay;
                         foodITem.PreparedAtForecast = headCourse.ServedAtForecast;
                     }
-
                 }
 
                 foreach (MealCourse course in Courses)

@@ -556,12 +556,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                    select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
 
             foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
-
-            //foreach (var servicePointPreparationItems in (from itemPreparation in (from item in servicesContextStorage.GetObjectCollection<IItemPreparation>()
-            //                                                                           //where item.State == ItemPreparationState.PreparationDelay|| item.State == ItemPreparationState.PendingPreparation || item.State == ItemPreparationState.OnPreparation
-            //                                                                       select item.Fetching(item.ClientSession)).ToArray()
-            //                                              group itemPreparation by itemPreparation.ClientSession.MainSession into ServicePointItems
-            //                                              select ServicePointItems))
             {
                 var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
                 foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
@@ -590,6 +584,33 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             Task.Run(() =>
             {
+
+
+                predictions = GetItemToServingtimespanPredictions();
+                var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
+                                               from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                               select preparationItem).ToList();
+                try
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var preparationStationItem in preparationStationItems)
+                        {
+                            if (predictions.ContainsKey(preparationStationItem.uid))
+                            {
+                                var prediction = predictions[preparationStationItem.uid];
+                                (preparationStationItem as ItemPreparation).PreparedAtForecast = prediction.PreparationStart + TimeSpan.FromMinutes(prediction.Duration);
+                            }
+                        }
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+                catch (Exception error)
+                {
+
+                }
+
 
                 while (true)
                 {

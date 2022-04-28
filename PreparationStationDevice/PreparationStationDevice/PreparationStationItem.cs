@@ -54,6 +54,8 @@ namespace PreparationStationDevice
             }
         }
 
+        public DateTime PreparedAtForecast { get; }
+
         /// <exclude>Excluded</exclude>
         Multilingual _FullName = new Multilingual();
 
@@ -62,7 +64,11 @@ namespace PreparationStationDevice
         public ServicePointPreparationItems ServicePointPreparationItems;
         public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
         {
+
+
             ItemPreparation = itemPreparation;
+
+
 
             AppearanceOrder = itemPreparation.AppearanceOrder;
 
@@ -73,6 +79,10 @@ namespace PreparationStationDevice
 
             MultilingualFullName = menuFoodItem.MultilingualFullName;
             MultilingualName = menuFoodItem.MultilingualName;
+
+            if (itemPreparation.PreparedAtForecast.Value != null)
+                PreparedAtForecast = itemPreparation.PreparedAtForecast.Value;
+
             Tags = menuFoodItem.PreparationTags.ToList();
             if (itemsPreparationTags.ContainsKey(menuFoodItem.Uri))
                 Tags.AddRange(itemsPreparationTags[menuFoodItem.Uri].Select(x => new MenuModel.JsonViewModel.Tag(x)).ToList());

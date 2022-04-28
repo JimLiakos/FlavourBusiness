@@ -3119,14 +3119,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServedAtForecast", args, argsTypes);
                 return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
             }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(System.Nullable<System.DateTime>);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_ServedAtForecast", args, argsTypes);
-            }
         }
         
         // The Width property for the object.
