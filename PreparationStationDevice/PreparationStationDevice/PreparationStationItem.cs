@@ -80,7 +80,7 @@ namespace PreparationStationDevice
             MultilingualFullName = menuFoodItem.MultilingualFullName;
             MultilingualName = menuFoodItem.MultilingualName;
 
-            if (itemPreparation.PreparedAtForecast.Value != null)
+            if (itemPreparation.PreparedAtForecast != null)
                 PreparedAtForecast = itemPreparation.PreparedAtForecast.Value;
 
             Tags = menuFoodItem.PreparationTags.ToList();

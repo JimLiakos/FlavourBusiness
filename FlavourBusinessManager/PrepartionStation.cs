@@ -732,7 +732,34 @@ namespace FlavourBusinessManager.ServicesContextResources
                 ServingTimespanPredictions = GetItemToServingtimespanPredictions()
             };
             if (PrepartionVelocityMilestone == null)
+            {
                 PrepartionVelocityMilestone = DateTime.UtcNow;
+
+                predictions = GetItemToServingtimespanPredictions();
+                var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
+                                               from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                               select preparationItem).ToList();
+                try
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var preparationStationItem in preparationStationItems)
+                        {
+                            if (predictions.ContainsKey(preparationStationItem.uid))
+                            {
+                                var prediction = predictions[preparationStationItem.uid];
+                                (preparationStationItem as ItemPreparation).PreparedAtForecast = prediction.PreparationStart + TimeSpan.FromMinutes(prediction.Duration);
+                            }
+                        }
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+                catch (Exception error)
+                {
+
+                }
+            }
 
             foreach (var servingSession in preparationStationStatus.NewItemsUnderPreparationControl)
             {
@@ -963,7 +990,13 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     foreach (var preparedÉtem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
                         if (predictions.ContainsKey(preparedÉtem.uid))
-                            predictions.Remove(preparedÉtem.uid);
+                        {
+                            if (predictions[preparedÉtem.uid].Duration > 0)
+                            {
+                                predictions[preparedÉtem.uid].PreparationStart = DateTime.UtcNow;
+                                predictions[preparedÉtem.uid].Duration = 0;
+                            }
+                        }
 
                     return predictions;
                 }
@@ -1075,14 +1108,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
             var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
 
-            if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
+            //if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
             {
                 _PreparationVelocity = avargePerc;
                 PreviousAveragePerc = _PreparationVelocity;
-                SmoothingItemsPreparationHistory.Clear();
+                //SmoothingItemsPreparationHistory.Clear();
             }
-            else
-                PreviousAveragePerc = avargePerc;
+            //else
+            //    PreviousAveragePerc = avargePerc;
         }
 
         /// <summary>
@@ -1176,7 +1209,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
             preparedItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                              from itemPreparation in servicePointPreparationItems.PreparationItems
-                             where itemPreparationUris.Contains(itemPreparation.uid) 
+                             where itemPreparationUris.Contains(itemPreparation.uid)
                              select itemPreparation).ToList();
 
             var clientSessionsItems = (from preparedItem in preparedItems
