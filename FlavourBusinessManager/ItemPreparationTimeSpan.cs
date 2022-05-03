@@ -44,7 +44,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [Association("ItemPreparationStatistics", Roles.RoleB, "7038c775-433e-4e6d-8400-ed23de8f8eb6")]
         [RoleBMultiplicityRange(1, 1)]
         [PersistentMember()]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        
         public PreparationStation PreparationStation;
 
         /// <exclude>Excluded</exclude>
