@@ -60,31 +60,31 @@ namespace FLBManager
             //System.Reflection.ConstructorInfo constructorInfo = type.GetConstructor(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, ParamTypes, null);
 
 
-            string storageName = "jimliakosgmailcom";
-            string storageLocation = "DevStorage";
-            string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+            //string storageName = "jimliakosgmailcom";
+            //string storageLocation = "DevStorage";
+            //string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
 
-            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+            //var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
 
 
-            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
+            //OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
 
-            var itemsTimeSpans = (from itemTimeSpan in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
-                                  select itemTimeSpan).ToList();
+            //var itemsTimeSpans = (from itemTimeSpan in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
+            //                      select itemTimeSpan).ToList();
 
-            var preparationStationStatistics = (from itemTimeSpan in itemsTimeSpans//servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
-                                                group itemTimeSpan by itemTimeSpan.ItemsInfoObjectUri into preparationItemsInfoStatistics
-                                                select preparationItemsInfoStatistics).ToList();
+            //var preparationStationStatistics = (from itemTimeSpan in itemsTimeSpans//servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
+            //                                    group itemTimeSpan by itemTimeSpan.ItemsInfoObjectUri into preparationItemsInfoStatistics
+            //                                    select preparationItemsInfoStatistics).ToList();
 
-            foreach (var preparationItemsInfoStatistics in preparationStationStatistics)
-            {
-                var preparationTimeSpan = preparationItemsInfoStatistics.Sum(x => (x.EndsAt - x.StartsAt).TotalMinutes * x.InformationValue) / preparationItemsInfoStatistics.Sum(x => x.InformationValue);
-                var itemsPreparationInf = (from itemsPreparationInfo in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo>()
-                                       where itemsPreparationInfo.ItemsInfoObjectUri == preparationItemsInfoStatistics.Key
-                                       select itemsPreparationInfo).FirstOrDefault();
+            //foreach (var preparationItemsInfoStatistics in preparationStationStatistics)
+            //{
+            //    var preparationTimeSpan = preparationItemsInfoStatistics.Sum(x => (x.EndsAt - x.StartsAt).TotalMinutes * x.InformationValue) / preparationItemsInfoStatistics.Sum(x => x.InformationValue);
+            //    var itemsPreparationInf = (from itemsPreparationInfo in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo>()
+            //                           where itemsPreparationInfo.ItemsInfoObjectUri == preparationItemsInfoStatistics.Key
+            //                           select itemsPreparationInfo).FirstOrDefault();
                 
 
-            }
+            //}
 
             // var sds = items[0].ClientSession;
             //var sAsdsd = new AuthFlavourBusiness();
@@ -119,7 +119,7 @@ namespace FLBManager
 
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
-            //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
+            Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
             //Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
