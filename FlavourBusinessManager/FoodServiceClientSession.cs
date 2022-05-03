@@ -447,6 +447,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             if (MainSession == null)
                 CheckForMealConversationTimeout();
+            
         }
 
 

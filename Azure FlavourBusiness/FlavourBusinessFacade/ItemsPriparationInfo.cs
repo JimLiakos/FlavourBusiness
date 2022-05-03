@@ -9,6 +9,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IItemsPreparationInfo
     {
+        /// <MetaDataID>{91db3b5c-a990-442f-bb82-ca2215d3e9e4}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         int? AppearanceOrder { get; set; }
 

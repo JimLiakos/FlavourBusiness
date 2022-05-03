@@ -21,6 +21,7 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+16")]
         double CookingTimeSpanInMin { get; set; }
 
+        /// <MetaDataID>{45efae09-2879-4a32-8d4d-e290d076b0d5}</MetaDataID>
         int AppearanceOrder { get; set; }
         /// <summary>
         /// Defines the tracking transfer.

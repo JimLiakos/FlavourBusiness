@@ -282,6 +282,7 @@
     <Compile Include="HumanResources\TranslationActivity.cs" />
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
+    <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />
     <Compile Include="Settings.cs" />

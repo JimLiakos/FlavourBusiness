@@ -20,6 +20,24 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+        /// <MetaDataID>{bd097583-6e84-45b4-a299-9e9abc66ae03}</MetaDataID>
+        public List<ItemPreparationTimeSpan> GetPreparationTimeSpans(DateTime fromDate, DateTime toDate)
+        {
+            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+
+
+            var preparationTimeSpans = (from itemPreparationTimeSpan in storage.GetObjectCollection<ItemPreparationTimeSpan>()
+             where itemPreparationTimeSpan.PreparationStation == this && itemPreparationTimeSpan.StartsAt > fromDate && itemPreparationTimeSpan.StartsAt < fromDate
+             select itemPreparationTimeSpan).ToList();
+            return preparationTimeSpans;
+        }
+
+        [PersistentMember()]
+        [Association("ItemPreparationStatistics", Roles.RoleA, "7038c775-433e-4e6d-8400-ed23de8f8eb6")]
+        [RoleAMultiplicityRange(1)]
+        [RoleBMultiplicityRange(1, 1)]
+        private OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan> PreparationTimeSpans = new OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan>();
+
 
         /// <exclude>Excluded</exclude>
         double _GroupingTimeSpan = 5;
@@ -112,10 +130,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value / 2;
             }
-
-
             return 0;
         }
+
+        /// <MetaDataID>{81e7a4d0-f597-4555-a69c-5f71cf7ecbca}</MetaDataID>
+        public IItemsPreparationInfo GetPreparationTimeitemsPreparationInfo(IMenuItem menuItem)
+        {
+
+            var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
+            foreach (var itemsPreparationInfo in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
+                    return itemsPreparationInfo;
+            }
+            return itemsPreparationInfos.FirstOrDefault();
+        }
+
         /// <MetaDataID>{2bdbae01-4664-4da5-8528-a1d7ee402c7b}</MetaDataID>
         public double GetCookingTimeSpanInMin(IMenuItem menuItem)
         {
@@ -130,6 +160,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        /// <MetaDataID>{32cdc1cf-346e-41af-8a03-c664597a52c4}</MetaDataID>
         public int GeAppearanceOrder(IMenuItem menuItem)
         {
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
@@ -541,45 +572,48 @@ namespace FlavourBusinessManager.ServicesContextResources
         [ObjectActivationCall]
         void ObjectActivation()
         {
-            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
-
-            var servicesContextRunTime = ServicesContextRunTime.Current;
-            servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
-            var sdsd = servicesContextRunTime.OpenSessions[0].Meal.Courses.ToList();
-            var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
-                                                   where openSession.Meal != null
-                                                   from mealCourse in openSession.Meal.Courses
-                                                   from itemPreparation in mealCourse.FoodItems
-                                                   orderby itemPreparation.PreparedAtForecast
-                                                   //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-                                                   group itemPreparation by mealCourse into ServicePointItems
-                                                   select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
-
-            foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
+            lock (DeviceUpdateLock)
             {
-                var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
-                foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
+                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+
+                var servicesContextRunTime = ServicesContextRunTime.Current;
+                servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
+
+                var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
+                                                       where openSession.Meal != null
+                                                       from mealCourse in openSession.Meal.Courses
+                                                       from itemPreparation in mealCourse.FoodItems
+                                                       orderby itemPreparation.PreparedAtForecast
+                                                       //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
+                                                       group itemPreparation by mealCourse into ServicePointItems
+                                                       select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
+
+                foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
                 {
-                    if (item.MenuItem == null)
-                        item.LoadMenuItem();
-
-                    if (CanPrepareItem(item.MenuItem))
+                    var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
+                    foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
                     {
-                        item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
-                        item.IsCooked = this.IsCooked(item.MenuItem);
-                        item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
+                        if (item.MenuItem == null)
+                            item.LoadMenuItem();
 
-                        //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
-                        //itemPreparation.Update(item);
-                        preparationItems.Add(item);
+                        if (CanPrepareItem(item.MenuItem))
+                        {
+                            item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
+                            item.IsCooked = this.IsCooked(item.MenuItem);
+                            item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
 
-                        item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                            //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
+                            //itemPreparation.Update(item);
+                            preparationItems.Add(item);
+
+                            item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                        }
                     }
-                }
 
-                var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
-                ServicePointsPreparationItems.Add(preparationSession);
-                preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                    var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
+                    ServicePointsPreparationItems.Add(preparationSession);
+                    preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                } 
             }
 
             Task.Run(() =>
@@ -930,7 +964,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 lock (predictions)
                 {
                     var preparationStationItems = (from serviceSession in this.ServicePointsPreparationItems
-                                                   from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                                   from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin).OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem))
                                                    select preparationItem).ToList();
 
                     var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
@@ -1062,7 +1096,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             PrepartionVelocityMilestone = DateTime.UtcNow;
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
-            var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
+            var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / this.ItemsPreparationHistory.Count;
 
             var clientSessionsItems = (from preparedItem in preparedItems
                                        group preparedItem by preparedItem.ClientSession into ClientSessionItems
@@ -1084,82 +1118,182 @@ namespace FlavourBusinessManager.ServicesContextResources
         private void UpdateItemPreparationHistory(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
         {
 
-            ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                PreviousItemsPreparationUpdate = DateTime.UtcNow - preparationTimeSpan,
-                PreparationEndsAt = DateTime.UtcNow,
-                DurationDif = preparationTimeSpan.TotalMinutes - preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Count,
-                PreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin) / preparedItems.Count,
-            };
 
-            itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.PreparationTimeSpanInMin) * 100;
-            ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
-            NormalizePreparationHistory();
+                var totalPreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin); // calculate the default time for all items
+                var normalizedItemsRations = preparedItems.Select(x => x.PreparationTimeSpanInMin / totalPreparationTimeSpanInMin).ToList(); // calculate the ratio between the default item preparation time and the default total preparation time
+                var previousItemsPreparationUpdate = DateTime.UtcNow - preparationTimeSpan;
+
+                int i = 0;
+                foreach (var preparedItem in preparedItems.OfType<ItemPreparation>())
+                {
+                    var itemTimeSpan = TimeSpan.FromMinutes(preparationTimeSpan.TotalMinutes * normalizedItemsRations[i]);
+
+                    ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
+                    {
+                        StartsAt = previousItemsPreparationUpdate,
+                        EndsAt = previousItemsPreparationUpdate + itemTimeSpan,
+                        DurationDif = itemTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
+                        OrgDurationDif = itemTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
+                        DefaultTimeSpanInMin = preparedItem.PreparationTimeSpanInMin,
+                        ItemsPreparationInfo = GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem),
+                        InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeitemsPreparationInfo(x.MenuItem) == GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
+                        PreparationForecastTimespan = (DateTime.UtcNow - preparedItem.PreparedAtForecast.Value).TotalMinutes
+
+                    };
+
+                    previousItemsPreparationUpdate = itemPreparationTimeSpan.EndsAt;
 
 
-            SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+                    itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
+                    itemPreparationTimeSpan.OrgDurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
+                    ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemPreparationTimeSpan);
+                    PreparationTimeSpans.Add(itemPreparationTimeSpan);
+                    NormalizePreparationHistory();
 
-            var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.PreparationEndsAt - x.PreviousItemsPreparationUpdate).TotalMinutes < 15).ToList();
-            if (smoothingItemsPreparationHistory.Count > 0)
-                SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
+
+                    SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+
+                    var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.EndsAt - x.StartsAt).TotalMinutes < 15).ToList();
+                    if (smoothingItemsPreparationHistory.Count > 0)
+                        SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
 
 
-            var averageDif = SmoothingItemsPreparationHistory.Sum(x => x.DurationDif) / SmoothingItemsPreparationHistory.Count;
-            var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
-            var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+                    var averageDif = SmoothingItemsPreparationHistory.Sum(x => x.DurationDif) / SmoothingItemsPreparationHistory.Count;
+                    var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
+                    var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
 
-            //if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
-            {
-                _PreparationVelocity = avargePerc;
-                PreviousAveragePerc = _PreparationVelocity;
-                //SmoothingItemsPreparationHistory.Clear();
+                    //if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
+                    {
+                        _PreparationVelocity = avargePerc;
+                        PreviousAveragePerc = _PreparationVelocity;
+                        //SmoothingItemsPreparationHistory.Clear();
+                    }
+                } 
+                stateTransition.Consistent = true;
             }
+
             //else
             //    PreviousAveragePerc = avargePerc;
         }
 
+
+
         /// <summary>
         /// This method normalize the preparation duration difs starts and end of preparation time of items where prepared as group 
         /// </summary>
+        /// <MetaDataID>{c4cac93a-366a-4794-b34d-17aa6f2d0184}</MetaDataID>
         private void NormalizePreparationHistory()
         {
 
             List<ItemPreparationTimeSpan> itemsPreparationHistory = ItemsPreparationHistory.ToList();
 
+            List<ItemPreparationTimeSpan> normalizedItems = new List<ItemPreparationTimeSpan>();
+            double availableTimeInMin = 0;
             foreach (var itemPreparationTimeSpan in itemsPreparationHistory)
             {
 
 
-                if (itemPreparationTimeSpan.DurationDifPerc < -40)//look like as items prepared as group
+                if (itemPreparationTimeSpan.OrgDurationDifPerc < -40)//look like as items prepared as group
                 {
 
-                    // in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
-                    // and the next items prepared in very short time
-                    // the next code try to canonicalize this action. Transfer the negative preparation time difference to the delayed item and corrects
-                    // preparation start and ends time of items between current item and delayed item. 
-
-                    var delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.DurationDifPerc > 50).FirstOrDefault();
-                    if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
+                    if (normalizedItems.Count == 0)
                     {
-                        delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
-                        delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                        delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
-                        itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-
-                        for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
+                        int itemIndex = itemsPreparationHistory.IndexOf(itemPreparationTimeSpan);
+                        if (itemIndex > 0)
                         {
-                            //corrects preparation start and ends time of items between current item and delayed item. 
-                            itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                            itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
-                        }
+                            availableTimeInMin = itemsPreparationHistory[itemIndex - 1].OrgDurationDif;
+                            if (availableTimeInMin > Math.Abs(itemPreparationTimeSpan.OrgDurationDif))
+                            {
+                                availableTimeInMin -= Math.Abs(itemPreparationTimeSpan.OrgDurationDif);
+                                ItemPreparationTimeSpan delayedItemPreparation = itemsPreparationHistory[itemsPreparationHistory.IndexOf(itemPreparationTimeSpan) - 1];
+                                if (!normalizedItems.Contains(delayedItemPreparation))
+                                    normalizedItems.Add(delayedItemPreparation);
 
-                        itemPreparationTimeSpan.DurationDif = 0;
-                        itemPreparationTimeSpan.DurationDifPerc = 0;
+                                normalizedItems.Add(itemPreparationTimeSpan);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (availableTimeInMin > Math.Abs(itemPreparationTimeSpan.OrgDurationDif))
+                        {
+                            availableTimeInMin -= Math.Abs(itemPreparationTimeSpan.OrgDurationDif);
+                            normalizedItems.Add(itemPreparationTimeSpan);
+                        }
                     }
                 }
-            }
+                else
+                {
+                    if (normalizedItems.Count > 0)
+                    {
+                        NormalizeItems(normalizedItems);
+                        normalizedItems.Clear();
+                        availableTimeInMin = 0;
+                    }
+                }
 
+
+                //ItemPreparationTimeSpan delayedItemPreparation = itemsPreparationHistory.Take(itemsPreparationHistory.IndexOf(itemPreparationTimeSpan)).Reverse().Where(x => x.OrgDurationDifPerc > 50).FirstOrDefault();
+
+                //if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
+                //{
+                //    delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
+                //    delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+                //    delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
+                //    itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+
+                //    for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
+                //    {
+                //        //corrects preparation start and ends time of items between current item and delayed item. 
+                //        itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+                //        itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(Math.Abs(itemPreparationTimeSpan.DurationDif));
+                //    }
+
+                //    itemPreparationTimeSpan.DurationDif = 0;
+                //    itemPreparationTimeSpan.DurationDifPerc = 0;
+                //}
+            }
+            if (normalizedItems.Count > 0)
+            {
+                NormalizeItems(normalizedItems);
+                normalizedItems.Clear();
+            }
         }
+
+        /// <MetaDataID>{41936091-16f7-4e49-ae10-21bbdd3057f6}</MetaDataID>
+        private void NormalizeItems(List<ItemPreparationTimeSpan> normalizedItems)
+        {
+            // in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
+            // and the next items prepared in very short time
+            // the next code try to canonicalize this action.
+            // Calculates the total time for normalized items and share this time to the normalized items
+
+            ItemPreparationTimeSpan delayedItemPreparation = normalizedItems[0];
+
+            var timespan = (normalizedItems.Last().EndsAt - delayedItemPreparation.StartsAt).TotalMinutes;
+            var totalPreparationTimeSpanInMin = normalizedItems.Sum(x => x.DefaultTimeSpanInMin); // calculate the default time for all items
+            var normalizedItemsRations = normalizedItems.Select(x => x.DefaultTimeSpanInMin / totalPreparationTimeSpanInMin).ToList(); // calculate the ratio between the default item preparation time and the default total preparation time
+
+
+
+            for (int i = 0; i < normalizedItems.Count; i++)
+            {
+                var normalizedItemPreparationTime = timespan * normalizedItemsRations[i];
+
+                normalizedItems[i].DurationDif = normalizedItemPreparationTime - normalizedItems[i].DefaultTimeSpanInMin;
+                normalizedItems[i].DurationDifPerc = (normalizedItems[i].DurationDif / normalizedItems[i].DefaultTimeSpanInMin) * 100;
+                normalizedItems[i].EndsAt = normalizedItems[i].StartsAt + TimeSpan.FromMinutes(normalizedItemPreparationTime);
+                normalizedItems[i].InformationValue = ((double)normalizedItems.Where(x => x.ItemsPreparationInfo == normalizedItems[i].ItemsPreparationInfo).Count()) / normalizedItems.Count;
+                //the item PreparationEndsAt time is the PreviousItemsPreparationUpdate  for next item
+                if (i + 1 < normalizedItems.Count)
+                    normalizedItems[i + 1].StartsAt = normalizedItems[i].EndsAt;
+            }
+        }
+
 
         /// <MetaDataID>{818687a0-bd81-48e6-8018-e6a99351c9eb}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
@@ -1200,13 +1334,19 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 //this.ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
 
-                UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
-                PrepartionVelocityMilestone = DateTime.UtcNow;
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
+                    PrepartionVelocityMilestone = DateTime.UtcNow; 
+                    stateTransition.Consistent = true;
+                }
+
             }
 
 
             var averageDif = this.ItemsPreparationHistory.Sum(x => x.DurationDif) / this.ItemsPreparationHistory.Count;
-            var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.PreparationTimeSpanInMin) / this.ItemsPreparationHistory.Count;
+            var averagePreparationTimeSpanInMin = this.ItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / this.ItemsPreparationHistory.Count;
             preparedItems = (from servicePointPreparationItems in ServicePointsPreparationItems
                              from itemPreparation in servicePointPreparationItems.PreparationItems
                              where itemPreparationUris.Contains(itemPreparation.uid)
@@ -1319,16 +1459,5 @@ namespace FlavourBusinessManager.ServicesContextResources
         public double PreparationTimeSpanInMin { get; internal set; }
     }
 
-    /// <MetaDataID>{0653c6c7-137b-4a4a-b017-76c6fe24213c}</MetaDataID>
-    public class ItemPreparationTimeSpan
-    {
-        /// <MetaDataID>{00068a01-afa8-48bc-950c-feaa3d275a80}</MetaDataID>
-        public DateTime PreparationEndsAt { get; set; }
-        /// <MetaDataID>{4360f9ec-d675-4931-809d-c955fd6263f7}</MetaDataID>
-        public double DurationDif { get; set; }
-        /// <MetaDataID>{82313792-9e0b-4f23-a4b5-c7820353fd79}</MetaDataID>
-        public double PreparationTimeSpanInMin { get; set; }
-        public double DurationDifPerc { get; set; }
-        public DateTime PreviousItemsPreparationUpdate { get; set; }
-    }
+  
 }

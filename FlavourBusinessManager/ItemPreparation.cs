@@ -375,12 +375,23 @@ namespace FlavourBusinessManager.RoomService
         /// <exclude>Excluded</exclude>
         int? _NumberOfShares;
         /// <MetaDataID>{804375b2-47fe-4846-9c45-ce0ff2c7b239}</MetaDataID>
+        [PersistentMember(nameof(_NumberOfShares))]
+        [BackwardCompatibilityID("+32")]
         public int NumberOfShares
         {
             get
             {
                 if (ClientSession != null)
-                    _NumberOfShares = _SharedWithClients.Count + 1;
+                {
+                    if (_NumberOfShares == null)
+                    {
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _NumberOfShares = _SharedWithClients.Count + 1;
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                }
 
                 if (_NumberOfShares == null)
                     return 1;
@@ -393,7 +404,22 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{a3dfa875-e9b1-4fae-9656-c09968bd587f}</MetaDataID>
+        [ObjectsLinkCall]
+        void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
+        {
+            if (associationEnd.Name == nameof(SharedWithClients))
+            {
+                _NumberOfShares = null;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _NumberOfShares = NumberOfShares;
+                    stateTransition.Consistent = true;
+                }
 
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         [JsonIgnore]
@@ -900,6 +926,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{f6245894-8a95-4b52-a9ee-892602fb6ead}</MetaDataID>
         public int AppearanceOrder { get; set; }
 
 

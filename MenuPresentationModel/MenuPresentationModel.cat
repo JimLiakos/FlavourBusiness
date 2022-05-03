@@ -14164,7 +14164,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@3
-				location   	(1443, 2913)
+				location   	(1443, 2918)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	620
@@ -14172,7 +14172,7 @@
 				label      	"Rect")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@3
-				location   	(1443, 2867)
+				location   	(1443, 2868)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -14204,7 +14204,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@4
-				location   	(661, 2863)
+				location   	(661, 2868)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	587
@@ -14212,7 +14212,7 @@
 				label      	"HeadingType")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@4
-				location   	(661, 2817)
+				location   	(661, 2818)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -17398,7 +17398,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@158
-				location   	(2399, 2064)
+				location   	(2399, 2069)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	520
@@ -17406,7 +17406,7 @@
 				label      	"ItemRelativePos")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@158
-				location   	(2399, 2018)
+				location   	(2399, 2019)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -18754,7 +18754,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@222
-				location   	(1585, 2360)
+				location   	(1585, 2365)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	557
@@ -18762,7 +18762,7 @@
 				label      	"TransformOrigin")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@222
-				location   	(1585, 2314)
+				location   	(1585, 2315)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -29405,7 +29405,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@292
-				location   	(3333, 1004)
+				location   	(3333, 1009)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	539
@@ -29413,7 +29413,7 @@
 				label      	"FontData")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@292
-				location   	(3333, 958)
+				location   	(3333, 959)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -29742,7 +29742,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@306
-				location   	(37, 2205)
+				location   	(37, 2210)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	476
@@ -29750,7 +29750,7 @@
 				label      	"Resource")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@306
-				location   	(37, 2159)
+				location   	(37, 2160)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -29781,7 +29781,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@307
-				location   	(71, 2615)
+				location   	(71, 2620)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	464
@@ -29789,7 +29789,7 @@
 				label      	"Margin")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@307
-				location   	(71, 2569)
+				location   	(71, 2570)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -30441,7 +30441,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@338
-				location   	(112, 3048)
+				location   	(112, 3053)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	420
@@ -30449,7 +30449,7 @@
 				label      	"PaperSize")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@338
-				location   	(112, 3002)
+				location   	(112, 3003)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -31112,7 +31112,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@371
-			location   	(4070, 422)
+			location   	(4070, 427)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	363
@@ -31120,7 +31120,7 @@
 			label      	"Alignment")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@371
-			location   	(4070, 376)
+			location   	(4070, 377)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

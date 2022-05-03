@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using FlavourBusinessManager;
 using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.Remoting.RestApi.Serialization;
 
@@ -159,15 +160,15 @@ namespace PreparationStationDevice.WPF
                     if (delayedItemPreparation != null && delayedItemPreparation.DurationDif > Math.Abs(itemPreparationTimeSpan.DurationDif))
                     {
                         delayedItemPreparation.DurationDif = delayedItemPreparation.DurationDif - Math.Abs(itemPreparationTimeSpan.DurationDif);
-                        delayedItemPreparation.PreparationEndsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
-                        delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.PreparationTimeSpanInMin) * 100;
-                        itemPreparationTimeSpan.PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                        delayedItemPreparation.EndsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                        delayedItemPreparation.DurationDifPerc = (delayedItemPreparation.DurationDif / delayedItemPreparation.DefaultTimeSpanInMin) * 100;
+                        itemPreparationTimeSpan.StartsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
                         itemPreparationTimeSpan.DurationDif = 0;
                         itemPreparationTimeSpan.DurationDifPerc = 0;
                         for (int i = itemsPreparationHistory.IndexOf(delayedItemPreparation) + 1; i < itemsPreparationHistory.IndexOf(itemPreparationTimeSpan); i++)
                         {
-                            itemsPreparationHistory[i].PreviousItemsPreparationUpdate -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
-                            itemsPreparationHistory[i].PreparationEndsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                            itemsPreparationHistory[i].StartsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
+                            itemsPreparationHistory[i].EndsAt -= TimeSpan.FromMinutes(itemPreparationTimeSpan.DurationDif);
                         }
                     }
 

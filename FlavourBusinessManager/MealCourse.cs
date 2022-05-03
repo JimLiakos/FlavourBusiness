@@ -140,6 +140,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{963bb0ae-3234-4bf5-b7e4-9a313dcb9531}</MetaDataID>
         [PersistentMember(nameof(_StartsAt))]
         [BackwardCompatibilityID("+2")]
+        [CachingDataOnClientSide]
         public System.DateTime? StartsAt
         {
             get => _StartsAt;
@@ -339,8 +340,8 @@ namespace FlavourBusinessManager.RoomService
                 var fbstorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x => x.StorageIdentity == (Meal.Session as ServicesContextResources.FoodServiceSession).MenuStorageIdentity).FirstOrDefault();
                 if (fbstorage != null && (Meal.Session as ServicesContextResources.FoodServiceSession).Menu == null)
                 {
-                    IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity);
-                    string organizationIdentity = flavoursServicesContext.Owner.Identity;
+                    //IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity);
+                    string organizationIdentity = ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity;
                     string versionSuffix = "";
                     if (!string.IsNullOrWhiteSpace(fbstorage.Version))
                         versionSuffix = "/" + fbstorage.Version;
