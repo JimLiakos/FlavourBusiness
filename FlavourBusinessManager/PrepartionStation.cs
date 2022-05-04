@@ -569,6 +569,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{7d50b4e9-05fb-460e-82e1-5e97fc810164}</MetaDataID>
         List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
+        TaskCompletionSource<bool> ObjectActivated = new TaskCompletionSource<bool>();
+
         /// <MetaDataID>{f65b0df7-3300-41f4-8b0f-8700a0ee2d24}</MetaDataID>
         [ObjectActivationCall]
         void ObjectActivation()
@@ -576,46 +578,55 @@ namespace FlavourBusinessManager.ServicesContextResources
             lock (DeviceUpdateLock)
             {
 
-                
-                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
-                var servicesContextRunTime = ServicesContextRunTime.Current;
-                servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
-
-                var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
-                                                       where openSession.Meal != null
-                                                       from mealCourse in openSession.Meal.Courses
-                                                       from itemPreparation in mealCourse.FoodItems
-                                                       orderby itemPreparation.PreparedAtForecast
-                                                       //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
-                                                       group itemPreparation by mealCourse into ServicePointItems
-                                                       select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
-
-                foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
+                try
                 {
-                    var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
-                    foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
+                    OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+
+                    var servicesContextRunTime = ServicesContextRunTime.Current;
+                    servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
+
+                    var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
+                                                           where openSession.Meal != null
+                                                           from mealCourse in openSession.Meal.Courses
+                                                           from itemPreparation in mealCourse.FoodItems
+                                                           orderby itemPreparation.PreparedAtForecast
+                                                           //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
+                                                           group itemPreparation by mealCourse into ServicePointItems
+                                                           select ServicePointItems).OrderBy(x => x.Key.ServedAtForecast).ToList();
+
+                    foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
                     {
-                        if (item.MenuItem == null)
-                            item.LoadMenuItem();
-
-                        if (CanPrepareItem(item.MenuItem))
+                        var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
+                        foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
                         {
-                            item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
-                            item.IsCooked = this.IsCooked(item.MenuItem);
-                            item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
+                            if (item.MenuItem == null)
+                                item.LoadMenuItem();
 
-                            //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
-                            //itemPreparation.Update(item);
-                            preparationItems.Add(item);
+                            if (CanPrepareItem(item.MenuItem))
+                            {
+                                item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
+                                item.IsCooked = this.IsCooked(item.MenuItem);
+                                item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
 
-                            item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                                //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
+                                //itemPreparation.Update(item);
+                                preparationItems.Add(item);
+
+                                item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                            }
                         }
-                    }
 
-                    var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
-                    ServicePointsPreparationItems.Add(preparationSession);
-                    preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                        var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
+                        ServicePointsPreparationItems.Add(preparationSession);
+                        preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                    }
+                }
+                finally
+                {
+                    ObjectActivated.SetResult(true);
+
+
                 }
             }
 
@@ -754,6 +765,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
         public PreparationStationStatus GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
         {
+
+            ObjectActivated.Task.Wait();
+
             if (deviceUpdateEtag == DeviceUpdateEtag)
             {
                 lock (DeviceUpdateLock)
@@ -836,7 +850,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
             //var ReturnObjectJson = OOAdvantech.Json.JsonConvert.SerializeObject(preparationStationStatus, jSetttings);
-            if(preparationStationStatus.NewItemsUnderPreparationControl.Count==0)
+            if (preparationStationStatus.NewItemsUnderPreparationControl.Count == 0)
             {
 
             }

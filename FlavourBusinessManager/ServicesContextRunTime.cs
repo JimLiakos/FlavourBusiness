@@ -304,6 +304,18 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             });
 
+            Task.Run(() =>
+            {
+                var trt = GetPreparationStationRuntime("7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad").GetPreparationItems(new List<ItemPreparationAbbreviation>(), "sds");
+
+            });
+
+            Task.Run(() =>
+            {
+                var trt = GetPreparationStationRuntime("7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad").GetPreparationItems(new List<ItemPreparationAbbreviation>(), "sds");
+
+            });
+
         }
 
 
