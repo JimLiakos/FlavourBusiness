@@ -12,6 +12,7 @@ using FlavourBusinessFacade.RoomService;
 using System.Threading.Tasks;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.RoomService;
+using OOAdvantech.Remoting.RestApi.Serialization;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -27,8 +28,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
             var preparationTimeSpans = (from itemPreparationTimeSpan in storage.GetObjectCollection<ItemPreparationTimeSpan>()
-             where itemPreparationTimeSpan.PreparationStation == this && itemPreparationTimeSpan.StartsAt > fromDate && itemPreparationTimeSpan.StartsAt < fromDate
-             select itemPreparationTimeSpan).ToList();
+                                        where itemPreparationTimeSpan.PreparationStation == this && itemPreparationTimeSpan.StartsAt > fromDate && itemPreparationTimeSpan.StartsAt < fromDate
+                                        select itemPreparationTimeSpan).ToList();
             return preparationTimeSpans;
         }
 
@@ -574,6 +575,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (DeviceUpdateLock)
             {
+
+                
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
 
                 var servicesContextRunTime = ServicesContextRunTime.Current;
@@ -613,7 +616,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     var preparationSession = new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems);
                     ServicePointsPreparationItems.Add(preparationSession);
                     preparationSession.ObjectChangeState += PreparationSessionChangeState;
-                } 
+                }
             }
 
             Task.Run(() =>
@@ -760,11 +763,21 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
 
-            PreparationStationStatus preparationStationStatus = new PreparationStationStatus()
+            PreparationStationStatus preparationStationStatus = null;
+
+
+            lock (DeviceUpdateLock)
             {
-                NewItemsUnderPreparationControl = ServicePointsPreparationItems.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList(),
-                ServingTimespanPredictions = GetItemToServingtimespanPredictions()
-            };
+                preparationStationStatus = new PreparationStationStatus()
+                {
+                    NewItemsUnderPreparationControl = ServicePointsPreparationItems.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList(),
+                    ServingTimespanPredictions = GetItemToServingtimespanPredictions()
+                };
+                if (preparationStationStatus.NewItemsUnderPreparationControl.Count == 0)
+                {
+
+                }
+            }
             if (PrepartionVelocityMilestone == null)
             {
                 PrepartionVelocityMilestone = DateTime.UtcNow;
@@ -813,6 +826,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                         }
                     }
                 }
+
+            }
+            //bool Web = false;
+
+            //OOAdvantech.Remoting.RestApi.RequestData request = System.Runtime.Remoting.Messaging.CallContext.GetData("RestApiRequest" ) as OOAdvantech.Remoting.RestApi.RequestData;
+
+            //var jSetttings = new OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings(JsonContractType.Serialize, Web ? JsonSerializationFormat.TypeScriptJsonSerialization : JsonSerializationFormat.NetTypedValuesJsonSerialization, request.ChannelUri, request.InternalChannelUri, request.ServerSession);// { TypeNameHandling = ServerSession.Web ? TypeNameHandling.None : TypeNameHandling.All, Binder = new OOAdvantech.Remoting.RestApi.SerializationBinder(Web), ContractResolver = new JsonContractResolver(JsonContractType.Serialize, ChannelUri, InternalChannelUri, ServerSession,Web) };
+
+
+            //var ReturnObjectJson = OOAdvantech.Json.JsonConvert.SerializeObject(preparationStationStatus, jSetttings);
+            if(preparationStationStatus.NewItemsUnderPreparationControl.Count==0)
+            {
 
             }
             return preparationStationStatus;
@@ -1172,7 +1197,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         PreviousAveragePerc = _PreparationVelocity;
                         //SmoothingItemsPreparationHistory.Clear();
                     }
-                } 
+                }
                 stateTransition.Consistent = true;
             }
 
@@ -1338,7 +1363,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
-                    PrepartionVelocityMilestone = DateTime.UtcNow; 
+                    PrepartionVelocityMilestone = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }
 
@@ -1459,5 +1484,5 @@ namespace FlavourBusinessManager.ServicesContextResources
         public double PreparationTimeSpanInMin { get; internal set; }
     }
 
-  
+
 }

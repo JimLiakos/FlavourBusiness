@@ -109,8 +109,10 @@ namespace PreparationStationDevice
                 {
                     try
                     {
+
                         if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
                         {
+                            var start = DateTime.UtcNow;
 
                             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
@@ -145,6 +147,7 @@ namespace PreparationStationDevice
                                 PreparationVelocity = PreparationStation.PreparationVelocity;
                             }
 
+                            var timeSpan = DateTime.UtcNow - start;
                             //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                         }
                         var preparationItemsPerServicePoint = (from servicePointItems in ServicePointsPreparationItems

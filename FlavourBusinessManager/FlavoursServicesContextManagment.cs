@@ -27,6 +27,7 @@ namespace FlavourBusinessManager
 
             if (FlavoursServicesContextsMonitoringTimer == null)
             {
+                OnFlavoursServicesContextsMonitoring(this,default( System.Timers.ElapsedEventArgs));
                 FlavoursServicesContextsMonitoringTimer = new System.Timers.Timer(20000);
                 FlavoursServicesContextsMonitoringTimer.Enabled = true;
                 FlavoursServicesContextsMonitoringTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnFlavoursServicesContextsMonitoring);
@@ -38,7 +39,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
         {
-
+            
             //bool utd = true;
             //if (utd)
             //    return;

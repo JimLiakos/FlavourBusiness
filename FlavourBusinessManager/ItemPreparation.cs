@@ -868,7 +868,17 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
-                var shareInSessions = SharedWithClients.Select(x => x.SessionID).ToList();
+                List<string> shareInSessions = new List<string>();
+                if (ClientSession == null && NumberOfShares == 0)
+                    return shareInSessions;
+
+                if (ClientSession != null && NumberOfShares == 1)
+                {
+                    shareInSessions.Add(ClientSession.SessionID);
+                    return shareInSessions;
+                }
+
+                shareInSessions.AddRange(SharedWithClients.Select(x => x.SessionID).ToList());
                 if (ClientSession != null)
                     shareInSessions.Add(ClientSession.SessionID);
                 return shareInSessions;
@@ -967,6 +977,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{ab76fae1-98fe-4f45-9973-c9dde93e547d}</MetaDataID>
         [PersistentMember(nameof(_ServedInTheBatch))]
         [BackwardCompatibilityID("+23")]
+        [JsonIgnore]
         public IServingBatch ServedInTheBatch => _ServedInTheBatch.Value;
 
 
