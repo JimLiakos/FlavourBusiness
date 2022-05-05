@@ -575,6 +575,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [ObjectActivationCall]
         void ObjectActivation()
         {
+            
             lock (DeviceUpdateLock)
             {
 
