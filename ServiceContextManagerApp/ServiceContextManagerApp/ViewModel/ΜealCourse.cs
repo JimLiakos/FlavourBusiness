@@ -79,6 +79,29 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 ServicePointType = ServerSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
                 ServicesContextPresentation.OnMealCourseUpdated(this);
             }
+
+            if (member == nameof(IMealCourse.SessionData))
+            {
+
+                var sessionData = ServerSideMealCourse.SessionData;
+                var storeRef = sessionData.Menu;
+#if !DeviceDotNet
+
+                storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
+#endif
+                string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
+                string menuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+
+
+                MenuData = new DontWaitApp.MenuData()
+                {
+                    MenuName = storeRef.Name,
+                    MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
+                    MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                    DefaultMealTypeUri = sessionData.DefaultMealTypeUri
+                };
+
+            }
         }
 
         private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)

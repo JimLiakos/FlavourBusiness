@@ -1152,6 +1152,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
             var menuItem3 = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
+
+            foreach (var session in OpenSessions)
+                session.Menu = null;
+
             ObjectChangeState?.Invoke(this, nameof(OperativeRestaurantMenu));
 
             //PublishMenuRestaurantMenuData();

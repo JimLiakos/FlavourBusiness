@@ -778,6 +778,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
 
+           foreach( var prepartionItem in (from prepartionSession in ServicePointsPreparationItems 
+            from prepartionItem in prepartionSession.PreparationItems
+            where prepartionItem.PreparationStation==null
+            select prepartionItem))
+            { ds
+
+            }
+
+
             PreparationStationStatus preparationStationStatus = null;
 
 

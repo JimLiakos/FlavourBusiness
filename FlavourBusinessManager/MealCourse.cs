@@ -665,6 +665,8 @@ namespace FlavourBusinessManager.RoomService
         [ObjectActivationCall]
         void ObjectActivation()
         {
+
+            ServicePointRunTime.ServicesContextRunTime.Current.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
             _FoodItemsInProgress = new List<ItemsPreparationContext>();
             foreach (var foodItem in _FoodItems.OfType<ItemPreparation>())
                 foodItem.ObjectChangeState += FlavourItem_ObjectChangeState;
@@ -691,6 +693,13 @@ namespace FlavourBusinessManager.RoomService
             }
 
             (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
+        }
+
+        private void ServicesContextRunTime_ObjectChangeState(object _object, string member)
+        {
+            if(member== nameof(ServicesContextRunTime.OperativeRestaurantMenu))
+                ObjectChangeState?.Invoke(this, nameof(SessionData));
+            
         }
 
 
