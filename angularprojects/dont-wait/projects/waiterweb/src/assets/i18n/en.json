@@ -37,5 +37,9 @@
 		"MonthsPrompt": "{0} months ago",
 		"YearPrompt": "{0} year ago",
 		"YearsPrompt": "{0} years ago"
+	},
+	"Supervisor":{
+		"UnderPreparationCommandLabel":"Under preparation",
+		"AllCommandLabel":"All"
 	}
 }

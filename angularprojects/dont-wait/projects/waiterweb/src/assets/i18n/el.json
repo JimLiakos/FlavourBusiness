@@ -42,6 +42,10 @@
 		"MonthsPrompt": "{0} μήνες πριν",
 		"YearPrompt": "{0} χρόνο πριν",
 		"YearsPrompt": "{0} χρόνια πριν"
+	},
+	"Supervisor":{
+		"UnderPreparationCommandLabel":"Ετοιμάζονται",
+		"AllCommandLabel":"Όλα"
 	}
 
 }

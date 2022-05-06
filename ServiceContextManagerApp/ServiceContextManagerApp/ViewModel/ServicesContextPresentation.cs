@@ -134,11 +134,15 @@ namespace ServiceContextManagerApp
         {
             var mealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
             var movedMealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == movedMealCourseUri).FirstOrDefault();
+            var description = mealCourse.Description;
+            MealsController.MoveCourseBefore(mealCourseUri, movedMealCourseUri);
         }
         public void MoveAfter(string mealCourseUri, string movedMealCourseUri)
         {
             var mealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
             var movedMealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == movedMealCourseUri).FirstOrDefault();
+            var description = mealCourse.Description;
+            MealsController.MoveCourseAfter(mealCourseUri, movedMealCourseUri);
         }
 
 

@@ -20,5 +20,7 @@ namespace FlavourBusinessFacade.RoomService
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
+        void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri);
+        void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri);
     }
 }

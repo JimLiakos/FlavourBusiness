@@ -2909,6 +2909,28 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
+        
+        public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = mealCourseAsReferenceUri;
+            argsTypes[0] = typeof(string);
+            args[1] = movedMealCourseUri;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseBefore", args, argsTypes);
+        }
+        
+        public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = mealCourseAsReferenceUri;
+            argsTypes[0] = typeof(string);
+            args[1] = movedMealCourseUri;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseAfter", args, argsTypes);
+        }
     }
     
     public sealed class Pr_IMealCourse : FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy

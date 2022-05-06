@@ -319,8 +319,15 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            
+        }
 
-
+        public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            
+        }
     }
 
 
