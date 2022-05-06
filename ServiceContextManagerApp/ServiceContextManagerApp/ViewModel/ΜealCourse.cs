@@ -26,6 +26,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public DontWaitApp.MenuData MenuData { get; set; }
 
         public string MealCourseUri { get; set; }
+        public ItemPreparationState PreparationState { get; }
 
         [JsonIgnore]
         ServiceContextManagerApp.ServicesContextPresentation ServicesContextPresentation;
@@ -63,7 +64,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             serverSideMealCourse.ObjectChangeState += ServerSideMealCourse_ObjectChangeState;
 
 
-
+            PreparationState = serverSideMealCourse.PreparationState;
         }
 
         private void ServerSideMealCourse_ObjectChangeState(object _object, string member)

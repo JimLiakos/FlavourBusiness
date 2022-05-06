@@ -130,6 +130,18 @@ namespace ServiceContextManagerApp
         }
 
 
+        public void MoveBefore(string mealCourseUri, string movedMealCourseUri)
+        {
+            var mealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
+            var movedMealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == movedMealCourseUri).FirstOrDefault();
+        }
+        public void MoveAfter(string mealCourseUri, string movedMealCourseUri)
+        {
+            var mealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
+            var movedMealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == movedMealCourseUri).FirstOrDefault();
+        }
+
+
 
         public void MakeSupervisorActive(ISupervisorPresentation supervisorPresentation)
         {

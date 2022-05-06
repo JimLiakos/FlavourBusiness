@@ -25,6 +25,13 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{059a02f3-5f3c-4768-84bb-681a837bfa0e}</MetaDataID>
         bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation);
 
+
+
+        void MoveBefore(string mealCourseUri,string movedMealCourseUri);
+        void MoveAfter(string mealCourseUri,string movedMealCourseUri);
+
+
+
         /// <MetaDataID>{bb586ccb-551d-4d69-b2d3-d9a96081df4c}</MetaDataID>
         void MakeSupervisorActive(ISupervisorPresentation supervisorPresentation);
 
