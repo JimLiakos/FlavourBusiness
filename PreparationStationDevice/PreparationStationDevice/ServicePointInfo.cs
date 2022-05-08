@@ -6,7 +6,7 @@ using System.Text;
 namespace PreparationStationDevice
 {
     /// <MetaDataID>{ac8782c6-2ea6-4ce3-a7be-8efc104736f1}</MetaDataID>
-    public class PreparationItemsPerServicePoint
+    public class ItemsPreparationContextPresentation
     {
         public string ServicesPointIdentity { get; set; }
         public string ServicesContextIdentity { get; set; }

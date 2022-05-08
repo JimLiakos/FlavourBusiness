@@ -1673,12 +1673,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return preparationStation;
         }
 
-        /// <MetaDataID>{366a4260-e268-4f49-aa23-266acf219ce9}</MetaDataID>
-        public List<ServicePointPreparationItems> GetPreparationStationItemsToPrepare(IPreparationStation preparationStation)
-        {
-            throw new NotImplementedException();
-        }
-
+      
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)

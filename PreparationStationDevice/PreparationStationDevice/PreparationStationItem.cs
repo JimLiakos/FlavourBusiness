@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlavourBusinessFacade.RoomService;
 
 #if !FlavourBusinessDevice
 using System.Windows.Controls;
@@ -61,8 +62,8 @@ namespace PreparationStationDevice
 
         public int AppearanceOrder { get; set; }
 
-        public ServicePointPreparationItems ServicePointPreparationItems;
-        public PreparationStationItem(ItemPreparation itemPreparation, ServicePointPreparationItems servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
+        public FlavourBusinessFacade.RoomService.ItemsPreparationContext ServicePointPreparationItems;
+        public PreparationStationItem(ItemPreparation itemPreparation, FlavourBusinessFacade.RoomService.ItemsPreparationContext servicePointPreparationItems, Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> menuItems, Dictionary<string, List<ITag>> itemsPreparationTags)
         {
 
 

@@ -118,7 +118,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     /// <MetaDataID>{fbe3b931-7627-4a81-ade7-0c279be64691}</MetaDataID>
     public class PreparationStationStatus
     {
-        public IList<ServicePointPreparationItems> NewItemsUnderPreparationControl;
+        public IList<ItemsPreparationContext> NewItemsUnderPreparationControl;
 
         public Dictionary<string, ItemPreparationPlan> ServingTimespanPredictions;
 

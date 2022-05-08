@@ -5796,16 +5796,216 @@
 				    value      	"60F580F600B1"))
 			    quid       	"60F580F600B1"
 			    parameters 	(list Parameters
-				(object Parameter "servicePoint"
-				    quid       	"60F580F600DF"
-				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint")
+				(object Parameter "mealCourse"
+				    quid       	"6276B0EB0321"
+				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
 				(object Parameter "preparationItems"
-				    quid       	"60F580F60101"
+				    quid       	"6276B0EB0359"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MealCourse_ObjectChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{eea37ed5-0b30-4611-a035-e6971db16d40}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0EB03CE"))
+			    quid       	"6276B0EB03CE"
+			    parameters 	(list Parameters
+				(object Parameter "_object"
+				    quid       	"6276B0EC0002"
+				    type       	"object")
+				(object Parameter "member"
+				    quid       	"6276B0EC0032"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "ServicePointPreparationItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a75bdf3b-c001-4d49-816d-384119f61d70}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0EC019C"))
+			    quid       	"6276B0EC019C"
+			    parameters 	(list Parameters
+				(object Parameter "servicePoint"
+				    quid       	"6276B0EC01B8"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint")
+				(object Parameter "preparationItems"
+				    quid       	"6276B0EC01E6"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
+				(object Parameter "description"
+				    quid       	"6276B0EC0211"
+				    type       	"string")
+				(object Parameter "uri"
+				    quid       	"6276B0EC023D"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddPreparationItem"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c65cde2f-17f7-4077-9b40-6d29e81dac5d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0EC02A5"))
+			    quid       	"6276B0EC02A5"
+			    parameters 	(list Parameters
+				(object Parameter "flavourItem"
+				    quid       	"6276B0EC02BD"
+				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemovePreparationItem"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b452dae6-2d24-40af-a627-633fcf7e759f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0EC031D"))
+			    quid       	"6276B0EC031D"
+			    parameters 	(list Parameters
+				(object Parameter "flavourItem"
+				    quid       	"6276B0EC0335"
+				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "Dispose"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b223c9d5-e85b-4760-938b-efb0a90da0f6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0EC036C"))
+			    quid       	"6276B0EC036C"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "Uri"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{11d2af44-df36-46a4-a315-cc7b02f9bd8e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0ED001B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"6276B0ED001B"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bc8ae02c-3398-4ecd-afc8-37c22ee92ed5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0ED00BE")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276B0ED00BE"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "CodeCard"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{eec93dcd-5cb0-40cf-b586-ead4b44c305a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0ED0176")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276B0ED0176"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServedAtForecast"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3b324eaa-efc0-4886-9e62-2bb7c7492ef6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0ED0275")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276B0ED0275"
+			    type       	"System.Nullable<System.DateTime>"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
@@ -7019,7 +7219,47 @@
 				    value      	"{66c4b234-b7ac-420e-83b1-4c0361108d45}"))
 			    quid       	"620214DE037A"
 			    supplier   	"Logical View::FlavourBusinessFacade::IFlavoursServicesContext"
-			    quidu      	"5B16B1600111"))))
+			    quidu      	"5B16B1600111")))
+		(object Association "$UNNAMED$10"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6276B0F00345")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"cc2adbe0-103f-48c2-97a5-cf3335c1fcf6"))
+		    quid       	"6276B0F00345"
+		    roles      	(list role_list
+			(object Role "ServicePoint"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0F00346")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f5930cf1-ed4e-4d02-bccb-7e3a59c1ac15}"))
+			    quid       	"6276B0F00346"
+			    label      	"ServicePoint"
+			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint"
+			    quidu      	"5B8BB60401E2"
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$11"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276B0F00348")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fa8211c5-0bef-4220-accb-7058178ef6ad}"))
+			    quid       	"6276B0F00348"
+			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::ServicePointPreparationItems"
+			    quidu      	"5D7E598A01C4"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"5B8BB0B50021"
@@ -7058,24 +7298,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(37, 2145)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	42
-				max_width  	2384)
 			    width      	800
 			    height     	594
 			    annotation 	8)
@@ -7105,24 +7327,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C7DEC4B0254"
-			    compartment 	(object Compartment
-				Parent_View 	@2
-				location   	(4181, 842)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	2246)
 			    width      	743
 			    height     	337
 			    annotation 	8)
@@ -7218,24 +7422,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5DF32099019D"
-			    compartment 	(object Compartment
-				Parent_View 	@6
-				location   	(340, 208)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	621)
 			    width      	494
 			    height     	269
 			    annotation 	8)
@@ -7353,24 +7539,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@10
-				location   	(4014, 339)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	10
-				max_width  	1528)
 			    width      	569
 			    height     	300
 			    annotation 	8)
@@ -7402,24 +7570,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@11
-				location   	(2637, 214)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	21
-				max_width  	2459)
 			    width      	706
 			    height     	394
 			    annotation 	8)
@@ -7619,24 +7769,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D722E01C3"
-			    compartment 	(object Compartment
-				Parent_View 	@20
-				location   	(2643, 1755)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	475)
 			    width      	500
 			    height     	275
 			    annotation 	8)
@@ -7697,24 +7829,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@22
-				location   	(1402, 264)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	594
 			    height     	319
 			    annotation 	8)
@@ -7921,24 +8035,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D71BB026B"
-			    compartment 	(object Compartment
-				Parent_View 	@32
-				location   	(1474, 1658)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	621)
 			    width      	588
 			    height     	281
 			    annotation 	8)
@@ -8116,24 +8212,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
-			    compartment 	(object Compartment
-				Parent_View 	@40
-				location   	(1415, 1155)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	16
-				max_width  	715)
 			    width      	675
 			    height     	325
 			    annotation 	8)
@@ -8165,24 +8243,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
-			    compartment 	(object Compartment
-				Parent_View 	@41
-				location   	(1506, 2271)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	787)
 			    width      	656
 			    height     	343
 			    annotation 	8)
@@ -8357,24 +8417,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@49
-				location   	(9, 1321)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	19
-				max_width  	2062)
 			    width      	638
 			    height     	488
 			    annotation 	8)
@@ -10738,7 +10780,7 @@
 				    documentation 	"ClientIdentity defines the identity of client which has create session.  "))
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$10"
+			(object Role "$UNNAMED$12"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10807,7 +10849,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$11"
+			(object Role "$UNNAMED$13"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10837,7 +10879,7 @@
 			    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClientSession"
 			    quidu      	"5C06122402B6"
 			    client_cardinality 	(value cardinality "0..*"))))
-		(object Association "$UNNAMED$12"
+		(object Association "$UNNAMED$14"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -10869,7 +10911,7 @@
 			    quidu      	"5D1715990311"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$13"
+			(object Role "$UNNAMED$15"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10926,7 +10968,7 @@
 			    quidu      	"5D17154F0388"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$14"
+			(object Role "$UNNAMED$16"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -11032,7 +11074,7 @@
 			    value      	"WaterServiceSession"))
 		    quid       	"6072CEF90049"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$15"
+			(object Role "$UNNAMED$17"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -11106,15 +11148,15 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$16"
+			(object Object "$UNNAMED$18"
 			    quid       	"5CFF278800A6"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D0074BE029A"
-				    supplier   	"$UNNAMED$17"
+				    supplier   	"$UNNAMED$19"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(          )"
+					(object Message "GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, organizationIdentity, unSafeGraphicMenus, create)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11133,10 +11175,10 @@
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5CFF280E0110"
-				    supplier   	"$UNNAMED$16"
+				    supplier   	"$UNNAMED$18"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11150,15 +11192,15 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$17"
+			(object Object "$UNNAMED$19"
 			    quid       	"5D0074A9012A"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D00868D03A6"
-				    supplier   	"$UNNAMED$18"
+				    supplier   	"$UNNAMED$20"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11172,7 +11214,7 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$18"
+			(object Object "$UNNAMED$20"
 			    quid       	"5D0085810266"
 			    class      	"Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint"
 			    quidu      	"5B8BB60401E2"
@@ -11189,7 +11231,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(messmateClientSesion)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11634,7 +11676,7 @@
 			    line_color 	3342489
 			    quidu      	"5C0634D0013E"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$10" @98
+				(object RoleView "$UNNAMED$12" @98
 				    Parent_View 	@96
 				    location   	(-550, 393)
 				    font       	(object Font
@@ -11868,7 +11910,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$11" @109
+				(object RoleView "$UNNAMED$13" @109
 				    Parent_View 	@104
 				    location   	(-155, 845)
 				    font       	(object Font
@@ -11949,7 +11991,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@112
-				location   	(3779, 256)
+				location   	(3779, 251)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	551
@@ -11957,7 +11999,7 @@
 				label      	"Notification")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@112
-				location   	(3779, 206)
+				location   	(3779, 205)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -11999,7 +12041,7 @@
 			    width      	575
 			    height     	250
 			    annotation 	8)
-			(object AssociationViewNew "$UNNAMED$12" @114
+			(object AssociationViewNew "$UNNAMED$14" @114
 			    location   	(3592, 312)
 			    font       	(object Font
 				size       	10
@@ -12080,7 +12122,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$13" @118
+				(object RoleView "$UNNAMED$15" @118
 				    Parent_View 	@114
 				    location   	(707, -1266)
 				    stereotype 	TRUE
@@ -12224,7 +12266,7 @@
 					pctDist    	0.926429
 					height     	70
 					orientation 	0))
-				(object RoleView "$UNNAMED$14" @125
+				(object RoleView "$UNNAMED$16" @125
 				    Parent_View 	@120
 				    location   	(433, -453)
 				    font       	(object Font
@@ -12340,7 +12382,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@129
-				location   	(1291, 465)
+				location   	(1291, 464)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -12371,7 +12413,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@130
-				location   	(2406, 471)
+				location   	(2406, 470)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -12388,7 +12430,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$16" @131
+			(object ObjectView "$UNNAMED$18" @131
 			    location   	(1088, 1278)
 			    font       	(object Font
 				size       	10
@@ -12402,7 +12444,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@131
-				location   	(725, 1165)
+				location   	(725, 1164)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	726
@@ -12433,7 +12475,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@132
-				location   	(76, 1192)
+				location   	(76, 1191)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	280
@@ -12450,7 +12492,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$17" @133
+			(object ObjectView "$UNNAMED$19" @133
 			    location   	(2409, 1284)
 			    font       	(object Font
 				size       	10
@@ -12464,7 +12506,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@133
-				location   	(2031, 1199)
+				location   	(2031, 1198)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	757
@@ -12481,7 +12523,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$18" @134
+			(object ObjectView "$UNNAMED$20" @134
 			    location   	(3545, 1306)
 			    font       	(object Font
 				size       	10
@@ -12495,7 +12537,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@134
-				location   	(3338, 1234)
+				location   	(3338, 1233)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	414
@@ -12561,7 +12603,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(          )"
+				label      	"GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, organizationIdentity, unSafeGraphicMenus, create)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -12648,7 +12690,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -12735,7 +12777,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -12864,7 +12906,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@153
-				location   	(3055, 1478)
+				location   	(3055, 1477)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	626
@@ -12895,7 +12937,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@154
-				location   	(1299, 550)
+				location   	(1299, 549)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	651
@@ -13030,7 +13072,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(messmateClientSesion)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -14614,6 +14656,227 @@
 			    name       	"LastMemberID"
 			    value      	"1"))
 		    quid       	"613F97F500AE"
+		    operations 	(list Operations
+			(object Operation "ItemsPreparationContext"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{57de3627-5720-4605-a451-fec19548023e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4DE02F3"))
+			    quid       	"6276A4DE02F3"
+			    documentation 	
+|
+|Defines items collection with common meal course and common preparation station.
+|
+			    
+			    parameters 	(list Parameters
+				(object Parameter "mealCourse"
+				    quid       	"6276A4DE031E"
+				    documentation 	
+|
+|Defines the meal course of preparation items
+|
+				    
+				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
+				(object Parameter "preparationStation"
+				    quid       	"6276A4DE0352"
+				    documentation 	
+|
+|Defines the preparation station where item prepared
+|
+				    
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationStation")
+				(object Parameter "preparationItems"
+				    quid       	"6276A4DE03A4"
+				    documentation 	
+|
+|Defines the preparation items collection.
+|
+				    
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsPreparationContext"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b53c2414-42ee-432c-a6ba-ac82e1f6f1bd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4DF0088"))
+			    quid       	"6276A4DF0088"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "PreparationStationIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8b5f1668-5da4-4e06-a565-03b8a622c502}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4DF0177")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276A4DF0177"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PreparationItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e3ab05aa-5f0e-4c56-b91a-c5cd2937684f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4DF0255")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276A4DF0255"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{41c8c8ed-0445-4e08-a995-cb44fe6d1837}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4DF0357")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276A4DF0357"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicePointDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{044b2150-955b-4587-a42e-a4cd1af9eb81}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4E00054")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276A4E00054"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PreparationStationDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b6e7eb8b-024d-496d-bfaf-a486b1840263}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4E0011B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6276A4E0011B"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "TradeProductsStationIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{41f0feed-af68-4ac7-b823-871fca058a89}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4E001E8")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"6276A4E001E8"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PreparationState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9479663e-b23d-4bb7-9e3f-333dd9dcf114}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6276A4E00272")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"6276A4E00272"
+			    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
@@ -14969,7 +15232,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"ContainerClass"
-				    value      	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
+				    value      	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation>")
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
@@ -14980,7 +15243,7 @@
 			    quidu      	"5D024DF603A6"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$19"
+			(object Role "$UNNAMED$21"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -15086,7 +15349,7 @@
 			    value      	"e7e482f4-cfba-45a5-8270-8346af757d7a"))
 		    quid       	"60E0180B00F8"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$20"
+			(object Role "$UNNAMED$22"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -15180,7 +15443,7 @@
 			    quidu      	"6073C95302E6"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$21"
+			(object Role "$UNNAMED$23"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -15302,7 +15565,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$22"
+			(object Role "$UNNAMED$24"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -15440,7 +15703,7 @@
 			    quidu      	"616950830001"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$23"
+			(object Role "$UNNAMED$25"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -15543,7 +15806,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	1125
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStationRuntime" @173
@@ -15593,7 +15856,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@174
-				location   	(128, 1727)
+				location   	(128, 1722)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	495
@@ -15601,7 +15864,7 @@
 				label      	"ItemPreparationState")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@174
-				location   	(128, 1677)
+				location   	(128, 1676)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -15643,6 +15906,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@175
+				location   	(22, 595)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	1437)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -15703,6 +15984,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@177
+				location   	(1409, 704)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	42
+				max_width  	1243)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -16574,7 +16873,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$19" @219
+				(object RoleView "$UNNAMED$21" @219
 				    Parent_View 	@214
 				    location   	(322, -809)
 				    font       	(object Font
@@ -17472,7 +17771,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$21" @259
+				(object RoleView "$UNNAMED$23" @259
 				    Parent_View 	@254
 				    location   	(760, -298)
 				    font       	(object Font
@@ -18155,7 +18454,7 @@
 			    line_color 	3342489
 			    quidu      	"60E0180B00F8"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$20" @292
+				(object RoleView "$UNNAMED$22" @292
 				    Parent_View 	@290
 				    location   	(1690, 104)
 				    font       	(object Font
@@ -18612,7 +18911,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$23" @313
+				(object RoleView "$UNNAMED$25" @313
 				    Parent_View 	@308
 				    location   	(587, 4)
 				    stereotype 	TRUE
@@ -19448,7 +19747,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@350
-				location   	(2908, 477)
+				location   	(2908, 476)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	450
@@ -19479,7 +19778,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@351
-				location   	(108, 462)
+				location   	(108, 461)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	388
@@ -19510,7 +19809,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@352
-				location   	(1839, 435)
+				location   	(1839, 434)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	682
@@ -19541,7 +19840,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@353
-				location   	(874, 437)
+				location   	(874, 436)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -19572,7 +19871,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@354
-				location   	(899, 912)
+				location   	(899, 911)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -19603,7 +19902,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@355
-				location   	(1966, 956)
+				location   	(1966, 955)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	458
@@ -23450,24 +23749,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F72C0B3018D"
-		    compartment 	(object Compartment
-			Parent_View 	@464
-			location   	(1947, 2451)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	1625)
 		    width      	843
 		    height     	413
 		    annotation 	8)

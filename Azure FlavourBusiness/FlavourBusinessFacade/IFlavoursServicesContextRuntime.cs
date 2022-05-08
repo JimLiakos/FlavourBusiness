@@ -41,9 +41,7 @@ namespace FlavourBusinessFacade
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+3")]
         string OrganizationIdentity { get; set; }
 
-        /// <MetaDataID>{55317a81-4a84-4735-b0a3-9aef9f0b4dab}</MetaDataID>
-        List<ServicePointPreparationItems> GetPreparationStationItemsToPrepare(IPreparationStation preparationStation);
-
+     
         /// <MetaDataID>{8f88ba0b-cdb8-4b42-beca-499bca462511}</MetaDataID>
         void LaunchCallerIDServer();
         /// <MetaDataID>{54ccbe05-9a3e-452d-98d4-cf6dfdbdb8da}</MetaDataID>
