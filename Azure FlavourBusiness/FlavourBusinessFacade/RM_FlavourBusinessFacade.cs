@@ -1260,16 +1260,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
         }
         
-        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems> GetPreparationStationItemsToPrepare(FlavourBusinessFacade.ServicesContextResources.IPreparationStation preparationStation)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = preparationStation;
-            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetPreparationStationItemsToPrepare", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>>(retValue);
-        }
-        
         public void LaunchCallerIDServer()
         {
             object[] args = new object[0];

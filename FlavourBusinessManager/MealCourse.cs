@@ -314,9 +314,11 @@ namespace FlavourBusinessManager.RoomService
                             }
                             else
                                 itemsPreparationContext.AddPreparationItem(itemPreparation);
+                            if (!_FoodItemsInProgress.Contains(itemsPreparationContext))
+                                _FoodItemsInProgress.Add(itemsPreparationContext);
                         }
 
-                        foreach (var itemsPreparationContext in this.FoodItemsInProgress)
+                        foreach (var itemsPreparationContext in this._FoodItemsInProgress)
                         {
                             var commonItemPreparationState = itemsPreparationContext.PreparationItems.GetMinimumCommonItemPreparationState();
                             itemsPreparationContext.PreparationState = commonItemPreparationState;

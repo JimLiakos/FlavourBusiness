@@ -32,7 +32,10 @@ namespace PreparationStationDevice.WPF
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
 
-            Canonicalization();
+
+            Simulator simulator = new Simulator();
+            simulator.start();
+         //   Canonicalization();
 
             //int prevDifPerc = 0;
             //List<int> averagePercs = new List<int>();
