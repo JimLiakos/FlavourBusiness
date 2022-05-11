@@ -11,14 +11,27 @@ namespace PreparationStationDevice.WPF
     {
         public override string ToString()
         {
-            string subActions = null;
-            foreach (var subAction in SubActions)
-                subActions += subAction.ProductionLine.Name + "  ";
+            string subActions = " ";
+            foreach (var productionLine in Simulator.ProductionLines)
+            {
+                if (this.SubActions.Any(x => x.ProductionLine == productionLine))
+                    subActions += productionLine.Name;
+                else
+                    subActions += "-";
+
+                subActions += "    ";
+            }
+
+
             return string.Format("{0} {1} : {2}", Name, subActions, PreparationForecast.ToShortTimeString());
         }
+
+        public Simulator Simulator { get; private set; }
+
         public readonly string Name;
-        public Action(string name, List<PartialAction> subActions)
+        public Action(string name, List<PartialAction> subActions, Simulator simulator)
         {
+            Simulator = simulator;
             Name = name;
             SubActions = subActions;
 
@@ -39,11 +52,23 @@ namespace PreparationStationDevice.WPF
             return SubActions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
         }
 
+        public DateTime GetPreparationStartForecast(ActionContext context)
+        {
+            return SubActions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context) - TimeSpan.FromMinutes(SubActions.OrderBy(x => x.GetPreparationForecast(context)).Last().Duration);
+        }
+
         internal string ToString(ActionContext actionContext)
         {
-            string subActions = null;
-            foreach (var subAction in SubActions)
-                subActions += subAction.ProductionLine.Name + "  ";
+            string subActions = " ";
+            foreach (var productionLine in Simulator.ProductionLines)
+            {
+                if (this.SubActions.Any(x => x.ProductionLine == productionLine))
+                    subActions += productionLine.Name;
+                else
+                    subActions += "-";
+
+                subActions += "    ";
+            }
             return string.Format("{0} {1} : {2}", Name, subActions, GetPreparationForecast(actionContext).ToShortTimeString());
         }
     }
@@ -64,7 +89,20 @@ namespace PreparationStationDevice.WPF
 
         public ProductionLine ProductionLine;
 
-        public List<ActionSlot> Slots;
+        List<ActionSlot> _Slots;
+        public List<ActionSlot> Slots
+        {
+            get
+            {
+                if (_Slots != null)
+                    return _Slots.Where(x => x.State < FlavourBusinessFacade.RoomService.ItemPreparationState.IsRoasting).ToList();
+                return _Slots;
+            }
+            set
+            {
+                _Slots = value;
+            }
+        }
 
         public DateTime PreparationForecast
         {
@@ -107,6 +145,7 @@ namespace PreparationStationDevice.WPF
                 return PreparationStart + TimeSpan.FromMinutes(Duration);
             }
         }
+        public FlavourBusinessFacade.RoomService.ItemPreparationState State { get; set; }
     }
 
     /// <MetaDataID>{af9d458c-141a-40ca-9a4f-693deb6676bd}</MetaDataID>
@@ -116,8 +155,6 @@ namespace PreparationStationDevice.WPF
         {
             Name = name;
             Simulator = simulator;
-            //List<PartialAction> actions
-            //Actions = actions;
         }
         Simulator Simulator;
         public List<PartialAction> Actions
@@ -136,7 +173,9 @@ namespace PreparationStationDevice.WPF
         internal void GetPredictions()
         {
 
-            DateTime previousePreparationEndsAt = DateTime.UtcNow;
+            if (PreviousePreparationEndsAt == null)
+                PreviousePreparationEndsAt = DateTime.UtcNow;
+            var previousePreparationEndsAt = PreviousePreparationEndsAt.Value;
             var slots = (from action in this.Simulator.Actions
                          from partialAction in action.SubActions
                          where partialAction.ProductionLine == this
@@ -149,10 +188,13 @@ namespace PreparationStationDevice.WPF
                 previousePreparationEndsAt = slot.PreparationStart + TimeSpan.FromMinutes(slot.Duration);
             }
         }
+        DateTime? PreviousePreparationEndsAt;
         internal void GetPredictions(ActionContext actionContext)
         {
-            DateTime previousePreparationEndsAt = DateTime.UtcNow;
 
+            if(PreviousePreparationEndsAt==null)
+                PreviousePreparationEndsAt = DateTime.UtcNow;
+            var previousePreparationEndsAt = PreviousePreparationEndsAt.Value;
             if (actionContext.ProductionLineActions.ContainsKey(this))
             {
                 var slots = (from partialAction in actionContext.ProductionLineActions[this]
@@ -162,8 +204,9 @@ namespace PreparationStationDevice.WPF
 
                 foreach (var slot in slots)
                 {
+                    
+                    previousePreparationEndsAt = previousePreparationEndsAt + TimeSpan.FromMinutes(slot.Duration);
                     actionContext.SlotsPreparationEndsAt[slot] = previousePreparationEndsAt;
-                    previousePreparationEndsAt = actionContext.SlotsPreparationEndsAt[slot] + TimeSpan.FromMinutes(slot.Duration);
                 }
             }
         }
@@ -181,16 +224,58 @@ namespace PreparationStationDevice.WPF
         }
 
 
-        internal List<PartialAction> OptimizeActions(ActionContext actionContext)
+        internal void OptimizeActions(ActionContext actionContext)
         {
             var actions = Actions.OrderBy(x => x.Action.GetPreparationForecast(actionContext)).ToList();
-
-
-            return actions;
+            actionContext.ProductionLineActions[this] = actions;
 
         }
 
 
+        DateTime? LastChangeDateTime;
+
+        internal void Run(ActionContext actionContext)
+        {
+
+            var partialActions = actionContext.ProductionLineActions[this];
+            List<PartialAction> filteredPartialActions = new List<PartialAction>();
+
+            foreach (var partialAction in partialActions)
+            {
+                if ((partialAction.Action.GetPreparationStartForecast(actionContext) - DateTime.UtcNow).TotalMinutes <= 5 ||
+                    ((partialAction.Action.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).TotalMinutes < 5))
+                {
+                    filteredPartialActions.Add(partialAction);
+                }
+                else
+                    break;
+            }
+            var strings = GetActionsToStrings(actionContext);
+            var slots = (from partialAction in filteredPartialActions
+                         from slot in partialAction.Slots
+                         where slot.State < FlavourBusinessFacade.RoomService.ItemPreparationState.IsRoasting
+                         select slot).ToList();
+
+
+            if (LastChangeDateTime == null && slots.Count > 0)
+            {
+                LastChangeDateTime = DateTime.UtcNow;
+                slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation;
+                var date = actionContext.SlotsPreparationEndsAt[slots[0]];
+            }
+            else if (slots.Count > 0)
+            {
+                if (actionContext.SlotsPreparationEndsAt[slots[0]] < DateTime.UtcNow)
+                {
+                    PreviousePreparationEndsAt = DateTime.UtcNow;
+                    slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared;
+                }
+            }
+
+
+
+
+        }
     }
 
     /// <MetaDataID>{b2c2a203-e4e6-4a0a-aec6-5106d04618dd}</MetaDataID>
@@ -205,7 +290,7 @@ namespace PreparationStationDevice.WPF
                 ProductionLine = ProductionLines[1],
                 Duration = 15,
                 Slots=new List<ActionSlot>(){new ActionSlot(){Name="Pizza margarita",Duration=7 },new ActionSlot(){Name="Burger Americana",Duration=8 }}
-            }});
+            }}, this);
             Actions.Add(action);
 
             //action = new Action("a1", new List<PartialAction>()
@@ -230,7 +315,7 @@ namespace PreparationStationDevice.WPF
                     new ActionSlot(){Name="Boloneze",Duration=8 },
                     new ActionSlot(){Name="Amatritsian",Duration=7 }
                 }
-            } });
+            } }, this);
             Actions.Add(action);
 
             action = new Action("a3", new List<PartialAction>()
@@ -245,7 +330,7 @@ namespace PreparationStationDevice.WPF
                     Duration = 12,
                     Slots=new List<ActionSlot>(){new ActionSlot(){Name= "Ριζοτο Alfredo ", Duration=6 }, new ActionSlot() { Name = "Ριζοτο Μιλανέζε ", Duration = 6 } }
                 }
-            });
+            }, this);
             Actions.Add(action);
 
             action = new Action("a4", new List<PartialAction>()
@@ -255,7 +340,7 @@ namespace PreparationStationDevice.WPF
                     Duration = 4,
                     Slots=new List<ActionSlot>(){new ActionSlot(){Name="Κοτομπεικον",Duration=4 } }
                 }
-            });
+            }, this);
             Actions.Add(action);
 
             action = new Action("a5", new List<PartialAction>()
@@ -269,7 +354,7 @@ namespace PreparationStationDevice.WPF
                     Duration = 15,
                     Slots=new List<ActionSlot>(){new ActionSlot(){Name= "Ριζοτο Alfredo ", Duration=6 }, new ActionSlot() { Name = "Roast Beef ", Duration = 9 } }
                 }
-            });
+            }, this);
             Actions.Add(action);
 
             action = new Action("a6", new List<PartialAction>()
@@ -282,14 +367,14 @@ namespace PreparationStationDevice.WPF
                 } ,
                 new PartialAction() { ProductionLine = ProductionLines[2], Duration = 6,
                 Slots=new List<ActionSlot>(){new ActionSlot(){Name= "Ριζοτο Alfredo ", Duration=6 } } }
-            });
+            }, this);
             Actions.Add(action);
 
 
 
         }
         public List<Action> Actions = new List<Action>();
-        List<ProductionLine> ProductionLines;
+        public List<ProductionLine> ProductionLines;
 
         public void start()
         {
@@ -308,8 +393,8 @@ namespace PreparationStationDevice.WPF
                     foreach (var productionLine in ProductionLines)
                     {
 
-                        var actions = productionLine.OptimizeActions(actionContext);
-                        actionContext.ProductionLineActions[productionLine] = actions;
+                        productionLine.OptimizeActions(actionContext);
+
                         productionLine.GetPredictions(actionContext);
 
                         foreach (var inProductionLine in ProductionLines)
@@ -320,7 +405,10 @@ namespace PreparationStationDevice.WPF
                         }
                     }
 
-
+                    foreach (var productionLine in ProductionLines)
+                    {
+                        productionLine.Run(actionContext);
+                    }
                     System.Threading.Thread.Sleep(20000);
 
                 }
