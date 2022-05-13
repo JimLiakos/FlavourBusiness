@@ -94,6 +94,8 @@ namespace PreparationStationDevice.WPF
 
         //public double Duration;
 
+        }
+
         public ProductionLine ProductionLine;
 
         List<ActionSlot> _Slots;
@@ -253,8 +255,9 @@ namespace PreparationStationDevice.WPF
 
         internal void OptimizeActions(ActionContext actionContext)
         {
-            var actions = Actions.OrderBy(x => x.Action.GetPreparationForecast(actionContext)).ToList();
-            actionContext.ProductionLineActions[this] = actions;
+            var partialActions = Actions.OrderBy(x => x.Action.GetPreparationForecast(actionContext)).ToList();
+
+            actionContext.ProductionLineActions[this] = partialActions;
 
         }
 
@@ -322,6 +325,23 @@ namespace PreparationStationDevice.WPF
             //        break;
             //}
 
+            return filteredPartialActions;
+        }
+
+        public List<PartialAction> GetActionsToDo(ActionContext actionContext)
+        {
+            List<PartialAction> filteredPartialActions = new List<PartialAction>();
+            var partialActions = actionContext.ProductionLineActions[this];
+            foreach (var partialAction in partialActions)
+            {
+                if ((partialAction.Action.GetPreparationStartForecast(actionContext) - DateTime.UtcNow).TotalMinutes <= 2.5 ||
+                    ((partialAction.Action.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).TotalMinutes < 1.5))
+                {
+                    filteredPartialActions.Add(partialAction);
+                }
+                else
+                    break;
+            }
             return filteredPartialActions;
         }
     }
