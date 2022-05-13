@@ -94,8 +94,6 @@ namespace PreparationStationDevice.WPF
 
         //public double Duration;
 
-        }
-
         public ProductionLine ProductionLine;
 
         List<ActionSlot> _Slots;
@@ -255,9 +253,8 @@ namespace PreparationStationDevice.WPF
 
         internal void OptimizeActions(ActionContext actionContext)
         {
-            var partialActions = Actions.OrderBy(x => x.Action.GetPreparationForecast(actionContext)).ToList();
-
-            actionContext.ProductionLineActions[this] = partialActions;
+            var actions = Actions.OrderBy(x => x.Action.GetPreparationForecast(actionContext)).ToList();
+            actionContext.ProductionLineActions[this] = actions;
 
         }
 
@@ -327,23 +324,6 @@ namespace PreparationStationDevice.WPF
 
             return filteredPartialActions;
         }
-
-        public List<PartialAction> GetActionsToDo(ActionContext actionContext)
-        {
-            List<PartialAction> filteredPartialActions = new List<PartialAction>();
-            var partialActions = actionContext.ProductionLineActions[this];
-            foreach (var partialAction in partialActions)
-            {
-                if ((partialAction.Action.GetPreparationStartForecast(actionContext) - DateTime.UtcNow).TotalMinutes <= 2.5 ||
-                    ((partialAction.Action.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).TotalMinutes < 1.5))
-                {
-                    filteredPartialActions.Add(partialAction);
-                }
-                else
-                    break;
-            }
-            return filteredPartialActions;
-        }
     }
 
     /// <MetaDataID>{b2c2a203-e4e6-4a0a-aec6-5106d04618dd}</MetaDataID>
@@ -389,7 +369,7 @@ namespace PreparationStationDevice.WPF
 
         public Simulator()
         {
-            
+
             if (true)
             {
 
@@ -505,15 +485,15 @@ namespace PreparationStationDevice.WPF
                 List<List<List<string>>> productionLinesStrings = new List<List<List<string>>>();
                 while (true)
                 {
-                    if(count<7)
+                    if (count < 7)
                     {
-                        
-                        var patern= ProductionLinesSlots[ _R.Next(ProductionLinesSlots.Count-1)];
+
+                        var patern = ProductionLinesSlots[_R.Next(ProductionLinesSlots.Count - 1)];
 
                         List<ActionSlot> a_productionLineActionSlots = new List<ActionSlot>();
-                        while(patern[0]>0)
+                        while (patern[0] > 0)
                         {
-                            a_productionLineActionSlots.Add( A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].Copy());
+                            a_productionLineActionSlots.Add(A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].Copy());
                             patern[0] = patern[0] - 1;
                         }
 
@@ -531,7 +511,7 @@ namespace PreparationStationDevice.WPF
                         }
 
                         List<PartialAction> partialActions = new List<PartialAction>();
-                        
+
                         if (a_productionLineActionSlots.Count > 0)
                             partialActions.Add(new PartialAction() { ProductionLine = ProductionLines[0], Slots = a_productionLineActionSlots });
 
