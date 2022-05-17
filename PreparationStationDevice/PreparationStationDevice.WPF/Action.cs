@@ -188,6 +188,16 @@ namespace PreparationStationDevice.WPF
                 _Duration = value / 2;
             }
         }
+        double _PackingTime;
+        public double PackingTime
+        {
+            get => _PackingTime;
+            set
+            {
+                _PackingTime = value / 2;
+            }
+        }
+        
         public double ActiveDuration
         {
             get
@@ -212,7 +222,7 @@ namespace PreparationStationDevice.WPF
 
         internal ActionSlot CopyFor(ProductionLine productionLine)
         {
-            return new ActionSlot() { Name = Name, Duration = Duration, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
+            return new ActionSlot() { Name = Name, Duration = Duration,PackingTime=PackingTime, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
         }
 
     }
@@ -344,6 +354,11 @@ namespace PreparationStationDevice.WPF
                     if (actionContext.ProductionLineActions.ContainsKey(this))
                         actions = actionContext.ProductionLineActions[this];
                     actions = actions.Where(x => x.ToDoSlots.Count > 0).ToList();
+                    if(slots[0].PartialAction!=null&& slots[0].PartialAction.ToDoSlots.Count==0)
+                    {
+                        var packingTime = slots[0].PartialAction.Slots.Sum(x => x.PackingTime);
+                        PreviousePreparationEndsAt += TimeSpan.FromMinutes(packingTime);
+                    }
                 }
 
                 //var astrings = Simulator.Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
@@ -440,28 +455,28 @@ namespace PreparationStationDevice.WPF
     public class Simulator
     {
         static List<ActionSlot> B_ProductionLineActionSlots = new List<ActionSlot>(){
-            new ActionSlot() { Name = "Pizza margarita",Duration = 7 },
-            new ActionSlot() { Name = "Burger Americana",Duration = 8 },
-            new ActionSlot(){Name="Pizza D'adrea",Duration=7 },
-            new ActionSlot(){Name="Chiken Burger",Duration=8 },
-            new ActionSlot(){Name="Boloneze",Duration=8 },
-            new ActionSlot(){Name="Amatritsian",Duration=7 },
-            new ActionSlot(){Name="Pizza special",Duration=7 },
-            new ActionSlot() { Name = "Carbonara", Duration = 8 }
+            new ActionSlot() { Name = "Pizza margarita",Duration = 7,PackingTime=0.8 },
+            new ActionSlot() { Name = "Burger Americana",Duration = 8, PackingTime=0.2 },
+            new ActionSlot(){Name="Pizza D'adrea",Duration=7, PackingTime=0.8},
+            new ActionSlot(){Name="Chiken Burger",Duration=8 , PackingTime=0.2 },
+            new ActionSlot(){Name="Boloneze",Duration=8 , PackingTime=0.2 },
+            new ActionSlot(){Name="Amatritsian",Duration=7 , PackingTime=0.2 },
+            new ActionSlot(){Name="Pizza special",Duration=7, PackingTime=0.8},
+            new ActionSlot() { Name = "Carbonara", Duration = 8 , PackingTime=0.2 }
         };
 
         static List<ActionSlot> A_ProductionLineActionSlots = new List<ActionSlot>(){
-            new ActionSlot(){Name="Πίτα γύρο χειρινο",Duration=2.5 },
-            new ActionSlot(){Name= "Πίτα γύρο κοτοπουλ", Duration=2.5 },
-            new ActionSlot(){Name="Κοτομπεικον",Duration=4 },
-            new ActionSlot(){Name= "Μεριδα γύρο κοτοπουλ", Duration=2.5 },
-            new ActionSlot(){Name= "Μεριδα γύρο χειρινο", Duration=2.5 },
+            new ActionSlot(){Name="Πίτα γύρο χειρινο",Duration=2.5 , PackingTime=0.1 },
+            new ActionSlot(){Name= "Πίτα γύρο κοτοπουλ", Duration=2.5 , PackingTime=0.1 },
+            new ActionSlot(){Name="Κοτομπεικον",Duration=4 , PackingTime=0.2 },
+            new ActionSlot(){Name= "Μεριδα γύρο κοτοπουλ", Duration=2.5 , PackingTime=0.2 },
+            new ActionSlot(){Name= "Μεριδα γύρο χειρινο", Duration=2.5 , PackingTime=0.2 },
         };
         static List<ActionSlot> C_ProductionLineActionSlots = new List<ActionSlot>()
         {
-            new ActionSlot(){Name= "Ριζοτο Alfredo ", Duration=6 },
-            new ActionSlot() { Name = "Ριζοτο Μιλανέζε ", Duration = 6 },
-             new ActionSlot() { Name = "Roast Beef ", Duration = 9 }
+            new ActionSlot(){Name= "Ριζοτο Alfredo ", Duration=6 , PackingTime=0.1 },
+            new ActionSlot() { Name = "Ριζοτο Μιλανέζε ", Duration = 6 , PackingTime=0.1 },
+             new ActionSlot() { Name = "Roast Beef ", Duration = 9 , PackingTime=0.1 }
         };
 
         static List<List<int>> ProductionLinesSlots = new List<List<int>>() {
@@ -654,7 +669,7 @@ namespace PreparationStationDevice.WPF
                     if (productionLinesStrings.Count > 0)
                     {
 
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = DateTime.UtcNow.ToShortTimeString() };
+                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow)};
 
                         string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
                         if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
@@ -662,7 +677,7 @@ namespace PreparationStationDevice.WPF
                     }
                     else
                     {
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = DateTime.UtcNow.ToShortTimeString() };
+                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
                         productionLinesStrings.Add(snapshot);
                     }
 
