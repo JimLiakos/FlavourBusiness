@@ -23,7 +23,7 @@ namespace PreparationStationDevice.WPF
             }
 
 
-            return string.Format("{0} {1} : {2}", Name, subActions, string.Format("{0:h:mm:ss tt}",PreparationForecast));
+            return string.Format("{0} {1} : {2}", Name, subActions, string.Format("{0:h:mm:ss tt}", PreparationForecast));
         }
 
         public Simulator Simulator { get; private set; }
@@ -163,7 +163,7 @@ namespace PreparationStationDevice.WPF
 
             var preparationForecast = GetPreparationForecast(actionContext);
 
-            return ProductionLine.Name + " " + Action.Name + " " + string.Format("{0:h:mm:ss tt}", preparationForecast)  + " " + string.Format("{0:h:mm:ss tt}", Action.GetPreparationForecast(actionContext)) + " slots : " + Slots.Count.ToString();
+            return ProductionLine.Name + " " + Action.Name + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", Action.GetPreparationForecast(actionContext)) + " slots : " + Slots.Count.ToString() + " v:" + ProductionLine?.Velocity;
         }
 
         public DateTime GetPreparationForecast(ActionContext actionContext)
@@ -177,7 +177,7 @@ namespace PreparationStationDevice.WPF
     /// <MetaDataID>{2db71939-c9b3-4834-b4b0-64606f034697}</MetaDataID>
     public class ActionSlot
     {
-      
+
         public string Name;
         double _Duration;
         public double Duration
@@ -192,7 +192,7 @@ namespace PreparationStationDevice.WPF
         {
             get
             {
-                if(ProductionLine!=null)
+                if (ProductionLine != null)
                     return this.ProductionLine.GetDuration(this);
                 return Duration;
             }
@@ -212,7 +212,7 @@ namespace PreparationStationDevice.WPF
 
         internal ActionSlot CopyFor(ProductionLine productionLine)
         {
-            return new ActionSlot() { Name = Name, Duration = Duration, ProductionLine= productionLine };
+            return new ActionSlot() { Name = Name, Duration = Duration, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
         }
 
     }
@@ -317,10 +317,10 @@ namespace PreparationStationDevice.WPF
                          from slot in partialAction.ToDoSlots
                          select slot).ToList();
 
-            if (slots.Count > 4)
-                Velocity = 0.1;
+            if (slots.Count > 3)
+                Velocity = 0.2;
             else
-                Velocity = 0;                                                                         
+                Velocity = 0;
 
 
 
@@ -384,11 +384,27 @@ namespace PreparationStationDevice.WPF
             foreach (var partialAction in actions)
             {
                 if ((partialAction.Action.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).TotalMinutes < 2 || ((partialAction.Action.GetPreparationForecast(actionContext) - TimeSpan.FromMinutes(partialAction.Duration + 2.5)) < DateTime.UtcNow))
+                {
+                    foreach (var actionSlot in partialAction.Slots)
+                    {
+                        if (actionSlot.State == FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay)
+                            actionSlot.State = FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation;
+                    }
+
                     filteredPartialActions.Add(partialAction);
+                }
                 else if (partialAction.Slots.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation))
+                {
+           
                     filteredPartialActions.Add(partialAction);
+                }
                 else
+                {
+                    //if (partialAction.Slots.All(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay))
+                    //    filteredPartialActions.Add(partialAction);
+
                     break;
+                }
             }
 
 
@@ -412,11 +428,11 @@ namespace PreparationStationDevice.WPF
 
         internal double GetDuration(ActionSlot actionSlot)
         {
-            if(Velocity!=0)
+            if (Velocity != 0)
             {
 
             }
-            return actionSlot.Duration*(1+Velocity);
+            return actionSlot.Duration * (1 + Velocity);
         }
     }
 
@@ -581,7 +597,7 @@ namespace PreparationStationDevice.WPF
                 List<Snapshot> productionLinesStrings = new List<Snapshot>();
                 while (true)
                 {
-                    if (count < 7)
+                    if (count < 10)
                     {
                         AddAction(count);
 
@@ -750,12 +766,12 @@ namespace PreparationStationDevice.WPF
 
         public DateTime? GetPreparationEndsAt(ActionSlot actionSlot)
         {
-            if(actionSlot.ActiveDuration!= actionSlot.Duration)
+            if (actionSlot.ActiveDuration != actionSlot.Duration)
             {
 
             }
 
-           
+
             DateTime dateTime;
             if (SlotsPreparationStartsAt.TryGetValue(actionSlot, out dateTime))
                 return dateTime + TimeSpan.FromMinutes(actionSlot.ActiveDuration);
