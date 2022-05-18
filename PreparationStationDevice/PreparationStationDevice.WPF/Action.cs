@@ -162,8 +162,10 @@ namespace PreparationStationDevice.WPF
         {
 
             var preparationForecast = GetPreparationForecast(actionContext);
+            
+            var preparationStartsAt = GetPreparationStartsAt(actionContext);
 
-            return ProductionLine.Name + " " + MainAction.Name + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", MainAction.GetPreparationForecast(actionContext)) + " slots : " + Slots.Count.ToString() + " v:" + ProductionLine?.Velocity;
+            return ProductionLine.Name + " " + MainAction.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", MainAction.GetPreparationForecast(actionContext)) + " slots : " + Slots.Count.ToString() + " v:" + ProductionLine?.Velocity;
         }
 
         public DateTime GetPreparationForecast(ActionContext actionContext)
@@ -172,6 +174,14 @@ namespace PreparationStationDevice.WPF
                 return actionContext.GetPreparationEndsAt(Slots.OrderBy(x => actionContext.GetPreparationEndsAt(x)).Last()).Value;
             else
                 return PreparationForecast;
+        }
+        public DateTime GetPreparationStartsAt(ActionContext actionContext)
+        {
+            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine))
+                return actionContext.GetPreparationStartsAt(ToDoSlots.OrderBy(x => actionContext.GetPreparationEndsAt(x)).First()).Value;
+            else
+
+                return Slots.OrderBy(x => x.PreparationStart).First().PreparationStart;
         }
     }
     /// <MetaDataID>{2db71939-c9b3-4834-b4b0-64606f034697}</MetaDataID>
@@ -222,7 +232,7 @@ namespace PreparationStationDevice.WPF
 
         internal ActionSlot CopyFor(ProductionLine productionLine)
         {
-            return new ActionSlot() { Name = Name, Duration = Duration,PackingTime=PackingTime, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
+            return new ActionSlot() { Name = Name, Duration = Duration, PackingTime = PackingTime, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
         }
 
     }
@@ -308,40 +318,26 @@ namespace PreparationStationDevice.WPF
             return strings;
         }
 
-        public List<string> GetActionsToStrings(ActionContext actionContext, List<PartialAction> actions)
-        {
-
-            List<string> strings =
-            (from partialAction in actions
-             select partialAction.ToString(actionContext)).ToList();
-
-            return strings;
-        }
+  
 
 
 
         internal void OptimizeActions(ActionContext actionContext, bool firstTime)
         {
             var actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
-            if (actionContext.ProductionLineActions.ContainsKey(this) && actionContext.ProductionLineActions[this].Count == actions.Count)
+            List<PartialAction> contextActions = new List<PartialAction>();
+            if (actionContext.ProductionLineActions.ContainsKey(this))
+                contextActions = actionContext.ProductionLineActions[this];
+            if (!Simulator.CompareActionsSets( actions, contextActions))
             {
-                foreach (var action in actions)
-                {
-                    if (actionContext.ProductionLineActions[this].Contains(action))
-                    {
-                        if (actions.IndexOf(action) != actionContext.ProductionLineActions[this].IndexOf(action))
-                        {
-                            var actionStrings = GetActionsToStrings(actionContext, actions);
-                            var actionContextActionStrings = GetActionsToStrings(actionContext, actionContext.ProductionLineActions[this]);
-                        }
-                    }
-                }
+                var actionStrings =Simulator.GetActionsToStrings(actionContext, actions);
+                var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, contextActions);
             }
             actionContext.ProductionLineActions[this] = actions;
 
         }
 
-
+    
         DateTime? LastChangeDateTime;
 
         internal void Run(ActionContext actionContext)
@@ -370,7 +366,7 @@ namespace PreparationStationDevice.WPF
             }
             else if (slots.Count > 0)
             {
-                if (actionContext.GetPreparationEndsAt(slots[0]) < DateTime.UtcNow)
+                while (slots.Count>0&& actionContext.GetPreparationEndsAt(slots[0]) < DateTime.UtcNow)
                 {
                     PreviousePreparationEndsAt = DateTime.UtcNow;
                     slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared;
@@ -383,8 +379,9 @@ namespace PreparationStationDevice.WPF
                     if (slots[0].PartialAction != null && slots[0].PartialAction.ToDoSlots.Count == 0)
                     {
                         var packingTime = slots[0].PartialAction.Slots.Sum(x => x.PackingTime);
-                        PreviousePreparationEndsAt += TimeSpan.FromMinutes(packingTime);
+                        PreviousePreparationEndsAt += TimeSpanEx.FromMinutes(packingTime);
                     }
+                    slots.RemoveAt(0);
                 }
 
                 //var astrings = Simulator.Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
@@ -424,7 +421,7 @@ namespace PreparationStationDevice.WPF
             List<PartialAction> filteredPartialActions = new List<PartialAction>();
             foreach (var partialAction in actions)
             {
-                if ((partialAction.MainAction.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).GetTotalMinutes()< 2 || ((partialAction.MainAction.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(partialAction.Duration + 2.5)) < DateTime.UtcNow))
+                if ((partialAction.MainAction.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).GetTotalMinutes() < 2 || ((partialAction.MainAction.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(partialAction.Duration + 2.5)) < DateTime.UtcNow))
                 {
                     foreach (var actionSlot in partialAction.Slots)
                     {
@@ -477,6 +474,8 @@ namespace PreparationStationDevice.WPF
         }
     }
 
+
+
     /// <MetaDataID>{b2c2a203-e4e6-4a0a-aec6-5106d04618dd}</MetaDataID>
     public class Simulator
     {
@@ -493,11 +492,11 @@ namespace PreparationStationDevice.WPF
         };
 
         static List<ActionSlot> A_ProductionLineActionSlots = new List<ActionSlot>(){
-            new ActionSlot(){Name="Πίτα γύρο χειρινο",Duration=2.5 , PackingTime=0.1 },
-            new ActionSlot(){Name= "Πίτα γύρο κοτοπουλ", Duration=2.5 , PackingTime=0.1 },
+            new ActionSlot(){Name="Πίτα γύρο χειρινο",Duration=0.5 , PackingTime=0.08 },
+            new ActionSlot(){Name= "Πίτα γύρο κοτοπουλ", Duration=0.5 , PackingTime=0.08 },
             new ActionSlot(){Name="Κοτομπεικον",Duration=4 , PackingTime=0.2 },
-            new ActionSlot(){Name= "Μεριδα γύρο κοτοπουλ", Duration=2.5 , PackingTime=0.2 },
-            new ActionSlot(){Name= "Μεριδα γύρο χειρινο", Duration=2.5 , PackingTime=0.2 },
+            new ActionSlot(){Name= "Μεριδα γύρο κοτοπουλ", Duration=1 , PackingTime=0.15 },
+            new ActionSlot(){Name= "Μεριδα γύρο χειρινο", Duration=1 , PackingTime=0.15 },
         };
         static List<ActionSlot> C_ProductionLineActionSlots = new List<ActionSlot>()
         {
@@ -637,7 +636,8 @@ namespace PreparationStationDevice.WPF
                 List<List<string>> theAStrings = new List<List<string>>();
 
                 List<Snapshot> productionLinesStrings = new List<Snapshot>();
-                ActionContext actionContext = new ActionContext();
+                
+
                 while (true)
                 {
                     if (count < 10)
@@ -663,11 +663,15 @@ namespace PreparationStationDevice.WPF
 
                     var _this = this;
 
-                    //foreach (var productionLine in ProductionLines)
-                    //    productionLine.GetPredictions();
-
+                    foreach (var productionLine in ProductionLines)
+                        productionLine.GetPredictions();
+                    ActionContext actionContext = new ActionContext();
                     actionContext.DoubleCheckOptimazation = false;
 
+                    Dictionary<ProductionLine, List<PartialAction>> productionLineActions = new Dictionary<ProductionLine, List<PartialAction>>();
+
+                    foreach(var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
+                        productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
 
                     bool firstTime = true;
                     while (!actionContext.DoubleCheckOptimazation)
@@ -689,6 +693,18 @@ namespace PreparationStationDevice.WPF
                         //    currentProductionLinesStrings.Add(productionLine.GetNextActions(actionContext).Select(x=>x.ToString(actionContext)).ToList());
 
                     }
+                    foreach (var productionLine in productionLineActions.Keys)
+                    {
+                        
+                        if (!Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
+                        {
+                            var actionStrings =Simulator. GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
+                            var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
+
+                        }
+
+                    }
+                        
 
                     List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
 
@@ -700,11 +716,17 @@ namespace PreparationStationDevice.WPF
                     if (productionLinesStrings.Count > 0)
                     {
 
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow)};
+                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
 
                         string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
                         if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
                             productionLinesStrings.Add(snapshot);
+                        else
+                        {
+
+                        }
+
+
                     }
                     else
                     {
@@ -740,7 +762,37 @@ namespace PreparationStationDevice.WPF
                 }
             });
         }
+        public static bool CompareActionsSets( List<PartialAction> actions, List<PartialAction> contextActions)
+        {
+            if(actions== contextActions)
+            {
 
+            }
+            if (contextActions.Count == actions.Count)
+            {
+                foreach (var action in actions)
+                {
+                    if (contextActions.Contains(action))
+                    {
+                        if (actions.IndexOf(action) != contextActions.IndexOf(action))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static List<string> GetActionsToStrings(ActionContext actionContext, List<PartialAction> actions)
+        {
+
+            List<string> strings =
+            (from partialAction in actions
+             select partialAction.ToString(actionContext)).ToList();
+
+            return strings;
+        }
         private void AddAction(int actionID)
         {
             while (true)
@@ -797,7 +849,7 @@ namespace PreparationStationDevice.WPF
             DateTime dateTime;
             if (SlotsPreparationStartsAt.TryGetValue(actionSlot, out dateTime))
                 return dateTime;
-            return null;
+            return actionSlot.PreparationStart;
         }
         public void SetPreparationStartsAt(ActionSlot actionSlot, DateTime dateTime)
         {
@@ -841,11 +893,13 @@ namespace PreparationStationDevice.WPF
     {
         public static TimeSpan FromMinutes(double value)
         {
-            return TimeSpan.FromSeconds(value);
+            //return TimeSpan.FromSeconds(value);
+            return TimeSpan.FromMinutes(value);
         }
         public static double GetTotalMinutes(this TimeSpan timeSpan)
         {
-            return timeSpan.TotalSeconds;
+            // return timeSpan.TotalSeconds;
+            return timeSpan.TotalMinutes;
         }
     }
 
