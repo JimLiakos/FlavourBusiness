@@ -222,7 +222,7 @@ namespace PreparationStationDevice.WPF
 
         internal ActionSlot CopyFor(ProductionLine productionLine)
         {
-            return new ActionSlot() { Name = Name, Duration = Duration, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
+            return new ActionSlot() { Name = Name, Duration = Duration,PackingTime=PackingTime, ProductionLine = productionLine, State = FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay };
         }
 
     }
@@ -700,7 +700,7 @@ namespace PreparationStationDevice.WPF
                     if (productionLinesStrings.Count > 0)
                     {
 
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = DateTime.UtcNow.ToShortTimeString() };
+                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow)};
 
                         string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
                         if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
@@ -708,7 +708,7 @@ namespace PreparationStationDevice.WPF
                     }
                     else
                     {
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = DateTime.UtcNow.ToShortTimeString() };
+                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
                         productionLinesStrings.Add(snapshot);
                     }
 
