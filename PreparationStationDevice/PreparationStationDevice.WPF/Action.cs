@@ -102,6 +102,10 @@ namespace PreparationStationDevice.WPF
         {
 
         }
+
+        public bool ActionOrderCommited;
+
+
         public override string ToString()
         {
             return ProductionLine.Name + " " + MainAction.Name + " " + PreparationForecast.ToShortTimeString() + " " + MainAction.PreparationForecast.ToShortTimeString();
@@ -162,7 +166,7 @@ namespace PreparationStationDevice.WPF
         {
 
             var preparationForecast = GetPreparationForecast(actionContext);
-            
+
             var preparationStartsAt = GetPreparationStartsAt(actionContext);
 
             return ProductionLine.Name + " " + MainAction.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", MainAction.GetPreparationForecast(actionContext)) + " slots : " + Slots.Count.ToString() + " v:" + ProductionLine?.Velocity;
@@ -177,7 +181,7 @@ namespace PreparationStationDevice.WPF
         }
         public DateTime GetPreparationStartsAt(ActionContext actionContext)
         {
-            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine))
+            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine)&& ToDoSlots.Count>0)
                 return actionContext.GetPreparationStartsAt(ToDoSlots.OrderBy(x => actionContext.GetPreparationEndsAt(x)).First()).Value;
             else
 
@@ -318,26 +322,38 @@ namespace PreparationStationDevice.WPF
             return strings;
         }
 
-  
+
 
 
 
         internal void OptimizeActions(ActionContext actionContext, bool firstTime)
         {
-            var actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
+
+
+
+            List<PartialAction> actionsForOptimazation = Actions.Where(x => !x.ActionOrderCommited).OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
+            List<PartialAction> optimazedActions = Actions.Where(x => x.ActionOrderCommited).ToList();
+
+            optimazedActions.AddRange(actionsForOptimazation);
+            List<PartialAction> actions = optimazedActions;
+
+
+            //List<PartialAction> actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
+
+
             List<PartialAction> contextActions = new List<PartialAction>();
             if (actionContext.ProductionLineActions.ContainsKey(this))
                 contextActions = actionContext.ProductionLineActions[this];
-            if (!Simulator.CompareActionsSets( actions, contextActions))
+            if (!Simulator.CompareActionsSets(actions, contextActions))
             {
-                var actionStrings =Simulator.GetActionsToStrings(actionContext, actions);
+                var actionStrings = Simulator.GetActionsToStrings(actionContext, actions);
                 var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, contextActions);
             }
             actionContext.ProductionLineActions[this] = actions;
 
         }
 
-    
+
         DateTime? LastChangeDateTime;
 
         internal void Run(ActionContext actionContext)
@@ -366,7 +382,7 @@ namespace PreparationStationDevice.WPF
             }
             else if (slots.Count > 0)
             {
-                while (slots.Count>0&& actionContext.GetPreparationEndsAt(slots[0]) < DateTime.UtcNow)
+                while (slots.Count > 0 && actionContext.GetPreparationEndsAt(slots[0]) < DateTime.UtcNow)
                 {
                     PreviousePreparationEndsAt = DateTime.UtcNow;
                     slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared;
@@ -408,9 +424,16 @@ namespace PreparationStationDevice.WPF
             }
 
             return actionStrings;
+        }
 
+
+        public void ActionsOrderCommited(ActionContext actionContext)
+        {
+            foreach (var partialAction in GetActionsToDo(actionContext))
+                partialAction.ActionOrderCommited = true;
 
         }
+
         public List<PartialAction> GetActionsToDo(ActionContext actionContext)
         {
 
@@ -438,8 +461,8 @@ namespace PreparationStationDevice.WPF
                 }
                 else
                 {
-                    //if (partialAction.Slots.All(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay))
-                    //    filteredPartialActions.Add(partialAction);
+                    if (partialAction.Slots.All(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay))
+                        filteredPartialActions.Add(partialAction);
 
                     break;
                 }
@@ -636,135 +659,142 @@ namespace PreparationStationDevice.WPF
                 List<List<string>> theAStrings = new List<List<string>>();
 
                 List<Snapshot> productionLinesStrings = new List<Snapshot>();
-                
-
-                while (true)
+                ActionContext actionContext = new ActionContext();
+                try
                 {
-                    if (count < 10)
+                    while (true)
                     {
-                        AddAction(count);
-
-                        count++;
-                    }
-                    else
-                    {
-
-                    }
-                    //if (ActionsRepository.Count > 0)
-                    //{
-                    //    _Actions.Add(ActionsRepository[0]);
-                    //    ActionsRepository.RemoveAt(0);
-                    //}
-                    //else
-                    //{
-                    //}
-
-
-
-                    var _this = this;
-
-                    foreach (var productionLine in ProductionLines)
-                        productionLine.GetPredictions();
-                    ActionContext actionContext = new ActionContext();
-                    actionContext.DoubleCheckOptimazation = false;
-
-                    Dictionary<ProductionLine, List<PartialAction>> productionLineActions = new Dictionary<ProductionLine, List<PartialAction>>();
-
-                    foreach(var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
-                        productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
-
-                    bool firstTime = true;
-                    while (!actionContext.DoubleCheckOptimazation)
-                    {
-                        actionContext.DoubleCheckOptimazation = true;
-                        foreach (var productionLine in ProductionLines)
+                        if (count < 10)
                         {
-                            productionLine.OptimizeActions(actionContext, firstTime);
-                            productionLine.GetPredictions(actionContext);
+                            AddAction(count);
+
+                            count++;
                         }
-                        firstTime = false;
-                        //var astrings = Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
-                        //theAStrings.Add(astrings);
-
-                        //List<List<string>> currentProductionLinesStrings = new List<List<string>>();
-                        //productionLinesStrings.Add(currentProductionLinesStrings);
-
-                        //foreach (var productionLine in ProductionLines)
-                        //    currentProductionLinesStrings.Add(productionLine.GetNextActions(actionContext).Select(x=>x.ToString(actionContext)).ToList());
-
-                    }
-                    foreach (var productionLine in productionLineActions.Keys)
-                    {
-                        
-                        if (!Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
-                        {
-                            var actionStrings =Simulator. GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
-                            var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
-
-                        }
-
-                    }
-                        
-
-                    List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
-
-
-                    foreach (var productionLine in ProductionLines)
-                        currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
-
-
-                    if (productionLinesStrings.Count > 0)
-                    {
-
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-
-                        string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
-                        if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
-                            productionLinesStrings.Add(snapshot);
                         else
                         {
 
                         }
+                        //if (ActionsRepository.Count > 0)
+                        //{
+                        //    _Actions.Add(ActionsRepository[0]);
+                        //    ActionsRepository.RemoveAt(0);
+                        //}
+                        //else
+                        //{
+                        //}
 
 
-                    }
-                    else
-                    {
-                        Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-                        productionLinesStrings.Add(snapshot);
-                    }
 
-                    var astrings = Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
-                    theAStrings.Add(astrings);
-                    if (count == 7)
-                    {
+                        var _this = this;
 
-                    }
-                    foreach (var inProductionLine in ProductionLines)
-                    {
-                        var strings = inProductionLine.GetActionsToStrings(actionContext);
-                    }
+                        foreach (var productionLine in ProductionLines)
+                            productionLine.GetPredictions();
+                        
+                        actionContext.DoubleCheckOptimazation = false;
 
-                    foreach (var productionLine in ProductionLines)
-                    {
-                        productionLine.Run(actionContext);
-                    }
-                    if (productionLinesStrings.LastOrDefault() != null)
-                    {
-                        if (productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
+                        Dictionary<ProductionLine, List<PartialAction>> productionLineActions = new Dictionary<ProductionLine, List<PartialAction>>();
+
+                        foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
+                            productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
+
+                        bool firstTime = true;
+                        while (!actionContext.DoubleCheckOptimazation)
+                        {
+                            actionContext.DoubleCheckOptimazation = true;
+                            foreach (var productionLine in ProductionLines)
+                            {
+                                productionLine.OptimizeActions(actionContext, firstTime);
+                                productionLine.GetPredictions(actionContext);
+                            }
+                            firstTime = false;
+                            //var astrings = Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
+                            //theAStrings.Add(astrings);
+
+                            //List<List<string>> currentProductionLinesStrings = new List<List<string>>();
+                            //productionLinesStrings.Add(currentProductionLinesStrings);
+
+                            //foreach (var productionLine in ProductionLines)
+                            //    currentProductionLinesStrings.Add(productionLine.GetNextActions(actionContext).Select(x=>x.ToString(actionContext)).ToList());
+
+                        }
+                        foreach (var productionLine in ProductionLines)
+                        {
+                            productionLine.ActionsOrderCommited(actionContext);
+                            if (productionLineActions.ContainsKey(productionLine) &&!Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
+                            {
+                                var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
+                                var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
+                            }
+                        }
+
+
+                        List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
+
+
+                        foreach (var productionLine in ProductionLines)
+                            currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
+
+
+                        if (productionLinesStrings.Count > 0)
+                        {
+
+                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
+
+                            string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
+                            if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
+                                productionLinesStrings.Add(snapshot);
+                            else
+                            {
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
+                            productionLinesStrings.Add(snapshot);
+                        }
+
+                        var astrings = Actions.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.ToString(actionContext)).ToList();
+                        theAStrings.Add(astrings);
+                        if (count == 7)
                         {
 
                         }
+                        foreach (var inProductionLine in ProductionLines)
+                        {
+                            var strings = inProductionLine.GetActionsToStrings(actionContext);
+                        }
+
+                        foreach (var productionLine in ProductionLines)
+                        {
+                            productionLine.Run(actionContext);
+                        }
+                        if (productionLinesStrings.LastOrDefault() != null)
+                        {
+                            if (productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
+                            {
+
+                            }
+                        }
+                        string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
+                        System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2).TotalMilliseconds);
+
                     }
-                    string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
-                    System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2).TotalMilliseconds);
 
                 }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+
             });
         }
-        public static bool CompareActionsSets( List<PartialAction> actions, List<PartialAction> contextActions)
+        public static bool CompareActionsSets(List<PartialAction> actions, List<PartialAction> contextActions)
         {
-            if(actions== contextActions)
+            if (actions == contextActions)
             {
 
             }
@@ -893,13 +923,13 @@ namespace PreparationStationDevice.WPF
     {
         public static TimeSpan FromMinutes(double value)
         {
-            //return TimeSpan.FromSeconds(value);
-            return TimeSpan.FromMinutes(value);
+            return TimeSpan.FromSeconds(value);
+            //return TimeSpan.FromMinutes(value);
         }
         public static double GetTotalMinutes(this TimeSpan timeSpan)
         {
-            // return timeSpan.TotalSeconds;
-            return timeSpan.TotalMinutes;
+             return timeSpan.TotalSeconds;
+            //return timeSpan.TotalMinutes;
         }
     }
 
