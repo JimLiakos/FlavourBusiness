@@ -181,7 +181,7 @@ namespace PreparationStationDevice.WPF
         }
         public DateTime GetPreparationStartsAt(ActionContext actionContext)
         {
-            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine)&& ToDoSlots.Count>0)
+            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine) && ToDoSlots.Count > 0)
                 return actionContext.GetPreparationStartsAt(ToDoSlots.OrderBy(x => actionContext.GetPreparationEndsAt(x)).First()).Value;
             else
 
@@ -330,8 +330,21 @@ namespace PreparationStationDevice.WPF
         {
 
 
+            List<PartialAction> actionsForOptimazation = null;
+            if (firstTime)
+            {
+                actionsForOptimazation = Actions.Where(x => !x.ActionOrderCommited).OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).Where(x => x.MainAction.SubActions.All(y => !y.ActionOrderCommited)).ToList();
+                var a_count = actionsForOptimazation.Count;
+                actionsForOptimazation.AddRange(Actions.Where(x => !x.ActionOrderCommited).OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).Where(x => x.MainAction.SubActions.Any(y => y.ActionOrderCommited)).ToList());
+                var b_count = actionsForOptimazation.Count;
+                if(a_count!=b_count)
+                {
 
-            List<PartialAction> actionsForOptimazation = Actions.Where(x => !x.ActionOrderCommited).OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
+                }
+            }
+            else
+                actionsForOptimazation = Actions.Where(x => !x.ActionOrderCommited).OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
+
             List<PartialAction> optimazedActions = Actions.Where(x => x.ActionOrderCommited).ToList();
 
             optimazedActions.AddRange(actionsForOptimazation);
@@ -419,7 +432,13 @@ namespace PreparationStationDevice.WPF
                 else if (partialAction.Slots.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation))
                     filteredPartialActions.Add(partialAction);
                 else
+                {
+                    if (partialAction.ActionOrderCommited)
+                    {
+
+                    }
                     actionStrings.Add("X-" + partialAction.ToString(actionContext));
+                }
 
             }
 
@@ -537,7 +556,8 @@ namespace PreparationStationDevice.WPF
             new List<int> { 0, 2, 1 },
             new List<int> { 2, 1, 1 },
             new List<int> { 2, 0, 1 },
-            new List<int> { 3, 0, 0 },
+            new List<int> { 3, 0, 1 },
+            new List<int> { 5, 0, 0 },
             new List<int> { 2, 0, 0 },
             new List<int> { 1, 0, 2 }
         };
@@ -689,7 +709,7 @@ namespace PreparationStationDevice.WPF
 
                         foreach (var productionLine in ProductionLines)
                             productionLine.GetPredictions();
-                        
+
                         actionContext.DoubleCheckOptimazation = false;
 
                         Dictionary<ProductionLine, List<PartialAction>> productionLineActions = new Dictionary<ProductionLine, List<PartialAction>>();
@@ -720,7 +740,7 @@ namespace PreparationStationDevice.WPF
                         foreach (var productionLine in ProductionLines)
                         {
                             productionLine.ActionsOrderCommited(actionContext);
-                            if (productionLineActions.ContainsKey(productionLine) &&!Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
+                            if (productionLineActions.ContainsKey(productionLine) && !Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
                             {
                                 var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
                                 var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
@@ -923,13 +943,13 @@ namespace PreparationStationDevice.WPF
     {
         public static TimeSpan FromMinutes(double value)
         {
-            return TimeSpan.FromSeconds(value);
-            //return TimeSpan.FromMinutes(value);
+            //return TimeSpan.FromSeconds(value);
+            return TimeSpan.FromMinutes(value);
         }
         public static double GetTotalMinutes(this TimeSpan timeSpan)
         {
-             return timeSpan.TotalSeconds;
-            //return timeSpan.TotalMinutes;
+            //return timeSpan.TotalSeconds;
+            return timeSpan.TotalMinutes;
         }
     }
 
