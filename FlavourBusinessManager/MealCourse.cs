@@ -18,8 +18,12 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+  
     /// <summary>
-    ///Defines a service section with time constraints and includes the preparation of the food-coffee items, the serving - takeaway - home delivery.
+    /// A meal consisting of multiple dishes (meal courses)
+    /// Most Western-world multicourse meals follow a standard sequence.
+    /// MealCourse class defines the food items where belongs to the same course 
+    /// for instance hors d'oeuvre or appetizer,main dish , dessert
     /// </summary>
     ///<MetaDataID>{986d1f45-2bef-4302-9d5c-b98141c24555}</MetaDataID>
     [BackwardCompatibilityID("{986d1f45-2bef-4302-9d5c-b98141c24555}")]
@@ -285,15 +289,23 @@ namespace FlavourBusinessManager.RoomService
         [PersistentMember(nameof(_Meal))]
         [CachingDataOnClientSide]
         [BackwardCompatibilityID("+9")]
-        public FlavourBusinessFacade.RoomService.IMeal Meal => _Meal.Value;
+        public IMeal Meal => _Meal.Value;
+
+     
+        /// <summary>
+        /// Multi thread synchronization object
+        /// </summary>
+        /// <MetaDataID>{e1c88e32-243d-4257-82a0-5a8119bf34e7}</MetaDataID>
+        object FoodItemsInProgressLock = new object();
+
 
         /// <exclude>Excluded</exclude>
         List<ItemsPreparationContext> _FoodItemsInProgress;
 
-        /// <MetaDataID>{e1c88e32-243d-4257-82a0-5a8119bf34e7}</MetaDataID>
-        object FoodItemsInProgressLock = new object();
-
-        /// <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
+        /// <summary>
+        /// Defines the meal course items grouped by preparation station where it prepares them.
+        /// </summary>
+        // <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
         [CachingDataOnClientSide]
         public IList<ItemsPreparationContext> FoodItemsInProgress
         {

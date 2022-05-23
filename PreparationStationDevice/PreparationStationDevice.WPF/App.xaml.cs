@@ -35,7 +35,13 @@ namespace PreparationStationDevice.WPF
 
             Simulator simulator = new Simulator();
             simulator.start();
-         //   Canonicalization();
+            Simulator simulator2 = new Simulator();
+            simulator2.start();
+            Simulator simulator3 = new Simulator();
+            simulator3.start();
+            Simulator simulator4 = new Simulator();
+            simulator4.start();
+            //   Canonicalization();
 
             //int prevDifPerc = 0;
             //List<int> averagePercs = new List<int>();

@@ -5,8 +5,14 @@ using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
+    /// <summary>
+    /// A meal consisting of multiple dishes (meal courses)
+    /// Most Western-world multicourse meals follow a standard sequence.
+    /// MealCourse class defines the food items where belongs to the same course 
+    /// for instance hors d'oeuvre or appetizer,main dish , dessert
+    /// </summary>
     /// <MetaDataID>{c8e552d4-3923-475d-9d77-71536de91ecf}</MetaDataID>
-    [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
+    [GenerateFacadeProxy]
     public interface IMealCourse
     {
         [Association("MealCourseSequence", Roles.RoleB, "3f8daafd-1296-452b-a9d6-1d9cd00f242e")]
@@ -27,6 +33,11 @@ namespace FlavourBusinessFacade.RoomService
         [RoleAMultiplicityRange(0)]
         [Association("MealCourseServingBatches", Roles.RoleA, "be1d6d0b-5778-416c-b68f-18f019d34479")]
         List<IServingBatch> ServingBatches { get; }
+
+
+        /// <summary>
+        /// Defines the meal of meal course
+        /// </summary>
         [Association("MealCourses", Roles.RoleB, "3c1213a5-f6e9-4d34-8802-72a4f051472b")]
         [RoleBMultiplicityRange(1, 1)]
         IMeal Meal { get; }
@@ -59,7 +70,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
         /// <summary>
-        /// Defines the meal course items grouped by state of items
+        /// Defines the meal course items grouped by preparation station where it prepares them.
         /// </summary>
         /// <MetaDataID>{b5f5344d-c7f5-4d9e-81a7-ed3559031101}</MetaDataID>
         IList<ItemsPreparationContext> FoodItemsInProgress { get; }
