@@ -124,6 +124,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string ClearItemsPreparationInfoMenuHeader {
+            get {
+                return ResourceManager.GetString("ClearItemsPreparationInfoMenuHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Company Resources.
         /// </summary>
         public static string CompanyResourcesLabel {

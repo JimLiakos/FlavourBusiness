@@ -33,13 +33,13 @@ namespace PreparationStationDevice.WPF
             mainWindow.Show();
 
 
-            Simulator simulator = new Simulator();
+            Simulator simulator = new Simulator("s1");
             simulator.start();
-            Simulator simulator2 = new Simulator();
+            Simulator simulator2 = new Simulator("s2");
             simulator2.start();
-            Simulator simulator3 = new Simulator();
+            Simulator simulator3 = new Simulator("s3");
             simulator3.start();
-            Simulator simulator4 = new Simulator();
+            Simulator simulator4 = new Simulator("s4");
             simulator4.start();
             //   Canonicalization();
 

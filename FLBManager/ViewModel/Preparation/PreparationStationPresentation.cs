@@ -125,6 +125,47 @@ namespace FLBManager.ViewModel.Preparation
             PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
         }
 
+        internal void ClearItemsPreparationInfo(IItemsCategory itemsCategory)
+        {
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                                where itemsInfoEntry.@object == itemsCategory
+                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+            if (includedItemsPreparationInfo != null)
+            {
+                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
+
+                ClearSubCategoryItemsPreparationInfo(itemsCategory);
+
+             
+
+
+            }
+        }
+
+        private void ClearSubCategoryItemsPreparationInfo(IItemsCategory itemsCategory)
+        {
+            foreach (var menuitem in itemsCategory.MenuItems)
+            {
+                if (!PreparationStation.StationPrepareItem(menuitem))
+                    ClearItemsPreparationInfo(menuitem);
+            }
+
+
+            foreach (var subCategory in itemsCategory.SubCategories)
+            {
+                if (!PreparationStation.StationPrepareItems(subCategory))
+                    ClearSubCategoryItemsPreparationInfo(itemsCategory);
+            }
+        }
+
 
         /// <MetaDataID>{a517dbc7-ab28-48cd-b5a0-a837abed283f}</MetaDataID>
         internal double GetPreparationTimeSpanInMin_old(IMenuItem menuItem)
@@ -157,6 +198,26 @@ namespace FLBManager.ViewModel.Preparation
             //    }
             //}
             return 1;
+        }
+
+        internal void ClearItemsPreparationInfo(IMenuItem menuItem)
+        {
+            var itemsPreparationInfos = (from itemsInfo in PreparationStation.ItemsPreparationInfos
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                                where itemsInfoEntry.@object == menuItem
+                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+            if (includedItemsPreparationInfo != null)
+            {
+                this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
+                
+            }
         }
 
 

@@ -89,7 +89,10 @@ namespace FLBManager.ViewModel.Preparation
             {
                 Delete();
             });
-
+            RemoveItemsPreparationInfoCommand = new RelayCommand((object sender) =>
+            {
+                RemoveItemsPreparationInfo();
+            });
             ToggleTagsCommand = new RelayCommand((object sender) =>
             {
                 ToggleTags();
@@ -132,6 +135,11 @@ namespace FLBManager.ViewModel.Preparation
             {
                 Delete();
             });
+
+            RemoveItemsPreparationInfoCommand = new RelayCommand((object sender) =>
+            {
+                RemoveItemsPreparationInfo();
+            });
             ToggleTagsCommand = new RelayCommand((object sender) =>
             {
                 ToggleTags();
@@ -152,6 +160,33 @@ namespace FLBManager.ViewModel.Preparation
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
 
+        private void RemoveItemsPreparationInfo()
+        {
+            if(EditMode)
+            {
+                if (ItemsCategory != null)
+                    PreparationStationPresentation.ClearItemsPreparationInfo(ItemsCategory);
+
+                if (MenuItem != null)
+                    PreparationStationPresentation.ClearItemsPreparationInfo(MenuItem);
+
+                UpdatePresentationItems();
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CookingTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
+                foreach(var member in Members.OfType<ItemsPreparationInfoPresentation>())
+                {
+                    member.Refresh();
+                }
+
+            }
+        }
+
         /// <MetaDataID>{f76f2725-c4bc-48db-b680-cf20f594f218}</MetaDataID>
         public ItemsPreparationInfoPresentation(ItemsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, MenuModel.IMenuItem menuItem, bool editMode) : base(parent)
         {
@@ -163,6 +198,11 @@ namespace FLBManager.ViewModel.Preparation
             {
                 Delete();
             });
+            RemoveItemsPreparationInfoCommand = new RelayCommand((object sender) =>
+            {
+                RemoveItemsPreparationInfo();
+            });
+
             ToggleTagsCommand = new RelayCommand((object sender) =>
             {
                 ToggleTags();
@@ -615,6 +655,8 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
+                if (!CanPrepared)
+                    _Tags = null;
                 if (_Tags == null)
                 {
                     List<TagViewModel> tagsPresentations = new List<TagViewModel>();
@@ -671,6 +713,7 @@ namespace FLBManager.ViewModel.Preparation
                 _Tags.Add(tagPresentation);
             }
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
         }
 
         private void TagPresentation_TagDeleted(TagViewModel tag)
@@ -764,6 +807,7 @@ namespace FLBManager.ViewModel.Preparation
 
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
+        public RelayCommand RemoveItemsPreparationInfoCommand { get; protected set; }
 
         /// <MetaDataID>{21c808d9-18d9-4d71-a039-827f56f10443}</MetaDataID>
         public RelayCommand NewSubPreparationStationCommand { get; protected set; }
@@ -798,6 +842,19 @@ namespace FLBManager.ViewModel.Preparation
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = NewSubPreparationStationCommand;
                     _ContextMenuItems.Add(menuItem);
+
+                    if(EditMode)
+                    {
+
+
+                        menuItem = new MenuCommand();
+                        imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
+                        menuItem.Header = Properties.Resources.ClearItemsPreparationInfoMenuHeader;
+                        menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                        menuItem.Command = RemoveItemsPreparationInfoCommand;
+                        _ContextMenuItems.Add(menuItem);
+
+                    }
 
                     if (this.Parent is PreparationStationPresentation)
                     {
@@ -984,6 +1041,8 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
 
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())

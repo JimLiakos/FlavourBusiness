@@ -141,6 +141,9 @@
   <data name="CashiersStationWindowTitle" xml:space="preserve">
     <value>Cashiers station</value>
   </data>
+  <data name="ClearItemsPreparationInfoMenuHeader" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="CompanyResourcesLabel" xml:space="preserve">
     <value>Company Resources</value>
   </data>

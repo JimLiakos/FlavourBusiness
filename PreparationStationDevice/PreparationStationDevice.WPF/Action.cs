@@ -470,11 +470,6 @@ namespace PreparationStationDevice.WPF
                     PreviousePreparationEndsAt = DateTime.UtcNow;
                     slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.IsPrepared;
 
-                    var actions = PreparationSessions;//.Where(x=>(x.Action.PreparationForecast-TimeSpanEx.FromMinutes(x.Duration+5))<DateTime.UtcNow).ToList();
-                    if (actionContext.ProductionLineActions.ContainsKey(this))
-                        actions = actionContext.ProductionLineActions[this];
-                    actions = actions.Where(x => x.ItemsToPrepare.Count > 0).ToList();
-
                     if (slots[0].PreparationSession != null && slots[0].PreparationSession.ItemsToPrepare.Count == 0)
                     {
                         slots[0].PreparationSession.CompletionTime = DateTime.UtcNow;
@@ -531,9 +526,9 @@ namespace PreparationStationDevice.WPF
             {
                 partialAction.PreparationOrderCommited = true;
 
-                foreach(var preparationItem in partialAction.PreparationItems)
+                foreach (var preparationItem in partialAction.PreparationItems)
                 {
-                    if(preparationItem.State==FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay)
+                    if (preparationItem.State == FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay)
                         preparationItem.State = FlavourBusinessFacade.RoomService.ItemPreparationState.PendingPreparation;
                 }
             }
@@ -669,23 +664,24 @@ namespace PreparationStationDevice.WPF
 
 
 
-
-        public Simulator()
+        string Name;
+        public Simulator(string name)
         {
+            Name = name;
             ProductionLines = new List<PreparationStation>() { new PreparationStation("A", this), new PreparationStation("B", this), new PreparationStation("C", this) };
         }
         List<MealCourse> SavedCourses;
 
         public void start()
         {
-            SavedCourses = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MealCourse>>(System.IO.File.ReadAllText(@"C:\Projects\simulator.json"));
+            //SavedCourses = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MealCourse>>(System.IO.File.ReadAllText(@"C:\Projects\simulator.json"));
 
-            foreach (var preparationSession in (from course in SavedCourses
-                                                from session in course.PreparationSessions
-                                                select session))
-            {
-                preparationSession.ProductionLine = ProductionLines[preparationSession.ProductionLineIndex];
-            }
+            //foreach (var preparationSession in (from course in SavedCourses
+            //                                    from session in course.PreparationSessions
+            //                                    select session))
+            //{
+            //    preparationSession.ProductionLine = ProductionLines[preparationSession.ProductionLineIndex];
+            //}
             Task.Run(() =>
             {
                 int count = 1;
@@ -720,7 +716,7 @@ namespace PreparationStationDevice.WPF
                         var _this = this;
 
 
-                        actionContext = new ActionContext();
+                        
 
                         Dictionary<PreparationStation, List<ItemsPreparationSession>> productionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSession>>();
                         foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
@@ -782,7 +778,7 @@ namespace PreparationStationDevice.WPF
                         {
                             productionLine.Run(actionContext);
                         }
-                       
+
                         string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
 
                         string json_a = OOAdvantech.Json.JsonConvert.SerializeObject((from action in MealCourses
@@ -800,6 +796,12 @@ namespace PreparationStationDevice.WPF
                         {
                             if (count >= 15 && productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
                             {
+
+                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json"))
+                                    System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json", json_a);
+
+                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name +"_"+ GetHashCode() + "_data.json"))
+                                    System.IO.File.WriteAllText(@"F:\PreparationData\" +  Name + "_" + GetHashCode() + "_data.json", json);
 
                             }
                         }
