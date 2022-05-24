@@ -132,7 +132,7 @@ namespace MenuItemsEditor.ViewModel
             MoveDownSelectedOptionCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { MoveDownSelectedOption(); }, (object sender) => SelectedOption != null);
             SetSelectedOptionCheckUncheckCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionCheckUncheck(); }, (object sender) => SelectedOption != null);
 
-            SetSelectedOptionHiddenCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionHideShow(); }, (object sender) => SelectedOption != null);
+            SetSelectedOptionHideShowCommand = new WPFUIElementObjectBind.RelayCommand((object sender) => { SetSelectedOptionHideShow(); }, (object sender) => SelectedOption != null);
             if (PreparationOptionsGroup is ItemSelectorOptionsGroup)
             {
                 _SelectionTypes = new List<SelectionTypeViewModel>()
@@ -354,6 +354,7 @@ namespace MenuItemsEditor.ViewModel
                 SelectedScaledOption.TonggleShowHide();
                 PreparationOptionChanged(SelectedOption);
                 _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupedOptions)));
+                _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OptionShowImagePath)));
 
             }
         }
@@ -513,7 +514,22 @@ namespace MenuItemsEditor.ViewModel
         public WPFUIElementObjectBind.RelayCommand SetSelectedOptionCheckUncheckCommand { get; protected set; }
 
         /// <MetaDataID>{5d5c4384-4c0b-424b-9886-a4c0acc1470a}</MetaDataID>
-        public WPFUIElementObjectBind.RelayCommand SetSelectedOptionHiddenCommand { get; protected set; }
+        public WPFUIElementObjectBind.RelayCommand SetSelectedOptionHideShowCommand { get; protected set; }
+
+
+
+        string _OptionShowImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/view16.png";
+        string _OptionHideImagePath = @"pack://application:,,,/MenuItemsEditor;Component/Image/restriction16.png";
+        public string OptionShowImagePath
+        {
+            get
+            {
+                if (SelectedScaledOption != null && SelectedScaledOption.IsHidden)
+                    return _OptionShowImagePath;
+                return _OptionHideImagePath;
+            }
+        }
+
 
 
         /// <MetaDataID>{d92138da-15ef-4b95-b670-76efa6b805c2}</MetaDataID>
