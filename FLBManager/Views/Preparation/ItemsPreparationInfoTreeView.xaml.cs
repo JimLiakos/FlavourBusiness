@@ -101,8 +101,13 @@ namespace FLBManager.Views.Preparation
                 var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
                 if (itemsPreparationInfo != null)
                 {
-
-                    this.Focus();
+                    
+                    foreach(var unitTextBox in WPFUIElementObjectBind.ObjectContext.FindChilds<TextBoxNumberWithUnit>(Content as DependencyObject))
+                        unitTextBox.Focus();
+                    foreach (var checkBox in WPFUIElementObjectBind.ObjectContext.FindChilds<CheckBox>(Content as DependencyObject))
+                        checkBox.Focus();
+                    Keyboard.ClearFocus();
+                    
                     Task.Run(() =>
                     {
                         System.Threading.Thread.Sleep(300);
@@ -112,6 +117,30 @@ namespace FLBManager.Views.Preparation
                 }
             }
         }
+
+        public TextBoxNumberWithUnit PreparationTime
+        {
+            get
+            {
+
+                var sds = WPFUIElementObjectBind.ObjectContext.FindChilds<TextBoxNumberWithUnit>(Content as DependencyObject);
+                if (this.ContentTemplate != null)
+                    return this.ContentTemplate.FindName("PreparationTime", this) as TextBoxNumberWithUnit;
+                else
+                    return null;
+            }
+        }
+        public TextBoxNumberWithUnit CookingTime
+        {
+            get
+            {
+                if (this.ContentTemplate != null)
+                    return this.ContentTemplate.FindName("PreparationTime", this) as TextBoxNumberWithUnit;
+                else
+                    return null;
+            }
+        }
+        
 
         /// <MetaDataID>{f91b64cd-fbd9-4bf1-b965-4854af6f4a3c}</MetaDataID>
         static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)

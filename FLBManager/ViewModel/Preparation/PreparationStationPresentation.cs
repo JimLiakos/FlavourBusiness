@@ -162,7 +162,7 @@ namespace FLBManager.ViewModel.Preparation
             foreach (var subCategory in itemsCategory.SubCategories)
             {
                 if (!PreparationStation.StationPrepareItems(subCategory))
-                    ClearSubCategoryItemsPreparationInfo(itemsCategory);
+                    ClearSubCategoryItemsPreparationInfo(subCategory);
             }
         }
 

@@ -406,6 +406,8 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
+                if (!CanPrepared)
+                    _AppearanceOrder = null;
                 if (_AppearanceOrder == null)
                 {
                     if (this.ItemsCategory != null)
@@ -561,6 +563,10 @@ namespace FLBManager.ViewModel.Preparation
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasAppearanceOrderValue)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrder)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderText)));
+
 
 
 
@@ -1043,6 +1049,11 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasAppearanceOrderValue)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrder)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderText)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
+            
 
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
