@@ -21,6 +21,7 @@ using System.IO;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
 using FinanceFacade;
+using MenuModel;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -414,7 +415,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
-                //StartSimulator();
+                StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try
@@ -1560,7 +1561,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{1513e163-7a1b-4747-97cf-161a9fc8e55a}</MetaDataID>
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
-        
+
         //clientDeviceID="81000000296"
         //clientName="clientName"
 
@@ -1679,7 +1680,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return preparationStation;
         }
 
-      
+
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)
@@ -2007,19 +2008,53 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         bool EndOfSimulation = false;
 
+        static List<List<int>> PreparationStationSimulatorItems = new List<List<int>>() {
+            new List<int> {0,1, 2, 0 },
+            new List<int> { 0,0, 0, 2 },
+            new List<int> { 0, 2, 1, 0 },
+            new List<int> { 0, 0, 3, 0 },
+            new List<int> { 0, 2, 1, 1 },
+            new List<int> { 0, 0, 2, 1 },
+            new List<int> { 0, 2, 1, 1 },
+            new List<int> { 0, 2, 0, 1 },
+            new List<int> { 0, 3, 0, 1 },
+            new List<int> { 0, 5, 0, 0 },
+            new List<int> { 0, 2, 0, 0 },
+            new List<int> { 0, 1, 0, 2 }
+        };
+
         void StartSimulator()
         {
 
-            if(SimulationTask==null|| SimulationTask.Status!=TaskStatus.Running)
+            if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
                 SimulationTask = Task.Run(() =>
                 {
                     var servicePoins = (from serviceArea in ServiceAreas
                                         from ServicePoint in serviceArea.ServicePoints
-                                        where ServicePoint.State==ServicePointState.Free
+                                        where ServicePoint.State == ServicePointState.Free
                                         select ServicePoint).ToList();
 
-                   
+                    List<IMenuItem> menuItems = GetMenuItems(this.OperativeRestaurantMenu.RootCategory);
+
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu));
+                    var twoCoursesMealType = (from fixedMealType in storage.GetObjectCollection<FixedMealType>()
+                                              select fixedMealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault();
+                    //var clientSession = GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
+
+                    var mainMealCourseType = twoCoursesMealType.Courses.Where(x => x.IsDefault).FirstOrDefault();
+                    var mainMealCourseMenuItems = menuItems.Where(x => x.PartofMeals.Any(y => y.MealCourseType == mainMealCourseType)).ToList();
+
+                    Dictionary<IPreparationStation, List<IMenuItem>> preparationSationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
+
+                    foreach (var preparationStation in PreparationStations.OrderBy(x => x.Description).ToList())
+                    {
+                        var preparationSationItems = mainMealCourseMenuItems.Where(x => preparationStation.CanPrepareItem(x)).ToList();
+                        if (preparationSationItems.Count > 0)
+                            preparationSationsItems[preparationStation] = preparationSationItems;
+                    }
+
+
 
                     while (!EndOfSimulation)
                     {
@@ -2028,11 +2063,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         string clientDeviceID = "S_81000000296";
                         string clientName = "Jimmy Garson";
 
-                        GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
+
+                       
 
 
+                        //PreparationStations[0].
+                        //clientSession.FoodServiceClientSession.AddItem
                         System.Threading.Thread.Sleep(10000);
-                        
+
                     }
                 });
             }
@@ -2043,6 +2081,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //clientDeviceID="S_81000000296"
             //clientName="clientName"
 
+        }
+
+        private List<IMenuItem> GetMenuItems(IItemsCategory rootCategory)
+        {
+            var menuItems = rootCategory.MenuItems.ToList();
+            foreach (var subCategory in rootCategory.SubCategories)
+                menuItems.AddRange(GetMenuItems(subCategory));
+
+            return menuItems;
         }
     }
 }
