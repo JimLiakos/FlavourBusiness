@@ -414,7 +414,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
-                StartSimulator();
+                //StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try
