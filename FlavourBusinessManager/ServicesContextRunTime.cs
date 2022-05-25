@@ -414,6 +414,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
+                StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try
@@ -1555,8 +1556,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
+
         /// <MetaDataID>{1513e163-7a1b-4747-97cf-161a9fc8e55a}</MetaDataID>
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
+        
+        //clientDeviceID="81000000296"
+        //clientName="clientName"
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
         public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
@@ -1994,6 +2000,49 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             ObjectStorage.GetObjectFromUri<FisicalParty>((fisicalParty as FisicalParty).FisicalPartyUri).Update(fisicalParty as FisicalParty);
+        }
+        static Random _R = new Random();
+
+        Task SimulationTask;
+
+        bool EndOfSimulation = false;
+
+        void StartSimulator()
+        {
+
+            if(SimulationTask==null|| SimulationTask.Status!=TaskStatus.Running)
+            {
+                SimulationTask = Task.Run(() =>
+                {
+                    var servicePoins = (from serviceArea in ServiceAreas
+                                        from ServicePoint in serviceArea.ServicePoints
+                                        where ServicePoint.State==ServicePointState.Free
+                                        select ServicePoint).ToList();
+
+                   
+
+                    while (!EndOfSimulation)
+                    {
+
+                        string servicesPointIdentity = servicePoins[_R.Next(servicePoins.Count - 1)].ServicesPointIdentity;
+                        string clientDeviceID = "S_81000000296";
+                        string clientName = "Jimmy Garson";
+
+                        GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
+
+
+                        System.Threading.Thread.Sleep(10000);
+                        
+                    }
+                });
+            }
+            else
+            {
+
+            }
+            //clientDeviceID="S_81000000296"
+            //clientName="clientName"
+
         }
     }
 }
