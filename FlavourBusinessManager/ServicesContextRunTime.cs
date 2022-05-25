@@ -2064,9 +2064,34 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         string clientName = "Jimmy Garson";
 
 
-                       
+                        var patern = PreparationStationSimulatorItems[_R.Next(PreparationStationSimulatorItems.Count - 1)].ToList();
 
+                        List<ItemPreparation> a_productionLineActionSlots = new List<ItemPreparation>();
+                        while (patern[0] > 0)
+                        {
+                            preparationSationsItems[preparationSationsItems.Keys.ToList()[0]]
+                            //a_productionLineActionSlots.Add(A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[0]));
+                            patern[0] = patern[0] - 1;
+                        }
 
+                        List<ItemPreparation> b_productionLineActionSlots = new List<ItemPreparation>();
+                        while (patern[1] > 0)
+                        {
+                            //b_productionLineActionSlots.Add(B_ProductionLineActionSlots[_R.Next(B_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
+                            patern[1] = patern[1] - 1;
+                        }
+                        List<ItemPreparation> c_productionLineActionSlots = new List<ItemPreparation>();
+                        while (patern[2] > 0)
+                        {
+                            //c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
+                            patern[2] = patern[2] - 1;
+                        }
+
+                        while (patern[3] > 0)
+                        {
+                            //c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
+                            patern[2] = patern[2] - 1;
+                        }
                         //PreparationStations[0].
                         //clientSession.FoodServiceClientSession.AddItem
                         System.Threading.Thread.Sleep(10000);
