@@ -2023,6 +2023,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             new List<int> { 0, 1, 0, 2 }
         };
 
+        /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         void StartSimulator()
         {
 
@@ -2030,9 +2031,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 SimulationTask = Task.Run(() =>
                 {
-                    var servicePoins = (from serviceArea in ServiceAreas
+                    var servicePoints = (from serviceArea in ServiceAreas
                                         from ServicePoint in serviceArea.ServicePoints
-                                        where ServicePoint.State == ServicePointState.Free
                                         select ServicePoint).ToList();
 
                     List<IMenuItem> menuItems = GetMenuItems(this.OperativeRestaurantMenu.RootCategory);
@@ -2044,54 +2044,41 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     var mainMealCourseType = twoCoursesMealType.Courses.Where(x => x.IsDefault).FirstOrDefault();
                     var mainMealCourseMenuItems = menuItems.Where(x => x.PartofMeals.Any(y => y.MealCourseType == mainMealCourseType)).ToList();
-
-                    Dictionary<IPreparationStation, List<IMenuItem>> preparationSationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
+                    string mainMealCourseTypeUri = ObjectStorage.GetStorageOfObject(mainMealCourseType).GetPersistentObjectUri(mainMealCourseType);
+                    Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
 
                     foreach (var preparationStation in PreparationStations.OrderBy(x => x.Description).ToList())
                     {
                         var preparationSationItems = mainMealCourseMenuItems.Where(x => preparationStation.CanPrepareItem(x)).ToList();
                         if (preparationSationItems.Count > 0)
-                            preparationSationsItems[preparationStation] = preparationSationItems;
+                            preparationStationsItems[preparationStation] = preparationSationItems;
                     }
 
+                    IFoodServiceClientSession clientSession=null;
 
-
-                    while (!EndOfSimulation)
+                    while (!EndOfSimulation&& servicePoints.Count>0)
                     {
-
-                        string servicesPointIdentity = servicePoins[_R.Next(servicePoins.Count - 1)].ServicesPointIdentity;
-                        string clientDeviceID = "S_81000000296";
-                        string clientName = "Jimmy Garson";
-
-
-                        var patern = PreparationStationSimulatorItems[_R.Next(PreparationStationSimulatorItems.Count - 1)].ToList();
-
-                        List<ItemPreparation> a_productionLineActionSlots = new List<ItemPreparation>();
-                        while (patern[0] > 0)
+                        if (clientSession == null)
                         {
-                            preparationSationsItems[preparationSationsItems.Keys.ToList()[0]]
-                            //a_productionLineActionSlots.Add(A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[0]));
-                            patern[0] = patern[0] - 1;
+                            servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+                            string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                            string clientDeviceID = "S_81000000296";
+                            string clientName = "Jimmy Garson";
+
+                            //var clientSession=  GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
+                            //clientSession.FoodServiceClientSession.Commit(null);
+                            clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            //{
+
+                            //    clientSession.ServicePoint.State = ServicePointState.Free;
+                            //    foreach (var itemPreparation in clientSession.FlavourItems)
+                            //        ObjectStorage.DeleteObject(itemPreparation);
+                            //    ObjectStorage.DeleteObject(clientSession);
+                            //    stateTransition.Consistent = true;
+                            //}
                         }
 
-                        List<ItemPreparation> b_productionLineActionSlots = new List<ItemPreparation>();
-                        while (patern[1] > 0)
-                        {
-                            //b_productionLineActionSlots.Add(B_ProductionLineActionSlots[_R.Next(B_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
-                            patern[1] = patern[1] - 1;
-                        }
-                        List<ItemPreparation> c_productionLineActionSlots = new List<ItemPreparation>();
-                        while (patern[2] > 0)
-                        {
-                            //c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
-                            patern[2] = patern[2] - 1;
-                        }
-
-                        while (patern[3] > 0)
-                        {
-                            //c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
-                            patern[2] = patern[2] - 1;
-                        }
                         //PreparationStations[0].
                         //clientSession.FoodServiceClientSession.AddItem
                         System.Threading.Thread.Sleep(10000);
@@ -2106,6 +2093,68 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //clientDeviceID="S_81000000296"
             //clientName="clientName"
 
+        }
+
+        private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, string servicesPointIdentity, string clientDeviceID, string clientName)
+        {
+
+            
+
+            List<IItemPreparation> itemsToPrepare = new List<IItemPreparation>();
+            var patern = PreparationStationSimulatorItems[_R.Next(PreparationStationSimulatorItems.Count - 1)].ToList();
+
+            List<ItemPreparation> a_productionLineActionSlots = new List<ItemPreparation>();
+            while (patern[0] > 0)
+            {
+                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[0]];
+                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                itemsToPrepare.Add(itemPreparation);
+                patern[0] = patern[0] - 1;
+            }
+
+            List<ItemPreparation> b_productionLineActionSlots = new List<ItemPreparation>();
+            while (patern[1] > 0)
+            {
+                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[1]];
+                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                itemsToPrepare.Add(itemPreparation);
+                patern[1] = patern[1] - 1;
+            }
+            List<ItemPreparation> c_productionLineActionSlots = new List<ItemPreparation>();
+            while (patern[2] > 0)
+            {
+                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[2]];
+                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                itemsToPrepare.Add(itemPreparation);
+                patern[2] = patern[2] - 1;
+            }
+
+            while (patern[3] > 0)
+            {
+                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[3]];
+                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                itemsToPrepare.Add(itemPreparation);
+                patern[3] = patern[3] - 1;
+            }
+            IFoodServiceClientSession clientSession = null;
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                clientSession = GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true).FoodServiceClientSession;
+                foreach (var itemToPrepare in itemsToPrepare)
+                    clientSession.AddItem(itemToPrepare);
+
+                
+                stateTransition.Consistent = true;
+                
+            }
+            clientSession.Commit(itemsToPrepare);
+            return clientSession;
+
+            //   clientSession.FoodServiceClientSession.Commit(itemsToPrepare);
         }
 
         private List<IMenuItem> GetMenuItems(IItemsCategory rootCategory)

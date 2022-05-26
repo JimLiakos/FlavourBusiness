@@ -71,7 +71,7 @@ namespace FlavourBusinessFacade.RoomService
             this.PreparationItems = preparationItems;
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
             MealCourseStartsAt = mealCourse.StartsAt;
-            ServedAtForecast = mealCourse.ServedAtForecast.Value;
+            ServedAtForecast = mealCourse.ServedAtForecast;
 
         }
 #endif
