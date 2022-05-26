@@ -2065,9 +2065,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             string clientDeviceID = "S_81000000296";
                             string clientName = "Jimmy Garson";
 
+
+                            
                             //var clientSession=  GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
                             //clientSession.FoodServiceClientSession.Commit(null);
-                            clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                            
+                           // clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+
                             //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             //{
 

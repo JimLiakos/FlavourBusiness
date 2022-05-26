@@ -773,7 +773,7 @@ namespace FlavourBusinessManager.RoomService
                 PreparationStation preparationStation = firstPreparationItem.PreparationStation as PreparationStation;
                 foreach (var preparationItem in itemsPreparationContext.PreparationItems)
                 {
-                    if (preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration) > preparedAtForecast)
+                    if (preparationStation.predictions.ContainsKey(preparationItem.uid)&& preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration) > preparedAtForecast)
                         preparedAtForecast = preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration);
 
                 }
