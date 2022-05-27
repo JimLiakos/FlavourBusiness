@@ -182,26 +182,26 @@ namespace FlavourBusinessManager.RoomService
                     {
                         try
                         {
-                            if (Courses.Count > 0 && Courses[0].ServedAtForecast == null)
-                                BuildMealTimePlan();
+                            //if (Courses.Count > 0 && Courses[0].ServedAtForecast == null)
+                            //    BuildMealTimePlan();
 
 
-                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                            {
-                                foreach (var preparationItem in (from course in Courses
-                                                                 from foodItem in course.FoodItems.OfType<ItemPreparation>()
-                                                                 where foodItem.State == ItemPreparationState.PreparationDelay
-                                                                 select foodItem))
-                                {
-                                    var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(preparationItem);
-                                    if ((DateTime.UtcNow + preparationData.Duration).ToUniversalTime() > preparationItem.MealCourse.ServedAtForecast?.ToUniversalTime())
-                                        preparationItem.State = ItemPreparationState.PendingPreparation;
-                                }
+                            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            //{
+                            //    foreach (var preparationItem in (from course in Courses
+                            //                                     from foodItem in course.FoodItems.OfType<ItemPreparation>()
+                            //                                     where foodItem.State == ItemPreparationState.PreparationDelay
+                            //                                     select foodItem))
+                            //    {
+                            //        var preparationData = ServicesContextResources.PreparationStation.GetPreparationData(preparationItem);
+                            //        if ((DateTime.UtcNow + preparationData.Duration).ToUniversalTime() > preparationItem.MealCourse.ServedAtForecast?.ToUniversalTime())
+                            //            preparationItem.State = ItemPreparationState.PendingPreparation;
+                            //    }
 
 
 
-                                stateTransition.Consistent = true;
-                            }
+                            //    stateTransition.Consistent = true;
+                            //}
 
                             try
                             {

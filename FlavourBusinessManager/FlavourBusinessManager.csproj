@@ -283,6 +283,7 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
+    <Compile Include="RoomService\PreparationPlan.cs" />
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />
     <Compile Include="Settings.cs" />
@@ -383,6 +384,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

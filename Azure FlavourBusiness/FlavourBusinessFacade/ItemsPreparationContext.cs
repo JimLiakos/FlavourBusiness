@@ -149,6 +149,8 @@ namespace FlavourBusinessFacade.RoomService
 
         public System.DateTime? ServedAtForecast { get; set; }
         public DateTime PreparedAtForecast { get; set; }
+        public bool PreparationOrderCommited { get; set; }
+       
 
         public ItemPreparationState PreparationState;
 

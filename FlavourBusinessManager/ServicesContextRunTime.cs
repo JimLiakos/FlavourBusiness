@@ -2065,22 +2065,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             string clientDeviceID = "S_81000000296";
                             string clientName = "Jimmy Garson";
 
-
-                            
-                            //var clientSession=  GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
-                            //clientSession.FoodServiceClientSession.Commit(null);
-                            
-                           // clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
-
-                            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                            //{
-
-                            //    clientSession.ServicePoint.State = ServicePointState.Free;
-                            //    foreach (var itemPreparation in clientSession.FlavourItems)
-                            //        ObjectStorage.DeleteObject(itemPreparation);
-                            //    ObjectStorage.DeleteObject(clientSession);
-                            //    stateTransition.Consistent = true;
-                            //}
+                            clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                       
+                            //DeleteSimulationData();
                         }
 
                         //PreparationStations[0].
@@ -2096,6 +2083,48 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
             //clientDeviceID="S_81000000296"
             //clientName="clientName"
+
+        }
+
+        private void DeleteSimulationData()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+            var simulationClientSessions = (from clientSession in servicesContextStorage.GetObjectCollection<FoodServiceClientSession>()
+                                            where clientSession.ClientDeviceID == "S_81000000296"
+                                            select clientSession).ToList();
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach(var clientSession in simulationClientSessions)
+                {
+                    var mainSession = clientSession.MainSession;
+                    ObjectStorage.DeleteObject(mainSession);
+                    if (mainSession != null)
+                    {
+                        var meal = mainSession.Meal;
+                        if (meal != null)
+                        {
+                            foreach (var mealCourse in meal.Courses)
+                                ObjectStorage.DeleteObject(mealCourse);
+                            ObjectStorage.DeleteObject(meal);
+                        }
+                        
+                    }
+                    clientSession.ServicePoint.State = ServicePointState.Free;
+                    foreach (var itemPreparation in clientSession.FlavourItems)
+                        ObjectStorage.DeleteObject(itemPreparation);
+                    ObjectStorage.DeleteObject(clientSession);
+
+                }
+                stateTransition.Consistent = true;
+            }
+
+
+
+
 
         }
 

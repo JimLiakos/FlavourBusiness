@@ -7,6 +7,7 @@ using OOAdvantech.Remoting;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -23,13 +24,44 @@ namespace FlavourBusinessManager.RoomService
                                    from mealCource in openSession.Meal.Courses
                                    orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
-                //you have to  filter mealcourses by state. 
 
-
-
-                //(from foodServiceSession in ServicesContextRunTime.OpenSessions
-                // from ss in foodServiceSession.PartialClientSessions
                 return mealCourses;
+            }
+        }
+
+
+
+
+        private void RebuildPreparationPlan(ActionContext actionContext)
+        {
+            actionContext.PreparationPlanIsDoubleChecked = false;
+            bool stirTheSequence = true;
+            while (!actionContext.PreparationPlanIsDoubleChecked)
+            {
+                actionContext.PreparationPlanIsDoubleChecked = true;
+
+                foreach (var preparationStation in ActivePreparationStations)
+                {
+                    preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
+                    preparationStation.GetPredictions(actionContext);
+                }
+
+                stirTheSequence = false;
+            }
+
+            foreach (var productionLine in ActivePreparationStations)
+                productionLine.ActionsOrderCommited(actionContext);
+        }
+
+        List<PreparationStation> ActivePreparationStations
+        {
+            get
+            {
+                return (from mealCourse in MealCoursesInProgress
+                        from foodItemsInProgress in mealCourse.FoodItemsInProgress
+                        from foodItem in foodItemsInProgress.PreparationItems
+                        where foodItem.PreparationStation != null
+                        select foodItem.PreparationStation).OfType<PreparationStation>().Distinct().ToList();
             }
         }
 
@@ -265,6 +297,27 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+        Task MonitoringTask;
+        internal void RunMonitoring()
+        {
+            lock (MealsControllerLock)
+            {
+                if (MonitoringTask != null && !MonitoringTask.IsCompleted)
+                    return;
+                MonitoringTask = Task.Run(() =>
+                {
+                    while (true)
+                    {
+
+                     
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                });
+
+            }
+
+        }
+
 
         /// <summary>
         /// This method finds all waiter which can serve the meal courses and update them for changes
@@ -321,12 +374,12 @@ namespace FlavourBusinessManager.RoomService
 
         public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
         {
-            
+
         }
 
         public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
         {
-            
+
         }
     }
 

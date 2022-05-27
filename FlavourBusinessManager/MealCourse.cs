@@ -731,7 +731,7 @@ namespace FlavourBusinessManager.RoomService
         {
           
             if (itemPreparation.PreparationStation != null)
-                return (itemPreparation.PreparationStation as PreparationStation).ItemsPreparationContexts.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity&&x.MealCourse== itemPreparation.MealCourse).FirstOrDefault();
+                return (itemPreparation.PreparationStation as PreparationStation).PreparationSessions.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity&&x.MealCourse== itemPreparation.MealCourse).FirstOrDefault();
             else
                 return itemPreparation.MealCourse?.FoodItemsInProgress?.Where(x => x.PreparationStationIdentity == ItemsPreparationContext.TradeProductsStationIdentity).FirstOrDefault();
         }

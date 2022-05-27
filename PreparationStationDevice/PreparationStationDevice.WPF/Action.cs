@@ -586,18 +586,7 @@ namespace PreparationStationDevice.WPF
             }
 
 
-            //List<PartialAction> filteredPartialActions = new List<PartialAction>();
 
-            //var partialActions = actionContext.ProductionLineActions[this];
-            //foreach (var partialAction in partialActions)
-            //{
-            //    if ((partialAction.Action.GetPreparationStartForecast(actionContext) - DateTime.UtcNow).TotalMinutes <= 2.5)//
-            //    {
-            //        filteredPartialActions.Add(partialAction);
-            //    }
-            //    else
-            //        break;
-            //}
 
             return filteredPartialActions;
         }
@@ -976,6 +965,7 @@ namespace PreparationStationDevice.WPF
                 return dateTime;
             return actionSlot.PreparationStart;
         }
+     
         public void SetPreparationStartsAt(ItemPreparation actionSlot, DateTime dateTime)
         {
             if (SlotsPreparationStartsAt.ContainsKey(actionSlot) && SlotsPreparationStartsAt[actionSlot] != dateTime)
