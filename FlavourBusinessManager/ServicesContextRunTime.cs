@@ -339,6 +339,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 {
                     if (_OpenClientSessions == null)
                     {
+                        DateTime timeStamp = DateTime.UtcNow;
+                        
+                        
 
                         var mainSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<FoodServiceSession>()
                                                select session).ToList();
@@ -350,7 +353,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         foreach (var clientSession in _OpenClientSessions)
                             clientSession.ServicesContextRunTime = this;
 
-                        
+                        TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
+
+
                     }
                     CollectGarbageClientSessions();
                     return _OpenClientSessions;
@@ -2072,17 +2077,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {
 
-                        //if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.8)
-                        //{
-                        //    servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
-                        //    string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
-                        //    string clientDeviceID = "S_81000000296";
-                        //    string clientName = "Jimmy Garson";
-                        //    clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                        if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
+                        {
+                            //servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+                            //string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                            //string clientDeviceID = "S_81000000296";
+                            //string clientName = "Jimmy Garson";
+                            //clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
 
-                        //    lastMealCourseAdded = DateTime.UtcNow;
-                        //    //DeleteSimulationData();
-                        //}
+                            //lastMealCourseAdded = DateTime.UtcNow;
+                            ////DeleteSimulationData();
+                        }
 
                         //PreparationStations[0].
                         //clientSession.FoodServiceClientSession.AddItem

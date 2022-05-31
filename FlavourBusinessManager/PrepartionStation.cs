@@ -271,7 +271,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_ItemsPreparationInfos))]
         [BackwardCompatibilityID("+3")]
         [CachingDataOnClientSide]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete|PersistencyFlag.OnConstruction)]
         public IList<IItemsPreparationInfo> ItemsPreparationInfos
         {
             get

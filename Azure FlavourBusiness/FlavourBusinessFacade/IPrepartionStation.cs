@@ -33,7 +33,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         //"6046c42e-6e1c-4fbc-86ee-8e1ef74628c0"
         [RoleBMultiplicityRange(1, 1)]
         [Association("PreparationStationItemsInfo", Roles.RoleA, "ff137010-8488-45be-b0e8-a65b28956ec0")]
-        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
+        
         IList<IItemsPreparationInfo> ItemsPreparationInfos { get; }
 
         /// <MetaDataID>{bb9df3c1-7e4a-418f-a3f4-6d9c07bf3427}</MetaDataID>

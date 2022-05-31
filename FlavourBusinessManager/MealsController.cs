@@ -20,12 +20,17 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
+                DateTime timeStamp = DateTime.UtcNow;
+                var openSessions = ServicesContextRunTime.OpenSessions;
+                TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
+
                 var mealCourses = (from openSession in ServicesContextRunTime.OpenSessions
                                    where openSession.Meal != null
                                    from mealCource in openSession.Meal.Courses
                                    orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
-
+                TimeSpan timeSpan2 = (DateTime.UtcNow - timeStamp);
+                
                 return mealCourses;
             }
         }
@@ -37,6 +42,7 @@ namespace FlavourBusinessManager.RoomService
         {
             try
             {
+                
                 DateTime timeStamp = DateTime.UtcNow;
                 actionContext.PreparationPlanIsDoubleChecked = false;
                 bool stirTheSequence = true;
@@ -79,11 +85,22 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
-                return (from mealCourse in MealCoursesInProgress
-                        from foodItemsInProgress in mealCourse.FoodItemsInProgress
-                        from foodItem in foodItemsInProgress.PreparationItems
-                        where foodItem.PreparationStation != null
-                        select foodItem.PreparationStation).OfType<PreparationStation>().Distinct().ToList();
+
+                DateTime timeStamp = DateTime.UtcNow;
+                try
+                {
+                    
+                    return (from mealCourse in MealCoursesInProgress
+                            from foodItemsInProgress in mealCourse.FoodItemsInProgress
+                            from foodItem in foodItemsInProgress.PreparationItems
+                            where foodItem.PreparationStation != null
+                            select foodItem.PreparationStation).OfType<PreparationStation>().Distinct().ToList();
+                }
+                finally
+                {
+                    TimeSpan timeSpan2 = DateTime.UtcNow - timeStamp;
+
+                }
             }
         }
 
