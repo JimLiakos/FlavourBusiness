@@ -191,6 +191,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{0aa1ebef-0011-45f0-9176-eba5e8afd63a}</MetaDataID>
         [PersistentMember(nameof(_PartialClientSessions))]
         [BackwardCompatibilityID("+4")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public IList<IFoodServiceClientSession> PartialClientSessions => _PartialClientSessions.AsReadOnly();
 
 

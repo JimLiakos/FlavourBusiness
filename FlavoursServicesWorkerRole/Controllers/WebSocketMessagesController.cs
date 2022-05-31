@@ -47,6 +47,7 @@ namespace FlavoursServicesWorkerRole.Controllers
     using Microsoft.Azure.Cosmos.Table;
     using FlavoursServicesWorkerRole;
     using Microsoft.WindowsAzure.ServiceRuntime;
+    using ComputationalResources;
 
     public class WebSocketMessagesController : ApiController
     {

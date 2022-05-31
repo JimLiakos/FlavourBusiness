@@ -240,9 +240,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{d64ddfb9-8fee-4703-a467-6961a6568c86}</MetaDataID>
         public ServicesContextRunTime()
         {
-            SessionsMonitoringTimer.Start();
-            SessionsMonitoringTimer.Elapsed += SessionsMonitoringTimer_Elapsed;
-            SessionsMonitoringTimer.AutoReset = false;
+    
             _Current = this;
         }
 
@@ -297,6 +295,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
                                             select menu).FirstOrDefault();
             }
+            //DeleteSimulationData();
+
+            SessionsMonitoringTimer.Start();
+            SessionsMonitoringTimer.Elapsed += SessionsMonitoringTimer_Elapsed;
+            SessionsMonitoringTimer.AutoReset = false;
+
             Task.Run(() =>
             {
                 (MealsController as MealsController).Init();
@@ -335,14 +339,18 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 {
                     if (_OpenClientSessions == null)
                     {
+
+                        var mainSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<FoodServiceSession>()
+                                               select session).ToList();
+
+
                         _OpenClientSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<EndUsers.FoodServiceClientSession>()
                                                select session).ToList();
 
                         foreach (var clientSession in _OpenClientSessions)
-                        {
                             clientSession.ServicesContextRunTime = this;
-                        }
 
+                        
                     }
                     CollectGarbageClientSessions();
                     return _OpenClientSessions;
@@ -415,6 +423,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
+                
                 StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
@@ -2031,9 +2040,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 SimulationTask = Task.Run(() =>
                 {
+                    DateTime? lastMealCourseAdded = null;
+
                     var servicePoints = (from serviceArea in ServiceAreas
-                                        from ServicePoint in serviceArea.ServicePoints
-                                        select ServicePoint).ToList();
+                                         from ServicePoint in serviceArea.ServicePoints
+                                         select ServicePoint).ToList();
 
                     List<IMenuItem> menuItems = GetMenuItems(this.OperativeRestaurantMenu.RootCategory);
 
@@ -2054,21 +2065,24 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             preparationStationsItems[preparationStation] = preparationSationItems;
                     }
 
-                    IFoodServiceClientSession clientSession=null;
+                    IFoodServiceClientSession clientSession = null;
 
-                    while (!EndOfSimulation&& servicePoints.Count>0)
+                    
+
+                    while (!EndOfSimulation && servicePoints.Count > 0)
                     {
-                        if (clientSession == null)
-                        {
-                            servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
-                            string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
-                            string clientDeviceID = "S_81000000296";
-                            string clientName = "Jimmy Garson";
 
-                            clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
-                       
-                            //DeleteSimulationData();
-                        }
+                        //if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.8)
+                        //{
+                        //    servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+                        //    string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                        //    string clientDeviceID = "S_81000000296";
+                        //    string clientName = "Jimmy Garson";
+                        //    clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+
+                        //    lastMealCourseAdded = DateTime.UtcNow;
+                        //    //DeleteSimulationData();
+                        //}
 
                         //PreparationStations[0].
                         //clientSession.FoodServiceClientSession.AddItem
@@ -2098,7 +2112,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                foreach(var clientSession in simulationClientSessions)
+                foreach (var clientSession in simulationClientSessions)
                 {
                     var mainSession = clientSession.MainSession;
                     ObjectStorage.DeleteObject(mainSession);
@@ -2111,7 +2125,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                 ObjectStorage.DeleteObject(mealCourse);
                             ObjectStorage.DeleteObject(meal);
                         }
-                        
+
                     }
                     clientSession.ServicePoint.State = ServicePointState.Free;
                     foreach (var itemPreparation in clientSession.FlavourItems)
@@ -2131,7 +2145,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, string servicesPointIdentity, string clientDeviceID, string clientName)
         {
 
-            
+
 
             List<IItemPreparation> itemsToPrepare = new List<IItemPreparation>();
             var patern = PreparationStationSimulatorItems[_R.Next(PreparationStationSimulatorItems.Count - 1)].ToList();
@@ -2141,7 +2155,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[0]];
                 var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                 itemsToPrepare.Add(itemPreparation);
                 patern[0] = patern[0] - 1;
             }
@@ -2151,7 +2165,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[1]];
                 var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                 itemsToPrepare.Add(itemPreparation);
                 patern[1] = patern[1] - 1;
             }
@@ -2160,7 +2174,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[2]];
                 var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                 itemsToPrepare.Add(itemPreparation);
                 patern[2] = patern[2] - 1;
             }
@@ -2169,7 +2183,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[3]];
                 var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1,SelectedMealCourseTypeUri= mainMealCourseTypeUri };
+                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                 itemsToPrepare.Add(itemPreparation);
                 patern[3] = patern[3] - 1;
             }
@@ -2180,9 +2194,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 foreach (var itemToPrepare in itemsToPrepare)
                     clientSession.AddItem(itemToPrepare);
 
-                
+
                 stateTransition.Consistent = true;
-                
+
             }
             clientSession.Commit(itemsToPrepare);
             return clientSession;

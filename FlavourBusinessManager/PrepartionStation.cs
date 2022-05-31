@@ -39,32 +39,32 @@ namespace FlavourBusinessManager.ServicesContextResources
         [RoleBMultiplicityRange(1, 1)]
         private OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan> PreparationTimeSpans = new OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan>();
 
-        internal void OptimizePreparationPlan(ActionContext actionContext, bool stirTheSequence)
-        {
-            List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
-            if (stirTheSequence)
-            {
-                // first takes the uncommitted  items preparation contexts where the meal course has all items preparation contexts uncommitted 
-                PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => (x.MealCourse as MealCourse).GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.All(y => !y.PreparationOrderCommited)).ToList();
+        //internal void OptimizePreparationPlans(ActionContext actionContext, bool stirTheSequence)
+        //{
+        //    List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
+        //    if (stirTheSequence)
+        //    {
+        //        // first takes the uncommitted  items preparation contexts where the meal course has all items preparation contexts uncommitted 
+        //        PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => (x.MealCourse as MealCourse).GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.All(y => !y.PreparationOrderCommited)).ToList();
 
-                var a_count = PreparationSessionsForOptimazation.Count;
+        //        var a_count = PreparationSessionsForOptimazation.Count;
 
-                //in the sequel takes the uncommitted  items preparation contexts where the meal course has at least one items preparation contexts committed 
-                PreparationSessionsForOptimazation.AddRange(PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.Any(y => y.PreparationOrderCommited)).ToList());
+        //        //in the sequel takes the uncommitted  items preparation contexts where the meal course has at least one items preparation contexts committed 
+        //        PreparationSessionsForOptimazation.AddRange(PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.Any(y => y.PreparationOrderCommited)).ToList());
 
-                //preparation contexts order by the preparation forecast time of meal course where this belongs   
-                var b_count = PreparationSessionsForOptimazation.Count;
-                if (a_count != b_count)
-                {
+        //        //preparation contexts order by the preparation forecast time of meal course where this belongs   
+        //        var b_count = PreparationSessionsForOptimazation.Count;
+        //        if (a_count != b_count)
+        //        {
 
-                }
-            }
-            else
-            {
-                //preparation contexts order by the preparation forecast time of meal course where this belongs
-                PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
-            }
-        }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //preparation contexts order by the preparation forecast time of meal course where this belongs
+        //        PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
+        //    }
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -271,13 +271,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_ItemsPreparationInfos))]
         [BackwardCompatibilityID("+3")]
         [CachingDataOnClientSide]
-
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public IList<IItemsPreparationInfo> ItemsPreparationInfos
         {
             get
             {
 
-                return _ItemsPreparationInfos.ToList();
+                return _ItemsPreparationInfos.ToThreadSafeList();
             }
         }
 
@@ -287,7 +287,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
         string _Description;
@@ -603,7 +603,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
 
                 GetItemToServingtimespanPredictions();
-                var itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.GetPreparedAtForecast()).ToList();
+                List<ItemsPreparationContext> itemsPreparationContexts = null;
+                lock (DeviceUpdateLock)
+                {
+                    itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.GetPreparedAtForecast()).ToList(); 
+                }
                 return itemsPreparationContexts;
             }
         }
@@ -625,6 +629,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     var servicesContextRunTime = ServicesContextRunTime.Current;
                     servicesContextRunTime.ObjectChangeState += ServicesContextRunTime_ObjectChangeState;
+                    DateTime timeStamp = DateTime.UtcNow;
 
                     var serviceSessionsPreparationItems = (from openSession in servicesContextRunTime.OpenSessions
                                                            where openSession.Meal != null
@@ -634,6 +639,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                                                            //where itemPreparation.State == ItemPreparationState.PreparationDelay|| itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.OnPreparation
                                                            group itemPreparation by mealCourse into ServicePointItems
                                                            select ServicePointItems).OrderBy(x => x.Key.StartsAt).ToList();
+
+                    var sss = (DateTime.UtcNow - timeStamp);
 
                     foreach (var servicePointPreparationItems in serviceSessionsPreparationItems)
                     {
@@ -1052,6 +1059,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{5a788c1a-199e-44b4-b0b0-bbe07baf672d}</MetaDataID>
         internal Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
+        internal DateTime? PreparationPlanStartTime;
+
         /// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
         List<IItemPreparation> ItemsInPreparation;
         /// <MetaDataID>{e8f2d2d9-d017-4c46-b82b-9ab788e46b0c}</MetaDataID>
@@ -1061,7 +1070,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (predictions)
                 {
-                    var preparationStationItems = (from serviceSession in this._PreparationSessions
+                    List<ItemsPreparationContext> preparationSessions = null;
+                    lock (DeviceUpdateLock)
+                    {
+                        preparationSessions = this._PreparationSessions;
+                    }
+                    var preparationStationItems = (from serviceSession in preparationSessions
                                                    from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin).OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem))
                                                    select preparationItem).ToList();
 

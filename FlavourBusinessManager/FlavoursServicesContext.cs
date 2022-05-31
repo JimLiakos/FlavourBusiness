@@ -25,7 +25,7 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{e8fbdbb0-94fd-4108-81a6-58b46e944a68}</MetaDataID>
     [BackwardCompatibilityID("{e8fbdbb0-94fd-4108-81a6-58b46e944a68}")]
     [Persistent()]
-    public class FlavoursServicesContext : MarshalByRefObject, IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class FlavoursServicesContext : MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
         /// <MetaDataID>{07e6d9ad-97ef-4bf0-a4a8-91c1f5fe9224}</MetaDataID>
         public void RemovePreparationStation(IPreparationStation prepartionStation)

@@ -5,6 +5,7 @@ using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting;
 using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,23 +35,44 @@ namespace FlavourBusinessManager.RoomService
 
         private void RebuildPreparationPlan(ActionContext actionContext)
         {
-            actionContext.PreparationPlanIsDoubleChecked = false;
-            bool stirTheSequence = true;
-            while (!actionContext.PreparationPlanIsDoubleChecked)
+            try
             {
-                actionContext.PreparationPlanIsDoubleChecked = true;
+                DateTime timeStamp = DateTime.UtcNow;
+                actionContext.PreparationPlanIsDoubleChecked = false;
+                bool stirTheSequence = true;
 
-                foreach (var preparationStation in ActivePreparationStations)
+                while (!actionContext.PreparationPlanIsDoubleChecked)
                 {
-                    preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
-                    preparationStation.GetPredictions(actionContext);
+                    actionContext.PreparationPlanIsDoubleChecked = true;
+
+                    foreach (var preparationStation in ActivePreparationStations)
+                    {
+                        preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
+                        preparationStation.GetPredictions(actionContext);
+                    }
+
+                    TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
+                    if (timeSpan.TotalSeconds>2)
+                        ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
+                    timeStamp = DateTime.UtcNow;
+
+                    stirTheSequence = false;
                 }
 
-                stirTheSequence = false;
-            }
+                foreach (var productionLine in ActivePreparationStations)
+                    productionLine.ActionsOrderCommited(actionContext);
 
-            foreach (var productionLine in ActivePreparationStations)
-                productionLine.ActionsOrderCommited(actionContext);
+                foreach (var productionLine in ActivePreparationStations)
+                {
+                    var strings = productionLine.GetActionsToStrings(actionContext);
+                }
+            }
+            catch (Exception error)
+            {
+                var ss = error.StackTrace;
+
+                throw;
+            }
         }
 
         List<PreparationStation> ActivePreparationStations
@@ -89,6 +111,7 @@ namespace FlavourBusinessManager.RoomService
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
             ServicesContextRunTime = servicesContextRunTime;
+            RunMonitoring();
         }
         /// <MetaDataID>{6570680d-a627-47c1-b385-2919e07bb359}</MetaDataID>
         ~MealsController()
@@ -306,11 +329,12 @@ namespace FlavourBusinessManager.RoomService
                     return;
                 MonitoringTask = Task.Run(() =>
                 {
+                    ActionContext actionContext = new ActionContext();
                     while (true)
                     {
 
-                     
-                        System.Threading.Thread.Sleep(1000);
+                        RebuildPreparationPlan(actionContext);
+                        System.Threading.Thread.Sleep(10000);
                     }
                 });
 

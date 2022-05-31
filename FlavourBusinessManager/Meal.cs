@@ -83,7 +83,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{5f5f90f7-bfae-4b34-8dc6-c6aa57297db5}</MetaDataID>
         [PersistentMember(nameof(_Courses))]
         [BackwardCompatibilityID("+2")]
-        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete| PersistencyFlag.OnConstruction)]
         public List<IMealCourse> Courses => _Courses.ToThreadSafeList();
 
         /// <exclude>Excluded</exclude>
