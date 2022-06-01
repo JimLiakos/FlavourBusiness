@@ -153,12 +153,14 @@ namespace FlavourBusinessManager.RoomService
         internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, ActionContext actionContext)
         {
             if (!actionContext.ProductionLineActions.ContainsKey(preparationStation))
-                return (from partialAction in preparationStation.PreparationSessions
-                        select partialAction.ToString()).ToList();
+                return (from preparationSession in preparationStation.PreparationSessions
+                        orderby preparationSession.MealCourseStartsAt
+                        select preparationSession.ToString()).ToList();
 
             List<string> strings =
-            (from partialAction in actionContext.ProductionLineActions[preparationStation]
-             select partialAction.TotString(actionContext)).ToList();
+            (from preparationSession in actionContext.ProductionLineActions[preparationStation]
+             orderby preparationSession.GetPreparationStartsAt( actionContext)
+             select preparationSession.TotString(actionContext)).ToList();
 
             return strings;
         }
@@ -168,10 +170,10 @@ namespace FlavourBusinessManager.RoomService
 
             var preparationStartsAt = preparationSession.GetPreparationStartsAt(actionContext);
 
-            return preparationSession.MealCourse.Meal.Session.ServicePoint.Description + " " + preparationSession.Description + " " + preparationSession.MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", preparationSession.MealCourse.GetPreparationForecast(actionContext)) + " itemsToPrepare : " + preparationSession.PreparationItems.Count.ToString() + " v:" + preparationSession.GetPreparationStation()?.PreparationVelocity;
+            return preparationSession.MealCourse.Meal.Session.ServicePoint.Description + " " + preparationSession.MealCourseStartsAt?.Day.ToString()+" "+ preparationSession.MealCourseStartsAt?.ToShortTimeString() + " " + preparationSession.Description + " " + preparationSession.MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", preparationSession.MealCourse.GetPreparationForecast(actionContext)) + " itemsToPrepare : " + preparationSession.PreparationItems.Count.ToString() + " v:" + preparationSession.GetPreparationStation()?.PreparationVelocity;
 
 
-            return "";
+
         }
         static List<ItemPreparation> GetItemsToPrepare(this ItemsPreparationContext preparationSession)
         {
@@ -251,6 +253,8 @@ namespace FlavourBusinessManager.RoomService
 
         internal static void OptimizePreparationPlan(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)
         {
+            
+
             List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
             if (stirTheSequence)
             {
@@ -291,6 +295,16 @@ namespace FlavourBusinessManager.RoomService
                 partialAction.PreparatioOrder = i++;
 
             actionContext.ProductionLineActions[preparationStation] = actions;
+            var actionHash = actions.Select(x => x.GetHashCode()).ToArray();
+            var m_actionsHash = preparationStation.PreparationSessions.Select(x => x.GetHashCode()).ToArray();
+            for (i = 0;i < actions.Count;i++)
+            {
+                if(actionHash[i]!= m_actionsHash[i])
+                {
+
+                }
+            }
+
         }
 
     }

@@ -606,7 +606,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 List<ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
-                    itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.GetPreparedAtForecast()).ToList(); 
+                    itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.MealCourseStartsAt).ToList(); 
                 }
                 return itemsPreparationContexts;
             }

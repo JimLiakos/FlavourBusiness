@@ -2079,13 +2079,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
                         {
-                            //servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
-                            //string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
-                            //string clientDeviceID = "S_81000000296";
-                            //string clientName = "Jimmy Garson";
-                            //clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                            servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+                            if (servicePoints.Count > 0)
+                            {
+                                //string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                                //string clientDeviceID = "S_81000000296";
+                                //string clientName = "Jimmy Garson";
+                                //clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
 
-                            //lastMealCourseAdded = DateTime.UtcNow;
+                                lastMealCourseAdded = DateTime.UtcNow;
+                            }
                             ////DeleteSimulationData();
                         }
 
@@ -2123,9 +2126,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     ObjectStorage.DeleteObject(mainSession);
                     if (mainSession != null)
                     {
-                        var meal = mainSession.Meal;
+                        var meal = mainSession.Meal as Meal;
                         if (meal != null)
                         {
+                            meal.StopMonitoring();
                             foreach (var mealCourse in meal.Courses)
                                 ObjectStorage.DeleteObject(mealCourse);
                             ObjectStorage.DeleteObject(meal);

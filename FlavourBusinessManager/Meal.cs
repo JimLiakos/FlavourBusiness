@@ -8,6 +8,7 @@ using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.RoomService
@@ -166,6 +167,8 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{529127a8-8386-46da-a81b-1539bed5530b}</MetaDataID>
         object MealLock = new object();
 
+        ManualResetEvent StopMealMonitoring = new ManualResetEvent(false);
+
         /// <MetaDataID>{340bccf9-c1ba-4185-851e-370a3286f0ee}</MetaDataID>
         Task MonitoringTask;
         /// <MetaDataID>{16c25ab9-e42f-4e19-b0de-7f0ea44de07c}</MetaDataID>
@@ -237,19 +240,33 @@ namespace FlavourBusinessManager.RoomService
 
                             (Session?.ServicePoint as ServicesContextResources.ServicePoint)?.UpdateState();
 
-                            System.Threading.Thread.Sleep(1000);
+                            if(StopMealMonitoring.WaitOne(1000))
+                            {
+                                
+                                StopMealMonitoring.Reset();
+                            }
+                            
                             sesionState = Session.SessionState;
                         }
                         catch (Exception error)
                         {
-
                             throw;
                         }
                     }
                 });
 
+                
             }
 
+        }
+
+        internal void StopMonitoring()
+        {
+            if(MonitoringTask!=null&& MonitoringTask.Status==TaskStatus.Running)
+            {
+                StopMealMonitoring.Set();
+                MonitoringTask.Wait(2000);
+            }
         }
 
         /// <MetaDataID>{09ccf99d-b9a6-4d3a-b26a-3b1c931b682c}</MetaDataID>
