@@ -64,7 +64,7 @@ namespace FlavourBusinessManager.RoomService
 
                     stirTheSequence = false;
                 }
-
+                //9962 08 2007088437
                 foreach (var productionLine in ActivePreparationStations)
                     productionLine.ActionsOrderCommited(actionContext);
 
