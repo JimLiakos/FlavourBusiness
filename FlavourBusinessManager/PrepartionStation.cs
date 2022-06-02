@@ -665,10 +665,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                         }
                         if (preparationItems.Count > 0)
                         {
-                            var preparationSession = new ItemsPreparationContext(servicePointPreparationItems.Key, this, preparationItems);
-                            _PreparationSessions.Add(preparationSession);
+                            var preparationSection = new ItemsPreparationContext(servicePointPreparationItems.Key, this, preparationItems);
+                            _PreparationSessions.Add(preparationSection);
 
-                            preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                            preparationSection.ObjectChangeState += PreparationSessionChangeState;
                         }
                     }
                 }
@@ -962,9 +962,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                     var servicePointPreparationItems = _PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
                     if (servicePointPreparationItems == null)
                     {
-                        var preparationSession = new ItemsPreparationContext(flavourItem.MealCourse, this, new List<IItemPreparation>() { flavourItem });
-                        _PreparationSessions.Add(preparationSession);
-                        preparationSession.ObjectChangeState += PreparationSessionChangeState;
+                        var preparationSection = new ItemsPreparationContext(flavourItem.MealCourse, this, new List<IItemPreparation>() { flavourItem });
+                        _PreparationSessions.Add(preparationSection);
+                        preparationSection.ObjectChangeState += PreparationSessionChangeState;
                     }
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
@@ -989,9 +989,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                 preparationData = new PreparationData()
                 {
                     ItemPreparation = itemPreparation,
-                    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime,
-                    PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                    CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime//,
+                    //PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                    //CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                 };
             }
             else
@@ -1005,9 +1005,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                         preparationData = new PreparationData()
                         {
                             ItemPreparation = itemPreparation,
-                            PreparationStationRuntime = preparationStation,
-                            PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                            CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                            PreparationStationRuntime = preparationStation//,
+                            //PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                            //CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                         };
                     }
                 }
@@ -1021,9 +1021,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                             preparationData = new PreparationData()
                             {
                                 ItemPreparation = itemPreparation,
-                                PreparationStationRuntime = preparationStation,
-                                PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                                CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
+                                PreparationStationRuntime = preparationStation//,
+                                //PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
+                                //CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
                             };
                         }
                     }
@@ -1070,12 +1070,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (predictions)
                 {
-                    List<ItemsPreparationContext> preparationSessions = null;
+                    List<ItemsPreparationContext> preparationSections = null;
                     lock (DeviceUpdateLock)
                     {
-                        preparationSessions = this._PreparationSessions;
+                        preparationSections = this._PreparationSessions;
                     }
-                    var preparationStationItems = (from serviceSession in preparationSessions
+                    var preparationStationItems = (from serviceSession in preparationSections
                                                    from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin).OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem))
                                                    select preparationItem).ToList();
 
@@ -1562,13 +1562,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{12f62d94-bd1a-4c95-8bdb-4e58145b4469}</MetaDataID>
         public IPreparationStationRuntime PreparationStationRuntime;
 
-        /// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
-        public TimeSpan Duration;
+        ///// <MetaDataID>{644e17a2-c58b-413c-bc65-b9b8d39c0729}</MetaDataID>
+        //public TimeSpan Duration;
 
         /// <MetaDataID>{587c172a-2068-4dbc-bcf6-3a0039d17506}</MetaDataID>
-        public double CookingTimeSpanInMin { get; internal set; }
-        /// <MetaDataID>{e580c37e-f0b6-4f71-b0b6-0aa31e35e730}</MetaDataID>
-        public double PreparationTimeSpanInMin { get; internal set; }
+        //public double CookingTimeSpanInMin { get; internal set; }
+        ///// <MetaDataID>{e580c37e-f0b6-4f71-b0b6-0aa31e35e730}</MetaDataID>
+        //public double PreparationTimeSpanInMin { get; internal set; }
     }
 
 

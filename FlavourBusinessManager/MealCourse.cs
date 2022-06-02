@@ -751,16 +751,16 @@ namespace FlavourBusinessManager.RoomService
             return commonState;
         }
 
-        /// <MetaDataID>{4e384189-294f-4979-87dc-0a2a22256286}</MetaDataID>
-        public static TimeSpan getPreparationDuration(this List<IItemPreparation> foodItems)
-        {
-            var foodItemPreparationData = foodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderBy(x => x.duration).LastOrDefault();
-            if (foodItemPreparationData == null)
-                return TimeSpan.FromSeconds(0);
+        ///// <MetaDataID>{4e384189-294f-4979-87dc-0a2a22256286}</MetaDataID>
+        //public static TimeSpan getPreparationDuration(this List<IItemPreparation> foodItems)
+        //{
+        //    var foodItemPreparationData = foodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderBy(x => x.duration).LastOrDefault();
+        //    if (foodItemPreparationData == null)
+        //        return TimeSpan.FromSeconds(0);
 
-            return foodItemPreparationData.duration;
+        //    return foodItemPreparationData.duration;
 
-        }
+        //}
 
         public static DateTime GetPreparedAtForecast(this ItemsPreparationContext itemsPreparationContext)
         {

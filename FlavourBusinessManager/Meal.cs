@@ -244,6 +244,7 @@ namespace FlavourBusinessManager.RoomService
                             {
                                 
                                 StopMealMonitoring.Reset();
+                                return;
                             }
                             
                             sesionState = Session.SessionState;
@@ -327,54 +328,54 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        /// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>
-        private void BuildMealTimePlan()
-        {
+        ///// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>
+        //private void BuildMealTimePlan()
+        //{
 
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                MealCourse headCourse = Courses.FirstOrDefault()?.HeaderCourse as MealCourse;
-                if (headCourse.ServedAtForecast == null)
-                {
-                    var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
-                    headCourse.ServedAtForecast = DateTime.UtcNow + foodItemsPreparatioData[0].duration;
-                    foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
-                    {
-                        foodITem.State = ItemPreparationState.PreparationDelay;
-                        foodITem.PreparedAtForecast = headCourse.ServedAtForecast;
-                    }
-                }
+        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //    {
+        //        MealCourse headCourse = Courses.FirstOrDefault()?.HeaderCourse as MealCourse;
+        //        if (headCourse.ServedAtForecast == null)
+        //        {
+        //            var foodItemsPreparatioData = headCourse.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
+        //            headCourse.ServedAtForecast = DateTime.UtcNow + foodItemsPreparatioData[0].duration;
+        //            foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
+        //            {
+        //                foodITem.State = ItemPreparationState.PreparationDelay;
+        //                foodITem.PreparedAtForecast = headCourse.ServedAtForecast;
+        //            }
+        //        }
 
-                foreach (MealCourse course in Courses)
-                {
-                    if (course == headCourse || course.ServedAtForecast != null)
-                        continue;
+        //        foreach (MealCourse course in Courses)
+        //        {
+        //            if (course == headCourse || course.ServedAtForecast != null)
+        //                continue;
 
-                    var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
+        //            var foodItemsPreparatioData = course.FoodItems.OfType<ItemPreparation>().Select(x => new { foodItem = x, duration = ServicesContextResources.PreparationStation.GetPreparationData(x).Duration }).OrderByDescending(x => x.duration).ToList();
 
-                    DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast.Value + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
-
-
-
-                    course.ServedAtForecast = System.DateTime.UtcNow + foodItemsPreparatioData[0].duration;
-                    if (course.ServedAtForecast < shouldnotServedBefore)
-                        course.ServedAtForecast = shouldnotServedBefore;
-
-                    foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
-                    {
-                        if (foodITem.State == ItemPreparationState.Committed)
-                        {
-                            foodITem.State = ItemPreparationState.PreparationDelay;
-                            foodITem.PreparedAtForecast = course.ServedAtForecast;
-                        }
-                    }
-                }
-                stateTransition.Consistent = true;
-            }
+        //            DateTime shouldnotServedBefore = (Courses[Courses.IndexOf(course) - 1] as MealCourse).ServedAtForecast.Value + TimeSpan.FromMinutes((Courses[Courses.IndexOf(course) - 1] as MealCourse).DurationInMinutes);
 
 
-        }
+
+        //            course.ServedAtForecast = System.DateTime.UtcNow + foodItemsPreparatioData[0].duration;
+        //            if (course.ServedAtForecast < shouldnotServedBefore)
+        //                course.ServedAtForecast = shouldnotServedBefore;
+
+        //            foreach (var foodITem in foodItemsPreparatioData.Select(x => x.foodItem))
+        //            {
+        //                if (foodITem.State == ItemPreparationState.Committed)
+        //                {
+        //                    foodITem.State = ItemPreparationState.PreparationDelay;
+        //                    foodITem.PreparedAtForecast = course.ServedAtForecast;
+        //                }
+        //            }
+        //        }
+        //        stateTransition.Consistent = true;
+        //    }
+
+
+        //}
 
 
         /// <MetaDataID>{4a767f54-cf13-46d7-8efd-7763ffcd80af}</MetaDataID>

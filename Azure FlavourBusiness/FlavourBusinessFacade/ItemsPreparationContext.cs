@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace FlavourBusinessFacade.RoomService
 {
+
+    /// <summary>
+    /// Defines 
+    /// </summary>
     /// <MetaDataID>{d83d4466-195d-471e-be61-fdceb04c166e}</MetaDataID>
     public class ItemsPreparationContext
     {

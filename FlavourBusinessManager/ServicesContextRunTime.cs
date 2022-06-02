@@ -1400,9 +1400,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                 var servicesContextIdentity = ServicesContextIdentity;
-                return (from preparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
-                        where preparationStation.ServicesContextIdentity == servicesContextIdentity
-                        select preparationStation).ToList();
+                
+                return PreparationStationRuntimes.Values.OfType<IPreparationStation>().ToList();
+
+                //return (from preparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
+                //        where preparationStation.ServicesContextIdentity == servicesContextIdentity
+                //        select preparationStation).ToList();
 
             }
         }
@@ -2082,10 +2085,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
                             if (servicePoints.Count > 0)
                             {
-                                //string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
-                                //string clientDeviceID = "S_81000000296";
-                                //string clientName = "Jimmy Garson";
-                                //clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
+                                string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                                string clientDeviceID = "S_81000000296";
+                                string clientName = "Jimmy Garson";
+                                clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
 
                                 lastMealCourseAdded = DateTime.UtcNow;
                             }
@@ -2117,7 +2120,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                             where clientSession.ClientDeviceID == "S_81000000296"
                                             select clientSession).ToList();
 
-
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 foreach (var clientSession in simulationClientSessions)
@@ -2144,11 +2146,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
                 stateTransition.Consistent = true;
             }
-
-
-
-
-
         }
 
         private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, string servicesPointIdentity, string clientDeviceID, string clientName)

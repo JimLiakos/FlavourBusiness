@@ -65,12 +65,12 @@ namespace FlavourBusinessManager.RoomService
                     stirTheSequence = false;
                 }
                 //9962 08 2007088437
-                foreach (var productionLine in ActivePreparationStations)
-                    productionLine.ActionsOrderCommited(actionContext);
+                foreach (var preparationStation in ActivePreparationStations)
+                    preparationStation.ActionsOrderCommited(actionContext);
 
-                foreach (var productionLine in ActivePreparationStations)
+                foreach (var preparationStation in ActivePreparationStations)
                 {
-                    var strings = productionLine.GetActionsToStrings(actionContext);
+                    var strings = preparationStation.GetActionsToStrings(actionContext);
                 }
             }
             catch (Exception error)

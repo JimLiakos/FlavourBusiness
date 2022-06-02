@@ -218,6 +218,10 @@ namespace FlavourBusinessManager.RoomService
                         var previousState = _State;
                         _State = value;
 
+                        if (previousState == ItemPreparationState.PreparationDelay)
+                        {
+
+                        }
                         if (_State == ItemPreparationState.ÉnPreparation)
                             _PreparationStartsAt = DateTime.UtcNow;
                         if (_State.IsInPreviousState(ItemPreparationState.ÉnPreparation))
