@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.PersistenceLayer;
@@ -30,7 +31,7 @@ namespace FlavourBusinessManager.RoomService
                                    orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
                 TimeSpan timeSpan2 = (DateTime.UtcNow - timeStamp);
-                
+
                 return mealCourses;
             }
         }
@@ -42,7 +43,7 @@ namespace FlavourBusinessManager.RoomService
         {
             try
             {
-                
+
                 DateTime timeStamp = DateTime.UtcNow;
                 actionContext.PreparationPlanIsDoubleChecked = false;
                 bool stirTheSequence = true;
@@ -58,7 +59,7 @@ namespace FlavourBusinessManager.RoomService
                     }
 
                     TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
-                    if (timeSpan.TotalSeconds>2)
+                    if (timeSpan.TotalSeconds > 2)
                         ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
                     timeStamp = DateTime.UtcNow;
 
@@ -89,7 +90,7 @@ namespace FlavourBusinessManager.RoomService
                 DateTime timeStamp = DateTime.UtcNow;
                 try
                 {
-                    
+
                     return (from mealCourse in MealCoursesInProgress
                             from foodItemsInProgress in mealCourse.FoodItemsInProgress
                             from foodItem in foodItemsInProgress.PreparationItems
@@ -337,7 +338,12 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+        ActionContext ActionContext = new ActionContext();
+
         Task MonitoringTask;
+
+
         internal void RunMonitoring()
         {
             lock (MealsControllerLock)
@@ -346,11 +352,11 @@ namespace FlavourBusinessManager.RoomService
                     return;
                 MonitoringTask = Task.Run(() =>
                 {
-                    ActionContext actionContext = new ActionContext();
+
                     while (true)
                     {
 
-                        RebuildPreparationPlan(actionContext);
+                        RebuildPreparationPlan(ActionContext);
                         System.Threading.Thread.Sleep(10000);
                     }
                 });
@@ -422,7 +428,23 @@ namespace FlavourBusinessManager.RoomService
         {
 
         }
-    }
 
+        internal Dictionary<string, ItemPreparationPlan> GetItemToServingTimespanPredictions(List<ItemPreparation> preparationStationItems)
+        {
+            RebuildPreparationPlan(ActionContext);
+            Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
+
+            foreach (var itemPreparation in preparationStationItems)
+            {
+                ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                {
+                    PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
+                    Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem)).TotalMinutes
+                };
+                predictions[itemPreparation.uid] = itemPreparationPlan;
+            }
+            return predictions;
+        }
+    }
 
 }

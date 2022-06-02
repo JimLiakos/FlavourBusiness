@@ -419,11 +419,11 @@ namespace FlavourBusinessManager.RoomService
         {
             if (itemPreparation.SelectedMealCourseTypeUri == MealCourseTypeUri)
             {
-                var preparationData = PreparationStation.GetPreparationData(itemPreparation);
+                var preparationStationRuntime = PreparationStation.GetPreparationStationFor(itemPreparation);
 
-                if (preparationData.PreparationStationRuntime != null)
+                if (preparationStationRuntime != null)
                 {
-                    var itemsPreparationContext = _FoodItemsInProgress.Where(x => x.PreparationStationIdentity == (preparationData.PreparationStationRuntime as IPreparationStation).PreparationStationIdentity).FirstOrDefault();
+                    var itemsPreparationContext = _FoodItemsInProgress.Where(x => x.PreparationStationIdentity == (preparationStationRuntime as IPreparationStation).PreparationStationIdentity).FirstOrDefault();
 
                     if (itemsPreparationContext != null)
                     {
@@ -620,10 +620,10 @@ namespace FlavourBusinessManager.RoomService
                         if (flavourItem.MenuItem == null)
                             flavourItem.LoadMenuItem();
 
-                        var preparationData = PreparationStation.GetPreparationData(flavourItem);
-                        if (preparationData.PreparationStationRuntime != null)
+                        var preparationStationRuntime = PreparationStation.GetPreparationStationFor(flavourItem);
+                        if (preparationStationRuntime != null)
                         {
-                            (preparationData.PreparationStationRuntime as PreparationStation).AssignItemPreparation(flavourItem);
+                            (preparationStationRuntime as PreparationStation).AssignItemPreparation(flavourItem);
                             flavourItem.State = ItemPreparationState.PreparationDelay;
                         }
                         else
@@ -762,25 +762,25 @@ namespace FlavourBusinessManager.RoomService
 
         //}
 
-        public static DateTime GetPreparedAtForecast(this ItemsPreparationContext itemsPreparationContext)
-        {
-            var firstPreparationItem = itemsPreparationContext.PreparationItems.FirstOrDefault();
+        //public static DateTime GetPreparedAtForecast(this ItemsPreparationContext itemsPreparationContext)
+        //{
+        //    var firstPreparationItem = itemsPreparationContext.PreparationItems.FirstOrDefault();
 
-            DateTime preparedAtForecast = DateTime.UtcNow;
-            if (firstPreparationItem != null && firstPreparationItem.PreparationStation != null)
-            {
+        //    DateTime preparedAtForecast = DateTime.UtcNow;
+        //    if (firstPreparationItem != null && firstPreparationItem.PreparationStation != null)
+        //    {
 
-                PreparationStation preparationStation = firstPreparationItem.PreparationStation as PreparationStation;
-                foreach (var preparationItem in itemsPreparationContext.PreparationItems)
-                {
-                    if (preparationStation.predictions.ContainsKey(preparationItem.uid)&& preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration) > preparedAtForecast)
-                        preparedAtForecast = preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration);
+        //        PreparationStation preparationStation = firstPreparationItem.PreparationStation as PreparationStation;
+        //        foreach (var preparationItem in itemsPreparationContext.PreparationItems)
+        //        {
+        //            if (preparationStation.predictions.ContainsKey(preparationItem.uid)&& preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration) > preparedAtForecast)
+        //                preparedAtForecast = preparationStation.predictions[preparationItem.uid].PreparationStart + TimeSpan.FromMinutes(preparationStation.predictions[preparationItem.uid].Duration);
 
-                }
-            }
-            itemsPreparationContext.PreparedAtForecast = preparedAtForecast;
-            return preparedAtForecast;
-        }
+        //        }
+        //    }
+        //    itemsPreparationContext.PreparedAtForecast = preparedAtForecast;
+        //    return preparedAtForecast;
+        //}
     }
 
 

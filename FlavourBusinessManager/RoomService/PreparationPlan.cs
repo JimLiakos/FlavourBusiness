@@ -49,7 +49,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
+       internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
 
         
 
