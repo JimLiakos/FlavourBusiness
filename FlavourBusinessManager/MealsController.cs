@@ -37,48 +37,52 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        object buildPreparationPlanLock = new object();
 
 
         private void RebuildPreparationPlan(ActionContext actionContext)
         {
-            try
+
+            lock (buildPreparationPlanLock)
             {
-
-                DateTime timeStamp = DateTime.UtcNow;
-                actionContext.PreparationPlanIsDoubleChecked = false;
-                bool stirTheSequence = true;
-
-                while (!actionContext.PreparationPlanIsDoubleChecked)
+                try
                 {
-                    actionContext.PreparationPlanIsDoubleChecked = true;
+                    DateTime timeStamp = DateTime.UtcNow;
+                    actionContext.PreparationPlanIsDoubleChecked = false;
+                    bool stirTheSequence = true;
+
+                    while (!actionContext.PreparationPlanIsDoubleChecked)
+                    {
+                        actionContext.PreparationPlanIsDoubleChecked = true;
+
+                        foreach (var preparationStation in ActivePreparationStations)
+                        {
+                            preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
+                            preparationStation.GetPredictions(actionContext);
+                        }
+
+                        TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
+                        if (timeSpan.TotalSeconds > 2)
+                            ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
+                        timeStamp = DateTime.UtcNow;
+
+                        stirTheSequence = false;
+                    }
+                    //9962 08 2007088437
+                    foreach (var preparationStation in ActivePreparationStations)
+                        preparationStation.ActionsOrderCommited(actionContext);
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
-                        preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
-                        preparationStation.GetPredictions(actionContext);
+                        var strings = preparationStation.GetActionsToStrings(actionContext);
                     }
-
-                    TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
-                    if (timeSpan.TotalSeconds > 2)
-                        ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
-                    timeStamp = DateTime.UtcNow;
-
-                    stirTheSequence = false;
                 }
-                //9962 08 2007088437
-                foreach (var preparationStation in ActivePreparationStations)
-                    preparationStation.ActionsOrderCommited(actionContext);
-
-                foreach (var preparationStation in ActivePreparationStations)
+                catch (Exception error)
                 {
-                    var strings = preparationStation.GetActionsToStrings(actionContext);
-                }
-            }
-            catch (Exception error)
-            {
-                var ss = error.StackTrace;
+                    var ss = error.StackTrace;
 
-                throw;
+                    throw;
+                }
             }
         }
 

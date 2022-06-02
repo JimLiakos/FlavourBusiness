@@ -602,7 +602,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
 
-                GetItemToServingtimespanPredictions();
+                //GetItemToServingtimespanPredictions();
                 List<ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
