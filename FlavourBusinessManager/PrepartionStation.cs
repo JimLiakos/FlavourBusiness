@@ -1073,7 +1073,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var preparationStationItems = (from serviceSession in preparationSections
                                            from preparationItem in serviceSession.PreparationItems
                                            select preparationItem).ToList();
-
+             
 
             PreparationPlanStartTime = null;
             Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
