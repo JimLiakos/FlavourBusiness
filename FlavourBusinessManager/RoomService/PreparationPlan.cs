@@ -128,7 +128,7 @@ namespace FlavourBusinessManager.RoomService
                                       where thePartialAction.GetPreparationStation() == preparationStation
                                       from slot in thePartialAction.GetItemsToPrepare()
                                       select slot).ToList();
-
+                 
 
                 if (preparationPlanStartTime == null)// !actionContext.PreparationStationspreParationPlanStartTime.ContainsKey(preparationStation))
                 {

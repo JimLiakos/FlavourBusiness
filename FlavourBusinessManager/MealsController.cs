@@ -62,7 +62,7 @@ namespace FlavourBusinessManager.RoomService
                             preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
                             preparationStation.GetPredictions(actionContext);
                         }
-
+                         
                         TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
                         if (timeSpan.TotalSeconds > 2)
                             ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
