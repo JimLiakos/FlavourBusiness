@@ -9,6 +9,10 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{c2c236bd-77c2-4557-97fd-8c8d8e96f67a}</MetaDataID>
+        [BackwardCompatibilityID("+19")]
+        int PreparatioOrder { get; set; }
+
         /// <MetaDataID>{673ef44c-06a5-40f4-b2b0-4a8bdc3cb0ac}</MetaDataID>
         [BackwardCompatibilityID("+18")]
         DateTime? CookingStartsAt { get; }

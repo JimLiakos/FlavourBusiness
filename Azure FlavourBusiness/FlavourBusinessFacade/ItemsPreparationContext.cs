@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace FlavourBusinessFacade.RoomService
             {
                 lock (preparationItemLock)
                 {
-                     _PreparationItems=value;
+                    _PreparationItems = value;
                 }
             }
         }
@@ -96,6 +97,7 @@ namespace FlavourBusinessFacade.RoomService
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
             MealCourseStartsAt = mealCourse.StartsAt;
             ServedAtForecast = mealCourse.ServedAtForecast;
+            PreparatioOrder = PreparatioOrder;
 
         }
 #endif
@@ -110,6 +112,7 @@ namespace FlavourBusinessFacade.RoomService
             _Uri = uri;
             // ServedAtForecast = servedAtForecast;
             MealCourseStartsAt = mealCourseStartsAt;
+            PreparatioOrder = PreparatioOrder;
         }
 
         /// <MetaDataID>{b53c2414-42ee-432c-a6ba-ac82e1f6f1bd}</MetaDataID>
@@ -133,7 +136,10 @@ namespace FlavourBusinessFacade.RoomService
             lock (preparationItemLock)
             {
                 if (!_PreparationItems.Contains(flavourItem))
+                {
+                    flavourItem.PreparatioOrder = PreparatioOrder;
                     _PreparationItems.Add(flavourItem);
+                }
             }
         }
 
@@ -184,7 +190,32 @@ namespace FlavourBusinessFacade.RoomService
         public System.DateTime? ServedAtForecast { get; set; }
         public DateTime PreparedAtForecast { get; set; }
         public bool PreparationOrderCommited { get; set; }
-        public int PreparatioOrder { get; set; }
+        public int PreparatioOrder
+        {
+            get
+            {
+                int preparatioOrder = 0;
+                var itemPreparation = PreparationItems.OrderBy(x => x.PreparatioOrder).LastOrDefault();
+                if (itemPreparation != null)
+                    preparatioOrder = itemPreparation.PreparatioOrder;
+                return preparatioOrder;
+
+            }
+            set
+            {
+                lock (preparationItemLock)
+                {
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        foreach (var itemPreparation in _PreparationItems)
+                            itemPreparation.PreparatioOrder = value;
+                        stateTransition.Consistent = true;
+                    }
+
+                }
+            }
+        }
 
         public ItemPreparationState PreparationState;
 

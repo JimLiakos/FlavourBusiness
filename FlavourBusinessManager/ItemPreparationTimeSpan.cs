@@ -185,6 +185,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     
     }
 
+    /// <MetaDataID>{895959fd-af89-4d5e-ad0f-d592223cceaa}</MetaDataID>
     public enum TimeSpanType
     {
         /// <summary>

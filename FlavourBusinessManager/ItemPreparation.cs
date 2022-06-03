@@ -22,6 +22,27 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+        /// <exclude>Excluded</exclude>
+        int _PreparatioOrder;
+
+        /// <MetaDataID>{804344b6-8080-4796-8775-a1eff2cbbc11}</MetaDataID>
+        [PersistentMember(nameof(_PreparatioOrder))]
+        [BackwardCompatibilityID("+33")]
+        public int PreparatioOrder
+        {
+            get => _PreparatioOrder;
+            set
+            {
+                if (_PreparatioOrder != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PreparatioOrder = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         DateTime? _CookingStartsAt;

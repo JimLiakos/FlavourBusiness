@@ -271,7 +271,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_ItemsPreparationInfos))]
         [BackwardCompatibilityID("+3")]
         [CachingDataOnClientSide]
-        [AssociationEndBehavior(PersistencyFlag.CascadeDelete|PersistencyFlag.OnConstruction)]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         public IList<IItemsPreparationInfo> ItemsPreparationInfos
         {
             get
@@ -606,7 +606,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 List<ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
-                    itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.MealCourseStartsAt).ToList(); 
+                    itemsPreparationContexts = _PreparationSessions.OrderBy(x => x.MealCourseStartsAt).ToList();
                 }
                 return itemsPreparationContexts;
             }
@@ -682,33 +682,6 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             Task.Run(() =>
             {
-
-
-                var predictions = GetItemToServingtimespanPredictions();
-                var preparationStationItems = (from serviceSession in this.PreparationSessions
-                                               from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
-                                               select preparationItem).ToList();
-                try
-                {
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                    {
-                        foreach (var preparationStationItem in preparationStationItems)
-                        {
-                            if (predictions.ContainsKey(preparationStationItem.uid))
-                            {
-                                var prediction = predictions[preparationStationItem.uid];
-                                (preparationStationItem as ItemPreparation).PreparedAtForecast = prediction.PreparationStart + TimeSpan.FromMinutes(prediction.Duration);
-                            }
-                        }
-
-                        stateTransition.Consistent = true;
-                    }
-                }
-                catch (Exception error)
-                {
-
-                }
-
 
                 while (true)
                 {
@@ -861,7 +834,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 PrepartionVelocityMilestone = DateTime.UtcNow;
 
-               
+
                 var preparationStationItems = (from serviceSession in this.PreparationSessions
                                                from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
                                                select preparationItem).ToList();
@@ -1083,7 +1056,41 @@ namespace FlavourBusinessManager.ServicesContextResources
                                            select preparationItem).ToList();
 
 
-            return (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
+            var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
+            if (ItemsInPreparation == null)
+                ItemsInPreparation = itemsInPreparation;
+            else
+            {
+                #region Remove the items in preparation to recalculate preparation time
+                var removedItem = ItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
+                if (removedItem != null && Predictions.ContainsKey(removedItem.uid) && Predictions[removedItem.uid].PreparationStart > DateTime.UtcNow)
+                {
+                    for (int i = ItemsInPreparation.IndexOf(removedItem); i < ItemsInPreparation.Count; i++)
+                    {
+                        if (Predictions.ContainsKey(ItemsInPreparation[i].uid))
+                            Predictions.Remove(ItemsInPreparation[i].uid);
+                    }
+                }
+                #endregion
+            }
+
+            DateTime previousePreparationEndsAt = DateTime.UtcNow;
+            foreach (var itemInPreparation in itemsInPreparation.Where(x => !ItemsInPreparation.Contains(x) || !predictions.ContainsKey(x.uid)))
+            {
+
+                //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
+                //{
+                //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
+
+                if (previousePreparationEndsAt > DateTime.UtcNow)
+                    Predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                else
+                    Predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
+                //}
+                previousePreparationEndsAt = Predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(Predictions[itemInPreparation.uid].Duration);
+            }
+
+            Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
             //try
             //{
             //    lock (predictions)
@@ -1207,6 +1214,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 //return (averageDif / averagePreparationTimeSpanInMin) * 100;
             }
         }
+
+        public Dictionary<string, ItemPreparationPlan> Predictions { get; private set; }
 
         /// <MetaDataID>{baa4b223-d63e-4981-b948-b4be0a8b8dae}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)

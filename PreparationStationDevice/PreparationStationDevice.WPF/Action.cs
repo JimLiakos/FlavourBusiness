@@ -671,142 +671,142 @@ namespace PreparationStationDevice.WPF
             //{
             //    preparationSession.ProductionLine = ProductionLines[preparationSession.ProductionLineIndex];
             //}
-            Task.Run(() =>
-            {
-                int count = 1;
-                List<List<string>> theAStrings = new List<List<string>>();
+            //Task.Run(() =>
+            //{
+            //    int count = 1;
+            //    List<List<string>> theAStrings = new List<List<string>>();
 
-                List<Snapshot> productionLinesStrings = new List<Snapshot>();
-                ActionContext actionContext = new ActionContext();
-                try
-                {
-                    while (true)
-                    {
-                        if (count < 15)
-                        {
-                            if (AddAction(count))
-                                count++;
-                        }
-                        else
-                        {
+            //    List<Snapshot> productionLinesStrings = new List<Snapshot>();
+            //    ActionContext actionContext = new ActionContext();
+            //    try
+            //    {
+            //        while (true)
+            //        {
+            //            if (count < 15)
+            //            {
+            //                if (AddAction(count))
+            //                    count++;
+            //            }
+            //            else
+            //            {
 
-                        }
-                        //if (ActionsRepository.Count > 0)
-                        //{
-                        //    _Actions.Add(ActionsRepository[0]);
-                        //    ActionsRepository.RemoveAt(0);
-                        //}
-                        //else
-                        //{
-                        //}
+            //            }
+            //            //if (ActionsRepository.Count > 0)
+            //            //{
+            //            //    _Actions.Add(ActionsRepository[0]);
+            //            //    ActionsRepository.RemoveAt(0);
+            //            //}
+            //            //else
+            //            //{
+            //            //}
 
 
 
-                        var _this = this;
+            //            var _this = this;
 
 
                         
 
-                        Dictionary<PreparationStation, List<ItemsPreparationSession>> productionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSession>>();
-                        foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
-                            productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
+            //            Dictionary<PreparationStation, List<ItemsPreparationSession>> productionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSession>>();
+            //            foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
+            //                productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
 
-                        RebuildPreparationPlan(actionContext);
+            //            RebuildPreparationPlan(actionContext);
 
-                        foreach (var productionLine in ProductionLines)
-                        {
+            //            foreach (var productionLine in ProductionLines)
+            //            {
 
-                            if (productionLineActions.ContainsKey(productionLine) && !Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
-                            {
-                                var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
-                                var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
-                            }
-                        }
-
-
-                        List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
+            //                if (productionLineActions.ContainsKey(productionLine) && !Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
+            //                {
+            //                    var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
+            //                    var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
+            //                }
+            //            }
 
 
-                        foreach (var productionLine in ProductionLines)
-                            currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
+            //            List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
 
 
-                        if (productionLinesStrings.Count > 0)
-                        {
-
-                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-
-                            string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
-                            if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
-                                productionLinesStrings.Add(snapshot);
-                            else
-                            {
-
-                            }
+            //            foreach (var productionLine in ProductionLines)
+            //                currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
 
 
-                        }
-                        else
-                        {
-                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-                            productionLinesStrings.Add(snapshot);
-                        }
+            //            if (productionLinesStrings.Count > 0)
+            //            {
 
-                        var astrings = MealCourses.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.GetDesription(actionContext)).ToList();
-                        theAStrings.Add(astrings);
-                        if (count == 7)
-                        {
+            //                Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
 
-                        }
-                        foreach (var inProductionLine in ProductionLines)
-                        {
-                            var strings = inProductionLine.GetActionsToStrings(actionContext);
-                        }
+            //                string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
+            //                if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
+            //                    productionLinesStrings.Add(snapshot);
+            //                else
+            //                {
 
-                        foreach (var productionLine in ProductionLines)
-                        {
-                            productionLine.Run(actionContext);
-                        }
+            //                }
 
-                        string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
 
-                        string json_a = OOAdvantech.Json.JsonConvert.SerializeObject((from action in MealCourses
-                                                                                      where action.CompletionTime != null
-                                                                                      orderby action.CompletionTime
-                                                                                      select new ActionCompleted
-                                                                                      {
-                                                                                          ActionName = action.Name,
-                                                                                          SubActionCompletionTime = action.PreparationSessions.Select(x => x.ProductionLine.Name + " " + string.Format("{0:h:mm:ss tt}", x.CompletionTime)).ToList()
-                                                                                      }).ToList());
+            //            }
+            //            else
+            //            {
+            //                Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
+            //                productionLinesStrings.Add(snapshot);
+            //            }
 
-                        string mealCoursesCopyJson = OOAdvantech.Json.JsonConvert.SerializeObject(MealCoursesCopy);
+            //            var astrings = MealCourses.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.GetDesription(actionContext)).ToList();
+            //            theAStrings.Add(astrings);
+            //            if (count == 7)
+            //            {
 
-                        if (productionLinesStrings.LastOrDefault() != null)
-                        {
-                            if (count >= 15 && productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
-                            {
+            //            }
+            //            foreach (var inProductionLine in ProductionLines)
+            //            {
+            //                var strings = inProductionLine.GetActionsToStrings(actionContext);
+            //            }
 
-                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json"))
-                                    System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json", json_a);
+            //            foreach (var productionLine in ProductionLines)
+            //            {
+            //                productionLine.Run(actionContext);
+            //            }
 
-                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name +"_"+ GetHashCode() + "_data.json"))
-                                    System.IO.File.WriteAllText(@"F:\PreparationData\" +  Name + "_" + GetHashCode() + "_data.json", json);
+            //            string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
 
-                            }
-                        }
+            //            string json_a = OOAdvantech.Json.JsonConvert.SerializeObject((from action in MealCourses
+            //                                                                          where action.CompletionTime != null
+            //                                                                          orderby action.CompletionTime
+            //                                                                          select new ActionCompleted
+            //                                                                          {
+            //                                                                              ActionName = action.Name,
+            //                                                                              SubActionCompletionTime = action.PreparationSessions.Select(x => x.ProductionLine.Name + " " + string.Format("{0:h:mm:ss tt}", x.CompletionTime)).ToList()
+            //                                                                          }).ToList());
 
-                        System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2 * Velocity).TotalMilliseconds);
+            //            string mealCoursesCopyJson = OOAdvantech.Json.JsonConvert.SerializeObject(MealCoursesCopy);
 
-                    }
+            //            if (productionLinesStrings.LastOrDefault() != null)
+            //            {
+            //                if (count >= 15 && productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
+            //                {
 
-                }
-                catch (Exception error)
-                {
+            //                    if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json"))
+            //                        System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json", json_a);
 
-                    throw;
-                }
+            //                    if (!System.IO.File.Exists(@"F:\PreparationData\" + Name +"_"+ GetHashCode() + "_data.json"))
+            //                        System.IO.File.WriteAllText(@"F:\PreparationData\" +  Name + "_" + GetHashCode() + "_data.json", json);
 
-            });
+            //                }
+            //            }
+
+            //            System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2 * Velocity).TotalMilliseconds);
+
+            //        }
+
+            //    }
+            //    catch (Exception error)
+            //    {
+
+            //        throw;
+            //    }
+
+            //});
         }
 
         public static bool CompareActionsSets(List<ItemsPreparationSession> actions, List<ItemsPreparationSession> contextActions)

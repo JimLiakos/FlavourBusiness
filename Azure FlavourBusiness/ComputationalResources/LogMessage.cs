@@ -15,6 +15,7 @@ namespace ComputationalResources
             LogMessage.WriteLog(message);
         }
     }
+    /// <MetaDataID>{6bd32a19-05c7-4413-9f3a-df92fbbc2b18}</MetaDataID>
     public class LogMessage : Microsoft.Azure.Cosmos.Table.TableEntity
     {
 

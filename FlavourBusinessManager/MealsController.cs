@@ -43,6 +43,7 @@ namespace FlavourBusinessManager.RoomService
         private void RebuildPreparationPlan(ActionContext actionContext)
         {
 
+            //return;
             lock (buildPreparationPlanLock)
             {
                 try

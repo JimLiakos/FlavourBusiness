@@ -9783,7 +9783,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(56, 2333)
+			location   	(56, 2338)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	526
@@ -9791,7 +9791,7 @@
 			label      	"FixedScaleTypes")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@7
-			location   	(56, 2287)
+			location   	(56, 2288)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -10145,7 +10145,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@24
-			location   	(2906, 1519)
+			location   	(2906, 1524)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	538
@@ -10153,7 +10153,7 @@
 			label      	"SelectionType")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@24
-			location   	(2906, 1473)
+			location   	(2906, 1474)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

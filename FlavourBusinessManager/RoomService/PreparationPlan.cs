@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.ServicesContextResources;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+    /// <MetaDataID>{16a0ba3c-c9f6-44a7-94cf-0598ffea5437}</MetaDataID>
     public class ActionContext
     {
         /// <summary>
@@ -40,7 +42,7 @@ namespace FlavourBusinessManager.RoomService
 
         public DateTime GetPreparationEndsAt(ItemPreparation itemPreparation)
         {
-            
+
             DateTime dateTime;
             if (ItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
                 return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
@@ -49,14 +51,15 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-       internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
+        internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
 
-        
+
 
         public bool PreparationPlanIsDoubleChecked { get; internal set; }
     }
 
 
+    /// <MetaDataID>{5384aed7-9476-46a3-9f4d-59644106a8c5}</MetaDataID>
     static class TimeSpanEx
     {
         public static TimeSpan FromMinutes(double value)
@@ -71,6 +74,7 @@ namespace FlavourBusinessManager.RoomService
         }
     }
 
+    /// <MetaDataID>{8b5ea92a-eb91-4c86-9941-8f646b46e1ac}</MetaDataID>
     public static class PreparationPlanExMethods
     {
 
@@ -127,7 +131,7 @@ namespace FlavourBusinessManager.RoomService
                                       from slot in thePartialAction.GetItemsToPrepare()
                                       select slot).ToList();
 
-                
+
                 ItemsPreparationContext partialAction = null;
                 double packingTime = 0;
                 foreach (var itemToPrepare in itemsToPrepare)
@@ -167,7 +171,7 @@ namespace FlavourBusinessManager.RoomService
 
             List<string> strings =
             (from preparationSection in actionContext.PreparationSections[preparationStation]
-             orderby preparationSection.GetPreparationStartsAt( actionContext)
+             orderby preparationSection.GetPreparationStartsAt(actionContext)
              select preparationSection.TotString(actionContext)).ToList();
 
             return strings;
@@ -180,8 +184,8 @@ namespace FlavourBusinessManager.RoomService
 
             var standby = !preparationSection.PreparationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation));
 
-            if(standby )
-                return "X "+ preparationSection.MealCourse.Meal.Session.ServicePoint.Description + " " + preparationSection.MealCourseStartsAt?.Day.ToString()+" "+ preparationSection.MealCourseStartsAt?.ToShortTimeString() + " " + preparationSection.Description + " " + preparationSection.MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", preparationSection.MealCourse.GetPreparationForecast(actionContext)) + " itemsToPrepare : " + preparationSection.PreparationItems.Count.ToString() + " v:" + preparationSection.GetPreparationStation()?.PreparationVelocity;
+            if (standby)
+                return "X " + preparationSection.MealCourse.Meal.Session.ServicePoint.Description + " " + preparationSection.MealCourseStartsAt?.Day.ToString() + " " + preparationSection.MealCourseStartsAt?.ToShortTimeString() + " " + preparationSection.Description + " " + preparationSection.MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", preparationSection.MealCourse.GetPreparationForecast(actionContext)) + " itemsToPrepare : " + preparationSection.PreparationItems.Count.ToString() + " v:" + preparationSection.GetPreparationStation()?.PreparationVelocity;
             else
                 return preparationSection.MealCourse.Meal.Session.ServicePoint.Description + " " + preparationSection.MealCourseStartsAt?.Day.ToString() + " " + preparationSection.MealCourseStartsAt?.ToShortTimeString() + " " + preparationSection.Description + " " + preparationSection.MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", preparationSection.MealCourse.GetPreparationForecast(actionContext)) + " itemsToPrepare : " + preparationSection.PreparationItems.Count.ToString() + " v:" + preparationSection.GetPreparationStation()?.PreparationVelocity;
 
@@ -267,7 +271,7 @@ namespace FlavourBusinessManager.RoomService
 
         internal static void OptimizePreparationPlan(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)
         {
-            
+
 
             List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
             if (stirTheSequence)
@@ -305,8 +309,14 @@ namespace FlavourBusinessManager.RoomService
             //List<PartialAction> actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
 
             int i = 0;
-            foreach (var partialAction in actions)
-                partialAction.PreparatioOrder = i++;
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var partialAction in actions)
+                    partialAction.PreparatioOrder = i++;
+
+                stateTransition.Consistent = true;
+            }
 
             var previous = preparationStation.PreparationSessions;
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
@@ -315,9 +325,9 @@ namespace FlavourBusinessManager.RoomService
             actionContext.PreparationSections[preparationStation] = actions;
             var actionHash = actions.Select(x => x.GetHashCode()).ToArray();
             var m_actionsHash = previous.Select(x => x.GetHashCode()).ToArray();
-            for (i = 0;i < actions.Count;i++)
+            for (i = 0; i < actions.Count; i++)
             {
-                if(actionHash[i]!= m_actionsHash[i])
+                if (actionHash[i] != m_actionsHash[i])
                 {
 
                 }
@@ -327,6 +337,7 @@ namespace FlavourBusinessManager.RoomService
 
     }
 
+    /// <MetaDataID>{17f3f120-eb70-4c0e-ba73-7b5f7715633a}</MetaDataID>
     public class Simulator
     {
         public static double Velocity = 0.33;

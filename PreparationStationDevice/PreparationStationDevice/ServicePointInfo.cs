@@ -16,5 +16,7 @@ namespace PreparationStationDevice
         public string Uri { get;  set; }
         public DateTime? MustBeServedAt { get; internal set; }
         public DateTime? StartsAt { get; internal set; }
+
+        public int PreparationOrder { get; internal set; }
     }
 }

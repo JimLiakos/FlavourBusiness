@@ -156,6 +156,7 @@ namespace PreparationStationDevice
                                                                    Description = itemsPreparationContext.MealCourseDescription,
                                                                    StartsAt = itemsPreparationContext.MealCourseStartsAt,
                                                                    MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                                   PreparationOrder= itemsPreparationContext.PreparatioOrder,
                                                                    ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
                                                                    ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
                                                                    Uri = itemsPreparationContext.Uri,
