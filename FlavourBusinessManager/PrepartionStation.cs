@@ -1038,7 +1038,26 @@ namespace FlavourBusinessManager.ServicesContextResources
         ///// <MetaDataID>{5a788c1a-199e-44b4-b0b0-bbe07baf672d}</MetaDataID>
         //internal Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
-        internal DateTime? PreparationPlanStartTime;
+        object PreparationPlanStartTimeLock = new object();
+
+        DateTime? _PreparationPlanStartTime;
+        internal  DateTime? PreparationPlanStartTime
+        {
+            get
+            {
+                lock (PreparationPlanStartTimeLock)
+                {
+                    return _PreparationPlanStartTime; 
+                }
+            }
+            set
+            {
+                lock (PreparationPlanStartTimeLock)
+                {
+                     _PreparationPlanStartTime=value;
+                }
+            }
+        }
 
         /// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
         List<IItemPreparation> ItemsInPreparation;
@@ -1056,41 +1075,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                                            select preparationItem).ToList();
 
 
-            var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.ÉnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
-            if (ItemsInPreparation == null)
-                ItemsInPreparation = itemsInPreparation;
-            else
-            {
-                #region Remove the items in preparation to recalculate preparation time
-                var removedItem = ItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
-                if (removedItem != null && Predictions.ContainsKey(removedItem.uid) && Predictions[removedItem.uid].PreparationStart > DateTime.UtcNow)
-                {
-                    for (int i = ItemsInPreparation.IndexOf(removedItem); i < ItemsInPreparation.Count; i++)
-                    {
-                        if (Predictions.ContainsKey(ItemsInPreparation[i].uid))
-                            Predictions.Remove(ItemsInPreparation[i].uid);
-                    }
-                }
-                #endregion
-            }
-
-            DateTime previousePreparationEndsAt = DateTime.UtcNow;
-            foreach (var itemInPreparation in itemsInPreparation.Where(x => !ItemsInPreparation.Contains(x) || !predictions.ContainsKey(x.uid)))
-            {
-
-                //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
-                //{
-                //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
-
-                if (previousePreparationEndsAt > DateTime.UtcNow)
-                    Predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
-                else
-                    Predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
-                //}
-                previousePreparationEndsAt = Predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(Predictions[itemInPreparation.uid].Duration);
-            }
-
+            PreparationPlanStartTime = null;
             Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
+
+            return Predictions;
             //try
             //{
             //    lock (predictions)

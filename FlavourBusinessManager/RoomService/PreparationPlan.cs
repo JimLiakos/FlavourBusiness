@@ -56,6 +56,8 @@ namespace FlavourBusinessManager.RoomService
 
 
         public bool PreparationPlanIsDoubleChecked { get; internal set; }
+
+        //internal Dictionary<PreparationStation, DateTime> PreparationStationspreParationPlanStartTime = new Dictionary<PreparationStation, DateTime>();
     }
 
 
@@ -115,22 +117,35 @@ namespace FlavourBusinessManager.RoomService
 
         public static void GetPredictions(this PreparationStation preparationStation, ActionContext actionContext)
         {
-            if (preparationStation.PreparationPlanStartTime == null)
-                preparationStation.PreparationPlanStartTime = DateTime.UtcNow;
-            DateTime previousePreparationEndsAt = DateTime.UtcNow;
 
-            if (preparationStation.PreparationPlanStartTime != null)
-                previousePreparationEndsAt = preparationStation.PreparationPlanStartTime.Value;
-
-            var preparationPlanStartTime = previousePreparationEndsAt;
 
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
             {
+                DateTime? preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
+
+
                 var itemsToPrepare = (from thePartialAction in actionContext.PreparationSections[preparationStation]
                                       where thePartialAction.GetPreparationStation() == preparationStation
                                       from slot in thePartialAction.GetItemsToPrepare()
                                       select slot).ToList();
 
+
+                if (preparationPlanStartTime == null)// !actionContext.PreparationStationspreParationPlanStartTime.ContainsKey(preparationStation))
+                {
+                    preparationPlanStartTime = DateTime.UtcNow;
+                    var itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation);
+
+                    foreach (var itemInPreparation in itemsInPreparation.Where(x => actionContext.ItemPreparationsStartsAt.ContainsKey(x)))
+                    {
+                        if (actionContext.ItemPreparationsStartsAt[itemInPreparation] < preparationPlanStartTime)
+                            preparationPlanStartTime = actionContext.ItemPreparationsStartsAt[itemInPreparation];
+                    }
+                    preparationStation.PreparationPlanStartTime = preparationPlanStartTime;
+                }
+                else
+                    preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
+
+                DateTime previousePreparationEndsAt = preparationPlanStartTime.Value;
 
                 ItemsPreparationContext partialAction = null;
                 double packingTime = 0;
@@ -158,8 +173,8 @@ namespace FlavourBusinessManager.RoomService
                 var strings = preparationStation.GetActionsToStrings(actionContext);
             }
 
-            if (preparationStation.GetActionsToDo(actionContext).Count == 0)
-                preparationStation.PreparationPlanStartTime = DateTime.UtcNow;
+            //if (preparationStation.GetActionsToDo(actionContext).Count == 0)
+            //    preparationStation.PreparationPlanStartTime = DateTime.UtcNow;
         }
 
         internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, ActionContext actionContext)

@@ -44,6 +44,7 @@ namespace FlavourBusinessManager.RoomService
         {
 
             //return;
+            //actionContext.PreparationStationspreParationPlanStartTime.Clear();
             lock (buildPreparationPlanLock)
             {
                 try
@@ -355,16 +356,17 @@ namespace FlavourBusinessManager.RoomService
             {
                 if (MonitoringTask != null && !MonitoringTask.IsCompleted)
                     return;
-                MonitoringTask = Task.Run(() =>
-                {
 
-                    while (true)
-                    {
+                //MonitoringTask = Task.Run(() =>
+                //{
 
-                        RebuildPreparationPlan(ActionContext);
-                        System.Threading.Thread.Sleep(10000);
-                    }
-                });
+                //    while (true)
+                //    {
+
+                //        RebuildPreparationPlan(ActionContext);
+                //        System.Threading.Thread.Sleep(10000);
+                //    }
+                //});
 
             }
 

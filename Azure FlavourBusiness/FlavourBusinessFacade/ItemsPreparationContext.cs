@@ -104,7 +104,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
         [OOAdvantech.Json.JsonConstructor]
-        public ItemsPreparationContext(IServicePoint servicePoint, List<IItemPreparation> preparationItems, string description, string uri, System.DateTime servedAtForecast, DateTime mealCourseStartsAt)
+        public ItemsPreparationContext(IServicePoint servicePoint, List<IItemPreparation> preparationItems, string description, string uri, System.DateTime? servedAtForecast, DateTime mealCourseStartsAt)
         {
             ServicePoint = servicePoint;
             _PreparationItems = preparationItems;
