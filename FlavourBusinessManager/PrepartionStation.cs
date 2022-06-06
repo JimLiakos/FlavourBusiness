@@ -768,10 +768,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}</MetaDataID>
         private void PreparationSessionChangeState(object _object, string member)
         {
-
-            lock (DeviceUpdateEtagLock)
-                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                lock (DeviceUpdateEtagLock)
+                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            });
         }
 
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
@@ -904,11 +905,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                     if (servicePointPreparationItems != null)
                         servicePointPreparationItems.RemovePreparationItem(flavourItem);
                 }
-                lock (DeviceUpdateEtagLock)
+                Transaction.RunOnTransactionCompleted(() =>
                 {
-                    if (DeviceUpdateEtag == null)
-                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-                }
+                    lock (DeviceUpdateEtagLock)
+                    {
+                        if (DeviceUpdateEtag == null)
+                            DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                    }
+                });
+               
             }
         }
         /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
@@ -941,13 +946,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
 
-                    lock (DeviceUpdateEtagLock)
+
+                    Transaction.RunOnTransactionCompleted(() =>
                     {
-                        if (DeviceUpdateEtag == null)
-                            DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-                    }
-
-
+                        lock (DeviceUpdateEtagLock)
+                        {
+                            if (DeviceUpdateEtag == null)
+                                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                        }
+                    });
                 }
 
             }
@@ -1030,11 +1037,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{02fa2443-01b0-409d-bb9f-5a9d9e257129}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-
-            lock (DeviceUpdateLock)
+            Transaction.RunOnTransactionCompleted(() =>
             {
-                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-            }
+                lock (DeviceUpdateEtagLock)
+                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            });
+
 
             if (member == null && !SuspendsObjectChangeStateEvents)
                 _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
@@ -1534,8 +1542,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                         servicePointPreparationItems.CodeCard = codeCard;
                 }
             }
-            lock (DeviceUpdateEtagLock)
-                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                lock (DeviceUpdateEtagLock)
+                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+            });
+
 
             _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }

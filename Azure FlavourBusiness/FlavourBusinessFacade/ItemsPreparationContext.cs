@@ -137,14 +137,17 @@ namespace FlavourBusinessFacade.RoomService
 
         public void AddPreparationItem(IItemPreparation flavourItem)
         {
-            lock (preparationItemLock)
+            Transaction.RunOnTransactionCompleted(() =>
             {
-                if (!_PreparationItems.Contains(flavourItem))
+                lock (preparationItemLock)
                 {
-                    flavourItem.PreparatioOrder = PreparatioOrder;
-                    _PreparationItems.Add(flavourItem);
+                    if (!_PreparationItems.Contains(flavourItem))
+                    {
+                        flavourItem.PreparatioOrder = PreparatioOrder;
+                        _PreparationItems.Add(flavourItem);
+                    }
                 }
-            }
+            });
         }
 
         public void RemovePreparationItem(IItemPreparation flavourItem)
