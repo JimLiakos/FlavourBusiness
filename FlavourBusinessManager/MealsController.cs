@@ -62,7 +62,7 @@ namespace FlavourBusinessManager.RoomService
                             preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
                             preparationStation.GetPredictions(actionContext);
                         }
-                         
+
                         TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
                         if (timeSpan.TotalSeconds > 2)
                             ComputationalResources.LogMessage.WriteLog("Load sessions time span : " + timeSpan.TotalSeconds.ToString());
@@ -72,7 +72,26 @@ namespace FlavourBusinessManager.RoomService
                     }
                     //9962 08 2007088437
                     foreach (var preparationStation in ActivePreparationStations)
+                    {
                         preparationStation.ActionsOrderCommited(actionContext);
+
+                        #region clear PreparationPlanStartTime in case where there are not items in state pendings to prepare 
+
+                        if (actionContext.PreparationSections.ContainsKey(preparationStation))
+                        {
+                            DateTime? preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
+
+                            List<ItemPreparation> itemsToPrepare = (from thePartialAction in actionContext.PreparationSections[preparationStation]
+                                                                    from itemPreparation in thePartialAction.GetItemsToPrepare()
+                                                                    select itemPreparation).ToList();
+                            if (itemsToPrepare.All(x => x.State.IsInPreviousState(ItemPreparationState.PendingPreparation)))
+                            {
+                                //in case where there aren't items pending to prepare clear PreparationPlanStartTime
+                                preparationStation.PreparationPlanStartTime = null;
+                            }
+                        }
+                        #endregion
+                    }
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
@@ -441,14 +460,34 @@ namespace FlavourBusinessManager.RoomService
             RebuildPreparationPlan(ActionContext);
             Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
+            //        var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
+
+            //        foreach (var roasting…tem in roasting…tems)
+            //            predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
+
             foreach (var itemPreparation in preparationStationItems)
             {
-                ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
                 {
-                    PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
-                    Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem)).TotalMinutes
-                };
-                predictions[itemPreparation.uid] = itemPreparationPlan;
+                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                    {
+                        PreparationStart = DateTime.UtcNow,
+                        Duration = 0
+                    };
+
+                    predictions[itemPreparation.uid] = itemPreparationPlan;
+
+                }
+                else
+                {
+                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                    {
+                        PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
+                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem)).TotalMinutes
+                    };
+
+                    predictions[itemPreparation.uid] = itemPreparationPlan;
+                }
             }
             return predictions;
         }

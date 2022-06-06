@@ -55,7 +55,7 @@ namespace PreparationStationDevice
             }
         }
 
-        public DateTime PreparedAtForecast { get; }
+        public DateTime? PreparedAtForecast { get; }
 
         /// <exclude>Excluded</exclude>
         Multilingual _FullName = new Multilingual();
@@ -81,8 +81,9 @@ namespace PreparationStationDevice
             MultilingualFullName = menuFoodItem.MultilingualFullName;
             MultilingualName = menuFoodItem.MultilingualName;
 
-            if (itemPreparation.PreparedAtForecast != null)
-                PreparedAtForecast = itemPreparation.PreparedAtForecast.Value;
+            //if (itemPreparation.PreparedAtForecast != null)
+            //    PreparedAtForecast = itemPreparation.PreparedAtForecast.Value;
+            
 
             Tags = menuFoodItem.PreparationTags.ToList();
             if (itemsPreparationTags.ContainsKey(menuFoodItem.Uri))

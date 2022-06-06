@@ -240,7 +240,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{d64ddfb9-8fee-4703-a467-6961a6568c86}</MetaDataID>
         public ServicesContextRunTime()
         {
-    
+
             _Current = this;
         }
 
@@ -295,7 +295,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
                                             select menu).FirstOrDefault();
             }
-            //DeleteSimulationData();
+            bool del = false;
+
+            if (del)
+                DeleteSimulationData();
 
             SessionsMonitoringTimer.Start();
             SessionsMonitoringTimer.Elapsed += SessionsMonitoringTimer_Elapsed;
@@ -340,11 +343,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     if (_OpenClientSessions == null)
                     {
                         DateTime timeStamp = DateTime.UtcNow;
-                        
-                        
+
+
 
                         var mainSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<FoodServiceSession>()
-                                               select session).ToList();
+                                            select session).ToList();
 
 
                         _OpenClientSessions = (from session in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this)).GetObjectCollection<EndUsers.FoodServiceClientSession>()
@@ -428,7 +431,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
-                
+
                 StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
@@ -1400,7 +1403,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                 var servicesContextIdentity = ServicesContextIdentity;
-                
+
                 return PreparationStationRuntimes.Values.OfType<IPreparationStation>().ToList();
 
                 //return (from preparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
@@ -2036,6 +2039,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
             new List<int> { 0, 2, 0, 1 },
             new List<int> { 0, 3, 0, 1 },
             new List<int> { 0, 5, 0, 0 },
+            new List<int> { 0, 0, 1, 2 },
+            new List<int> { 0, 0, 3, 0 },
+            new List<int> { 0, 0, 0, 3 },
             new List<int> { 0, 2, 0, 0 },
             new List<int> { 0, 1, 0, 2 }
         };
@@ -2075,7 +2081,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     IFoodServiceClientSession clientSession = null;
 
-                    
+
 
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {

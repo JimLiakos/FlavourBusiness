@@ -27,6 +27,9 @@ namespace PreparationStationDevice.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            
+
+
             SerializeTaskScheduler.RunAsync();
 
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();

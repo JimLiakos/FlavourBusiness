@@ -310,10 +310,8 @@ namespace FlavourBusinessManager.RoomService
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
                             foreach (var mealCourseItem in mealCourseItems)
-                            {
                                 mealCourse.AddItem(mealCourseItem);
-                                mealCourseItem.PreparedAtForecast = mealCourse.ServedAtForecast;
-                            }
+                                
                             stateTransition.Consistent = true;
                         }
 

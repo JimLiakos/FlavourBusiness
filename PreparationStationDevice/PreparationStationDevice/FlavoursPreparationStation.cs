@@ -151,17 +151,17 @@ namespace PreparationStationDevice
                             //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                         }
                         var itemsPreparationContexts = (from itemsPreparationContext in ItemsPreparationContexts
-                                                               select new ItemsPreparationContextPresentation()
-                                                               {
-                                                                   Description = itemsPreparationContext.MealCourseDescription,
-                                                                   StartsAt = itemsPreparationContext.MealCourseStartsAt,
-                                                                   MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                   PreparationOrder= itemsPreparationContext.PreparatioOrder,
-                                                                   ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
-                                                                   ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
-                                                                   Uri = itemsPreparationContext.Uri,
-                                                                   PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
-                                                               }).ToList();
+                                                        select new ItemsPreparationContextPresentation()
+                                                        {
+                                                            Description = itemsPreparationContext.MealCourseDescription,
+                                                            StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                                                            MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                            PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                            ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                                                            ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                                                            Uri = itemsPreparationContext.Uri,
+                                                            PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                                                        }).ToList();
 
                         return itemsPreparationContexts;
                     }
@@ -412,8 +412,22 @@ namespace PreparationStationDevice
                                  select new ItemPreparationAbbreviation() { uid = preparationItem.uid, StateTimestamp = preparationItem.StateTimestamp }).ToList();
 
 
+            PreparationStationStatus preparationStationStatus = null;
+            int tries = 30;
+            while (tries > 0)
+            {
+                try
+                {
 
-            PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
+                    preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
+                }
+                catch (Exception error)
+                {
+                    tries--;
+                    if (tries == 0)
+                        throw;
+                }
+            }
             var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
             PreparationVelocity = PreparationStation.PreparationVelocity;
@@ -431,15 +445,18 @@ namespace PreparationStationDevice
                 {
                     ItemsPreparationContexts = servicePointsPreparationItems;
                     PreparationItemsLoaded?.Invoke(this);
+                    ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                     break;
                 }
                 else if ((existingPreparationItem as ItemPreparation).Update(updatedItemPreparation as ItemPreparation))
                 {
                     ItemsPreparationContexts = servicePointsPreparationItems;
                     PreparationItemsLoaded?.Invoke(this);
+                    ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                     break;
                 }
             }
+
         }
 
         /// <MetaDataID>{e21edb31-648a-4b63-b5a6-7dec0572b963}</MetaDataID>
@@ -457,7 +474,7 @@ namespace PreparationStationDevice
         {
 
 
-            get => RemotingServices.CastTransparentProxy <IPreparationStation>(PreparationStation).GroupingTimeSpan;
+            get => RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan;
             set => RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan = value;
         }
 
