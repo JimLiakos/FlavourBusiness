@@ -2054,6 +2054,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 SimulationTask = Task.Run(() =>
                 {
+                    System.Threading.Thread.Sleep(60000);
                     DateTime? lastMealCourseAdded = null;
 
                     var servicePoints = (from serviceArea in ServiceAreas

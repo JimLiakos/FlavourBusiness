@@ -552,7 +552,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
                 itemPreparation.PreparationTimeSpanInMin = 0;
             }
-            return itemPreparation.PreparationTimeSpanInMin/ 2;
+            return itemPreparation.PreparationTimeSpanInMin;
         }
 
         /// <MetaDataID>{39ef62a3-cbec-4713-9edd-16f70a9a43c8}</MetaDataID>
@@ -866,11 +866,16 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 var preparationStationItems = (from serviceSession in this.PreparationSessions
                                                from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
+                                               orderby preparationItem.PreparedAtForecast
                                                select preparationItem).ToList();
 
                 if (preparationStationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation)))
                 {
                     //preparation  velocity measured only in case where there are items to prepare   
+                    DateTime? endTime = preparationStationItems.FirstOrDefault()?.PreparedAtForecast;
+                    DateTime startTime;
+                    if (endTime != null)
+                        startTime = endTime.Value - TimeSpan.FromMinutes(preparationStationItems.FirstOrDefault().PreparationTimeSpanInMin);
                     PrepartionVelocityMilestone = DateTime.UtcNow;
                 }
 
@@ -1280,7 +1285,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
 
                     var itemTimeSpan = TimeSpan.FromMinutes(preparationTimeSpan.TotalMinutes * normalizedItemsRations[i]);
-
+                    
                     ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
                     {
                         StartsAt = previousItemsPreparationUpdate,

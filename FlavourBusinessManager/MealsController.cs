@@ -97,6 +97,8 @@ namespace FlavourBusinessManager.RoomService
                     {
                         var strings = preparationStation.GetActionsToStrings(actionContext);
                     }
+
+                    RebuildPreparationPlanLastTime = DateTime.UtcNow;
                 }
                 catch (Exception error)
                 {
@@ -130,6 +132,22 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        DateTime _RebuildPreparationPlanLastTime;
+
+        public DateTime RebuildPreparationPlanLastTime
+        {
+            get
+            {
+                lock (buildPreparationPlanLock)
+                    return _RebuildPreparationPlanLastTime;
+            }
+            private set
+            {
+                lock (buildPreparationPlanLock)
+                    _RebuildPreparationPlanLastTime=value;
+            }
+        }
+
 
         /// <MetaDataID>{05e0750f-3947-4c50-b0b7-28b7ecc6f434}</MetaDataID>
         internal void RecalculateServedAtForecast()
@@ -154,7 +172,7 @@ namespace FlavourBusinessManager.RoomService
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
             ServicesContextRunTime = servicesContextRunTime;
-            RunMonitoring();
+            
         }
         /// <MetaDataID>{6570680d-a627-47c1-b385-2919e07bb359}</MetaDataID>
         ~MealsController()
@@ -356,10 +374,10 @@ namespace FlavourBusinessManager.RoomService
                 else
                     MealCourseSortID = lastMealCourse.SortID + 1;
 
-                bool recalculate = false;
 
-                if (recalculate)
-                    RecalculateServedAtForecast();
+                RunMonitoring();
+
+                RecalculateServedAtForecast();
 
             }
         }
@@ -376,16 +394,16 @@ namespace FlavourBusinessManager.RoomService
                 if (MonitoringTask != null && !MonitoringTask.IsCompleted)
                     return;
 
-                //MonitoringTask = Task.Run(() =>
-                //{
+                MonitoringTask = Task.Run(() =>
+                {
 
-                //    while (true)
-                //    {
-
-                //        RebuildPreparationPlan(ActionContext);
-                //        System.Threading.Thread.Sleep(10000);
-                //    }
-                //});
+                    while (true)
+                    {
+                        if ((DateTime.UtcNow - RebuildPreparationPlanLastTime).TotalSeconds >= 5)
+                            RebuildPreparationPlan(ActionContext);
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                });
 
             }
 
