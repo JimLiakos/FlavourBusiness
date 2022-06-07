@@ -151,7 +151,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return false;
         }
         /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
-        public double GetPreparationTimeSpanInMin(IMenuItem menuItem)
+         double GetPreparationTimeSpanInMin(IMenuItem menuItem)
         {
 
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
@@ -382,7 +382,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             Transaction.RunOnTransactionCompleted(() =>
             {
-                _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+                
+                lock (DeviceUpdateEtagLock)
+                {
+                    if (DeviceUpdateEtag == null)
+                        DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+                }
             });
         }
 
@@ -531,6 +536,25 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
         /// <exclude>Excluded</exclude>
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
+
+        internal double GetPreparationTimeSpanInMin(ItemPreparation itemPreparation)
+        {
+            if (itemPreparation.PreparationTimeSpanInMin == -1)
+            {
+                var itemsPreparationInfos = this.GetItemsPreparationInfo(itemPreparation.MenuItem);
+                foreach (var itemsPreparationInfo in itemsPreparationInfos)
+                {
+                    if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
+                    {
+                        itemPreparation.PreparationTimeSpanInMin = itemsPreparationInfo.PreparationTimeSpanInMin.Value;
+                        break;
+                    }
+                }
+                itemPreparation.PreparationTimeSpanInMin = 0;
+            }
+            return itemPreparation.PreparationTimeSpanInMin/ 2;
+        }
+
         /// <MetaDataID>{39ef62a3-cbec-4713-9edd-16f70a9a43c8}</MetaDataID>
         public Dictionary<string, List<ITag>> ItemsPreparationTags
         {
@@ -662,9 +686,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                             if (CanPrepareItem(item.MenuItem))
                             {
-                                item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
+                                //item.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(item.MenuItem);
                                 item.IsCooked = this.IsCooked(item.MenuItem);
-                                item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
+                                //item.CookingTimeSpanInMin = GetCookingTimeSpanInMin(item.MenuItem);
 
                                 //RoomService.ItemPreparation itemPreparation = new RoomService.ItemPreparation(item.uid, item.MenuItemUri, item.Name);
                                 //itemPreparation.Update(item);
@@ -705,7 +729,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 DateTime myDate = new DateTime(numberOfTicks);
                                 if ((DateTime.Now - myDate).TotalSeconds > 3)
                                 {
-                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 30)
+                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 10)
                                     {
                                         _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
                                         RaiseEventTimeStamp = DateTime.UtcNow;
@@ -768,11 +792,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}</MetaDataID>
         private void PreparationSessionChangeState(object _object, string member)
         {
-            Transaction.RunOnTransactionCompleted(() =>
-            {
-                lock (DeviceUpdateEtagLock)
-                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-            });
+            OnPreparationItemsChangeState();
         }
 
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
@@ -905,15 +925,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     if (servicePointPreparationItems != null)
                         servicePointPreparationItems.RemovePreparationItem(flavourItem);
                 }
-                Transaction.RunOnTransactionCompleted(() =>
-                {
-                    lock (DeviceUpdateEtagLock)
-                    {
-                        if (DeviceUpdateEtag == null)
-                            DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-                    }
-                });
-               
+                OnPreparationItemsChangeState();
             }
         }
         /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
@@ -947,14 +959,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
 
 
-                    Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        lock (DeviceUpdateEtagLock)
-                        {
-                            if (DeviceUpdateEtag == null)
-                                DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-                        }
-                    });
+                    OnPreparationItemsChangeState();
                 }
 
             }
@@ -1037,15 +1042,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{02fa2443-01b0-409d-bb9f-5a9d9e257129}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-            Transaction.RunOnTransactionCompleted(() =>
-            {
-                lock (DeviceUpdateEtagLock)
-                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-            });
+            OnPreparationItemsChangeState();
 
-
-            if (member == null && !SuspendsObjectChangeStateEvents)
-                _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+            //if (member == null && !SuspendsObjectChangeStateEvents)
+            //    _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
         }
 
 
@@ -1079,18 +1079,26 @@ namespace FlavourBusinessManager.ServicesContextResources
         Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
         {
 
-            List<ItemsPreparationContext> preparationSections = null;
-            lock (DeviceUpdateLock)
+            try
             {
-                preparationSections = this._PreparationSessions.ToList();
+                SuspendsObjectChangeStateEvents = true;
+                List<ItemsPreparationContext> preparationSections = null;
+                lock (DeviceUpdateLock)
+                {
+                    preparationSections = this._PreparationSessions.ToList();
+                }
+                var preparationStationItems = (from serviceSession in preparationSections
+                                               from preparationItem in serviceSession.PreparationItems
+                                               select preparationItem).ToList();
+
+
+                Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
+                return Predictions;
             }
-            var preparationStationItems = (from serviceSession in preparationSections
-                                           from preparationItem in serviceSession.PreparationItems
-                                           select preparationItem).ToList();
-
-
-            Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
-            return Predictions;
+            finally
+            {
+                SuspendsObjectChangeStateEvents = false;
+            }
 
 
             //try
@@ -1542,14 +1550,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                         servicePointPreparationItems.CodeCard = codeCard;
                 }
             }
-            Transaction.RunOnTransactionCompleted(() =>
-            {
-                lock (DeviceUpdateEtagLock)
-                    DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
-            });
+            OnPreparationItemsChangeState();
 
 
-            _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+
         }
 
         /// <MetaDataID>{3083f4f5-9be3-4a22-9725-f571f8b2264a}</MetaDataID>

@@ -129,7 +129,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                         stateTransition.Consistent = true;
                     }
                 }
-
             }
         }
         public event ObjectChangeStateHandle ObjectChangeState;

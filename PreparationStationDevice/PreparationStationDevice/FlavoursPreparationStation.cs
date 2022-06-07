@@ -420,7 +420,9 @@ namespace PreparationStationDevice
                 {
 
                     preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), deviceUpdateEtag);
+                    break;
                 }
+
                 catch (Exception error)
                 {
                     tries--;

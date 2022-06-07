@@ -48,9 +48,9 @@ namespace FlavourBusinessManager.RoomService
 
             DateTime dateTime;
             if (ItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
-                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
 
-            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem));
+            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
         }
 
 
@@ -232,7 +232,7 @@ namespace FlavourBusinessManager.RoomService
                         actionContext.PreparationPlanIsDoubleChecked = false;
                     }
                     actionContext.SetPreparationStartsAt(itemToPrepare, previousePreparationEndsAt);
-                    previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare.MenuItem));
+                    previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare));
                 }
 
                 //var strings = preparationStation.GetActionsToStrings(actionContext);
@@ -376,7 +376,7 @@ namespace FlavourBusinessManager.RoomService
 
         internal static double GetDuration(this ItemsPreparationContext itemsPreparationContext)
         {
-            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(x.MenuItem));
+            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(x));
         }
 
         internal static void OptimizePreparationPlan(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)

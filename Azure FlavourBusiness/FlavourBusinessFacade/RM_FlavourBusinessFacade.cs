@@ -4628,6 +4628,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public MenuModel.IClassified MenuModelObject
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo), "get_MenuModelObject", args, argsTypes);
+                return this.Proxy.GetValue<MenuModel.IClassified>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string Description
         {
             get

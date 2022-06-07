@@ -55,8 +55,8 @@ namespace MenuModel
         OOAdvantech.Collections.Generic.Set<IClassified> _ClassifiedItems = new OOAdvantech.Collections.Generic.Set<IClassified>();
 
         /// <MetaDataID>{ce14aeb6-477e-41ae-ab1b-f0bb00903fea}</MetaDataID>
-        [PersistentMember("_ClassifiedItems")]
-        [TransactionalMember(LockOptions.Shared, "_ClassifiedItems")]
+        [PersistentMember(nameof(_ClassifiedItems))]
+        [TransactionalMember(LockOptions.Shared,nameof(_ClassifiedItems))]
         [BackwardCompatibilityID("+2")]
 
         public IList<MenuModel.IClassified> ClassifiedItems

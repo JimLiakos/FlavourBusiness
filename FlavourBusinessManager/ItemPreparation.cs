@@ -27,6 +27,7 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{804344b6-8080-4796-8775-a1eff2cbbc11}</MetaDataID>
         [PersistentMember(nameof(_PreparatioOrder))]
+        [TransactionalMember(LockOptions.Shared, nameof(_PreparatioOrder))]
         [BackwardCompatibilityID("+33")]
         public int PreparatioOrder
         {
@@ -35,7 +36,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 if (_PreparatioOrder != value)
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, nameof(PreparatioOrder)))
                     {
                         _PreparatioOrder = value;
                         stateTransition.Consistent = true;
@@ -68,12 +69,12 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}</MetaDataID>
         [BackwardCompatibilityID("+30")]
-        public double PreparationTimeSpanInMin { get; set; }
+        public double PreparationTimeSpanInMin { get; set; } = -1;
 
 
         /// <MetaDataID>{1315d6ad-a380-49fd-946f-a1274fcd0f6c}</MetaDataID>
         [BackwardCompatibilityID("+31")]
-        public double CookingTimeSpanInMin { get; set; }
+        public double CookingTimeSpanInMin { get; set; } = -1;
 
 
         /// <exclude>Excluded</exclude> 
@@ -345,13 +346,12 @@ namespace FlavourBusinessManager.RoomService
         [BeforeCommitObjectStateInStorageCall]
         void BeforeCommitObjectState()
         {
-            var myStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            OOAdvantech.PersistenceLayer.ObjectStorage myStorage = null; 
+            foreach (var optionChange in this._OptionsChanges)
             {
-                foreach (var optionChange in this._OptionsChanges)
-                    myStorage.CommitTransientObjectState(optionChange);
-
-                stateTransition.Consistent = true;
+                if (myStorage == null)
+                    myStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                myStorage.CommitTransientObjectState(optionChange);
             }
         }
 
@@ -401,6 +401,7 @@ namespace FlavourBusinessManager.RoomService
         int? _NumberOfShares;
         /// <MetaDataID>{804375b2-47fe-4846-9c45-ce0ff2c7b239}</MetaDataID>
         [PersistentMember(nameof(_NumberOfShares))]
+        [TransactionalMember(LockOptions.Shared, nameof(_NumberOfShares))]
         [BackwardCompatibilityID("+32")]
         public int NumberOfShares
         {
@@ -410,7 +411,7 @@ namespace FlavourBusinessManager.RoomService
                 {
                     if (_NumberOfShares == null)
                     {
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, nameof(NumberOfShares)))
                         {
                             _NumberOfShares = _SharedWithClients.Count + 1;
                             stateTransition.Consistent = true;

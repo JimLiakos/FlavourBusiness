@@ -457,6 +457,8 @@ namespace FlavourBusinessManager.RoomService
 
         internal Dictionary<string, ItemPreparationPlan> GetItemToServingTimespanPredictions(List<ItemPreparation> preparationStationItems)
         {
+            DateTime startTime = DateTime.UtcNow;
+
             RebuildPreparationPlan(ActionContext);
             Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
@@ -483,12 +485,13 @@ namespace FlavourBusinessManager.RoomService
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
-                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem)).TotalMinutes
+                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
                     };
 
                     predictions[itemPreparation.uid] = itemPreparationPlan;
                 }
             }
+            var timeSpan = DateTime.UtcNow - startTime;
             return predictions;
         }
     }

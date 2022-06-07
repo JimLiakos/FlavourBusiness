@@ -210,17 +210,18 @@ namespace FlavourBusinessFacade.RoomService
             }
             set
             {
-                lock (preparationItemLock)
+                Transaction.RunOnTransactionCompleted(() =>
                 {
-
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    lock (preparationItemLock)
                     {
-                        foreach (var itemPreparation in _PreparationItems)
-                            itemPreparation.PreparatioOrder = value;
-                        stateTransition.Consistent = true;
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var itemPreparation in _PreparationItems)
+                                itemPreparation.PreparatioOrder = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
-
-                }
+                });
             }
         }
 
