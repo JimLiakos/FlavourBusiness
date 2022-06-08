@@ -363,97 +363,106 @@ namespace FlavourBusinessManager
 
             lock (ServicesContextLock)
             {
-                string storageIdentity = null;
-                var fbstorage = (from storage in (Owner as Organization).Storages
-                                 where storage.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu
-                                 select storage).FirstOrDefault();
-
-                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri+  fbstorage.Url;
-                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
-
-                var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
-
-
-
-                if (ComputingCluster.CurrentComputingResource == ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(RunAtContext.ContextID))
+                try
                 {
+                    string storageIdentity = null;
+                    var fbstorage = (from storage in (Owner as Organization).Storages
+                                     where storage.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu
+                                     select storage).FirstOrDefault();
 
-                    string publicServerUrl = ComputingCluster.CurrentComputingCluster.GetRoleInstancePublicServerUrl(RunAtContext.ContextID);
-                    FlavoursServicesContextManagment flavoursServicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(publicServerUrl, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).FullName, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).Assembly.FullName) as FlavourBusinessManager.FlavoursServicesContextManagment;
-                    string storageName = ContextStorageName;
-                    string storageLocation = "DevStorage";
+                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
+                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
-                    FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
-                    if (FlavoursServicesContextRuntime != null)
-                        FlavoursServicesContextRuntime.Description = Description;
-
-                    return FlavoursServicesContextRuntime;
-                }
-                else
-                {
-                    string publicServerUrl = ComputingCluster.CurrentComputingCluster.GetRoleInstancePublicServerUrl(RunAtContext.ContextID);
-
-                    FlavoursServicesContextManagment flavoursServicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(publicServerUrl, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).FullName, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).Assembly.FullName) as FlavourBusinessManager.FlavoursServicesContextManagment;
+                    var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
 
 
-                    string storageName = ContextStorageName;
-                    string storageLocation = "DevStorage";
-                    //string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
-
-                    FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
-                    if (FlavoursServicesContextRuntime != null)
-                        FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
-
-                    if (FlavoursServicesContextRuntime != null)
-                        FlavoursServicesContextRuntime.Description = Description;
-
-
-                    var proxy = System.Runtime.Remoting.RemotingServices.GetRealProxy(FlavoursServicesContextRuntime) as OOAdvantech.Remoting.RestApi.Proxy;
-
-                    AuthUserRef authUserRef = AuthUserRef.GetAuthUserRefForRole(Owner.SignUpUserIdentity);
-
-
-                    IServiceContextSupervisor masterSupervisor = authUserRef.GetRoles().Where(x => UserData.UserRole.GetRoleType(x.TypeFullName) == UserData.RoleType.ServiceContextSupervisor && (x.RoleObject is IServiceContextSupervisor) && (x.RoleObject as IServiceContextSupervisor).ServicesContextIdentity == this.ServicesContextIdentity).Select(x => x.RoleObject).OfType<IServiceContextSupervisor>().FirstOrDefault();
-
-                    if (masterSupervisor == null)
+                    if (ComputingCluster.CurrentComputingResource == ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(RunAtContext.ContextID))
                     {
 
-                        masterSupervisor = FlavoursServicesContextRuntime.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity == Owner.SignUpUserIdentity).FirstOrDefault();
-                        if (masterSupervisor != null && !authUserRef.HasRole(masterSupervisor))
-                            authUserRef.AddRole(masterSupervisor);
-                        else if (masterSupervisor == null)
+                        string publicServerUrl = ComputingCluster.CurrentComputingCluster.GetRoleInstancePublicServerUrl(RunAtContext.ContextID);
+                        FlavoursServicesContextManagment flavoursServicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(publicServerUrl, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).FullName, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).Assembly.FullName) as FlavourBusinessManager.FlavoursServicesContextManagment;
+                        string storageName = ContextStorageName;
+                        string storageLocation = "DevStorage";
+
+                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
+                        if (FlavoursServicesContextRuntime != null)
+                            FlavoursServicesContextRuntime.Description = Description;
+
+                        return FlavoursServicesContextRuntime;
+                    }
+                    else
+                    {
+                        string publicServerUrl = ComputingCluster.CurrentComputingCluster.GetRoleInstancePublicServerUrl(RunAtContext.ContextID);
+
+                        FlavoursServicesContextManagment flavoursServicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(publicServerUrl, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).FullName, typeof(FlavourBusinessManager.FlavoursServicesContextManagment).Assembly.FullName) as FlavourBusinessManager.FlavoursServicesContextManagment;
+
+
+
+                        string storageName = ContextStorageName;
+                        string storageLocation = "DevStorage";
+                        //string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+
+                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
+                        if (FlavoursServicesContextRuntime != null)
+                            FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
+
+                        if (FlavoursServicesContextRuntime != null)
+                            FlavoursServicesContextRuntime.Description = Description;
+
+
+                        var proxy = System.Runtime.Remoting.RemotingServices.GetRealProxy(FlavoursServicesContextRuntime) as OOAdvantech.Remoting.RestApi.Proxy;
+
+                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRefForRole(Owner.SignUpUserIdentity);
+
+
+                        IServiceContextSupervisor masterSupervisor = authUserRef.GetRoles().Where(x => UserData.UserRole.GetRoleType(x.TypeFullName) == UserData.RoleType.ServiceContextSupervisor && (x.RoleObject is IServiceContextSupervisor) && (x.RoleObject as IServiceContextSupervisor).ServicesContextIdentity == this.ServicesContextIdentity).Select(x => x.RoleObject).OfType<IServiceContextSupervisor>().FirstOrDefault();
+
+                        if (masterSupervisor == null)
                         {
-                            UserData userData = new UserData()
-                            {
-                                Identity = authUserRef.GetIdentity(),
-                                Email = authUserRef.Email,
-                                FullName = authUserRef.FullName,
-                                PhoneNumber = authUserRef.PhoneNumber,
-                                Address = authUserRef.Address,
-                                PhotoUrl = authUserRef.PhotoUrl,
-                                Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
-                            };
 
-
-                            int tries = 4;
-                            while (tries > 0)
+                            masterSupervisor = FlavoursServicesContextRuntime.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity == Owner.SignUpUserIdentity).FirstOrDefault();
+                            if (masterSupervisor != null && !authUserRef.HasRole(masterSupervisor))
+                                authUserRef.AddRole(masterSupervisor);
+                            else if (masterSupervisor == null)
                             {
-                                tries--;
-                                string supervisorAssignKey = FlavoursServicesContextRuntime.NewSupervisor();
-                                masterSupervisor = FlavoursServicesContextRuntime.AssignSupervisorUser(supervisorAssignKey, Owner.SignUpUserIdentity, authUserRef.FullName);
-                                if (masterSupervisor != null)
+                                UserData userData = new UserData()
                                 {
-                                    masterSupervisor.Name = authUserRef.FullName;
-                                    authUserRef.AddRole(masterSupervisor);
-                                    break;
+                                    Identity = authUserRef.GetIdentity(),
+                                    Email = authUserRef.Email,
+                                    FullName = authUserRef.FullName,
+                                    PhoneNumber = authUserRef.PhoneNumber,
+                                    Address = authUserRef.Address,
+                                    PhotoUrl = authUserRef.PhotoUrl,
+                                    Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
+                                };
+
+
+                                int tries = 4;
+                                while (tries > 0)
+                                {
+                                    tries--;
+                                    string supervisorAssignKey = FlavoursServicesContextRuntime.NewSupervisor();
+                                    masterSupervisor = FlavoursServicesContextRuntime.AssignSupervisorUser(supervisorAssignKey, Owner.SignUpUserIdentity, authUserRef.FullName);
+                                    if (masterSupervisor != null)
+                                    {
+                                        masterSupervisor.Name = authUserRef.FullName;
+                                        authUserRef.AddRole(masterSupervisor);
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
+                        }
+                        return FlavoursServicesContextRuntime;
                     }
-                    return FlavoursServicesContextRuntime;
                 }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+                
             }
         }
 

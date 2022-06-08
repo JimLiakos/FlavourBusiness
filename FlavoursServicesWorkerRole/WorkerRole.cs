@@ -376,8 +376,8 @@ namespace FlavoursServicesWorkerRole
                 //                  where endPoint.Name == "tcpinternal"
                 //                  select endPoint.Address + ":" + endPoint.Port).FirstOrDefault();
                 //roleInstanceServerUrl = string.Format("net.tcp://{0}/", address);
-
-                string address = (from endPoint in ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(request.InternalChannelUri).CommunicationEndpoints
+                var communicationEndpoints = ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(request.InternalChannelUri).CommunicationEndpoints;
+                string address = (from endPoint in communicationEndpoints
                                   where endPoint.Name == "httpInternal"
                                   select endPoint.Address + ":" + endPoint.Port).FirstOrDefault();
                 if (string.IsNullOrWhiteSpace(address))

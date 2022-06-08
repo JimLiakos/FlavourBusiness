@@ -31,11 +31,22 @@ namespace ComputationalResources
         {
             get
             {
-                if (_CommunicationEndpoints == null)
+                lock (this)
                 {
-                    _CommunicationEndpoints = new List<EndPoint>();
-                    foreach (var instanceEndpointEntry in RoleInstance.InstanceEndpoints)
-                        _CommunicationEndpoints.Add(new EndPoint() { Name = instanceEndpointEntry.Key, Protocol = instanceEndpointEntry.Value.Protocol, Address = instanceEndpointEntry.Value.IPEndpoint.Address.ToString(), Port = instanceEndpointEntry.Value.IPEndpoint.Port });
+                    if (_CommunicationEndpoints == null)
+                    {
+                        _CommunicationEndpoints = new List<EndPoint>();
+                        var instanceEndpoints = RoleInstance.InstanceEndpoints;
+
+                        foreach (var instanceEndpointEntry in instanceEndpoints)
+                            _CommunicationEndpoints.Add(new EndPoint() { Name = instanceEndpointEntry.Key, Protocol = instanceEndpointEntry.Value.Protocol, Address = instanceEndpointEntry.Value.IPEndpoint.Address.ToString(), Port = instanceEndpointEntry.Value.IPEndpoint.Port });
+
+                        if (_CommunicationEndpoints.Count == 0)
+                        {
+
+                        }
+
+                    }
                 }
                 return _CommunicationEndpoints;
             }

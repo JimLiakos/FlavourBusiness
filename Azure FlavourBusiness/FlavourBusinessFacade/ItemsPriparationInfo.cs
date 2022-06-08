@@ -110,7 +110,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
             var itemsPreparationInfos = (from itemsInfo in preparationStation.ItemsPreparationInfos
                                          select new
                                          {
-                                             @object = itemsInfo.MenuModelObject,// OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                              ItemsPreparationInfo = itemsInfo
                                          });// ;//.ToList();
 
@@ -160,7 +160,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
                                          select new
                                          {
                                              ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = itemsInfo.MenuModelObject, //OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                              ItemsPreparationInfo = itemsInfo
                                          }).ToList();
 
@@ -197,7 +197,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
                                          select new
                                          {
                                              ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = itemsInfo.MenuModelObject,// OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             @object =!OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject)?itemsInfo.MenuModelObject:OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                              ItemsPreparationInfo = itemsInfo
                                          }).ToList();
 
@@ -216,7 +216,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
             foreach (var itemsPreparationInfo in preparationStation.ItemsPreparationInfos)
             {
                 MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-                var @object = itemsPreparationInfo.MenuModelObject;// OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
+                var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsPreparationInfo as System.MarshalByRefObject) ? itemsPreparationInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
+                //var @object = itemsPreparationInfo.MenuModelObject;// OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsPreparationInfo.ItemsInfoObjectUri);
                 if (@object is MenuModel.IItemsCategory)
                 {
                     var itemsPreparationInfoCategory = (@object as MenuModel.IItemsCategory);
@@ -239,7 +240,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
             var itemsPreparationInfos = (from itemsInfo in preparationStation.ItemsPreparationInfos
                                          select new
                                          {
-                                             @object = itemsInfo.MenuModelObject,// OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                              ItemsPreparationInfo = itemsInfo
                                          }).ToList();
 
