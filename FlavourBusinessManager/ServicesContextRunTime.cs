@@ -2132,9 +2132,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 foreach (var clientSession in simulationClientSessions)
                 {
                     var mainSession = clientSession.MainSession;
-                    ObjectStorage.DeleteObject(mainSession);
+                    
+                        
                     if (mainSession != null)
                     {
+                        ObjectStorage.DeleteObject(mainSession);
                         var meal = mainSession.Meal as Meal;
                         if (meal != null)
                         {
