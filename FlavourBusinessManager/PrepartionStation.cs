@@ -513,7 +513,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         break;
                     }
                 }
-                itemPreparation.PreparationTimeSpanInMin = 0;
+                if (itemPreparation.PreparationTimeSpanInMin == -1)
+                    itemPreparation.PreparationTimeSpanInMin = 0;
             }
             return itemPreparation.PreparationTimeSpanInMin;
         }
@@ -1287,11 +1288,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                     var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
                     var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
 
-                    //if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
+                    if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
                     {
                         _PreparationVelocity = avargePerc;
                         PreviousAveragePerc = _PreparationVelocity;
-                        //SmoothingItemsPreparationHistory.Clear();
+                        SmoothingItemsPreparationHistory.Clear();
                     }
                 }
                 stateTransition.Consistent = true;
