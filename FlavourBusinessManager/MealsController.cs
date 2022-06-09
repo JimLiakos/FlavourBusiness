@@ -37,9 +37,11 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{db77bf43-40ea-48ca-830f-f713e88938aa}</MetaDataID>
         object buildPreparationPlanLock = new object();
 
 
+        /// <MetaDataID>{dfd3500e-b5f0-47da-b3b8-5c161f224ec3}</MetaDataID>
         private void RebuildPreparationPlan(ActionContext actionContext)
         {
 
@@ -109,6 +111,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{1c8b7c3a-e3a4-4ea4-9c77-3d61ed8d47f1}</MetaDataID>
         List<PreparationStation> ActivePreparationStations
         {
             get
@@ -132,8 +135,10 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{a42810ef-fbbe-49d5-8733-04986c3d7030}</MetaDataID>
         DateTime _RebuildPreparationPlanLastTime;
 
+        /// <MetaDataID>{9c0a13ae-a2d2-4371-b944-60605d818dcd}</MetaDataID>
         public DateTime RebuildPreparationPlanLastTime
         {
             get
@@ -144,7 +149,7 @@ namespace FlavourBusinessManager.RoomService
             private set
             {
                 lock (buildPreparationPlanLock)
-                    _RebuildPreparationPlanLastTime=value;
+                    _RebuildPreparationPlanLastTime = value;
             }
         }
 
@@ -382,11 +387,14 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{fa568071-4178-4e14-a25c-51f4f8498bef}</MetaDataID>
         ActionContext ActionContext = new ActionContext();
 
+        /// <MetaDataID>{dfff57b8-a93a-48b8-a2f0-b87345e77f04}</MetaDataID>
         Task MonitoringTask;
 
 
+        /// <MetaDataID>{34c5fae2-3f2b-4531-8db6-3752ec0ba8c8}</MetaDataID>
         internal void RunMonitoring()
         {
             lock (MealsControllerLock)
@@ -463,16 +471,19 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{c79fa8ae-e4b6-452e-96d8-9f590b3e5e04}</MetaDataID>
         public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
         {
 
         }
 
+        /// <MetaDataID>{1f3b96de-e184-4669-897b-17c69b3c260b}</MetaDataID>
         public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
         {
 
         }
 
+        /// <MetaDataID>{3e5166da-a888-46e4-9778-4c4acfe31411}</MetaDataID>
         internal Dictionary<string, ItemPreparationPlan> GetItemToServingTimespanPredictions(List<ItemPreparation> preparationStationItems)
         {
             DateTime startTime = DateTime.UtcNow;
@@ -503,7 +514,7 @@ namespace FlavourBusinessManager.RoomService
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
-                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
+                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation)).TotalMinutes
                     };
 
                     predictions[itemPreparation.uid] = itemPreparationPlan;

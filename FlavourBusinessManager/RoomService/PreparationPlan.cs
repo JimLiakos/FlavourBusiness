@@ -46,19 +46,21 @@ namespace FlavourBusinessManager.RoomService
 
             DateTime dateTime;
             if (ItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
-                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
+                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation));
 
-            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
+            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation));
         }
 
 
         internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool PreparationPlanIsDoubleChecked { get; internal set; }
 
-        //internal Dictionary<PreparationStation, DateTime> PreparationStationspreParationPlanStartTime = new Dictionary<PreparationStation, DateTime>();
+        
     }
 
 
@@ -230,7 +232,7 @@ namespace FlavourBusinessManager.RoomService
                         actionContext.PreparationPlanIsDoubleChecked = false;
                     }
                     actionContext.SetPreparationStartsAt(itemToPrepare, previousePreparationEndsAt);
-                    previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare));
+                    previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeInMin(itemToPrepare));
                 }
 
                 //var strings = preparationStation.GetActionsToStrings(actionContext);
@@ -374,7 +376,7 @@ namespace FlavourBusinessManager.RoomService
 
         internal static double GetDuration(this ItemsPreparationContext itemsPreparationContext)
         {
-            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(x));
+            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetPreparationTimeInMin(x));
         }
 
         internal static void OptimizePreparationPlan(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)

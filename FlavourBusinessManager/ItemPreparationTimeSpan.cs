@@ -9,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
-    /// <MetaDataID>{0653c6c7-137b-4a4a-b017-76c6fe24213c}</MetaDataID>
+
+    /// <summary>
+    /// ItemPreparationTimeSpan keeps useful information about preparing items 
+    /// like preparation time, preparation start time and end time,
+    /// deviation from the predicted time
+    /// </summary>
+    ///<MetaDataID>{0653c6c7-137b-4a4a-b017-76c6fe24213c}</MetaDataID>
     [BackwardCompatibilityID("{0653c6c7-137b-4a4a-b017-76c6fe24213c}")]
     [Persistent()]
     public class ItemPreparationTimeSpan
@@ -141,8 +147,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{fca50c81-2cf7-4a81-8ba4-a69217657789}</MetaDataID>
         public double DurationDifPerc { get; set; }
 
+
+        
         /// <exclude>Excluded</exclude>
         double _InformationValue;
+        /// <summary>
+        ///Defines the score of preparation info  
+        /// </summary>
         /// <MetaDataID>{3a9e0d5c-579c-4c86-b39a-d0ca08c24d98}</MetaDataID>
         [PersistentMember(nameof(_InformationValue))]
         [BackwardCompatibilityID("+1")]

@@ -39,32 +39,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [RoleBMultiplicityRange(1, 1)]
         private OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan> PreparationTimeSpans = new OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan>();
 
-        //internal void OptimizePreparationPlans(ActionContext actionContext, bool stirTheSequence)
-        //{
-        //    List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
-        //    if (stirTheSequence)
-        //    {
-        //        // first takes the uncommitted  items preparation contexts where the meal course has all items preparation contexts uncommitted 
-        //        PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => (x.MealCourse as MealCourse).GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.All(y => !y.PreparationOrderCommited)).ToList();
 
-        //        var a_count = PreparationSessionsForOptimazation.Count;
-
-        //        //in the sequel takes the uncommitted  items preparation contexts where the meal course has at least one items preparation contexts committed 
-        //        PreparationSessionsForOptimazation.AddRange(PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.Any(y => y.PreparationOrderCommited)).ToList());
-
-        //        //preparation contexts order by the preparation forecast time of meal course where this belongs   
-        //        var b_count = PreparationSessionsForOptimazation.Count;
-        //        if (a_count != b_count)
-        //        {
-
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //preparation contexts order by the preparation forecast time of meal course where this belongs
-        //        PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
-        //    }
-        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -151,7 +126,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return false;
         }
         /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
-        double GetPreparationTimeSpanInMin(IMenuItem menuItem)
+        double GetPreparationTimeInMin(IMenuItem menuItem)
         {
 
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
@@ -223,7 +198,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{fdf4d688-7439-48b0-b7d7-87df67b6c965}</MetaDataID>
-        public double GetPreparationTimeSpanInMinForCategoryItems(IItemsCategory itemsCategory)
+        public double GetPreparationTimeInMinForCategoryItems(IItemsCategory itemsCategory)
         {
             var itemsPreparationInfos = this.GetItemsPreparationInfo(itemsCategory);
 
@@ -233,18 +208,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                     return itemsPreparationInfo.PreparationTimeSpanInMin.Value;
             }
 
-            //string ItemsInfoObjectUri = ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-            //var itemsPreparationInfo = ItemsPreparationInfos.Where(x => x.ItemsInfoObjectUri == ItemsInfoObjectUri).FirstOrDefault();
-            //if (itemsPreparationInfo != null)
-            //{
-            //    if ((itemsPreparationInfo.ItemsPreparationInfoType & ItemsPreparationInfoType.Exclude) == ItemsPreparationInfoType.Exclude)
-            //        return 0;
-            //    else
-            //        return itemsPreparationInfo.PreparationTimeSpanInMin;
-            //}
-            //else if (itemsCategory.Parent != null)
-            //    return GetPreparationTimeSpanInMinForCategoryItems(itemsCategory.Parent);
-            //else
             return 0;
         }
         /// <MetaDataID>{da579ee2-870e-4fd5-accd-08c2ca57fa4a}</MetaDataID>
@@ -537,7 +500,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
 
-        internal double GetPreparationTimeSpanInMin(ItemPreparation itemPreparation)
+        internal double GetPreparationTimeInMin(ItemPreparation itemPreparation)
         {
             if (itemPreparation.PreparationTimeSpanInMin == -1)
             {
@@ -951,7 +914,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     flavourItem.PreparationStation = this;
 
-                    flavourItem.PreparationTimeSpanInMin = GetPreparationTimeSpanInMin(flavourItem.MenuItem);
+                    flavourItem.PreparationTimeSpanInMin = GetPreparationTimeInMin(flavourItem.MenuItem);
                     flavourItem.IsCooked = this.IsCooked(flavourItem.MenuItem);
                     flavourItem.CookingTimeSpanInMin = GetCookingTimeSpanInMin(flavourItem.MenuItem);
 

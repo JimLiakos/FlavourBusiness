@@ -13302,8 +13302,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	2082
-		    origin_y   	697
+		    origin_x   	0
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::FlavoursServicesContext" @168
 			    ShowCompartmentStereotypes 	TRUE
@@ -13476,6 +13476,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
+			    compartment 	(object Compartment
+				Parent_View 	@173
+				location   	(3316, 494)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	1946)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -13536,6 +13554,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@175
+				location   	(1278, 452)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	16
+				max_width  	715)
 			    width      	750
 			    height     	437
 			    annotation 	8)
@@ -13553,7 +13589,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @177
 				Parent_View 	@176
-				location   	(969, 292)
+				location   	(968, 293)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13687,7 +13723,7 @@
 					height     	54
 					orientation 	1))))
 			(object AssociationViewNew "PreparationStationItemsInfo" @183
-			    location   	(2663, 563)
+			    location   	(2663, 565)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13700,7 +13736,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @184
 				Parent_View 	@183
-				location   	(2611, 387)
+				location   	(2611, 389)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13726,7 +13762,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "ItemsPreparationInfos" @185
 				    Parent_View 	@183
-				    location   	(601, 85)
+				    location   	(601, 87)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -13739,7 +13775,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @186
 					Parent_View 	@185
-					location   	(2990, 487)
+					location   	(2990, 489)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13764,16 +13800,12 @@
 				    quidu      	"5D5D5067029B"
 				    client     	@183
 				    supplier   	@173
-				    vertices   	(list Points
-					(2663, 563)
-					(2663, 565)
-					(3307, 565))
 				    line_style 	3
-				    origin_attachment 	(2663, 563)
+				    origin_attachment 	(2663, 565)
 				    terminal_attachment 	(3307, 565)
 				    label      	(object SegLabel @187
 					Parent_View 	@185
-					location   	(3242, 617)
+					location   	(3242, 619)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13795,7 +13827,7 @@
 					orientation 	1))
 				(object RoleView "$UNNAMED$3" @188
 				    Parent_View 	@183
-				    location   	(601, 85)
+				    location   	(601, 87)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -13812,11 +13844,11 @@
 				    client     	@183
 				    supplier   	@175
 				    line_style 	3
-				    origin_attachment 	(2663, 563)
-				    terminal_attachment 	(2019, 563)
+				    origin_attachment 	(2663, 565)
+				    terminal_attachment 	(2019, 565)
 				    label      	(object SegLabel @189
 					Parent_View 	@188
-					location   	(2210, 521)
+					location   	(2210, 523)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -22991,7 +23023,543 @@
 			(object Realize_Relationship
 			    quid       	"61376D900337"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealsController"
-			    quidu      	"613748FD01E6"))
+			    quidu      	"613748FD01E6")
+			(object Realize_Relationship
+			    quid       	"62A17ABE0350"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
+		    operations 	(list Operations
+			(object Operation "RebuildPreparationPlan"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{dfd3500e-b5f0-47da-b3b8-5c161f224ec3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC603D2"))
+			    quid       	"62A17AC603D2"
+			    parameters 	(list Parameters
+				(object Parameter "actionContext"
+				    quid       	"62A17AC603E0"
+				    type       	"FlavourBusinessManager.RoomService.ActionContext"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "RecalculateServedAtForecast"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{05e0750f-3947-4c50-b0b7-28b7ecc6f434}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC70018"))
+			    quid       	"62A17AC70018"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "MealsController"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{678886b6-415d-4058-8264-0847b0872a3a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC70051"))
+			    quid       	"62A17AC70051"
+			    parameters 	(list Parameters
+				(object Parameter "servicesContextRunTime"
+				    quid       	"62A17AC70064"
+				    type       	"FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "~MealsController"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6570680d-a627-47c1-b385-2919e07bb359}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC70086"))
+			    quid       	"62A17AC70086"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "OnNewMealCoursesInrogress"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{287105f2-4956-4515-b8f8-a1b06d4d5092}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC700E8"))
+			    quid       	"62A17AC700E8"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourses"
+				    quid       	"62A17AC700FA"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "OnRemoveMealCoursesInrogress"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{31cd58c7-882d-4902-9d94-8b63c8ee71bc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC7012F"))
+			    quid       	"62A17AC7012F"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourses"
+				    quid       	"62A17AC7013F"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "AutoMealParticipation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC7017C"))
+			    quid       	"62A17AC7017C"
+			    documentation 	
+|
+|In case where the prerequisites fulfilled, assigns all unassigned partial sessions to a meal session 
+|
+			    
+			    parameters 	(list Parameters
+				(object Parameter "referencClientSession"
+				    quid       	"62A17AC70192"
+				    documentation 	
+|
+|Defines a partial session as reference to identify service point meal
+|
+				    
+				    type       	"FlavourBusinessManager.EndUsers.FoodServiceClientSession"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetServingBatches"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e7cf8250-6b70-4095-bf94-bf087a79d362}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC70291"))
+			    quid       	"62A17AC70291"
+			    parameters 	(list Parameters
+				(object Parameter "waiter"
+				    quid       	"62A17AC7029E"
+				    type       	"FlavourBusinessManager.HumanResources.Waiter"))
+			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessManager.RoomService.ServingBatch,{25AEC1BF-1882-41C8-8B4A-B3B3E1EF624D}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ServingBatchDeassigned"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cad5c370-7874-46bf-a785-93efc6d68ed7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC70363"))
+			    quid       	"62A17AC70363"
+			    parameters 	(list Parameters
+				(object Parameter "waiter"
+				    quid       	"62A17AC7036F"
+				    type       	"FlavourBusinessManager.HumanResources.Waiter")
+				(object Parameter "servingBatch"
+				    quid       	"62A17AC7037F"
+				    type       	"FlavourBusinessFacade.RoomService.IServingBatch"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "GetNextSortingID"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4786b94c-efed-46cf-93d2-307a2343de57}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC7039D"))
+			    quid       	"62A17AC7039D"
+			    result     	"int"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "Init"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b5895f92-f271-4868-aaf6-dbbd158d4558}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC703C2"))
+			    quid       	"62A17AC703C2"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "RunMonitoring"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{34c5fae2-3f2b-4531-8db6-3752ec0ba8c8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC703E7"))
+			    quid       	"62A17AC703E7"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ReadyToServeMealcoursesCheck"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{17792be3-f73c-4e93-b382-6848fcef9521}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC8004C"))
+			    quid       	"62A17AC8004C"
+			    documentation 	
+|
+|This method finds all waiter which can serve the meal courses and update them for changes
+|
+			    
+			    parameters 	(list Parameters
+				(object Parameter "mealCourses"
+				    quid       	"62A17AC8005B"
+				    documentation 	
+|
+|Defines the meal courses which are ready for serving
+|
+				    
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>")
+				(object Parameter "excludeWaiter"
+				    quid       	"62A17AC80069"
+				    documentation 	
+|
+|This parameter defines the waiter where exclude from waiters list
+|
+				    
+				    type       	"FlavourBusinessManager.HumanResources.Waiter"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ServingBatchAssigned"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{eb9a6c0c-3a5e-4115-a6e2-c1aaee2b0fb9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC800B6"))
+			    quid       	"62A17AC800B6"
+			    parameters 	(list Parameters
+				(object Parameter "waiter"
+				    quid       	"62A17AC800C3"
+				    type       	"FlavourBusinessManager.HumanResources.Waiter")
+				(object Parameter "servingBatch"
+				    quid       	"62A17AC800D2"
+				    type       	"FlavourBusinessFacade.RoomService.IServingBatch"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "MoveCourseBefore"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c79fa8ae-e4b6-452e-96d8-9f590b3e5e04}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC80107"))
+			    quid       	"62A17AC80107"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourseAsReferenceUri"
+				    quid       	"62A17AC80112"
+				    type       	"string")
+				(object Parameter "movedMealCourseUri"
+				    quid       	"62A17AC8011F"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MoveCourseAfter"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1f3b96de-e184-4669-897b-17c69b3c260b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC80146"))
+			    quid       	"62A17AC80146"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourseAsReferenceUri"
+				    quid       	"62A17AC80152"
+				    type       	"string")
+				(object Parameter "movedMealCourseUri"
+				    quid       	"62A17AC8015E"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetItemToServingTimespanPredictions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3e5166da-a888-46e4-9778-4c4acfe31411}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC8031B"))
+			    quid       	"62A17AC8031B"
+			    parameters 	(list Parameters
+				(object Parameter "preparationStationItems"
+				    quid       	"62A17AC8032B"
+				    type       	"System.Collections.Generic.List<FlavourBusinessManager.RoomService.ItemPreparation>"))
+			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "MealCoursesInProgress"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0a7aeeab-712e-4d32-b84b-4de237e3192c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC80352"))
+			    quid       	"62A17AC80352"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActivePreparationStations"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1c8b7c3a-e3a4-4ea4-9c77-3d61ed8d47f1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC803BA")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"62A17AC803BA"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.PreparationStation>")
+			(object ClassAttribute "RebuildPreparationPlanLastTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9c0a13ae-a2d2-4371-b944-60605d818dcd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC90043")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"62A17AC90043"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "buildPreparationPlanLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{db77bf43-40ea-48ca-830f-f713e88938aa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC900B6")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC900B6"
+			    type       	"object")
+			(object ClassAttribute "_RebuildPreparationPlanLastTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a42810ef-fbbe-49d5-8733-04986c3d7030}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC900F5")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC900F5"
+			    type       	"System.DateTime")
+			(object ClassAttribute "ServicesContextRunTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2545475d-7f8d-4eb5-b7ec-12ca0dc59bfa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC90112")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC90112"
+			    type       	"FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "UnassignedMealCourses"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cd97524c-d96b-4469-8ad1-dbc709729bb4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC90177")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC90177"
+			    type       	"System.Collections.Generic.Dictionary<FlavourBusinessFacade.RoomService.IMealCourse,FlavourBusinessManager.RoomService.ServingBatch>")
+			(object ClassAttribute "MealsControllerLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2cdcccbe-599b-4ebd-8c71-a5e7db5a1bed}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC901BE")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC901BE"
+			    type       	"object")
+			(object ClassAttribute "MealCourseSortID"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8dd7566f-8b5f-4107-b93f-913139929d09}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC90222")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC90222"
+			    type       	"int")
+			(object ClassAttribute "ActionContext"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fa568071-4178-4e14-a25c-51f4f8498bef}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC9025E")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC9025E"
+			    type       	"FlavourBusinessManager.RoomService.ActionContext")
+			(object ClassAttribute "MonitoringTask"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{dfff57b8-a93a-48b8-a2f0-b87345e77f04}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62A17AC902C7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62A17AC902C7"
+			    type       	"System.Threading.Tasks.Task"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#")
@@ -25178,8 +25746,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	806
-		    origin_y   	0
+		    origin_x   	0
+		    origin_y   	191
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @392
 			    ShowCompartmentStereotypes 	TRUE
