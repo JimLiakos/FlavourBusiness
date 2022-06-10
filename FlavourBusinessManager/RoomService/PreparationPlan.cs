@@ -60,7 +60,28 @@ namespace FlavourBusinessManager.RoomService
         /// </summary>
         public bool PreparationPlanIsDoubleChecked { get; internal set; }
 
-        
+        internal void RemoveOutOfPlamPreparationItems()
+        {
+            foreach (var itemOutOfPlan in ItemPreparationsStartsAt.Keys.Where(x => x.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)).ToList())
+                ItemPreparationsStartsAt.Remove(itemOutOfPlan);
+
+            foreach (var outOfPlanItemEntry in (from itemsInPreparationEntry in ItemsInPreparation
+                                                from itemInPreparation in itemsInPreparationEntry.Value
+                                                where itemInPreparation.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)
+                                                select new
+                                                {
+                                                    PreparationStation = itemsInPreparationEntry.Key,
+                                                    itemInPreparation
+                                                }).ToList())
+            {
+                ItemsInPreparation[outOfPlanItemEntry.PreparationStation].Remove(outOfPlanItemEntry.itemInPreparation);
+                if (ItemsInPreparation[outOfPlanItemEntry.PreparationStation].Count == 0)
+                    ItemsInPreparation.Remove(outOfPlanItemEntry.PreparationStation);
+
+            }
+
+
+        }
     }
 
 
@@ -205,7 +226,7 @@ namespace FlavourBusinessManager.RoomService
                     else
                         actionContext.SetPreparationStartsAt(itemInPreparation, DateTime.UtcNow);
 
-                    previousePreparationEndsAt = actionContext.GetPreparationStartsAt(itemInPreparation);
+                    previousePreparationEndsAt = actionContext.GetPreparationEndsAt(itemInPreparation);
                 }
                 preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation);
 

@@ -51,6 +51,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 try
                 {
+                    actionContext.RemoveOutOfPlamPreparationItems();
                     DateTime timeStamp = DateTime.UtcNow;
                     actionContext.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;

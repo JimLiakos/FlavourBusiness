@@ -247,12 +247,20 @@ namespace FlavourBusinessManager.RoomService
                         if (_State == ItemPreparationState.ÉnPreparation)
                             _PreparationStartsAt = DateTime.UtcNow;
                         if (_State.IsInPreviousState(ItemPreparationState.ÉnPreparation))
+                        {
                             _PreparationStartsAt = null;
+                            PreparationTimeSpanInMin = -1;
+                        }
+
 
                         if (_State == ItemPreparationState.IsRoasting)
                             _CookingStartsAt = DateTime.UtcNow;
                         if (_State.IsInPreviousState(ItemPreparationState.IsRoasting))
+                        {
                             _CookingStartsAt = null;
+                            CookingTimeSpanInMin = -1;
+                        }
+
                         if (_State.IsIntheSameOrFollowingState(ItemPreparationState.IsPrepared) && previousState.IsInPreviousState(ItemPreparationState.IsPrepared) && PreparationStartsAt != null)
                             PreparationTimeSpanInMin = (DateTime.UtcNow - PreparationStartsAt.Value).TotalMinutes;
 
