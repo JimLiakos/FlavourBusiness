@@ -243,7 +243,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             _Current = this;
 
-             try
+            try
             {
                 FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("ServicesContextRunTime ctor:" + DateTime.Now.ToLongTimeString());
             }
@@ -2127,6 +2127,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        class PreparationStationItemsPattern
+        {
+            List<ItemPattern> ItemsPatterns; 
+
+
+        }
+
+        class ItemPattern
+        {
+            double MinDuration;
+            double MaxDuration;
+        }
+
         private void DeleteSimulationData()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -2141,8 +2154,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 foreach (var clientSession in simulationClientSessions)
                 {
                     var mainSession = clientSession.MainSession;
-                    
-                        
+
+
                     if (mainSession != null)
                     {
                         ObjectStorage.DeleteObject(mainSession);
