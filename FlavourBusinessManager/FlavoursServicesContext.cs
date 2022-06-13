@@ -357,12 +357,23 @@ namespace FlavourBusinessManager
         public IFlavoursServicesContextRuntime GetRunTime()
         {
 
-            if (FlavoursServicesContextRuntime != null)
-                return FlavoursServicesContextRuntime;
-
+       
+        
 
             lock (ServicesContextLock)
             {
+                if (FlavoursServicesContextRuntime != null)
+                    return FlavoursServicesContextRuntime;
+
+
+                try
+                {
+                    FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("Get runtime :" + DateTime.Now.ToLongTimeString());
+                }
+                catch (Exception error)
+                {
+                }
+    
                 try
                 {
                     string storageIdentity = null;
@@ -385,6 +396,13 @@ namespace FlavourBusinessManager
                         string storageName = ContextStorageName;
                         string storageLocation = "DevStorage";
 
+                        try
+                        {
+                            FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("Get runtime remote call:" + DateTime.Now.ToLongTimeString());
+                        }
+                        catch (Exception error)
+                        {
+                        }
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.Description = Description;
@@ -403,6 +421,14 @@ namespace FlavourBusinessManager
                         string storageLocation = "DevStorage";
                         //string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
 
+                        try
+                        {
+                            FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("Get runtime remote call:" + DateTime.Now.ToLongTimeString());
+                        }
+                        catch (Exception error)
+                        {
+                        }
+                  
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;

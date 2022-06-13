@@ -71,11 +71,15 @@ namespace FlavoursServicesWorkerRole
 
         public override bool OnStart()
         {
-
             try
             {
-
-                
+                try
+                {
+                    FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("Worker role OnStart :" + DateTime.Now.ToLongTimeString());
+                }
+                catch (Exception error)
+                {
+                }
 #if DEBUG && !DeviceDotNet
                 RemotingServices.SetDebugLeaseTime();
 #else

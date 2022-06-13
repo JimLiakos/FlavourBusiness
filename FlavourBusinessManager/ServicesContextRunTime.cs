@@ -242,6 +242,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
 
             _Current = this;
+
+             try
+            {
+                FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("ServicesContextRunTime ctor:" + DateTime.Now.ToLongTimeString());
+            }
+            catch (Exception error)
+            {
+            }
+
         }
 
         /// <exclude>Excluded</exclude>
@@ -432,7 +441,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             try
             {
 
-                //StartSimulator();
+                StartSimulator();
                 foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
                 {
                     try

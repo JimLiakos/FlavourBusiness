@@ -92,15 +92,31 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+6")]
         public string DeviceUpdateEtag
         {
-            get => _DeviceUpdateEtag;
+            get
+            {
+                lock (DeviceUpdateEtagLock)
+                    return _DeviceUpdateEtag;
+            }
             set
             {
-                if (_DeviceUpdateEtag != value)
+                lock (DeviceUpdateEtagLock)
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Description == "Pasta & Rice")
                     {
-                        _DeviceUpdateEtag = value;
-                        stateTransition.Consistent = true;
+
+                    }
+                    if (value != null && string.IsNullOrWhiteSpace(value))
+                    {
+
+                    }
+
+                    if (_DeviceUpdateEtag != value)
+                    {
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _DeviceUpdateEtag = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -348,7 +364,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 lock (DeviceUpdateEtagLock)
                 {
-                    if (DeviceUpdateEtag == null)
+                    if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
                         DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
                 }
             });
@@ -685,19 +701,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     lock (DeviceUpdateLock)
                     {
-                        if (DeviceUpdateEtag != null)
+
+
+                        long numberOfTicks = 0;
+                        if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
                         {
-                            long numberOfTicks = 0;
-                            if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
+                            if (_Description == "Pasta & Rice")
                             {
-                                DateTime myDate = new DateTime(numberOfTicks);
-                                if ((DateTime.Now - myDate).TotalSeconds > 3)
+
+                            }
+                            DateTime myDate = new DateTime(numberOfTicks);
+                            if ((DateTime.Now - myDate).TotalSeconds > 3)
+                            {
+                                if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 10)
                                 {
-                                    if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 10)
-                                    {
-                                        _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
-                                        RaiseEventTimeStamp = DateTime.UtcNow;
-                                    }
+                                    _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+                                    RaiseEventTimeStamp = DateTime.UtcNow;
                                 }
                             }
                         }
@@ -1437,7 +1456,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris)
         {
-            
+
 
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
                                  from itemPreparation in servicePointPreparationItems.PreparationItems

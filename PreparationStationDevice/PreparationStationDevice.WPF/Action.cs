@@ -39,7 +39,7 @@ namespace PreparationStationDevice.WPF
         public Simulator Simulator { get; internal set; }
 
         public readonly string Name;
-        public MealCourse(string name, List<ItemsPreparationSession> preparationSessions, Simulator simulator)
+        public MealCourse(string name, List<ItemsPreparationSection> preparationSessions, Simulator simulator)
         {
             Simulator = simulator;
             Name = name;
@@ -50,9 +50,9 @@ namespace PreparationStationDevice.WPF
         }
 
         /// <exclude>Excluded</exclude>
-        List<ItemsPreparationSession> _PreparationSessions;
+        List<ItemsPreparationSection> _PreparationSessions;
 
-        public List<ItemsPreparationSession> PreparationSessions
+        public List<ItemsPreparationSection> PreparationSessions
         {
             get
             {
@@ -63,7 +63,7 @@ namespace PreparationStationDevice.WPF
         /// <summary>
         /// Preparation session to be done
         /// </summary>
-        public List<ItemsPreparationSession> PendingPreparationSessions
+        public List<ItemsPreparationSection> PendingPreparationSessions
         {
             get
             {
@@ -95,6 +95,37 @@ namespace PreparationStationDevice.WPF
             }
         }
 
+        public bool IsLastPlanReferencePreparationSectionCommited(ActionContext context)
+        {
+            if (PendingPreparationSessions.Count != 0)
+                return PendingPreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).Last().PreparationOrderCommited;
+
+            else
+                return false;
+
+        }
+
+
+        public ItemsPreparationSection GetReferencePreparationSection(ActionContext context)
+        {
+            return PendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).LastOrDefault();
+        }
+
+        public ItemsPreparationSection GetLastPlanReferencePreparationSection(ActionContext context)
+        {
+            return PendingPreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).LastOrDefault();
+        }
+        public DateTime GetLastPlanPreparationForecast(ActionContext context)
+        {
+            if (PendingPreparationSessions.Count != 0)
+                return PendingPreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).Last().GetLastPlanPreparationForecast(context);
+            else
+            {
+                if (PreparationSessions.Count == 0)
+                    return DateTime.Now;
+                return PreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).Last().GetLastPlanPreparationForecast(context);
+            }
+        }
         public DateTime GetPreparationStartForecast(ActionContext context)
         {
             return PendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context) - TimeSpanEx.FromMinutes(PendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().Duration);
@@ -114,12 +145,14 @@ namespace PreparationStationDevice.WPF
             }
             return string.Format("{0} {1} : {2}", Name, subActions, string.Format("{0:h:mm:ss tt}", GetPreparationForecast(actionContext)));
         }
+
+     
     }
 
     /// <MetaDataID>{0294b45b-f0c7-4af8-9938-6d827dbecc83}</MetaDataID>
-    public class ItemsPreparationSession
+    public class ItemsPreparationSection
     {
-        public ItemsPreparationSession()
+        public ItemsPreparationSection()
         {
 
         }
@@ -204,10 +237,30 @@ namespace PreparationStationDevice.WPF
             return ProductionLine.Name + " " + MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", MealCourse.GetPreparationForecast(actionContext)) + " slots : " + PreparationItems.Count.ToString() + " v:" + ProductionLine?.Velocity;
         }
 
+        public string LastPlanToString(ActionContext actionContext)
+        {
+            if (actionContext.LastPlanSlotsPreparationStartsAt == null)
+                return "";
+
+            var preparationForecast = GetLastPlanPreparationForecast(actionContext);
+
+            var preparationStartsAt = GetPreparationStartsAt(actionContext);
+
+            return ProductionLine.Name + " " + MealCourse.Name + " " + string.Format("{0:h:mm:ss tt}", preparationStartsAt) + " " + " " + string.Format("{0:h:mm:ss tt}", preparationForecast) + " " + string.Format("{0:h:mm:ss tt}", MealCourse.GetLastPlanPreparationForecast(actionContext)) + " slots : " + PreparationItems.Count.ToString() + " v:" + ProductionLine?.Velocity;
+        }
+
         public DateTime GetPreparationForecast(ActionContext actionContext)
         {
             if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine))
                 return actionContext.GetPreparationEndsAt(PreparationItems.OrderBy(x => actionContext.GetPreparationEndsAt(x)).Last()).Value;
+            else
+                return PreparationForecast;
+        }
+
+        public DateTime GetLastPlanPreparationForecast(ActionContext actionContext)
+        {
+            if (actionContext.ProductionLineActions.ContainsKey(this.ProductionLine))
+                return actionContext.GetLastPlanPreparationEndsAt(PreparationItems.OrderBy(x => actionContext.GetLastPlanPreparationEndsAt(x)).Last()).Value;
             else
                 return PreparationForecast;
         }
@@ -264,7 +317,7 @@ namespace PreparationStationDevice.WPF
         }
         public FlavourBusinessFacade.RoomService.ItemPreparationState State { get; set; }
         [JsonIgnore]
-        public ItemsPreparationSession PreparationSession { get; internal set; }
+        public ItemsPreparationSection PreparationSession { get; internal set; }
 
         [JsonIgnore]
         public PreparationStation ProductionLine { get; private set; }
@@ -285,7 +338,7 @@ namespace PreparationStationDevice.WPF
             Simulator = simulator;
         }
         Simulator Simulator;
-        public List<ItemsPreparationSession> PreparationSessions
+        public List<ItemsPreparationSection> PreparationSessions
         {
             get
             {
@@ -330,7 +383,7 @@ namespace PreparationStationDevice.WPF
                              where thePartialAction.ProductionLine == this
                              from slot in thePartialAction.ItemsToPrepare
                              select slot).ToList();
-                ItemsPreparationSession partialAction = null;
+                ItemsPreparationSection partialAction = null;
                 double packingTime = 0;
                 foreach (var slot in slots)
                 {
@@ -369,7 +422,7 @@ namespace PreparationStationDevice.WPF
         }
 
 
-
+        List<string> logs = new List<string>();
 
         /// <summary>
         /// 
@@ -380,10 +433,13 @@ namespace PreparationStationDevice.WPF
         {
 
 
-            List<ItemsPreparationSession> PreparationSessionsForOptimazation = null;
+            List<ItemsPreparationSection> PreparationSessionsForOptimazation = null;
             if (stirTheSequence)
             {
                 // first takes the uncommitted  items preparation contexts where the meal course has all items preparation contexts uncommitted 
+                if (PreparationSessions.Count > 1)
+                {
+                }
                 PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.PreparationSessions.All(y => !y.PreparationOrderCommited)).ToList();
 
                 var a_count = PreparationSessionsForOptimazation.Count;
@@ -400,18 +456,56 @@ namespace PreparationStationDevice.WPF
             }
             else
             {
+                if (Name == "C")
+                {
+
+
+                    string ss1 = PreparationSessions[0].ToString(actionContext);
+                    logs.Add(ss1);
+                    string ss2 = PreparationSessions[0].LastPlanToString(actionContext);
+                    if (PreparationSessions.Count > 1)
+                    {
+                        string ss3 = PreparationSessions[1].ToString(actionContext);
+                    }
+
+                    //   string ss2 = PreparationSessions[1].ToString(actionContext);
+                }
                 //preparation contexts order by the preparation forecast time of meal course where this belongs
                 PreparationSessionsForOptimazation = PreparationSessions.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
+
+                if (actionContext.LastPlanSlotsPreparationStartsAt != null)
+                {
+                    foreach (var preparationSection in PreparationSessionsForOptimazation.ToList())
+                    {
+                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of mealcourse has change
+                            preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommited) // there is reference committed preparation section
+                        {
+                            if (preparationSection.MealCourse.GetLastPlanPreparationForecast(actionContext) < preparationSection.MealCourse.GetPreparationForecast(actionContext))// the meal course preparation forecast is worse from the last plan
+                            {
+                                if (PreparationSessionsForOptimazation.Count > 1)
+                                {
+                                    int oneUpPos = PreparationSessionsForOptimazation.IndexOf(preparationSection) - 1; //moves preparation section one position up 
+                                    if (oneUpPos >= 0)
+                                    {
+                                        PreparationSessionsForOptimazation.Remove(preparationSection);
+                                        PreparationSessionsForOptimazation.Insert(oneUpPos, preparationSection);
+                                        preparationSection.PreparationOrderCommited = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
 
 
             //preparation order committed PreparationSessions
-            List<ItemsPreparationSession> orderCommittedreparationContexts = PreparationSessions.Where(x => x.PreparationOrderCommited).OrderBy(x => x.PreparatioOrder).ToList();
+            List<ItemsPreparationSection> orderCommittedreparationContexts = PreparationSessions.Where(x => x.PreparationOrderCommited).OrderBy(x => x.PreparatioOrder).ToList();
 
             //Adds the re planed preparation contexts 
             orderCommittedreparationContexts.AddRange(PreparationSessionsForOptimazation);
-            List<ItemsPreparationSession> actions = orderCommittedreparationContexts;
+            List<ItemsPreparationSection> actions = orderCommittedreparationContexts;
 
 
             //List<PartialAction> actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
@@ -422,7 +516,7 @@ namespace PreparationStationDevice.WPF
 
 
 #if DEBUG
-            List<ItemsPreparationSession> contextActions = new List<ItemsPreparationSession>();
+            List<ItemsPreparationSection> contextActions = new List<ItemsPreparationSection>();
             if (actionContext.ProductionLineActions.ContainsKey(this))
                 contextActions = actionContext.ProductionLineActions[this];
             if (!Simulator.CompareActionsSets(actions, contextActions))
@@ -441,7 +535,7 @@ namespace PreparationStationDevice.WPF
 
         internal void Run(ActionContext actionContext)
         {
-            List<ItemsPreparationSession> filteredPartialActions = GetActionsToDo(actionContext);
+            List<ItemsPreparationSection> filteredPartialActions = GetActionsToDo(actionContext);
             var strings = GetActionsToStrings(actionContext);
             var slots = (from partialAction in filteredPartialActions
                          from slot in partialAction.ItemsToPrepare
@@ -493,7 +587,7 @@ namespace PreparationStationDevice.WPF
             if (actionContext.ProductionLineActions.ContainsKey(this))
                 actions = actionContext.ProductionLineActions[this];
 
-            List<ItemsPreparationSession> filteredPartialActions = GetActionsToDo(actionContext);
+            List<ItemsPreparationSection> filteredPartialActions = GetActionsToDo(actionContext);
             foreach (var partialAction in actions)
             {
                 if (filteredPartialActions.Contains(partialAction))
@@ -524,6 +618,10 @@ namespace PreparationStationDevice.WPF
         {
             foreach (var partialAction in GetActionsToDo(actionContext))
             {
+                if (Name == "C")
+                {
+
+                }
                 partialAction.PreparationOrderCommited = true;
 
                 foreach (var preparationItem in partialAction.PreparationItems)
@@ -535,14 +633,14 @@ namespace PreparationStationDevice.WPF
 
         }
 
-        public List<ItemsPreparationSession> GetActionsToDo(ActionContext actionContext)
+        public List<ItemsPreparationSection> GetActionsToDo(ActionContext actionContext)
         {
 
 
             var actions = PreparationSessions;//.Where(x=>(x.Action.PreparationForecast-TimeSpanEx.FromMinutes(x.Duration+5))<DateTime.UtcNow).ToList();
             if (actionContext.ProductionLineActions.ContainsKey(this))
                 actions = actionContext.ProductionLineActions[this];
-            List<ItemsPreparationSession> filteredPartialActions = new List<ItemsPreparationSession>();
+            List<ItemsPreparationSection> filteredPartialActions = new List<ItemsPreparationSection>();
             foreach (var partialAction in actions)
             {
                 if ((partialAction.MealCourse.GetPreparationForecast(actionContext) - partialAction.GetPreparationForecast(actionContext)).GetTotalMinutes() < 1.5 * Simulator.Velocity || ((partialAction.MealCourse.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(partialAction.Duration + (2 * Simulator.Velocity))) < DateTime.UtcNow))
@@ -614,12 +712,19 @@ namespace PreparationStationDevice.WPF
             new ItemPreparation() { Name = "Pizza margarita",Duration = 7,PackingTime=0.8 },
             new ItemPreparation() { Name = "Burger Americana",Duration = 8, PackingTime=0.2 },
             new ItemPreparation(){Name="Pizza D'adrea",Duration=7, PackingTime=0.8},
-            new ItemPreparation(){Name="Chiken Burger",Duration=8 , PackingTime=0.2 },
+            new ItemPreparation(){Name="Chiken Burger",Duration=9 , PackingTime=0.2 },
             new ItemPreparation(){Name="Boloneze",Duration=8 , PackingTime=0.2 },
             new ItemPreparation(){Name="Amatritsian",Duration=7 , PackingTime=0.2 },
             new ItemPreparation(){Name="Pizza special",Duration=7, PackingTime=0.8},
             new ItemPreparation() { Name = "Carbonara", Duration = 8 , PackingTime=0.2 }
         };
+
+        //B_ProductionLineActionSlots[3];
+        //C_ProductionLineActionSlots[0];
+
+
+        //C_ProductionLineActionSlots[2]
+
 
         static List<ItemPreparation> A_ProductionLineActionSlots = new List<ItemPreparation>(){
             new ItemPreparation(){Name="Πίτα γύρο χειρινο",Duration=0.5 , PackingTime=0.08 },
@@ -627,10 +732,11 @@ namespace PreparationStationDevice.WPF
             new ItemPreparation(){Name="Κοτομπεικον",Duration=4 , PackingTime=0.2 },
             new ItemPreparation(){Name= "Μεριδα γύρο κοτοπουλ", Duration=1 , PackingTime=0.15 },
             new ItemPreparation(){Name= "Μεριδα γύρο χειρινο", Duration=1 , PackingTime=0.15 },
+             new ItemPreparation(){Name= "Mosx", Duration=1 , PackingTime=0.15 }
         };
         static List<ItemPreparation> C_ProductionLineActionSlots = new List<ItemPreparation>()
         {
-            new ItemPreparation(){Name= "Ριζοτο Alfredo ", Duration=6 , PackingTime=0.1 },
+            new ItemPreparation(){Name= "Ριζοτο Alfredo ", Duration=4 , PackingTime=0.1 },
             new ItemPreparation() { Name = "Ριζοτο Μιλανέζε ", Duration = 6 , PackingTime=0.1 },
              new ItemPreparation() { Name = "Roast Beef ", Duration = 9 , PackingTime=0.1 }
         };
@@ -671,145 +777,148 @@ namespace PreparationStationDevice.WPF
             //{
             //    preparationSession.ProductionLine = ProductionLines[preparationSession.ProductionLineIndex];
             //}
-            //Task.Run(() =>
-            //{
-            //    int count = 1;
-            //    List<List<string>> theAStrings = new List<List<string>>();
+            Task.Run(() =>
+            {
+                int count = 1;
+                List<List<string>> theAStrings = new List<List<string>>();
 
-            //    List<Snapshot> productionLinesStrings = new List<Snapshot>();
-            //    ActionContext actionContext = new ActionContext();
-            //    try
-            //    {
-            //        while (true)
-            //        {
-            //            if (count < 15)
-            //            {
-            //                if (AddAction(count))
-            //                    count++;
-            //            }
-            //            else
-            //            {
+                List<Snapshot> productionLinesStrings = new List<Snapshot>();
+                ActionContext actionContext = new ActionContext();
+                try
+                {
+                    while (true)
+                    {
+                        if (count < 15)
+                        {
+                            if (AddAction(count))
+                                count++;
+                        }
+                        else
+                        {
 
-            //            }
-            //            //if (ActionsRepository.Count > 0)
-            //            //{
-            //            //    _Actions.Add(ActionsRepository[0]);
-            //            //    ActionsRepository.RemoveAt(0);
-            //            //}
-            //            //else
-            //            //{
-            //            //}
-
-
-
-            //            var _this = this;
+                        }
+                        //if (ActionsRepository.Count > 0)
+                        //{
+                        //    _Actions.Add(ActionsRepository[0]);
+                        //    ActionsRepository.RemoveAt(0);
+                        //}
+                        //else
+                        //{
+                        //}
 
 
-                        
 
-            //            Dictionary<PreparationStation, List<ItemsPreparationSession>> productionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSession>>();
-            //            foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
-            //                productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
-
-            //            RebuildPreparationPlan(actionContext);
-
-            //            foreach (var productionLine in ProductionLines)
-            //            {
-
-            //                if (productionLineActions.ContainsKey(productionLine) && !Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
-            //                {
-            //                    var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
-            //                    var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
-            //                }
-            //            }
+                        var _this = this;
 
 
-            //            List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
 
 
-            //            foreach (var productionLine in ProductionLines)
-            //                currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
+                        Dictionary<PreparationStation, List<ItemsPreparationSection>> productionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSection>>();
+                        foreach (var productionLine in actionContext.ProductionLineActions.Keys.ToArray())
+                            productionLineActions[productionLine] = actionContext.ProductionLineActions[productionLine].ToList();
+                        if (count == 3)
+                        {
+
+                        }
+                        RebuildPreparationPlan(actionContext);
+
+                        foreach (var productionLine in ProductionLines)
+                        {
+
+                            if (productionLineActions.ContainsKey(productionLine) && !Simulator.CompareActionsSets(productionLineActions[productionLine], actionContext.ProductionLineActions[productionLine]))
+                            {
+                                var actionStrings = Simulator.GetActionsToStrings(actionContext, actionContext.ProductionLineActions[productionLine]);
+                                var actionContextActionStrings = Simulator.GetActionsToStrings(actionContext, productionLineActions[productionLine]);
+                            }
+                        }
 
 
-            //            if (productionLinesStrings.Count > 0)
-            //            {
-
-            //                Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-
-            //                string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
-            //                if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
-            //                    productionLinesStrings.Add(snapshot);
-            //                else
-            //                {
-
-            //                }
+                        List<List<string>> currentProductionLinesActionStrings = new List<List<string>>();
 
 
-            //            }
-            //            else
-            //            {
-            //                Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
-            //                productionLinesStrings.Add(snapshot);
-            //            }
+                        foreach (var productionLine in ProductionLines)
+                            currentProductionLinesActionStrings.Add(productionLine.GetActionsToDoStrings(actionContext));
 
-            //            var astrings = MealCourses.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.GetDesription(actionContext)).ToList();
-            //            theAStrings.Add(astrings);
-            //            if (count == 7)
-            //            {
 
-            //            }
-            //            foreach (var inProductionLine in ProductionLines)
-            //            {
-            //                var strings = inProductionLine.GetActionsToStrings(actionContext);
-            //            }
+                        if (productionLinesStrings.Count > 0)
+                        {
 
-            //            foreach (var productionLine in ProductionLines)
-            //            {
-            //                productionLine.Run(actionContext);
-            //            }
+                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
 
-            //            string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
+                            string k_json = OOAdvantech.Json.JsonConvert.SerializeObject(snapshot.Entry);
+                            if (OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings.Last().Entry) != k_json)
+                                productionLinesStrings.Add(snapshot);
+                            else
+                            {
 
-            //            string json_a = OOAdvantech.Json.JsonConvert.SerializeObject((from action in MealCourses
-            //                                                                          where action.CompletionTime != null
-            //                                                                          orderby action.CompletionTime
-            //                                                                          select new ActionCompleted
-            //                                                                          {
-            //                                                                              ActionName = action.Name,
-            //                                                                              SubActionCompletionTime = action.PreparationSessions.Select(x => x.ProductionLine.Name + " " + string.Format("{0:h:mm:ss tt}", x.CompletionTime)).ToList()
-            //                                                                          }).ToList());
+                            }
 
-            //            string mealCoursesCopyJson = OOAdvantech.Json.JsonConvert.SerializeObject(MealCoursesCopy);
 
-            //            if (productionLinesStrings.LastOrDefault() != null)
-            //            {
-            //                if (count >= 15 && productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
-            //                {
+                        }
+                        else
+                        {
+                            Snapshot snapshot = new Snapshot() { Entry = currentProductionLinesActionStrings, TimeSpan = string.Format("{0:h:mm:ss tt}", DateTime.UtcNow) };
+                            productionLinesStrings.Add(snapshot);
+                        }
 
-            //                    if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json"))
-            //                        System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json", json_a);
+                        var astrings = MealCourses.OrderBy(x => x.GetPreparationForecast(actionContext)).Select(x => x.GetDesription(actionContext)).ToList();
+                        theAStrings.Add(astrings);
+                        if (count == 7)
+                        {
 
-            //                    if (!System.IO.File.Exists(@"F:\PreparationData\" + Name +"_"+ GetHashCode() + "_data.json"))
-            //                        System.IO.File.WriteAllText(@"F:\PreparationData\" +  Name + "_" + GetHashCode() + "_data.json", json);
+                        }
+                        foreach (var inProductionLine in ProductionLines)
+                        {
+                            var strings = inProductionLine.GetActionsToStrings(actionContext);
+                        }
 
-            //                }
-            //            }
+                        foreach (var productionLine in ProductionLines)
+                        {
+                            productionLine.Run(actionContext);
+                        }
 
-            //            System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2 * Velocity).TotalMilliseconds);
+                        string json = OOAdvantech.Json.JsonConvert.SerializeObject(productionLinesStrings);
 
-            //        }
+                        string json_a = OOAdvantech.Json.JsonConvert.SerializeObject((from action in MealCourses
+                                                                                      where action.CompletionTime != null
+                                                                                      orderby action.CompletionTime
+                                                                                      select new ActionCompleted
+                                                                                      {
+                                                                                          ActionName = action.Name,
+                                                                                          SubActionCompletionTime = action.PreparationSessions.Select(x => x.ProductionLine.Name + " " + string.Format("{0:h:mm:ss tt}", x.CompletionTime)).ToList()
+                                                                                      }).ToList());
 
-            //    }
-            //    catch (Exception error)
-            //    {
+                        string mealCoursesCopyJson = OOAdvantech.Json.JsonConvert.SerializeObject(MealCoursesCopy);
 
-            //        throw;
-            //    }
+                        if (productionLinesStrings.LastOrDefault() != null)
+                        {
+                            if (count >= 15 && productionLinesStrings.Last().Entry[0].Count == 0 && productionLinesStrings.Last().Entry[1].Count == 0 && productionLinesStrings.Last().Entry[2].Count == 0)
+                            {
 
-            //});
+                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json"))
+                                    System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_summary.json", json_a);
+
+                                if (!System.IO.File.Exists(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_data.json"))
+                                    System.IO.File.WriteAllText(@"F:\PreparationData\" + Name + "_" + GetHashCode() + "_data.json", json);
+
+                            }
+                        }
+
+                        System.Threading.Thread.Sleep((int)TimeSpanEx.FromMinutes(0.2 * Velocity).TotalMilliseconds);
+
+                    }
+
+                }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+
+            });
         }
 
-        public static bool CompareActionsSets(List<ItemsPreparationSession> actions, List<ItemsPreparationSession> contextActions)
+        public static bool CompareActionsSets(List<ItemsPreparationSection> actions, List<ItemsPreparationSection> contextActions)
         {
             if (actions == contextActions)
             {
@@ -831,7 +940,7 @@ namespace PreparationStationDevice.WPF
             return true;
         }
 
-        public static List<string> GetActionsToStrings(ActionContext actionContext, List<ItemsPreparationSession> actions)
+        public static List<string> GetActionsToStrings(ActionContext actionContext, List<ItemsPreparationSection> actions)
         {
 
             List<string> strings =
@@ -852,7 +961,7 @@ namespace PreparationStationDevice.WPF
                 //    return false;
 
 
-                if (actionID < 5 && (DateTime.UtcNow - LastActionAdded).GetTotalMinutes() < (2.5 * Simulator.Velocity))
+                if (actionID < 5 && (DateTime.UtcNow - LastActionAdded).GetTotalMinutes() < (0.8 * Simulator.Velocity))
                     return false;
 
                 if (actionID >= 5 && actionID < 7 && (DateTime.UtcNow - LastActionAdded).GetTotalMinutes() < (1.5 * Simulator.Velocity))
@@ -865,40 +974,53 @@ namespace PreparationStationDevice.WPF
                     return false;
 
 
-
-                var patern = ProductionLinesSlots[_R.Next(ProductionLinesSlots.Count - 1)].ToList();
-
                 List<ItemPreparation> a_productionLineActionSlots = new List<ItemPreparation>();
-                while (patern[0] > 0)
-                {
-                    a_productionLineActionSlots.Add(A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[0]));
-                    patern[0] = patern[0] - 1;
-                }
-
                 List<ItemPreparation> b_productionLineActionSlots = new List<ItemPreparation>();
-                while (patern[1] > 0)
-                {
-                    b_productionLineActionSlots.Add(B_ProductionLineActionSlots[_R.Next(B_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
-                    patern[1] = patern[1] - 1;
-                }
                 List<ItemPreparation> c_productionLineActionSlots = new List<ItemPreparation>();
-                while (patern[2] > 0)
-                {
-                    c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
-                    patern[2] = patern[2] - 1;
-                }
 
-                List<ItemsPreparationSession> partialActions = new List<ItemsPreparationSession>();
+                if (actionID == 1)
+                {
+                    b_productionLineActionSlots.Add(B_ProductionLineActionSlots[3]);
+                    c_productionLineActionSlots.Add(C_ProductionLineActionSlots[0]);
+                }
+                else
+
+
+                if (actionID == 2)
+                {
+                    c_productionLineActionSlots.Add(C_ProductionLineActionSlots[2]);
+                }
+                else
+                    return true;
+
+                //var patern = ProductionLinesSlots[_R.Next(ProductionLinesSlots.Count - 1)].ToList();
+                //while (patern[0] > 0)
+                //{
+                //    a_productionLineActionSlots.Add(A_ProductionLineActionSlots[_R.Next(A_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[0]));
+                //    patern[0] = patern[0] - 1;
+                //}
+                //while (patern[1] > 0)
+                //{
+                //    b_productionLineActionSlots.Add(B_ProductionLineActionSlots[_R.Next(B_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
+                //    patern[1] = patern[1] - 1;
+                //}
+                //while (patern[2] > 0)
+                //{
+                //    c_productionLineActionSlots.Add(C_ProductionLineActionSlots[_R.Next(C_ProductionLineActionSlots.Count - 1)].CopyFor(ProductionLines[1]));
+                //    patern[2] = patern[2] - 1;
+                //}
+
+                List<ItemsPreparationSection> partialActions = new List<ItemsPreparationSection>();
 
 
                 if (a_productionLineActionSlots.Count > 0)
-                    partialActions.Add(new ItemsPreparationSession() { ProductionLine = ProductionLines[0], ProductionLineIndex = 0, PreparationItems = a_productionLineActionSlots }); ;
+                    partialActions.Add(new ItemsPreparationSection() { ProductionLine = ProductionLines[0], ProductionLineIndex = 0, PreparationItems = a_productionLineActionSlots }); ;
 
                 if (b_productionLineActionSlots.Count > 0)
-                    partialActions.Add(new ItemsPreparationSession() { ProductionLine = ProductionLines[1], ProductionLineIndex = 1, PreparationItems = b_productionLineActionSlots });
+                    partialActions.Add(new ItemsPreparationSection() { ProductionLine = ProductionLines[1], ProductionLineIndex = 1, PreparationItems = b_productionLineActionSlots });
 
                 if (c_productionLineActionSlots.Count > 0)
-                    partialActions.Add(new ItemsPreparationSession() { ProductionLine = ProductionLines[2], ProductionLineIndex = 2, PreparationItems = c_productionLineActionSlots });
+                    partialActions.Add(new ItemsPreparationSection() { ProductionLine = ProductionLines[2], ProductionLineIndex = 2, PreparationItems = c_productionLineActionSlots });
                 if (partialActions.Count != 0)
                 {
 
@@ -944,19 +1066,31 @@ namespace PreparationStationDevice.WPF
                 {
                     productionLine.OptimizePreparationPlan(actionContext, stirTheSequence);
                     productionLine.GetPredictions(actionContext);
+
+
                 }
                 stirTheSequence = false;
             }
+            actionContext.LastPlanSlotsPreparationStartsAt = new Dictionary<ItemPreparation, DateTime>(actionContext.SlotsPreparationStartsAt);
 
             foreach (var productionLine in ProductionLines)
                 productionLine.ActionsOrderCommited(actionContext);
         }
 
     }
+
+    //public enum OptimazationType
+    //{
+    //    StirSequence,
+    //    NormalizationStirSequence,
+
+    //}
     /// <MetaDataID>{7d5af78e-a3af-45b8-b6a4-48e9facded87}</MetaDataID>
     public class ActionContext
     {
-        public Dictionary<PreparationStation, List<ItemsPreparationSession>> ProductionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSession>>();
+
+
+        public Dictionary<PreparationStation, List<ItemsPreparationSection>> ProductionLineActions = new Dictionary<PreparationStation, List<ItemsPreparationSection>>();
 
         public DateTime? GetPreparationStartsAt(ItemPreparation actionSlot)
         {
@@ -965,7 +1099,7 @@ namespace PreparationStationDevice.WPF
                 return dateTime;
             return actionSlot.PreparationStart;
         }
-     
+
         public void SetPreparationStartsAt(ItemPreparation actionSlot, DateTime dateTime)
         {
             if (SlotsPreparationStartsAt.ContainsKey(actionSlot) && SlotsPreparationStartsAt[actionSlot] != dateTime)
@@ -991,7 +1125,24 @@ namespace PreparationStationDevice.WPF
 
             return actionSlot.PreparationStart + TimeSpanEx.FromMinutes(actionSlot.ActiveDuration);
         }
-        Dictionary<ItemPreparation, DateTime> SlotsPreparationStartsAt = new Dictionary<ItemPreparation, DateTime>();
+
+        public DateTime? GetLastPlanPreparationEndsAt(ItemPreparation actionSlot)
+        {
+            if (actionSlot.ActiveDuration != actionSlot.Duration)
+            {
+
+            }
+
+
+            DateTime dateTime;
+            if (LastPlanSlotsPreparationStartsAt.TryGetValue(actionSlot, out dateTime))
+                return dateTime + TimeSpanEx.FromMinutes(actionSlot.ActiveDuration);
+
+            return DateTime.MinValue;
+        }
+        internal Dictionary<ItemPreparation, DateTime> SlotsPreparationStartsAt = new Dictionary<ItemPreparation, DateTime>();
+
+        internal Dictionary<ItemPreparation, DateTime> LastPlanSlotsPreparationStartsAt;
 
         //        Dictionary<ActionSlot, DateTime> SlotsPreparationEndsAt = new Dictionary<ActionSlot, DateTime>();
 
@@ -1056,14 +1207,14 @@ namespace PreparationStationDevice.WPF
             return string.Format("{0} {1} : {2}", mealCourse.Name, subActions, string.Format("{0:h:mm:ss tt}", mealCourse.GetPreparationForecast(actionContext)));
         }
 
-        public static string GetDesription(this ItemsPreparationSession itemsPreparationSession)
+        public static string GetDesription(this ItemsPreparationSection itemsPreparationSession)
         {
 
             return itemsPreparationSession.ProductionLine.Name + " " + itemsPreparationSession.MealCourse.Name + " " + itemsPreparationSession.PreparationForecast.ToShortTimeString() + " " + itemsPreparationSession.MealCourse.PreparationForecast.ToShortTimeString();
 
         }
 
-        public static string GetDesription(this ItemsPreparationSession itemsPreparationSession, ActionContext actionContext)
+        public static string GetDesription(this ItemsPreparationSection itemsPreparationSession, ActionContext actionContext)
         {
             var preparationForecast = itemsPreparationSession.GetPreparationForecast(actionContext);
 

@@ -245,6 +245,26 @@ namespace FlavourBusinessManager
             return null;
         }
 
+       static object EventLogLock = new object();
+        static System.Diagnostics.EventLog _FlavoursServicesEventLog;
+        public static System.Diagnostics.EventLog FlavoursServicesEventLog
+        {
+            get
+            {
+
+                lock (EventLogLock)
+                {
+                    if (_FlavoursServicesEventLog != null)
+                        return _FlavoursServicesEventLog;
+                    if (!System.Diagnostics.EventLog.SourceExists("FlavoursServices", "."))
+                        System.Diagnostics.EventLog.CreateEventSource("FlavoursServices", "Microneme");
+                    System.Diagnostics.EventLog myLog = new System.Diagnostics.EventLog();
+                    myLog.Source = "FlavoursServices";
+                    _FlavoursServicesEventLog = myLog;
+                    return _FlavoursServicesEventLog; 
+                }
+            }
+        }
         /// <MetaDataID>{f20f9e9d-c06f-440b-afdc-1a8f38dd82ea}</MetaDataID>
         public IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicesContextIdentity, string organizationIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false)
         {
@@ -253,6 +273,15 @@ namespace FlavourBusinessManager
             storageLocation = "DevStorage";
             string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
 
+
+            try
+            {
+                FlavoursServicesContextManagment.FlavoursServicesEventLog.WriteEntry("In GetServicesContextRuntime:" + DateTime.Now.ToLongTimeString());
+            }
+            catch (Exception error)
+            {
+            }
+        
 
             ObjectStorage objectStorage = null;
             try
