@@ -2058,7 +2058,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         void StartSimulator()
         {
-            
+            return;
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
                 SimulationTask = Task.Run(() =>

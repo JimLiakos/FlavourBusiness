@@ -477,7 +477,7 @@ namespace PreparationStationDevice.WPF
                 {
                     foreach (var preparationSection in PreparationSessionsForOptimazation.ToList())
                     {
-                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of mealcourse has change
+                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of meal course has change
                             preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommited) // there is reference committed preparation section
                         {
                             if (preparationSection.MealCourse.GetLastPlanPreparationForecast(actionContext) < preparationSection.MealCourse.GetPreparationForecast(actionContext))// the meal course preparation forecast is worse from the last plan

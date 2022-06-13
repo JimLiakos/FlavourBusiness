@@ -51,9 +51,19 @@ namespace FlavourBusinessManager.RoomService
             return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation));
         }
 
+        public DateTime GetLastPlanPreparationEndsAt(ItemPreparation itemPreparation)
+        {
+            DateTime dateTime;
+            if (LastPlanItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
+                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation));
+
+            return DateTime.MinValue;
+        }
+
 
         internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
 
+        internal Dictionary<ItemPreparation, DateTime> LastPlanItemPreparationsStartsAt;
 
         /// <summary>
         /// 
@@ -118,10 +128,44 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        public static DateTime GetLastPlanPreparationForecast(this IMealCourse mealCourse, ActionContext context)
+        {
+            var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
+
+            if (pendingPreparationSessions.Count != 0)
+                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
+            else
+            {
+                if (pendingPreparationSessions.Count == 0)
+                    return DateTime.Now;
+                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
+            }
+        }
+        public static ItemsPreparationContext GetReferencePreparationSection(this IMealCourse mealCourse, ActionContext context)
+        {
+            var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
+
+            return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).LastOrDefault();
+        }
+
+        public static ItemsPreparationContext GetLastPlanReferencePreparationSection(this IMealCourse mealCourse, ActionContext context)
+        {
+            var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
+
+            return pendingPreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).LastOrDefault();
+        }
         public static DateTime GetPreparationForecast(this ItemsPreparationContext preparationSection, ActionContext actionContext)
         {
             if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
                 return actionContext.GetPreparationEndsAt(preparationSection.PreparationItems.OfType<ItemPreparation>().OrderBy(x => actionContext.GetPreparationEndsAt(x)).Last());
+            else
+                return preparationSection.PreparedAtForecast;
+        }
+
+        public static DateTime GetLastPlanPreparationForecast(this ItemsPreparationContext preparationSection, ActionContext actionContext)
+        {
+            if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
+                return actionContext.GetLastPlanPreparationEndsAt(preparationSection.PreparationItems.OfType<ItemPreparation>().OrderBy(x => actionContext.GetLastPlanPreparationEndsAt(x)).Last());
             else
                 return preparationSection.PreparedAtForecast;
         }
@@ -427,6 +471,30 @@ namespace FlavourBusinessManager.RoomService
             {
                 //preparation contexts order by the preparation forecast time of meal course where this belongs
                 PreparationSessionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
+
+                if (actionContext.LastPlanItemPreparationsStartsAt!= null)
+                {
+                    foreach (var preparationSection in PreparationSessionsForOptimazation.ToList())
+                    {
+                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of meal course has change
+                            preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommited) // there is reference committed preparation section
+                        {
+                            if (preparationSection.MealCourse.GetLastPlanPreparationForecast(actionContext) < preparationSection.MealCourse.GetPreparationForecast(actionContext))// the meal course preparation forecast is worse from the last plan
+                            {
+                                if (PreparationSessionsForOptimazation.Count > 1)
+                                {
+                                    int oneUpPos = PreparationSessionsForOptimazation.IndexOf(preparationSection) - 1; //moves preparation section one position up 
+                                    if (oneUpPos >= 0)
+                                    {
+                                        PreparationSessionsForOptimazation.Remove(preparationSection);
+                                        PreparationSessionsForOptimazation.Insert(oneUpPos, preparationSection);
+                                        preparationSection.PreparationOrderCommited = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             
