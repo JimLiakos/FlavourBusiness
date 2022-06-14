@@ -133,13 +133,10 @@ namespace FlavourBusinessManager.RoomService
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
 
             if (pendingPreparationSessions.Count != 0)
-                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
+                return pendingPreparationSessions.OrderBy(x => x.GetLastPlanPreparationForecast(context)).Last().GetLastPlanPreparationForecast(context);
             else
-            {
-                if (pendingPreparationSessions.Count == 0)
-                    return DateTime.Now;
-                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
-            }
+                return DateTime.Now;
+            
         }
         public static ItemsPreparationContext GetReferencePreparationSection(this IMealCourse mealCourse, ActionContext context)
         {
@@ -471,6 +468,11 @@ namespace FlavourBusinessManager.RoomService
             {
                 //preparation contexts order by the preparation forecast time of meal course where this belongs
                 PreparationSessionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
+                
+                if(PreparationSessionsForOptimazation.Count>1)
+                {
+
+                }
 
                 if (actionContext.LastPlanItemPreparationsStartsAt!= null)
                 {

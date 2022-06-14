@@ -2107,19 +2107,25 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     int i = 0;
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {
-                        List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
+                        
                         if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
                         {
-                            servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+                            List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
 
-                            if (servicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() <= 2)
+                            var freeServicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+
+                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() <2)
                             {
 
-                                string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
+                                string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
                                 string clientDeviceID = "S_81000000296";
                                 string clientName = "Jimmy Garson";
                                 clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems, servicesPointIdentity, clientDeviceID, clientName);
                                 lastMealCourseAdded = DateTime.UtcNow;
+                            }
+                            else
+                            {
+
                             }
                             ////DeleteSimulationData();
                         }
@@ -2248,14 +2254,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
 
-            while (patern[0].NumberOfItems > 0)
-            {
-                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[0]];
-                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                itemsToPrepare.Add(itemPreparation);
-                patern[0].NumberOfItems = patern[0].NumberOfItems - 1;
-            }
+            //while (patern[0].NumberOfItems > 0)
+            //{
+            //    var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[0]];
+            //    var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+            //    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+            //    itemsToPrepare.Add(itemPreparation);
+            //    patern[0].NumberOfItems = patern[0].NumberOfItems - 1;
+            //}
 
 
             //while (patern[1].NumberOfItems > 0)
