@@ -605,6 +605,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        object PreparationStationRuntimesLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, IPreparationStationRuntime> _PreparationStationRuntimes;
         [Association("ContextPreparationStationRuntime", Roles.RoleA, "471493c1-dcec-41bb-a354-e0dc03ea7101")]
@@ -612,23 +613,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                if (_PreparationStationRuntimes == null)
+                lock (this)
                 {
-                    _PreparationStationRuntimes = new Dictionary<string, IPreparationStationRuntime>();
-                    var objectStorage = ObjectStorage.GetStorageOfObject(this);
-                    OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
-
-                    var servicesContextIdentity = ServicesContextIdentity;
-                    foreach (var preparationStation in (from aPreparationStation in servicesContextStorage.GetObjectCollection<PreparationStation>()
-                                                        where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
-                                                        select aPreparationStation))
+                    if (_PreparationStationRuntimes == null)
                     {
-                        if (!string.IsNullOrWhiteSpace(preparationStation.PreparationStationIdentity))
-                            this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+                        _PreparationStationRuntimes = new Dictionary<string, IPreparationStationRuntime>();
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        foreach (var preparationStation in (from aPreparationStation in servicesContextStorage.GetObjectCollection<PreparationStation>()
+                                                            where aPreparationStation.ServicesContextIdentity == servicesContextIdentity
+                                                            select aPreparationStation))
+                        {
+                            if (!string.IsNullOrWhiteSpace(preparationStation.PreparationStationIdentity))
+                                this._PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+
+                        }
                     }
+                    return new Dictionary<string, IPreparationStationRuntime>(_PreparationStationRuntimes);
                 }
-                return _PreparationStationRuntimes;
             }
         }
 
@@ -1705,7 +1709,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 stateTransition.Consistent = true;
             }
             var count = PreparationStationRuntimes.Count;
-            _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+            lock (PreparationStationRuntimesLock)
+            {
+                _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
+            }
             return preparationStation;
         }
 
@@ -2037,28 +2044,30 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         bool EndOfSimulation = false;
 
-        static List<List<int>> PreparationStationSimulatorItems = new List<List<int>>() {
-            new List<int> {0,1, 2, 0 },
-            new List<int> { 0,0, 0, 2 },
-            new List<int> { 0, 2, 1, 0 },
-            new List<int> { 0, 0, 3, 0 },
-            new List<int> { 0, 2, 1, 1 },
-            new List<int> { 0, 0, 2, 1 },
-            new List<int> { 0, 2, 1, 1 },
-            new List<int> { 0, 2, 0, 1 },
-            new List<int> { 0, 3, 0, 1 },
-            new List<int> { 0, 5, 0, 0 },
-            new List<int> { 0, 0, 1, 2 },
-            new List<int> { 0, 0, 3, 0 },
-            new List<int> { 0, 0, 0, 3 },
-            new List<int> { 0, 2, 0, 0 },
-            new List<int> { 0, 1, 0, 2 }
+        static List<List<PSItemsPattern>> PreparationStationSimulatorItems = new List<List<PSItemsPattern>>() {
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 2 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 1 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() {NumberOfItems= 1 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 1 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 1 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 1 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 5 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 2 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 3 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 0 } },
+            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 2 } },
+
         };
 
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         void StartSimulator()
         {
-            return;
+
+            
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
                 SimulationTask = Task.Run(() =>
@@ -2082,7 +2091,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     string mainMealCourseTypeUri = ObjectStorage.GetStorageOfObject(mainMealCourseType).GetPersistentObjectUri(mainMealCourseType);
                     Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
 
-                    foreach (var preparationStation in PreparationStations.OrderBy(x => x.Description).ToList())
+
+
+
+                    foreach (var preparationStation in SimulatorPreparationStations.ToList())
                     {
                         var preparationSationItems = mainMealCourseMenuItems.Where(x => preparationStation.CanPrepareItem(x)).ToList();
                         if (preparationSationItems.Count > 0)
@@ -2092,20 +2104,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     IFoodServiceClientSession clientSession = null;
 
 
-
+                    int i = 0;
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {
-
+                        List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
                         if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
                         {
                             servicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
-                            if (servicePoints.Count > 0)
+
+                            if (servicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() <= 2)
                             {
+
                                 string servicesPointIdentity = servicePoints[_R.Next(servicePoints.Count - 1)].ServicesPointIdentity;
                                 string clientDeviceID = "S_81000000296";
                                 string clientName = "Jimmy Garson";
-                                clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, servicesPointIdentity, clientDeviceID, clientName);
-
+                                clientSession = simulateClientSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems, servicesPointIdentity, clientDeviceID, clientName);
                                 lastMealCourseAdded = DateTime.UtcNow;
                             }
                             ////DeleteSimulationData();
@@ -2127,17 +2140,32 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
-        class PreparationStationItemsPattern
+
+        IList<IPreparationStation> SimulatorPreparationStations
         {
-            List<ItemPattern> ItemsPatterns; 
-
-
+            get
+            {
+                var simulatorPreparationStations = PreparationStationRuntimes.Values.OrderBy(x => x.Description).OfType<IPreparationStation>().ToList();
+                return simulatorPreparationStations;
+            }
         }
-
-        class ItemPattern
+        private List<List<PSItemsPattern>> GetNextPreparationPatern(int step)
         {
-            double MinDuration;
-            double MaxDuration;
+            List<List<PSItemsPattern>> preparationPaterns = new List<List<PSItemsPattern>>();
+
+            if (step == 0)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> { new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 } } }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 8.5, MaxDuration = 10.5 } } } });
+                return preparationPaterns;
+            }
+            if (step == 1)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> { new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 }, new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 } } }, new PSItemsPattern() { NumberOfItems = 0 } });
+                return preparationPaterns;
+            }
+
+
+            return PreparationStationSimulatorItems;
         }
 
         private void DeleteSimulationData()
@@ -2179,51 +2207,83 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, string servicesPointIdentity, string clientDeviceID, string clientName)
+        private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<List<PSItemsPattern>> preparationStationSimulatorItems, string servicesPointIdentity, string clientDeviceID, string clientName)
         {
 
 
 
             List<IItemPreparation> itemsToPrepare = new List<IItemPreparation>();
-            var patern = PreparationStationSimulatorItems[_R.Next(PreparationStationSimulatorItems.Count - 1)].ToList();
+            var patern = preparationStationSimulatorItems[_R.Next(preparationStationSimulatorItems.Count - 1)].ToList();
 
-            List<ItemPreparation> a_productionLineActionSlots = new List<ItemPreparation>();
-            while (patern[0] > 0)
+
+
+            foreach (var psItemsPattern in patern)
+            {
+                if (psItemsPattern.NumberOfItems != null)
+                {
+                    while (psItemsPattern.NumberOfItems > 0)
+                    {
+                        var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)]];
+                        var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        itemsToPrepare.Add(itemPreparation);
+                        psItemsPattern.NumberOfItems = patern[0].NumberOfItems - 1;
+                    }
+                }
+                if (psItemsPattern.ItemsPatterns != null)
+                {
+                    foreach (var itemPater in psItemsPattern.ItemsPatterns)
+                    {
+                        var preparationStation = preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)];
+                        var preparationStationItems = preparationStationsItems[preparationStation];
+
+                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPater.MinDuration/2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPater.MaxDuration/2).ToList();
+                        var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        itemsToPrepare.Add(itemPreparation);
+                        psItemsPattern.NumberOfItems = patern[0].NumberOfItems - 1;
+                    }
+                }
+
+
+            }
+
+            while (patern[0].NumberOfItems > 0)
             {
                 var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[0]];
                 var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
                 ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                 itemsToPrepare.Add(itemPreparation);
-                patern[0] = patern[0] - 1;
+                patern[0].NumberOfItems = patern[0].NumberOfItems - 1;
             }
 
-            List<ItemPreparation> b_productionLineActionSlots = new List<ItemPreparation>();
-            while (patern[1] > 0)
-            {
-                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[1]];
-                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                itemsToPrepare.Add(itemPreparation);
-                patern[1] = patern[1] - 1;
-            }
-            List<ItemPreparation> c_productionLineActionSlots = new List<ItemPreparation>();
-            while (patern[2] > 0)
-            {
-                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[2]];
-                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                itemsToPrepare.Add(itemPreparation);
-                patern[2] = patern[2] - 1;
-            }
 
-            while (patern[3] > 0)
-            {
-                var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[3]];
-                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                itemsToPrepare.Add(itemPreparation);
-                patern[3] = patern[3] - 1;
-            }
+            //while (patern[1].NumberOfItems > 0)
+            //{
+            //    var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[1]];
+            //    var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+            //    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+            //    itemsToPrepare.Add(itemPreparation);
+            //    patern[1].NumberOfItems = patern[1].NumberOfItems - 1;
+            //}
+
+            //while (patern[2].NumberOfItems > 0)
+            //{
+            //    var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[2]];
+            //    var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+            //    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+            //    itemsToPrepare.Add(itemPreparation);
+            //    patern[2].NumberOfItems = patern[2].NumberOfItems - 1;
+            //}
+
+            //while (patern[3].NumberOfItems > 0)
+            //{
+            //    var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[3]];
+            //    var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+            //    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+            //    itemsToPrepare.Add(itemPreparation);
+            //    patern[3].NumberOfItems = patern[3].NumberOfItems - 1;
+            //}
             IFoodServiceClientSession clientSession = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
@@ -2249,5 +2309,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             return menuItems;
         }
+    }
+
+    class PSItemsPattern
+    {
+        public List<ItemPattern> ItemsPatterns;
+
+        public int? NumberOfItems;
+
+    }
+
+    class ItemPattern
+    {
+        public double MinDuration;
+        public double MaxDuration;
     }
 }

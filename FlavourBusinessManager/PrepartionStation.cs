@@ -142,7 +142,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return false;
         }
         /// <MetaDataID>{7dbd63b3-bf54-4af7-8f79-090016be250b}</MetaDataID>
-        double GetPreparationTimeInMin(IMenuItem menuItem)
+        internal double GetPreparationTimeInMin(IMenuItem menuItem)
         {
 
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);

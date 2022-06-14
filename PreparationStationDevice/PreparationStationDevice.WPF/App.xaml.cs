@@ -37,7 +37,7 @@ namespace PreparationStationDevice.WPF
 
 
             Simulator simulator = new Simulator("s1");
-            simulator.start();
+            //simulator.start();
             //Simulator simulator2 = new Simulator("s2");
             //simulator2.start();
             //Simulator simulator3 = new Simulator("s3");
