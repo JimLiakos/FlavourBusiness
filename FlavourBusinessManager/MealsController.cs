@@ -55,6 +55,9 @@ namespace FlavourBusinessManager.RoomService
                     DateTime timeStamp = DateTime.UtcNow;
                     actionContext.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;
+                    
+                    foreach (var preparationStation in ActivePreparationStations)
+                        preparationStation.GetPreparationSections(actionContext);
 
                     while (!actionContext.PreparationPlanIsDoubleChecked)
                     {
@@ -74,7 +77,15 @@ namespace FlavourBusinessManager.RoomService
                         stirTheSequence = false;
                     }
                     actionContext.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>(actionContext.ItemPreparationsStartsAt);
-                    //9962 08 2007088437
+
+
+
+                    foreach (var preparationStation in ActivePreparationStations)
+                    {
+                        var strings = preparationStation.GetActionsToStrings(actionContext);
+                    }
+
+
                     foreach (var preparationStation in ActivePreparationStations)
                     {
                         preparationStation.ActionsOrderCommited(actionContext);
@@ -97,10 +108,7 @@ namespace FlavourBusinessManager.RoomService
                         #endregion
                     }
 
-                    foreach (var preparationStation in ActivePreparationStations)
-                    {
-                        var strings = preparationStation.GetActionsToStrings(actionContext);
-                    }
+                  
 
                     RebuildPreparationPlanLastTime = DateTime.UtcNow;
                 }

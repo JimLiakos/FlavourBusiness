@@ -179,4 +179,35 @@ namespace FlavourBusinessFacade.RoomService
 
     }
 
+    /// <MetaDataID>{02a0de31-8f78-40f0-92cf-9a6cc11846f1}</MetaDataID>
+    public static class ItemPreparationStateEx
+    {
+        /// <MetaDataID>{52d16497-7a11-47e5-9020-8517e3d26493}</MetaDataID>
+        static public bool IsInFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //following 
+            return ((int)thisState) > ((int)state);
+        }
+        /// <MetaDataID>{b1802d54-39e2-45cc-b67e-4c8740ae9445}</MetaDataID>
+        static public bool IsIntheSameOrFollowingState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //following 
+            return ((int)thisState) >= ((int)state);
+        }
+
+        /// <MetaDataID>{3e7af055-3c4e-4dc6-a201-64a5c6579372}</MetaDataID>
+        static public bool IsInPreviousState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //previous
+            return ((int)thisState) < ((int)state);
+        }
+        /// <MetaDataID>{16e68989-ae1e-4f10-9ac7-08cf7c3c8f76}</MetaDataID>
+        static public bool IsInTheSameOrPreviousState(this ItemPreparationState thisState, ItemPreparationState state)
+        {
+            //previous
+            return ((int)thisState) <= ((int)state);
+        }
+
+    }
+
 }

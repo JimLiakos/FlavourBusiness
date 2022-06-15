@@ -196,7 +196,22 @@ namespace FlavourBusinessFacade.RoomService
 
         public System.DateTime? ServedAtForecast { get; set; }
         public DateTime PreparedAtForecast { get; set; }
-        public bool PreparationOrderCommited { get; set; }
+
+
+        public bool? _PreparationOrderCommited; 
+        public bool PreparationOrderCommited
+        {
+            get
+            {
+                if (_PreparationOrderCommited != null)
+                    return _PreparationOrderCommited.Value;
+                else
+                    _PreparationOrderCommited = this.PreparationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation));
+                return _PreparationOrderCommited.Value;
+            }
+            set => _PreparationOrderCommited = value;
+        }
+                
         public int PreparatioOrder
         {
             get
@@ -210,6 +225,10 @@ namespace FlavourBusinessFacade.RoomService
             }
             set
             {
+                if(PreparatioOrder != value)
+                {
+
+                }
                 Transaction.RunOnTransactionCompleted(() =>
                 {
                     lock (preparationItemLock)
