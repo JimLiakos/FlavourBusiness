@@ -315,6 +315,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             Task.Run(() =>
             {
+
                 (MealsController as MealsController).Init();
                 //Load CashierStations
                 var cashierStations = CashierStations;
@@ -2072,7 +2073,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 SimulationTask = Task.Run(() =>
                 {
-                    System.Threading.Thread.Sleep(10000);
+                    System.Threading.Thread.Sleep(50000);
                     DateTime? lastMealCourseAdded = null;
 
                     var servicePoints = (from serviceArea in ServiceAreas

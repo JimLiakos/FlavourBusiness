@@ -21,6 +21,8 @@ namespace FlavourBusinessManager.RoomService
         internal Dictionary<PreparationStation, List<ItemPreparation>> ItemsInPreparation = new Dictionary<PreparationStation, List<ItemPreparation>>();
 
 
+        internal List<PositionInterchange> PositionInterchanges = new List<PositionInterchange>();
+
         public DateTime GetPreparationStartsAt(ItemPreparation itemPreparation)
         {
             DateTime dateTime;
@@ -199,11 +201,6 @@ namespace FlavourBusinessManager.RoomService
             {
 
 
-
-
-
-
-
                 DateTime? preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
 
                 var itemsToPrepare = (from thePartialAction in actionContext.PreparationSections[preparationStation]
@@ -278,6 +275,17 @@ namespace FlavourBusinessManager.RoomService
 
                 var itemsPendingToPrepare = itemsToPrepare.Where(x => x.State == ItemPreparationState.PreparationDelay || x.State == ItemPreparationState.PendingPreparation).ToList();
 
+                foreach(var positionInterchange in actionContext.PositionInterchanges)
+                {
+                    int nPosFirstItem = itemsPendingToPrepare.IndexOf(positionInterchange.FirstItemPreparation);
+                    int nPosSecondItem = itemsPendingToPrepare.IndexOf(positionInterchange.SecondItemPreparation);
+                    if(nPosFirstItem!=-1&& nPosSecondItem!=-1&& nPosFirstItem+1== nPosSecondItem)
+                    {
+                        itemsPendingToPrepare.Remove(positionInterchange.SecondItemPreparation);
+                        itemsPendingToPrepare.Insert(nPosFirstItem, positionInterchange.SecondItemPreparation);
+                    }
+                }
+
                 ItemsPreparationContext partialAction = null;
                 double packingTime = 0;
                 bool pendingItemsRerange = false;
@@ -326,6 +334,7 @@ namespace FlavourBusinessManager.RoomService
                                             pendingItemsRearrangements++;
                                             itemsPendingToPrepare.Remove(nextItemToPrepare);
                                             itemsPendingToPrepare.Insert(itemsPendingToPrepare.IndexOf(itemToPrepare), nextItemToPrepare);
+                                            actionContext.PositionInterchanges.Add(new PositionInterchange() { FirstItemPreparation = itemToPrepare, SecondItemPreparation = nextItemToPrepare });
                                             break;
                                         }
                                     }
@@ -612,5 +621,12 @@ namespace FlavourBusinessManager.RoomService
     public class Simulator
     {
         public static double Velocity = 0.33;
+    }
+
+    class PositionInterchange
+    {
+        public ItemPreparation FirstItemPreparation;
+
+        public ItemPreparation SecondItemPreparation;
     }
 }

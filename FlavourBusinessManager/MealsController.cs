@@ -77,7 +77,7 @@ namespace FlavourBusinessManager.RoomService
                         stirTheSequence = false;
                     }
                     actionContext.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>(actionContext.ItemPreparationsStartsAt);
-
+                    actionContext.PositionInterchanges.Clear();
 
 
                     foreach (var preparationStation in ActivePreparationStations)
