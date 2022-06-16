@@ -21,7 +21,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
-        
+
         /// <MetaDataID>{bd097583-6e84-45b4-a299-9e9abc66ae03}</MetaDataID>
         public List<ItemPreparationTimeSpan> GetPreparationTimeSpans(DateTime fromDate, DateTime toDate)
         {
@@ -526,7 +526,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     if (itemsPreparationInfo.PreparationTimeSpanInMin != null)
                     {
-                        itemPreparation.PreparationTimeSpanInMin = itemsPreparationInfo.PreparationTimeSpanInMin.Value;
+                        itemPreparation.PreparationTimeSpanInMin = itemsPreparationInfo.PreparationTimeSpanInMin.Value / 2;
                         break;
                     }
                 }

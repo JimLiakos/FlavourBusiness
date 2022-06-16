@@ -231,6 +231,8 @@ namespace FlavourBusinessManager.RoomService
 
 
                 DateTime previousePreparationEndsAt = preparationPlanStartTime.Value;
+
+                #region Gets items in preparation predictions
                 var lastPredictionItemsInPreparation = preparationStation.GetLastPredictionItemsInPreparation(actionContext);
                 List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
 
@@ -270,7 +272,8 @@ namespace FlavourBusinessManager.RoomService
 
                     previousePreparationEndsAt = actionContext.GetPreparationEndsAt(itemInPreparation);
                 }
-                preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation);
+                preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation); 
+                #endregion
 
 
                 var itemsPendingToPrepare = itemsToPrepare.Where(x => x.State == ItemPreparationState.PreparationDelay || x.State == ItemPreparationState.PendingPreparation).ToList();
@@ -589,6 +592,19 @@ namespace FlavourBusinessManager.RoomService
 
                 stateTransition.Consistent = true;
             }
+
+
+            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //{
+            //    foreach (var partialAction in actions)
+            //    {
+            //        if (!partialAction.PreparationOrderCommited)
+            //            partialAction.PreparatioOrder = i++;
+            //        else
+            //            i = partialAction.PreparatioOrder + 1;
+            //    }
+            //    stateTransition.Consistent = true;
+            //}
 
             var previous = preparationStation.PreparationSessions;
             if (actionContext.PreparationSections.ContainsKey(preparationStation))

@@ -2046,21 +2046,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
         bool EndOfSimulation = false;
 
         static List<List<PSItemsPattern>> PreparationStationSimulatorItems = new List<List<PSItemsPattern>>() {
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 2 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 1 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() {NumberOfItems= 1 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 1 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 1 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 1 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 5 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() {NumberOfItems= 2 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 3 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 3 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 2 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 0 } },
-            new List<PSItemsPattern> { new PSItemsPattern() {NumberOfItems= 0 } , new PSItemsPattern() { NumberOfItems = 1 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() {NumberOfItems= 2 } },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(1) , new PSItemsPattern(2) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(0) , new PSItemsPattern(2)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(2) , new PSItemsPattern(1) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(3) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(2) , new PSItemsPattern(1) , new PSItemsPattern(1)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(2) , new PSItemsPattern(1)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(2) , new PSItemsPattern(1) , new PSItemsPattern(1)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(2) , new PSItemsPattern(0) , new PSItemsPattern(1)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(3) , new PSItemsPattern(0) , new PSItemsPattern(1)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(5) , new PSItemsPattern(0) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(1) , new PSItemsPattern(2)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(3) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(0) , new PSItemsPattern(3)  },
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(2) , new PSItemsPattern(0) , new PSItemsPattern(0)},
+            new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(1) , new PSItemsPattern(0) , new PSItemsPattern(2)  },
 
         };
 
@@ -2068,7 +2068,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         void StartSimulator()
         {
 
-            
+
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
                 SimulationTask = Task.Run(() =>
@@ -2108,14 +2108,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     int i = 0;
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {
-                        
+
                         if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
                         {
                             List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
 
                             var freeServicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
 
-                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() <2)
+                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() < 2)
                             {
 
                                 string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
@@ -2162,12 +2162,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             if (step == 0)
             {
-                preparationPaterns.Add(new List<PSItemsPattern> { new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 } } }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 8.5, MaxDuration = 10.5 } } } });
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5))  ,
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(8.5,10.5),new ItemPattern(3.5,5.5)) });
                 return preparationPaterns;
             }
             if (step == 1)
             {
-                preparationPaterns.Add(new List<PSItemsPattern> { new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0 }, new PSItemsPattern() { NumberOfItems = 0, ItemsPatterns = new List<ItemPattern> { new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 }, new ItemPattern { MinDuration = 3.5, MaxDuration = 4.5 } } }, new PSItemsPattern() { NumberOfItems = 0 } });
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5)),
+                    new PSItemsPattern(0)});
+
                 return preparationPaterns;
             }
 
@@ -2244,7 +2253,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         var preparationStation = preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)];
                         var preparationStationItems = preparationStationsItems[preparationStation];
 
-                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPater.MinDuration/2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPater.MaxDuration/2).ToList();
+                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPater.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPater.MaxDuration / 2).ToList();
                         var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
                         ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                         itemsToPrepare.Add(itemPreparation);
@@ -2318,16 +2327,35 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
     }
 
+
+
     class PSItemsPattern
     {
+        public PSItemsPattern(int numberOfItems)
+        {
+            NumberOfItems = numberOfItems;
+        }
+        public PSItemsPattern(List<ItemPattern> itemsPatterns)
+        {
+            ItemsPatterns = itemsPatterns;
+        }
         public List<ItemPattern> ItemsPatterns;
 
         public int? NumberOfItems;
 
+        public static PSItemsPattern GetItemsPatterns(params ItemPattern[] paternParma)
+        {
+            return new PSItemsPattern(paternParma.ToList());
+        }
     }
 
     class ItemPattern
     {
+        public ItemPattern(double min, double max)
+        {
+            MinDuration = min;
+            MaxDuration = max;
+        }
         public double MinDuration;
         public double MaxDuration;
     }

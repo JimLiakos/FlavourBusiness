@@ -227,7 +227,6 @@ namespace FlavourBusinessFacade.RoomService
             {
                 if(PreparatioOrder != value)
                 {
-
                 }
                 Transaction.RunOnTransactionCompleted(() =>
                 {
