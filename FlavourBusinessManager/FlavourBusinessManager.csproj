@@ -287,6 +287,7 @@
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Simulator.cs" />
     <None Include="app.config" />
     <None Include="FlavourBusinessManager.cat" />
     <None Include="FlavourBusinessManager.sub" />

@@ -420,7 +420,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 foreach (var partialAction in preparationStation.GetActionsToDo(actionContext))
                 {
-                    partialAction.PreparationOrderCommited = true;
+                    partialAction.PreparationOrderCommitted = true;
 
                     foreach (var preparationItem in partialAction.PreparationItems.OfType<ItemPreparation>())
                     {
@@ -476,7 +476,7 @@ namespace FlavourBusinessManager.RoomService
                         filteredPartialActions.Add(preparationSection);
                     else
                     {
-                        if (preparationSection.PreparationOrderCommited)
+                        if (preparationSection.PreparationOrderCommitted)
                         {
 
                         }
@@ -505,31 +505,41 @@ namespace FlavourBusinessManager.RoomService
         {
 
 
-            List<ItemsPreparationContext> PreparationSessionsForOptimazation = null;
+            List<ItemsPreparationContext> preparationSectionsForOptimazation = null;
             var preparationSections = actionContext.PreparationSections[preparationStation];
-            List<ItemsPreparationContext> orderCommittedreparationContexts = preparationSections.Where(x => x.PreparationOrderCommited).OrderBy(x => x.PreparatioOrder).ToList();
+            List<ItemsPreparationContext> orderCommittedPreparationSections = preparationSections.Where(x => x.PreparationOrderCommitted).OrderBy(x => x.PreparatioOrder).ToList();
+            List<ItemsPreparationContext> preparationSectionsToCommit = new List<ItemsPreparationContext>();
             if (stirTheSequence)
             {
 
                 // first takes the uncommitted  items preparation contexts where the meal course has all items preparation contexts uncommitted 
-                PreparationSessionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommited).OrderBy(x => (x.MealCourse as MealCourse).GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.All(y => !y.PreparationOrderCommited)).ToList();
+                preparationSectionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommitted).OrderBy(x => (x.MealCourse as MealCourse).GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.All(y => !y.PreparationOrderCommitted)).ToList();
 
+                #region Debug
+#if DEBUG
+                var a_count = preparationSectionsForOptimazation.Count;
+#endif 
+                #endregion
 
-                var a_count = PreparationSessionsForOptimazation.Count;
 
                 //in the sequel takes the uncommitted  items preparation contexts where the meal course has at least one items preparation contexts committed 
-                PreparationSessionsForOptimazation.AddRange(preparationSections.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.Any(y => y.PreparationOrderCommited)).ToList());
+                preparationSectionsForOptimazation.AddRange(preparationSections.Where(x => !x.PreparationOrderCommitted).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).Where(x => x.MealCourse.FoodItemsInProgress.Any(y => y.PreparationOrderCommitted)).ToList());
 
-                if (PreparationSessionsForOptimazation.Count > 1)
+                #region Debug
+#if DEBUG
+                if (preparationSectionsForOptimazation.Count > 1)
                 {
 
                 }
+
                 //preparation contexts order by the preparation forecast time of meal course where this belongs   
-                var b_count = PreparationSessionsForOptimazation.Count;
+                var b_count = preparationSectionsForOptimazation.Count;
                 if (a_count != b_count)
                 {
 
                 }
+#endif 
+                #endregion
 
             }
             else
@@ -537,30 +547,34 @@ namespace FlavourBusinessManager.RoomService
 
 
                 //preparation contexts order by the preparation forecast time of meal course where this belongs
-                PreparationSessionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommited).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
+                preparationSectionsForOptimazation = preparationSections.Where(x => !x.PreparationOrderCommitted).OrderBy(x => x.MealCourse.GetPreparationForecast(actionContext)).ToList();
 
-                if (PreparationSessionsForOptimazation.Count > 1)
+                #region Debug
+
+                if (preparationSectionsForOptimazation.Count > 1)
                 {
 
                 }
 
+                #endregion
+
                 if (actionContext.LastPlanItemPreparationsStartsAt != null)
                 {
-                    foreach (var preparationSection in PreparationSessionsForOptimazation.ToList())
+                    foreach (var preparationSection in preparationSectionsForOptimazation.ToList())
                     {
                         if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of meal course has change
-                            preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommited) // there is reference committed preparation section
+                            preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommitted) // there is reference committed preparation section
                         {
                             if (preparationSection.MealCourse.GetLastPlanPreparationForecast(actionContext) < preparationSection.MealCourse.GetPreparationForecast(actionContext))// the meal course preparation forecast is worse from the last plan
                             {
-                                if (PreparationSessionsForOptimazation.Count > 1)
+                                if (preparationSectionsForOptimazation.Count > 1)
                                 {
-                                    int oneUpPos = PreparationSessionsForOptimazation.IndexOf(preparationSection) - 1; //moves preparation section one position up 
+                                    int oneUpPos = preparationSectionsForOptimazation.IndexOf(preparationSection) - 1; //moves preparation section one position up 
                                     if (oneUpPos >= 0)
                                     {
-                                        PreparationSessionsForOptimazation.Remove(preparationSection);
-                                        PreparationSessionsForOptimazation.Insert(oneUpPos, preparationSection);
-                                        preparationSection.PreparationOrderCommited = true;
+                                        preparationSectionsForOptimazation.Remove(preparationSection);
+                                        preparationSectionsForOptimazation.Insert(oneUpPos, preparationSection);
+                                        preparationSectionsToCommit.Add(preparationSection);
                                     }
                                 }
                             }
@@ -569,56 +583,70 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
 
+            List<ItemsPreparationContext> optimizedPreparationSections = orderCommittedPreparationSections.ToList();
 
             //preparation order committed PreparationSessions
 
 
             //Adds the re planed preparation contexts 
-            orderCommittedreparationContexts.AddRange(PreparationSessionsForOptimazation);
-            List<ItemsPreparationContext> actions = orderCommittedreparationContexts;
+            optimizedPreparationSections.AddRange(preparationSectionsForOptimazation);
+            
 
-            //var preparationStationItems = (from serviceSession in preparationSections
-            //                               from preparationItem in serviceSession.PreparationItems
-            //                               select preparationItem).ToList();
-
-            //List<PartialAction> actions = Actions.OrderBy(x => x.MainAction.GetPreparationForecast(actionContext)).ToList();
 
             int i = 0;
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                foreach (var partialAction in actions)
-                    partialAction.PreparatioOrder = i++;
-
-                stateTransition.Consistent = true;
-            }
-
-
             //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             //{
-            //    foreach (var partialAction in actions)
+            //    foreach (var preparationSection in optimizedPreparationSections)
             //    {
-            //        if (!partialAction.PreparationOrderCommited)
-            //            partialAction.PreparatioOrder = i++;
-            //        else
-            //            i = partialAction.PreparatioOrder + 1;
+            //        preparationSection.PreparatioOrder = i++;
+
+            //        if (preparationSectionsToCommit.Contains(preparationSection))
+            //            preparationSection.PreparationOrderCommitted = true;
             //    }
+
             //    stateTransition.Consistent = true;
             //}
+
+
+            #region Update preparationOrder
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var preparationSection in optimizedPreparationSections)
+                {
+                    if (!preparationSection.PreparationOrderCommitted)
+                        preparationSection.PreparatioOrder = i++;
+                    else
+                        i = preparationSection.PreparatioOrder + 1;
+
+                    if (preparationSectionsToCommit.Contains(preparationSection))
+                        preparationSection.PreparationOrderCommitted = true;
+                }
+                stateTransition.Consistent = true;
+            } 
+            #endregion
+
+            #region Debug
 
             var previous = preparationStation.PreparationSessions;
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
                 previous = actionContext.PreparationSections[preparationStation];
 
-            actionContext.PreparationSections[preparationStation] = actions;
-            if (preparationSections.Count != actions.Count)
+            #endregion
+
+            actionContext.PreparationSections[preparationStation] = optimizedPreparationSections;
+
+            #region Debug
+
+            if (preparationSections.Count != optimizedPreparationSections.Count)
             {
 
             }
 
-            var actionHash = actions.Select(x => x.GetHashCode()).ToArray();
+            var actionHash = optimizedPreparationSections.Select(x => x.GetHashCode()).ToArray();
             var m_actionsHash = previous.Select(x => x.GetHashCode()).ToArray();
-            for (i = 0; i < actions.Count; i++)
+            for (i = 0; i < optimizedPreparationSections.Count; i++)
             {
                 if (actionHash.Length == m_actionsHash.Length)
                 {
@@ -627,18 +655,16 @@ namespace FlavourBusinessManager.RoomService
 
                     }
                 }
-            }
+            } 
+            #endregion
 
         }
 
     }
 
-    /// <MetaDataID>{17f3f120-eb70-4c0e-ba73-7b5f7715633a}</MetaDataID>
-    public class Simulator
-    {
-        public static double Velocity = 0.33;
-    }
 
+
+    /// <MetaDataID>{ca707c10-e87c-4481-9046-f6adae30554b}</MetaDataID>
     class PositionInterchange
     {
         public ItemPreparation FirstItemPreparation;

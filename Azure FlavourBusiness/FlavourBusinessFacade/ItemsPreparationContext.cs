@@ -199,7 +199,7 @@ namespace FlavourBusinessFacade.RoomService
 
 
         public bool? _PreparationOrderCommited; 
-        public bool PreparationOrderCommited
+        public bool PreparationOrderCommitted
         {
             get
             {
@@ -225,8 +225,12 @@ namespace FlavourBusinessFacade.RoomService
             }
             set
             {
-                if(PreparatioOrder != value)
+                if (PreparationOrderCommitted)
                 {
+                    if (PreparatioOrder != value)
+                    {
+                        System.Diagnostics.Debug.Assert(false, "Preparation order committed");
+                    }
                 }
                 Transaction.RunOnTransactionCompleted(() =>
                 {
