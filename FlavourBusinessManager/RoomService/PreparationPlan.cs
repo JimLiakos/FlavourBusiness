@@ -199,7 +199,7 @@ namespace FlavourBusinessManager.RoomService
             }
             else
                 return preparationSection.PreparedAtForecast;
-        }
+        } 
 
         public static DateTime GetLastPlanPreparationForecast(this ItemsPreparationContext preparationSection, ActionContext actionContext)
         {
