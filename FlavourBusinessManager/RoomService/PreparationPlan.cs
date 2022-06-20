@@ -34,12 +34,18 @@ namespace FlavourBusinessManager.RoomService
 
         public void SetPreparationStartsAt(ItemPreparation itemPreparation, DateTime dateTime)
         {
-            if (ItemPreparationsStartsAt.ContainsKey(itemPreparation) && ItemPreparationsStartsAt[itemPreparation] != dateTime)
+
+            if (ItemPreparationsStartsAt.ContainsKey(itemPreparation) && Math.Abs( (ItemPreparationsStartsAt[itemPreparation]- dateTime).TotalMinutes)>1.2)
             {
 
             }
 
             ItemPreparationsStartsAt[itemPreparation] = dateTime;
+
+            if ((GetPreparationEndsAt(itemPreparation) - DateTime.UtcNow).TotalSeconds < -20)
+            {
+
+            }
 
         }
 
@@ -72,7 +78,7 @@ namespace FlavourBusinessManager.RoomService
         /// </summary>
         public bool PreparationPlanIsDoubleChecked { get; internal set; }
 
-        internal void RemoveOutOfPlamPreparationItems()
+        internal void RemoveOutOfPlanPreparationItems()
         {
             foreach (var itemOutOfPlan in ItemPreparationsStartsAt.Keys.Where(x => x.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)).ToList())
                 ItemPreparationsStartsAt.Remove(itemOutOfPlan);
@@ -86,6 +92,10 @@ namespace FlavourBusinessManager.RoomService
                                                     itemInPreparation
                                                 }).ToList())
             {
+
+                if (ItemsInPreparation[outOfPlanItemEntry.PreparationStation].IndexOf(outOfPlanItemEntry.itemInPreparation) == 0)//
+                    outOfPlanItemEntry.PreparationStation.PreparationPlanStartTime = null;// the first item in list of ItemsInPreparation defines the preparation plan startTime  
+
                 ItemsInPreparation[outOfPlanItemEntry.PreparationStation].Remove(outOfPlanItemEntry.itemInPreparation);
                 if (ItemsInPreparation[outOfPlanItemEntry.PreparationStation].Count == 0)
                     ItemsInPreparation.Remove(outOfPlanItemEntry.PreparationStation);
@@ -193,13 +203,11 @@ namespace FlavourBusinessManager.RoomService
             actionContext.ItemsInPreparation[preparationStation] = itemsInPreparation;
         }
 
-        public static void GetPredictions(this PreparationStation preparationStation, ActionContext actionContext)
+        public static void GetPredictions(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)
         {
-
 
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
             {
-
 
                 DateTime? preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
 
@@ -207,7 +215,6 @@ namespace FlavourBusinessManager.RoomService
                                       where thePartialAction.GetPreparationStation() == preparationStation
                                       from slot in thePartialAction.GetItemsToPrepare()
                                       select slot).ToList();
-
 
                 #region Debug code 
                 List<ItemsPreparationContext> preparationSections = preparationStation.PreparationSessions.ToList();
@@ -230,59 +237,74 @@ namespace FlavourBusinessManager.RoomService
                     preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
 
 
-                DateTime previousePreparationEndsAt = preparationPlanStartTime.Value;
+                
 
                 #region Gets items in preparation predictions
                 var lastPredictionItemsInPreparation = preparationStation.GetLastPredictionItemsInPreparation(actionContext);
-                List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
 
-                if (lastPredictionItemsInPreparation == null)
+
+                List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && actionContext.ItemPreparationsStartsAt.ContainsKey(x)).OrderBy(x => actionContext.GetPreparationStartsAt(x)).ToList();
+                itemsInPreparation.AddRange(itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && !actionContext.ItemPreparationsStartsAt.ContainsKey(x)));
+
+                if (itemsInPreparation.Count == 1 && (lastPredictionItemsInPreparation==null|| !lastPredictionItemsInPreparation.Contains(itemsInPreparation[0])))
                 {
-                    preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation);
-                    lastPredictionItemsInPreparation = itemsInPreparation;
-                }
-                else
-                {
-                    #region Remove the items in preparation to recalculate preparation time
-                    var removedItem = lastPredictionItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
-                    if (removedItem != null && actionContext.ItemPreparationsStartsAt.ContainsKey(removedItem) && actionContext.ItemPreparationsStartsAt[removedItem] > DateTime.UtcNow)
-                    {
-                        for (int i = lastPredictionItemsInPreparation.IndexOf(removedItem); i < lastPredictionItemsInPreparation.Count; i++)
-                        {
-                            if (actionContext.ItemPreparationsStartsAt.ContainsKey(lastPredictionItemsInPreparation[i]))
-                                actionContext.ItemPreparationsStartsAt.Remove(lastPredictionItemsInPreparation[i]);
-                        }
-                    }
-                    #endregion
-                }
-                foreach (var itemInPreparation in itemsInPreparation.Where(x => lastPredictionItemsInPreparation.Contains(x) && actionContext.ItemPreparationsStartsAt.ContainsKey(x)))
-                {
-                    if (actionContext.GetPreparationEndsAt(itemInPreparation) > previousePreparationEndsAt)
-                        previousePreparationEndsAt = actionContext.GetPreparationEndsAt(itemInPreparation);
+                    preparationPlanStartTime = DateTime.UtcNow;
+                    preparationStation.PreparationPlanStartTime = preparationPlanStartTime;
                 }
 
+                DateTime previousePreparationEndsAt = preparationPlanStartTime.Value;
+                //if (lastPredictionItemsInPreparation != null && lastPredictionItemsInPreparation.Count > 0 && itemsInPreparation.Count == 0)
+                //{
 
-                foreach (var itemInPreparation in itemsInPreparation.Where(x => !lastPredictionItemsInPreparation.Contains(x) || !actionContext.ItemPreparationsStartsAt.ContainsKey(x)))
+                //}
+
+                //if (lastPredictionItemsInPreparation == null)
+                //{
+                //    preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation);
+                //    lastPredictionItemsInPreparation = itemsInPreparation;
+                //}
+                //else
+                //{
+                //    #region Remove the items in preparation to recalculate preparation time
+                //    var removedItem = lastPredictionItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
+                //    if (removedItem != null && actionContext.ItemPreparationsStartsAt.ContainsKey(removedItem) && actionContext.ItemPreparationsStartsAt[removedItem] > DateTime.UtcNow)
+                //    {
+                //        for (int i = lastPredictionItemsInPreparation.IndexOf(removedItem); i < lastPredictionItemsInPreparation.Count; i++)
+                //        {
+                //            if (actionContext.ItemPreparationsStartsAt.ContainsKey(lastPredictionItemsInPreparation[i]))
+                //                actionContext.ItemPreparationsStartsAt.Remove(lastPredictionItemsInPreparation[i]);
+                //        }
+                //    }
+                //    #endregion
+                //}
+                //foreach (var itemInPreparation in itemsInPreparation.Where(x => lastPredictionItemsInPreparation.Contains(x) && actionContext.ItemPreparationsStartsAt.ContainsKey(x)))
+                //{
+                //    if (actionContext.GetPreparationEndsAt(itemInPreparation) > previousePreparationEndsAt)
+                //        previousePreparationEndsAt = actionContext.GetPreparationEndsAt(itemInPreparation);
+                //}
+
+
+                foreach (var itemInPreparation in itemsInPreparation)//.Where(x => !lastPredictionItemsInPreparation.Contains(x) || !actionContext.ItemPreparationsStartsAt.ContainsKey(x)))
                 {
 
-                    if (previousePreparationEndsAt > DateTime.UtcNow)
-                        actionContext.SetPreparationStartsAt(itemInPreparation, previousePreparationEndsAt);
-                    else
-                        actionContext.SetPreparationStartsAt(itemInPreparation, DateTime.UtcNow);
+                    //if (previousePreparationEndsAt > DateTime.UtcNow)
+                    actionContext.SetPreparationStartsAt(itemInPreparation, previousePreparationEndsAt);
+                    //else
+                    //    actionContext.SetPreparationStartsAt(itemInPreparation, DateTime.UtcNow);
 
                     previousePreparationEndsAt = actionContext.GetPreparationEndsAt(itemInPreparation);
                 }
-                preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation); 
+                preparationStation.SetItemsInPreparation(actionContext, itemsInPreparation);
                 #endregion
 
 
                 var itemsPendingToPrepare = itemsToPrepare.Where(x => x.State == ItemPreparationState.PreparationDelay || x.State == ItemPreparationState.PendingPreparation).ToList();
 
-                foreach(var positionInterchange in actionContext.PositionInterchanges)
+                foreach (var positionInterchange in actionContext.PositionInterchanges)
                 {
                     int nPosFirstItem = itemsPendingToPrepare.IndexOf(positionInterchange.FirstItemPreparation);
                     int nPosSecondItem = itemsPendingToPrepare.IndexOf(positionInterchange.SecondItemPreparation);
-                    if(nPosFirstItem!=-1&& nPosSecondItem!=-1&& nPosFirstItem+1== nPosSecondItem)
+                    if (nPosFirstItem != -1 && nPosSecondItem != -1 && nPosFirstItem + 1 == nPosSecondItem)
                     {
                         itemsPendingToPrepare.Remove(positionInterchange.SecondItemPreparation);
                         itemsPendingToPrepare.Insert(nPosFirstItem, positionInterchange.SecondItemPreparation);
@@ -309,7 +331,7 @@ namespace FlavourBusinessManager.RoomService
                             partialAction = itemToPrepare.FindItemsPreparationContext();
                         }
 
-               
+
 
                         if (actionContext.GetPreparationStartsAt(itemToPrepare) == null || actionContext.GetPreparationStartsAt(itemToPrepare) != previousePreparationEndsAt)
                         {
@@ -319,26 +341,29 @@ namespace FlavourBusinessManager.RoomService
                         actionContext.SetPreparationStartsAt(itemToPrepare, previousePreparationEndsAt);
                         previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeInMin(itemToPrepare));
 
-                        var itemToPreparePreparationSection = itemToPrepare.FindItemsPreparationContext();
-
-                        if (!itemToPrepare.IsInReferencePreparationSection(actionContext))
-                        {
-                            if (itemsPendingToPrepare.IndexOf(itemToPrepare) < itemsPendingToPrepare.Count - 1)
+                        if (!stirTheSequence)       //The rearrangements doesn't allowed when we stir preparations sequence
+                        {                           //The rearrangements  produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
+                            var itemToPreparePreparationSection = itemToPrepare.FindItemsPreparationContext();
+                            if (!itemToPrepare.IsInReferencePreparationSection(actionContext))
                             {
-                                ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
-                                if (nextItemToPrepare.FindItemsPreparationContext() != itemToPreparePreparationSection)
+
+                                if (itemToPrepare != itemsPendingToPrepare.Last())
                                 {
-                                    if (nextItemToPrepare.IsInReferencePreparationSection(actionContext))
+                                    ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
+                                    if (nextItemToPrepare.FindItemsPreparationContext() != itemToPreparePreparationSection)
                                     {
-                                        TimeSpan timeSpan = itemToPrepare.MealCourse.GetPreparationForecast(actionContext) - actionContext.GetPreparationEndsAt(itemToPrepare);
-                                        if (preparationStation.GetPreparationTimeInMin(nextItemToPrepare) * 0.9 <= timeSpan.TotalMinutes)
+                                        if (nextItemToPrepare.IsInReferencePreparationSection(actionContext))
                                         {
-                                            pendingItemsRerange = true;
-                                            pendingItemsRearrangements++;
-                                            itemsPendingToPrepare.Remove(nextItemToPrepare);
-                                            itemsPendingToPrepare.Insert(itemsPendingToPrepare.IndexOf(itemToPrepare), nextItemToPrepare);
-                                            actionContext.PositionInterchanges.Add(new PositionInterchange() { FirstItemPreparation = itemToPrepare, SecondItemPreparation = nextItemToPrepare });
-                                            break;
+                                            TimeSpan timeSpan = itemToPrepare.MealCourse.GetPreparationForecast(actionContext) - actionContext.GetPreparationEndsAt(itemToPrepare);
+                                            if (timeSpan.TotalMinutes >= preparationStation.GetPreparationTimeInMin(nextItemToPrepare) * 0.9)
+                                            {
+                                                pendingItemsRerange = true;
+                                                pendingItemsRearrangements++;
+                                                itemsPendingToPrepare.Remove(nextItemToPrepare);
+                                                itemsPendingToPrepare.Insert(itemsPendingToPrepare.IndexOf(itemToPrepare), nextItemToPrepare);
+                                                actionContext.PositionInterchanges.Add(new PositionInterchange() { FirstItemPreparation = itemToPrepare, SecondItemPreparation = nextItemToPrepare });
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -418,7 +443,7 @@ namespace FlavourBusinessManager.RoomService
             string delayAction = actionContext.PreparationSections[preparationStation].Where(x => x.PreparationState == ItemPreparationState.PreparationDelay).FirstOrDefault()?.TotString(actionContext);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                foreach (var partialAction in preparationStation.GetActionsToDo(actionContext))
+                foreach (var partialAction in preparationStation.GetToDoPreparationSections(actionContext))
                 {
                     partialAction.PreparationOrderCommitted = true;
 
@@ -444,7 +469,7 @@ namespace FlavourBusinessManager.RoomService
 
 
         }
-        public static List<ItemsPreparationContext> GetActionsToDo(this PreparationStation preparationStation, ActionContext actionContext)
+        public static List<ItemsPreparationContext> GetToDoPreparationSections(this PreparationStation preparationStation, ActionContext actionContext)
         {
 
             List<ItemsPreparationContext> preparationSections = new List<ItemsPreparationContext>();//.Where(x=>(x.Action.PreparationForecast-TimeSpanEx.FromMinutes(x.Duration+5))<DateTime.UtcNow).ToList();
@@ -454,7 +479,11 @@ namespace FlavourBusinessManager.RoomService
 
             foreach (var preparationSection in preparationSections)
             {
-                if ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - preparationSection.GetPreparationForecast(actionContext)).GetTotalMinutes() < 1.5 * Simulator.Velocity || ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(preparationSection.GetDuration() + (2 * Simulator.Velocity))) < DateTime.UtcNow))
+                if (preparationSection.PreparationOrderCommitted)
+                {
+                    filteredPartialActions.Add(preparationSection);
+                }
+                else if ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - preparationSection.GetPreparationForecast(actionContext)).GetTotalMinutes() < 1.5 * Simulator.Velocity || ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(preparationSection.GetDuration() + (2 * Simulator.Velocity))) < DateTime.UtcNow))
                 {
                     if (preparationSection.MealCourse.Name == "a11")
                     {
@@ -472,16 +501,6 @@ namespace FlavourBusinessManager.RoomService
                 }
                 else
                 {
-                    if (preparationSection.PreparationItems.All(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.PreparationDelay))
-                        filteredPartialActions.Add(preparationSection);
-                    else
-                    {
-                        if (preparationSection.PreparationOrderCommitted)
-                        {
-
-                        }
-                    }
-
                     break;
                 }
             }
@@ -590,7 +609,7 @@ namespace FlavourBusinessManager.RoomService
 
             //Adds the re planed preparation contexts 
             optimizedPreparationSections.AddRange(preparationSectionsForOptimazation);
-            
+
 
 
             int i = 0;
@@ -624,7 +643,7 @@ namespace FlavourBusinessManager.RoomService
                         preparationSection.PreparationOrderCommitted = true;
                 }
                 stateTransition.Consistent = true;
-            } 
+            }
             #endregion
 
             #region Debug
@@ -655,7 +674,7 @@ namespace FlavourBusinessManager.RoomService
 
                     }
                 }
-            } 
+            }
             #endregion
 
         }

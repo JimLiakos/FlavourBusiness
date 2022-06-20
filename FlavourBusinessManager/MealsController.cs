@@ -51,7 +51,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 try
                 {
-                    actionContext.RemoveOutOfPlamPreparationItems();
+                    actionContext.RemoveOutOfPlanPreparationItems();
                     DateTime timeStamp = DateTime.UtcNow;
                     actionContext.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;
@@ -66,7 +66,7 @@ namespace FlavourBusinessManager.RoomService
                         foreach (var preparationStation in ActivePreparationStations)
                         {
                             preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
-                            preparationStation.GetPredictions(actionContext);
+                            preparationStation.GetPredictions(actionContext, stirTheSequence);
                         }
 
                         TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
@@ -80,11 +80,7 @@ namespace FlavourBusinessManager.RoomService
                     actionContext.PositionInterchanges.Clear();
 
 
-                    foreach (var preparationStation in ActivePreparationStations)
-                    {
-                        var strings = preparationStation.GetActionsToStrings(actionContext);
-                    }
-
+                   
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
@@ -108,7 +104,15 @@ namespace FlavourBusinessManager.RoomService
                         #endregion
                     }
 
-                  
+                    foreach (var preparationStation in ActivePreparationStations)
+                    {
+                        var strings = preparationStation.GetActionsToStrings(actionContext);
+                        if(strings.Count>1)
+                        {
+
+                        }
+                    }
+
 
                     RebuildPreparationPlanLastTime = DateTime.UtcNow;
                 }
@@ -417,9 +421,9 @@ namespace FlavourBusinessManager.RoomService
 
                     while (true)
                     {
-                        if ((DateTime.UtcNow - RebuildPreparationPlanLastTime).TotalSeconds >= 5)
+                        if ((DateTime.UtcNow - RebuildPreparationPlanLastTime).TotalSeconds >= 15)
                             RebuildPreparationPlan(ActionContext);
-                        System.Threading.Thread.Sleep(1000);
+                        System.Threading.Thread.Sleep(10000);
                     }
                 });
 
@@ -501,11 +505,7 @@ namespace FlavourBusinessManager.RoomService
             RebuildPreparationPlan(ActionContext);
             Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
-            //        var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
-
-            //        foreach (var roasting…tem in roasting…tems)
-            //            predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
-
+   
             foreach (var itemPreparation in preparationStationItems)
             {
                 if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))

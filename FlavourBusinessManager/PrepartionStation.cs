@@ -1188,7 +1188,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris)
         {
 
-            PreparationPlanStartTime = null;
+            
 
             var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -1227,6 +1227,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)
         {
 
+            
             var preparationTimeSpan = DateTime.UtcNow - PrepartionVelocityMilestone.Value;
 
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
@@ -1457,8 +1458,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris)
         {
-
-
+            
+            //ServicesContextRunTime.Current.MealsController.RebuildPreparationPlanLastTime=DateTime.UtcNow+TimeSpan.FromMinutes()
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
                                  where itemPreparationUris.Contains(itemPreparation.uid) && itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.…nPreparation)
