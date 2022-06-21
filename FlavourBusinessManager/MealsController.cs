@@ -55,7 +55,7 @@ namespace FlavourBusinessManager.RoomService
                     DateTime timeStamp = DateTime.UtcNow;
                     actionContext.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;
-                    
+
                     foreach (var preparationStation in ActivePreparationStations)
                         preparationStation.GetPreparationSections(actionContext);
 
@@ -80,7 +80,7 @@ namespace FlavourBusinessManager.RoomService
                     actionContext.PositionInterchanges.Clear();
 
 
-                   
+
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
@@ -107,7 +107,7 @@ namespace FlavourBusinessManager.RoomService
                     foreach (var preparationStation in ActivePreparationStations)
                     {
                         var strings = preparationStation.GetActionsToStrings(actionContext);
-                        if(strings.Count>1)
+                        if (strings.Count > 1)
                         {
 
                         }
@@ -191,7 +191,7 @@ namespace FlavourBusinessManager.RoomService
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
         {
             ServicesContextRunTime = servicesContextRunTime;
-            
+
         }
         /// <MetaDataID>{6570680d-a627-47c1-b385-2919e07bb359}</MetaDataID>
         ~MealsController()
@@ -505,23 +505,28 @@ namespace FlavourBusinessManager.RoomService
             RebuildPreparationPlan(ActionContext);
             Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
-   
+
             foreach (var itemPreparation in preparationStationItems)
             {
-                if(itemPreparation.State==ItemPreparationState.IsRoasting&& itemPreparation.CookingStartsAt.Value!=null)
+                if (itemPreparation.State == ItemPreparationState.IsRoasting && itemPreparation.CookingStartsAt.Value != null)
                 {
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = itemPreparation.CookingStartsAt.Value,
                         Duration = itemPreparation.CookingTimeSpanInMin
                     };
-                } else if (itemPreparation.State.IsInFollowingState(ItemPreparationState.IsRoasting))
+
+                    predictions[itemPreparation.uid] = itemPreparationPlan;
+                }
+                else if (itemPreparation.State.IsInFollowingState(ItemPreparationState.IsRoasting))
                 {
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = DateTime.UtcNow,
                         Duration = 0
                     };
+
+                    predictions[itemPreparation.uid] = itemPreparationPlan;
                 }
                 else if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
                 {

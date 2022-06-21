@@ -165,16 +165,16 @@ namespace FlavourBusinessManager.RoomService
             //        PSItemsPattern.GetItemsPatterns(new ItemPattern(8.5,10.5),new ItemPattern(3.5,5.5)) });
             //    return preparationPaterns;
             //}
-            if (step == 1)
-            {
-                preparationPaterns.Add(new List<PSItemsPattern> {
-                    new PSItemsPattern(0),
-                    new PSItemsPattern(0),
-                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5)),
-                    new PSItemsPattern(0)});
+            //if (step == 1)
+            //{
+            //    preparationPaterns.Add(new List<PSItemsPattern> {
+            //        new PSItemsPattern(0),
+            //        new PSItemsPattern(0),
+            //        PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5)),
+            //        new PSItemsPattern(0)});
 
-                return preparationPaterns;
-            }
+            //    return preparationPaterns;
+            //}
 
             if (step == 0)
             {
