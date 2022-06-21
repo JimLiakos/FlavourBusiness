@@ -508,7 +508,22 @@ namespace FlavourBusinessManager.RoomService
    
             foreach (var itemPreparation in preparationStationItems)
             {
-                if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
+                if(itemPreparation.State==ItemPreparationState.IsRoasting&& itemPreparation.CookingStartsAt.Value!=null)
+                {
+                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                    {
+                        PreparationStart = itemPreparation.CookingStartsAt.Value,
+                        Duration = itemPreparation.CookingTimeSpanInMin
+                    };
+                } else if (itemPreparation.State.IsInFollowingState(ItemPreparationState.IsRoasting))
+                {
+                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                    {
+                        PreparationStart = DateTime.UtcNow,
+                        Duration = 0
+                    };
+                }
+                else if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
                 {
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {

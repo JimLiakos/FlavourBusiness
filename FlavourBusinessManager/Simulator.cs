@@ -61,7 +61,7 @@ namespace FlavourBusinessManager.RoomService
         };
 
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
-       internal void StartSimulator()
+        internal void StartSimulator()
         {
 
 
@@ -72,7 +72,7 @@ namespace FlavourBusinessManager.RoomService
                     System.Threading.Thread.Sleep(50000);
                     DateTime? lastMealCourseAdded = null;
 
-                    var servicePoints = (from serviceArea in ServicesContextRunTime.Current. ServiceAreas
+                    var servicePoints = (from serviceArea in ServicesContextRunTime.Current.ServiceAreas
                                          from ServicePoint in serviceArea.ServicePoints
                                          select ServicePoint).ToList();
 
@@ -156,15 +156,15 @@ namespace FlavourBusinessManager.RoomService
         {
             List<List<PSItemsPattern>> preparationPaterns = new List<List<PSItemsPattern>>();
 
-            if (step == 0)
-            {
-                preparationPaterns.Add(new List<PSItemsPattern> {
-                    new PSItemsPattern(0),
-                    new PSItemsPattern(0),
-                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5))  ,
-                    PSItemsPattern.GetItemsPatterns(new ItemPattern(8.5,10.5),new ItemPattern(3.5,5.5)) });
-                return preparationPaterns;
-            }
+            //if (step == 0)
+            //{
+            //    preparationPaterns.Add(new List<PSItemsPattern> {
+            //        new PSItemsPattern(0),
+            //        new PSItemsPattern(0),
+            //        PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5))  ,
+            //        PSItemsPattern.GetItemsPatterns(new ItemPattern(8.5,10.5),new ItemPattern(3.5,5.5)) });
+            //    return preparationPaterns;
+            //}
             if (step == 1)
             {
                 preparationPaterns.Add(new List<PSItemsPattern> {
@@ -172,6 +172,27 @@ namespace FlavourBusinessManager.RoomService
                     new PSItemsPattern(0),
                     PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5)),
                     new PSItemsPattern(0)});
+
+                return preparationPaterns;
+            }
+
+            if (step == 0)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5)) });
+                return preparationPaterns;
+            }
+            if (step == 1)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(3) });
+
 
                 return preparationPaterns;
             }
@@ -239,21 +260,20 @@ namespace FlavourBusinessManager.RoomService
                         var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
                         ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                         itemsToPrepare.Add(itemPreparation);
-                        psItemsPattern.NumberOfItems = patern[0].NumberOfItems - 1;
+                        psItemsPattern.NumberOfItems = psItemsPattern.NumberOfItems - 1;
                     }
                 }
                 if (psItemsPattern.ItemsPatterns != null)
                 {
-                    foreach (var itemPater in psItemsPattern.ItemsPatterns)
+                    foreach (var itemPatern in psItemsPattern.ItemsPatterns)
                     {
                         var preparationStation = preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)];
                         var preparationStationItems = preparationStationsItems[preparationStation];
 
-                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPater.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPater.MaxDuration / 2).ToList();
+                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPatern.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPatern.MaxDuration / 2).ToList();
                         var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
                         ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
                         itemsToPrepare.Add(itemPreparation);
-                        psItemsPattern.NumberOfItems = patern[0].NumberOfItems - 1;
                     }
                 }
 
