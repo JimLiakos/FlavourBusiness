@@ -497,61 +497,10 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
-        /// <MetaDataID>{3e5166da-a888-46e4-9778-4c4acfe31411}</MetaDataID>
-        internal Dictionary<string, ItemPreparationPlan> GetItemToServingTimespanPredictions(List<ItemPreparation> preparationStationItems)
+        internal ActionContext RebuildPreparationPlan()
         {
-            DateTime startTime = DateTime.UtcNow;
-
             RebuildPreparationPlan(ActionContext);
-            Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
-
-
-            foreach (var itemPreparation in preparationStationItems)
-            {
-                if (itemPreparation.State == ItemPreparationState.IsRoasting && itemPreparation.CookingStartsAt.Value != null)
-                {
-                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
-                    {
-                        PreparationStart = itemPreparation.CookingStartsAt.Value,
-                        Duration =  TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes  
-                    };
-
-                    predictions[itemPreparation.uid] = itemPreparationPlan;
-                }
-                else if (itemPreparation.State.IsInFollowingState(ItemPreparationState.IsRoasting))
-                {
-                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
-                    {
-                        PreparationStart = DateTime.UtcNow,
-                        Duration = 0
-                    };
-
-                    predictions[itemPreparation.uid] = itemPreparationPlan;
-                }
-                else if (!ActionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
-                {
-                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
-                    {
-                        PreparationStart = DateTime.UtcNow,
-                        Duration = 0
-                    };
-
-                    predictions[itemPreparation.uid] = itemPreparationPlan;
-
-                }
-                else
-                {
-                    ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
-                    {
-                        PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
-                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
-                    };
-
-                    predictions[itemPreparation.uid] = itemPreparationPlan;
-                }
-            }
-            var timeSpan = DateTime.UtcNow - startTime;
-            return predictions;
+            return ActionContext;
         }
     }
 

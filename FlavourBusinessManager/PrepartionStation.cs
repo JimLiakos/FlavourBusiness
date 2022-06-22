@@ -605,7 +605,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-     
+
 
         /// <MetaDataID>{a32e2c1f-9f35-4f67-868e-8d6a3b13fb20}</MetaDataID>
         public object DeviceUpdateLock = new object();
@@ -817,7 +817,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
 
-            var predictions = GetItemToServingtimespanPredictions();
+            var predictions = GetItemToServingTimespanPredictions();
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 foreach (var prepartionItem in (from prepartionSession in PreparationSessions
@@ -1073,8 +1073,123 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
         List<IItemPreparation> ItemsInPreparation;
-        /// <MetaDataID>{e8f2d2d9-d017-4c46-b82b-9ab788e46b0c}</MetaDataID>
-        Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
+        ///// <MetaDataID>{e8f2d2d9-d017-4c46-b82b-9ab788e46b0c}</MetaDataID>
+        //Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
+        //{
+
+        //    try
+        //    {
+        //        SuspendsObjectChangeStateEvents = true;
+        //        List<ItemsPreparationContext> preparationSections = null;
+        //        lock (DeviceUpdateLock)
+        //        {
+        //            preparationSections = this._PreparationSessions.ToList();
+        //        }
+        //        var preparationStationItems = (from serviceSession in preparationSections
+        //                                       from preparationItem in serviceSession.PreparationItems
+        //                                       select preparationItem).ToList();
+
+
+
+        //        Predictions = GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
+        //        return Predictions;
+        //    }
+        //    finally
+        //    {
+        //        SuspendsObjectChangeStateEvents = false;
+        //    }
+
+
+        //    //try
+        //    //{
+        //    //    lock (predictions)
+        //    //    {
+        //    //        List<ItemsPreparationContext> preparationSections = null;
+        //    //        lock (DeviceUpdateLock)
+        //    //        {
+        //    //            preparationSections = this._PreparationSessions;
+        //    //        }
+        //    //        var preparationStationItems = (from serviceSession in preparationSections
+        //    //                                       from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin).OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem))
+        //    //                                       select preparationItem).ToList();
+
+        //    //        var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
+
+        //    //        if (ItemsInPreparation == null)
+        //    //            ItemsInPreparation = itemsInPreparation;
+        //    //        else
+        //    //        {
+        //    //            #region Remove the items in preparation to recalculate preparation time
+        //    //            var removedItem = ItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
+        //    //            if (removedItem != null && predictions.ContainsKey(removedItem.uid) && predictions[removedItem.uid].PreparationStart > DateTime.UtcNow)
+        //    //            {
+        //    //                for (int i = ItemsInPreparation.IndexOf(removedItem); i < ItemsInPreparation.Count; i++)
+        //    //                {
+        //    //                    if (predictions.ContainsKey(ItemsInPreparation[i].uid))
+        //    //                        predictions.Remove(ItemsInPreparation[i].uid);
+        //    //                }
+        //    //            }
+        //    //            #endregion
+        //    //        }
+
+        //    //        DateTime previousePreparationEndsAt = DateTime.UtcNow;
+        //    //        foreach (var itemInPreparation in itemsInPreparation.Where(x => ItemsInPreparation.Contains(x) && predictions.ContainsKey(x.uid)))
+        //    //        {
+        //    //            if (predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration) > previousePreparationEndsAt)
+        //    //                previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
+        //    //        }
+        //    //        foreach (var itemInPreparation in itemsInPreparation.Where(x => !ItemsInPreparation.Contains(x) || !predictions.ContainsKey(x.uid)))
+        //    //        {
+
+        //    //            //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
+        //    //            //{
+        //    //            //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
+
+        //    //            if (previousePreparationEndsAt > DateTime.UtcNow)
+        //    //                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
+        //    //            else
+        //    //                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
+        //    //            //}
+        //    //            previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
+        //    //        }
+
+        //    //        ItemsInPreparation = itemsInPreparation;
+
+        //    //        var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
+        //    //        foreach (var itemPendingToPrepare in itemsPendingToPrepare)
+        //    //        {
+        //    //            predictions[itemPendingToPrepare.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemPendingToPrepare.PreparationTimeSpanInMin };
+        //    //            previousePreparationEndsAt = previousePreparationEndsAt + TimeSpan.FromMinutes(itemPendingToPrepare.PreparationTimeSpanInMin);
+        //    //        }
+
+
+        //    //        var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
+
+        //    //        foreach (var roasting…tem in roasting…tems)
+        //    //            predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
+
+        //    //        foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
+        //    //            if (predictions.ContainsKey(prepared…tem.uid))
+        //    //            {
+        //    //                if (predictions[prepared…tem.uid].Duration > 0)
+        //    //                {
+        //    //                    predictions[prepared…tem.uid].PreparationStart = DateTime.UtcNow;
+        //    //                    predictions[prepared…tem.uid].Duration = 0;
+        //    //                }
+        //    //            }
+
+        //    //        return predictions;
+        //    //    }
+        //    //}
+        //    //catch (Exception error)
+        //    //{
+
+        //    //    throw;
+        //    //}
+        //}
+
+        /// <MetaDataID>{3e5166da-a888-46e4-9778-4c4acfe31411}</MetaDataID>
+        internal Dictionary<string, ItemPreparationPlan> GetItemToServingTimespanPredictions()
         {
 
             try
@@ -1087,11 +1202,69 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
                 var preparationStationItems = (from serviceSession in preparationSections
                                                from preparationItem in serviceSession.PreparationItems
-                                               select preparationItem).ToList();
+                                               select preparationItem).OfType<ItemPreparation>().ToList();
 
 
-                Predictions = (ServicesContextRunTime.Current.MealsController as MealsController).GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
-                return Predictions;
+
+                //Predictions = GetItemToServingTimespanPredictions(preparationStationItems.OfType<ItemPreparation>().ToList());
+                //return Predictions;
+
+                DateTime startTime = DateTime.UtcNow;
+
+                ActionContext actionContext = (ServicesContextRunTime.Current.MealsController as MealsController).RebuildPreparationPlan();
+                Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
+
+
+                foreach (var itemPreparation in preparationStationItems)
+                {
+                    if(itemPreparation.PreparationStation==null)
+                    {
+
+                    }
+                    if (itemPreparation.State == ItemPreparationState.IsRoasting && itemPreparation.CookingStartsAt.Value != null)
+                    {
+                        ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                        {
+                            PreparationStart = itemPreparation.CookingStartsAt.Value,
+                            Duration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
+                        };
+
+                        predictions[itemPreparation.uid] = itemPreparationPlan;
+                    }
+                    else if (itemPreparation.State.IsInFollowingState(ItemPreparationState.IsRoasting))
+                    {
+                        ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                        {
+                            PreparationStart = DateTime.UtcNow,
+                            Duration = 0
+                        };
+
+                        predictions[itemPreparation.uid] = itemPreparationPlan;
+                    }
+                    else if (!actionContext.ItemPreparationsStartsAt.ContainsKey(itemPreparation))
+                    {
+                        ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                        {
+                            PreparationStart = DateTime.UtcNow,
+                            Duration = 0
+                        };
+
+                        predictions[itemPreparation.uid] = itemPreparationPlan;
+
+                    }
+                    else
+                    {
+                        ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
+                        {
+                            PreparationStart = actionContext.ItemPreparationsStartsAt[itemPreparation],
+                            Duration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
+                        };
+
+                        predictions[itemPreparation.uid] = itemPreparationPlan;
+                    }
+                }
+                var timeSpan = DateTime.UtcNow - startTime;
+                return predictions;
             }
             finally
             {
@@ -1099,92 +1272,6 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
 
-            //try
-            //{
-            //    lock (predictions)
-            //    {
-            //        List<ItemsPreparationContext> preparationSections = null;
-            //        lock (DeviceUpdateLock)
-            //        {
-            //            preparationSections = this._PreparationSessions;
-            //        }
-            //        var preparationStationItems = (from serviceSession in preparationSections
-            //                                       from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin).OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem))
-            //                                       select preparationItem).ToList();
-
-            //        var itemsInPreparation = preparationStationItems.Where(x => x.State == ItemPreparationState.…nPreparation).OrderBy(x => x.PreparationStartsAt).ToList();
-
-            //        if (ItemsInPreparation == null)
-            //            ItemsInPreparation = itemsInPreparation;
-            //        else
-            //        {
-            //            #region Remove the items in preparation to recalculate preparation time
-            //            var removedItem = ItemsInPreparation.Where(x => !itemsInPreparation.Contains(x)).FirstOrDefault();
-            //            if (removedItem != null && predictions.ContainsKey(removedItem.uid) && predictions[removedItem.uid].PreparationStart > DateTime.UtcNow)
-            //            {
-            //                for (int i = ItemsInPreparation.IndexOf(removedItem); i < ItemsInPreparation.Count; i++)
-            //                {
-            //                    if (predictions.ContainsKey(ItemsInPreparation[i].uid))
-            //                        predictions.Remove(ItemsInPreparation[i].uid);
-            //                }
-            //            }
-            //            #endregion
-            //        }
-
-            //        DateTime previousePreparationEndsAt = DateTime.UtcNow;
-            //        foreach (var itemInPreparation in itemsInPreparation.Where(x => ItemsInPreparation.Contains(x) && predictions.ContainsKey(x.uid)))
-            //        {
-            //            if (predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration) > previousePreparationEndsAt)
-            //                previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
-            //        }
-            //        foreach (var itemInPreparation in itemsInPreparation.Where(x => !ItemsInPreparation.Contains(x) || !predictions.ContainsKey(x.uid)))
-            //        {
-
-            //            //if (!ItemsInPreparation.Contains(itemInPreparation) || !predictions.ContainsKey(itemInPreparation.uid))
-            //            //{
-            //            //item was not in preparation mode in the previous calculation or the preparation time must be recalculated
-
-            //            if (previousePreparationEndsAt > DateTime.UtcNow)
-            //                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemInPreparation.PreparationTimeSpanInMin };
-            //            else
-            //                predictions[itemInPreparation.uid] = new ItemPreparationPlan() { PreparationStart = DateTime.UtcNow, Duration = itemInPreparation.PreparationTimeSpanInMin };
-            //            //}
-            //            previousePreparationEndsAt = predictions[itemInPreparation.uid].PreparationStart + TimeSpan.FromMinutes(predictions[itemInPreparation.uid].Duration);
-            //        }
-
-            //        ItemsInPreparation = itemsInPreparation;
-
-            //        var itemsPendingToPrepare = preparationStationItems.Where(x => x.State == ItemPreparationState.PendingPreparation).ToList();
-            //        foreach (var itemPendingToPrepare in itemsPendingToPrepare)
-            //        {
-            //            predictions[itemPendingToPrepare.uid] = new ItemPreparationPlan() { PreparationStart = previousePreparationEndsAt, Duration = itemPendingToPrepare.PreparationTimeSpanInMin };
-            //            previousePreparationEndsAt = previousePreparationEndsAt + TimeSpan.FromMinutes(itemPendingToPrepare.PreparationTimeSpanInMin);
-            //        }
-
-
-            //        var roasting…tems = preparationStationItems.Where(x => x.State == ItemPreparationState.IsRoasting).ToList();
-
-            //        foreach (var roasting…tem in roasting…tems)
-            //            predictions[roasting…tem.uid] = new ItemPreparationPlan() { PreparationStart = roasting…tem.CookingStartsAt.Value, Duration = roasting…tem.CookingTimeSpanInMin };
-
-            //        foreach (var prepared…tem in preparationStationItems.Where(x => x.State == ItemPreparationState.IsPrepared))
-            //            if (predictions.ContainsKey(prepared…tem.uid))
-            //            {
-            //                if (predictions[prepared…tem.uid].Duration > 0)
-            //                {
-            //                    predictions[prepared…tem.uid].PreparationStart = DateTime.UtcNow;
-            //                    predictions[prepared…tem.uid].Duration = 0;
-            //                }
-            //            }
-
-            //        return predictions;
-            //    }
-            //}
-            //catch (Exception error)
-            //{
-
-            //    throw;
-            //}
         }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris)
@@ -1201,7 +1288,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.Items…nPreparation(clientSessionItems.ClientSessionItems);
 
-            return GetItemToServingtimespanPredictions();
+            return GetItemToServingTimespanPredictions();
         }
 
 
@@ -1248,7 +1335,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
-            return GetItemToServingtimespanPredictions();
+            
+            
+            return GetItemToServingTimespanPredictions();
         }
         /// <MetaDataID>{5b510e03-e1ba-4905-abc7-b4438f510bd8}</MetaDataID>
         int _PreparationVelocity = 0;
@@ -1451,7 +1540,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
-            return GetItemToServingtimespanPredictions();
+            return GetItemToServingTimespanPredictions();
         }
 
 
@@ -1493,7 +1582,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 clientSessionItems.clientSession.ItemsPrepared(clientSessionItems.ClientSessionItems);
 
 
-            return GetItemToServingtimespanPredictions();
+            return GetItemToServingTimespanPredictions();
 
 
         }
@@ -1513,7 +1602,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 foreach (var clientSessionItems in clientSessionsItems)
                     clientSessionItems.clientSession.CancelLastPreparationStep(clientSessionItems.ClientSessionItems);
-                return GetItemToServingtimespanPredictions();
+                return GetItemToServingTimespanPredictions();
             }
             finally
             {
