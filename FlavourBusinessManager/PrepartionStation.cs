@@ -517,7 +517,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
 
-        internal double GetPreparationTimeInMin(ItemPreparation itemPreparation)
+        internal double GetCookingTimeSpanInMin(ItemPreparation itemPreparation)
         {
             if (itemPreparation.PreparationTimeSpanInMin == -1)
             {
@@ -604,6 +604,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
         }
+
+     
 
         /// <MetaDataID>{a32e2c1f-9f35-4f67-868e-8d6a3b13fb20}</MetaDataID>
         public object DeviceUpdateLock = new object();
@@ -1188,7 +1190,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris)
         {
 
-            
+
 
             var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -1227,7 +1229,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)
         {
 
-            
+
             var preparationTimeSpan = DateTime.UtcNow - PrepartionVelocityMilestone.Value;
 
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
@@ -1458,7 +1460,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{b2502860-c9af-44cf-8f10-d0a221986c7b}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsPrepared(List<string> itemPreparationUris)
         {
-            
+
             //ServicesContextRunTime.Current.MealsController.RebuildPreparationPlanLastTime=DateTime.UtcNow+TimeSpan.FromMinutes()
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
                                  from itemPreparation in servicePointPreparationItems.PreparationItems

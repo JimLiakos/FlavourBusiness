@@ -513,7 +513,7 @@ namespace FlavourBusinessManager.RoomService
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = itemPreparation.CookingStartsAt.Value,
-                        Duration = itemPreparation.CookingTimeSpanInMin
+                        Duration =  TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes  
                     };
 
                     predictions[itemPreparation.uid] = itemPreparationPlan;
@@ -544,7 +544,7 @@ namespace FlavourBusinessManager.RoomService
                     ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                     {
                         PreparationStart = ActionContext.ItemPreparationsStartsAt[itemPreparation],
-                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeInMin(itemPreparation)).TotalMinutes
+                        Duration = TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
                     };
 
                     predictions[itemPreparation.uid] = itemPreparationPlan;
