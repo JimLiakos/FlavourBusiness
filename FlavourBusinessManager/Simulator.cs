@@ -182,10 +182,21 @@ namespace FlavourBusinessManager.RoomService
                     new PSItemsPattern(0),
                     new PSItemsPattern(0),
                     new PSItemsPattern(0),
-                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5)) });
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5)) 
+                });
                 return preparationPaterns;
             }
             if (step == 1)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                        PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5))
+                });
+                return preparationPaterns;
+            }
+            if (step == 3)
             {
                 preparationPaterns.Add(new List<PSItemsPattern> {
                     new PSItemsPattern(0),
@@ -196,7 +207,6 @@ namespace FlavourBusinessManager.RoomService
 
                 return preparationPaterns;
             }
-
 
             return PreparationStationSimulatorItems;
         }

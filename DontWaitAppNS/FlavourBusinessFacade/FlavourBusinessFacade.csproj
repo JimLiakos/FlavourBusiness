@@ -79,6 +79,8 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\UserData.cs" Link="UserData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\WorkerData.cs" Link="WorkerData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ΙHallLayout.cs" Link="ΙHallLayout.cs" />
+    <Compile Include="..\..\MenuModel\IClass.cs" Link="IClass.cs" />
+    <Compile Include="..\..\MenuModel\IClassified.cs" Link="IClassified.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealCourseType.cs" Link="IMealCourseType.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IMealType.cs" Link="IMealType.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\ITag.cs" Link="ITag.cs" />

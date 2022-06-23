@@ -408,5 +408,11 @@
   <ItemGroup>
     <Resource Include="Backup\RestaurantMenuData.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notificationSound.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotificationSound.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

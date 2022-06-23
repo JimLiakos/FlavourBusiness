@@ -16,8 +16,11 @@ using System.Reflection;
 using OOAdvantech.Json.Linq;
 using MenuModel;
 using MenuModel.JsonViewModel;
+using System.IO;
+
 
 #if DeviceDotNet
+using OOAdvantech.AudioManager;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #endif
 
@@ -177,6 +180,19 @@ namespace PreparationStationDevice
                 return null;
 
             });
+        }
+
+
+        public async void PlayNotificationSound()
+        {
+
+#if DeviceDotNet
+            await Audio.Manager.PlaySound("NotificationSound.mp3");
+#else
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(FlavourBusinessApps.Properties.Resources.NotificationSound);
+            player.Play();
+#endif
+
         }
 
         /// <MetaDataID>{4fbed955-14b7-4406-a861-844e2e9398d8}</MetaDataID>
@@ -476,8 +492,18 @@ namespace PreparationStationDevice
         {
 
 
-            get => RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan;
-            set => RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan = value;
+            get
+            {
+                PlayNotificationSound();
+                if (PreparationStation == null)
+                    return 0;
+                return RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan;
+            }
+            set
+            {
+                if(PreparationStation!=null)
+                    RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan = value;
+            }
         }
 
 
@@ -549,7 +575,7 @@ namespace PreparationStationDevice
                     MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
                     GetMenuLanguages(MenuItems.Values.ToList());
                     PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
-                    ServicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                    var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                     ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                     CommunicationCredentialKey = communicationCredentialKey;
                     return true;
@@ -674,7 +700,7 @@ namespace PreparationStationDevice
             string path = "";
 
 
-#if DeviceDotNet   
+#if DeviceDotNet
             path = "PreparationStationDevice.i18n";
 #else
             path = "PreparationStationDevice.WPF.i18n";
@@ -835,6 +861,8 @@ namespace PreparationStationDevice
 
         /// <MetaDataID>{bd482c6d-8458-43cb-b050-87dcab4da02c}</MetaDataID>
         double PreparationVelocity { get; }
+
+        void PlayNotificationSound();
     }
 
 

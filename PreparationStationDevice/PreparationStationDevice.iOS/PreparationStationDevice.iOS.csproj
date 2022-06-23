@@ -140,4 +140,7 @@
       <Name>PreparationStationDevice</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sounds\NotificationSound.mp3" />
+  </ItemGroup>
 </Project>
