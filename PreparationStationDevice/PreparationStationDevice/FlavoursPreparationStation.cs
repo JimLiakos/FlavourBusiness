@@ -93,6 +93,9 @@ namespace PreparationStationDevice
 
 
         }
+
+        List<ItemsPreparationContextPresentation> ΙtemsPreparationContexts;
+
         /// <MetaDataID>{c109d672-0fb4-4aff-867d-70e329fd0496}</MetaDataID>
         Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> MenuItems;
 
@@ -106,80 +109,116 @@ namespace PreparationStationDevice
 
 
             return Task<List<ItemsPreparationContextPresentation>>.Run(() =>
-            {
-                int tries = 30;
-                while (tries > 0)
-                {
-                    try
-                    {
+           {
+               int tries = 30;
+               while (tries > 0)
+               {
+                   try
+                   {
 
-                        if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
-                        {
-                            var start = DateTime.UtcNow;
+                       if (PreparationStation == null && !string.IsNullOrWhiteSpace(CommunicationCredentialKey))
+                       {
+                           var start = DateTime.UtcNow;
 
-                            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                            string serverUrl = AzureServerUrl;
-                            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                            var preparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
-                            if (preparationStation != null)
-                            {
+                           string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                           string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                           string serverUrl = AzureServerUrl;
+                           IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                           var preparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                           if (preparationStation != null)
+                           {
 
-                                PreparationStationStatus preparationStationStatus = preparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                               PreparationStationStatus preparationStationStatus = preparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
 
-                                ItemsPreparationTags = preparationStation.ItemsPreparationTags;
-                                preparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
+                               ItemsPreparationTags = preparationStation.ItemsPreparationTags;
+                               preparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
 
 
-                                var restaurantMenuDataSharedUri = preparationStation.RestaurantMenuDataSharedUri;
-                                HttpClient httpClient = new HttpClient();
-                                var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
-                                getJsonTask.Wait();
-                                var json = getJsonTask.Result;
-                                var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                                MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+                               var restaurantMenuDataSharedUri = preparationStation.RestaurantMenuDataSharedUri;
+                               HttpClient httpClient = new HttpClient();
+                               var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                               getJsonTask.Wait();
+                               var json = getJsonTask.Result;
+                               var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                               MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
-                                GetMenuLanguages(MenuItems.Values.ToList());
+                               GetMenuLanguages(MenuItems.Values.ToList());
                                 // servicesContextManagment.
                                 Title = preparationStation.Description;
 
-                                preparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
-                                PreparationStation = preparationStation;
-                                ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
-                                ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
-                                PreparationVelocity = PreparationStation.PreparationVelocity;
-                            }
+                               preparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
+                               PreparationStation = preparationStation;
+                               ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                               ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+                               PreparationVelocity = PreparationStation.PreparationVelocity;
+                           }
 
-                            var timeSpan = DateTime.UtcNow - start;
+                           var timeSpan = DateTime.UtcNow - start;
                             //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                         }
-                        var itemsPreparationContexts = (from itemsPreparationContext in ItemsPreparationContexts
-                                                        select new ItemsPreparationContextPresentation()
-                                                        {
-                                                            Description = itemsPreparationContext.MealCourseDescription,
-                                                            StartsAt = itemsPreparationContext.MealCourseStartsAt,
-                                                            MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                            PreparationOrder = itemsPreparationContext.PreparatioOrder,
-                                                            ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
-                                                            ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
-                                                            Uri = itemsPreparationContext.Uri,
-                                                            PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
-                                                        }).ToList();
 
-                        return itemsPreparationContexts;
-                    }
-                    catch (Exception error)
-                    {
+                       var itemsPreparationContexts = (from itemsPreparationContext in ItemsPreparationContexts
+                                                       select new ItemsPreparationContextPresentation()
+                                                       {
+                                                           Description = itemsPreparationContext.MealCourseDescription,
+                                                           StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                                                           MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                           PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                           ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                                                           ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                                                           Uri = itemsPreparationContext.Uri,
+                                                           PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                                                       }).ToList();
 
-                        tries--;
-                        if (tries == 0)
-                            throw;
+                       if (ΙtemsPreparationContexts == null || ΙtemsPreparationContexts.Count == 0)
+                       {
+                           List<ItemPreparation> preparationItems = (from preparationSection in itemsPreparationContexts
+                                                                     from preparationItem in preparationSection.PreparationItems
+                                                                     select preparationItem.ItemPreparation).ToList();
 
-                    }
-                }
-                return null;
+                           if (preparationItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation)) && preparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation))
+                           {
+                               Task.Run(() =>
+                               {
+                                   TimeSpan delay = TimeSpan.FromMinutes(1);
+                                   int count = 0;
+                                   while (true)
+                                   {
+                                       System.Threading.Thread.Sleep(delay);
+                                       preparationItems = (from preparationSection in ΙtemsPreparationContexts
+                                                           from preparationItem in preparationSection.PreparationItems
+                                                           select preparationItem.ItemPreparation).ToList();
+                                       if (count < 3)
+                                           delay = TimeSpan.FromMinutes(0.5);
+                                       else
+                                           delay = TimeSpan.FromSeconds(10);
+                                       count++;
+                                       if (preparationItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation)) && preparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation))
+                                           PlayNotificationSound();
+                                       else
+                                           break;
+                                   }
 
-            });
+                               });
+                           }
+                       }
+
+                       ΙtemsPreparationContexts = itemsPreparationContexts;
+
+                       return ΙtemsPreparationContexts;
+                   }
+                   catch (Exception error)
+                   {
+
+                       tries--;
+                       if (tries == 0)
+                           throw;
+
+                   }
+               }
+               return null;
+
+           });
         }
 
 
@@ -287,6 +326,9 @@ namespace PreparationStationDevice
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsPrepared(itemPreparations.Select(x => x.uid).ToList());
                         PreparationVelocity = PreparationStation.PreparationVelocity;
+
+                        UpdatePreparationItems(itemPreparations);
+
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -301,6 +343,20 @@ namespace PreparationStationDevice
                 }
                 return true;
             });
+        }
+
+        object PreparationItemsLock = new object();
+
+        private void UpdatePreparationItems(List<ItemPreparation> itemPreparations)
+        {
+            lock (PreparationItemsLock)
+            {
+                List<ItemPreparation> preparationItems = (from preparationSection in ΙtemsPreparationContexts
+                                                          from preparationItem in preparationSection.PreparationItems
+                                                          select preparationItem.ItemPreparation).ToList();
+                foreach (var itemPreparation in itemPreparations)
+                    preparationItems.Where(x => x.uid == itemPreparation.uid).FirstOrDefault().Update(itemPreparation);
+            }
         }
 
         /// <MetaDataID>{c92e564e-3b00-4b10-a079-6a55c5eb464a}</MetaDataID>
@@ -356,6 +412,9 @@ namespace PreparationStationDevice
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
                         PreparationVelocity = PreparationStation.PreparationVelocity;
+
+                        UpdatePreparationItems(itemPreparations);
+
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -400,6 +459,9 @@ namespace PreparationStationDevice
                     {
                         ServingTimeSpanPredictions = PreparationStation.ItemsRoasting(itemPreparations.Select(x => x.uid).ToList());
                         PreparationVelocity = PreparationStation.PreparationVelocity;
+
+                        UpdatePreparationItems(itemPreparations);
+
                         ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
                         break;
                     }
@@ -494,14 +556,13 @@ namespace PreparationStationDevice
 
             get
             {
-                PlayNotificationSound();
                 if (PreparationStation == null)
                     return 0;
                 return RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan;
             }
             set
             {
-                if(PreparationStation!=null)
+                if (PreparationStation != null)
                     RemotingServices.CastTransparentProxy<IPreparationStation>(PreparationStation).GroupingTimeSpan = value;
             }
         }
@@ -541,17 +602,19 @@ namespace PreparationStationDevice
                 ApplicationSettings.Current.CommunicationCredentialKey = value;
             }
         }
+
+        
 #if DeviceDotNet
         public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
         /// <MetaDataID>{a25fca78-e27e-48c3-ba70-e7f548de56dc}</MetaDataID>
         [HttpVisible]
-        public Task<bool> AssignPreparationStation()
+        public Task<bool> AssignPreparationStation(bool useFrontCameraIfAvailable)
         {
             return Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", true);
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", useFrontCameraIfAvailable);
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
                     return false;
