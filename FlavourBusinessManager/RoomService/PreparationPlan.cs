@@ -219,7 +219,13 @@ namespace FlavourBusinessManager.RoomService
 
         static PreparationStation GetPreparationStation(this ItemsPreparationContext preparationSection)
         {
-            return preparationSection.PreparationItems[0].PreparationStation as PreparationStation;
+            var preparationStation = preparationSection.PreparationItems[0].PreparationStation as PreparationStation;
+            if(preparationStation==null)
+            { 
+
+            }
+
+            return preparationStation;
         }
 
         public static List<ItemPreparation> GetLastPredictionItemsInPreparation(this PreparationStation preparationStation, ActionContext actionContext)

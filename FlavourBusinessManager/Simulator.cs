@@ -111,7 +111,7 @@ namespace FlavourBusinessManager.RoomService
 
                             var freeServicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
 
-                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() < 2)
+                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() < 5)
                             {
 
                                 string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
@@ -196,6 +196,15 @@ namespace FlavourBusinessManager.RoomService
                 });
                 return preparationPaterns;
             }
+            if (step == 2)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(3) });
+                return preparationPaterns;
+            }
             if (step == 3)
             {
                 preparationPaterns.Add(new List<PSItemsPattern> {
@@ -203,11 +212,8 @@ namespace FlavourBusinessManager.RoomService
                     new PSItemsPattern(0),
                     new PSItemsPattern(0),
                     new PSItemsPattern(3) });
-
-
                 return preparationPaterns;
             }
-
             return PreparationStationSimulatorItems;
         }
 
