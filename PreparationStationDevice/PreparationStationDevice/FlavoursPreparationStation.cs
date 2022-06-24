@@ -94,14 +94,14 @@ namespace PreparationStationDevice
 
         }
 
-        List<ItemsPreparationContextPresentation> ΙtemsPreparationContexts;
+        
 
         /// <MetaDataID>{c109d672-0fb4-4aff-867d-70e329fd0496}</MetaDataID>
         Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> MenuItems;
 
         /// <MetaDataID>{073297e1-b8c8-4f8c-948b-77ff8992884a}</MetaDataID>
         List<FlavourBusinessFacade.RoomService.ItemsPreparationContext> ItemsPreparationContexts = new List<FlavourBusinessFacade.RoomService.ItemsPreparationContext>();
-
+        List<ItemsPreparationContextPresentation> ItemsPreparationContextPresentations;
         /// <MetaDataID>{a0fcee0a-6b90-42e8-8d55-531586e74dd6}</MetaDataID>
         [HttpVisible]
         public Task<List<ItemsPreparationContextPresentation>> WebUIAttached()
@@ -170,7 +170,7 @@ namespace PreparationStationDevice
                                                            PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
                                                        }).ToList();
 
-                       if (ΙtemsPreparationContexts == null || ΙtemsPreparationContexts.Count == 0)
+                       if (ItemsPreparationContextPresentations == null || ItemsPreparationContextPresentations.Count == 0)
                        {
                            List<ItemPreparation> preparationItems = (from preparationSection in itemsPreparationContexts
                                                                      from preparationItem in preparationSection.PreparationItems
@@ -185,7 +185,7 @@ namespace PreparationStationDevice
                                    while (true)
                                    {
                                        System.Threading.Thread.Sleep(delay);
-                                       preparationItems = (from preparationSection in ΙtemsPreparationContexts
+                                       preparationItems = (from preparationSection in ItemsPreparationContextPresentations
                                                            from preparationItem in preparationSection.PreparationItems
                                                            select preparationItem.ItemPreparation).ToList();
                                        if (count < 3)
@@ -203,9 +203,9 @@ namespace PreparationStationDevice
                            }
                        }
 
-                       ΙtemsPreparationContexts = itemsPreparationContexts;
+                       ItemsPreparationContextPresentations = itemsPreparationContexts;
 
-                       return ΙtemsPreparationContexts;
+                       return ItemsPreparationContextPresentations;
                    }
                    catch (Exception error)
                    {
@@ -351,7 +351,7 @@ namespace PreparationStationDevice
         {
             lock (PreparationItemsLock)
             {
-                List<ItemPreparation> preparationItems = (from preparationSection in ΙtemsPreparationContexts
+                List<ItemPreparation> preparationItems = (from preparationSection in ItemsPreparationContextPresentations
                                                           from preparationItem in preparationSection.PreparationItems
                                                           select preparationItem.ItemPreparation).ToList();
                 foreach (var itemPreparation in itemPreparations)
@@ -595,6 +595,10 @@ namespace PreparationStationDevice
         {
             get
             {
+                if(!string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                {
+
+                }
                 return ApplicationSettings.Current.CommunicationCredentialKey;
             }
             set
@@ -629,6 +633,8 @@ namespace PreparationStationDevice
                 if (PreparationStation != null)
                 {
                     Title = PreparationStation.Description;
+                    ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+                    CommunicationCredentialKey = communicationCredentialKey;
                     var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                     HttpClient httpClient = new HttpClient();
                     var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
@@ -638,9 +644,23 @@ namespace PreparationStationDevice
                     MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
                     GetMenuLanguages(MenuItems.Values.ToList());
                     PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
-                    var servicePointsPreparationItems = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                    ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                     ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
-                    CommunicationCredentialKey = communicationCredentialKey;
+                    PreparationVelocity = PreparationStation.PreparationVelocity;
+                    ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
+                                                            select new ItemsPreparationContextPresentation()
+                                                            {
+                                                                Description = itemsPreparationContext.MealCourseDescription,
+                                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                                                                Uri = itemsPreparationContext.Uri,
+                                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                                                            }).ToList();
+
+
                     return true;
                 }
                 else
@@ -714,7 +734,19 @@ namespace PreparationStationDevice
                             ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
                             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                             PreparationVelocity = PreparationStation.PreparationVelocity;
-
+                            ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
+                                                            select new ItemsPreparationContextPresentation()
+                                                            {
+                                                                Description = itemsPreparationContext.MealCourseDescription,
+                                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                                                                Uri = itemsPreparationContext.Uri,
+                                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                                                            }).ToList();
+                             
                             return true;
                         }
                         else
