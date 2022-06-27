@@ -1211,7 +1211,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 DateTime startTime = DateTime.UtcNow;
 
-                ActionContext actionContext = (ServicesContextRunTime.Current.MealsController as MealsController).RebuildPreparationPlan();
+                PreparationPlan actionContext = (ServicesContextRunTime.Current.MealsController as MealsController).RebuildPreparationPlan();
                 Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
 
@@ -1374,7 +1374,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         DefaultTimeSpanInMin = preparedItem.PreparationTimeSpanInMin,
                         ItemsPreparationInfo = GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem),
                         InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeitemsPreparationInfo(x.MenuItem) == GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
-                        PreparationForecastTimespan = (DateTime.UtcNow - preparedItem.PreparedAtForecast)?.TotalMinutes ?? 0
+                        PreparationForecastTimespan = itemTimeSpan.TotalMinutes
 
                     };
 
@@ -1498,13 +1498,19 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        /// <MetaDataID>{41936091-16f7-4e49-ae10-21bbdd3057f6}</MetaDataID>
+
+        /// <summary>
+        /// This method normalize the preparation time of items
+        /// in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
+        /// and the next items prepared in very short time
+        /// the next code try to canonicalize this action.
+        /// Calculates the total time for normalized items and share this time to the normalized items
+        /// </summary>
+        /// <param name="normalizedItems"></param>
+        // <MetaDataID>{41936091-16f7-4e49-ae10-21bbdd3057f6}</MetaDataID>
         private void NormalizeItems(List<ItemPreparationTimeSpan> normalizedItems)
         {
-            // in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
-            // and the next items prepared in very short time
-            // the next code try to canonicalize this action.
-            // Calculates the total time for normalized items and share this time to the normalized items
+           
 
             ItemPreparationTimeSpan delayedItemPreparation = normalizedItems[0];
 
@@ -1522,6 +1528,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 normalizedItems[i].DurationDifPerc = (normalizedItems[i].DurationDif / normalizedItems[i].DefaultTimeSpanInMin) * 100;
                 normalizedItems[i].EndsAt = normalizedItems[i].StartsAt + TimeSpan.FromMinutes(normalizedItemPreparationTime);
                 normalizedItems[i].InformationValue = ((double)normalizedItems.Where(x => x.ItemsPreparationInfo == normalizedItems[i].ItemsPreparationInfo).Count()) / normalizedItems.Count;
+                normalizedItems[i].PreparationForecastTimespan = normalizedItemPreparationTime;
+
                 //the item PreparationEndsAt time is the PreviousItemsPreparationUpdate  for next item
                 if (i + 1 < normalizedItems.Count)
                     normalizedItems[i + 1].StartsAt = normalizedItems[i].EndsAt;

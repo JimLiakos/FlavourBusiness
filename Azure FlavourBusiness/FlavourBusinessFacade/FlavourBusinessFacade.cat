@@ -11156,7 +11156,7 @@
 				    supplier   	"$UNNAMED$19"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(          )"
+					(object Message "GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, organizationIdentity, unSafeGraphicMenus, create)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11178,7 +11178,7 @@
 				    supplier   	"$UNNAMED$18"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11200,7 +11200,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11231,7 +11231,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(messmateClientSesion)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -11991,7 +11991,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@112
-				location   	(3779, 256)
+				location   	(3779, 251)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	551
@@ -11999,7 +11999,7 @@
 				label      	"Notification")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@112
-				location   	(3779, 206)
+				location   	(3779, 205)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -12382,7 +12382,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@129
-				location   	(1291, 465)
+				location   	(1291, 464)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -12413,7 +12413,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@130
-				location   	(2406, 471)
+				location   	(2406, 470)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -12444,7 +12444,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@131
-				location   	(725, 1165)
+				location   	(725, 1164)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	726
@@ -12475,7 +12475,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@132
-				location   	(76, 1192)
+				location   	(76, 1191)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	280
@@ -12506,7 +12506,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@133
-				location   	(2031, 1199)
+				location   	(2031, 1198)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	757
@@ -12537,7 +12537,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@134
-				location   	(3338, 1234)
+				location   	(3338, 1233)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	414
@@ -12603,7 +12603,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(          )"
+				label      	"GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, organizationIdentity, unSafeGraphicMenus, create)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -12690,7 +12690,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -12777,7 +12777,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -12906,7 +12906,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@153
-				location   	(3055, 1478)
+				location   	(3055, 1477)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	626
@@ -12937,7 +12937,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@154
-				location   	(1299, 550)
+				location   	(1299, 549)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	651
@@ -13072,7 +13072,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(messmateClientSesion)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -13282,7 +13282,7 @@
 		(object external_doc
 		    external_doc_url 	"https://medium.com/zomato-technology/the-deep-tech-behind-estimating-food-preparation-time-e5068807acb0")
 		(object external_doc
-		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Preparation Sychronization.docx"))
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\MealCoursePreparationPlaning.docx"))
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "IItemPreparation"
@@ -15891,7 +15891,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@174
-				location   	(128, 1727)
+				location   	(128, 1722)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	495
@@ -15899,7 +15899,7 @@
 				label      	"ItemPreparationState")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@174
-				location   	(128, 1677)
+				location   	(128, 1676)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -19746,7 +19746,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@350
-				location   	(2908, 477)
+				location   	(2908, 476)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	450
@@ -19777,7 +19777,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@351
-				location   	(108, 462)
+				location   	(108, 461)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	388
@@ -19808,7 +19808,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@352
-				location   	(1839, 435)
+				location   	(1839, 434)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	682
@@ -19839,7 +19839,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@353
-				location   	(874, 437)
+				location   	(874, 436)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -19870,7 +19870,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@354
-				location   	(899, 912)
+				location   	(899, 911)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -19901,7 +19901,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@355
-				location   	(1966, 956)
+				location   	(1966, 955)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	458

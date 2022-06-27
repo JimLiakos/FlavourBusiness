@@ -9,20 +9,41 @@ namespace FlavourBusinessManager.RoomService
 {
 
 
-
+    /// <summary>
+    /// Preparation plan has keeps infos about the item preparation start time and the preparation duration.
+    /// Also has temporary info, useful for the plan build and plan update, like the order in which each preparation section begins  
+    /// </summary>
     /// <MetaDataID>{16a0ba3c-c9f6-44a7-94cf-0598ffea5437}</MetaDataID>
-    public class ActionContext
+    public class PreparationPlan
     {
         /// <summary>
-        /// 
+        /// Defines the order in which each preparation section begins 
         /// </summary>
         internal Dictionary<PreparationStation, List<ItemsPreparationContext>> PreparationSections = new Dictionary<PreparationStation, List<ItemsPreparationContext>>();
 
+
+        /// <summary>
+        /// Defines the items where are in preparation state.
+        /// </summary>
         internal Dictionary<PreparationStation, List<ItemPreparation>> ItemsInPreparation = new Dictionary<PreparationStation, List<ItemPreparation>>();
 
-
+        /// <summary>
+        /// Position interchange are necessary in case where there is preparation gap.
+        /// In case where planner delays the start of item preparation for meal course synchronization reason, 
+        /// one item from the preparation section can fills the gap if it meets certain conditions 
+        /// </summary>
         internal List<PositionInterchange> PositionInterchanges = new List<PositionInterchange>();
 
+
+        /// <summary>
+        /// Gets the planned item preparation start time
+        /// </summary>
+        /// <param name="itemPreparation">
+        /// Defines the item where looking for start preparation time
+        /// </param>
+        /// <returns>
+        /// return preparation start time
+        /// </returns>
         public DateTime GetPreparationStartsAt(ItemPreparation itemPreparation)
         {
             DateTime dateTime;
@@ -35,20 +56,32 @@ namespace FlavourBusinessManager.RoomService
         public void SetPreparationStartsAt(ItemPreparation itemPreparation, DateTime dateTime)
         {
 
+            #region debug code
             if (ItemPreparationsStartsAt.ContainsKey(itemPreparation) && Math.Abs((ItemPreparationsStartsAt[itemPreparation] - dateTime).TotalMinutes) > 1.2)
             {
-
-            }
+            } 
+            #endregion
 
             ItemPreparationsStartsAt[itemPreparation] = dateTime;
 
+            #region debug code
             if ((GetPreparationEndsAt(itemPreparation) - DateTime.UtcNow).TotalSeconds < -20)
             {
 
             }
+            #endregion
 
         }
 
+        /// <summary>
+        /// Gets the planned item preparation end time
+        /// </summary>
+        /// <param name="itemPreparation">
+        /// Defines the item where looking for   preparation end time
+        /// </param>
+        /// <returns>
+        /// return preparation end time
+        /// </returns>
         public DateTime GetPreparationEndsAt(ItemPreparation itemPreparation)
         {
 
@@ -59,6 +92,17 @@ namespace FlavourBusinessManager.RoomService
             return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation));
         }
 
+
+        /// <summary>
+        /// Gets the  item preparation end time in previous plan.
+        /// In case where there isn't previous plan return DateTime.MinValue 
+        /// </summary>
+        /// <param name="itemPreparation">
+        /// Defines the item where looking for preparation end time
+        /// </param>
+        /// <returns>
+        /// return preparation end time
+        /// </returns>
         public DateTime GetLastPlanPreparationEndsAt(ItemPreparation itemPreparation)
         {
             DateTime dateTime;
@@ -68,16 +112,27 @@ namespace FlavourBusinessManager.RoomService
             return DateTime.MinValue;
         }
 
-
+        /// <summary>
+        /// Defines the dictionary with items preparation start time
+        /// </summary>
         internal Dictionary<ItemPreparation, DateTime> ItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>();
 
+        /// <summary>
+        /// Defines the dictionary with items preparation start time in previous plan
+        /// </summary>
         internal Dictionary<ItemPreparation, DateTime> LastPlanItemPreparationsStartsAt;
 
         /// <summary>
-        /// 
+        /// The planning mechanism planning item preparation for each preparation station in cycles 
+        /// In case where to cycles produce the same plan the flag PreparationPlanIsDoubleChecked is true and the plan is valid otherwise
+        /// the flag PreparationPlanIsDoubleChecked is false
         /// </summary>
-        public bool PreparationPlanIsDoubleChecked { get; internal set; }
+        internal bool PreparationPlanIsDoubleChecked { get;  set; }
 
+
+        /// <summary>
+        /// Before the system starts the re planning  procedure removes all item where are in state of prepared 
+        /// </summary>
         internal void RemoveOutOfPlanPreparationItems()
         {
             foreach (var itemOutOfPlan in ItemPreparationsStartsAt.Keys.Where(x => x.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)).ToList())
@@ -122,11 +177,21 @@ namespace FlavourBusinessManager.RoomService
         }
     }
 
-    /// <MetaDataID>{8b5ea92a-eb91-4c86-9941-8f646b46e1ac}</MetaDataID>
+    /// <summary>
+    /// Defines the extension methods for the classes MealCourse, PreparationSection,PreparationStation necessary for preparation planing
+    /// </summary>
+    // <MetaDataID>{8b5ea92a-eb91-4c86-9941-8f646b46e1ac}</MetaDataID>
     public static class PreparationPlanExMethods
     {
-
-        public static DateTime GetPreparationForecast(this IMealCourse mealCourse, ActionContext context)
+        /// <summary>
+        /// Gets  a forecast about the end time of meal course preparation 
+        /// </summary>
+        /// <param name="mealCourse">Extension class this object </param>
+        /// <param name="preparationPlan">
+        /// Defines preparation plan.
+        /// </param>
+        /// <returns></returns>
+        public static DateTime GetPreparationForecast(this IMealCourse mealCourse, PreparationPlan preparationPlan)
         {
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null && x.PreparationItems.
                     Any(y => y.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && y.State.IsInTheSameOrPreviousState(ItemPreparationState.ΙnPreparation))).ToList();
@@ -138,16 +203,16 @@ namespace FlavourBusinessManager.RoomService
             }
 
             if (pendingPreparationSessions.Count != 0)
-                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
+                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(preparationPlan)).Last().GetPreparationForecast(preparationPlan);
             else
             {
                 if (pendingPreparationSessions.Count == 0)
                     return DateTime.Now;
-                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).Last().GetPreparationForecast(context);
+                return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(preparationPlan)).Last().GetPreparationForecast(preparationPlan);
             }
         }
 
-        public static DateTime GetLastPlanPreparationForecast(this IMealCourse mealCourse, ActionContext context)
+        public static DateTime GetLastPlanPreparationForecast(this IMealCourse mealCourse, PreparationPlan context)
         {
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
 
@@ -157,14 +222,14 @@ namespace FlavourBusinessManager.RoomService
                 return DateTime.Now;
 
         }
-        public static ItemsPreparationContext GetReferencePreparationSection(this IMealCourse mealCourse, ActionContext context)
+        public static ItemsPreparationContext GetReferencePreparationSection(this IMealCourse mealCourse, PreparationPlan context)
         {
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
 
             return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).LastOrDefault();
         }
 
-        public static ItemsPreparationContext GetLastPlanReferencePreparationSection(this IMealCourse mealCourse, ActionContext context)
+        public static ItemsPreparationContext GetLastPlanReferencePreparationSection(this IMealCourse mealCourse, PreparationPlan context)
         {
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
 
@@ -184,7 +249,7 @@ namespace FlavourBusinessManager.RoomService
         /// Returns the forecast time when all the products in the section will be prepared.
         /// In caSe where all items of preparation section are prepared return utc now 
         /// </returns>
-        public static DateTime GetPreparationForecast(this ItemsPreparationContext preparationSection, ActionContext actionContext)
+        public static DateTime GetPreparationForecast(this ItemsPreparationContext preparationSection, PreparationPlan actionContext)
         {
             if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
             {
@@ -201,7 +266,7 @@ namespace FlavourBusinessManager.RoomService
                 return preparationSection.PreparedAtForecast;
         } 
 
-        public static DateTime GetLastPlanPreparationForecast(this ItemsPreparationContext preparationSection, ActionContext actionContext)
+        public static DateTime GetLastPlanPreparationForecast(this ItemsPreparationContext preparationSection, PreparationPlan actionContext)
         {
             if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
                 return actionContext.GetLastPlanPreparationEndsAt(preparationSection.PreparationItems.OfType<ItemPreparation>().OrderBy(x => actionContext.GetLastPlanPreparationEndsAt(x)).Last());
@@ -209,7 +274,7 @@ namespace FlavourBusinessManager.RoomService
                 return preparationSection.PreparedAtForecast;
         }
 
-        public static DateTime GetPreparationStartsAt(this ItemsPreparationContext preparationSection, ActionContext actionContext)
+        public static DateTime GetPreparationStartsAt(this ItemsPreparationContext preparationSection, PreparationPlan actionContext)
         {
             if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
                 return actionContext.GetPreparationStartsAt(preparationSection.PreparationItems.OfType<ItemPreparation>().OrderBy(x => actionContext.GetPreparationEndsAt(x)).Last());
@@ -228,18 +293,18 @@ namespace FlavourBusinessManager.RoomService
             return preparationStation;
         }
 
-        public static List<ItemPreparation> GetLastPredictionItemsInPreparation(this PreparationStation preparationStation, ActionContext actionContext)
+        public static List<ItemPreparation> GetLastPredictionItemsInPreparation(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
             List<ItemPreparation> itemsInPreparation = null;
             actionContext.ItemsInPreparation.TryGetValue(preparationStation, out itemsInPreparation);
             return itemsInPreparation;
         }
-        public static void SetItemsInPreparation(this PreparationStation preparationStation, ActionContext actionContext, List<ItemPreparation> itemsInPreparation)
+        public static void SetItemsInPreparation(this PreparationStation preparationStation, PreparationPlan actionContext, List<ItemPreparation> itemsInPreparation)
         {
             actionContext.ItemsInPreparation[preparationStation] = itemsInPreparation;
         }
 
-        public static void GetPredictions(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)
+        public static void GetPredictions(this PreparationStation preparationStation, PreparationPlan actionContext, bool stirTheSequence)
         {
 
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
@@ -417,11 +482,11 @@ namespace FlavourBusinessManager.RoomService
             //if (preparationStation.GetActionsToDo(actionContext).Count == 0)
             //    preparationStation.PreparationPlanStartTime = DateTime.UtcNow;
         }
-        internal static bool IsInReferencePreparationSection(this ItemPreparation itemPreparation, ActionContext actionContext)
+        internal static bool IsInReferencePreparationSection(this ItemPreparation itemPreparation, PreparationPlan actionContext)
         {
             return itemPreparation.MealCourse.GetReferencePreparationSection(actionContext) == itemPreparation.FindItemsPreparationContext();
         }
-        internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, ActionContext actionContext)
+        internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
             if (!actionContext.PreparationSections.ContainsKey(preparationStation))
                 return (from preparationSection in preparationStation.PreparationSessions
@@ -435,7 +500,7 @@ namespace FlavourBusinessManager.RoomService
 
             return strings;
         }
-        static string TotString(this ItemsPreparationContext preparationSection, ActionContext actionContext)
+        static string TotString(this ItemsPreparationContext preparationSection, PreparationPlan actionContext)
         {
             var preparationForecast = preparationSection.GetPreparationForecast(actionContext);
 
@@ -462,7 +527,7 @@ namespace FlavourBusinessManager.RoomService
             return itemsToPrepare;
         }
 
-        public static void ActionsOrderCommited(this PreparationStation preparationStation, ActionContext actionContext)
+        public static void ActionsOrderCommited(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
 
             bool thereArenotPendingPreparationItems = false;
@@ -505,7 +570,7 @@ namespace FlavourBusinessManager.RoomService
 
 
         }
-        public static List<ItemsPreparationContext> GetToDoPreparationSections(this PreparationStation preparationStation, ActionContext actionContext)
+        public static List<ItemsPreparationContext> GetToDoPreparationSections(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
 
             List<ItemsPreparationContext> preparationSections = new List<ItemsPreparationContext>();//.Where(x=>(x.Action.PreparationForecast-TimeSpanEx.FromMinutes(x.Duration+5))<DateTime.UtcNow).ToList();
@@ -552,11 +617,11 @@ namespace FlavourBusinessManager.RoomService
             return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(x));
         }
 
-        internal static void GetPreparationSections(this PreparationStation preparationStation, ActionContext actionContext)
+        internal static void GetPreparationSections(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
             actionContext.PreparationSections[preparationStation] = preparationStation.PreparationSessions;
         }
-        internal static void OptimizePreparationPlan(this PreparationStation preparationStation, ActionContext actionContext, bool stirTheSequence)
+        internal static void OptimizePreparationPlan(this PreparationStation preparationStation, PreparationPlan actionContext, bool stirTheSequence)
         {
 
 

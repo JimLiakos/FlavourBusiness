@@ -41,8 +41,12 @@ namespace FlavourBusinessManager.RoomService
         object buildPreparationPlanLock = new object();
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="preparationPlan"></param>
         /// <MetaDataID>{dfd3500e-b5f0-47da-b3b8-5c161f224ec3}</MetaDataID>
-        private void RebuildPreparationPlan(ActionContext actionContext)
+        private void RebuildPreparationPlan(PreparationPlan preparationPlan)
         {
 
             //return;
@@ -51,22 +55,22 @@ namespace FlavourBusinessManager.RoomService
             {
                 try
                 {
-                    actionContext.RemoveOutOfPlanPreparationItems();
+                    preparationPlan.RemoveOutOfPlanPreparationItems();
                     DateTime timeStamp = DateTime.UtcNow;
-                    actionContext.PreparationPlanIsDoubleChecked = false;
+                    preparationPlan.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;
 
                     foreach (var preparationStation in ActivePreparationStations)
-                        preparationStation.GetPreparationSections(actionContext);
+                        preparationStation.GetPreparationSections(preparationPlan);
 
-                    while (!actionContext.PreparationPlanIsDoubleChecked)
+                    while (!preparationPlan.PreparationPlanIsDoubleChecked)
                     {
-                        actionContext.PreparationPlanIsDoubleChecked = true;
+                        preparationPlan.PreparationPlanIsDoubleChecked = true;
 
                         foreach (var preparationStation in ActivePreparationStations)
                         {
-                            preparationStation.OptimizePreparationPlan(actionContext, stirTheSequence);
-                            preparationStation.GetPredictions(actionContext, stirTheSequence);
+                            preparationStation.OptimizePreparationPlan(preparationPlan, stirTheSequence);
+                            preparationStation.GetPredictions(preparationPlan, stirTheSequence);
                         }
 
                         TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
@@ -76,23 +80,23 @@ namespace FlavourBusinessManager.RoomService
 
                         stirTheSequence = false;
                     }
-                    actionContext.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>(actionContext.ItemPreparationsStartsAt);
-                    actionContext.PositionInterchanges.Clear();
+                    preparationPlan.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>(preparationPlan.ItemPreparationsStartsAt);
+                    preparationPlan.PositionInterchanges.Clear();
 
 
 
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
-                        preparationStation.ActionsOrderCommited(actionContext);
+                        preparationStation.ActionsOrderCommited(preparationPlan);
 
                         #region clear PreparationPlanStartTime in case where there are not items in state pendings to prepare 
 
-                        if (actionContext.PreparationSections.ContainsKey(preparationStation))
+                        if (preparationPlan.PreparationSections.ContainsKey(preparationStation))
                         {
                             DateTime? preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
 
-                            List<ItemPreparation> itemsToPrepare = (from thePartialAction in actionContext.PreparationSections[preparationStation]
+                            List<ItemPreparation> itemsToPrepare = (from thePartialAction in preparationPlan.PreparationSections[preparationStation]
                                                                     from itemPreparation in thePartialAction.GetItemsToPrepare()
                                                                     select itemPreparation).ToList();
                             if (itemsToPrepare.All(x => x.State.IsInPreviousState(ItemPreparationState.PendingPreparation)))
@@ -106,7 +110,7 @@ namespace FlavourBusinessManager.RoomService
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
-                        var strings = preparationStation.GetActionsToStrings(actionContext);
+                        var strings = preparationStation.GetActionsToStrings(preparationPlan);
                         if (strings.Count > 1)
                         {
 
@@ -149,7 +153,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        /// <MetaDataID>{a42810ef-fbbe-49d5-8733-04986c3d7030}</MetaDataID>
+        /// <exclude>Excluded</exclude>  
         DateTime _RebuildPreparationPlanLastTime;
 
         /// <MetaDataID>{9c0a13ae-a2d2-4371-b944-60605d818dcd}</MetaDataID>
@@ -402,7 +406,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{fa568071-4178-4e14-a25c-51f4f8498bef}</MetaDataID>
-        ActionContext ActionContext = new ActionContext();
+        PreparationPlan ActionContext = new PreparationPlan();
 
         /// <MetaDataID>{dfff57b8-a93a-48b8-a2f0-b87345e77f04}</MetaDataID>
         Task MonitoringTask;
@@ -497,7 +501,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
-        internal ActionContext RebuildPreparationPlan()
+        internal PreparationPlan RebuildPreparationPlan()
         {
             RebuildPreparationPlan(ActionContext);
             return ActionContext;
