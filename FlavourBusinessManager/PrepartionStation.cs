@@ -1324,7 +1324,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                  where itemPreparationUris.Contains(itemPreparation.uid)
                                  select itemPreparation).ToList();
 
-            UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
+            UpdateItemPreparationStatistics(preparedItems, preparationTimeSpan);
 
 
             PrepartionVelocityMilestone = DateTime.UtcNow;
@@ -1347,8 +1347,21 @@ namespace FlavourBusinessManager.ServicesContextResources
         List<ItemPreparationTimeSpan> SmoothingItemsPreparationHistory = new List<ItemPreparationTimeSpan>();
 
 
+
+        /// <summary>
+        /// This method update preparation station statistics
+        /// </summary>
+        /// <param name="preparedItems">
+        /// Defines the items where prepared in timespan
+        /// </param>
+        /// <param name="preparationTimeSpan">
+        /// Defines the timespan where items prepared
+        /// </param>
+        /// <remarks>
+        /// sdfdds d
+        /// </remarks>
         /// <MetaDataID>{9992e845-e2d9-4d6c-864c-de2952762af6}</MetaDataID>
-        private void UpdateItemPreparationHistory(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
+        private void UpdateItemPreparationStatistics(List<IItemPreparation> preparedItems, TimeSpan preparationTimeSpan)
         {
 
 
@@ -1374,7 +1387,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         DefaultTimeSpanInMin = preparedItem.PreparationTimeSpanInMin,
                         ItemsPreparationInfo = GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem),
                         InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeitemsPreparationInfo(x.MenuItem) == GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
-                        PreparationForecastTimespan = itemTimeSpan.TotalMinutes
+                        ActualTimeSpanInMin = itemTimeSpan.TotalMinutes
 
                     };
 
@@ -1388,30 +1401,36 @@ namespace FlavourBusinessManager.ServicesContextResources
                     PreparationTimeSpans.Add(itemPreparationTimeSpan);
                     NormalizePreparationHistory();
 
-
-                    SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
-
-                    var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.EndsAt - x.StartsAt).TotalMinutes < 15).ToList();
-                    if (smoothingItemsPreparationHistory.Count > 0)
-                        SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
-
-
-                    var averageDif = SmoothingItemsPreparationHistory.Sum(x => x.DurationDif) / SmoothingItemsPreparationHistory.Count;
-                    var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
-                    var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
-
-                    if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
-                    {
-                        _PreparationVelocity = avargePerc;
-                        PreviousAveragePerc = _PreparationVelocity;
-                        SmoothingItemsPreparationHistory.Clear();
-                    }
+                    CalculatePreparationVelocity(itemPreparationTimeSpan);
                 }
                 stateTransition.Consistent = true;
             }
 
             //else
             //    PreviousAveragePerc = avargePerc;
+        }
+
+        private void CalculatePreparationVelocity(ItemPreparationTimeSpan itemPreparationTimeSpan)
+        {
+            SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
+
+            var smoothingItemsPreparationHistory = SmoothingItemsPreparationHistory.Where(x => (itemPreparationTimeSpan.EndsAt - x.StartsAt).TotalMinutes < 15).ToList();
+            if (smoothingItemsPreparationHistory.Count > 0)
+                SmoothingItemsPreparationHistory = smoothingItemsPreparationHistory;
+
+            // Duration difference is 
+            var averageDif = SmoothingItemsPreparationHistory.Sum(x => x.DurationDif) / SmoothingItemsPreparationHistory.Count;
+
+            var averagePreparationTimeSpanInMin = SmoothingItemsPreparationHistory.Sum(x => x.DefaultTimeSpanInMin) / SmoothingItemsPreparationHistory.Count;
+
+            var avargePerc = (int)Math.Ceiling((averageDif / averagePreparationTimeSpanInMin) * 100);
+
+            if (Math.Abs(avargePerc - PreviousAveragePerc) < 15 || Math.Abs(avargePerc - _PreparationVelocity) < 15)
+            {
+                _PreparationVelocity = avargePerc;
+                PreviousAveragePerc = _PreparationVelocity;
+                SmoothingItemsPreparationHistory.Clear();
+            }
         }
 
 
@@ -1528,7 +1547,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 normalizedItems[i].DurationDifPerc = (normalizedItems[i].DurationDif / normalizedItems[i].DefaultTimeSpanInMin) * 100;
                 normalizedItems[i].EndsAt = normalizedItems[i].StartsAt + TimeSpan.FromMinutes(normalizedItemPreparationTime);
                 normalizedItems[i].InformationValue = ((double)normalizedItems.Where(x => x.ItemsPreparationInfo == normalizedItems[i].ItemsPreparationInfo).Count()) / normalizedItems.Count;
-                normalizedItems[i].PreparationForecastTimespan = normalizedItemPreparationTime;
+                normalizedItems[i].ActualTimeSpanInMin = normalizedItemPreparationTime;
 
                 //the item PreparationEndsAt time is the PreviousItemsPreparationUpdate  for next item
                 if (i + 1 < normalizedItems.Count)
@@ -1570,7 +1589,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    UpdateItemPreparationHistory(preparedItems, preparationTimeSpan);
+                    UpdateItemPreparationStatistics(preparedItems, preparationTimeSpan);
                     PrepartionVelocityMilestone = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }

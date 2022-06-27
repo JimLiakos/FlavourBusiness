@@ -10022,7 +10022,7 @@
 			    quid       	"626DFE8C0019"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "PreparationForecastTimespan"
+			(object ClassAttribute "ActualTimeSpanInMin"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -32977,7 +32977,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@560
-			location   	(56, 179)
+			location   	(56, 184)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -32985,7 +32985,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@560
-			location   	(56, 133)
+			location   	(56, 134)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

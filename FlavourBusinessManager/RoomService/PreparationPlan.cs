@@ -180,6 +180,7 @@ namespace FlavourBusinessManager.RoomService
     /// <summary>
     /// Defines the extension methods for the classes MealCourse, PreparationSection,PreparationStation necessary for preparation planing
     /// </summary>
+    /// <MetaDataID>{3fad3b58-8af7-4061-814a-61c69c4d658e}</MetaDataID>
     // <MetaDataID>{8b5ea92a-eb91-4c86-9941-8f646b46e1ac}</MetaDataID>
     public static class PreparationPlanExMethods
     {
@@ -264,7 +265,7 @@ namespace FlavourBusinessManager.RoomService
             }
             else
                 return preparationSection.PreparedAtForecast;
-        } 
+        }
 
         public static DateTime GetLastPlanPreparationForecast(this ItemsPreparationContext preparationSection, PreparationPlan actionContext)
         {
@@ -285,8 +286,8 @@ namespace FlavourBusinessManager.RoomService
         static PreparationStation GetPreparationStation(this ItemsPreparationContext preparationSection)
         {
             var preparationStation = preparationSection.PreparationItems[0].PreparationStation as PreparationStation;
-            if(preparationStation==null)
-            { 
+            if (preparationStation == null)
+            {
 
             }
 

@@ -21,20 +21,24 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class ItemPreparationTimeSpan
     {
         /// <exclude>Excluded</exclude>
-        double _PreparationForecastTimespan;
+        double _ActualTimeSpanInMin;
+
+        /// <summary>
+        /// Defines the actual preparation timespan 
+        /// </summary>
         /// <MetaDataID>{335d7e52-b8fb-4f7c-9510-90e124553c59}</MetaDataID>
-        [PersistentMember(nameof(_PreparationForecastTimespan))]
+        [PersistentMember(nameof(_ActualTimeSpanInMin))]
         [BackwardCompatibilityID("+7")]
-        public double PreparationForecastTimespan
+        public double ActualTimeSpanInMin
         {
-            get => _PreparationForecastTimespan;
+            get => _ActualTimeSpanInMin;
             set
             {
-                if (_PreparationForecastTimespan != value)
+                if (_ActualTimeSpanInMin != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PreparationForecastTimespan = value;
+                        _ActualTimeSpanInMin = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -124,6 +128,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <exclude>Excluded</exclude>
         double _DurationDif;
+
+        /// <summary>
+        /// Defines the duration difference between the default preparation duration and the actual preparation duration   
+        /// </summary>
         /// <MetaDataID>{4360f9ec-d675-4931-809d-c955fd6263f7}</MetaDataID>
         [PersistentMember(nameof(_DurationDif))]
         [BackwardCompatibilityID("+2")]
@@ -142,8 +150,16 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        /// <summary>
+        ///Defines the statistical preparation timespan 
+        /// </summary>
         /// <MetaDataID>{82313792-9e0b-4f23-a4b5-c7820353fd79}</MetaDataID>
         public double DefaultTimeSpanInMin { get; set; }
+
+        /// <summary>
+        /// Defines the duration difference between the statistical preparation duration and the actual preparation duration as percentage  
+        /// </summary>
         /// <MetaDataID>{fca50c81-2cf7-4a81-8ba4-a69217657789}</MetaDataID>
         public double DurationDifPerc { get; set; }
 
@@ -151,8 +167,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         
         /// <exclude>Excluded</exclude>
         double _InformationValue;
+
+
         /// <summary>
-        ///Defines the score of preparation info  
+        ///Defines the score of preparation info
+        ///Score is the value if info 
         /// </summary>
         /// <MetaDataID>{3a9e0d5c-579c-4c86-b39a-d0ca08c24d98}</MetaDataID>
         [PersistentMember(nameof(_InformationValue))]
@@ -175,8 +194,18 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        /// <summary>
+        /// Defines the duration difference between the default preparation duration and the actual preparation duration 
+        /// before normalization
+        /// </summary>
         /// <MetaDataID>{8fa56c55-de83-4ffb-81e0-a0325d43baae}</MetaDataID>
         public double OrgDurationDif { get; set; }
+
+
+        /// <summary>
+        /// Defines the duration difference between the statistical preparation duration and the actual preparation duration as percentage
+        /// before normalization
+        /// </summary>
         /// <MetaDataID>{61be2be3-0e9e-49bd-9ab6-bbb5db9e1c85}</MetaDataID>
         public double OrgDurationDifPerc { get; set; }
 

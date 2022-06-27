@@ -29,6 +29,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+    /// <MetaDataID>{c99be1be-17c0-435d-87ae-81b2bf5ec133}</MetaDataID>
     public class Simulator
     {
 
@@ -182,7 +183,7 @@ namespace FlavourBusinessManager.RoomService
                     new PSItemsPattern(0),
                     new PSItemsPattern(0),
                     new PSItemsPattern(0),
-                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5)) 
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5))
                 });
                 return preparationPaterns;
             }
