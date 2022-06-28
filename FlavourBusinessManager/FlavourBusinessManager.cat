@@ -7737,7 +7737,7 @@
 			    quid       	"5D6898770376"
 			    parameters 	(list Parameters
 				(object Parameter "itemsInfoObjectUri"
-				    quid       	"610B5E7601FC"
+				    quid       	"62BAB1040258"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -7797,7 +7797,7 @@
 			    quid       	"5F4A42950255"
 			    parameters 	(list Parameters
 				(object Parameter "menuItem"
-				    quid       	"610B5E7601A1"
+				    quid       	"62BAB10301CC"
 				    type       	"MenuModel.IMenuItem"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
@@ -7835,7 +7835,7 @@
 			    quid       	"60DEABBB02EA"
 			    parameters 	(list Parameters
 				(object Parameter "PreparationForInfo"
-				    quid       	"610B5E76021B"
+				    quid       	"62BAB104029C"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -7897,7 +7897,7 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
-			(object Operation "GetPreparationTimeSpanInMin"
+			(object Operation "GetPreparationTimeInMin"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -7910,11 +7910,11 @@
 			    quid       	"610B5B48027B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItem"
-				    quid       	"610B5B480287"
+				    quid       	"62BAB10302C4"
 				    type       	"MenuModel.IMenuItem"))
 			    result     	"double"
 			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
+			    opExportControl 	"Implementation"
 			    uid        	0)
 			(object Operation "CanPrepareItemFor"
 			    attributes 	(list Attribute_Set
@@ -7929,16 +7929,16 @@
 			    quid       	"610B5B48029B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItem"
-				    quid       	"610B5E7601CB"
+				    quid       	"62BAB10400E6"
 				    type       	"MenuModel.IMenuItem")
 				(object Parameter "servicePoint"
-				    quid       	"610B5E7601D5"
+				    quid       	"62BAB10400EE"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
-			(object Operation "GetPreparationTimeSpanInMinForCategoryItems"
+			(object Operation "GetPreparationTimeInMinForCategoryItems"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -7951,7 +7951,7 @@
 			    quid       	"610B5B48034D"
 			    parameters 	(list Parameters
 				(object Parameter "itemsCategory"
-				    quid       	"610B5B48037A"
+				    quid       	"62BAB10401E2"
 				    type       	"MenuModel.IItemsCategory"))
 			    result     	"double"
 			    concurrency 	"Sequential"
@@ -7970,10 +7970,10 @@
 			    quid       	"610B5B49000C"
 			    parameters 	(list Parameters
 				(object Parameter "servicePoint"
-				    quid       	"610B5E760230"
+				    quid       	"62BAB1050239"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint")
 				(object Parameter "PreparationForInfoType"
-				    quid       	"610B5E76023B"
+				    quid       	"62BAB1050244"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.PreparationForInfoType"))
 			    result     	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"
 			    concurrency 	"Sequential"
@@ -8054,7 +8054,7 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
 			    uid        	0)
-			(object Operation "GetPreparationData"
+			(object Operation "GetPreparationStationFor"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -8067,9 +8067,9 @@
 			    quid       	"610B5B49018A"
 			    parameters 	(list Parameters
 				(object Parameter "itemPreparation"
-				    quid       	"610B5B490199"
+				    quid       	"62BAB10600E6"
 				    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
-			    result     	"FlavourBusinessManager.ServicesContextResources.PreparationData"
+			    result     	"FlavourBusinessFacade.ServicesContextResources.IPreparationStation"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
 			    uid        	0)
@@ -8203,13 +8203,13 @@
 			    quid       	"610B5E770100"
 			    parameters 	(list Parameters
 				(object Parameter "preparationStation"
-				    quid       	"610B5E77010E"
+				    quid       	"62BAB107011D"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationStation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
-			(object Operation "opname"
+			(object Operation "GetPreparationTimeSpans"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -8220,7 +8220,377 @@
 				    name       	"MetaObjectID"
 				    value      	"{bd097583-6e84-45b4-a299-9e9abc66ae03}"))
 			    quid       	"626E189C02D7"
+			    parameters 	(list Parameters
+				(object Parameter "fromDate"
+				    quid       	"62BAB1030137"
+				    type       	"System.DateTime")
+				(object Parameter "toDate"
+				    quid       	"62BAB1030147"
+				    type       	"System.DateTime"))
+			    result     	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetPreparationTimeitemsPreparationInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{81e7a4d0-f597-4555-a69c-5f71cf7ecbca}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10303D6"))
+			    quid       	"62BAB10303D6"
+			    parameters 	(list Parameters
+				(object Parameter "menuItem"
+				    quid       	"62BAB10303E5"
+				    type       	"MenuModel.IMenuItem"))
+			    result     	"FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetCookingTimeSpanInMin"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2bdbae01-4664-4da5-8528-a1d7ee402c7b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1040062"))
+			    quid       	"62BAB1040062"
+			    parameters 	(list Parameters
+				(object Parameter "menuItem"
+				    quid       	"62BAB1040076"
+				    type       	"MenuModel.IMenuItem"))
+			    result     	"double"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GeAppearanceOrder"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{32cdc1cf-346e-41af-8a03-c664597a52c4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10400B6"))
+			    quid       	"62BAB10400B6"
+			    parameters 	(list Parameters
+				(object Parameter "menuItem"
+				    quid       	"62BAB10400C4"
+				    type       	"MenuModel.IMenuItem"))
+			    result     	"int"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "OnPreparationItemsChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1593b236-b246-4099-981f-ace2d6b584bf}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB104023A"))
+			    quid       	"62BAB104023A"
 			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "GetPreparedAtForecast"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{17d272fa-ea15-4a97-a448-3cd33f624866}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1040316"))
+			    quid       	"62BAB1040316"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparation"
+				    quid       	"62BAB1040328"
+				    type       	"FlavourBusinessManager.RoomService.ItemPreparation")
+				(object Parameter "mealCourse"
+				    quid       	"62BAB1040334"
+				    type       	"FlavourBusinessManager.RoomService.MealCourse"))
+			    result     	"System.DateTime"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "GetCookingTimeSpanInMin"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6c64712f-bba6-4803-acb8-28b5df0871a0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB104038C"))
+			    quid       	"62BAB104038C"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparation"
+				    quid       	"62BAB104039C"
+				    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+			    result     	"double"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "GetitemsPreparationTags"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{96af9e2b-3822-49d2-be45-0da2df603ce0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1050077"))
+			    quid       	"62BAB1050077"
+			    result     	"System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<MenuModel.ITag>>"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "GetPreparationStationMenuItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{22e79fdc-5ec6-40c7-947d-ea86376e5388}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1050208"))
+			    quid       	"62BAB1050208"
+			    parameters 	(list Parameters
+				(object Parameter "category"
+				    quid       	"62BAB1050215"
+				    type       	"MenuModel.IItemsCategory"))
+			    result     	"System.Collections.Generic.IList`1[[MenuModel.IMenuItem,{D85BE368-8C63-4BAC-A287-B111A5D25EFF}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "ServicesContextRunTime_ObjectChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a16a4790-f7f7-471a-aed1-5fcf53ebe59c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10502A0"))
+			    quid       	"62BAB10502A0"
+			    parameters 	(list Parameters
+				(object Parameter "_object"
+				    quid       	"62BAB10502B1"
+				    type       	"object")
+				(object Parameter "member"
+				    quid       	"62BAB10502BE"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "UpdateItemsPreparationTags"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8d71bc56-c666-41a0-910e-d7a8ca3b2618}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10502ED"))
+			    quid       	"62BAB10502ED"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "PreparationSessionChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1050373"))
+			    quid       	"62BAB1050373"
+			    parameters 	(list Parameters
+				(object Parameter "_object"
+				    quid       	"62BAB1050384"
+				    type       	"object")
+				(object Parameter "member"
+				    quid       	"62BAB1050394"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "GetItemToServingTimespanPredictions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3e5166da-a888-46e4-9778-4c4acfe31411}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10601B0"))
+			    quid       	"62BAB10601B0"
+			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ItemsRoasting"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{baa4b223-d63e-4981-b948-b4be0a8b8dae}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB106021A"))
+			    quid       	"62BAB106021A"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"62BAB106022F"
+				    type       	"System.Collections.Generic.List`1[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"))
+			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "UpdateItemPreparationStatistics"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9992e845-e2d9-4d6c-864c-de2952762af6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB106035F"))
+			    quid       	"62BAB106035F"
+			    documentation 	
+|
+|This method update preparation station statistics
+|
+			    
+			    parameters 	(list Parameters
+				(object Parameter "preparedItems"
+				    quid       	"62BAB1060378"
+				    documentation 	
+|
+|Defines the items where prepared in timespan
+|
+				    
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
+				(object Parameter "preparationTimeSpan"
+				    quid       	"62BAB1060386"
+				    documentation 	
+|
+|Defines the timespan where items prepared
+|
+				    
+				    type       	"System.TimeSpan"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "CalculatePreparationVelocity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{74243f9d-8326-4598-99d4-e7a289f1a137}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10603DD"))
+			    quid       	"62BAB10603DD"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationTimeSpan"
+				    quid       	"62BAB1070006"
+				    type       	"FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "NormalizePreparationHistory"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c4cac93a-366a-4794-b34d-17aa6f2d0184}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1070032"))
+			    quid       	"62BAB1070032"
+			    documentation 	
+|
+|This method normalize the preparation duration difs starts and end of preparation time of items where prepared as group 
+|
+			    
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "NormalizeItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{88eee950-a77c-4d38-971b-bf4af3abd949}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1070079"))
+			    quid       	"62BAB1070079"
+			    documentation 	
+|
+|This method normalize the preparation time of items
+|in case where user set in prepared state two or three items in same time, the first item seems to have been prepared late
+|and the next items prepared in very short time
+|the next code try to canonicalize this action.
+|Calculates the total time for normalized items and share this time to the normalized items
+|
+			    
+			    parameters 	(list Parameters
+				(object Parameter "normalizedItems"
+				    quid       	"62BAB1070092"
+				    type       	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "ItemsServing"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{818687a0-bd81-48e6-8018-e6a99351c9eb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10700C6"))
+			    quid       	"62BAB10700C6"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparationUris"
+				    quid       	"62BAB10700D1"
+				    type       	"System.Collections.Generic.List`1[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"))
+			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -8488,7 +8858,7 @@
 			    quid       	"610B5B4A0097"
 			    type       	"object"
 			    exportControl 	"Public")
-			(object ClassAttribute "ServicePointsPreparationItems"
+			(object ClassAttribute "PreparationSessions"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -8501,9 +8871,14 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	FALSE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
 			    quid       	"610B5B4A0100"
-			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.ServicePointPreparationItems>")
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"
+			    exportControl 	"Implementation")
 			(object ClassAttribute "RaiseEventTimeStamp"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -8552,7 +8927,283 @@
 				    value      	"+8"))
 			    quid       	"6262F10D0348"
 			    type       	"double"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemsPreparationTags"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{39ef62a3-cbec-4713-9edd-16f70a9a43c8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10702A3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"62BAB10702A3"
+			    type       	"System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<MenuModel.ITag>>"
+			    exportControl 	"Public")
+			(object ClassAttribute "PreparationPlanStartTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{092f57c6-5b4c-4104-bafb-286c1be565da}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10703C4")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"62BAB10703C4"
+			    type       	"System.Nullable<System.DateTime>"
+			    exportControl 	"Implementation")
+			(object ClassAttribute "PreparationVelocity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{318ebf1b-cb44-4ae3-9f15-e4bb4403199a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1080036"))
+			    quid       	"62BAB1080036"
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "Predictions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2579a2ec-c9ae-46a2-bd1f-0f782af292b3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1080082")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"62BAB1080082"
+			    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.ServicesContextResources.ItemPreparationPlan>"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceUpdateEtagLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c0c5c15b-9f3d-43b3-a176-57a165523002}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1080131")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB1080131"
+			    type       	"object")
+			(object ClassAttribute "_PreparationSessions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{077c48c2-28ff-4305-ae1e-aa4daf50f785}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10801B7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10801B7"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
+			(object ClassAttribute "ObjectActivated"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3fca2ab5-8bfd-4eb0-ba49-1366ad0c909a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1080217")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB1080217"
+			    type       	"System.Threading.Tasks.TaskCompletionSource<bool>")
+			(object ClassAttribute "PrepartionVelocityMilestone"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8ae5f7dd-9136-4cee-a183-060bf7120ae7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10802A2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10802A2"
+			    type       	"System.Nullable<System.DateTime>")
+			(object ClassAttribute "PreparationPlanStartTimeLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1ab40191-6416-4db1-8e60-72018f6f2945}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10802F7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10802F7"
+			    type       	"object")
+			(object ClassAttribute "_PreparationPlanStartTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bb72d0ac-ccf0-4a07-98c8-5e41e5de9c1f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB108034E")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB108034E"
+			    type       	"System.Nullable<System.DateTime>")
+			(object ClassAttribute "ItemsInPreparation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{099ce3b8-0473-4526-b3bd-c114990d4fd2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10803B8")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10803B8"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
+			(object ClassAttribute "_PreparationVelocity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5b510e03-e1ba-4905-abc7-b4438f510bd8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1090052")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB1090052"
+			    type       	"int")
+			(object ClassAttribute "PreviousAveragePerc"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7c7f7b5b-6d47-4c63-b20b-67988fd41c61}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10900E0")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10900E0"
+			    type       	"int")
+			(object ClassAttribute "SmoothingItemsPreparationHistory"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b2f4de11-bcf7-499f-84e0-dc8d2b19297f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1090146")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB1090146"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>")
+			(object ClassAttribute "ItemsPreparationHistory"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a7dbebb6-dce3-49ac-993f-ca5bb5cd8023}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB10901D1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB10901D1"
+			    type       	"System.Collections.Generic.Queue<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>")
+			(object ClassAttribute "SuspendsObjectChangeStateEvents"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4175b752-9249-4adf-86a0-dd5bf2f0d069}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"62BAB1090269")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"62BAB1090269"
+			    type       	"bool"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -10481,7 +11132,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"ContainerClass"
-				    value      	(value Text "OOAdvantech.Collections.Generic.Set<ItemPreparationTimeSpan>"))
+				    value      	(value Text "OOAdvantech.Collections.Generic.Set<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>"))
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
@@ -10558,6 +11209,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
+			    compartment 	(object Compartment
+				Parent_View 	@39
+				location   	(1684, 1495)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	1646)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -10644,6 +11313,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
+			    compartment 	(object Compartment
+				Parent_View 	@42
+				location   	(2843, 2102)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	7
+				max_width  	1284)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -10704,6 +11391,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@44
+				location   	(4505, 608)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	1528)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -10773,6 +11478,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@47
+				location   	(3242, 583)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	21
+				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -11091,6 +11814,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
+			    compartment 	(object Compartment
+				Parent_View 	@63
+				location   	(1621, 512)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -11409,6 +12150,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
+			    compartment 	(object Compartment
+				Parent_View 	@79
+				location   	(52, 457)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	19
+				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -11617,6 +12376,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
+			    compartment 	(object Compartment
+				Parent_View 	@89
+				location   	(975, 1161)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	7
+				max_width  	1225)
 			    width      	619
 			    height     	531
 			    annotation 	8)

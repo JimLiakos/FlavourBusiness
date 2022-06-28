@@ -78,6 +78,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             _ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
 
+        /// <MetaDataID>{c0c5c15b-9f3d-43b3-a176-57a165523002}</MetaDataID>
         object DeviceUpdateEtagLock = new object();
         /// <exclude>Excluded</exclude>
         string _DeviceUpdateEtag;
@@ -358,6 +359,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+5")]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 
+        /// <MetaDataID>{1593b236-b246-4099-981f-ace2d6b584bf}</MetaDataID>
         internal void OnPreparationItemsChangeState()
         {
             Transaction.RunOnTransactionCompleted(() =>
@@ -517,6 +519,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
 
+        /// <MetaDataID>{6c64712f-bba6-4803-acb8-28b5df0871a0}</MetaDataID>
         internal double GetCookingTimeSpanInMin(ItemPreparation itemPreparation)
         {
             if (itemPreparation.PreparationTimeSpanInMin == -1)
@@ -611,6 +614,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public object DeviceUpdateLock = new object();
 
 
+        /// <MetaDataID>{077c48c2-28ff-4305-ae1e-aa4daf50f785}</MetaDataID>
         List<ItemsPreparationContext> _PreparationSessions = new List<ItemsPreparationContext>();
 
         /// <MetaDataID>{7d50b4e9-05fb-460e-82e1-5e97fc810164}</MetaDataID>
@@ -629,6 +633,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{3fca2ab5-8bfd-4eb0-ba49-1366ad0c909a}</MetaDataID>
         TaskCompletionSource<bool> ObjectActivated = new TaskCompletionSource<bool>();
 
         /// <MetaDataID>{f65b0df7-3300-41f4-8b0f-8700a0ee2d24}</MetaDataID>
@@ -1050,9 +1055,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         ///// <MetaDataID>{5a788c1a-199e-44b4-b0b0-bbe07baf672d}</MetaDataID>
         //internal Dictionary<string, ItemPreparationPlan> predictions = new Dictionary<string, ItemPreparationPlan>();
 
+        /// <MetaDataID>{1ab40191-6416-4db1-8e60-72018f6f2945}</MetaDataID>
         object PreparationPlanStartTimeLock = new object();
 
+        /// <MetaDataID>{bb72d0ac-ccf0-4a07-98c8-5e41e5de9c1f}</MetaDataID>
         DateTime? _PreparationPlanStartTime;
+        /// <MetaDataID>{092f57c6-5b4c-4104-bafb-286c1be565da}</MetaDataID>
         internal DateTime? PreparationPlanStartTime
         {
             get
@@ -1310,6 +1318,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{2579a2ec-c9ae-46a2-bd1f-0f782af292b3}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> Predictions { get; private set; }
 
         /// <MetaDataID>{baa4b223-d63e-4981-b948-b4be0a8b8dae}</MetaDataID>
@@ -1410,6 +1419,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //    PreviousAveragePerc = avargePerc;
         }
 
+        /// <MetaDataID>{74243f9d-8326-4598-99d4-e7a289f1a137}</MetaDataID>
         private void CalculatePreparationVelocity(ItemPreparationTimeSpan itemPreparationTimeSpan)
         {
             SmoothingItemsPreparationHistory.Add(itemPreparationTimeSpan);
@@ -1526,10 +1536,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// Calculates the total time for normalized items and share this time to the normalized items
         /// </summary>
         /// <param name="normalizedItems"></param>
+        /// <MetaDataID>{88eee950-a77c-4d38-971b-bf4af3abd949}</MetaDataID>
         // <MetaDataID>{41936091-16f7-4e49-ae10-21bbdd3057f6}</MetaDataID>
         private void NormalizeItems(List<ItemPreparationTimeSpan> normalizedItems)
         {
-           
+
 
             ItemPreparationTimeSpan delayedItemPreparation = normalizedItems[0];
 
@@ -1613,6 +1624,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+        /// <MetaDataID>{4175b752-9249-4adf-86a0-dd5bf2f0d069}</MetaDataID>
         volatile bool SuspendsObjectChangeStateEvents;
         /// <MetaDataID>{70023458-eb6b-4245-8003-3668bc9253ec}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> CancelLastPreparationStep(List<string> itemPreparationUris)
