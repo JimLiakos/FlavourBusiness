@@ -7691,6 +7691,9 @@
 			    name       	"LastMemberID"
 			    value      	"9"))
 		    quid       	"5D57B5C30236"
+		    external_docs 	(list external_doc_list
+			(object external_doc
+			    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Preparation TimeSpan Statistics.docx"))
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
 			    quid       	"5D57B80B023B"
@@ -8487,6 +8490,9 @@
 |This method update preparation station statistics
 |
 			    
+			    external_docs 	(list external_doc_list
+				(object external_doc
+				    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Preparation TimeSpan Statistics.docx"))
 			    parameters 	(list Parameters
 				(object Parameter "preparedItems"
 				    quid       	"62BAB1060378"
@@ -9028,22 +9034,6 @@
 				    value      	FALSE))
 			    quid       	"62BAB1080131"
 			    type       	"object")
-			(object ClassAttribute "_PreparationSessions"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{077c48c2-28ff-4305-ae1e-aa4daf50f785}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"62BAB10801B7")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	FALSE))
-			    quid       	"62BAB10801B7"
-			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
 			(object ClassAttribute "ObjectActivated"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -9092,22 +9082,6 @@
 				    value      	FALSE))
 			    quid       	"62BAB10802F7"
 			    type       	"object")
-			(object ClassAttribute "_PreparationPlanStartTime"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{bb72d0ac-ccf0-4a07-98c8-5e41e5de9c1f}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"62BAB108034E")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	FALSE))
-			    quid       	"62BAB108034E"
-			    type       	"System.Nullable<System.DateTime>")
 			(object ClassAttribute "ItemsInPreparation"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -9124,22 +9098,6 @@
 				    value      	FALSE))
 			    quid       	"62BAB10803B8"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
-			(object ClassAttribute "_PreparationVelocity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{5b510e03-e1ba-4905-abc7-b4438f510bd8}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"62BAB1090052")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	FALSE))
-			    quid       	"62BAB1090052"
-			    type       	"int")
 			(object ClassAttribute "PreviousAveragePerc"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -11391,24 +11349,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@44
-				location   	(4505, 608)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	10
-				max_width  	1528)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -14253,6 +14193,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
+			    compartment 	(object Compartment
+				Parent_View 	@173
+				location   	(3316, 494)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	1946)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -14313,6 +14271,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@175
+				location   	(1278, 452)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	16
+				max_width  	715)
 			    width      	750
 			    height     	437
 			    annotation 	8)

@@ -614,7 +614,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public object DeviceUpdateLock = new object();
 
 
-        /// <MetaDataID>{077c48c2-28ff-4305-ae1e-aa4daf50f785}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         List<ItemsPreparationContext> _PreparationSessions = new List<ItemsPreparationContext>();
 
         /// <MetaDataID>{7d50b4e9-05fb-460e-82e1-5e97fc810164}</MetaDataID>
@@ -1225,7 +1225,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 foreach (var itemPreparation in preparationStationItems)
                 {
-                    if(itemPreparation.PreparationStation==null)
+                    if (itemPreparation.PreparationStation == null)
                     {
 
                     }
@@ -1320,6 +1320,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{2579a2ec-c9ae-46a2-bd1f-0f782af292b3}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> Predictions { get; private set; }
+        double NormalizeTimeSpanInSec = 15;
 
         /// <MetaDataID>{baa4b223-d63e-4981-b948-b4be0a8b8dae}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsRoasting(List<string> itemPreparationUris)
@@ -1344,11 +1345,11 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var clientSessionItems in clientSessionsItems)
                 clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
-            
-            
+
+
             return GetItemToServingTimespanPredictions();
         }
-        /// <MetaDataID>{5b510e03-e1ba-4905-abc7-b4438f510bd8}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         int _PreparationVelocity = 0;
         /// <MetaDataID>{7c7f7b5b-6d47-4c63-b20b-67988fd41c61}</MetaDataID>
         int PreviousAveragePerc;
@@ -1376,39 +1377,55 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-
-                var totalPreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin); // calculate the default time for all items
-                var normalizedItemsRations = preparedItems.Select(x => x.PreparationTimeSpanInMin / totalPreparationTimeSpanInMin).ToList(); // calculate the ratio between the default item preparation time and the default total preparation time
+                // calculate the default time for all items
+                var totalPreparationTimeSpanInMin = preparedItems.Sum(x => x.PreparationTimeSpanInMin);
+                // calculate the ratio between the default item preparation time and the default total preparation time
+                var normalizedItemsRations = preparedItems.Select(x => x.PreparationTimeSpanInMin / totalPreparationTimeSpanInMin).ToList();
                 var previousItemsPreparationUpdate = DateTime.UtcNow - preparationTimeSpan;
 
                 int i = 0;
                 foreach (var preparedItem in preparedItems.OfType<ItemPreparation>())
                 {
-
-                    var itemTimeSpan = TimeSpan.FromMinutes(preparationTimeSpan.TotalMinutes * normalizedItemsRations[i]);
-
+                    var normalizedTimeSpan = TimeSpan.FromMinutes(preparationTimeSpan.TotalMinutes * normalizedItemsRations[i++]);
                     ItemPreparationTimeSpan itemPreparationTimeSpan = new ItemPreparationTimeSpan()
                     {
                         StartsAt = previousItemsPreparationUpdate,
-                        EndsAt = previousItemsPreparationUpdate + itemTimeSpan,
-                        DurationDif = itemTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
-                        OrgDurationDif = itemTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
+                        EndsAt = previousItemsPreparationUpdate + normalizedTimeSpan,
+                        DurationDif = normalizedTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
+                        OrgDurationDif = normalizedTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
                         DefaultTimeSpanInMin = preparedItem.PreparationTimeSpanInMin,
                         ItemsPreparationInfo = GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem),
                         InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeitemsPreparationInfo(x.MenuItem) == GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
-                        ActualTimeSpanInMin = itemTimeSpan.TotalMinutes
+                        ActualTimeSpanInMin = normalizedTimeSpan.TotalMinutes
 
                     };
+                    itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
+                    itemPreparationTimeSpan.OrgDurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
+
+
+                    
+
+
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemPreparationTimeSpan);
+                    PreparationTimeSpans.Add(itemPreparationTimeSpan);
 
                     previousItemsPreparationUpdate = itemPreparationTimeSpan.EndsAt;
 
+                    if (preparationTimeSpan.TotalSeconds > NormalizeTimeSpanInSec)
+                    {
+                        // Normalize is necessary when the timespan between now and previous preparation complete is less than NormalizeTimeSpanInSec
 
-                    itemPreparationTimeSpan.DurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
-                    itemPreparationTimeSpan.OrgDurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
-                    ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
-                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemPreparationTimeSpan);
-                    PreparationTimeSpans.Add(itemPreparationTimeSpan);
-                    NormalizePreparationHistory();
+                        ItemsPreparationHistory.Clear();
+                        ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+                    }
+                    else
+                    {
+                        ItemsPreparationHistory.Enqueue(itemPreparationTimeSpan);
+                        List<ItemPreparationTimeSpan> normalizedItems = ItemsPreparationHistory.ToList();
+                        NormalizeItems(normalizedItems);
+
+                        //NormalizePreparationHistory();
+                    }
 
                     CalculatePreparationVelocity(itemPreparationTimeSpan);
                 }
@@ -1460,7 +1477,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
 
 
-                if (itemPreparationTimeSpan.OrgDurationDifPerc < -40)//look like as items prepared as group
+                if (itemPreparationTimeSpan.OrgDurationDifPerc < -60)//look like as items prepared as group
                 {
 
                     if (normalizedItems.Count == 0)
