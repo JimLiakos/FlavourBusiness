@@ -1243,7 +1243,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     {
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
-                            PreparationStart = DateTime.UtcNow,
+                            PreparationStart = itemPreparation.StateTimestamp,
                             Duration = 0
                         };
 
