@@ -94,7 +94,7 @@ namespace PreparationStationDevice
 
         }
 
-        
+
 
         /// <MetaDataID>{c109d672-0fb4-4aff-867d-70e329fd0496}</MetaDataID>
         Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem> MenuItems;
@@ -143,8 +143,8 @@ namespace PreparationStationDevice
                                MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
                                GetMenuLanguages(MenuItems.Values.ToList());
-                                // servicesContextManagment.
-                                Title = preparationStation.Description;
+                               // servicesContextManagment.
+                               Title = preparationStation.Description;
 
                                preparationStation.PreparationItemsChangeState += PreparationStation_PreparationItemsChangeState;
                                PreparationStation = preparationStation;
@@ -154,8 +154,8 @@ namespace PreparationStationDevice
                            }
 
                            var timeSpan = DateTime.UtcNow - start;
-                            //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
-                        }
+                           //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
+                       }
 
                        var itemsPreparationContexts = (from itemsPreparationContext in ItemsPreparationContexts
                                                        select new ItemsPreparationContextPresentation()
@@ -595,7 +595,7 @@ namespace PreparationStationDevice
         {
             get
             {
-                if(!string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
                 {
 
                 }
@@ -607,7 +607,7 @@ namespace PreparationStationDevice
             }
         }
 
-        
+
 #if DeviceDotNet
         public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
@@ -735,18 +735,18 @@ namespace PreparationStationDevice
                             ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                             PreparationVelocity = PreparationStation.PreparationVelocity;
                             ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
-                                                            select new ItemsPreparationContextPresentation()
-                                                            {
-                                                                Description = itemsPreparationContext.MealCourseDescription,
-                                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
-                                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
-                                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
-                                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
-                                                                Uri = itemsPreparationContext.Uri,
-                                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
-                                                            }).ToList();
-                             
+                                                                    select new ItemsPreparationContextPresentation()
+                                                                    {
+                                                                        Description = itemsPreparationContext.MealCourseDescription,
+                                                                        StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                                                                        MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                                                                        PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                                        ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                                                                        ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                                                                        Uri = itemsPreparationContext.Uri,
+                                                                        PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                                                                    }).ToList();
+
                             return true;
                         }
                         else
@@ -904,7 +904,38 @@ namespace PreparationStationDevice
         /// <MetaDataID>{543f6e31-794b-4b02-b698-64a8eaabce1c}</MetaDataID>
         public string AppIdentity => "com.microneme.preparationstationdevice";
 
+        public bool RoastingAudibleAlert { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        /// <exclude>Excluded</exclude>
+        bool _RoastingAlert;
+        public bool RoastingAlert
+        {
+            get => _RoastingAlert; 
+            set
+            {
+                _RoastingAlert = value;
+                if (_RoastingAlert)
+                {
+                    Task.Run(() =>
+                    {
+                        TimeSpan delay = TimeSpan.FromMinutes(1);
+                        int count = 0;
+                        while (true)
+                        {
+
+                            delay = TimeSpan.FromSeconds(2);
+                            PlayNotificationSound();
+                            count++;
+                            if (count >= 2)
+                                return;
+
+                            System.Threading.Thread.Sleep(delay);
+                        }
+
+                    });
+                }
+            }
+        }
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);
@@ -939,6 +970,9 @@ namespace PreparationStationDevice
         /// <MetaDataID>{f4048772-fc00-4bb3-9d59-afcf10436db5}</MetaDataID>
         void ItemsΙnPreparation(List<ItemPreparation> itemPreparations);
 
+        bool RoastingAudibleAlert { get; set; }
+
+        bool RoastingAlert { get; set; }
         [GenerateEventConsumerProxy]
         event PreparationItemsLoadedHandle PreparationItemsLoaded;
 
