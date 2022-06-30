@@ -79,7 +79,7 @@ namespace FLBManager
             foreach (var preparationItemsInfoStatistics in preparationStationStatistics)
             {
                 var preparationTimeSpan = preparationItemsInfoStatistics.Sum(x => (x.EndsAt - x.StartsAt).TotalMinutes * x.InformationValue) / preparationItemsInfoStatistics.Sum(x => x.InformationValue);
-                var preparationForecastTimeSpan = preparationItemsInfoStatistics.Sum(x => x.PreparationForecastTimespan) / preparationItemsInfoStatistics.Count();
+                var preparationForecastTimeSpan = preparationItemsInfoStatistics.Sum(x => x.ActualTimeSpanInMin) / preparationItemsInfoStatistics.Count();
                 var itemsPreparationInf = (from itemsPreparationInfo in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo>()
                                            where itemsPreparationInfo.ItemsInfoObjectUri == preparationItemsInfoStatistics.Key
                                            select itemsPreparationInfo).FirstOrDefault();
