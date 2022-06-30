@@ -129,6 +129,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         public DateTime PreparationStart { get; set; }
         public double Duration { get; set; }
+        public double CoockingDuration { get; set; }
     }
 
 

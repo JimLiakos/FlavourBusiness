@@ -520,7 +520,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         Dictionary<string, List<ITag>> _ItemsPreparationTags;
 
         /// <MetaDataID>{6c64712f-bba6-4803-acb8-28b5df0871a0}</MetaDataID>
-        internal double GetCookingTimeSpanInMin(ItemPreparation itemPreparation)
+        internal double GetPreparationTimeSpanInMin(ItemPreparation itemPreparation)
         {
             if (itemPreparation.PreparationTimeSpanInMin == -1)
             {
@@ -1234,7 +1234,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = itemPreparation.CookingStartsAt.Value,
-                            Duration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
+                            Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;
@@ -1265,7 +1265,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = actionContext.ItemPreparationsStartsAt[itemPreparation],
-                            Duration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
+                            Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;

@@ -87,9 +87,9 @@ namespace FlavourBusinessManager.RoomService
 
             DateTime dateTime;
             if (ItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
-                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation));
+                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
 
-            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation));
+            return DateTime.UtcNow + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
         }
 
 
@@ -107,7 +107,7 @@ namespace FlavourBusinessManager.RoomService
         {
             DateTime dateTime;
             if (LastPlanItemPreparationsStartsAt.TryGetValue(itemPreparation, out dateTime))
-                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation));
+                return dateTime + TimeSpanEx.FromMinutes((itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation));
 
             return DateTime.MinValue;
         }
@@ -256,8 +256,9 @@ namespace FlavourBusinessManager.RoomService
             {
                 var lastItemToPrepare = preparationSection.PreparationItems.
                     Where(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && x.State.IsInTheSameOrPreviousState(ItemPreparationState.ΙnPreparation)).
-                    OfType<ItemPreparation>().OrderBy(x => actionContext.GetPreparationEndsAt(x)).LastOrDefault();
+                    OfType<ItemPreparation>().OrderBy(x => actionContext.GetPreparationEndsAt(x)+ TimeSpan.FromMinutes(x.CookingTimeSpanInMin)).LastOrDefault();
 
+                
                 if (lastItemToPrepare == null)//All items prepared
                     return DateTime.UtcNow;
                 else
@@ -441,7 +442,7 @@ namespace FlavourBusinessManager.RoomService
                             actionContext.PreparationPlanIsDoubleChecked = false;
                         }
                         actionContext.SetPreparationStartsAt(itemToPrepare, previousePreparationEndsAt);
-                        previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetCookingTimeSpanInMin(itemToPrepare));
+                        previousePreparationEndsAt = previousePreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare));
 
                         //if (!stirTheSequence)       //The rearrangements doesn't allowed when we stir preparations sequence
                         {                           //The rearrangements  produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
@@ -457,7 +458,7 @@ namespace FlavourBusinessManager.RoomService
                                         if (nextItemToPrepare.IsInReferencePreparationSection(actionContext))
                                         {
                                             TimeSpan timeSpan = itemToPrepare.MealCourse.GetPreparationForecast(actionContext) - actionContext.GetPreparationEndsAt(itemToPrepare);
-                                            if (timeSpan.TotalMinutes >= preparationStation.GetCookingTimeSpanInMin(nextItemToPrepare) * 0.9)
+                                            if (timeSpan.TotalMinutes >= preparationStation.GetPreparationTimeSpanInMin(nextItemToPrepare) * 0.9)
                                             {
                                                 pendingItemsRerange = true;
                                                 pendingItemsRearrangements++;
@@ -615,7 +616,7 @@ namespace FlavourBusinessManager.RoomService
 
         internal static double GetDuration(this ItemsPreparationContext itemsPreparationContext)
         {
-            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(x));
+            return itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().Sum(x => (x.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(x));
         }
 
         internal static void GetPreparationSections(this PreparationStation preparationStation, PreparationPlan actionContext)
