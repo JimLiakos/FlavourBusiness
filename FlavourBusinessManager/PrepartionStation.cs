@@ -538,7 +538,27 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             return itemPreparation.PreparationTimeSpanInMin;
         }
+        internal double GetCookingTimeSpanInMin(ItemPreparation itemPreparation)
+        {
+            if (itemPreparation.CookingTimeSpanInMin == -1)
+            {
+                var itemsPreparationInfos = this.GetItemsPreparationInfo(itemPreparation.MenuItem);
+                foreach (var itemsPreparationInfo in itemsPreparationInfos)
+                {
+                    if (itemsPreparationInfo.CookingTimeSpanInMin != null)
+                    {
+                        itemPreparation.CookingTimeSpanInMin = itemsPreparationInfo.CookingTimeSpanInMin.Value / 2;
+                        break;
+                    }
+                }
+              
+            }
+            if (itemPreparation.CookingTimeSpanInMin == -1)
+                return 0;
 
+            return itemPreparation.CookingTimeSpanInMin;
+        }
+        
         /// <MetaDataID>{39ef62a3-cbec-4713-9edd-16f70a9a43c8}</MetaDataID>
         public Dictionary<string, List<ITag>> ItemsPreparationTags
         {
@@ -1036,7 +1056,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //}
             //else
             //{
-            //    preparationData.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem) + (preparationData.PreparationStationRuntime as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem));
+            //    preparationData.Duration =.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem) + (preparationData.PreparationStationRuntime as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem));
             //}
             return null;
         }
@@ -1234,7 +1254,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = itemPreparation.CookingStartsAt.Value,
-                            Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
+                            Duration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes,
+                            CookingDuration = 0//TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;
@@ -1244,7 +1265,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = itemPreparation.StateTimestamp,
-                            Duration = 0
+                            Duration = 0,
+                            CookingDuration = 0
+
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;
@@ -1254,7 +1277,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = DateTime.UtcNow,
-                            Duration = 0
+                            Duration = 0,
+                            CookingDuration = 0
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;
@@ -1265,7 +1289,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
                             PreparationStart = actionContext.ItemPreparationsStartsAt[itemPreparation],
-                            Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes
+                            Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes,
+                            CookingDuration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
                         };
 
                         predictions[itemPreparation.uid] = itemPreparationPlan;

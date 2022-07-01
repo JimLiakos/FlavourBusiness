@@ -124,13 +124,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     }
 
-    /// <MetaDataID>{035494c0-f39d-441e-b659-5dd7213ea78e}</MetaDataID>
-    public class ItemPreparationPlan
-    {
-        public DateTime PreparationStart { get; set; }
-        public double Duration { get; set; }
-        public double CoockingDuration { get; set; }
-    }
+
 
 
 
