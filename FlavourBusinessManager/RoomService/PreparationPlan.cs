@@ -349,11 +349,18 @@ namespace FlavourBusinessManager.RoomService
                 List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && actionContext.ItemPreparationsStartsAt.ContainsKey(x)).OrderBy(x => actionContext.GetPreparationStartsAt(x)).ToList();
                 itemsInPreparation.AddRange(itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && !actionContext.ItemPreparationsStartsAt.ContainsKey(x)));
 
-                if (itemsInPreparation.Count == 1 && (lastPredictionItemsInPreparation == null || !lastPredictionItemsInPreparation.Contains(itemsInPreparation[0])))
+                if (itemsInPreparation.Count > 0 && (lastPredictionItemsInPreparation == null || lastPredictionItemsInPreparation.Count==0))//!itemsInPreparation.Any(x=>lastPredictionItemsInPreparation.Contains(x)))
                 {
                     preparationPlanStartTime = DateTime.UtcNow;
                     preparationStation.PreparationPlanStartTime = preparationPlanStartTime;
                 }
+
+
+                //if (itemsInPreparation.Count == 1 && (lastPredictionItemsInPreparation == null || !lastPredictionItemsInPreparation.Contains(itemsInPreparation[0])))
+                //{
+                //    preparationPlanStartTime = DateTime.UtcNow;
+                //    preparationStation.PreparationPlanStartTime = preparationPlanStartTime;
+                //}
 
                 DateTime previousePreparationEndsAt = preparationPlanStartTime.Value;
                 //if (lastPredictionItemsInPreparation != null && lastPredictionItemsInPreparation.Count > 0 && itemsInPreparation.Count == 0)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FlavourBusinessManager;
 using FlavourBusinessManager.ServicesContextResources;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
 
 namespace PreparationStationDevice.WPF
@@ -117,6 +118,31 @@ namespace PreparationStationDevice.WPF
             //    smoothAveragePercs.Add((int)Math.Ceiling(sma));
             //}
 
+
+            string storageName = "jimliakosgmailcom";
+            string storageLocation = "DevStorage";
+            string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+
+            var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
+
+
+            OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(demoStorage);
+
+            var itemsTimeSpans = (from itemTimeSpan in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
+                                  select itemTimeSpan).ToList();
+
+            var preparationStationStatistics = (from itemTimeSpan in itemsTimeSpans//servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>()
+                                                group itemTimeSpan by itemTimeSpan.ItemsInfoObjectUri into preparationItemsInfoStatistics
+                                                select preparationItemsInfoStatistics).ToList();
+
+            foreach (var preparationItemsInfoStatistics in preparationStationStatistics)
+            {
+                var preparationTimeSpan = preparationItemsInfoStatistics.Sum(x => (x.EndsAt - x.StartsAt).TotalMinutes * x.InformationValue) / preparationItemsInfoStatistics.Sum(x => x.InformationValue);
+                var preparationForecastTimeSpan = preparationItemsInfoStatistics.Sum(x => x.ActualTimeSpanInMin) / preparationItemsInfoStatistics.Count();
+                var itemsPreparationInf = (from itemsPreparationInfo in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo>()
+                                           where itemsPreparationInfo.ItemsInfoObjectUri == preparationItemsInfoStatistics.Key
+                                           select itemsPreparationInfo).FirstOrDefault();
+            }
 
             base.OnStartup(e);
         }

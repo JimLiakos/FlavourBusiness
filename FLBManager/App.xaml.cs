@@ -83,8 +83,6 @@ namespace FLBManager
                 var itemsPreparationInf = (from itemsPreparationInfo in servicesContextStorage.GetObjectCollection<FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo>()
                                            where itemsPreparationInfo.ItemsInfoObjectUri == preparationItemsInfoStatistics.Key
                                            select itemsPreparationInfo).FirstOrDefault();
-
-
             }
 
             // var sds = items[0].ClientSession;
