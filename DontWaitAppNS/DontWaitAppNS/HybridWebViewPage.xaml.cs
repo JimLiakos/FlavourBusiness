@@ -58,10 +58,11 @@ namespace DontWaitApp
                 url = "http://10.0.0.13:4300/#/";
 
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+                url = string.Format(@"http://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
 
-               //var AssemblyMetaObject =OOAdvantech.DotNetMetaDataRepository.Assembly.GetComponent(typeof(ApplicationSettings).GetMetaData().Assembly);
-               // long count = AssemblyMetaObject.Residents.Count;
+                //var AssemblyMetaObject =OOAdvantech.DotNetMetaDataRepository.Assembly.GetComponent(typeof(ApplicationSettings).GetMetaData().Assembly);
+                // long count = AssemblyMetaObject.Residents.Count;
 
 
                 FlavoursOrderServer.MenuData = ApplicationSettings.Current.LastServicePoinMenuData;
@@ -103,11 +104,11 @@ namespace DontWaitApp
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-            if (device.ForegroundService)
-            {
-                if (!device.IsForegroundServiceStarted)
-                    device.StartForegroundService();
-            }
+            //if (device.ForegroundService)
+            //{
+            //    if (!device.IsForegroundServiceStarted)
+            //        device.StartForegroundService();
+            //}
             if (check)
             {
                 OOAdvantech.IBatteryInfo batteryInfo = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IBatteryInfo)) as OOAdvantech.IBatteryInfo;

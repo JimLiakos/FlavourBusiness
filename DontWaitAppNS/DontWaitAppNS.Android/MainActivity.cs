@@ -19,7 +19,7 @@ using Android.Graphics;
 namespace DontWaitAppNS.Droid
 {
     [Activity(Label = "DontWaitAppNS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTask, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, OOAdvantech.IForegroundService
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
         internal static readonly string CHANNEL_ID = "my_notification_channel";
@@ -107,7 +107,7 @@ namespace DontWaitAppNS.Droid
                     // Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
                 }
             }
-            InitForgroundService(savedInstanceState);
+            //InitForgroundService(savedInstanceState);
             CreateNotificationChannel();
 
             if(Intent.Extras!=null)
@@ -264,8 +264,7 @@ namespace DontWaitAppNS.Droid
             stopServiceIntent = new Intent(this, typeof(TimestampService));
             stopServiceIntent.SetAction(Constants.ACTION_STOP_SERVICE);
 
-            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = this;
-
+            
 
             //stopServiceButton = FindViewById<Button>(Resource.Id.stop_timestamp_service_button);
             //startServiceButton = FindViewById<Button>(Resource.Id.start_timestamp_service_button);
