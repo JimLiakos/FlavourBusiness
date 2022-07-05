@@ -41,5 +41,8 @@
 	"Supervisor":{
 		"UnderPreparationCommandLabel":"Under preparation",
 		"AllCommandLabel":"All"
-	}
+	},
+    "App": {
+        "AppTitle":"Don't wait"
+    }
 }
