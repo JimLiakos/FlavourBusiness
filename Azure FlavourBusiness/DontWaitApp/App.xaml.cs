@@ -36,6 +36,10 @@ namespace DontWaitApp
             //CultureInfo ci = new CultureInfo(1033);
             //Thread.CurrentThread.CurrentCulture = ci;
             //Thread.CurrentThread.CurrentUICulture = ci;
+            string sessionoken = Guid.NewGuid().ToString("N");
+
+            string url = String.Format("https://maps.googleapis.com/maps/api/place/autocomplete/json?input={0}&language={1}&key={2}&sessiontoken={3}", "Ρηγα", System.Globalization.CultureInfo.CurrentCulture.Name, "AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI", sessionoken);
+
 
 
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
