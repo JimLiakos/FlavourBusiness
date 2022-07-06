@@ -12,6 +12,7 @@ using System.Xml.Linq;
 namespace CashierStationDevice.aadeUtil
 {
 
+    /// <MetaDataID>{18854ce0-9b4c-45b1-b2b5-5f6bf7b9bb07}</MetaDataID>
     public class aadeFiscalParty
     {
         public string DoyDescription;
@@ -30,7 +31,7 @@ namespace CashierStationDevice.aadeUtil
 
         public bool IsConnectedToInternet()
         {
-            string host = "https://www.google.com/";  
+            string host = "https://www.google.com/";
             bool result = false;
             Ping p = new Ping();
             try
@@ -42,7 +43,7 @@ namespace CashierStationDevice.aadeUtil
             catch { }
             return result;
         }
-        
+
 
         public static aadeFiscalParty GetPartyInfo(string callerVat, string authUser, string authPassword, string vat)
         {

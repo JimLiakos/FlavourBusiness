@@ -23,6 +23,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{57fea597-c836-44a8-a747-e6b9885eacc1}</MetaDataID>
         [PersistentMember(nameof(_CashierStationIdentity))]
         [BackwardCompatibilityID("+5")]
+        [CachingDataOnClientSide]
         public string CashierStationIdentity
         {
             get

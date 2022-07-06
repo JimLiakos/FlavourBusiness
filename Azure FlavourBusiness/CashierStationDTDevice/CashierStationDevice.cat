@@ -36,7 +36,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"2"))
+		    value      	"4"))
 	    quid       	"61AD944301A2"
 	    operations 	(list Operations
 		(object Operation "AddTransactionPrinter"
@@ -180,6 +180,72 @@
 			    name       	"Identity"
 			    value      	"+1"))
 		    quid       	"61AD9AE402A9"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DocumentSignerType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a383767-4d19-4f63-9518-35065aa02f56}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"62C5A5130122")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"62C5A5130122"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DocumentSignerCommunicationData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{82718c75-cb1d-4409-a2ce-4b848d5221fa}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"62C5A7090174")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"62C5A7090174"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"
@@ -588,7 +654,7 @@
 				    ordinal    	1
 				    quidu      	"000000000000"
 				    creation   	FALSE)
-				(object Message "TransactionPrinted(TransactionPrintID, TransactionPrintDataJson)"
+				(object Message "TransactionPrinted(string, string)"
 				    quid       	"61AE28F500E7"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -1077,7 +1143,7 @@
 			nlines     	1
 			max_width  	10
 			justify    	0
-			label      	"TransactionPrinted(TransactionPrintID, TransactionPrintDataJson)"
+			label      	"TransactionPrinted(string, string)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	1)

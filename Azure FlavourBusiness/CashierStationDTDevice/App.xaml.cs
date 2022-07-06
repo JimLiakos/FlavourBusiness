@@ -36,7 +36,21 @@ namespace CashierStationDTDevice
             //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
-            CashierStationDevice.DocumentSignDevice.Init();
+
+
+            if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
+            {
+                if(Type.GetType(ApplicationSettings.Current.DocumentSignerType)==typeof(SamtecNext))
+                    CashierStationDevice.DocumentSignDevice.Init(new SamtecNext());
+                if (Type.GetType(ApplicationSettings.Current.DocumentSignerType) == typeof(RBSDocSigner))
+                {
+                    var rbsDocSigner = new RBSDocSigner();
+                    rbsDocSigner.Connect(ApplicationSettings.Current.DocumentSignerCommunicationData);
+                    CashierStationDevice.DocumentSignDevice.Init(rbsDocSigner);
+                }
+
+            }
+            
 
             StartPrinterEmulation();
 

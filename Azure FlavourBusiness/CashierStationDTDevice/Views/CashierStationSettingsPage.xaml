@@ -9,7 +9,7 @@
                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
                             xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
                             mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="800"
+      d:DesignHeight="900" d:DesignWidth="800"
       Title="CashierStationSettings">
     <sw:PageDialogViewEmulator.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:CashierStationDevicePresentation}"    Name="Connection" TransactionOption="RequiresNew"  RollbackOnExitWithoutAnswer="True"></ConnectableCtrl:ObjectContext>
@@ -58,6 +58,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="auto"  />
+
                             <RowDefinition Height="14*" MinHeight="60" />
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
@@ -72,6 +73,8 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="3*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" >
                                 <Grid.RowDefinitions>
@@ -136,6 +139,28 @@
                                     </Grid.ColumnDefinitions>
                                     <wpftoolkitex:WatermarkTextBox IsEnabled="{Binding EditCompanyHeader}" AcceptsReturn="True" Height="{Binding ElementName=ThankfulMessageHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding Thankfull, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
                                 </Grid>
+
+                            </Grid>
+
+                            <Grid Grid.Row="6">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer"/>
+                                <ComboBox  Grid.Row="1"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedDocSigner}" ItemsSource="{Binding DocSigners}" DisplayMemberPath="Name"  ></ComboBox>
+
+                            </Grid>
+
+                            <Grid Grid.Row="7">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer communication "/>
+                                <wpftoolkitex:WatermarkTextBox Grid.Row="1" AcceptsReturn="True" Height="{Binding ElementName=ThankfulMessageHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerCommunication, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                                
+                                
 
                             </Grid>
                             <!--Thankful message-->

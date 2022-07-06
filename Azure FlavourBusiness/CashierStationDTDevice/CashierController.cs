@@ -20,13 +20,15 @@ namespace CashierStationDevice
         /// <MetaDataID>{af4a528e-ef65-4e03-b887-e0ba7e094e13}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
-        
 
+
+        /// <MetaDataID>{1e6f893a-0c22-495e-bf82-87e67c84b6e9}</MetaDataID>
         public CashierController()
         {
             ApplicationSettings.Current.ObjectChangeState += ApplicationSettings_ObjectChangeState;
         }
 
+        /// <MetaDataID>{4d603572-27d1-467e-85ef-266b8912c0d2}</MetaDataID>
         private void ApplicationSettings_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(ApplicationSettings.CommunicationCredentialKey))
@@ -58,6 +60,7 @@ namespace CashierStationDevice
         }
 
 
+        /// <MetaDataID>{4c0c5a25-49c9-4012-b591-c599cb07d069}</MetaDataID>
         public void Stop()
         {
 
@@ -274,49 +277,52 @@ namespace CashierStationDevice
 
 
                 printText = GetReceiptRawPrint(transaction, companyHeader, transaction.GetPropertyValue("ServicePointDescription"), "");
-                string myafm = Issuer.VATNumber;
-                string clientafm = "";
 
-                string transactionTypeID = transaction.GetTransactionTypeID();
-                string series = transaction.GetSeries();
-                string taxDocNumber = transaction.GetAutoNumber()?.ToString();
-                decimal net_a = 0;
-                decimal net_b = 0;
-                decimal net_c = 0;
-                decimal net_d = 0;
-                decimal net_e = 0;
-                decimal vat_a = 0;
-                decimal vat_b = 0;
-                decimal vat_c = 0;
-                decimal vat_d = 0;
-                decimal total_to_pay_poso = 0;
+                EpsilonLineData epsilonLineData = new EpsilonLineData()
+                {
+                    myafm = Issuer.VATNumber,
+                    clientafm = "",
+                    transactionTypeID = transaction.GetTransactionTypeID(),
+                    series = transaction.GetSeries(),
+                    taxDocNumber = transaction.GetAutoNumber()?.ToString(),
+                    net_a = 0,
+                    net_b = 0,
+                    net_c = 0,
+                    net_d = 0,
+                    net_e = 0,
+                    vat_a = 0,
+                    vat_b = 0,
+                    vat_c = 0,
+                    vat_d = 0,
+                    total_to_pay_poso = 0
+                };
 
                 foreach (var item in transaction.Items)
                 {
-                    total_to_pay_poso += item.Price;
+                    epsilonLineData.total_to_pay_poso += item.Price;
                     if (item.Taxes.Count > 0 && VatAcounts.ContainsKey(item.Taxes[0].AccountID))
                     {
                         if (VatAcounts[item.Taxes[0].AccountID] == 0)
                         {
-                            vat_a += item.Taxes[0].Amount;
-                            net_a += item.Price - item.Taxes[0].Amount;
+                            epsilonLineData.vat_a += item.Taxes[0].Amount;
+                            epsilonLineData.net_a += item.Price - item.Taxes[0].Amount;
                         }
                         if (VatAcounts[item.Taxes[0].AccountID] == 1)
                         {
-                            vat_b += item.Taxes[0].Amount;
-                            net_b += item.Price - item.Taxes[0].Amount;
+                            epsilonLineData.vat_b += item.Taxes[0].Amount;
+                            epsilonLineData.net_b += item.Price - item.Taxes[0].Amount;
                         }
 
                         if (VatAcounts[item.Taxes[0].AccountID] == 2)
                         {
-                            vat_c += item.Taxes[0].Amount;
-                            net_c += item.Price - item.Taxes[0].Amount;
+                            epsilonLineData.vat_c += item.Taxes[0].Amount;
+                            epsilonLineData.net_c += item.Price - item.Taxes[0].Amount;
                         }
 
                         if (VatAcounts[item.Taxes[0].AccountID] == 3)
                         {
-                            vat_d += item.Taxes[0].Amount;
-                            net_d += item.Price - item.Taxes[0].Amount;
+                            epsilonLineData.vat_d += item.Taxes[0].Amount;
+                            epsilonLineData.net_d += item.Price - item.Taxes[0].Amount;
                         }
                     }
 
@@ -325,11 +331,8 @@ namespace CashierStationDevice
                 string afdsDoc = printText;
                 if (documentSigner.IsOnline)
                 {
-                    string epsilon_line = string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0};{1};;{2};{3};{4};", myafm, clientafm, transactionTypeID, series, taxDocNumber);
-                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};{4:N2};", net_a, net_b, net_c, net_d, net_e);
-                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};", vat_a, vat_b, vat_c, vat_d);
-                    epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};0;;;", total_to_pay_poso);
-                    afdsDoc += documentSigner.PrepareEpsilonLine(epsilon_line);
+                  
+                    afdsDoc += documentSigner.PrepareEpsilonLine(epsilonLineData);
                     SignatureData signature = documentSigner.SignDocument(afdsDoc);
                     if (!string.IsNullOrWhiteSpace(signature.Signuture))
                     {
@@ -401,7 +404,7 @@ namespace CashierStationDevice
 
             System.Collections.Generic.Dictionary<string, decimal> taxesSums = new Dictionary<string, decimal>();
 
-            byte[] data = Read(typeof(CashierStationDevice.DocumentSignDevice).Assembly.GetManifestResourceStream("CashierStationDevice.Resources.Receipt.bin"));
+            byte[] data = Read(typeof(CashierStationDevice.SamtecNext).Assembly.GetManifestResourceStream("CashierStationDevice.Resources.Receipt.bin"));
             string printReport = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
 
 
@@ -674,7 +677,7 @@ namespace CashierStationDevice
 
                 string printReport = null;
 
-                byte[] data = Read(typeof(CashierStationDevice.DocumentSignDevice).Assembly.GetManifestResourceStream("CashierStationDevice.Resources.order.bin"));
+                byte[] data = Read(typeof(CashierStationDevice.SamtecNext).Assembly.GetManifestResourceStream("CashierStationDevice.Resources.order.bin"));
                 printReport = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
 
 
@@ -1176,6 +1179,7 @@ namespace CashierStationDevice
 
     }
 
+    /// <MetaDataID>{12442051-2e56-49cf-9290-742c17dee613}</MetaDataID>
     enum TextJustify
     {
         Left = 1,

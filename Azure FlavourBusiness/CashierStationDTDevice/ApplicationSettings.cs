@@ -11,6 +11,55 @@ namespace CashierStationDevice
     [Persistent()]
     public class ApplicationSettings
     {
+        /// <exclude>Excluded</exclude>
+        string _DocumentSignerType;
+
+        /// <MetaDataID>{6a383767-4d19-4f63-9518-35065aa02f56}</MetaDataID>
+        [PersistentMember(nameof(_DocumentSignerType))]
+        [BackwardCompatibilityID("+2")]
+        public string DocumentSignerType
+        {
+            get => _DocumentSignerType;
+            set
+            {
+
+                if (_DocumentSignerType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DocumentSignerType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _DocumentSignerCommunicationData;
+
+        /// <MetaDataID>{82718c75-cb1d-4409-a2ce-4b848d5221fa}</MetaDataID>
+        [PersistentMember(nameof(_DocumentSignerCommunicationData))]
+        [BackwardCompatibilityID("+3")]
+        public string DocumentSignerCommunicationData
+        {
+            get => _DocumentSignerCommunicationData;
+            set
+            {
+
+                if (_DocumentSignerCommunicationData != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DocumentSignerCommunicationData = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <MetaDataID>{d033859f-8c04-47cd-8f7a-69b6af5ceab0}</MetaDataID>
         public ICashiersStationRuntime CashiersStation;
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
@@ -60,6 +109,7 @@ namespace CashierStationDevice
         {
             get
             {
+                
                 if (_Current == null)
                 {
 
@@ -91,6 +141,7 @@ namespace CashierStationDevice
             }
         }
 
+        /// <MetaDataID>{67eea655-69f7-47cc-bb8e-c531f1f8ff4f}</MetaDataID>
         static public string AppDataPath
         {
             get
@@ -155,6 +206,7 @@ namespace CashierStationDevice
             }
         }
 
+        /// <MetaDataID>{1fe845a2-2aae-4f58-99cc-304d37e9311e}</MetaDataID>
         public CompanyHeader CompanyHeader;
 
         /// <exclude>Excluded</exclude>
