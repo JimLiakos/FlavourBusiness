@@ -421,9 +421,6 @@
     <EmbeddedResource Include="Resources\Receipt.bin" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\GprinterComandChars.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\Metro\business-report24.png" />
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +430,7 @@
     <Content Include="External\DocMsign.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\GprinterComandChars.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

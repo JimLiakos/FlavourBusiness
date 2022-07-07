@@ -25,9 +25,9 @@ namespace CashierStationDevice
     public interface IDocumentSignDevice
     {
         /// <MetaDataID>{aede50b0-94d9-489d-8004-43b48f0cf455}</MetaDataID>
-        SignatureData SignDocument(string document);
-        /// <MetaDataID>{25b2b301-3c76-4ae2-a527-20b718ec4660}</MetaDataID>
-        string PrepareEpsilonLine(EpsilonLineData epsilonLineData);
+        SignatureData SignDocument(string document, EpsilonLineData epsilonLineData);
+        ///// <MetaDataID>{25b2b301-3c76-4ae2-a527-20b718ec4660}</MetaDataID>
+       // string PrepareEpsilonLine(EpsilonLineData epsilonLineData);
 
         /// <MetaDataID>{54a4b79f-96ff-417b-b6d1-cc6f37d3d50c}</MetaDataID>
         bool IsOnline { get; }
@@ -52,7 +52,7 @@ namespace CashierStationDevice
         public abstract string PrepareEpsilonLine(EpsilonLineData epsilonLineData);
 
         /// <MetaDataID>{4b6cc4f2-bd55-4ab9-a141-767ca18cd9bc}</MetaDataID>
-        public abstract SignatureData SignDocument(string document);
+        public abstract SignatureData SignDocument(string document, EpsilonLineData epsilonLineData);
 
         /// <MetaDataID>{7dbf720f-5fba-49ed-be53-7d53eea2bd88}</MetaDataID>
         static IDocumentSignDevice _CurrentDocumentSignDevice;
@@ -76,13 +76,16 @@ namespace CashierStationDevice
         }
 
     }
+
+    
+
     /// <MetaDataID>{f94d8727-ac50-4dc5-a0e2-196c0bd469d1}</MetaDataID>
     public class EpsilonLineData
     {
         /// <MetaDataID>{264bdcb0-8ea6-4fd7-b30b-2498f7aa95cd}</MetaDataID>
-        public string myafm;
+        public string afm_publisher;
         /// <MetaDataID>{e2872758-c255-4170-8358-1c4b25ddec52}</MetaDataID>
-        public string clientafm;
+        public string afm_recipient;
 
         /// <MetaDataID>{810456e2-9dc3-4fed-93eb-123587c6d875}</MetaDataID>
         public string transactionTypeID;

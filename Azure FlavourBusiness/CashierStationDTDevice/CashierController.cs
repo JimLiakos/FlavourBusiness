@@ -280,8 +280,8 @@ namespace CashierStationDevice
 
                 EpsilonLineData epsilonLineData = new EpsilonLineData()
                 {
-                    myafm = Issuer.VATNumber,
-                    clientafm = "",
+                    afm_publisher = Issuer.VATNumber,
+                    afm_recipient = "",
                     transactionTypeID = transaction.GetTransactionTypeID(),
                     series = transaction.GetSeries(),
                     taxDocNumber = transaction.GetAutoNumber()?.ToString(),
@@ -332,8 +332,8 @@ namespace CashierStationDevice
                 if (documentSigner.IsOnline)
                 {
                   
-                    afdsDoc += documentSigner.PrepareEpsilonLine(epsilonLineData);
-                    SignatureData signature = documentSigner.SignDocument(afdsDoc);
+                    
+                    SignatureData signature = documentSigner.SignDocument(afdsDoc, epsilonLineData);
                     if (!string.IsNullOrWhiteSpace(signature.Signuture))
                     {
                         transaction.SetPropertyValue("Signature", signature.Signuture);
@@ -921,7 +921,7 @@ namespace CashierStationDevice
 
 
         /// <MetaDataID>{661189ff-24a2-4352-ad42-af1762b7bf6e}</MetaDataID>
-        private static byte[] Read(Stream stream)
+        internal static byte[] Read(Stream stream)
         {
             byte[] buffer = new byte[stream.Length];
             stream.Read(buffer, 0, (int)stream.Length);
