@@ -38,14 +38,14 @@ namespace CashierStationDTDevice
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
 
 
-            if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
+            if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
             {
                 if(Type.GetType(ApplicationSettings.Current.DocumentSignerType)==typeof(SamtecNext))
                     CashierStationDevice.DocumentSignDevice.Init(new SamtecNext());
                 if (Type.GetType(ApplicationSettings.Current.DocumentSignerType) == typeof(RBSDocSigner))
                 {
                     var rbsDocSigner = new RBSDocSigner();
-                    rbsDocSigner.Connect(ApplicationSettings.Current.DocumentSignerCommunicationData);
+                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerCommunicationData);
                     CashierStationDevice.DocumentSignDevice.Init(rbsDocSigner);
                 }
 

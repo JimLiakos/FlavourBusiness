@@ -204,8 +204,9 @@ namespace CashierStationDevice
                 }
             }
         }
-        public SignatureData SignDocument(string document)
+        public SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
         {
+            document +=Environment.NewLine+  PrepareEpsilonLine(epsilonLineData);
             lock (ConnectionLock)
             {
                 using (Socket DeviceCommunicationSocket = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp))
@@ -316,12 +317,12 @@ namespace CashierStationDevice
 
         }
 
-        public string PrepareEpsilonLine(EpsilonLineData epsilonLineData)
+         string PrepareEpsilonLine(EpsilonLineData epsilonLineData)
         {
-            string epsilon_line = string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0};{1};;{2};{3};{4};", epsilonLineData.myafm, epsilonLineData.clientafm, epsilonLineData.transactionTypeID, epsilonLineData.series, epsilonLineData.taxDocNumber);
+            string epsilon_line = string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0};{1};;{2};{3};{4};", epsilonLineData.afm_publisher, epsilonLineData.afm_recipient, epsilonLineData.transactionTypeID, epsilonLineData.series, epsilonLineData.taxDocNumber);
             epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};{4:N2};", epsilonLineData.net_a, epsilonLineData.net_b, epsilonLineData.net_c, epsilonLineData.net_d, epsilonLineData.net_e);
             epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};{1:N2};{2:N2};{3:N2};", epsilonLineData.vat_a, epsilonLineData.vat_b, epsilonLineData.vat_c, epsilonLineData.vat_d);
-
+            epsilon_line += string.Format(System.Globalization.CultureInfo.GetCultureInfo(1033), "{0:N2};0;;;", epsilonLineData.total_to_pay_poso);
             return "[<]" + epsilon_line + "[>]";
         }
 
