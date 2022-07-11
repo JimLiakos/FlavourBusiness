@@ -322,20 +322,24 @@ namespace DontWaitApp
         {
             get
             {
-                //return _FriendlyName;
-                return null;
+                bool tt = false;
+                if (tt)
+                    return null;
+                else
+                    return _FriendlyName;
+                
             }
             set
             {
 
-                //if (_FriendlyName != value)
-                //{
-                //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                //    {
-                //        _FriendlyName = value;
-                //        stateTransition.Consistent = true;
-                //    }
-                //}
+                if (_FriendlyName != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FriendlyName = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 
