@@ -99,7 +99,7 @@ namespace DontWaitApp
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            MyLabel.Text = "Liakos";
+            //MyLabel.Text = "Liakos";
 
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -176,7 +176,7 @@ namespace DontWaitApp
                 FlavoursOrderServer.Initialize();
 
             }
-            MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
+            //MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
 
         }
 
