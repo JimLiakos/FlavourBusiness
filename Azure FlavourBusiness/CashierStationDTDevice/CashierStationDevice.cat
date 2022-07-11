@@ -36,7 +36,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4"))
+		    value      	"5"))
 	    quid       	"61AD944301A2"
 	    operations 	(list Operations
 		(object Operation "AddTransactionPrinter"
@@ -215,7 +215,7 @@
 		    quid       	"62C5A5130122"
 		    type       	"string"
 		    exportControl 	"Public")
-		(object ClassAttribute "DocumentSignerCommunicationData"
+		(object ClassAttribute "DocumentSignerDeviceIPAddress"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -246,6 +246,39 @@
 			    name       	"Identity"
 			    value      	"+3"))
 		    quid       	"62C5A7090174"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DocumentSignerOutputFolder"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3ada20d5-62e4-453d-8613-581ae62bdf66}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"62C80241020C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"62C80241020C"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"

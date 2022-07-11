@@ -108,8 +108,8 @@ namespace ESD_DTool.Helper
 
         public string RetErr = "";
         public bool usespath = true;
-        public string firstpath = "C:\\OUT\\";
-        public string secondpath = "C:\\OUT\\BACKUP\\";
+        public string firstpath = @"c:\out\";
+        public string secondpath = @"c:\out\backup\";
         //  Util UTL = new Util();
         public string currentpath = "";
 
@@ -178,16 +178,27 @@ namespace ESD_DTool.Helper
             Console.Write(message);
             return 0;
         }
+        internal void SetOutputFolder(string outputFolder)
+        {
+            if(string.IsNullOrWhiteSpace(outputFolder))
+            {
+                firstpath = CashierStationDevice.Properties.Settings.Default.fpath;
+                secondpath = CashierStationDevice.Properties.Settings.Default.spath;
+                usespath = CashierStationDevice.Properties.Settings.Default.enspath;
+            }
+            else
+            {
+                firstpath = outputFolder + @"\out\";
+                secondpath = outputFolder + @"\out\backup\";
+            }
+        }
+
 
         public int SelectESDDevice(Devices CDEv)
         {
             int res = -1;
             string ReturnedErrorStr = "";
             string serno = CDEv.SerialNO;
-
-            firstpath = CashierStationDevice.Properties.Settings.Default.fpath;
-            secondpath = CashierStationDevice.Properties.Settings.Default.spath;
-            usespath = CashierStationDevice.Properties.Settings.Default.enspath;
 
             if (CheckingCfilesActive)
                 VB_FSL_DisableCheckZFiles(0);

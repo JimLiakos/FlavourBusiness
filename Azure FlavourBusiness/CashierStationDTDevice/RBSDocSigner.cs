@@ -11,14 +11,14 @@ using System.Windows;
 namespace CashierStationDevice
 {
     /// <MetaDataID>{6a723107-e61c-4464-9a63-0fbc71c78020}</MetaDataID>
-    public class RBSDocSigner : IDocumentSignDevice
+    public class RBSDocSigner :  DocumentSignDevice
     {
         ESDPROT RBSESD = new ESDPROT();
 
         public string UnlockKey { get; private set; }
 
         bool _IsOnline = true;
-        public bool IsOnline
+        public override bool IsOnline
         {
             get
             {
@@ -60,7 +60,7 @@ namespace CashierStationDevice
         }
         Devices CurDEV = new Devices();
 
-        public event EventHandler<EventArgs> DeviceStatusChanged;
+        public override event EventHandler<EventArgs> DeviceStatusChanged;
         object ConnectionLock = new object();
         public void Start(string ethernetIP)
         {
@@ -147,7 +147,7 @@ namespace CashierStationDevice
         string errors;
 
         object rbsDiviceLock = new object();
-        public SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
+        public override SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
         {
             lock (ConnectionLock)
             {
@@ -184,7 +184,7 @@ namespace CashierStationDevice
                     string documentFile = CashierStationDevice.ApplicationSettings.AppDataPath + "\\RBS\\" + Guid.NewGuid().ToString("N") + ".txt";
                     //documentFile = @"F:\ESDtool.120522.RBS\ESD_DTool2\ESD_DTool\ESD_DTool\bin\Debug\TestDoc.txt";
                     //document=PrepareEpsilonLine(epsilonLineData) + Environment.NewLine + Environment.NewLine + document;
-                    String unescapedString = Regex.Unescape(document);
+                    
 
                     System.IO.File.WriteAllBytes(documentFile, Encoding.GetEncoding("windows-1253").GetBytes(document));
                   
@@ -194,6 +194,10 @@ namespace CashierStationDevice
                     //string vstream = System.IO.File.ReadLines(@"F:\ESDtool.120522.RBS\ESD_DTool2\ESD_DTool\ESD_DTool\bin\Debug\TestDoc.txt").First();
                     //string vstream2 = PrepareEpsilonLine(epsilonLineData);
                     //int ret = RBSESD.SignData(CurDEV, documentFile, vstream, ref signature);
+
+                    if(!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
+                        RBSESD.SetOutputFolder(ApplicationSettings.Current.DocumentSignerOutputFolder);
+
                     int ret = RBSESD.SignData(CurDEV, documentFile, PrepareEpsilonLine(epsilonLineData), ref signature);
 
                     //int ret = RBSESD.SignData(CurDEV, documentFile, PrepareEpsilonLine(epsilonLineData), ref signature);
@@ -230,7 +234,7 @@ namespace CashierStationDevice
             return epsilon_line;
         }
 
-        public List<string> CheckStatusForError()
+        public override List<string>  CheckStatusForError()
         {
             if (!string.IsNullOrWhiteSpace(errors))
                 return new List<string>() { errors };

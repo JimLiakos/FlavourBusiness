@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace CashierStationDevice
 {
     /// <MetaDataID>{4b187271-a093-454c-9fb4-b7f320c22047}</MetaDataID>
-    public class SamtecNext : IDocumentSignDevice
+    public class SamtecNext : DocumentSignDevice
     {
-        public event EventHandler<EventArgs> DeviceStatusChanged;
+        public override event EventHandler<EventArgs> DeviceStatusChanged;
         public SamtecNext()
         {
 
@@ -120,7 +120,7 @@ namespace CashierStationDevice
             }
         }
 
-        public List<string> CheckStatusForError()
+        public override List<string> CheckStatusForError()
         {
             List<string> statusMessages = new List<string>();
 
@@ -204,7 +204,7 @@ namespace CashierStationDevice
                 }
             }
         }
-        public SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
+        public override SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
         {
             document +=Environment.NewLine+  PrepareEpsilonLine(epsilonLineData);
             lock (ConnectionLock)
@@ -326,7 +326,7 @@ namespace CashierStationDevice
             return "[<]" + epsilon_line + "[>]";
         }
 
-        public bool IsOnline { get => Status != null && !Status.SamtecDriverConnectionError; }
+        public override bool IsOnline { get => Status != null && !Status.SamtecDriverConnectionError; }
         private string ReadAnswer(Socket DeviceCommunicationSocket)
         {
             byte[] resBuffera = new byte[1024];
