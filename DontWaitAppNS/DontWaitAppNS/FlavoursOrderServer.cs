@@ -296,6 +296,11 @@ namespace DontWaitApp
 
         }
 
+        Location GetMyCurrentLocation()
+        {
+
+        }
+
         /// <MetaDataID>{ebf9e3ce-2957-4519-82cf-8aa08b910d88}</MetaDataID>
         public void WebViewLoaded()
         {
@@ -1690,6 +1695,31 @@ namespace DontWaitApp
 
         }
 
+        public async Task<bool> CheckPermissionsToAccessCurrentLocation()
+
+        {
+#if DeviceDotNet
+#if IOSEmulator
+                    return true;
+#else
+            Xamarin.Essentials.
+            var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
+            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+#endif
+#else
+            return false;
+#endif
+        }
+
+        public async Task<bool> RequestPermissionsToAccessCurrentLocation()
+        {
+#if DeviceDotNet
+            var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
+            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+#else
+            return true;
+#endif
+        }
 
         /// <MetaDataID>{11b11a15-ce5b-4d4f-aaaf-ff6e6427b9f1}</MetaDataID>
         public async Task<bool> CheckPermissionsForServicePointScan()

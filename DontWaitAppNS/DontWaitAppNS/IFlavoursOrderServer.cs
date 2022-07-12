@@ -144,6 +144,10 @@ namespace DontWaitApp
         Task<bool> CheckPermissionsForServicePointScan();
 
 
+        Task<bool> CheckPermissionsToAccessCurrentLocation();
+
+        Task<bool> RequestPermissionsToAccessCurrentLocation();
+
         /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
         Task<bool> SendItemForPreparation();
 
@@ -390,7 +394,13 @@ namespace DontWaitApp
     }
 
 
+    public class Location
+    {
+        public double Latitude;
+        public double Longitude;
 
+    }
+    
     /// <MetaDataID>{8cada9df-78e0-4eef-9482-ae9093cef026}</MetaDataID>
     [HttpVisible]
 
