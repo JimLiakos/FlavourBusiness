@@ -331,7 +331,6 @@ namespace DontWaitApp
             }
             set
             {
-
                 if (_FriendlyName != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

@@ -58,8 +58,9 @@ namespace DontWaitApp
                 url = "http://10.0.0.13:4300/#/";
 
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+                
                 url = string.Format(@"http://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
-
+                url = string.Format(@"https://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
                 //var AssemblyMetaObject =OOAdvantech.DotNetMetaDataRepository.Assembly.GetComponent(typeof(ApplicationSettings).GetMetaData().Assembly);
                 // long count = AssemblyMetaObject.Residents.Count;
