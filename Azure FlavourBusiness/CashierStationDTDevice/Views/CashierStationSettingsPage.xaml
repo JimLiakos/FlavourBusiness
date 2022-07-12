@@ -19,7 +19,7 @@
 
     </sw:PageDialogViewEmulator.Resources>
     <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource Dd_CashierStationDevicePresentation}" >
-        <sw:DialogContentControl BeforeTransactionCommit="{Binding SaveCommand}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.SettingDialogTitle}" InitialWidth="500" InitialHeight="750" Icon="/CashierStationDevice;component/Resources/Images/Metro/Settings24.png">
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding SaveCommand}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.SettingDialogTitle}" InitialWidth="500" InitialHeight="900" Icon="/CashierStationDevice;component/Resources/Images/Metro/Settings24.png">
 
 
 
@@ -65,7 +65,7 @@
 
 
 
-                        <Grid Grid.Row="1" Grid.Column="1" >
+                        <Grid Grid.Row="1" Grid.Column="1"    >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
@@ -74,7 +74,7 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" >
                                 <Grid.RowDefinitions>
@@ -147,7 +147,7 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer"/>
+                                <Label Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer"/>
                                 <ComboBox  Grid.Row="1"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedDocSigner}" ItemsSource="{Binding DocSigners}" DisplayMemberPath="Name"  ></ComboBox>
 
                             </Grid>
@@ -156,11 +156,14 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer communication "/>
-                                <wpftoolkitex:WatermarkTextBox Grid.Row="1" AcceptsReturn="True" Height="{Binding ElementName=ThankfulMessageHost, Path=ActualHeight}" VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerCommunication, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
-                                
-                                
+                                <Label Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS Device IP Address  "/>
+                                <wpftoolkitex:WatermarkTextBox Grid.Row="1" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DeviceIPAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                                <Label Grid.Row="2" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS output folder  "/>
+                                <wpftoolkitex:WatermarkTextBox Grid.Row="3" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerOutputFolder, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+
 
                             </Grid>
                             <!--Thankful message-->
@@ -222,20 +225,20 @@
                                                                 <ColumnDefinition Width="2*"/>
 
                                                             </Grid.ColumnDefinitions>
-                                                            <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.SeriesLabel}"/>
+                                                            <Label Margin="0,4,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.SeriesLabel}"/>
                                                             <wpftoolkitex:WatermarkTextBox  VerticalContentAlignment="Center"  Text="{Binding Series,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
 
-                                                            <Label Grid.Row="0" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.AutoNumberLabel}"/>
+                                                            <Label Grid.Row="0" Margin="0,4,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.AutoNumberLabel}"/>
                                                             <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="2" Grid.ColumnSpan="2" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding AutoNumber, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  Grid.Row="1" />
-                                                            <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Printer Name"/>
+                                                            <Label Grid.Row="3" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Printer Name"/>
                                                             <ComboBox  Grid.Row="4"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding PrinterName}" ItemsSource="{Binding AvailablePrinters}"  ></ComboBox>
                                                             <!--<wpftoolkitex:WatermarkTextBox x:Name="PrinterNameEdit"   Grid.Row="4" VerticalContentAlignment="Center"  Text="{Binding PrinterName ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" ></wpftoolkitex:WatermarkTextBox>
                                                 <Button  Grid.Row="4" Grid.Column="4"  Command="{Binding SelectPrinterCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="{Binding ElementName=PrinterNameEdit, Path=ActualHeight}" Height="{Binding ElementName=PrinterNameEdit, Path=ActualHeight}" >
                                                     ...
                                                 </Button>-->
-                                                            <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Raw Printer Address"/>
+                                                            <Label Grid.Row="5" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Raw Printer Address"/>
                                                             <wpftoolkitex:WatermarkTextBox    Grid.Row="6" VerticalContentAlignment="Center"  Text="{Binding RawPrinterAddress ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
-                                                            <Label Grid.Row="5" Margin="0,0,0,4" Grid.Column="3"  VerticalAlignment="Bottom" Content="Code Page"/>
+                                                            <Label Grid.Row="5" Margin="0,4,0,4" Grid.Column="3"  VerticalAlignment="Bottom" Content="Code Page"/>
                                                             <ControlsEx:TextBoxNumberWithUnit Integer="True" Grid.Column="3"  Grid.Row="6"  VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding PrinterCodePage, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
 
                                                         </Grid>

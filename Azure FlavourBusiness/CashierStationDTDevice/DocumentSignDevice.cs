@@ -48,14 +48,18 @@ namespace CashierStationDevice
         /// <MetaDataID>{65f3531b-2c42-41a7-bd1f-4ddc1e79d8e2}</MetaDataID>
         public abstract List<string> CheckStatusForError();
 
-        /// <MetaDataID>{92dc3ec1-416a-4e37-8471-108f4181322c}</MetaDataID>
-        public abstract string PrepareEpsilonLine(EpsilonLineData epsilonLineData);
+        ///// <MetaDataID>{92dc3ec1-416a-4e37-8471-108f4181322c}</MetaDataID>
+        //public abstract string PrepareEpsilonLine(EpsilonLineData epsilonLineData);
 
         /// <MetaDataID>{4b6cc4f2-bd55-4ab9-a141-767ca18cd9bc}</MetaDataID>
         public abstract SignatureData SignDocument(string document, EpsilonLineData epsilonLineData);
 
+
+
+
         /// <MetaDataID>{7dbf720f-5fba-49ed-be53-7d53eea2bd88}</MetaDataID>
         static IDocumentSignDevice _CurrentDocumentSignDevice;
+
         /// <MetaDataID>{3bbfd8a1-db71-4ba3-96b5-4922d11e714e}</MetaDataID>
         public static IDocumentSignDevice CurrentDocumentSignDevice
         {

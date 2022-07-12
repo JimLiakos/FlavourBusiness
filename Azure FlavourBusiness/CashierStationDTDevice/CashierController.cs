@@ -1072,7 +1072,9 @@ namespace CashierStationDevice
     [BackwardCompatibilityID("{23f6cd11-d207-425b-b22b-e287dc016fad}")]
     public class CompanyHeader
     {
+        /// <MetaDataID>{904deb7e-9e69-4ec4-b3ad-531334ee11f5}</MetaDataID>
         string _Title;
+        /// <MetaDataID>{53f82f10-dca0-4511-90f8-b3e1158a90d2}</MetaDataID>
         public string Title
         {
             get => _Title;
@@ -1088,7 +1090,9 @@ namespace CashierStationDevice
                 }
             }
         }
+        /// <MetaDataID>{167876a5-1820-455c-aca4-233c72225fd3}</MetaDataID>
         string _Subtitle;
+        /// <MetaDataID>{206009ec-6240-4335-a14f-a3d3590721d5}</MetaDataID>
         public string Subtitle
         {
             get => _Subtitle;
@@ -1104,8 +1108,10 @@ namespace CashierStationDevice
                 }
             }
         }
+        /// <MetaDataID>{69e25577-f93d-473b-a30e-768430ee626a}</MetaDataID>
         string _ContatInfo;//email telephone etc
 
+        /// <MetaDataID>{c202f2f2-3b32-49f0-95e2-af79bb3e9eae}</MetaDataID>
         public string ContatInfo
         {
             get => _ContatInfo;
@@ -1122,7 +1128,9 @@ namespace CashierStationDevice
             }
         }
 
+        /// <MetaDataID>{1590b9d2-c40e-4a8d-a74d-9665d2f977b6}</MetaDataID>
         string _FiscalData;//vat and etc
+        /// <MetaDataID>{2a622010-32f9-457a-b4fe-66902f556e9a}</MetaDataID>
         public string FiscalData
         {
             get => _FiscalData;
@@ -1139,8 +1147,10 @@ namespace CashierStationDevice
             }
         }
 
+        /// <MetaDataID>{f379f0e3-ffd0-4119-8d34-2029d1947605}</MetaDataID>
         string _Address;// defines the company address
 
+        /// <MetaDataID>{e507875b-b5c5-4ef8-a195-61843b537bed}</MetaDataID>
         public string Address
         {
             get => _Address;
@@ -1157,7 +1167,9 @@ namespace CashierStationDevice
             }
         }
 
+        /// <MetaDataID>{8e63f3db-c59c-4ec9-a865-84b8ea7de1b0}</MetaDataID>
         string _Thankfull;
+        /// <MetaDataID>{4cb9c309-6d2e-4927-9c56-d42c6f24b011}</MetaDataID>
         public string Thankfull
         {
             get => _Thankfull;

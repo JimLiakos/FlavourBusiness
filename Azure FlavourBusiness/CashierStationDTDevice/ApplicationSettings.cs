@@ -12,6 +12,30 @@ namespace CashierStationDevice
     public class ApplicationSettings
     {
         /// <exclude>Excluded</exclude>
+        string _DocumentSignerOutputFolder;
+
+        /// <MetaDataID>{3ada20d5-62e4-453d-8613-581ae62bdf66}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.PersistentMember(nameof(_DocumentSignerOutputFolder))]
+        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+4")]
+        public string DocumentSignerOutputFolder
+        {
+            get => _DocumentSignerOutputFolder;
+            set
+            {
+
+                if (_DocumentSignerOutputFolder != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DocumentSignerOutputFolder = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         string _DocumentSignerType;
 
         /// <MetaDataID>{6a383767-4d19-4f63-9518-35065aa02f56}</MetaDataID>
@@ -36,26 +60,24 @@ namespace CashierStationDevice
         }
 
         /// <exclude>Excluded</exclude>
-        string _DocumentSignerCommunicationData;
+        string _DocumentSignerDeviceIPAddress;
 
         /// <MetaDataID>{82718c75-cb1d-4409-a2ce-4b848d5221fa}</MetaDataID>
-        [PersistentMember(nameof(_DocumentSignerCommunicationData))]
+        [PersistentMember(nameof(_DocumentSignerDeviceIPAddress))]
         [BackwardCompatibilityID("+3")]
-        public string DocumentSignerCommunicationData
+        public string DocumentSignerDeviceIPAddress
         {
-            get => _DocumentSignerCommunicationData;
+            get => _DocumentSignerDeviceIPAddress;
             set
             {
-
-                if (_DocumentSignerCommunicationData != value)
+                if (_DocumentSignerDeviceIPAddress != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _DocumentSignerCommunicationData = value;
+                        _DocumentSignerDeviceIPAddress = value;
                         stateTransition.Consistent = true;
                     }
                 }
-
             }
         }
 
@@ -67,6 +89,7 @@ namespace CashierStationDevice
         OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter> _TransactionsPrinters = new OOAdvantech.Collections.Generic.Set<Model.TransactionPrinter>();
 
 
+        /// <MetaDataID>{f428c1f7-594f-4899-be0d-5c297d0a1237}</MetaDataID>
         [Association("CashierStationPrinters", Roles.RoleA, "1c778140-1ab8-42d2-a1bd-5055514aabca")]
         [RoleAMultiplicityRange(1)]
         [PersistentMember(nameof(_TransactionsPrinters))]

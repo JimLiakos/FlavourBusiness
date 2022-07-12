@@ -8,173 +8,217 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CashierStationDevice.Properties {
-    
-    
+namespace CashierStationDevice.Properties
+{
+
+
+    /// <MetaDataID>{193391ff-81b4-447b-b614-15ae82320893}</MetaDataID>
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("c:\\out\\backup\\")]
-        public string spath {
-            get {
+        public string spath
+        {
+            get
+            {
                 return ((string)(this["spath"]));
             }
-            set {
+            set
+            {
                 this["spath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("c:\\out\\")]
-        public string fpath {
-            get {
+        public string fpath
+        {
+            get
+            {
                 return ((string)(this["fpath"]));
             }
-            set {
+            set
+            {
                 this["fpath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool enspath {
-            get {
+        public bool enspath
+        {
+            get
+            {
                 return ((bool)(this["enspath"]));
             }
-            set {
+            set
+            {
                 this["enspath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int CommType {
-            get {
+        public int CommType
+        {
+            get
+            {
                 return ((int)(this["CommType"]));
             }
-            set {
+            set
+            {
                 this["CommType"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string ippEsd {
-            get {
+        public string ippEsd
+        {
+            get
+            {
                 return ((string)(this["ippEsd"]));
             }
-            set {
+            set
+            {
                 this["ippEsd"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string ippProxy {
-            get {
+        public string ippProxy
+        {
+            get
+            {
                 return ((string)(this["ippProxy"]));
             }
-            set {
+            set
+            {
                 this["ippProxy"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
-        public string serport {
-            get {
+        public string serport
+        {
+            get
+            {
                 return ((string)(this["serport"]));
             }
-            set {
+            set
+            {
                 this["serport"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string AESKey {
-            get {
+        public string AESKey
+        {
+            get
+            {
                 return ((string)(this["AESKey"]));
             }
-            set {
+            set
+            {
                 this["AESKey"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UnlockKey {
-            get {
+        public string UnlockKey
+        {
+            get
+            {
                 return ((string)(this["UnlockKey"]));
             }
-            set {
+            set
+            {
                 this["UnlockKey"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("c:\\out\\")]
-        public string epath {
-            get {
+        public string epath
+        {
+            get
+            {
                 return ((string)(this["epath"]));
             }
-            set {
+            set
+            {
                 this["epath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public string eport {
-            get {
+        public string eport
+        {
+            get
+            {
                 return ((string)(this["eport"]));
             }
-            set {
+            set
+            {
                 this["eport"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(" http://www1.gsis.gr/eafdss/myweb/websend.php ")]
-        public string endpoint {
-            get {
+        public string endpoint
+        {
+            get
+            {
                 return ((string)(this["endpoint"]));
             }
-            set {
+            set
+            {
                 this["endpoint"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int DrvType {
-            get {
+        public int DrvType
+        {
+            get
+            {
                 return ((int)(this["DrvType"]));
             }
-            set {
+            set
+            {
                 this["DrvType"] = value;
             }
         }

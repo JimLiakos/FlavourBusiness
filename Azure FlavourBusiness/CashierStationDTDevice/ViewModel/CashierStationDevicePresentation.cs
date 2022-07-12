@@ -358,18 +358,46 @@ namespace CashierStationDevice.ViewModel
             }
         }
 
-        public string DocumentSignerCommunication
+        public string DeviceIPAddress
         {
             get
             {
-                return ApplicationSettings.Current.DocumentSignerCommunicationData;
+                return ApplicationSettings.Current.DocumentSignerDeviceIPAddress;
             }
             set
             {
-                ApplicationSettings.Current.DocumentSignerCommunicationData = value;
+                ApplicationSettings.Current.DocumentSignerDeviceIPAddress = value;
             }
         }
 
+        string invalidOrder;
+        public string DocumentSignerOutputFolder
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(invalidOrder))
+                    return invalidOrder;
+                return ApplicationSettings.Current.DocumentSignerOutputFolder;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value) && !System.IO.Directory.Exists(value))
+                {
+                    invalidOrder = "Μη έγκυρος φάκελος.";
+                    ApplicationSettings.Current.DocumentSignerOutputFolder = null;
+                    Task.Run(() =>
+                    {
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DocumentSignerOutputFolder)));
+                    });
+                }
+                else
+                {
+                    invalidOrder = null;
+                    ApplicationSettings.Current.DocumentSignerOutputFolder = value;
+                }
+            }
+        }
 
+        
     }
 }
