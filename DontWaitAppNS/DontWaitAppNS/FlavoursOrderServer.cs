@@ -21,6 +21,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.HumanResources;
 using OOAdvantech.Json.Linq;
 using System.Reflection;
+using System.Threading;
 
 
 
@@ -298,25 +299,72 @@ namespace DontWaitApp
 
         public async Task<Location> GetCurrentLocation()
         {
+
+#if DeviceDotNet
             if (!await CheckPermissionsToAccessCurrentLocation())
             {
                 if (await RequestPermissionsToAccessCurrentLocation())
                 {
-                    var location = await Geolocation.GetLastKnownLocationAsync();
+                    var location = await GetCurrentLocationNative();
                     if (location != null)
                         return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
                 }
             }
             else
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = await GetCurrentLocationNative();
                 if (location != null)
                     return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
             }
+#endif
+#if DEBUG
+            return new Location()
+            {
+                Latitude = 38.0002465,
+                Longitude = 23.74731
+            };
 
-
+#endif
             return null;
         }
+
+
+
+#if DeviceDotNet
+        public static CancellationTokenSource cts;
+        async Task<Xamarin.Essentials.Location> GetCurrentLocationNative()
+        {
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                cts = new CancellationTokenSource();
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                if (location == null)
+                    location = await Geolocation.GetLocationAsync(request, cts.Token);
+                return location;
+
+
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
+            return null;
+        }
+
+#endif
 
         /// <MetaDataID>{ebf9e3ce-2957-4519-82cf-8aa08b910d88}</MetaDataID>
         public void WebViewLoaded()
@@ -1720,7 +1768,7 @@ namespace DontWaitApp
                     return true;
 #else
             var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions != PermissionStatus.Granted;
+            return locationInUsePermisions == PermissionStatus.Granted;
             //else
 
 
@@ -1739,7 +1787,7 @@ namespace DontWaitApp
         {
 #if DeviceDotNet
             var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions != PermissionStatus.Granted;
+            return locationInUsePermisions == PermissionStatus.Granted;
 #else
             return true;
 #endif
