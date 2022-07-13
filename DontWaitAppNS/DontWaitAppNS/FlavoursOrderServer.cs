@@ -318,11 +318,18 @@ namespace DontWaitApp
             }
 #endif
 #if DEBUG
+            //return new Location()
+            //{
+            //    Latitude = 38.0002465,
+            //    Longitude = 23.74731
+            //};
             return new Location()
             {
-                Latitude = 38.0002465,
-                Longitude = 23.74731
+                Latitude = 37.953746,
+                Longitude = 22.801600
             };
+
+            
 
 #endif
             return null;
@@ -338,9 +345,9 @@ namespace DontWaitApp
             {
                 var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                 cts = new CancellationTokenSource();
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = await Geolocation.GetLocationAsync(request, cts.Token);
                 if (location == null)
-                    location = await Geolocation.GetLocationAsync(request, cts.Token);
+                     location = await Geolocation.GetLastKnownLocationAsync();
                 return location;
 
 

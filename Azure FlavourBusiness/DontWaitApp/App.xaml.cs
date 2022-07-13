@@ -34,8 +34,8 @@ namespace DontWaitApp
             SerializeTaskScheduler.RunAsync();
 
             //CultureInfo ci = new CultureInfo(1033);
-            //Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el-GR");
-            //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("el-GR"); ;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el-GR");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("el-GR"); ;
             string sessionoken = Guid.NewGuid().ToString("N");
 
             string url = String.Format("https://maps.googleapis.com/maps/api/place/autocomplete/json?input={0}&language={1}&key={2}&sessiontoken={3}", "Ρηγα", System.Globalization.CultureInfo.CurrentCulture.Name, "AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI", sessionoken);

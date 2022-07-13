@@ -241,7 +241,21 @@ namespace CashierStationDevice
             return new List<string>();
         }
 
+        public bool IssueZreport(out string message)
+        {
+            int ret = RBSESD.IssueZreport(CurDEV);
+            if (ret > 0)
+            {
+                message = RBSESD.RetErr;
+                return false;
+            }
+            else
+            {
+                message = "Procedure completed successfully\r\n";
+                return true;
+            }
 
+        }
 
     }
 }
