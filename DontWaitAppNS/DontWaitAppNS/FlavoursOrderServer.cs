@@ -296,9 +296,26 @@ namespace DontWaitApp
 
         }
 
-        Location GetMyCurrentLocation()
+        public async Task<Location> GetCurrentLocation()
         {
+            if (!await CheckPermissionsToAccessCurrentLocation())
+            {
+                if (await RequestPermissionsToAccessCurrentLocation())
+                {
+                    var location = await Geolocation.GetLastKnownLocationAsync();
+                    if (location != null)
+                        return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
+                }
+            }
+            else
+            {
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                if (location != null)
+                    return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
+            }
 
+
+            return null;
         }
 
         /// <MetaDataID>{ebf9e3ce-2957-4519-82cf-8aa08b910d88}</MetaDataID>
@@ -759,8 +776,8 @@ namespace DontWaitApp
                                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
                                 ClientSessionID = FoodServiceClientSession.SessionID,
-                                MainSessionID= FoodServiceClientSession.MainSession?.SessionID,
-                            FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
+                                MainSessionID = FoodServiceClientSession.MainSession?.SessionID,
+                                FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServiceClientSession),
                                 ServicePointIdentity = clientSessionData.ServicePointIdentity,
                                 ServicesPointName = clientSessionData.ServicesPointName,
                                 DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
@@ -1102,10 +1119,10 @@ namespace DontWaitApp
                     var menuData = MenuData;
                     menuData.MainSessionID = FoodServiceClientSession.MainSession?.SessionID;
                     MenuData = menuData;
-                    
+
                 }
 
-                
+
 
                 GetMessages();
             }
@@ -1702,9 +1719,16 @@ namespace DontWaitApp
 #if IOSEmulator
                     return true;
 #else
-            Xamarin.Essentials.
-            var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
-            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+            var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            return locationInUsePermisions != PermissionStatus.Granted;
+            //else
+
+
+
+
+
+
+
 #endif
 #else
             return false;
@@ -1714,8 +1738,8 @@ namespace DontWaitApp
         public async Task<bool> RequestPermissionsToAccessCurrentLocation()
         {
 #if DeviceDotNet
-            var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
-            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            return locationInUsePermisions != PermissionStatus.Granted;
 #else
             return true;
 #endif

@@ -67,6 +67,8 @@ namespace DontWaitApp
         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
+        Task<Location> GetCurrentLocation();
+
         ServicePointState ServicePointState { get; }
 
         //void TableIsLay();
@@ -398,7 +400,6 @@ namespace DontWaitApp
     {
         public double Latitude;
         public double Longitude;
-
     }
     
     /// <MetaDataID>{8cada9df-78e0-4eef-9482-ae9093cef026}</MetaDataID>
