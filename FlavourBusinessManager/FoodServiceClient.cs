@@ -1,5 +1,7 @@
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -10,6 +12,10 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class FoodServiceClient : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.EndUsers.IFoodServiceClient
     {
+        /// <MetaDataID>{e74570a3-f55a-4203-9ec7-d9ba5d25cb17}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+9")]
+        private string DeliveryPlacesJson;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -178,6 +184,96 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
             }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        List<Place> _DeliveryPlaces = new List<Place>();
+
+        /// <MetaDataID>{972042e9-c407-4532-bdf2-2db29f6e4e11}</MetaDataID>
+        public List<IPlace> DeliveryPlaces
+        {
+            get
+            {
+                lock (this)
+                    return _DeliveryPlaces.OfType<IPlace>().ToList();
+            }
+        }
+
+        /// <MetaDataID>{7e30445f-1aeb-4ff7-91b2-b83606628ad5}</MetaDataID>
+        public void RemoveDeliveryPlace(IPlace place)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                lock (this)
+                    _DeliveryPlaces.Remove(place as Place);
+
+                stateTransition.Consistent = true;
+            }
+        }
+
+        /// <MetaDataID>{c6c177e9-725f-4173-8520-ecd11726358b}</MetaDataID>
+        public void AddDeliveryPlace(IPlace place)
+        {
+            if (place == null)
+                return;
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
+                if (existingPlace != null)
+                    UpdateDeliveryPlace(place);
+                else
+                {
+                    lock (this)
+                        _DeliveryPlaces.Add(place as Place);
+                }
+                stateTransition.Consistent = true;
+            }
+        }
+        /// <MetaDataID>{6af560ea-96da-40f1-9158-65753afed15c}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        void BeforeCommitObjectState()
+        {
+            lock (this)
+                DeliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlaces);
+
+        }
+        /// <MetaDataID>{0524d783-69ed-4402-8f54-8123c7718d24}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+        }
+
+        /// <MetaDataID>{27e725df-0785-4f1d-bd67-59df24ba43ee}</MetaDataID>
+        public void UpdateDeliveryPlace(IPlace place)
+        {
+            Place existingPlace = null;
+            lock(this)
+                existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
+            if(existingPlace!=null)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    existingPlace.Area = place.Area;
+                    existingPlace.CityTown = place.CityTown;
+                    existingPlace.Country = place.Country;
+                    existingPlace.Description = place.Description;
+                    existingPlace.Location = place.Location;
+                    existingPlace.PlaceID = place.PlaceID;
+                    existingPlace.PostalCode = place.PostalCode;
+                    existingPlace.StateProvinceRegion = place.StateProvinceRegion;
+                    existingPlace.Street = place.Street;
+                    existingPlace.StreetNumber = place.StreetNumber;
+
+                    stateTransition.Consistent = true;
+                }
+
+            }
+
+
         }
     }
 }

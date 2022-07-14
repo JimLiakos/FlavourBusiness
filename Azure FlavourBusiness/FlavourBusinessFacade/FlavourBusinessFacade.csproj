@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="EndUserData.cs" />
     <Compile Include="Exceptions\TransferException.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="IMessageConsumer.cs" />
     <Compile Include="HumanResources\IServiceContextSupervisor.cs" />
     <Compile Include="IParty.cs" />
+    <Compile Include="IPlace.cs" />
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
     <Compile Include="IServingBatch.cs" />

@@ -285,6 +285,7 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
+    <Compile Include="Place.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />

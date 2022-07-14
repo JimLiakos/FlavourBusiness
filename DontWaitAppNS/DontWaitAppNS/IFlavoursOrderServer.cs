@@ -108,7 +108,7 @@ namespace DontWaitApp
         string Path { get; set; }
 
 
-      
+
         /// <MetaDataID>{9006f63a-f41f-4ca5-81ba-91578660d4d4}</MetaDataID>
         void Speak(string text);
         /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
@@ -124,7 +124,7 @@ namespace DontWaitApp
         /// <MetaDataID>{e7762c6c-3f6e-49b7-b795-ade0e705aac8}</MetaDataID>
         Task<bool> ConnectToServicePoint(string servicePointIdentity = "");
 
-        
+
         /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
         Task<HallLayout> GetHallLayout();
 
@@ -236,15 +236,38 @@ namespace DontWaitApp
         /// <MetaDataID>{ddc0de45-90e3-4ad6-ad3b-ba01880aef0a}</MetaDataID>
         void SuggestMenuItem(Messmate messmate, string menuItemUri);
 
-    
+
         /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
         void CancelMealInvitation(Messmate messmate);
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
         Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
+
+        void SaveDelivaryPlace(Place deliveryPlace);
     }
 
 
     public delegate void WebViewLoadedHandle();
+
+
+    /// <MetaDataID>{dab03878-ebcf-4cdf-9928-ea08dd0f29eb}</MetaDataID>
+    public class Place
+    {
+        public string fullName;
+        public string street_number;
+        public string street;
+        public string area;
+        public string postal_code;
+        public string country;
+        /**
+         *latitude in degrees.
+         */
+        public double latitude;
+        /**
+         *longitude in degrees.
+         */
+        public double longitude;
+        public string place_id;
+    }
 
 
     /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>
@@ -307,7 +330,7 @@ namespace DontWaitApp
             internal set
             {
                 ServedMealTypesUrisStream = "";
-                foreach (var uri in value )
+                foreach (var uri in value)
                 {
                     if (string.IsNullOrWhiteSpace(ServedMealTypesUrisStream))
                         ServedMealTypesUrisStream = uri;
@@ -396,12 +419,13 @@ namespace DontWaitApp
     }
 
 
+    /// <MetaDataID>{62dfcf63-566a-45f7-aa85-16ce37400804}</MetaDataID>
     public class Location
     {
         public double Latitude;
         public double Longitude;
     }
-    
+
     /// <MetaDataID>{8cada9df-78e0-4eef-9482-ae9093cef026}</MetaDataID>
     [HttpVisible]
 

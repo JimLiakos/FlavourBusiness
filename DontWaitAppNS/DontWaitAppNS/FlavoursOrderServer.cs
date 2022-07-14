@@ -329,14 +329,17 @@ namespace DontWaitApp
                 Longitude = 22.801600
             };
 
-            
+
 
 #endif
             return null;
         }
 
 
+        public void SaveDelivaryPlace(Place deliveryPlace)
+        {
 
+        }
 #if DeviceDotNet
         public static CancellationTokenSource cts;
         async Task<Xamarin.Essentials.Location> GetCurrentLocationNative()

@@ -13,6 +13,28 @@ namespace DontWaitApp
     [Persistent()]
     public class ApplicationSettings
     {
+        /// <exclude>Excluded</exclude>
+        FlavourBusinessManager.EndUsers.FoodServiceClient _ClientAsGuest;
+
+        [Association("AppClientAsGuest", Roles.RoleA, "96589fb5-74e3-446b-a76c-5aa0742f5f32")]
+        [PersistentMember(nameof(_ClientAsGuest))]
+        public FlavourBusinessManager.EndUsers.FoodServiceClient ClientAsGuest
+        {
+            get => _ClientAsGuest;
+            set
+            {
+
+                if (_ClientAsGuest != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ClientAsGuest = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         string _WaiterObjectRef;

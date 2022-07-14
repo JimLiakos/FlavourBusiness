@@ -7,6 +7,16 @@ namespace FlavourBusinessFacade.EndUsers
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{8ebba0ed-26f3-45ae-98da-4e890296e72b}")]
     public interface IFoodServiceClient
     {
+        /// <MetaDataID>{a045a4d1-553e-448b-8b4c-788ccb287566}</MetaDataID>
+        void UpdateDeliveryPlace(IPlace place);
+
+        [Association("ClientPlaces", Roles.RoleA, "dff911d5-ede0-4355-b47b-108d265027e3")]
+        System.Collections.Generic.List<IPlace> DeliveryPlaces { get; }
+
+        void RemoveDeliveryPlace(IPlace place);
+
+        void AddDeliveryPlace(IPlace place);
+
         /// <MetaDataID>{494166a4-2018-4e76-b9fc-d54697a29c5d}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         [CachingDataOnClientSide]
@@ -54,6 +64,7 @@ namespace FlavourBusinessFacade.EndUsers
         public string SIMCardDescription;
 
 
+        /// <MetaDataID>{0dc4294b-f9e9-4df3-8941-6d97a5a7373f}</MetaDataID>
         public static bool operator ==(SIMCardData left, SIMCardData right)
         {
             if (left.SIMCardIdentity == right.SIMCardIdentity)
@@ -62,9 +73,12 @@ namespace FlavourBusinessFacade.EndUsers
                 return false;
         }
 
+        /// <MetaDataID>{bff2b72b-7d1f-4693-bb72-244a1dcedd45}</MetaDataID>
         public static bool operator !=(SIMCardData left, SIMCardData right)
         {
             return !(left == right);
         }
     }
+
+   
 }
