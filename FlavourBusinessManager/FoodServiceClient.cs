@@ -10,7 +10,7 @@ namespace FlavourBusinessManager.EndUsers
     /// <MetaDataID>{c502c6c0-09cc-4a1f-925f-be44fa7644ea}</MetaDataID>
     [BackwardCompatibilityID("{c502c6c0-09cc-4a1f-925f-be44fa7644ea}")]
     [Persistent()]
-    public class FoodServiceClient : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.EndUsers.IFoodServiceClient
+    public class FoodServiceClient : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceClient
     {
         /// <MetaDataID>{e74570a3-f55a-4203-9ec7-d9ba5d25cb17}</MetaDataID>
         [PersistentMember()]
@@ -200,6 +200,28 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _FriendlyName;
+
+        /// <MetaDataID>{db910cf4-9afe-4c40-b4e5-e4c1e266c131}</MetaDataID>
+        [PersistentMember(nameof(_FriendlyName))]
+        [BackwardCompatibilityID("+10")]
+        public string FriendlyName
+        {
+            get=> _FriendlyName;
+            set
+            {
+                if (_FriendlyName != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FriendlyName = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{7e30445f-1aeb-4ff7-91b2-b83606628ad5}</MetaDataID>
         public void RemoveDeliveryPlace(IPlace place)
         {
@@ -243,16 +265,20 @@ namespace FlavourBusinessManager.EndUsers
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+            if (DeliveryPlacesJson != null)
+                _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+            else
+                _DeliveryPlaces = new List<Place>();
+
         }
 
         /// <MetaDataID>{27e725df-0785-4f1d-bd67-59df24ba43ee}</MetaDataID>
         public void UpdateDeliveryPlace(IPlace place)
         {
             Place existingPlace = null;
-            lock(this)
+            lock (this)
                 existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
-            if(existingPlace!=null)
+            if (existingPlace != null)
             {
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

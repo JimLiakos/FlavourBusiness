@@ -35,6 +35,7 @@ using System.Drawing.Imaging;
 using System;
 using MenuModel;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 #endif
 
 #if FlavourBusinessDevice
@@ -243,31 +244,13 @@ namespace DontWaitApp
         Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
 
         void SaveDelivaryPlace(Place deliveryPlace);
+
+        List<IPlace> DeliveryPlaces { get; }
     }
 
 
     public delegate void WebViewLoadedHandle();
 
-
-    /// <MetaDataID>{dab03878-ebcf-4cdf-9928-ea08dd0f29eb}</MetaDataID>
-    public class Place
-    {
-        public string fullName;
-        public string street_number;
-        public string street;
-        public string area;
-        public string postal_code;
-        public string country;
-        /**
-         *latitude in degrees.
-         */
-        public double latitude;
-        /**
-         *longitude in degrees.
-         */
-        public double longitude;
-        public string place_id;
-    }
 
 
     /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>

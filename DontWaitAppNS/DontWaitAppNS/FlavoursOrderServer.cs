@@ -22,6 +22,8 @@ using FlavourBusinessFacade.HumanResources;
 using OOAdvantech.Json.Linq;
 using System.Reflection;
 using System.Threading;
+using OOAdvantech.Transactions;
+using FlavourBusinessManager.EndUsers;
 
 
 
@@ -335,10 +337,24 @@ namespace DontWaitApp
             return null;
         }
 
-
+        public List<IPlace> DeliveryPlaces
+        {
+            get
+            {
+                if (ApplicationSettings.Current.ClientAsGuest != null)
+                    return ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
+                else
+                    return new List<IPlace>();
+            }
+        }
         public void SaveDelivaryPlace(Place deliveryPlace)
         {
-
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            ApplicationSettings.Current.ClientAsGuest.AddDeliveryPlace(deliveryPlace);
         }
 #if DeviceDotNet
         public static CancellationTokenSource cts;
@@ -424,7 +440,12 @@ namespace DontWaitApp
             {
                 var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                //string sdfd= device.
+
+                if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
+                {
+                    CreateClientAsGuest();
+                    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
+                }
                 string friendlyName = ApplicationSettings.Current.FriendlyName;
                 return friendlyName;
             });
@@ -433,10 +454,42 @@ namespace DontWaitApp
 
         }
 
+        private void CreateClientAsGuest()
+        {
+            lock (ClientSessionLock)
+            {
+
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        ApplicationSettings.Current.ClientAsGuest = new FoodServiceClient("Guest");
+                        ApplicationSettings.AppSettingsStorage.CommitTransientObjectState(ApplicationSettings.Current.ClientAsGuest);
+                        if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.FriendlyName))
+                            ApplicationSettings.Current.ClientAsGuest.FriendlyName = ApplicationSettings.Current.FriendlyName;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{60462cb1-1349-470d-87c9-923b2e7fe825}</MetaDataID>
         public void SetFriendlyName(string friendlyName)
         {
-            ApplicationSettings.Current.FriendlyName = friendlyName;
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                if (!WaiterView)
+                {
+                    lock (ClientSessionLock)
+                    {
+                        if (ApplicationSettings.Current.ClientAsGuest == null)
+                            CreateClientAsGuest();
+                    }
+                }
+                ApplicationSettings.Current.FriendlyName = friendlyName;
+                stateTransition.Consistent = true;
+            }
 
             if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
             {

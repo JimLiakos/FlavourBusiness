@@ -7,14 +7,20 @@ namespace FlavourBusinessFacade.EndUsers
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{8ebba0ed-26f3-45ae-98da-4e890296e72b}")]
     public interface IFoodServiceClient
     {
+        [BackwardCompatibilityID("+7")]
+        [CachingDataOnClientSide]
+        string FriendlyName { get; set; }
+
         /// <MetaDataID>{a045a4d1-553e-448b-8b4c-788ccb287566}</MetaDataID>
         void UpdateDeliveryPlace(IPlace place);
 
         [Association("ClientPlaces", Roles.RoleA, "dff911d5-ede0-4355-b47b-108d265027e3")]
         System.Collections.Generic.List<IPlace> DeliveryPlaces { get; }
 
+        /// <MetaDataID>{138fb579-d435-4a56-b524-e27e4d817591}</MetaDataID>
         void RemoveDeliveryPlace(IPlace place);
 
+        /// <MetaDataID>{5d7d54a7-c72f-4ffe-9716-c97ff7cc8e14}</MetaDataID>
         void AddDeliveryPlace(IPlace place);
 
         /// <MetaDataID>{494166a4-2018-4e76-b9fc-d54697a29c5d}</MetaDataID>

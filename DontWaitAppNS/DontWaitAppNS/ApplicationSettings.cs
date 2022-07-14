@@ -278,6 +278,8 @@ namespace DontWaitApp
                         {
                             //_Current.FriendlyName = "FriendlyName 2";
                         }
+                
+
                         stateTransition.Consistent = true;
                     }
                 }
