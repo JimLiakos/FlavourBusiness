@@ -36,6 +36,7 @@ using System.Drawing.Imaging;
 using System;
 using MenuModel;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 
 #endif
 

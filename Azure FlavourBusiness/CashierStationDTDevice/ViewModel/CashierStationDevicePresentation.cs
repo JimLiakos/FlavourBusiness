@@ -24,6 +24,12 @@ namespace CashierStationDevice.ViewModel
         /// <MetaDataID>{b083528a-a33b-4db2-aa42-65b598210728}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand SettingsCommand { get; set; }
 
+        public WPFUIElementObjectBind.RelayCommand ZReportCommand { get; set; }
+
+        public string ZReportErrorMesage { get; set; }
+        public Visibility ZReportErrorMesageVisible { get; set; }
+
+
         /// <MetaDataID>{324001e9-7d0b-4556-8425-f0efa25df95f}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand ReportDesignerCommand { get; set; }
         /// <MetaDataID>{5b9797ed-270d-471b-88e3-f47f9488c62d}</MetaDataID>
@@ -46,24 +52,55 @@ namespace CashierStationDevice.ViewModel
             {
                 CashierStations = new List<CashierStationPresentation>() { new CashierStationPresentation(ApplicationSettings.Current.CashiersStation as ICashierStation, null) };
                 _SelectedCashierStation = CashierStations[0];
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CashierStations)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCashierStation)));
             }
+            ZReportCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                if (ApplicationSettings.Current.DocumentSignerType == typeof(RBSDocSigner).Name)
+                {
+                    var rbsDocSigner = new RBSDocSigner();
+                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress);
+                    string message = null;
+                    if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
+                        rbsDocSigner.SetOutputFolder(ApplicationSettings.Current.DocumentSignerOutputFolder);
 
+                    if (rbsDocSigner.IssueZreport(out message))
+                    {
+                        CashierStationDevice.DocumentSignDevice.Init(rbsDocSigner);
+                        ZReportErrorMesage = "";
+                        ZReportErrorMesageVisible = Visibility.Collapsed;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ZReportErrorMesage)));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ZReportErrorMesageVisible)));
+                    }
+                    else
+                    {
+                        ZReportErrorMesage = message;
+                        ZReportErrorMesageVisible = Visibility.Visible;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ZReportErrorMesage)));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ZReportErrorMesageVisible)));
+
+                    }
+                }
+
+
+            });
             SettingsCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
-              {
-                  System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                  var pageDialogFrame = WPFUIElementObjectBind.ObjectContext.FindChilds<StyleableWindow.PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
+             {
+                 System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                 var pageDialogFrame = WPFUIElementObjectBind.ObjectContext.FindChilds<StyleableWindow.PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
 
 
-                  using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
-                  {
+                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                 {
 
-                      var cashierStationSettingsPage = new CashierStationDevice.Views.CashierStationSettingsPage();
-                      cashierStationSettingsPage.GetObjectContext().SetContextInstance(this);
-                      pageDialogFrame.ShowDialogPage(cashierStationSettingsPage);
-                      stateTransition.Consistent = true;
-                  }
+                     var cashierStationSettingsPage = new CashierStationDevice.Views.CashierStationSettingsPage();
+                     cashierStationSettingsPage.GetObjectContext().SetContextInstance(this);
+                     pageDialogFrame.ShowDialogPage(cashierStationSettingsPage);
+                     stateTransition.Consistent = true;
+                 }
 
-              });
+             });
             ReportDesignerCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 DXConnectableControls.XtraReports.Design.ReportDesignForm reportDesignForm = new DXConnectableControls.XtraReports.Design.ReportDesignForm();
@@ -192,17 +229,88 @@ namespace CashierStationDevice.ViewModel
         {
             get
             {
-                if(string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
+                if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
+                {
+                    DocumentSignerOutputFolderVisible = Visibility.Collapsed;
+                    DocumentSignerDeviceIPAddressVisible = Visibility.Collapsed;
+                    ZReportCommandVisible = Visibility.Collapsed;
                     return typeof(SamtecNext);
+                }
+                if (ApplicationSettings.Current.DocumentSignerType == "SamtecNext")
+                {
+                    DocumentSignerOutputFolderVisible = Visibility.Collapsed;
+                    DocumentSignerDeviceIPAddressVisible = Visibility.Collapsed;
+                    ZReportCommandVisible = Visibility.Collapsed;
+                    return typeof(SamtecNext);
+                }
+                if (ApplicationSettings.Current.DocumentSignerType == "RBSDocSigner")
+                {
+                    DocumentSignerOutputFolderVisible = Visibility.Visible;
+                    DocumentSignerDeviceIPAddressVisible = Visibility.Visible;
+                    ZReportCommandVisible = Visibility.Visible;
 
-                return Type.GetType(ApplicationSettings.Current.DocumentSignerType);
+                    return typeof(RBSDocSigner);
+                }
+
+                return typeof(SamtecNext);
+
                 //  ApplicationSettings.Current.DocumentSignerCommunicationData
             }
             set
             {
-                ApplicationSettings.Current.DocumentSignerType = value.AssemblyQualifiedName;
+                ApplicationSettings.Current.DocumentSignerType = value.Name;
+                if (value == typeof(RBSDocSigner))
+                {
+                    DocumentSignerOutputFolderVisible = Visibility.Visible;
+                    DocumentSignerDeviceIPAddressVisible = Visibility.Visible;
+                    ZReportCommandVisible = Visibility.Visible;
+                }
+                else
+                {
+                    DocumentSignerOutputFolderVisible = Visibility.Collapsed;
+                    DocumentSignerDeviceIPAddressVisible = Visibility.Collapsed;
+                    ZReportCommandVisible = Visibility.Collapsed;
+
+
+                }
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
             }
-        } 
+        }
+
+        System.Windows.Visibility _ZReportCommandVisible;
+        public System.Windows.Visibility ZReportCommandVisible
+        {
+            get => _ZReportCommandVisible;
+            set
+            {
+                _ZReportCommandVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ZReportCommandVisible)));
+            }
+        }
+        System.Windows.Visibility _DocumentSignerDeviceIPAddressVisible;
+        public System.Windows.Visibility DocumentSignerDeviceIPAddressVisible
+        {
+            get => _DocumentSignerDeviceIPAddressVisible;
+            set
+            {
+                _DocumentSignerDeviceIPAddressVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DocumentSignerDeviceIPAddressVisible)));
+            }
+        }
+
+        System.Windows.Visibility _DocumentSignerOutputFolderVisible;
+        public System.Windows.Visibility DocumentSignerOutputFolderVisible
+        {
+            get => _DocumentSignerOutputFolderVisible;
+            set
+            {
+                _DocumentSignerOutputFolderVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DocumentSignerOutputFolderVisible)));
+            }
+        }
+
+
 
         /// <MetaDataID>{611b9e37-2871-426d-9d29-9059c622c32d}</MetaDataID>
         public System.Collections.Generic.List<TransactionPrinterPresentation> TransactionsPrinters
@@ -398,6 +506,6 @@ namespace CashierStationDevice.ViewModel
             }
         }
 
-        
+
     }
 }

@@ -40,9 +40,9 @@ namespace CashierStationDTDevice
 
             if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))
             {
-                if(Type.GetType(ApplicationSettings.Current.DocumentSignerType)==typeof(SamtecNext))
+                if(ApplicationSettings.Current.DocumentSignerType== typeof(SamtecNext).Name)
                     CashierStationDevice.DocumentSignDevice.Init(new SamtecNext());
-                if (Type.GetType(ApplicationSettings.Current.DocumentSignerType) == typeof(RBSDocSigner))
+                if (ApplicationSettings.Current.DocumentSignerType == typeof(RBSDocSigner).Name)
                 {
                     var rbsDocSigner = new RBSDocSigner();
                     rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress);

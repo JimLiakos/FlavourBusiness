@@ -34,6 +34,7 @@ namespace CashierStationDevice
 
             }
         }
+    
 
         /// <exclude>Excluded</exclude>
         string _DocumentSignerType;

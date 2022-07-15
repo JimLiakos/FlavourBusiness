@@ -119,6 +119,11 @@ namespace CashierStationDevice
             }
         }
 
+        internal void SetOutputFolder(string documentSignerOutputFolder)
+        {
+            RBSESD.SetOutputFolder(documentSignerOutputFolder);
+        }
+
         private void CheckDeviceStatus()
         {
 

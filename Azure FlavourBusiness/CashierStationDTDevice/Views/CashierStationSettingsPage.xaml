@@ -47,7 +47,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Margin="5,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.CashierStationLabel}"/>
                     <ComboBox x:Name="CashierStations" Grid.Row="1" MinWidth="200"  HorizontalAlignment="Stretch" ItemsSource="{Binding CashierStations}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCashierStation}"/>
-                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding SelectedCashierStation.EditCommand}"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
+                    <Button Grid.Row="1" Grid.Column="2" IsEnabled="{Binding EditCompanyHeader}" Command="{Binding SelectedCashierStation.EditCommand}"  Name="FisicalPartToggle"   Style="{StaticResource ListViewBarButtonStyle}"  >
                         <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
                     </Button>
 
@@ -148,7 +148,7 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Document signer"/>
-                                <ComboBox  Grid.Row="1"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedDocSigner}" ItemsSource="{Binding DocSigners}" DisplayMemberPath="Name"  ></ComboBox>
+                                <ComboBox  IsEnabled="{Binding EditCompanyHeader}" Grid.Row="1"  Grid.ColumnSpan="4" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedDocSigner}" ItemsSource="{Binding DocSigners}" DisplayMemberPath="Name"  ></ComboBox>
 
                             </Grid>
 
@@ -158,12 +158,25 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS Device IP Address  "/>
-                                <wpftoolkitex:WatermarkTextBox Grid.Row="1" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DeviceIPAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
-                                <Label Grid.Row="2" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS output folder  "/>
-                                <wpftoolkitex:WatermarkTextBox Grid.Row="3" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerOutputFolder, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                                <Label Visibility="{Binding DocumentSignerDeviceIPAddressVisible}"  Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS Device IP Address  "/>
+                                <wpftoolkitex:WatermarkTextBox Visibility="{Binding DocumentSignerDeviceIPAddressVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="1" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DeviceIPAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                                <Label  Visibility="{Binding DocumentSignerOutputFolderVisible}" Grid.Row="2" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS output folder  "/>
+                                <wpftoolkitex:WatermarkTextBox Visibility="{Binding DocumentSignerOutputFolderVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="3" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerOutputFolder, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+                                <!--DocumentSignerOutputFolderVisible 
+                                    DocumentSignerDeviceIPAddressVisible 
+                                    ZReportCommandVisible -->
+                                <TextBlock Grid.Row="4" Text="{Binding ZReportErrorMesage}" Foreground="Red" IsEnabled="False" Visibility="{Binding ZReportErrorMesageVisible}">
+                                    
+                                </TextBlock>
 
+                                <Button Visibility="{Binding ZReportCommandVisible}" Grid.Row="5" MinHeight="40" Margin="0,8,0,8" Command="{Binding ZReportCommand}"  >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="4,0,0,0" Text="Z Report"></TextBlock>
+                                    </StackPanel>
+                                </Button>
 
                             </Grid>
                             <!--Thankful message-->

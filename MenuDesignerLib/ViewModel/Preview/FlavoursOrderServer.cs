@@ -1,4 +1,5 @@
 ﻿using DontWaitApp;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
 using FlavourBusinessManager.RoomService;
@@ -53,6 +54,8 @@ namespace MenuDesigner.ViewModel.Preview
         public ServicePointState ServicePointState => throw new NotImplementedException();
 
         public IFoodServiceSession MainSession => throw new NotImplementedException();
+
+        public List<IPlace> DeliveryPlaces => throw new NotImplementedException();
 
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -287,6 +290,26 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         public string GetMealInvitationQRCode(string color)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Location> GetCurrentLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CheckPermissionsToAccessCurrentLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RequestPermissionsToAccessCurrentLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveDelivaryPlace(FlavourBusinessManager.EndUsers.Place deliveryPlace)
         {
             throw new NotImplementedException();
         }
