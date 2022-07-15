@@ -84,11 +84,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _StreetNumber;
             set
             {
-                if (_Street != value)
+                if (_StreetNumber != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Street = value;
+                        _StreetNumber = value;
                         stateTransition.Consistent = true;
                     }
                 }

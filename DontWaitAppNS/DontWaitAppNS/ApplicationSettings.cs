@@ -18,6 +18,7 @@ namespace DontWaitApp
 
         [Association("AppClientAsGuest", Roles.RoleA, "96589fb5-74e3-446b-a76c-5aa0742f5f32")]
         [PersistentMember(nameof(_ClientAsGuest))]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public FlavourBusinessManager.EndUsers.FoodServiceClient ClientAsGuest
         {
             get => _ClientAsGuest;

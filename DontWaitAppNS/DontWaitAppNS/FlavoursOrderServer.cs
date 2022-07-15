@@ -325,11 +325,21 @@ namespace DontWaitApp
             //    Latitude = 38.0002465,
             //    Longitude = 23.74731
             //};
+            string strCoordinatesBrax = "37.953746, 22.801600";
+            string strCoordinates = "38.000483, 23.745453";
+            var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(),System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
             return new Location()
             {
-                Latitude = 37.953746,
-                Longitude = 22.801600
+                Latitude = coordinates[0],
+                Longitude = coordinates[1] 
             };
+
+            //var debugLocation = new Location()
+            //{
+            //    Latitude = 37.953746,
+            //    Longitude = 22.801600
+            //};
+            //return debugLocation;
 
 
 
