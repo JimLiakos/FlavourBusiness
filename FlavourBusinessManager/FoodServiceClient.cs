@@ -208,7 +208,7 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+10")]
         public string FriendlyName
         {
-            get=> _FriendlyName;
+            get => _FriendlyName;
             set
             {
                 if (_FriendlyName != value)
@@ -225,11 +225,13 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{7e30445f-1aeb-4ff7-91b2-b83606628ad5}</MetaDataID>
         public void RemoveDeliveryPlace(IPlace place)
         {
-
+            if (place == null)
+                return;
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                lock (this)
-                    _DeliveryPlaces.Remove(place as Place);
+                var existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
+                if (existingPlace != null)
+                    _DeliveryPlaces.Remove(existingPlace);
 
                 stateTransition.Consistent = true;
             }
@@ -300,6 +302,20 @@ namespace FlavourBusinessManager.EndUsers
             }
 
 
+        }
+
+        public void SetDefaultDelivaryPlace(IPlace place)
+        {
+            Place existingPlace = null;
+            lock (this)
+                existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
+            if (existingPlace != null)
+            {
+                foreach (var thePlace in DeliveryPlaces)
+                    thePlace.Default = false;
+
+                existingPlace.Default = true;
+            }
         }
     }
 }

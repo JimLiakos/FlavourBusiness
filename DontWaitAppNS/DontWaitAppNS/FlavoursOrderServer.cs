@@ -327,11 +327,11 @@ namespace DontWaitApp
             //};
             string strCoordinatesBrax = "37.953746, 22.801600";
             string strCoordinates = "38.000483, 23.745453";
-            var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(),System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
+            var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(), System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
             return new Location()
             {
                 Latitude = coordinates[0],
-                Longitude = coordinates[1] 
+                Longitude = coordinates[1]
             };
 
             //var debugLocation = new Location()
@@ -352,7 +352,14 @@ namespace DontWaitApp
             get
             {
                 if (ApplicationSettings.Current.ClientAsGuest != null)
+                {
+
+                    var places = ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
+                    if (places.Count > 0 && places.Where(x => x.Default).FirstOrDefault() == null)
+                        ApplicationSettings.Current.ClientAsGuest.SetDefaultDelivaryPlace(places[0]);
+
                     return ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
+                }
                 else
                     return new List<IPlace>();
             }
@@ -365,6 +372,28 @@ namespace DontWaitApp
                     CreateClientAsGuest();
             }
             ApplicationSettings.Current.ClientAsGuest.AddDeliveryPlace(deliveryPlace);
+        }
+
+        public void RemoveDelivaryPlace(Place deliveryPlace)
+        {
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            ApplicationSettings.Current.ClientAsGuest.RemoveDeliveryPlace(deliveryPlace);
+
+        }
+
+        public void SelectDelivaryPlace(Place deliveryPlace)
+        {
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            ApplicationSettings.Current.ClientAsGuest.SetDefaultDelivaryPlace(deliveryPlace);
+
         }
 #if DeviceDotNet
         public static CancellationTokenSource cts;
@@ -2410,7 +2439,7 @@ namespace DontWaitApp
             throw new NotImplementedException();
         }
 
-   
+
 
 
         //public async void TransferSession(string targetServicePointIdentity)

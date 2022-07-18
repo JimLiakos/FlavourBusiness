@@ -246,6 +246,11 @@ namespace DontWaitApp
         Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
 
         void SaveDelivaryPlace(Place deliveryPlace);
+        void RemoveDelivaryPlace(Place deliveryPlace);
+
+        void SelectDelivaryPlace(Place deliveryPlace);
+      
+
 
         List<IPlace> DeliveryPlaces { get; }
     }

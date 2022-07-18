@@ -2,6 +2,7 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
+using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -310,6 +311,16 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         public void SaveDelivaryPlace(FlavourBusinessManager.EndUsers.Place deliveryPlace)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveDelivaryPlace(Place deliveryPlace)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SelectDelivaryPlace(Place deliveryPlace)
         {
             throw new NotImplementedException();
         }

@@ -227,5 +227,27 @@ namespace FlavourBusinessManager.EndUsers
 
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        bool _Default;
+        /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>
+        [PersistentMember(nameof(_Default))]
+        [BackwardCompatibilityID("+11")]
+        public bool Default
+        {
+            get => _Default;
+            set
+            {
+                if (_Default != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Default = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

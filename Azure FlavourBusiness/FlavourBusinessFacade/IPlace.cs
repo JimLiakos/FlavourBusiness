@@ -33,6 +33,10 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{8268d4c6-9154-4fa5-a4c1-7fe537350d9c}</MetaDataID>
         string Description { get; set; }
+
+
+        /// <MetaDataID>{a4cd01ce-e822-4255-b43b-cc14bd7a344e}</MetaDataID>
+        bool Default { get; set; }
     }
 
   
