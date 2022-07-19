@@ -3,6 +3,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 
@@ -11,70 +12,79 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{6412585a-256a-42d3-8bc5-e28467ff30b2}</MetaDataID>
     [BackwardCompatibilityID("{6412585a-256a-42d3-8bc5-e28467ff30b2}")]
     [Persistent()]
-    public class HomeDeliveryServicePoint : FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint
+    public class HomeDeliveryServicePoint : ServicePoint, IHomeDeliveryServicePoint
     {
+        /// <exclude>Excluded</exclude> 
+        Dictionary<DayOfWeek, List<OpeningHours>> _WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
+
+        /// <MetaDataID>{b7115410-3a04-441e-a776-36d3bc068202}</MetaDataID>
+        public Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule
+        {
+            get => _WeeklyDeliverySchedule;
+            set
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _WeeklyDeliverySchedule = value;
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
         /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink;
-
-        public Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<Coordinate> ServiceAreaMap { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public IList<string> ServesMealTypesUris => throw new NotImplementedException();
-
-        public IList<IMealType> ServesMealTypes => throw new NotImplementedException();
-
-        public int Seats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ServicePointState State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ServicePointType ServicePointType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public IList<IFoodServiceClientSession> ActiveFoodServiceClientSessions => throw new NotImplementedException();
-
-        public IList<IFoodServiceSession> ServiceSessions => throw new NotImplementedException();
-
-        public string ServicesPointIdentity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServicesContextIdentity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public event ObjectChangeStateHandle ObjectChangeState;
-
-        public void AddFoodServiceSession(IFoodServiceSession foodServiceSession)
+        List<Coordinate> _ServiceAreaMap = new List<Coordinate>();
+        /// <MetaDataID>{28d81c75-938c-4dba-8c5a-c2f456e725b5}</MetaDataID>
+        public List<Coordinate> ServiceAreaMap
         {
-            throw new NotImplementedException();
+            get => _ServiceAreaMap;
+            set
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _ServiceAreaMap = value;
+                    stateTransition.Consistent = true;
+                }
+            }
         }
+        /// <exclude>Excluded</exclude>
+        decimal _FreeShippingMinimumOrderValue;
 
-        public void AddMealType(string mealTypeUri)
+        /// <MetaDataID>{962cc95f-7c44-456b-9817-831fd6928525}</MetaDataID>
+        public decimal FreeShippingMinimumOrderValue { get => _FreeShippingMinimumOrderValue; set => throw new NotImplementedException(); }
+
+        /// <exclude>Excluded</exclude>
+        decimal _MinimumShippingFee;
+
+        /// <MetaDataID>{48980b23-8e25-47c9-906c-0ced1401a34e}</MetaDataID>
+        public decimal MinimumShippingFee { get => _MinimumShippingFee; set => throw new NotImplementedException(); }
+
+        /// <MetaDataID>{ae158781-fd71-4b27-8311-76438eaabc23}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+1")]
+        string ServiceAreaMapJson;
+
+        /// <MetaDataID>{23169d00-d175-494e-9d0f-ab960b760834}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+2")]
+        string WeeklyDeliveryScheduleJson;
+
+        /// <MetaDataID>{41e6bdf1-c64e-4d58-ae16-5280acb3324a}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        void BeforeCommitObjectState()
         {
-            throw new NotImplementedException();
+            ServiceAreaMapJson = OOAdvantech.Json.JsonConvert.SerializeObject(_ServiceAreaMap);
+            WeeklyDeliveryScheduleJson = OOAdvantech.Json.JsonConvert.SerializeObject(_WeeklyDeliverySchedule);
         }
-
-        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, bool create = false)
+        /// <MetaDataID>{d602d811-8ffd-4679-a1ac-6511c47a057a}</MetaDataID>
+        [ObjectActivationCall]
+        void ObjectActivation()
         {
-            throw new NotImplementedException();
-        }
+            if (!string.IsNullOrWhiteSpace(ServiceAreaMapJson))
+                _ServiceAreaMap = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Coordinate>>(ServiceAreaMapJson);
 
-        public IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
-        {
-            throw new NotImplementedException();
-        }
+            if (!string.IsNullOrWhiteSpace(WeeklyDeliveryScheduleJson))
+                _WeeklyDeliverySchedule = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<DayOfWeek, List<OpeningHours>>>(WeeklyDeliveryScheduleJson);
 
-        public IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IFoodServiceSession NewFoodServiceSession()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveFoodServiceSession(IFoodServiceSession foodServiceSession)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveMealType(string mealTypeUri)
-        {
-            throw new NotImplementedException();
         }
     }
 }

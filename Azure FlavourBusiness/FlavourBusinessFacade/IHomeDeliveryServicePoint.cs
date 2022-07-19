@@ -11,6 +11,13 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{59c2d7fb-cff7-4546-98a9-980513766fdd}</MetaDataID>
         List<EndUsers.Coordinate> ServiceAreaMap { get; set; }
+
+        /// <MetaDataID>{6491ecf3-29a5-4254-a9e9-c2fa0abf3a34}</MetaDataID>
+        decimal FreeShippingMinimumOrderValue { get; set; }
+
+        /// <MetaDataID>{71e97fe2-bb20-406a-b82b-a7097049bbd8}</MetaDataID>
+        decimal MinimumShippingFee { get; set; }
+
     }
 
 
