@@ -3314,14 +3314,14 @@ public event FlavourBusinessFacade.ServicesContextResources.ServicePointChangeSt
         }
         
         // The Width property for the object.
-        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IServicePoint> ServicePoints
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallServicePoint> ServicePoints
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "get_ServicePoints", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IServicePoint>>(retValue);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallServicePoint>>(retValue);
             }
         }
         
@@ -3381,40 +3381,40 @@ public event FlavourBusinessFacade.ServicesContextResources.ServicePointChangeSt
             return this.Proxy.GetValue<bool>(retValue);
         }
         
-        public void AddServicePoint(FlavourBusinessFacade.ServicesContextResources.IServicePoint servicePoint)
+        public void AddServicePoint(FlavourBusinessFacade.ServicesContextResources.IHallServicePoint servicePoint)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = servicePoint;
-            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint);
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHallServicePoint);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "AddServicePoint", args, argsTypes);
         }
         
-        public FlavourBusinessFacade.ServicesContextResources.IServicePoint NewServicePoint()
+        public FlavourBusinessFacade.ServicesContextResources.IHallServicePoint NewServicePoint()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "NewServicePoint", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHallServicePoint>(retValue);
         }
         
-        public void RemoveServicePoint(FlavourBusinessFacade.ServicesContextResources.IServicePoint servicePoint)
+        public void RemoveServicePoint(FlavourBusinessFacade.ServicesContextResources.IHallServicePoint servicePoint)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = servicePoint;
-            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint);
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHallServicePoint);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "RemoveServicePoint", args, argsTypes);
         }
         
-        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IServicePoint> GetUnassignedServicePoints(System.Collections.Generic.List<string> hallServicesPoints)
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHallServicePoint> GetUnassignedServicePoints(System.Collections.Generic.List<string> hallServicesPoints)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = hallServicesPoints;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServiceArea), "GetUnassignedServicePoints", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IServicePoint>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHallServicePoint>>(retValue);
         }
     }
     
@@ -3466,18 +3466,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.ServicesContextResources.IServiceArea ServiceArea
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "get_ServiceArea", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServiceArea>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
         public System.Collections.Generic.IList<MenuModel.IMealType> ServesMealTypes
         {
             get
@@ -3486,26 +3474,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "get_ServesMealTypes", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<MenuModel.IMealType>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public int Seats
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "get_Seats", args, argsTypes);
-                return this.Proxy.GetValue<int>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(int);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "set_Seats", args, argsTypes);
             }
         }
         

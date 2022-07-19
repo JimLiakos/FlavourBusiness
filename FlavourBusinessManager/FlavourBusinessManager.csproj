@@ -278,6 +278,7 @@
     <Compile Include="FoodServiceClient.cs" />
     <Compile Include="FoodServiceClientSession.cs" />
     <Compile Include="FoodServiceSession.cs" />
+    <None Include="HomeDeliveryServicePoint.cs" />
     <Compile Include="HumanResources\MenuMaker.cs" />
     <Compile Include="HumanResources\ServiceContextSupervisor.cs" />
     <Compile Include="HumanResources\ShiftWork.cs" />

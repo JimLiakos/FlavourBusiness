@@ -1201,7 +1201,7 @@ namespace FLBManager.ViewModel.Preparation
             if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude)
                 return false;
 
-            preparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == servicePoint.ServiceArea).FirstOrDefault();
+            preparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == (servicePoint as IHallServicePoint).ServiceArea).FirstOrDefault();
 
             if (preparationForInfo != null && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include)
                 return true;

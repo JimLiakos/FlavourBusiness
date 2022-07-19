@@ -71,8 +71,8 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (defaultMealTypeUri == null)
                 {
-                    defaultMealTypeUri = this.ServicePoint.ServiceArea.ServesMealTypesUris.FirstOrDefault();
-                    servedMealTypesUris = this.ServicePoint.ServiceArea.ServesMealTypesUris.ToList();
+                    defaultMealTypeUri = (this.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.FirstOrDefault();
+                    servedMealTypesUris = (this.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.ToList();
                 }
 
                 return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };

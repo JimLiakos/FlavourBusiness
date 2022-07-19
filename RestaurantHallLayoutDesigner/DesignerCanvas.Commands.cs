@@ -517,12 +517,12 @@ namespace FloorLayoutDesigner
                 {
                     SelectedShape.Shape.ServicesPointIdentity = null;
                     SelectedShape.Shape.Label = null;
-                    SelectedShape.ServicesPoints = new List<IServicePoint>();
+                    SelectedShape.ServicesPoints = new List<IHallServicePoint>();
                 }
                 else
                 {
                     var hallServicesPoints = SelectedShape.HallLayoutViewModel.HallLayout.Shapes.Select(x => x.ServicesPointIdentity).ToList();
-                    List<IServicePoint> unassignedServicePoints = serviceArea.GetUnassignedServicePoints(hallServicesPoints);
+                    List<IHallServicePoint> unassignedServicePoints = serviceArea.GetUnassignedServicePoints(hallServicesPoints);
                     unassignedServicePoints = unassignedServicePoints.OrderBy(x => x.Description).ToList();
                     SelectedShape.ServicesPoints = unassignedServicePoints;
                     SelectedShape.ServicePointsPopupIsOpen = true;

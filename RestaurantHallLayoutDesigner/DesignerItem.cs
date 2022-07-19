@@ -453,12 +453,12 @@ namespace FloorLayoutDesigner
             {
                 Shape.ServicesPointIdentity = null;
                 Shape.Label = null;
-                ServicesPoints = new List<IServicePoint>();
+                ServicesPoints = new List<IHallServicePoint>();
             }
             else
             {
                 var hallServicesPoints = HallLayoutViewModel.HallLayout.Shapes.Select(x => x.ServicesPointIdentity).ToList();
-                List<IServicePoint> unassignedServicePoints = HallLayoutViewModel.ServiceAreaViewModel.ServicePoints.Where(x => !hallServicesPoints.Contains(x.ServicePoint.ServicesPointIdentity)).OrderBy(x=>x.ServicePoint.Description).Select(x => x.ServicePoint).ToList();
+                List<IHallServicePoint> unassignedServicePoints = HallLayoutViewModel.ServiceAreaViewModel.ServicePoints.Where(x => !hallServicesPoints.Contains(x.ServicePoint.ServicesPointIdentity)).OrderBy(x=>x.ServicePoint.Description).Select(x => x.ServicePoint).ToList();
                 //List<IServicePoint> unassignedServicePoints = serviceArea.GetUnassignedServicePoints(hallServicesPoints);
 
 
@@ -885,8 +885,8 @@ namespace FloorLayoutDesigner
         }
 
 
-        List<IServicePoint> _ServicesPoints;
-        public List<IServicePoint> ServicesPoints
+        List<IHallServicePoint> _ServicesPoints;
+        public List<IHallServicePoint> ServicesPoints
         {
             get
             {

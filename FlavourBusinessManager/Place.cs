@@ -8,6 +8,8 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class Place : FlavourBusinessFacade.EndUsers.IPlace
     {
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <exclude>Excluded</exclude> 
         string _CityTown;
 

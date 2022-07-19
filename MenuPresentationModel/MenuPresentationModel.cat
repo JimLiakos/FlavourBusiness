@@ -14164,7 +14164,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@3
-				location   	(1443, 2916)
+				location   	(1443, 2918)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	620
@@ -14204,7 +14204,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@4
-				location   	(661, 2866)
+				location   	(661, 2868)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	587
@@ -17398,7 +17398,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@158
-				location   	(2399, 2067)
+				location   	(2399, 2069)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	520
@@ -18754,7 +18754,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@222
-				location   	(1585, 2363)
+				location   	(1585, 2365)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	557
@@ -29405,7 +29405,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@292
-				location   	(3333, 1007)
+				location   	(3333, 1009)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	539
@@ -29742,7 +29742,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@306
-				location   	(37, 2208)
+				location   	(37, 2210)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	476
@@ -29781,7 +29781,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@307
-				location   	(71, 2618)
+				location   	(71, 2620)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	464
@@ -30441,7 +30441,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@338
-				location   	(112, 3051)
+				location   	(112, 3053)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	420
@@ -31112,7 +31112,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@371
-			location   	(4070, 425)
+			location   	(4070, 427)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	363

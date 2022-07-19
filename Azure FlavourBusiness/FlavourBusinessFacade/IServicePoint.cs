@@ -20,10 +20,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
-        [Association("AreaServicePoints", Roles.RoleB, "27b5c804-1630-41b4-975e-cf64dc1969a0")]
-        [RoleBMultiplicityRange(1, 1)]
-        [CachingDataOnClientSide]
-        IServiceArea ServiceArea { get; }
+  
         [Association("ServicePointMealType", Roles.RoleA, true, "1c10159e-488c-45bd-bd93-af7013cb1ce5")]
         IList<IMealType> ServesMealTypes { get; }
 
@@ -35,14 +32,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
 
-        /// <MetaDataID>{3c93b655-a409-4bf7-867d-2d4ce126e2bf}</MetaDataID>
-        [BackwardCompatibilityID("+6")]
-        [CachingDataOnClientSide]
-        int Seats { get; set; }
-
         /// <MetaDataID>{d4a506ca-d55f-4e33-9354-85724e8630fc}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         ServicePointState State { get; set; }
+
 
         /// <MetaDataID>{ffbbbbd1-7687-4c51-a022-b487f11ac0c0}</MetaDataID>
         [BackwardCompatibilityID("+9")]
@@ -127,7 +120,23 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
 
-    
+
+    /// <MetaDataID>{92D4966E-E823-4124-A2BB-A3D17389E9D5}</MetaDataID>
+    public interface IHallServicePoint: IServicePoint
+    {
+
+        [Association("AreaServicePoints", Roles.RoleB, "27b5c804-1630-41b4-975e-cf64dc1969a0")]
+        [RoleBMultiplicityRange(1, 1)]
+        [CachingDataOnClientSide]
+        IServiceArea ServiceArea { get; }
+
+
+        /// <MetaDataID>{b0c0b13d-1963-4765-b73e-f7df3ce3d5e1}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
+        int Seats { get; set; }
+
+
+    }
 
     /// <MetaDataID>{dd9d7ee9-ef6e-488b-b464-200ffd7c722d}</MetaDataID>
     public enum ServicePointState

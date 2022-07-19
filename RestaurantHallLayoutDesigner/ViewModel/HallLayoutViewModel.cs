@@ -1422,7 +1422,7 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{ea5dbd7d-1978-4c77-bb99-24d90d745571}</MetaDataID>
     public interface IServicePointViewModel
     {
-        IServicePoint ServicePoint { get; }
+        IHallServicePoint ServicePoint { get; }
 
         void RefreshMealTypes();
     }

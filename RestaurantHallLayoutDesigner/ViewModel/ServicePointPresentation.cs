@@ -75,10 +75,10 @@ namespace FloorLayoutDesigner.ViewModel
 
         private readonly ServiceAreaPresentation ServiceAreaPresentation;
 
-        public IServicePoint ServicePoint { get; private set; }
+        public IHallServicePoint ServicePoint { get; private set; }
 
         public System.Windows.Visibility CheckBoxVisibility { get; set; } = Visibility.Collapsed;
-        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent ) : base(parent)
+        public ServicePointPresentation(IHallServicePoint servicePoint, FBResourceTreeNode parent ) : base(parent)
         {
             ServiceAreaPresentation = parent as ServiceAreaPresentation;
             ServicePoint = servicePoint;
@@ -100,7 +100,7 @@ namespace FloorLayoutDesigner.ViewModel
 
         }
 
-        public ServicePointPresentation(IServicePoint servicePoint, FBResourceTreeNode parent, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) : this(servicePoint, parent)
+        public ServicePointPresentation(IHallServicePoint servicePoint, FBResourceTreeNode parent, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) : this(servicePoint, parent)
         {
             ServiceAreaPresentation = parent as ServiceAreaPresentation;
             _MealTypes = mealTypesViewModel.MealTypes.Select(x => new AssignedMealTypeViewMode(x.MealType, this)).ToList();

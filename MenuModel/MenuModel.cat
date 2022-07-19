@@ -9783,7 +9783,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(56, 2336)
+			location   	(56, 2338)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	526
@@ -10145,7 +10145,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@24
-			location   	(2906, 1522)
+			location   	(2906, 1524)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	538

@@ -202,7 +202,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (CanPrepareItem(menuItem))
             {
                 string servicePointObjectUri = ObjectStorage.GetStorageOfObject(servicePoint).GetPersistentObjectUri(servicePoint);
-                string serviceAreaObjectUri = ObjectStorage.GetStorageOfObject(servicePoint.ServiceArea).GetPersistentObjectUri(servicePoint.ServiceArea);
+                string serviceAreaObjectUri = ObjectStorage.GetStorageOfObject((servicePoint as IHallServicePoint).ServiceArea).GetPersistentObjectUri((servicePoint as IHallServicePoint).ServiceArea);
                 if (PreparationForInfos.OfType<PreparationForInfo>().Where(x => x.ServicePointsInfoObjectUri == servicePointObjectUri && x.PreparationForInfoType == PreparationForInfoType.Exclude).FirstOrDefault() != null)
                     return false;
 

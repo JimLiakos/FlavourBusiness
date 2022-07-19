@@ -23,7 +23,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             PreparationItems = preparationItems;
-            _Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+            _Description = (ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + ServicePoint.Description;
             _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
             
@@ -34,7 +34,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
             if (nameof(IFoodServiceSession.ServicePoint) == member)
             {
                 ServicePoint = MealCourse.Meal.Session.ServicePoint;
-                Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+                Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
                 ObjectChangeState?.Invoke(this, null);
             }
 
@@ -74,7 +74,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
             get
             {
                 if(MealCourse!=null)
-                    _Description = ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
+                    _Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
                 return _Description;
             }
             set

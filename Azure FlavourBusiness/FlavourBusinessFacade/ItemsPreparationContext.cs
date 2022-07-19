@@ -89,7 +89,7 @@ namespace FlavourBusinessFacade.RoomService
 
                 //Description = MealCourse.Meal.Session.ServicePoint.ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
 
-                MealCourseDescription = MealCourse.Meal.Session.ServicePoint.ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                MealCourseDescription = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
                 Description = preparationStation.Description;
             }
             else
@@ -128,7 +128,7 @@ namespace FlavourBusinessFacade.RoomService
         {
             if (nameof(IFoodServiceSession.ServicePoint) == member)
             {
-                Description = MealCourse.Meal.Session.ServicePoint.ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                Description = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint).ServiceArea  .Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
                 ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 ObjectChangeState?.Invoke(this, null);
             }

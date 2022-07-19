@@ -15,45 +15,52 @@ using FlavourBusinessFacade;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
-    /// <MetaDataID>{5a6deea9-0208-441b-9b01-77a13dc8c126}</MetaDataID>
-    [BackwardCompatibilityID("{5a6deea9-0208-441b-9b01-77a13dc8c126}")]
+    /// <MetaDataID>{680d7ca1-c381-4be1-890b-e1b21451126e}</MetaDataID>
+    [BackwardCompatibilityID("{680d7ca1-c381-4be1-890b-e1b21451126e}")]
     [Persistent()]
-    public class ServicePoint : MarshalByRefObject, IServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ServicePoint :MarshalByRefObject, IServicePoint
     {
-
         /// <exclude>Excluded</exclude>
-        int _Seats;
-
-        /// <MetaDataID>{bc816cfa-a904-4461-a92b-7ea5ad1bbb09}</MetaDataID>
-        [PersistentMember(nameof(_Seats))]
-        [BackwardCompatibilityID("+6")]
-        public int Seats
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        /// <MetaDataID>{9be98e3b-defe-473e-99a6-84d3e179f6e8}</MetaDataID>
+        public IList<string> ServesMealTypesUris
         {
-            get => _Seats;
-            set
+            get
             {
-                if (_Seats != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _Seats = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
+                if (string.IsNullOrWhiteSpace(MealTypesUris))
+                    return new List<string>();
+                return MealTypesUris.Split(';');
             }
         }
 
-        /// <MetaDataID>{bb55702d-4be6-4339-94f5-354cf83542ec}</MetaDataID>
+        
         public ServicePoint()
         {
         }
 
 
 
-
-
         /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink = new OOAdvantech.ObjectStateManagerLink();
+        ServicePointState _State;
+        /// <MetaDataID>{b9c9676f-c53d-4952-92e6-b17d22d81e18}</MetaDataID>
+        [PersistentMember(nameof(_State))]
+        [BackwardCompatibilityID("+7")]
+        public ServicePointState State
+        {
+            get => _State;
+            set
+            {
+
+                if (_State != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _State = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         string _Description;
@@ -135,6 +142,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{d79628e5-95b4-4abf-b51c-f65fe2a29806}</MetaDataID>
         internal void UpdateState()
         {
 
@@ -212,27 +220,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        /// <exclude>Excluded</exclude>
-        ServicePointState _State;
-        /// <MetaDataID>{b9c9676f-c53d-4952-92e6-b17d22d81e18}</MetaDataID>
-        [PersistentMember(nameof(_State))]
-        [BackwardCompatibilityID("+7")]
-        public ServicePointState State
-        {
-            get => _State;
-            set
-            {
 
-                if (_State != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _State = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
 
         /// <MetaDataID>{4182b8cc-608d-460a-838e-b666eb57c83c}</MetaDataID>
         public void AddFoodServiceSession(IFoodServiceSession foodServiceSession)
@@ -571,8 +559,6 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-        /// <exclude>Excluded</exclude>
-        OOAdvantech.Member<IServiceArea> _ServiceArea = new OOAdvantech.Member<IServiceArea>();
 
 
         public event ObjectChangeStateHandle _ObjectChangeState;
@@ -589,21 +575,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-        /// <MetaDataID>{7e5c81f0-c1d2-4ea7-931a-1f6884181a3c}</MetaDataID>
-        [PersistentMember(nameof(_ServiceArea))]
-        [BackwardCompatibilityID("+9")]
-        public IServiceArea ServiceArea => _ServiceArea.Value;
 
-        /// <MetaDataID>{9be98e3b-defe-473e-99a6-84d3e179f6e8}</MetaDataID>
-        public IList<string> ServesMealTypesUris
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(MealTypesUris))
-                    return new List<string>();
-                return MealTypesUris.Split(';');
-            }
-        }
 
         /// <exclude>Excluded</exclude>
         ServicePointType _ServicePointType = ServicePointType.HallServicePoint;
@@ -626,6 +598,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{db3ec41f-0bf7-4c7f-8ba3-22a3d0503ec7}</MetaDataID>
         public List<FoodServiceSession> OpenSessions
         {
             get
@@ -635,6 +608,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{49abf041-57e1-44e9-8c00-a42c9992ba8b}</MetaDataID>
         public List<FoodServiceClientSession> OpenClientSessions
         {
             get
@@ -744,6 +718,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return true;
         }
 
+        /// <MetaDataID>{e1599e2d-a463-4e10-8634-8b7786b64b09}</MetaDataID>
         internal void TransferPartialSession(FoodServiceClientSession partialSessionToTransfer, string targetSessionID)
         {
             lock (ServicePointLock)
@@ -768,7 +743,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     stateTransition.Consistent = true;
                 }
-                foreach(var partialSession in targetSession.PartialClientSessions.OfType<FoodServiceClientSession>() )
+                foreach (var partialSession in targetSession.PartialClientSessions.OfType<FoodServiceClientSession>())
                 {
                     partialSession.RaiseMainSessionChange();
                 }
@@ -782,6 +757,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        /// <MetaDataID>{b1e7aef4-92d8-4acc-82fa-5a603735d8f4}</MetaDataID>
         public static void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         {
             if (foodServiceSession == null)
@@ -840,6 +816,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{f9df74dc-4dd6-4cf4-afa3-54b0ba4d9f4f}</MetaDataID>
         public static void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
         {
 
@@ -1035,12 +1012,57 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{85bd4b65-edff-4bc1-95ac-7ec4f7ac7274}</MetaDataID>
         public static void TransferPartialSession(string partialSessionID, string targetSessionID)
         {
             var partialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
 
             (partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSession, targetSessionID);
         }
+    }
+}
+
+namespace FlavourBusinessManager.ServicesContextResources
+{
+    /// <MetaDataID>{5a6deea9-0208-441b-9b01-77a13dc8c126}</MetaDataID>
+    [BackwardCompatibilityID("{5a6deea9-0208-441b-9b01-77a13dc8c126}")]
+    [Persistent()]
+    public class HallServicePoint:ServicePoint, IHallServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject
+    {
+
+        /// <exclude>Excluded</exclude>
+        int _Seats;
+
+        /// <MetaDataID>{bc816cfa-a904-4461-a92b-7ea5ad1bbb09}</MetaDataID>
+        [PersistentMember(nameof(_Seats))]
+        [BackwardCompatibilityID("+6")]
+        public int Seats
+        {
+            get => _Seats;
+            set
+            {
+                if (_Seats != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Seats = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+   
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Member<IServiceArea> _ServiceArea = new OOAdvantech.Member<IServiceArea>();
+
+        /// <MetaDataID>{7e5c81f0-c1d2-4ea7-931a-1f6884181a3c}</MetaDataID>
+        [PersistentMember(nameof(_ServiceArea))]
+        [BackwardCompatibilityID("+9")]
+        public IServiceArea ServiceArea => _ServiceArea.Value;
+
+
 
     }
 

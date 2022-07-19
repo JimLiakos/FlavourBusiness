@@ -22,6 +22,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        /// <MetaDataID>{6b88620a-22a4-4057-938a-0ae98f6df236}</MetaDataID>
         [ObjectActivationCall]
         internal void OnActivated()
         {
@@ -40,6 +41,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{3fd60574-f95a-403a-8b70-0182221409ee}</MetaDataID>
         private void ServicePoint_ObjectChangeState(object _object, string member)
         {
             if (_object is ServicePoint && member == nameof(ServicePoint.State))
@@ -120,13 +122,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<IServicePoint> _ServicePoints = new OOAdvantech.Collections.Generic.Set<IServicePoint>();
+        OOAdvantech.Collections.Generic.Set<IHallServicePoint> _ServicePoints = new OOAdvantech.Collections.Generic.Set<IHallServicePoint>();
 
         /// <MetaDataID>{9c5a8dc9-988a-46a5-9aa8-2084536af2e6}</MetaDataID>
         [PersistentMember(nameof(_ServicePoints))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+1")]
-        public IList<IServicePoint> ServicePoints
+        public IList<IHallServicePoint> ServicePoints
         {
             get
             {
@@ -226,6 +228,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{b7d3e8db-4943-4483-929e-2740d1151916}</MetaDataID>
         public IList<string> ServesMealTypesUris
         {
             get
@@ -238,7 +241,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{fbed765d-b818-45e3-81d9-64ce055ccaea}</MetaDataID>
-        public void AddServicePoint(IServicePoint servicePoint)
+        public void AddServicePoint(IHallServicePoint servicePoint)
         {
 
 
@@ -251,7 +254,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{f046286f-6954-4a16-9a98-add0993a03e6}</MetaDataID>
-        public void RemoveServicePoint(IServicePoint servicePoint)
+        public void RemoveServicePoint(IHallServicePoint servicePoint)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -264,13 +267,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{d45fce1f-afc6-45db-9f52-8e22c009f307}</MetaDataID>
-        public IServicePoint NewServicePoint()
+        public IHallServicePoint NewServicePoint()
         {
 
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                ServicePoint servicePoint = new ServicePoint();
+                HallServicePoint servicePoint = new HallServicePoint();
                 servicePoint.ServicesContextIdentity = ServicesContextIdentity;
                 servicePoint.Description = Properties.Resources.DefaultServicePointDescription;
                 servicePoint.ServicesPointIdentity = Guid.NewGuid().ToString("N");
@@ -285,12 +288,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{7473939f-0ecb-4949-ada5-0715c0d50926}</MetaDataID>
-        public List<IServicePoint> GetUnassignedServicePoints(List<string> hallServicesPoints)
+        public List<IHallServicePoint> GetUnassignedServicePoints(List<string> hallServicesPoints)
         {
 
             return ServicePoints.Where(x => !hallServicesPoints.Contains(x.ServicesPointIdentity)).ToList();
         }
 
+        /// <MetaDataID>{4fc0a363-a133-4ab6-ba36-41a95afb79f9}</MetaDataID>
         public bool MealTypeAssigned(string mealTypeUri)
         {
             throw new NotImplementedException();
