@@ -1309,9 +1309,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var objectStorage = ObjectStorage.GetStorageOfObject(this);// OpenServicesContextStorageStorage();
                     OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
                     var servicesContextIdentity = ServicesContextIdentity;
-                    _CallerIDServer = (from serviceArea in servicesContextStorage.GetObjectCollection<ICallerIDServer>()
-                                       where serviceArea.ServicesContextIdentity == servicesContextIdentity
-                                       select serviceArea).FirstOrDefault();
+                    _CallerIDServer = (from callerIDServer in servicesContextStorage.GetObjectCollection<ICallerIDServer>()
+                                       where callerIDServer.ServicesContextIdentity == servicesContextIdentity
+                                       select callerIDServer).FirstOrDefault();
 
                     CallerIDServerLoaded = true;
                 }
@@ -1525,6 +1525,34 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     return _Settings;
                 }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool DeliveryServicePointLoaded;
+
+        /// <exclude>Excluded</exclude>
+        HomeDeliveryServicePoint _DeliveryServicePoint;
+
+        public IHomeDeliveryServicePoint DeliveryServicePoint
+        {
+            get
+            {
+                 if (!DeliveryServicePointLoaded)
+                {
+                    var objectStorage = ObjectStorage.GetStorageOfObject(this);// OpenServicesContextStorageStorage();
+                    OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+                    var servicesContextIdentity = ServicesContextIdentity;
+                    _DeliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
+                                       where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
+                                       select homeDeliveryServicePoint).FirstOrDefault();
+
+                    DeliveryServicePointLoaded = true;
+                }
+                if (_DeliveryServicePoint.IsActive)
+                    return _DeliveryServicePoint;
+                else
+                    return null;
             }
         }
 
@@ -2042,7 +2070,31 @@ namespace FlavourBusinessManager.ServicePointRunTime
             ObjectStorage.GetObjectFromUri<FisicalParty>((fisicalParty as FisicalParty).FisicalPartyUri).Update(fisicalParty as FisicalParty);
         }
 
-     
+        public void RemoveHomeDeliveryService()
+        {
+            if (_DeliveryServicePoint != null)
+                _DeliveryServicePoint.IsActive = false;
+        }
+
+        public void LaunchHomeDeliveryService()
+        {
+            if (_DeliveryServicePoint != null)
+                _DeliveryServicePoint.IsActive = true;
+            else
+            {
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    _DeliveryServicePoint = new HomeDeliveryServicePoint();
+                    _DeliveryServicePoint.ServicesContextIdentity = this.ServicesContextIdentity;
+                    _DeliveryServicePoint.IsActive = true;
+                    objectStorage.CommitTransientObjectState(_CallerIDServer);
+                    stateTransition.Consistent = true;
+                }
+            }
+
+        }
     }
 
 

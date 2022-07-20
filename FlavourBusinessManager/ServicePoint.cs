@@ -33,7 +33,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        
+
+        /// <MetaDataID>{6fea060f-d976-4e87-91d0-47732725d99f}</MetaDataID>
         public ServicePoint()
         {
         }

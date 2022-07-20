@@ -483,6 +483,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint DeliveryServicePoint
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_DeliveryServicePoint", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.ISettings Settings
         {
             get
@@ -680,6 +692,20 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void LaunchHomeDeliveryService()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "LaunchHomeDeliveryService", args, argsTypes);
+        }
+        
+        public void RemoveHomeDeliveryService()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveHomeDeliveryService", args, argsTypes);
         }
         
         public void RemovePreparationStation(FlavourBusinessFacade.ServicesContextResources.IPreparationStation prepartionStation)
@@ -987,6 +1013,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint DeliveryServicePoint
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_DeliveryServicePoint", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public int AllMessmetesCommitedTimeSpan
         {
             get
@@ -1208,6 +1246,20 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemoveHomeDeliveryService()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveHomeDeliveryService", args, argsTypes);
+        }
+        
+        public void LaunchHomeDeliveryService()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "LaunchHomeDeliveryService", args, argsTypes);
         }
         
         public bool RemoveSupervisor(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor supervisor)

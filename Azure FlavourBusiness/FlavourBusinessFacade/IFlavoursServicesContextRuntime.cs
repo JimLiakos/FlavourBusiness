@@ -14,6 +14,13 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContextRuntime
     {
+        IHomeDeliveryServicePoint DeliveryServicePoint { get; }
+
+        /// <MetaDataID>{b220d064-7c8e-4ba5-85db-8f94babb3c96}</MetaDataID>
+        void RemoveHomeDeliveryService();
+
+        /// <MetaDataID>{3ed4c592-ef05-4260-a64f-86b4e1dc62e4}</MetaDataID>
+        void LaunchHomeDeliveryService();
 
         /// <summary>
         /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 

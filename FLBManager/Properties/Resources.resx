@@ -197,6 +197,9 @@
   <data name="HeadingListViewTitle" xml:space="preserve">
     <value>Menu Headings</value>
   </data>
+  <data name="HomeDeliveryTreeNodeName" xml:space="preserve">
+    <value>Home Delivery</value>
+  </data>
   <data name="IsBilledtemStateDescription" xml:space="preserve">
     <value>On bill</value>
     <comment>Defines the description for IsBilled item state  </comment>

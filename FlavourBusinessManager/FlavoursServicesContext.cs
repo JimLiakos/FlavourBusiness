@@ -25,7 +25,7 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{e8fbdbb0-94fd-4108-81a6-58b46e944a68}</MetaDataID>
     [BackwardCompatibilityID("{e8fbdbb0-94fd-4108-81a6-58b46e944a68}")]
     [Persistent()]
-    public class FlavoursServicesContext : MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class FlavoursServicesContext : MarshalByRefObject, IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
         /// <MetaDataID>{07e6d9ad-97ef-4bf0-a4a8-91c1f5fe9224}</MetaDataID>
         public void RemovePreparationStation(IPreparationStation prepartionStation)
@@ -310,6 +310,7 @@ namespace FlavourBusinessManager
             }
         }
 
+        /// <MetaDataID>{3c9c6c67-a203-420d-9cdb-782aeaf1c3d9}</MetaDataID>
         public IList<FinanceFacade.IFisicalParty> FisicalParties
         {
             get
@@ -581,20 +582,7 @@ namespace FlavourBusinessManager
         {
 
             GetRunTime().LaunchCallerIDServer();
-            //if (CallerIDServer == null)
-            //{
-            //    var objectStorage = OpenServicesContextStorageStorage();
 
-            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //    {
-            //        _CallerIDServer = new CallerIDServer();
-            //        _CallerIDServer.ServicesContextIdentity = this.ServicesContextIdentity;
-            //        objectStorage.CommitTransientObjectState(_CallerIDServer);
-
-            //        stateTransition.Consistent = true;
-            //    }
-
-            //}
         }
 
         /// <MetaDataID>{64f78232-2293-4106-8cc6-a9be2ceb5dc6}</MetaDataID>
@@ -625,15 +613,18 @@ namespace FlavourBusinessManager
 
 
 
+        /// <MetaDataID>{4613e465-5c23-4a01-8e6d-8bea90712bf9}</MetaDataID>
         public FinanceFacade.IFisicalParty NewFisicalParty()
         {
             return GetRunTime().NewFisicalParty();
         }
 
+        /// <MetaDataID>{10a844d5-f3c6-4ffd-96a5-af1261be18b0}</MetaDataID>
         public void RemoveFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             GetRunTime().RemoveFisicalParty(fisicalParty);
         }
+        /// <MetaDataID>{352ae357-09a4-4a78-9181-354fc66150d0}</MetaDataID>
         public void UpdateFisicalParty(FinanceFacade.IFisicalParty fisicalParty)
         {
             GetRunTime().UpdateFisicalParty(fisicalParty);
@@ -658,9 +649,21 @@ namespace FlavourBusinessManager
 
         }
 
+        /// <MetaDataID>{cfb2c9e3-e4d3-4c6c-9ddc-d7fee936a836}</MetaDataID>
+        public void RemoveHomeDeliveryService()
+        {
+            GetRunTime().RemoveHomeDeliveryService();
+        }
+
+        public void LaunchHomeDeliveryService()
+        {
+            GetRunTime().LaunchHomeDeliveryService();
+        }
+
         /// <MetaDataID>{1900ac60-fd30-4922-b07b-a93d61875010}</MetaDataID>
         public IUploadService UploadService { get => GetRunTime() as IUploadService; }
 
+        /// <MetaDataID>{008ca56c-3e87-442e-8540-65eb36cf3837}</MetaDataID>
         public ISettings Settings
         {
             get
@@ -668,6 +671,7 @@ namespace FlavourBusinessManager
                 return GetRunTime().Settings;
             }
         }
-    
+
+        public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
     }
 }

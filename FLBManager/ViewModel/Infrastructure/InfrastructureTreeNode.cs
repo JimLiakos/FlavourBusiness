@@ -22,6 +22,7 @@ namespace FLBManager.ViewModel.Infrastructure
         }
         public readonly FlavoursServicesContextPresentation ServicesContextPresentation;
         CallerIDServerTreeNode CallerIDServerTreeNode;
+        public RelayCommand LaunchCallerIDServerCommand { get; protected set; }
 
         TreasuryTreeNode TreasuryTreeNode;
         Preparation.PreparationSationsTreeNode PreparationSattionsTreeNode;
@@ -41,11 +42,29 @@ namespace FLBManager.ViewModel.Infrastructure
                 LaunchCallerIDServer();
             });
 
+            LaunchHomeDeliveryCommand = new RelayCommand((object sender) =>
+            {
+                LaunchHomeDeliveryService();
+            });
+
             TreasuryTreeNode = new TreasuryTreeNode(this);
             PreparationSattionsTreeNode = new Preparation.PreparationSationsTreeNode(this);
 
         }
 
+        private void LaunchHomeDeliveryService()
+        {
+
+            if (HomeDeliveryServiceTreeNode == null)
+            {
+                ServicesContextPresentation.ServicesContext.LaunchHomeDeliveryService();
+                var homeDeliveryService = ServicesContextPresentation.ServicesContext.DeliveryServicePoint;
+                if (homeDeliveryService != null)
+                    HomeDeliveryServiceTreeNode = new HomeDeliveryServiceTreeNode(this, homeDeliveryService);
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
+        }
         private void LaunchCallerIDServer()
         {
             if (CallerIDServerTreeNode == null)
@@ -61,7 +80,9 @@ namespace FLBManager.ViewModel.Infrastructure
             }
         }
 
-        public RelayCommand LaunchCallerIDServerCommand { get; protected set; }
+        public RelayCommand LaunchHomeDeliveryCommand { get; protected set; }
+
+        
 
         List<MenuCommand> _ContextMenuItems;
         public override List<MenuCommand> ContextMenuItems
@@ -99,6 +120,13 @@ namespace FLBManager.ViewModel.Infrastructure
                     menuItem.Header = Properties.Resources.LaunchCallerIDServer;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = LaunchCallerIDServerCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+                    menuItem = new MenuCommand(); ;
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/delivery-bike16.png"));
+                    menuItem.Header = Properties.Resources.LaunchCallerIDServer;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = LaunchHomeDeliveryCommand;
                     _ContextMenuItems.Add(menuItem);
 
                     //_ContextMenuItems.Add(null);
@@ -237,5 +265,6 @@ namespace FLBManager.ViewModel.Infrastructure
         }
 
         public ServiceContextResources ServiceContextResources { get; private set; }
+        public HomeDeliveryServiceTreeNode HomeDeliveryServiceTreeNode { get; private set; }
     }
 }

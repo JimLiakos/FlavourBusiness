@@ -268,6 +268,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home Delivery.
+        /// </summary>
+        public static string HomeDeliveryTreeNodeName {
+            get {
+                return ResourceManager.GetString("HomeDeliveryTreeNodeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On bill.
         /// </summary>
         public static string IsBilledtemStateDescription {

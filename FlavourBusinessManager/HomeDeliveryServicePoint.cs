@@ -14,6 +14,49 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class HomeDeliveryServicePoint : ServicePoint, IHomeDeliveryServicePoint
     {
+
+        /// <exclude>Excluded</exclude> 
+        decimal _MinimumOrderValue;
+        /// <MetaDataID>{ad37bdfb-0a9f-4753-9723-51fdd393e086}</MetaDataID>
+        [PersistentMember(nameof(_MinimumOrderValue))]
+        [BackwardCompatibilityID("+4")]
+        public decimal MinimumOrderValue
+        {
+            get => _MinimumOrderValue;
+            set
+            {
+                if (_MinimumOrderValue != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MinimumOrderValue = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _IsActive;
+        /// <MetaDataID>{a59cb9b3-7a94-4d32-8548-bbf64f058696}</MetaDataID>
+        [PersistentMember(nameof(_IsActive))]
+        [BackwardCompatibilityID("+5")]
+        internal bool IsActive
+        {
+            get=>_IsActive;
+            set
+            {
+                if (IsActive != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        IsActive = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude> 
         Dictionary<DayOfWeek, List<OpeningHours>> _WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
 

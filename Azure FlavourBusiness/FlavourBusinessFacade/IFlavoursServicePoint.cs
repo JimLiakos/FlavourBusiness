@@ -12,6 +12,16 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        [Association("ServiceContextDelivery", Roles.RoleA, "13742cae-d52d-4ee7-a9cc-02be8e8192c7")]
+        [RoleAMultiplicityRange(1, 1)]
+        IHomeDeliveryServicePoint DeliveryServicePoint { get; }
+
+        /// <MetaDataID>{7868fa11-efee-4608-a447-f102ce810331}</MetaDataID>
+        void LaunchHomeDeliveryService();
+
+        /// <MetaDataID>{b825e803-0c37-4ff6-80d5-6761d343e15d}</MetaDataID>
+        void RemoveHomeDeliveryService();
+
         [RoleAMultiplicityRange(1, 1)]
         [Association("FlavoursServicesContextSettings", Roles.RoleA, "b09368df-ec34-4529-ab3d-bce7037059db")]
         ISettings Settings { get; }

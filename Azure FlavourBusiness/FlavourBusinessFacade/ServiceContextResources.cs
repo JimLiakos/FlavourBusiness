@@ -17,6 +17,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
         public ICallerIDServer CallerIDServer { get; set; }
 
         public IList<IServiceArea> ServiceAreas { get; set; }
-
+        public IHomeDeliveryServicePoint DeliveryServicePoint { get; set; }
     }
 }
