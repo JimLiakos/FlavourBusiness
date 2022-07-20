@@ -2089,7 +2089,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     _DeliveryServicePoint = new HomeDeliveryServicePoint();
                     _DeliveryServicePoint.ServicesContextIdentity = this.ServicesContextIdentity;
                     _DeliveryServicePoint.IsActive = true;
-                    objectStorage.CommitTransientObjectState(_CallerIDServer);
+                    objectStorage.CommitTransientObjectState(_DeliveryServicePoint);
                     stateTransition.Consistent = true;
                 }
             }

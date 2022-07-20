@@ -46,11 +46,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             get=>_IsActive;
             set
             {
-                if (IsActive != value)
+
+                if (_IsActive != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        IsActive = value;
+                        _IsActive = value;
                         stateTransition.Consistent = true;
                     }
                 }

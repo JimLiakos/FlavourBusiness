@@ -1,26 +1,35 @@
 ﻿using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Transactions;
+using StyleableWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPFUIElementObjectBind;
 
-namespace FLBManager.ViewModel.Infrastructure
+namespace FLBManager.ViewModel
 {
+    /// <MetaDataID>{f1d7153e-8c05-4420-b64f-f6a874f26d50}</MetaDataID>
     public class HomeDeliveryServiceTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
-        public HomeDeliveryServiceTreeNode(InfrastructureTreeNode infrastructureTreeNode, IHomeDeliveryServicePoint homeDeliveryService) : base(infrastructureTreeNode)
+        public HomeDeliveryServiceTreeNode(FlavoursServicesContextPresentation servicesContextPresentation, IHomeDeliveryServicePoint homeDeliveryService) : base(servicesContextPresentation)
         {
             HomeDeliveryService = homeDeliveryService;
-            InfrastructureTreeNode = infrastructureTreeNode;
+            ServicesContextPresentation = servicesContextPresentation;
             //CallerIDServer.ObjectStateChanged += CallerIDServer_ObjectStateChanged;
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
+            });
+
+            SettingsCommand= DeleteCommand = new RelayCommand((object sender) =>
+            {
+                OpenHomeDeliverySettings();
             });
         }
 
@@ -56,8 +65,26 @@ namespace FLBManager.ViewModel.Infrastructure
             }
         }
         public RelayCommand DeleteCommand { get; protected set; }
+        public RelayCommand LaunchHomeDeliveryCommand { get; protected set; }
+        public RelayCommand SettingsCommand { get; protected set; }
 
+        private void OpenHomeDeliverySettings()
+        {
+            System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+            {
 
+                var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
+                Views.HomeDeliveryServicePage homeDeliveryServicePage = new Views.HomeDeliveryServicePage();
+                homeDeliveryServicePage.GetObjectContext().SetContextInstance(new HomeDeliveryServicePresentation(this.HomeDeliveryService));
+
+                frame.ShowDialogPage(homeDeliveryServicePage);
+                stateTransition.Consistent = true;
+            }
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+        }
+
+        public override bool HasContextMenu => true;
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
         public override List<MenuCommand> ContextMenuItems
@@ -84,12 +111,23 @@ namespace FLBManager.ViewModel.Infrastructure
                     //_ContextMenuItems.Add(null);
 
                     menuItem = new MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/settings16.png"));
+                    menuItem.Header = Properties.Resources.SettingsMenuPrompt;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = SettingsCommand;
+                    _ContextMenuItems.Add(menuItem);
+                    
+                    _ContextMenuItems.Add(null);
+
+                    menuItem = new MenuCommand();
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
                     menuItem.Header = Properties.Resources.RemoveCallerIDServer;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = DeleteCommand;
 
                     _ContextMenuItems.Add(menuItem);
+
+
 
 
 
@@ -104,7 +142,9 @@ namespace FLBManager.ViewModel.Infrastructure
 
         public override List<MenuCommand> SelectedItemContextMenuItems => ContextMenuItems;
         public IHomeDeliveryServicePoint HomeDeliveryService { get; }
-        public InfrastructureTreeNode InfrastructureTreeNode { get; }
+
+        FlavoursServicesContextPresentation ServicesContextPresentation;
+
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {

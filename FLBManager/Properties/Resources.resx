@@ -197,8 +197,14 @@
   <data name="HeadingListViewTitle" xml:space="preserve">
     <value>Menu Headings</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value />
+  </data>
   <data name="HomeDeliveryTreeNodeName" xml:space="preserve">
     <value>Home Delivery</value>
+  </data>
+  <data name="HomeDeloveryServiceSettingsTitle" xml:space="preserve">
+    <value>Home Delovery Settings</value>
   </data>
   <data name="IsBilledtemStateDescription" xml:space="preserve">
     <value>On bill</value>
@@ -210,6 +216,9 @@
   </data>
   <data name="LaunchCallerIDServer" xml:space="preserve">
     <value>Launch CallerID Server</value>
+  </data>
+  <data name="LaunchHomeDeliveryService" xml:space="preserve">
+    <value>Launch Home Delivery Service</value>
   </data>
   <data name="MenuItemsListActionsLabel" xml:space="preserve">
     <value>Actions</value>

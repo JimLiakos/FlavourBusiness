@@ -268,11 +268,29 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home Delivery.
         /// </summary>
         public static string HomeDeliveryTreeNodeName {
             get {
                 return ResourceManager.GetString("HomeDeliveryTreeNodeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Delovery Settings.
+        /// </summary>
+        public static string HomeDeloveryServiceSettingsTitle {
+            get {
+                return ResourceManager.GetString("HomeDeloveryServiceSettingsTitle", resourceCulture);
             }
         }
         
@@ -300,6 +318,15 @@ namespace FLBManager.Properties {
         public static string LaunchCallerIDServer {
             get {
                 return ResourceManager.GetString("LaunchCallerIDServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch Home Delivery Service.
+        /// </summary>
+        public static string LaunchHomeDeliveryService {
+            get {
+                return ResourceManager.GetString("LaunchHomeDeliveryService", resourceCulture);
             }
         }
         

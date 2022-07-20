@@ -16,6 +16,7 @@ using FloorLayoutDesigner.ViewModel;
 using MenuDesigner.ViewModel;
 using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
+using StyleableWindow;
 using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel
@@ -88,6 +89,8 @@ namespace FLBManager.ViewModel
 
         StaffTreeNode StaffTreeNode;
 
+        public RelayCommand LaunchHomeDeliveryCommand { get; protected set; }
+
 
         /// <MetaDataID>{472640f9-e3eb-41d7-b257-7e5e8b9327ad}</MetaDataID>
         public readonly IFlavoursServicesContext ServicesContext;
@@ -121,6 +124,10 @@ namespace FLBManager.ViewModel
             {
                 AddServiceArea();
             });
+            LaunchHomeDeliveryCommand = new RelayCommand((object sender) =>
+            {
+                LaunchHomeDeliveryService();
+            });
 
 
 
@@ -132,6 +139,11 @@ namespace FLBManager.ViewModel
                     FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
                     ServiceContextResources = FlavoursServicesContextRuntime.ServiceContextResources;
                     ServiceContextHumanResources = FlavoursServicesContextRuntime.ServiceContextHumanResources;
+
+                    var homeDeliveryService = FlavoursServicesContextRuntime.DeliveryServicePoint;
+                    if (homeDeliveryService != null)
+                        HomeDeliveryServiceTreeNode = new HomeDeliveryServiceTreeNode(this, homeDeliveryService);
+
 
                     foreach (var serviceArea in ServiceContextResources.ServiceAreas)
                         ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this,this));
@@ -185,7 +197,22 @@ namespace FLBManager.ViewModel
             });
 
         }
+        public HomeDeliveryServiceTreeNode HomeDeliveryServiceTreeNode { get; private set; }
+        private void LaunchHomeDeliveryService()
+        {
 
+            if (HomeDeliveryServiceTreeNode == null)
+            {
+                ServicesContext.LaunchHomeDeliveryService();
+                var homeDeliveryService = FlavoursServicesContextRuntime.DeliveryServicePoint;
+                if (homeDeliveryService != null)
+                    HomeDeliveryServiceTreeNode = new HomeDeliveryServiceTreeNode(this, homeDeliveryService);
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
+        }
+
+      
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
             ServiceContextHumanResources = ServicesContext.ServiceContextHumanResources;
@@ -319,6 +346,15 @@ namespace FLBManager.ViewModel
                     menuItem.Command = DeleteCommand;
 
                     _ContextMenuItems.Add(menuItem);
+                    if (HomeDeliveryServiceTreeNode == null)
+                    {
+                        menuItem = new MenuCommand(); 
+                        imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/delivery-bike16.png"));
+                        menuItem.Header = Properties.Resources.LaunchHomeDeliveryService;
+                        menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                        menuItem.Command = LaunchHomeDeliveryCommand;
+                        _ContextMenuItems.Add(menuItem);
+                    }
 
 
 
@@ -354,10 +390,13 @@ namespace FLBManager.ViewModel
             {
                 var members = ServiceAreas.Values.OfType<FBResourceTreeNode>().ToList();
 
+                if (HomeDeliveryServiceTreeNode != null)
+                    members.Add(HomeDeliveryServiceTreeNode);
+
                 if (MenusTreeNode != null)
                     members.Add(MenusTreeNode);
 
-
+             
                 if (StaffTreeNode != null)
                     members.Add(StaffTreeNode);
 

@@ -163,13 +163,14 @@
     <Compile Include="ViewModel\FlavourBusinessManagerViewModel.cs" />
     <Compile Include="ViewModel\FlavourBusinessResourcesPresentation.cs" />
     <Compile Include="ViewModel\FlavoursServicesContextPresentation.cs" />
+    <Compile Include="ViewModel\HomeDeliveryServicePresentation.cs" />
     <Compile Include="ViewModel\HumanResources\AdministrationTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\DesignSubject.cs" />
     <Compile Include="ViewModel\HumanResources\GraphicDesignActivityPresentation.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakersTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakerTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\MenuMakerViewModel.cs" />
-    <Compile Include="ViewModel\Infrastructure\HomeDeliveryServiceTreeNode.cs" />
+    <Compile Include="ViewModel\HomeDeliveryServiceTreeNode.cs" />
     <Compile Include="ViewModel\Infrastructure\InfrastructureTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\StaffTreeNode.cs" />
     <Compile Include="ViewModel\HumanResources\SupervisorTreeNode.cs" />
@@ -198,6 +199,9 @@
     </Compile>
     <Compile Include="Views\FlavourBusinessResourcesView.xaml.cs">
       <DependentUpon>FlavourBusinessResourcesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeDeliveryServicePage.xaml.cs">
+      <DependentUpon>HomeDeliveryServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResources\AddresWindow.xaml.cs">
       <DependentUpon>AddresWindow.xaml</DependentUpon>
@@ -376,6 +380,10 @@
     <Page Include="Views\FlavourBusinessResourcesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HomeDeliveryServicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResources\AddresWindow.xaml">
       <SubType>Designer</SubType>
@@ -694,6 +702,9 @@
     <Resource Include="Resources\Images\Metro\delivery-bike16.png" />
     <Resource Include="Resources\Images\Metro\delivery-bike24.png" />
     <Resource Include="Resources\Images\Metro\delivery-bike32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\Settings24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
