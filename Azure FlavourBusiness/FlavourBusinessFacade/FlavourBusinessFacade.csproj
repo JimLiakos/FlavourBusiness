@@ -60,6 +60,7 @@
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
     <Compile Include="ICashierStationRuntime.cs" />
+    <Compile Include="IGeocoding.cs" />
     <Compile Include="IHomeDeliveryServicePoint.cs" />
     <Compile Include="IMeal.cs" />
     <Compile Include="IMealController.cs" />

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Device.Location;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -30,6 +31,9 @@ namespace FLBManager
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
+
+            var location = watcher.Position.Location;
 
             //try
             //{
@@ -120,10 +124,10 @@ namespace FLBManager
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
-           // Backup(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
+            // Backup(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
-           // Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
+            // Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
@@ -339,7 +343,7 @@ namespace FLBManager
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MealType)] = "MenuModel.JsonViewModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MealCourseType)] = "MenuModel.JsonViewModel.MealCourseType";
 
-     
+
 
         }
 

@@ -1549,7 +1549,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     DeliveryServicePointLoaded = true;
                 }
-                if (_DeliveryServicePoint.IsActive)
+                if (_DeliveryServicePoint?.IsActive==true)
                     return _DeliveryServicePoint;
                 else
                     return null;

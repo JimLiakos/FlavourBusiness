@@ -19,7 +19,7 @@
     </sw:PageDialogViewEmulator.Resources>
 
     <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource Dd_HomeDeliveryServicePresentation}" >
-        <sw:DialogContentControl BeforeTransactionCommit="{Binding SaveCommand}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.HomeDeloveryServiceSettingsTitle}" InitialWidth="500" InitialHeight="300" Icon="/FLBManager;component/Resources/Images/Metro/Settings24.png">
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding SaveCommand}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.HomeDeloveryServiceSettingsTitle}" InitialWidth="1200" InitialHeight="700" Icon="/FLBManager;component/Resources/Images/Metro/Settings24.png">
             <Grid>
                 <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    x:Name="WebBrowserHost">
                     <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->

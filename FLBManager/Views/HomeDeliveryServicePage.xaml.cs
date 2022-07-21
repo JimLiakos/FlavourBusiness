@@ -2,6 +2,7 @@
 using StyleableWindow;
 using System;
 using System.Collections.Generic;
+using System.Device.Location;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,9 +36,12 @@ namespace FLBManager.Views
 
         private void HomeDeliveryServicePage_Loaded(object sender, RoutedEventArgs e)
         {
+          
+
             string url = @"http://localhost:4300/";
+            url = @"https://localhost:4300/";
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
-            Browser.Navigate(new Uri(url + "/#/room-service;orderServerPath=.%2FEndUser"));
+            Browser.Navigate(new Uri(url + "/#/service-area-map"));
         }
 
         private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
