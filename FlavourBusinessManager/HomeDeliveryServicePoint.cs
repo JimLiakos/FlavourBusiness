@@ -43,7 +43,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+5")]
         internal bool IsActive
         {
-            get=>_IsActive;
+            get => _IsActive;
             set
             {
 
@@ -101,6 +101,29 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{48980b23-8e25-47c9-906c-0ced1401a34e}</MetaDataID>
         public decimal MinimumShippingFee { get => _MinimumShippingFee; set => throw new NotImplementedException(); }
 
+        /// <exclude>Excluded</exclude>
+        string PlaceOfDistributionJson = null;
+        /// <exclude>Excluded</exclude>
+        EndUsers.Place _PlaceOfDistribution ;
+        /// <MetaDataID>{67337dcd-a5e2-4ca9-8c70-077d6e594510}</MetaDataID>
+        [PersistentMember(nameof(_PlaceOfDistribution))]
+        [BackwardCompatibilityID("+6")]
+        public IPlace PlaceOfDistribution
+        {
+            get => _PlaceOfDistribution;
+            set
+            {
+                if (_PlaceOfDistribution != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PlaceOfDistribution = value as EndUsers.Place;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{ae158781-fd71-4b27-8311-76438eaabc23}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+1")]
@@ -117,6 +140,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             ServiceAreaMapJson = OOAdvantech.Json.JsonConvert.SerializeObject(_ServiceAreaMap);
             WeeklyDeliveryScheduleJson = OOAdvantech.Json.JsonConvert.SerializeObject(_WeeklyDeliverySchedule);
+            PlaceOfDistributionJson= OOAdvantech.Json.JsonConvert.SerializeObject(_PlaceOfDistribution);
         }
         /// <MetaDataID>{d602d811-8ffd-4679-a1ac-6511c47a057a}</MetaDataID>
         [ObjectActivationCall]
@@ -127,6 +151,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (!string.IsNullOrWhiteSpace(WeeklyDeliveryScheduleJson))
                 _WeeklyDeliverySchedule = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<DayOfWeek, List<OpeningHours>>>(WeeklyDeliveryScheduleJson);
+
+            if (!string.IsNullOrWhiteSpace(PlaceOfDistributionJson))
+                _PlaceOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(PlaceOfDistributionJson);
 
 
         }

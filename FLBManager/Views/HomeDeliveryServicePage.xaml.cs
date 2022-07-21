@@ -36,8 +36,8 @@ namespace FLBManager.Views
 
         private void HomeDeliveryServicePage_Loaded(object sender, RoutedEventArgs e)
         {
-          
 
+            WebBrowserHost.DataContext = this.GetDataContextObject();
             string url = @"http://localhost:4300/";
             url = @"https://localhost:4300/";
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);

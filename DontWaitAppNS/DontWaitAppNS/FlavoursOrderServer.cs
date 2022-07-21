@@ -45,7 +45,7 @@ using System;
 namespace DontWaitApp
 {
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
-    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
 
@@ -299,7 +299,7 @@ namespace DontWaitApp
 
         }
 
-        public async Task<Location> GetCurrentLocation()
+        public async Task<Coordinate?> GetCurrentLocation()
         {
 
 #if DeviceDotNet
@@ -328,7 +328,7 @@ namespace DontWaitApp
             string strCoordinatesBrax = "37.953746, 22.801600";
             string strCoordinates = "38.000483, 23.745453";
             var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(), System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
-            return new Location()
+            return new Coordinate()
             {
                 Latitude = coordinates[0],
                 Longitude = coordinates[1]
@@ -347,7 +347,7 @@ namespace DontWaitApp
             return null;
         }
 
-        public List<IPlace> DeliveryPlaces
+        public List<IPlace> Places
         {
             get
             {
@@ -364,7 +364,8 @@ namespace DontWaitApp
                     return new List<IPlace>();
             }
         }
-        public void SaveDelivaryPlace(Place deliveryPlace)
+
+        public void SavePlace(IPlace deliveryPlace)
         {
             lock (ClientSessionLock)
             {
@@ -374,7 +375,7 @@ namespace DontWaitApp
             ApplicationSettings.Current.ClientAsGuest.AddDeliveryPlace(deliveryPlace);
         }
 
-        public void RemoveDelivaryPlace(Place deliveryPlace)
+        public void RemovePlace(IPlace deliveryPlace)
         {
             lock (ClientSessionLock)
             {
@@ -384,8 +385,10 @@ namespace DontWaitApp
             ApplicationSettings.Current.ClientAsGuest.RemoveDeliveryPlace(deliveryPlace);
 
         }
+     
 
-        public void SelectDelivaryPlace(Place deliveryPlace)
+
+        public void SetDefaultPlace(IPlace deliveryPlace)
         {
             lock (ClientSessionLock)
             {
@@ -2439,6 +2442,7 @@ namespace DontWaitApp
             throw new NotImplementedException();
         }
 
+   
 
 
 

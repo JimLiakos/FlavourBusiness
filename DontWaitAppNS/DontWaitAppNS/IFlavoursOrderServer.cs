@@ -70,7 +70,7 @@ namespace DontWaitApp
         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
-        Task<Location> GetCurrentLocation();
+        
 
         ServicePointState ServicePointState { get; }
 
@@ -245,14 +245,14 @@ namespace DontWaitApp
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
         Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
 
-        void SaveDelivaryPlace(Place deliveryPlace);
-        void RemoveDelivaryPlace(Place deliveryPlace);
+        //void SaveDelivaryPlace(Place deliveryPlace);
+        //void RemoveDelivaryPlace(Place deliveryPlace);
 
-        void SelectDelivaryPlace(Place deliveryPlace);
+        //void SelectDelivaryPlace(Place deliveryPlace);
       
 
 
-        List<IPlace> DeliveryPlaces { get; }
+        //List<IPlace> DeliveryPlaces { get; }
     }
 
 
