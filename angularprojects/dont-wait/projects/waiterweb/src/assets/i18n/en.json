@@ -45,4 +45,9 @@
     "App": {
         "AppTitle":"Don't wait"
     }
+	,
+	"PlacesPageStrings":
+	{
+		"DistributionCenterLabel":"Address of distribution center"  
+	}
 }

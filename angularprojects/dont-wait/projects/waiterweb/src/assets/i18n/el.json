@@ -47,5 +47,10 @@
 		"UnderPreparationCommandLabel":"Ετοιμάζονται",
 		"AllCommandLabel":"Όλα"
 	}
+	,
+	"PlacesPageStrings":
+	{
+		"DistributionCenterLabel":"Διεύθυνση κέντρου διανομής" 
+	}
 
 }

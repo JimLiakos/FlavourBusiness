@@ -101,12 +101,15 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{48980b23-8e25-47c9-906c-0ced1401a34e}</MetaDataID>
         public decimal MinimumShippingFee { get => _MinimumShippingFee; set => throw new NotImplementedException(); }
 
-        /// <exclude>Excluded</exclude>
+
+        /// <MetaDataID>{1c2670e3-8d2d-4b7c-aaed-1ec452eab8ee}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+7")]
         string PlaceOfDistributionJson = null;
+
         /// <exclude>Excluded</exclude>
         EndUsers.Place _PlaceOfDistribution ;
         /// <MetaDataID>{67337dcd-a5e2-4ca9-8c70-077d6e594510}</MetaDataID>
-        [PersistentMember(nameof(_PlaceOfDistribution))]
         [BackwardCompatibilityID("+6")]
         public IPlace PlaceOfDistribution
         {
