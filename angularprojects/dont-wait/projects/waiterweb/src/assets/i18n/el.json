@@ -50,7 +50,10 @@
 	,
 	"PlacesPageStrings":
 	{
-		"DistributionCenterLabel":"Διεύθυνση κέντρου διανομής" 
+		"DistributionCenterLabel":"Διεύθυνση κέντρου διανομής",
+		"PanButtonTooltip":"Μετακινήστε τον χάρτη",
+	   "DrawPathButtonTooltip":"Σχεδιάστε τη διαδρομή",
+	   "ClosePathButtonTooltip":"Ενοποίηση διαδρομής" 
 	}
 
 }

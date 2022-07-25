@@ -48,6 +48,9 @@
 	,
 	"PlacesPageStrings":
 	{
-		"DistributionCenterLabel":"Address of distribution center"  
+		"DistributionCenterLabel":"Address of distribution center",
+		"PanButtonTooltip":"Pan the map",
+		"DrawPathButtonTooltip":"Draw path",
+		"ClosePathButtonTooltip":"Path integration"  
 	}
 }
