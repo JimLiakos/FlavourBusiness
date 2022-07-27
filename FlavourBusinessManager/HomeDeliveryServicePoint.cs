@@ -132,9 +132,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        Coordinate _MapCenter;
+        Coordinate? _MapCenter;
         /// <MetaDataID>{14a3ba03-5e0d-43c1-bbd1-eb01a8c246ea}</MetaDataID>
-        public Coordinate MapCenter { get => _MapCenter; set => _MapCenter= value; }
+        public Coordinate? MapCenter { get => _MapCenter; set => _MapCenter= value; }
 
 
         /// <exclude>Excluded</exclude>
@@ -181,7 +181,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{1348a699-3c57-4358-a22a-845dcb992d0a}</MetaDataID>
-        public void Update(IPlace placeOfDistribution, Coordinate mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom)
+        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -194,6 +194,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 stateTransition.Consistent = true;
             }
+            base.RunObjectChangeState(this, null);
+            
         }
 
         /// <MetaDataID>{ae158781-fd71-4b27-8311-76438eaabc23}</MetaDataID>
@@ -212,8 +214,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         void BeforeCommitObjectState()
         {
             ServiceAreaMapJson = OOAdvantech.Json.JsonConvert.SerializeObject(_ServiceAreaMap);
-            MapCenterJson = OOAdvantech.Json.JsonConvert.SerializeObject(_MapCenter);
+            if(_MapCenter!=null)
+                MapCenterJson = OOAdvantech.Json.JsonConvert.SerializeObject(_MapCenter);
+
             WeeklyDeliveryScheduleJson = OOAdvantech.Json.JsonConvert.SerializeObject(_WeeklyDeliverySchedule);
+            
             PlaceOfDistributionJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PlaceOfDistribution);
             
         }

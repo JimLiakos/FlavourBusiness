@@ -15,23 +15,84 @@ using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel
 {
-    [OOAdvantech.Transactions.Transactional]
+    [Transactional]//To force transaction mechanism to ask to save on close the changes
     /// <MetaDataID>{a2719e24-d3e7-4df3-acaa-e80226746b20}</MetaDataID>
     public class HomeDeliveryServicePresentation : MarshalByRefObject, INotifyPropertyChanged, IGeocodingPlaces, IExtMarshalByRefObject
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <exclude>Excluded</exclude>
+        List<Coordinate> _ServiceAreaMap;
         [HttpVisible]
-        public List<Coordinate> ServiceAreaMap { get; set; }
+        public List<Coordinate> ServiceAreaMap
+        {
+            get => _ServiceAreaMap;
+            set
+            {
+                if (_ServiceAreaMap != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServiceAreaMap = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
+        Coordinate? _MapCenter;
         [HttpVisible]
-        public Coordinate MapCenter { get; set; }
+        public Coordinate? MapCenter
+        {
+            get => _MapCenter;
+            set
+            {
+                if (_MapCenter != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MapCenter = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
+        double _Zoom;
         [HttpVisible]
-        public double Zoom { get; set; }
+        public double Zoom
+        {
+            get => _Zoom;
+            set
+            {
+                if (_Zoom != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Zoom = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
+        bool _IsPolyline;
         [HttpVisible]
-        public bool IsPolyline { get; set; }
+        public bool IsPolyline
+        {
+            get => _IsPolyline;
+            set
+            {
+                if (_IsPolyline != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsPolyline = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         public HomeDeliveryServicePresentation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)
@@ -40,13 +101,13 @@ namespace FLBManager.ViewModel
             var placeOfDistribution = homeDeliveryServicePoint.PlaceOfDistribution;
             if (placeOfDistribution != null)
                 _Places.Add(placeOfDistribution);
-            MapCenter = HomeDeliveryServicePoint.MapCenter;
-            if(MapCenter.Latitude==0&& MapCenter.Longitude==0&& placeOfDistribution)
-                MapCenter
+            _MapCenter = HomeDeliveryServicePoint.MapCenter;
+            //if(MapCenter.Latitude==0&& MapCenter.Longitude==0&& placeOfDistribution)
+            //    MapCenter
 
-                ServiceAreaMap = HomeDeliveryServicePoint.ServiceAreaMap;
-            IsPolyline = HomeDeliveryServicePoint.IsPolyline;
-            Zoom = HomeDeliveryServicePoint.Zoom;
+            _ServiceAreaMap = HomeDeliveryServicePoint.ServiceAreaMap;
+            _IsPolyline = HomeDeliveryServicePoint.IsPolyline;
+            _Zoom = HomeDeliveryServicePoint.Zoom;
 
             BeforeTransactionCommitCommand = new RelayCommand((object sender) =>
             {
@@ -59,12 +120,12 @@ namespace FLBManager.ViewModel
         }
         public HomeDeliveryServicePresentation()
         {
-            
+
         }
         public WPFUIElementObjectBind.RelayCommand BeforeTransactionCommitCommand { get; set; }
 
-        OOAdvantech.Collections.Generic.Set <IPlace> _Places = new OOAdvantech.Collections.Generic.Set<IPlace>();
-        
+        OOAdvantech.Collections.Generic.Set<IPlace> _Places = new OOAdvantech.Collections.Generic.Set<IPlace>();
+
         [ImplementationMember(nameof(_Places))]
         public List<IPlace> Places => _Places.ToList();
 
@@ -90,15 +151,15 @@ namespace FLBManager.ViewModel
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Places.Clear(); 
+                _Places.Clear();
                 stateTransition.Consistent = true;
             }
 
         }
 
-   
 
-   
+
+
 
         public void SetDefaultPlace(IPlace place)
         {

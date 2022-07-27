@@ -32,7 +32,7 @@ namespace FLBManager.Views
 
         
         }
-
+        protected override bool CheckOnlyPersistentClassInstancesForChanges => false;
 
         private void HomeDeliveryServicePage_Loaded(object sender, RoutedEventArgs e)
         {

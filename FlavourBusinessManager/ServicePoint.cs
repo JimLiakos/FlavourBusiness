@@ -187,6 +187,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{b3a3c408-9ebf-4d2b-af0c-8cc7268f12ab}</MetaDataID>
         OOAdvantech.Collections.Generic.Set<IFoodServiceSession> _ServiceSessions = new OOAdvantech.Collections.Generic.Set<IFoodServiceSession>();
+
+        internal void RunObjectChangeState(HomeDeliveryServicePoint homeDeliveryServicePoint, object p)
+        {
+            _ObjectChangeState?.Invoke(this, null);
+        }
+
         /// <MetaDataID>{3f818102-6573-4e5a-99cf-8f52c39c0805}</MetaDataID>
         [PersistentMember(nameof(_ServiceSessions))]
         [BackwardCompatibilityID("+4")]

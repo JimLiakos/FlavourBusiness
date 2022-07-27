@@ -40,20 +40,21 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e742d9f1-b736-4768-b430-1e9800fef424}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]
-        EndUsers.Coordinate MapCenter { get; set; }
+        EndUsers.Coordinate? MapCenter { get; set; }
 
         /// <MetaDataID>{15e0af3c-2358-437f-a9c5-ea2e6b8276e9}</MetaDataID>
         [BackwardCompatibilityID("+8")]
         [CachingDataOnClientSide]
         double Zoom { get; set; }
 
-        void Update(IPlace placeOfDistribution, Coordinate mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom);
+        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom);
 
         /// <MetaDataID>{36217abe-f4f6-4029-b841-a99a609a540a}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         [CachingDataOnClientSide]
         bool IsPolyline { get; set; }
 
+        
 
     }
 
