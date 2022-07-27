@@ -18,6 +18,10 @@ namespace FlavourBusinessFacade
         void SetDefaultPlace(IPlace deliveryPlace);
 
         List<IPlace> Places { get; }
+
         Task<Coordinate?> GetCurrentLocation();
+
+     
+
     }
 }

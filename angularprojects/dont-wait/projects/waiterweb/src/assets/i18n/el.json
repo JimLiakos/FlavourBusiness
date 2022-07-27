@@ -54,6 +54,12 @@
 		"PanButtonTooltip":"Μετακινήστε τον χάρτη",
 	   "DrawPathButtonTooltip":"Σχεδιάστε τη διαδρομή",
 	   "ClosePathButtonTooltip":"Ενοποίηση διαδρομής" 
+	},
+	"Edit":
+	{
+		"UndoCommandTooltip":"Αναίρεση",
+		"RedoCommandTooltip":"Επανάληψη"
 	}
+
 
 }

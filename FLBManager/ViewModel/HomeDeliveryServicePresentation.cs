@@ -21,12 +21,32 @@ namespace FLBManager.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [HttpVisible]
+        public List<Coordinate> ServiceAreaMap { get; set; }
+
+        [HttpVisible]
+        public Coordinate MapCenter { get; set; }
+
+        [HttpVisible]
+        public double Zoom { get; set; }
+
+        [HttpVisible]
+        public bool IsPolyline { get; set; }
+
+
         public HomeDeliveryServicePresentation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)
         {
             HomeDeliveryServicePoint = homeDeliveryServicePoint;
             var placeOfDistribution = homeDeliveryServicePoint.PlaceOfDistribution;
             if (placeOfDistribution != null)
                 _Places.Add(placeOfDistribution);
+            MapCenter = HomeDeliveryServicePoint.MapCenter;
+            if(MapCenter.Latitude==0&& MapCenter.Longitude==0&& placeOfDistribution)
+                MapCenter
+
+                ServiceAreaMap = HomeDeliveryServicePoint.ServiceAreaMap;
+            IsPolyline = HomeDeliveryServicePoint.IsPolyline;
+            Zoom = HomeDeliveryServicePoint.Zoom;
 
             BeforeTransactionCommitCommand = new RelayCommand((object sender) =>
             {
@@ -34,7 +54,7 @@ namespace FLBManager.ViewModel
                     HomeDeliveryServicePoint.PlaceOfDistribution = null;
                 else
                     HomeDeliveryServicePoint.PlaceOfDistribution = _Places[0];
-
+                HomeDeliveryServicePoint.Update(HomeDeliveryServicePoint.PlaceOfDistribution, MapCenter, ServiceAreaMap, IsPolyline, Zoom);
             });
         }
         public HomeDeliveryServicePresentation()

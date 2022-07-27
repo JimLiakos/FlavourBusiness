@@ -14,6 +14,10 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class HomeDeliveryServicePoint : ServicePoint, IHomeDeliveryServicePoint
     {
+        /// <MetaDataID>{f5213c16-1b33-465c-9c83-9ffb82f8259f}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+10")]
+        private string MapCenterJson;
 
         /// <exclude>Excluded</exclude> 
         decimal _MinimumOrderValue;
@@ -108,7 +112,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         string PlaceOfDistributionJson = null;
 
         /// <exclude>Excluded</exclude>
-        EndUsers.Place _PlaceOfDistribution ;
+        EndUsers.Place _PlaceOfDistribution;
         /// <MetaDataID>{67337dcd-a5e2-4ca9-8c70-077d6e594510}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         public IPlace PlaceOfDistribution
@@ -127,11 +131,77 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        Coordinate _MapCenter;
+        /// <MetaDataID>{14a3ba03-5e0d-43c1-bbd1-eb01a8c246ea}</MetaDataID>
+        public Coordinate MapCenter { get => _MapCenter; set => _MapCenter= value; }
+
+
+        /// <exclude>Excluded</exclude>
+        double _Zoom;
+
+        /// <MetaDataID>{42346420-ec90-4b15-9070-2eac25381892}</MetaDataID>
+        [PersistentMember(nameof(_Zoom))]
+        [BackwardCompatibilityID("+8")]
+        public double Zoom
+        {
+            get => _Zoom; 
+            set
+            {
+                if (_Zoom != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Zoom = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _IsPolyline;
+        /// <MetaDataID>{003f8343-7a42-40a2-a86e-b9940dcdddeb}</MetaDataID>
+        [PersistentMember(nameof(_IsPolyline))]
+        [BackwardCompatibilityID("+9")]
+        public bool IsPolyline
+        {
+            get => _IsPolyline; 
+            set
+            {
+                if (_IsPolyline != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsPolyline = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{1348a699-3c57-4358-a22a-845dcb992d0a}</MetaDataID>
+        public void Update(IPlace placeOfDistribution, Coordinate mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                PlaceOfDistribution = placeOfDistribution;
+                MapCenter = mapCenter;
+                ServiceAreaMap = serviceAreaMap;
+                IsPolyline = IsPolyline;
+                Zoom = zoom;
+
+                stateTransition.Consistent = true;
+            }
+        }
+
         /// <MetaDataID>{ae158781-fd71-4b27-8311-76438eaabc23}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+1")]
-        string ServiceAreaMapJson;
+        string ServiceAreaMapJson = @"[{""Latitude"":38.000240262320936, ""Longitude"":23.750335054426756},{""Latitude"":37.99832108602798,""Longitude"":23.751161174803343},{ ""Latitude"":37.99534499527491,""Longitude"":23.749326543837157},{ ""Latitude"":37.996503317677686,""Longitude"":23.74603279116687},{ ""Latitude"":37.99605520972059,""Longitude"":23.743919210463133},{ ""Latitude"":37.99616512324652,""Longitude"":23.742170410185423},{ ""Latitude"":37.99491379029195,""Longitude"":23.736054973631468},{ ""Latitude"":37.995556369340605,""Longitude"":23.732074575453368},{ ""Latitude"":38.00013880932487,""Longitude"":23.7332332897478},{ ""Latitude"":38.00572696945966,""Longitude"":23.734713869124022},{ ""Latitude"":38.00665265229764,""Longitude"":23.734955267935362},{ ""Latitude"":38.00648357867907,""Longitude"":23.740719335108366},{ ""Latitude"":38.005760784563485,""Longitude"":23.741502540140715},{ ""Latitude"":38.00575655767636,""Longitude"":23.742610292463866},{ ""Latitude"":38.006542372746324,""Longitude"":23.743995032319887},{ ""Latitude"":38.00739196305551,""Longitude"":23.744778237352236},{ ""Latitude"":38.00814010159382,""Longitude"":23.744831881532534},{ ""Latitude"":38.00805164316818,""Longitude"":23.746637986944283},{ ""Latitude"":38.007451441510376,""Longitude"":23.747614311025703},{ ""Latitude"":38.00665680077053,""Longitude"":23.74774305705842},{ ""Latitude"":38.007299276929025,""Longitude"":23.7491807210904},{ ""Latitude"":38.00653844928516,""Longitude"":23.74970643405732},{ ""Latitude"":38.00627449090539,""Longitude"":23.74997551698178},{ ""Latitude"":38.006502740849264,""Longitude"":23.75049050111264},{ ""Latitude"":38.005302307259825,""Longitude"":23.751327350325287},{ ""Latitude"":38.00536148402404,""Longitude"":23.751627757734955},{ ""Latitude"":38.00283374825802,""Longitude"":23.751928165144623},{ ""Latitude"":38.00192619043664,""Longitude"":23.75025822604646},{ ""Latitude"":38.00165565502161,""Longitude"":23.750526446947948},{ ""Latitude"":38.00077640802997,""Longitude"":23.74972178424348},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756}]";
 
+    
         /// <MetaDataID>{23169d00-d175-494e-9d0f-ab960b760834}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+2")]
@@ -142,8 +212,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         void BeforeCommitObjectState()
         {
             ServiceAreaMapJson = OOAdvantech.Json.JsonConvert.SerializeObject(_ServiceAreaMap);
+            MapCenterJson = OOAdvantech.Json.JsonConvert.SerializeObject(_MapCenter);
             WeeklyDeliveryScheduleJson = OOAdvantech.Json.JsonConvert.SerializeObject(_WeeklyDeliverySchedule);
-            PlaceOfDistributionJson= OOAdvantech.Json.JsonConvert.SerializeObject(_PlaceOfDistribution);
+            PlaceOfDistributionJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PlaceOfDistribution);
+            
         }
         /// <MetaDataID>{d602d811-8ffd-4679-a1ac-6511c47a057a}</MetaDataID>
         [ObjectActivationCall]
@@ -151,6 +223,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             if (!string.IsNullOrWhiteSpace(ServiceAreaMapJson))
                 _ServiceAreaMap = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Coordinate>>(ServiceAreaMapJson);
+
+            if (!string.IsNullOrWhiteSpace(MapCenterJson))
+                _MapCenter = OOAdvantech.Json.JsonConvert.DeserializeObject<Coordinate>(MapCenterJson);
 
             if (!string.IsNullOrWhiteSpace(WeeklyDeliveryScheduleJson))
                 _WeeklyDeliverySchedule = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<DayOfWeek, List<OpeningHours>>>(WeeklyDeliveryScheduleJson);
