@@ -189,7 +189,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 PlaceOfDistribution = placeOfDistribution;
                 MapCenter = mapCenter;
                 ServiceAreaMap = serviceAreaMap;
-                IsPolyline = IsPolyline;
+                IsPolyline = isPolyline;
                 Zoom = zoom;
 
                 stateTransition.Consistent = true;

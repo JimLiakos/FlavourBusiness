@@ -29,7 +29,15 @@ namespace FLBManager.ViewModel
             get => _ServiceAreaMap;
             set
             {
-                if (_ServiceAreaMap != value)
+                bool hasChanges = true;
+                if (_ServiceAreaMap != null && value != null && value.Count == _ServiceAreaMap.Count)
+                {
+                    if (value.All(x => _ServiceAreaMap.Any(y => y == x)))
+                        hasChanges = false;
+
+
+                }
+                if (hasChanges)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
