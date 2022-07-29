@@ -29,9 +29,16 @@ namespace FLBManager.Views
 
             
             Loaded += HomeDeliveryServicePage_Loaded;
+            Unloaded += HomeDeliveryServicePage_Unloaded;
 
         
         }
+
+        private void HomeDeliveryServicePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Browser?.DisposeBrowser();
+        }
+
         protected override bool CheckOnlyPersistentClassInstancesForChanges => false;
 
         private void HomeDeliveryServicePage_Loaded(object sender, RoutedEventArgs e)
