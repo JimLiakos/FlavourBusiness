@@ -63,9 +63,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
     public struct OpeningHours
     {
         /// <MetaDataID>{7e6ed39c-744d-4ee8-9f08-e27cd6819462}</MetaDataID>
-        public System.DateTime SartsAt;
+        public double StartsAt;
         /// <MetaDataID>{531e0650-2eb1-4fa0-af19-00eec90d272c}</MetaDataID>
-        public System.DateTime EndsAt;
+        public double EndsAt;
     }
 }
 

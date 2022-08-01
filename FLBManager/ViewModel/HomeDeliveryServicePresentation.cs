@@ -66,6 +66,24 @@ namespace FLBManager.ViewModel
             }
         }
 
+        [HttpVisible]
+        public void SetOpeningHoursForDate(DayOfWeek dayOfWeek, List<OpeningHours> openingHours)
+        {
+            WeeklyDeliverySchedule[dayOfWeek] = openingHours;
+        }
+
+        
+
+        //Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule=new Dictionary<DayOfWeek, List<OpeningHours>>();
+
+        [HttpVisible]
+        public List<OpeningHours> GetOpeningHoursForDate(DayOfWeek dayOfWeek)
+        {
+            List<OpeningHours> openingHours = null;
+            WeeklyDeliverySchedule.TryGetValue(dayOfWeek, out openingHours);
+            return openingHours;
+        }
+
         double _Zoom;
         [HttpVisible]
         public double Zoom
@@ -116,6 +134,7 @@ namespace FLBManager.ViewModel
             _ServiceAreaMap = HomeDeliveryServicePoint.ServiceAreaMap;
             _IsPolyline = HomeDeliveryServicePoint.IsPolyline;
             _Zoom = HomeDeliveryServicePoint.Zoom;
+            WeeklyDeliverySchedule = HomeDeliveryServicePoint.WeeklyDeliverySchedule;
 
             BeforeTransactionCommitCommand = new RelayCommand((object sender) =>
             {
@@ -166,7 +185,7 @@ namespace FLBManager.ViewModel
         }
 
 
-
+        Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
 
 
         public void SetDefaultPlace(IPlace place)
@@ -186,4 +205,7 @@ namespace FLBManager.ViewModel
             return null;
         }
     }
+
+
+
 }
