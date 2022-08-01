@@ -47,7 +47,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [CachingDataOnClientSide]
         double Zoom { get; set; }
 
-        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom);
+        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<System.DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule);
 
         /// <MetaDataID>{36217abe-f4f6-4029-b841-a99a609a540a}</MetaDataID>
         [BackwardCompatibilityID("+9")]

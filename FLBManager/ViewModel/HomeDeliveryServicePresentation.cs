@@ -69,7 +69,17 @@ namespace FLBManager.ViewModel
         [HttpVisible]
         public void SetOpeningHoursForDate(DayOfWeek dayOfWeek, List<OpeningHours> openingHours)
         {
-            WeeklyDeliverySchedule[dayOfWeek] = openingHours;
+            var existingOpeningHours = GetOpeningHoursForDate(dayOfWeek);
+            if (existingOpeningHours.Count != openingHours.Count || !openingHours.All(x => existingOpeningHours.Any(y => x.StartsAt == y.StartsAt && x.EndsAt == y.EndsAt)))
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    WeeklyDeliverySchedule[dayOfWeek] = openingHours; 
+                    stateTransition.Consistent = true;
+                }
+
+            }
         }
 
         
@@ -80,8 +90,10 @@ namespace FLBManager.ViewModel
         public List<OpeningHours> GetOpeningHoursForDate(DayOfWeek dayOfWeek)
         {
             List<OpeningHours> openingHours = null;
-            WeeklyDeliverySchedule.TryGetValue(dayOfWeek, out openingHours);
-            return openingHours;
+            if (WeeklyDeliverySchedule.TryGetValue(dayOfWeek, out openingHours))
+                return openingHours;
+            else
+                return new List<OpeningHours>();
         }
 
         double _Zoom;
@@ -142,7 +154,7 @@ namespace FLBManager.ViewModel
                     HomeDeliveryServicePoint.PlaceOfDistribution = null;
                 else
                     HomeDeliveryServicePoint.PlaceOfDistribution = _Places[0];
-                HomeDeliveryServicePoint.Update(HomeDeliveryServicePoint.PlaceOfDistribution, MapCenter, ServiceAreaMap, IsPolyline, Zoom);
+                HomeDeliveryServicePoint.Update(HomeDeliveryServicePoint.PlaceOfDistribution, MapCenter, ServiceAreaMap, IsPolyline, Zoom, WeeklyDeliverySchedule);
             });
         }
         public HomeDeliveryServicePresentation()

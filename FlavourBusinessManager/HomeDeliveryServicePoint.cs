@@ -181,7 +181,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{1348a699-3c57-4358-a22a-845dcb992d0a}</MetaDataID>
-        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom)
+        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -191,6 +191,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 ServiceAreaMap = serviceAreaMap;
                 IsPolyline = isPolyline;
                 Zoom = zoom;
+                WeeklyDeliverySchedule= weeklyDeliverySchedule;
 
                 stateTransition.Consistent = true;
             }
