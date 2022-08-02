@@ -75,14 +75,14 @@ namespace FLBManager.ViewModel
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    WeeklyDeliverySchedule[dayOfWeek] = openingHours; 
+                    WeeklyDeliverySchedule[dayOfWeek] = openingHours;
                     stateTransition.Consistent = true;
                 }
 
             }
         }
 
-        
+
 
         //Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule=new Dictionary<DayOfWeek, List<OpeningHours>>();
 
@@ -94,6 +94,11 @@ namespace FLBManager.ViewModel
                 return openingHours;
             else
                 return new List<OpeningHours>();
+        }
+        [HttpVisible]
+        public Dictionary<DayOfWeek, List<OpeningHours>> GetWeeklyDeliverySchedule()
+        {
+            return WeeklyDeliverySchedule;
         }
 
         double _Zoom;

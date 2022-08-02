@@ -3,35 +3,30 @@
 		"ActiveShiftWorkTitle": "Σε βάρδια ..*",
 		"OffShiftTitle": "Εκτός βάρδιας ..*"
 	},
-
-	"RoomService":
-	{
-		"BillCommandLabel":"Λογαριασμός",
-		"BillLabel":"Λογαριασμός",
-		"MessmatesCommandLabel":"Συνδαιτυμόνες",
-        "TableAvailableCommandLabel":"Τραπέζι Ελεύθερο",
-		"TransferAllCommandLabel":"Μεταφορά τραπεζιού",
-		"PartialTransferCommandLabel":"Μεταφορά ειδών",
-		"ItemsReadyToServeMessage":"Στον πάγκο υπάρχουν είδη για σερβίρισμα",
+	"RoomService": {
+		"BillCommandLabel": "Λογαριασμός",
+		"BillLabel": "Λογαριασμός",
+		"MessmatesCommandLabel": "Συνδαιτυμόνες",
+		"TableAvailableCommandLabel": "Τραπέζι Ελεύθερο",
+		"TransferAllCommandLabel": "Μεταφορά τραπεζιού",
+		"PartialTransferCommandLabel": "Μεταφορά ειδών",
+		"ItemsReadyToServeMessage": "Στον πάγκο υπάρχουν είδη για σερβίρισμα",
 		"MealConversationTimeoutMessage": "Υπέρβαση χρονού παραγγελίας στο τρσπέζι {0}",
-		"WillLayTheTableMessage":"'Ο {0}' \nΘα στρώσει το τραπέζι\n'{1}'",
-		"LayTableMessageDialogTitle":"Στρώσιμο τραπεζιού",
-		"WillTakeCareLabel":"Θα φροντίσω",
-		"MealSessionStartedAtLabel":"Ξεκίνησε : ",
-		"LastMealSessionChangesAtLabel":"΄Άλλαξε :",
-		"SessionTransferErrorMessage":"Μερική μεταφορά της ενότητας '{0}' δεν επιτρέπεται.",
-		"SharedItemsTransferErrorMessage":"Μερική μεταφορά του κοινού είδους '{0}' δεν επιτρέπεται.",
-		"TransferItemsWillBeDoneMessage":"Τα είδη θα μεταφερθούν στο τραπέζι {0}",
-		"TransferErrorMessageOKButton":"OK"
-		
-
+		"WillLayTheTableMessage": "'Ο {0}' \nΘα στρώσει το τραπέζι\n'{1}'",
+		"LayTableMessageDialogTitle": "Στρώσιμο τραπεζιού",
+		"WillTakeCareLabel": "Θα φροντίσω",
+		"MealSessionStartedAtLabel": "Ξεκίνησε : ",
+		"LastMealSessionChangesAtLabel": "΄Άλλαξε :",
+		"SessionTransferErrorMessage": "Μερική μεταφορά της ενότητας '{0}' δεν επιτρέπεται.",
+		"SharedItemsTransferErrorMessage": "Μερική μεταφορά του κοινού είδους '{0}' δεν επιτρέπεται.",
+		"TransferItemsWillBeDoneMessage": "Τα είδη θα μεταφερθούν στο τραπέζι {0}",
+		"TransferErrorMessageOKButton": "OK"
 	},
-	"ModalDialog":
-	{
-		"OKButtonLabel":"Εντάξει",
-		"CancelButtonLabel":"Άκυρο",
-		"YesButtonLabel":"Ναι",
-		"NoButtonLabel":"Όχι"
+	"ModalDialog": {
+		"OKButtonLabel": "Εντάξει",
+		"CancelButtonLabel": "Άκυρο",
+		"YesButtonLabel": "Ναι",
+		"NoButtonLabel": "Όχι"
 	},
 	"DatePrompt": {
 		"YesterdayPrompt": "Χτές",
@@ -43,23 +38,32 @@
 		"YearPrompt": "{0} χρόνο πριν",
 		"YearsPrompt": "{0} χρόνια πριν"
 	},
-	"Supervisor":{
-		"UnderPreparationCommandLabel":"Ετοιμάζονται",
-		"AllCommandLabel":"Όλα"
-	}
-	,
-	"PlacesPageStrings":
-	{
-		"DistributionCenterLabel":"Διεύθυνση κέντρου διανομής",
-		"PanButtonTooltip":"Μετακινήστε τον χάρτη",
-	   "DrawPathButtonTooltip":"Σχεδιάστε τη διαδρομή",
-	   "ClosePathButtonTooltip":"Ενοποίηση διαδρομής" 
+	"Supervisor": {
+		"UnderPreparationCommandLabel": "Ετοιμάζονται",
+		"AllCommandLabel": "Όλα"
 	},
-	"Edit":
-	{
-		"UndoCommandTooltip":"Αναίρεση",
-		"RedoCommandTooltip":"Επανάληψη"
+	"PlacesPageStrings": {
+		"DistributionCenterLabel": "Διεύθυνση κέντρου διανομής",
+		"PanButtonTooltip": "Μετακινήστε τον χάρτη",
+		"DrawPathButtonTooltip": "Σχεδιάστε τη διαδρομή",
+		"ClosePathButtonTooltip": "Ενοποίηση διαδρομής"
+	},
+	"Edit": {
+		"UndoCommandTooltip": "Αναίρεση",
+		"RedoCommandTooltip": "Επανάληψη"
+	},
+	"WeeklySchedule": {
+		"Monday": "Δευτέρα",
+		"Tuesday": "Τρίτη",
+		"Wednesday": "Τετάρτη",
+		"Thursday": "Πέμπτη",
+		"Friday": "Παρασκευή",
+		"Saturday": "Σάββατο",
+		"Sunday": "Κυριακή",
+		"Closed": "Κλειστό",
+		"OpeningHoursStartLabel": "Ανοίγει",
+		"OpeningHoursEndsLabel": "Κλείνει",
+		"AddOpeningHoursTooltip": "Προσθήκη ωρών λειτουργίας",
+		"OpeningHoursEditTooltip":"Κάνε click πάνω στην ημέρα για να τερματιστή η επεξεργασία"
 	}
-
-
 }

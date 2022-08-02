@@ -34,6 +34,8 @@ namespace FLBManager
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
 
             var location = watcher.Position.Location;
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("el");
 
             //try
             //{
