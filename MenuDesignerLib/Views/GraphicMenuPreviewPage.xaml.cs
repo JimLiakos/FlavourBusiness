@@ -64,7 +64,7 @@ namespace MenuDesigner.Views
                 BookViewModel.CreateMenuPreview(FlavoursOrderServer.MenuData.MenuRoot, FlavoursOrderServer.MenuData.MenuName, GraphickMenuResources);
 
             }));
-            string url = @"http://localhost:4300/";
+            string url = @"https://localhost:4300/";
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.ProcessRequest += this.Browser_ProcessRequest;
