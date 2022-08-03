@@ -483,6 +483,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.IFoodTypeTag> FoodTypes
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_FoodTypes", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.IFoodTypeTag>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint DeliveryServicePoint
         {
             get
@@ -692,6 +704,24 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemoveFoodType(FlavourBusinessFacade.IFoodTypeTag foodTypeTag)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodTypeTag;
+            argsTypes[0] = typeof(FlavourBusinessFacade.IFoodTypeTag);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveFoodType", args, argsTypes);
+        }
+        
+        public void AddFoodType(FlavourBusinessFacade.IFoodTypeTag foodTypeTag)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodTypeTag;
+            argsTypes[0] = typeof(FlavourBusinessFacade.IFoodTypeTag);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "AddFoodType", args, argsTypes);
         }
         
         public void LaunchHomeDeliveryService()
