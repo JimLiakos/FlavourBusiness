@@ -655,9 +655,22 @@ namespace FlavourBusinessManager
             GetRunTime().RemoveHomeDeliveryService();
         }
 
+        /// <MetaDataID>{d3551fc2-7c11-4efa-96fd-aff02a9d9970}</MetaDataID>
         public void LaunchHomeDeliveryService()
         {
             GetRunTime().LaunchHomeDeliveryService();
+        }
+
+        /// <MetaDataID>{073ddaf2-3bf7-4a29-8938-6df63e777f81}</MetaDataID>
+        public void RemoveFoodType(IFoodTypeTag foodTypeTag)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{cac75434-043b-402a-9b8f-52802390a295}</MetaDataID>
+        public void AddFoodType(IFoodTypeTag foodTypeTag)
+        {
+            throw new NotImplementedException();
         }
 
         /// <MetaDataID>{1900ac60-fd30-4922-b07b-a93d61875010}</MetaDataID>
@@ -672,6 +685,10 @@ namespace FlavourBusinessManager
             }
         }
 
+        /// <MetaDataID>{97b2ae66-b89d-4e66-883b-e03bb1d3817a}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
+
+        /// <MetaDataID>{057cd81b-2ed5-4e0a-9a82-c905c36086f5}</MetaDataID>
+        public List<IFoodTypeTag> FoodTypes => throw new NotImplementedException();
     }
 }

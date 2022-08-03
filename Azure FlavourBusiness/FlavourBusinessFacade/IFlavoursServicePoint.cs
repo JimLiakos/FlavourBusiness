@@ -12,6 +12,17 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        /// <MetaDataID>{770ae1ae-dc20-4fdb-83e1-8e4b6806f409}</MetaDataID>
+        void RemoveFoodType(IFoodTypeTag foodTypeTag);
+
+        /// <MetaDataID>{a5ae81a7-b59b-4cd5-96c8-73e3573492a1}</MetaDataID>
+        void AddFoodType(IFoodTypeTag foodTypeTag);
+
+        [Association("FlavoursServicesContextFoodTypes", Roles.RoleA, "05ca45da-920e-451b-a1ef-5d0c5b894e5a")]
+        [RoleAMultiplicityRange(1)]
+        List<IFoodTypeTag> FoodTypes { get; }
+
+
         [Association("ServiceContextDelivery", Roles.RoleA, "13742cae-d52d-4ee7-a9cc-02be8e8192c7")]
         [RoleAMultiplicityRange(1, 1)]
         IHomeDeliveryServicePoint DeliveryServicePoint { get; }
