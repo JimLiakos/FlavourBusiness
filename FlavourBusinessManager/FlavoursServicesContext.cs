@@ -358,8 +358,8 @@ namespace FlavourBusinessManager
         public IFlavoursServicesContextRuntime GetRunTime()
         {
 
-       
-        
+
+
 
             lock (ServicesContextLock)
             {
@@ -374,7 +374,7 @@ namespace FlavourBusinessManager
                 catch (Exception error)
                 {
                 }
-    
+
                 try
                 {
                     string storageIdentity = null;
@@ -407,7 +407,28 @@ namespace FlavourBusinessManager
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.Description = Description;
+                        try
+                        {
+                            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
+                            FoodTypeTag foodTypeTag = (from s_foodTypeTag in storage.GetObjectCollection<FoodTypeTag>()
+                                                       select s_foodTypeTag).FirstOrDefault();
 
+                            if (foodTypeTag == null)
+                            {
+                                foodTypeTag = new FoodTypeTag(); ;
+                                foodTypeTag.Name = "pizza";
+                            }
+                            else
+                                foodTypeTag.Name = foodTypeTag.Name + "_1";
+
+                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
+
+                        }
+                        catch (Exception error)
+                        {
+
+
+                        }
                         return FlavoursServicesContextRuntime;
                     }
                     else
@@ -429,7 +450,7 @@ namespace FlavourBusinessManager
                         catch (Exception error)
                         {
                         }
-                  
+
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
@@ -489,7 +510,7 @@ namespace FlavourBusinessManager
 
                     throw;
                 }
-                
+
             }
         }
 
