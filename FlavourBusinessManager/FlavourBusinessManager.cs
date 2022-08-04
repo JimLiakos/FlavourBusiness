@@ -1,6 +1,7 @@
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using ComputationalResources;
 using FlavourBusinessFacade;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -24,11 +25,14 @@ namespace FlavourBusinessManager
             {
                 CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
                 CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
+                CloudTableStorageAccount_a = new Azure.Data.Tables.TableServiceClient(CloudBlobStorageAccount.ToString(true));
             }
             else
             {
                 CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey), true);
                 CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey), true);
+                CloudTableStorageAccount_a = new Azure.Data.Tables.TableServiceClient(CloudBlobStorageAccount.ToString(true));
+
                 RootContainer = rootContainer;
             }
 
@@ -87,6 +91,7 @@ namespace FlavourBusinessManager
         public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount { get; set; }
 
         public static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount { get; set; }
+        public static TableServiceClient CloudTableStorageAccount_a { get; private set; }
         public static string RootContainer { get; set; }
 
         /// <MetaDataID>{4ce71c7e-e41d-445a-ad42-c239c64c53c5}</MetaDataID>

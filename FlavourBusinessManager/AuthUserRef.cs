@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
+using Azure;
 
 namespace FlavourBusinessManager
 {
     /// <MetaDataID>{2d073bb7-66e1-4428-995a-434e081a6708}</MetaDataID>
     /// <summary>Defines a authentication system account which refered to server roles in flavour business system roles  </summary>
-    public class AuthUserRef : Microsoft.Azure.Cosmos.Table.TableEntity
+    public class AuthUserRef : Microsoft.Azure.Cosmos.Table.TableEntity,Azure.Data.Tables.ITableEntity
     {
 
         public class Role
@@ -108,6 +109,39 @@ namespace FlavourBusinessManager
                 return _AuthUserRefCloudTable;
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        static Azure.Data.Tables.TableClient _AuthUserRefCloudTable_a;
+        
+        static Azure.Data.Tables.TableClient AuthUserRefCloudTable_a
+        {
+            get
+            {
+                if (_AuthUserRefCloudTable_a == null)
+                {
+                    
+                    var tablesAccount = FlavourBusinessManagerApp.CloudTableStorageAccount_a;
+
+                     
+                    var table_a= tablesAccount.GetTableClient("AuthUserRefCloudTable");
+
+                    Azure.Pageable<Azure.Data.Tables.Models.TableItem> queryTableResults = tablesAccount.Query(String.Format("TableName eq '{0}'", AuthUserRefCloudTable));
+                    bool AuthUserRefCloudTable_exist = queryTableResults.Count() > 0;
+
+
+
+             
+                    if (AuthUserRefCloudTable_exist)
+                        table_a.CreateIfNotExists();
+
+                    
+                    _AuthUserRefCloudTable_a= table_a;
+                }
+                return _AuthUserRefCloudTable_a;
+            }
+        }
+
         /// <MetaDataID>{c51d844b-ef6c-414e-a48f-a0ad7c7223f1}</MetaDataID>
         public static ICRCConfig CRCConfig
         {
@@ -150,9 +184,13 @@ namespace FlavourBusinessManager
 
                 string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
 
-                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                //AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                //                           where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
+                //                           select authUserRefEntry).FirstOrDefault();
+                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                            where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
                                            select authUserRefEntry).FirstOrDefault();
+
 
                 if (authUserRef == null && create)
                 {
@@ -187,6 +225,7 @@ namespace FlavourBusinessManager
                     return null;
 
                 string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
+
 
                 AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
                                            where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
@@ -263,6 +302,8 @@ namespace FlavourBusinessManager
 
         /// <MetaDataID>{73de9d3d-cffe-49cd-a33b-e10fbb1f6748}</MetaDataID>
         public string RolesJson { get; set; }
+        DateTimeOffset? Azure.Data.Tables.ITableEntity.Timestamp { get; set; }
+        ETag Azure.Data.Tables.ITableEntity.ETag { get; set; }
 
         /// <MetaDataID>{1e0a7d36-5beb-430c-a0d3-f066edc7f716}</MetaDataID>
         object rolesLock = new object();
