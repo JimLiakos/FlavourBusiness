@@ -44,24 +44,31 @@ namespace FlavourBusinessManager
 
 
         /// <exclude>Excluded</exclude>
-        static CloudTable _DeviceIDAbbreviationTable;
+        static Azure.Data.Tables.TableClient _DeviceIDAbbreviationTable;
         /// <MetaDataID>{8aa0e63d-2722-4cb9-b67a-c0f0c813a854}</MetaDataID>
-        static CloudTable DeviceIDAbbreviationTable
+        static Azure.Data.Tables.TableClient DeviceIDAbbreviationTable
         {
             get
             {
                 if (_DeviceIDAbbreviationTable == null)
                 {
-                    CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
+                    //CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
+                    var tablesAccount = FlavourBusinessManagerApp.CloudTableStorageAccount_a;
                     //if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
                     //    account = CloudStorageAccount.DevelopmentStorageAccount;
                     //else
                     //    account = new CloudStorageAccount(new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
 
-                    CloudTableClient tableClient = account.CreateCloudTableClient();
-                    CloudTable table = tableClient.GetTableReference("DeviceIDAbbreviation");
-                    if (!table.Exists())
+                    //CloudTableClient tableClient = account.CreateCloudTableClient();
+                    // CloudTable table = tableClient.GetTableReference("DeviceIDAbbreviation");
+                    Azure.Data.Tables.TableClient table = tablesAccount.GetTableClient("DeviceIDAbbreviation");
+                    Azure.Pageable<Azure.Data.Tables.Models.TableItem> queryTableResults = tablesAccount.Query(String.Format("TableName eq '{0}'", "DeviceIDAbbreviation"));
+                    bool deviceIDAbbreviation_exist = queryTableResults.Count() > 0;
+                    if (!deviceIDAbbreviation_exist)
                         table.CreateIfNotExists();
+
+                    //if (!table.Exists())
+                    //    table.CreateIfNotExists();
                     _DeviceIDAbbreviationTable = table;
                 }
                 return _DeviceIDAbbreviationTable;

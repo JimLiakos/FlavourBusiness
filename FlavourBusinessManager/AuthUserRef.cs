@@ -84,31 +84,31 @@ namespace FlavourBusinessManager
         }
 
 
-        /// <exclude>Excluded</exclude>
-        static CloudTable _AuthUserRefCloudTable;
-        /// <MetaDataID>{8aa0e63d-2722-4cb9-b67a-c0f0c813a854}</MetaDataID>
-        static CloudTable AuthUserRefCloudTable
-        {
-            get
-            {
-                if (_AuthUserRefCloudTable == null)
-                {
-                    CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
+        ///// <exclude>Excluded</exclude>
+        //static CloudTable _AuthUserRefCloudTable;
+        ///// <MetaDataID>{8aa0e63d-2722-4cb9-b67a-c0f0c813a854}</MetaDataID>
+        //static CloudTable AuthUserRefCloudTable
+        //{
+        //    get
+        //    {
+        //        if (_AuthUserRefCloudTable == null)
+        //        {
+        //            CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
 
-                    //if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
-                    //    account = CloudStorageAccount.DevelopmentStorageAccount;
-                    //else
-                    //    account = new CloudStorageAccount(new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
+        //            //if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
+        //            //    account = CloudStorageAccount.DevelopmentStorageAccount;
+        //            //else
+        //            //    account = new CloudStorageAccount(new StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
 
-                    CloudTableClient tableClient = account.CreateCloudTableClient();
-                    CloudTable table = tableClient.GetTableReference("AuthUserRefCloudTable");
-                    if (!table.Exists())
-                        table.CreateIfNotExists();
-                    _AuthUserRefCloudTable = table;
-                }
-                return _AuthUserRefCloudTable;
-            }
-        }
+        //            CloudTableClient tableClient = account.CreateCloudTableClient();
+        //            CloudTable table = tableClient.GetTableReference("AuthUserRefCloudTable");
+        //            if (!table.Exists())
+        //                table.CreateIfNotExists();
+        //            _AuthUserRefCloudTable = table;
+        //        }
+        //        return _AuthUserRefCloudTable;
+        //    }
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -126,7 +126,7 @@ namespace FlavourBusinessManager
                      
                     var table_a= tablesAccount.GetTableClient("AuthUserRefCloudTable");
 
-                    Azure.Pageable<Azure.Data.Tables.Models.TableItem> queryTableResults = tablesAccount.Query(String.Format("TableName eq '{0}'", AuthUserRefCloudTable));
+                    Azure.Pageable<Azure.Data.Tables.Models.TableItem> queryTableResults = tablesAccount.Query(String.Format("TableName eq '{0}'", "AuthUserRefCloudTable"));
                     bool AuthUserRefCloudTable_exist = queryTableResults.Count() > 0;
 
 
@@ -195,8 +195,9 @@ namespace FlavourBusinessManager
                 if (authUserRef == null && create)
                 {
                     authUserRef = new AuthUserRef() { PartitionKey = partitionKey, RowKey = authUser.User_ID, Email = authUser.Email, PhotoUrl = authUser.Picture, RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(new List<string>()) };
-                    TableOperation insertOperation = TableOperation.Insert(authUserRef);
-                    var result = AuthUserRefCloudTable.Execute(insertOperation);
+                    //TableOperation insertOperation = TableOperation.Insert(authUserRef);
+                    //var result = AuthUserRefCloudTable.Execute(insertOperation);
+                    var result = AuthUserRefCloudTable_a.AddEntity(authUserRef);
                 }
                 else
                 {
@@ -207,7 +208,8 @@ namespace FlavourBusinessManager
                             authUserRef.Email = authUser.Email;
                             authUserRef.PhotoUrl = authUser.Picture;
                             TableOperation replaceOperation = TableOperation.Replace(authUserRef);
-                            var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                            //var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                            var result = AuthUserRefCloudTable_a.UpdateEntity(authUserRef, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
                         }
                     }
                 }
@@ -227,15 +229,16 @@ namespace FlavourBusinessManager
                 string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
 
 
-                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                            where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
                                            select authUserRefEntry).FirstOrDefault();
 
                 if (authUserRef == null && create)
                 {
                     authUserRef = new AuthUserRef() { PartitionKey = partitionKey, RowKey = authUser.User_ID, Email = authUser.Email, PhotoUrl = authUser.Picture, RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(new List<string>()) };
-                    TableOperation insertOperation = TableOperation.Insert(authUserRef);
-                    var result = AuthUserRefCloudTable.Execute(insertOperation);
+                    //TableOperation insertOperation = TableOperation.Insert(authUserRef);
+                    //var result = AuthUserRefCloudTable.Execute(insertOperation);
+                    var result = AuthUserRefCloudTable_a.AddEntity(authUserRef);
                 }
                 else
                 {
@@ -245,8 +248,9 @@ namespace FlavourBusinessManager
                         {
                             authUserRef.Email = authUser.Email;
                             authUserRef.PhotoUrl = authUser.Picture;
-                            TableOperation replaceOperation = TableOperation.Replace(authUserRef);
-                            var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                            //TableOperation replaceOperation = TableOperation.Replace(authUserRef);
+                            //var result = AuthUserRefCloudTable.Execute(replaceOperation);
+                            var result = AuthUserRefCloudTable_a.UpdateEntity(authUserRef, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
                         }
                     }
                 }
@@ -264,7 +268,7 @@ namespace FlavourBusinessManager
 
                 string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(user_ID)).AsHexString();
 
-                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                            where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == user_ID
                                            select authUserRefEntry).FirstOrDefault();
 
@@ -282,7 +286,7 @@ namespace FlavourBusinessManager
             {
 
 
-                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                            where authUserRefEntry.Email == userName
                                            select authUserRefEntry).FirstOrDefault();
                 return authUserRef;
@@ -294,7 +298,7 @@ namespace FlavourBusinessManager
         {
             string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(user_ID)).AsHexString();
 
-            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                        where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == user_ID
                                        select authUserRefEntry).FirstOrDefault();
             return authUserRef;
@@ -337,7 +341,7 @@ namespace FlavourBusinessManager
                     {
                         try
                         {
-                            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                                        where authUserRefEntry.PartitionKey == PartitionKey && authUserRefEntry.RowKey == RowKey
                                                        select authUserRefEntry).FirstOrDefault();
 
@@ -349,8 +353,9 @@ namespace FlavourBusinessManager
                                     rolesDictionary.Add(storageRole.ObjectUri, storageRole);
                             }
                             RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(rolesDictionary.Values);
-                            TableOperation updateOperation = TableOperation.Replace(this);
-                            var result = AuthUserRefCloudTable.Execute(updateOperation);
+                            //TableOperation updateOperation = TableOperation.Replace(this);
+                            //var result = AuthUserRefCloudTable.Execute(updateOperation);
+                            var result = AuthUserRefCloudTable_a.UpdateEntity(this, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
                             _Roles = rolesDictionary.Values.ToList();
                             break;
                         }
@@ -381,7 +386,7 @@ namespace FlavourBusinessManager
                     {
                         try
                         {
-                            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
+                            AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable_a.Query<AuthUserRef>()
                                                        where authUserRefEntry.PartitionKey == PartitionKey && authUserRefEntry.RowKey == RowKey
                                                        select authUserRefEntry).FirstOrDefault();
 
@@ -394,8 +399,9 @@ namespace FlavourBusinessManager
                             }
                             rolesDictionary.Remove(role.ObjectUri);
                             RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(rolesDictionary.Values);
-                            TableOperation updateOperation = TableOperation.Replace(this);
-                            var result = AuthUserRefCloudTable.Execute(updateOperation);
+                            //TableOperation updateOperation = TableOperation.Replace(this);
+                            //var result = AuthUserRefCloudTable.Execute(updateOperation);
+                            var result = AuthUserRefCloudTable_a.UpdateEntity(this, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
                             _Roles = rolesDictionary.Values.ToList();
                             break;
                         }
@@ -455,8 +461,9 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{99b2f5eb-477c-4661-999c-9deba6788230}</MetaDataID>
         internal void Save()
         {
-            TableOperation updateOperation = TableOperation.Replace(this);
-            var result = AuthUserRefCloudTable.Execute(updateOperation);
+            //TableOperation updateOperation = TableOperation.Replace(this);
+            //var result = AuthUserRefCloudTable.Execute(updateOperation);
+            var result = AuthUserRefCloudTable_a.UpdateEntity(this, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
         }
     }
 }
