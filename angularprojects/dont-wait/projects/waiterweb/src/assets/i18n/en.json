@@ -14,13 +14,13 @@
 		"MealConversationTimeoutMessage": "Meal conversation is over time at {0}",
 		"WillLayTheTableMessage": "'{0}'\nwill lay the table '{1}'",
 		"LayTableMessageDialogTitle": "Table laying",
-		"WillTakeCareLabel":"I will take care",
-		"MealSessionStartedAtLabel":"Started at: ",
+		"WillTakeCareLabel": "I will take care",
+		"MealSessionStartedAtLabel": "Started at: ",
 		"LastMealSessionChangesAtLabel": "Last change:",
-		"SessionTransferErrorMessage":"Partial transfer of the '{0}' session is not possible",
-		"SharedItemsTransferErrorMessage":"Partial transfer of the sharing item '{0}' is not possible",
-		"TransferItemsWillBeDoneMessage":"The items will be transferred to table {0}",
-		"TransferErrorMessageOKButton":"OK"
+		"SessionTransferErrorMessage": "Partial transfer of the '{0}' session is not possible",
+		"SharedItemsTransferErrorMessage": "Partial transfer of the sharing item '{0}' is not possible",
+		"TransferItemsWillBeDoneMessage": "The items will be transferred to table {0}",
+		"TransferErrorMessageOKButton": "OK"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "OK",
@@ -38,39 +38,51 @@
 		"YearPrompt": "{0} year ago",
 		"YearsPrompt": "{0} years ago"
 	},
-	"Supervisor":{
-		"UnderPreparationCommandLabel":"Under preparation",
-		"AllCommandLabel":"All"
+	"Supervisor": {
+		"UnderPreparationCommandLabel": "Under preparation",
+		"AllCommandLabel": "All"
 	},
-    "App": {
-        "AppTitle":"Don't wait"
-    }
-	,
-	"PlacesPageStrings":
-	{
-		"DistributionCenterLabel":"Address of distribution center",
-		"PanButtonTooltip":"Pan the map",
-		"DrawPathButtonTooltip":"Draw path",
-		"ClosePathButtonTooltip":"Path integration"  
-	}	,
-	"Edit":
-	{
-		"UndoCommandTooltip":"Undo",
-		"RedoCommandTooltip":"Redo"
+	"App": {
+		"AppTitle": "Don't wait"
 	},
-	"WeeklySchedule":
-	{
-		"Monday":"Monday",
-		"Tuesday":"Tuesday",
-		"Wednesday":"Wednesday",
-		"Thursday":"Thursday",
-		"Friday":"Friday",
-		"Saturday":"Saturday",
-		"Sunday":"Sunday",
-		"Closed":"Closed",
-		"OpeningHoursStartLabel":"It opens",
-		"OpeningHoursEndsLabel":"It closes",
-		"AddOpeningHoursTooltip":"Add opening hours"
+	"PlacesPageStrings": {
+		"DistributionCenterLabel": "Address of distribution center",
+		"PanButtonTooltip": "Pan the map",
+		"DrawPathButtonTooltip": "Draw path",
+		"ClosePathButtonTooltip": "Path integration"
+	},
+	"Edit": {
+		"UndoCommandTooltip": "Undo",
+		"RedoCommandTooltip": "Redo"
+	},
+	"WeeklySchedule": {
+		"Monday": "Monday",
+		"Tuesday": "Tuesday",
+		"Wednesday": "Wednesday",
+		"Thursday": "Thursday",
+		"Friday": "Friday",
+		"Saturday": "Saturday",
+		"Sunday": "Sunday",
+		"Closed": "Closed",
+		"OpeningHoursStartLabel": "It opens",
+		"OpeningHoursEndsLabel": "It closes",
+		"AddOpeningHoursTooltip": "Add opening hours"
+	},
+	"FoodTypes": {
+		"SelectFoodTypeTagTooltip": "Click to select food type",
+		"RemoveFoodTypeTagTooltip": "Click to delete this food type",
+		"FoodTypeFilterPlaceholder": "Write the food type filter",
+		"FoodTypeFilterLabel": "Food Type Filter"
+	},
+	"HomeDelivery": {
+		"FreeShippingMinimumOrderLabel": "Free Shipping Minimum Order",
+		"FreeShippingMinimumOrderPlaceholder": "Write the free shipping minimum order value",
+		"ShippingCostLabel": "Shipping Cost",
+		"ShippingCostPlaceholder": "Write the Shipping Cost",
+		"MinimumOrderLabel": "Minimum Order Value",
+		"MinimumOrderPlaceholder": "Minimum Order Value",
+		"MinimumOrderTooltip": "You defines the minimum value of customer order.",
+		"ShippingCostTooltip": "You defines the delivery cost charged to the customer for each order.",
+		"FreeShippingMinimumOrderTooltip": "You defines the minimum order value for free delivery."
 	}
-
 }

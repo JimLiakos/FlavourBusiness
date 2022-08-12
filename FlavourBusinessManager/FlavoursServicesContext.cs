@@ -27,13 +27,41 @@ namespace FlavourBusinessManager
     [Persistent()]
     public class FlavoursServicesContext : MarshalByRefObject, IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <MetaDataID>{c4e48188-9beb-42ae-9bb2-0c8e2ef345b6}</MetaDataID>
+        OOAdvantech.Collections.Generic.Set<IFoodTypeTag> _FoodTypes = new OOAdvantech.Collections.Generic.Set<IFoodTypeTag>();
+
+        /// <MetaDataID>{057cd81b-2ed5-4e0a-9a82-c905c36086f5}</MetaDataID>
+        [PersistentMember(nameof(_FoodTypes))]
+        [BackwardCompatibilityID("+7")]
+        public List<IFoodTypeTag> FoodTypes
+        {
+            get => _FoodTypes.ToThreadSafeList();
+
+        }
+
+
         /// <MetaDataID>{07e6d9ad-97ef-4bf0-a4a8-91c1f5fe9224}</MetaDataID>
         public void RemovePreparationStation(IPreparationStation prepartionStation)
         {
             GetRunTime().RemovePreparationStation(prepartionStation);
         }
 
+        //[BeforeCommitObjectStateInStorageCall]
+        //void BeforeCommitObjectState()
+        //{
+        //    //lock (this)
+        //    //    DeliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlaces);
 
+        //}
+        //[ObjectActivationCall]
+        //public void ObjectActivation()
+        //{
+        //    //if (DeliveryPlacesJson != null)
+        //    //    _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+        //    //else
+        //    //    _DeliveryPlaces = new List<Place>();
+
+        //}
         /// <MetaDataID>{52258872-5176-411c-8cea-4173e715bd41}</MetaDataID>
         public IPreparationStation NewPreparationStation()
         {
@@ -409,25 +437,29 @@ namespace FlavourBusinessManager
                             FlavoursServicesContextRuntime.Description = Description;
                         try
                         {
+#if DEBUG
                             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
-                            FoodTypeTag foodTypeTag = (from s_foodTypeTag in storage.GetObjectCollection<FoodTypeTag>()
-                                                       select s_foodTypeTag).FirstOrDefault();
+                            var foodTypeTags = (from s_foodTypeTag in storage.GetObjectCollection<FoodTypeTag>()
+                                                select s_foodTypeTag).ToList();
 
-                            if (foodTypeTag == null)
+                            string foodCategories = "Καφέδες(47); Σουβλάκια(61); Pizza(48); Κινέζικη(18); Κρέπες(21); Burgers(46); Sushi(26); Γλυκά(24); Μαγειρευτά(40); Ζυμαρικά(36); Μεξικάνικη(5); Νηστίσιμα(16); Βάφλες(10); Ινδική(13); Vegan(8); Brunch(20); Vegetarian(5); Hot Dog(5); Γαλακτοκομικά(1); Ασιατική(24); Σφολιάτες(8); Θαλασσινά(21); Σαλάτες(44); Ζαχαροπλαστείο(10); Cocktails(16); Ιταλική(16); Ψητά - Grill(95); Αρτοποιήματα(2); Sandwich(33); Παγωτό(21); Kebab(12); Πεϊνιρλί(7); Ποτά(13); Ethnic(10); Cool food(6); Κοτόπουλα(5); Ανατολίτικη(8); Φαλάφελ(6); Τσέχικη(1); Κεντροευρωπαϊκή(1); Μεζεδοπωλείο(7); Μεσογειακή(9); Ελληνική(9); Πατσάς(1); Snacks(4); Donuts(2); Πιροσκί(1); Λουκουμάδες(3)";
+
+                            var foodCategoriesNames = foodCategories.Split(';').Select(x => x.Split('(')[0]).ToList();
+                            foreach (var foodCategory in foodCategoriesNames)
                             {
-                                foodTypeTag = new FoodTypeTag(); ;
-                                foodTypeTag.Name = "pizza";
+
+                                if (foodTypeTags.Where(x => x.Name == foodCategory).Count() == 0)
+                                {
+                                    var foodTypeTag = new FoodTypeTag(); ;
+                                    foodTypeTag.Name = foodCategory.Trim();
+                                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
+                                }
+
                             }
-                            else
-                                foodTypeTag.Name = foodTypeTag.Name + "_1";
-
-                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
-
+#endif
                         }
                         catch (Exception error)
                         {
-
-
                         }
                         return FlavoursServicesContextRuntime;
                     }
@@ -683,15 +715,31 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{073ddaf2-3bf7-4a29-8938-6df63e777f81}</MetaDataID>
-        public void RemoveFoodType(IFoodTypeTag foodTypeTag)
+        public void RemoveFoodTypes(List<IFoodTypeTag> foodTypeTags)
         {
-            throw new NotImplementedException();
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var foodTypeTag in foodTypeTags)
+                {
+                    var serverFoodTypeTag = FlavoursServicesContextManagment.Current.FoodTypeTags.Where(x => x.Uri == foodTypeTag.Uri).FirstOrDefault();
+                    _FoodTypes.Remove(serverFoodTypeTag);
+                }
+                stateTransition.Consistent = true;
+            }
         }
 
         /// <MetaDataID>{cac75434-043b-402a-9b8f-52802390a295}</MetaDataID>
-        public void AddFoodType(IFoodTypeTag foodTypeTag)
+        public void AddFoodTypes(List<IFoodTypeTag> foodTypeTags)
         {
-            throw new NotImplementedException();
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var foodTypeTag in foodTypeTags)
+                {
+                    var serverFoodTypeTag = FlavoursServicesContextManagment.Current.FoodTypeTags.Where(x => x.Uri == foodTypeTag.Uri).FirstOrDefault();
+                    _FoodTypes.Add(serverFoodTypeTag);
+                }
+                stateTransition.Consistent = true;
+            }
         }
 
         /// <MetaDataID>{1900ac60-fd30-4922-b07b-a93d61875010}</MetaDataID>
@@ -709,7 +757,6 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{97b2ae66-b89d-4e66-883b-e03bb1d3817a}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
 
-        /// <MetaDataID>{057cd81b-2ed5-4e0a-9a82-c905c36086f5}</MetaDataID>
-        public List<IFoodTypeTag> FoodTypes => throw new NotImplementedException();
+
     }
 }

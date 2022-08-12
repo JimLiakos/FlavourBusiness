@@ -24,6 +24,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{ad37bdfb-0a9f-4753-9723-51fdd393e086}</MetaDataID>
         [PersistentMember(nameof(_MinimumOrderValue))]
         [BackwardCompatibilityID("+4")]
+        [CachingDataOnClientSide]
         public decimal MinimumOrderValue
         {
             get => _MinimumOrderValue;
@@ -97,13 +98,47 @@ namespace FlavourBusinessManager.ServicesContextResources
         decimal _FreeShippingMinimumOrderValue;
 
         /// <MetaDataID>{962cc95f-7c44-456b-9817-831fd6928525}</MetaDataID>
-        public decimal FreeShippingMinimumOrderValue { get => _FreeShippingMinimumOrderValue; set => throw new NotImplementedException(); }
+        [PersistentMember(nameof(_FreeShippingMinimumOrderValue))]
+        [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
+        public decimal FreeShippingMinimumOrderValue
+        {
+            get => _FreeShippingMinimumOrderValue;
+            set
+            {
+                if (_FreeShippingMinimumOrderValue != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FreeShippingMinimumOrderValue = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
-        decimal _MinimumShippingFee;
+        decimal _ShippingCost;
 
         /// <MetaDataID>{48980b23-8e25-47c9-906c-0ced1401a34e}</MetaDataID>
-        public decimal MinimumShippingFee { get => _MinimumShippingFee; set => throw new NotImplementedException(); }
+        [PersistentMember(nameof(_ShippingCost))]
+        [BackwardCompatibilityID("+11")]
+        [CachingDataOnClientSide]
+        public decimal ShippingCost
+        {
+            get => _ShippingCost;
+            set
+            {
+                if (_ShippingCost != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ShippingCost = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <MetaDataID>{1c2670e3-8d2d-4b7c-aaed-1ec452eab8ee}</MetaDataID>
@@ -134,7 +169,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         Coordinate? _MapCenter;
         /// <MetaDataID>{14a3ba03-5e0d-43c1-bbd1-eb01a8c246ea}</MetaDataID>
-        public Coordinate? MapCenter { get => _MapCenter; set => _MapCenter= value; }
+        public Coordinate? MapCenter { get => _MapCenter; set => _MapCenter = value; }
 
 
         /// <exclude>Excluded</exclude>
@@ -145,7 +180,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+8")]
         public double Zoom
         {
-            get => _Zoom; 
+            get => _Zoom;
             set
             {
                 if (_Zoom != value)
@@ -166,7 +201,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+9")]
         public bool IsPolyline
         {
-            get => _IsPolyline; 
+            get => _IsPolyline;
             set
             {
                 if (_IsPolyline != value)
@@ -181,7 +216,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{1348a699-3c57-4358-a22a-845dcb992d0a}</MetaDataID>
-        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule)
+        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -191,20 +226,24 @@ namespace FlavourBusinessManager.ServicesContextResources
                 ServiceAreaMap = serviceAreaMap;
                 IsPolyline = isPolyline;
                 Zoom = zoom;
-                WeeklyDeliverySchedule= weeklyDeliverySchedule;
+                WeeklyDeliverySchedule = weeklyDeliverySchedule;
+                MinimumOrderValue = minimumOrderValue;
+                ShippingCost = shippingCost;
+                FreeShippingMinimumOrderValue = freeShippingMinimumOrderValue;
+
 
                 stateTransition.Consistent = true;
             }
             base.RunObjectChangeState(this, null);
-            
+
         }
 
         /// <MetaDataID>{ae158781-fd71-4b27-8311-76438eaabc23}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+1")]
-        string ServiceAreaMapJson; 
+        string ServiceAreaMapJson;
 
-    
+
         /// <MetaDataID>{23169d00-d175-494e-9d0f-ab960b760834}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+2")]
@@ -215,20 +254,20 @@ namespace FlavourBusinessManager.ServicesContextResources
         void BeforeCommitObjectState()
         {
             ServiceAreaMapJson = OOAdvantech.Json.JsonConvert.SerializeObject(_ServiceAreaMap);
-            if(_MapCenter!=null)
+            if (_MapCenter != null)
                 MapCenterJson = OOAdvantech.Json.JsonConvert.SerializeObject(_MapCenter);
 
             WeeklyDeliveryScheduleJson = OOAdvantech.Json.JsonConvert.SerializeObject(_WeeklyDeliverySchedule);
-            
+
             PlaceOfDistributionJson = OOAdvantech.Json.JsonConvert.SerializeObject(_PlaceOfDistribution);
-            
+
         }
         /// <MetaDataID>{d602d811-8ffd-4679-a1ac-6511c47a057a}</MetaDataID>
         [ObjectActivationCall]
         void ObjectActivation()
         {
 
-            string tmp= @"[{""Latitude"":38.000240262320936, ""Longitude"":23.750335054426756},{""Latitude"":37.99832108602798,""Longitude"":23.751161174803343},{ ""Latitude"":37.99534499527491,""Longitude"":23.749326543837157},{ ""Latitude"":37.996503317677686,""Longitude"":23.74603279116687},{ ""Latitude"":37.99605520972059,""Longitude"":23.743919210463133},{ ""Latitude"":37.99616512324652,""Longitude"":23.742170410185423},{ ""Latitude"":37.99491379029195,""Longitude"":23.736054973631468},{ ""Latitude"":37.995556369340605,""Longitude"":23.732074575453368},{ ""Latitude"":38.00013880932487,""Longitude"":23.7332332897478},{ ""Latitude"":38.00572696945966,""Longitude"":23.734713869124022},{ ""Latitude"":38.00665265229764,""Longitude"":23.734955267935362},{ ""Latitude"":38.00648357867907,""Longitude"":23.740719335108366},{ ""Latitude"":38.005760784563485,""Longitude"":23.741502540140715},{ ""Latitude"":38.00575655767636,""Longitude"":23.742610292463866},{ ""Latitude"":38.006542372746324,""Longitude"":23.743995032319887},{ ""Latitude"":38.00739196305551,""Longitude"":23.744778237352236},{ ""Latitude"":38.00814010159382,""Longitude"":23.744831881532534},{ ""Latitude"":38.00805164316818,""Longitude"":23.746637986944283},{ ""Latitude"":38.007451441510376,""Longitude"":23.747614311025703},{ ""Latitude"":38.00665680077053,""Longitude"":23.74774305705842},{ ""Latitude"":38.007299276929025,""Longitude"":23.7491807210904},{ ""Latitude"":38.00653844928516,""Longitude"":23.74970643405732},{ ""Latitude"":38.00627449090539,""Longitude"":23.74997551698178},{ ""Latitude"":38.006502740849264,""Longitude"":23.75049050111264},{ ""Latitude"":38.005302307259825,""Longitude"":23.751327350325287},{ ""Latitude"":38.00536148402404,""Longitude"":23.751627757734955},{ ""Latitude"":38.00283374825802,""Longitude"":23.751928165144623},{ ""Latitude"":38.00192619043664,""Longitude"":23.75025822604646},{ ""Latitude"":38.00165565502161,""Longitude"":23.750526446947948},{ ""Latitude"":38.00077640802997,""Longitude"":23.74972178424348},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756}]";
+            string tmp = @"[{""Latitude"":38.000240262320936, ""Longitude"":23.750335054426756},{""Latitude"":37.99832108602798,""Longitude"":23.751161174803343},{ ""Latitude"":37.99534499527491,""Longitude"":23.749326543837157},{ ""Latitude"":37.996503317677686,""Longitude"":23.74603279116687},{ ""Latitude"":37.99605520972059,""Longitude"":23.743919210463133},{ ""Latitude"":37.99616512324652,""Longitude"":23.742170410185423},{ ""Latitude"":37.99491379029195,""Longitude"":23.736054973631468},{ ""Latitude"":37.995556369340605,""Longitude"":23.732074575453368},{ ""Latitude"":38.00013880932487,""Longitude"":23.7332332897478},{ ""Latitude"":38.00572696945966,""Longitude"":23.734713869124022},{ ""Latitude"":38.00665265229764,""Longitude"":23.734955267935362},{ ""Latitude"":38.00648357867907,""Longitude"":23.740719335108366},{ ""Latitude"":38.005760784563485,""Longitude"":23.741502540140715},{ ""Latitude"":38.00575655767636,""Longitude"":23.742610292463866},{ ""Latitude"":38.006542372746324,""Longitude"":23.743995032319887},{ ""Latitude"":38.00739196305551,""Longitude"":23.744778237352236},{ ""Latitude"":38.00814010159382,""Longitude"":23.744831881532534},{ ""Latitude"":38.00805164316818,""Longitude"":23.746637986944283},{ ""Latitude"":38.007451441510376,""Longitude"":23.747614311025703},{ ""Latitude"":38.00665680077053,""Longitude"":23.74774305705842},{ ""Latitude"":38.007299276929025,""Longitude"":23.7491807210904},{ ""Latitude"":38.00653844928516,""Longitude"":23.74970643405732},{ ""Latitude"":38.00627449090539,""Longitude"":23.74997551698178},{ ""Latitude"":38.006502740849264,""Longitude"":23.75049050111264},{ ""Latitude"":38.005302307259825,""Longitude"":23.751327350325287},{ ""Latitude"":38.00536148402404,""Longitude"":23.751627757734955},{ ""Latitude"":38.00283374825802,""Longitude"":23.751928165144623},{ ""Latitude"":38.00192619043664,""Longitude"":23.75025822604646},{ ""Latitude"":38.00165565502161,""Longitude"":23.750526446947948},{ ""Latitude"":38.00077640802997,""Longitude"":23.74972178424348},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756},{ ""Latitude"":38.000240262320936,""Longitude"":23.750335054426756}]";
             if (!string.IsNullOrWhiteSpace(ServiceAreaMapJson))
                 _ServiceAreaMap = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Coordinate>>(ServiceAreaMapJson);
 

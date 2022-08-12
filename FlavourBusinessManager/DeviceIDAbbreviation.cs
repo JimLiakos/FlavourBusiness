@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Cosmos.Table;
+﻿using Azure;
+
 using System;
 using System.Collections.Generic;
 using System.Data.HashFunction.CRC;
@@ -9,24 +10,25 @@ using System.Threading.Tasks;
 namespace FlavourBusinessManager
 {
     /// <MetaDataID>{a9076ab6-17a4-4cdc-8b3b-3f54956fcd5c}</MetaDataID>
-    public class DeviceIDAbbreviation : Microsoft.Azure.Cosmos.Table.TableEntity
+    public class DeviceIDAbbreviation : Azure.Data.Tables.ITableEntity
     {
         public static string GetAbbreviation(string deviceId)
         {
             string abbreviation = "101"+CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(deviceId)).AsHexString().ToUpper();
 
 
-            DeviceIDAbbreviation deviceIDAbbreviation = (from deviceIDAbbreviationEntry in DeviceIDAbbreviationTable.CreateQuery<DeviceIDAbbreviation>()
+            DeviceIDAbbreviation deviceIDAbbreviation = (from deviceIDAbbreviationEntry in DeviceIDAbbreviationTable.Query<DeviceIDAbbreviation>()
                                                          where deviceIDAbbreviationEntry.PartitionKey == "101" && deviceIDAbbreviationEntry.RowKey == abbreviation
                                                          select deviceIDAbbreviationEntry).FirstOrDefault();
 
             if (deviceIDAbbreviation == null)
             {
                 deviceIDAbbreviation = new DeviceIDAbbreviation() { PartitionKey = "101", RowKey = abbreviation, DeviceId=deviceId };
-                TableOperation insertOperation = TableOperation.Insert(deviceIDAbbreviation);
+               
                 try
                 {
-                    var result = DeviceIDAbbreviationTable.Execute(insertOperation);
+                    DeviceIDAbbreviationTable.AddEntity(deviceIDAbbreviation);
+                   // var result = DeviceIDAbbreviationTable.Execute(insertOperation);
                 }
                 catch (Exception error)
                 {
@@ -53,7 +55,7 @@ namespace FlavourBusinessManager
                 if (_DeviceIDAbbreviationTable == null)
                 {
                     //CloudStorageAccount account = FlavourBusinessManagerApp.CloudTableStorageAccount;
-                    var tablesAccount = FlavourBusinessManagerApp.CloudTableStorageAccount_a;
+                    var tablesAccount = FlavourBusinessManagerApp.TablesAccount;
                     //if ((string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName) || FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName == "devstoreaccount1"))
                     //    account = CloudStorageAccount.DevelopmentStorageAccount;
                     //else
@@ -74,5 +76,10 @@ namespace FlavourBusinessManager
                 return _DeviceIDAbbreviationTable;
             }
         }
+
+        public DateTimeOffset? Timestamp { get; set; }
+        public ETag ETag { get; set; }
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
     }
 }

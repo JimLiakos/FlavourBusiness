@@ -1,6 +1,6 @@
 
 using System.Data.HashFunction.CRC;
-using Microsoft.Azure.Cosmos.Table;
+
 using OOAdvantech.Remoting.RestApi;
 using System.Linq;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace FlavourBusinessManager
 {
     /// <MetaDataID>{2d073bb7-66e1-4428-995a-434e081a6708}</MetaDataID>
     /// <summary>Defines a authentication system account which refered to server roles in flavour business system roles  </summary>
-    public class AuthUserRef : Microsoft.Azure.Cosmos.Table.TableEntity,Azure.Data.Tables.ITableEntity
+    public class AuthUserRef : Azure.Data.Tables.ITableEntity
     {
 
         public class Role
@@ -31,14 +31,14 @@ namespace FlavourBusinessManager
             {
                 get
                 {
-                    if(!string.IsNullOrWhiteSpace( this.ComputingContextID)&& this.ComputingContextID != ComputationalResources.IsolatedComputingContext.CurrentContextID)
+                    if (!string.IsNullOrWhiteSpace(this.ComputingContextID) && this.ComputingContextID != ComputationalResources.IsolatedComputingContext.CurrentContextID)
                     {
                         if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
                         {
                             string channelUri = string.Format("{0}({1})", RemotingServices.ServerPublicUrl, this.ComputingContextID);
                             _RoleObject = RemotingServices.GetPersistentObject(channelUri, ObjectUri);
                         }
-                        
+
                     }
                     else if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
                         _RoleObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ObjectUri);
@@ -56,7 +56,7 @@ namespace FlavourBusinessManager
                         ObjRef.GetChannelUriParts(proxy.ChannelUri, out publicChannelUri, out internalchannelUri);
                         ComputingContextID = internalchannelUri;
                         TypeFullName = proxy.TypeFullName;
-                        
+
                     }
                     else
                     {
@@ -78,7 +78,7 @@ namespace FlavourBusinessManager
                 }
                 else
                 {
-                    return  OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(roleObject).GetPersistentObjectUri(roleObject);
+                    return OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(roleObject).GetPersistentObjectUri(roleObject);
                 }
             }
         }
@@ -113,30 +113,30 @@ namespace FlavourBusinessManager
 
         /// <exclude>Excluded</exclude>
         static Azure.Data.Tables.TableClient _AuthUserRefCloudTable_a;
-        
+
         static Azure.Data.Tables.TableClient AuthUserRefCloudTable_a
         {
             get
             {
                 if (_AuthUserRefCloudTable_a == null)
                 {
-                    
-                    var tablesAccount = FlavourBusinessManagerApp.CloudTableStorageAccount_a;
 
-                     
-                    var table_a= tablesAccount.GetTableClient("AuthUserRefCloudTable");
+                    var tablesAccount = FlavourBusinessManagerApp.TablesAccount;
+
+
+                    var table_a = tablesAccount.GetTableClient("AuthUserRefCloudTable");
 
                     Azure.Pageable<Azure.Data.Tables.Models.TableItem> queryTableResults = tablesAccount.Query(String.Format("TableName eq '{0}'", "AuthUserRefCloudTable"));
-                    bool AuthUserRefCloudTable_exist = queryTableResults.Count() > 0;
+                    bool authUserRefCloudTable_Exist = queryTableResults.Count() > 0;
 
 
 
-             
-                    if (AuthUserRefCloudTable_exist)
+
+                    if (!authUserRefCloudTable_Exist)
                         table_a.CreateIfNotExists();
 
-                    
-                    _AuthUserRefCloudTable_a= table_a;
+
+                    _AuthUserRefCloudTable_a = table_a;
                 }
                 return _AuthUserRefCloudTable_a;
             }
@@ -207,7 +207,6 @@ namespace FlavourBusinessManager
                         {
                             authUserRef.Email = authUser.Email;
                             authUserRef.PhotoUrl = authUser.Picture;
-                            TableOperation replaceOperation = TableOperation.Replace(authUserRef);
                             //var result = AuthUserRefCloudTable.Execute(replaceOperation);
                             var result = AuthUserRefCloudTable_a.UpdateEntity(authUserRef, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
                         }
@@ -218,7 +217,7 @@ namespace FlavourBusinessManager
         }
 
 
-        public static AuthUserRef GetCallContextAuthUserRef( bool create)
+        public static AuthUserRef GetCallContextAuthUserRef(bool create)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             lock (AuthUserRefsLock)
@@ -306,8 +305,10 @@ namespace FlavourBusinessManager
 
         /// <MetaDataID>{73de9d3d-cffe-49cd-a33b-e10fbb1f6748}</MetaDataID>
         public string RolesJson { get; set; }
-        DateTimeOffset? Azure.Data.Tables.ITableEntity.Timestamp { get; set; }
-        ETag Azure.Data.Tables.ITableEntity.ETag { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
+        public ETag ETag { get; set; }
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
 
         /// <MetaDataID>{1e0a7d36-5beb-430c-a0d3-f066edc7f716}</MetaDataID>
         object rolesLock = new object();
@@ -437,8 +438,8 @@ namespace FlavourBusinessManager
             lock (rolesLock)
             {
                 GetRoles();
-                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName&&x.ComputingContextID== ComputationalResources.IsolatedComputingContext.CurrentContextID&& x.RoleObject!=null).FirstOrDefault();
-                
+                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName && x.ComputingContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID && x.RoleObject != null).FirstOrDefault();
+
                 if (role != null)
                     return role.RoleObject as T;
                 else

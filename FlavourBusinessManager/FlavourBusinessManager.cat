@@ -1867,7 +1867,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"7")
+		    value      	"8")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -2643,31 +2643,6 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{091a711d-e910-40ee-99d6-6b330c2b8b5f}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"62D79F7D0203")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"As Property"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"GenerateGetOperation"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"GenerateSetOperation"
-			    value      	TRUE))
-		    quid       	"62D79F7D0203"
-		    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"
-		    exportControl 	"Public")
-		(object ClassAttribute "DeliveryServicePoint"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
 			    value      	"{97b2ae66-b89d-4e66-883b-e03bb1d3817a}")
 			(object Attribute
 			    tool       	"MetaData"
@@ -2685,7 +2660,23 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"UniqueID"
-			    value      	"62EA0EFA01A4"))
+			    value      	"62EA0EFA01A4")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
 		    quid       	"62EA0EFA01A4"
 		    type       	"System.Collections.Generic.List<FlavourBusinessFacade.IFoodTypeTag>"
 		    exportControl 	"Public"))
@@ -10805,7 +10796,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"11")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -10960,7 +10951,7 @@
 			    quid       	"62D6CC5B028F"
 			    type       	"decimal"
 			    exportControl 	"Public")
-			(object ClassAttribute "MinimumShippingFee"
+			(object ClassAttribute "ShippingCost"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10981,7 +10972,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
 			    quid       	"62D6CC5B02B1"
 			    type       	"decimal"
 			    exportControl 	"Public")
@@ -15970,7 +15969,7 @@
 			    quidu      	"5B2CE9870228"
 			    compartment 	(object Compartment
 				Parent_View 	@192
-				location   	(50, 1232)
+				location   	(50, 1225)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -36369,7 +36368,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@596
-			location   	(56, 184)
+			location   	(56, 179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
@@ -36377,7 +36376,7 @@
 			label      	"OrganizationsManager")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@596
-			location   	(56, 134)
+			location   	(56, 133)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -36511,24 +36510,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AB1FBFA03B9"
-		    compartment 	(object Compartment
-			Parent_View 	@601
-			location   	(31, 1342)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	137)
 		    width      	713
 		    height     	268
 		    annotation 	8)
@@ -36703,24 +36684,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B2CE9870228"
-		    compartment 	(object Compartment
-			Parent_View 	@608
-			location   	(2385, 925)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	47
-			max_width  	2375)
 		    width      	644
 		    height     	300
 		    annotation 	8)
@@ -36751,24 +36714,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B06E8630242"
-		    compartment 	(object Compartment
-			Parent_View 	@609
-			location   	(2356, 1449)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	1284)
 		    width      	838
 		    height     	356
 		    annotation 	8)
@@ -37290,24 +37235,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B1600111"
-		    compartment 	(object Compartment
-			Parent_View 	@631
-			location   	(2366, 529)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	23
-			max_width  	2062)
 		    width      	588
 		    height     	318
 		    annotation 	8)
@@ -37596,8 +37523,30 @@
 			    quidu      	"62EA038E03DA"
 			    client     	@642
 			    supplier   	@631
-			    line_style 	0)
-			(object RoleView "FoodTypes" @646
+			    line_style 	0
+			    label      	(object SegLabel @646
+				Parent_View 	@644
+				location   	(2964, 537)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "FoodTypes" @647
 			    Parent_View 	@642
 			    location   	(-311, 24)
 			    font       	(object Font
@@ -37610,8 +37559,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @647
-				Parent_View 	@646
+			    label      	(object SegLabel @648
+				Parent_View 	@647
 				location   	(3278, 442)
 				font       	(object Font
 				    size       	10
@@ -37638,8 +37587,8 @@
 			    client     	@642
 			    supplier   	@641
 			    line_style 	0
-			    label      	(object SegLabel @648
-				Parent_View 	@646
+			    label      	(object SegLabel @649
+				Parent_View 	@647
 				location   	(3296, 537)
 				font       	(object Font
 				    size       	10
@@ -37660,7 +37609,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))))
-		(object RealizeView "" @649
+		(object RealizeView "" @650
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"62EA0EDE01A6"

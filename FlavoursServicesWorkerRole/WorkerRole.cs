@@ -1,7 +1,6 @@
 
 using ComputationalResources;
 using FlavourBusinessManager;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Owin.Hosting;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
@@ -111,7 +110,7 @@ namespace FlavoursServicesWorkerRole
                 OOAdvantech.ObjectsContext.Init(assemblies);
 
 
-                FlavourBusinessManagerApp.CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
+                FlavourBusinessManagerApp.TablesAccount = new Azure.Data.Tables.TableServiceClient("UseDevelopmentStorage=true"); 
                 //FlavourBusinessManagerApp.CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw=="), true);
 
                 FlavourBusinessManagerApp.CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;

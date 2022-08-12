@@ -44,7 +44,6 @@ namespace FlavoursServicesWorkerRole.Controllers
                                      System.Threading.Tasks.Task>;
     using System.Web;
     using System.ServiceModel.Channels;
-    using Microsoft.Azure.Cosmos.Table;
     using FlavoursServicesWorkerRole;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using ComputationalResources;

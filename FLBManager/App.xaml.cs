@@ -136,7 +136,7 @@ namespace FLBManager
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
             // Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
-            Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
+            //Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
@@ -318,6 +318,8 @@ namespace FLBManager
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.ShapesGroup"] = typeof(RestaurantHallLayoutModel.ShapesGroup);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.Margin"] = typeof(UIBaseEx.Margin);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
+            SerializationBinder.NamesTypesDictionary["FLBManager.ViewModel.FoodTypeTagPresentation"] = typeof(FLBManager.ViewModel.FoodTypeTagPresentation);
+            
 
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
@@ -349,6 +351,7 @@ namespace FLBManager
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.PartofMeal)] = "MenuModel.JsonViewModel.PartofMeal";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MealType)] = "MenuModel.JsonViewModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MealCourseType)] = "MenuModel.JsonViewModel.MealCourseType";
+            SerializationBinder.TypesNamesDictionary[typeof(FLBManager.ViewModel.FoodTypeTagPresentation)] = "FLBManager.ViewModel.FoodTypeTagPresentation";
 
 
 

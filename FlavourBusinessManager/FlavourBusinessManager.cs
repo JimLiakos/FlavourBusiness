@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -19,19 +20,22 @@ namespace FlavourBusinessManager
         public static string FlavourBusinessStoragesLocation;
 
         /// <MetaDataID>{9af6c9da-a163-47fb-9dea-70ff6193ef7e}</MetaDataID>
-        public static void Init(string flavourBusinessStoragesAccountName, string flavourBusinessStoragesAccountkey, string flavourBusinessStoragesLocation,string rootContainer)
+        public static void Init(string flavourBusinessStoragesAccountName, string flavourBusinessStoragesAccountkey, string flavourBusinessStoragesLocation, string rootContainer)
         {
+
+       
             if (flavourBusinessStoragesAccountName == Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName)
             {
-                CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
                 CloudBlobStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount;
-                CloudTableStorageAccount_a = new Azure.Data.Tables.TableServiceClient(CloudBlobStorageAccount.ToString(true));
+                TablesAccount = new Azure.Data.Tables.TableServiceClient("UseDevelopmentStorage=true"); 
+                
             }
             else
             {
-                CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey), true);
                 CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey), true);
-                CloudTableStorageAccount_a = new Azure.Data.Tables.TableServiceClient(CloudBlobStorageAccount.ToString(true));
+
+                Uri endPoint = new Uri(string.Format("https://{0}.table.core.windows.net", flavourBusinessStoragesAccountName));
+                TablesAccount = new Azure.Data.Tables.TableServiceClient(endPoint, new Azure.Data.Tables.TableSharedKeyCredential(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey));
 
                 RootContainer = rootContainer;
             }
@@ -47,7 +51,7 @@ namespace FlavourBusinessManager
 
             //var businessesResourcesInitTask = Task.Run(() =>
             //{
-            
+
             var objectsStorage = OpenFlavourBusinessesResourcesStorage(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey, flavourBusinessStoragesLocation);
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectsStorage);
 
@@ -72,8 +76,8 @@ namespace FlavourBusinessManager
 
             //var authManagerTask = Task.Run(() =>
             //{
-                if (OrganizationsManager.AuthFlavourBusiness == null)
-                    OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
+            if (OrganizationsManager.AuthFlavourBusiness == null)
+                OrganizationsManager.AuthFlavourBusiness = new AuthFlavourBusiness();
             //});
 
 
@@ -88,10 +92,11 @@ namespace FlavourBusinessManager
 
 
         static ObjectStorage FlavourBusinessesResourcesStorage;
-        public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount { get; set; }
+        //public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount { get; set; }
+        public static TableServiceClient TablesAccount { get; set; }
 
         public static Microsoft.Azure.Storage.CloudStorageAccount CloudBlobStorageAccount { get; set; }
-        public static TableServiceClient CloudTableStorageAccount_a { get; private set; }
+
         public static string RootContainer { get; set; }
 
         /// <MetaDataID>{4ce71c7e-e41d-445a-ad42-c239c64c53c5}</MetaDataID>
@@ -105,7 +110,7 @@ namespace FlavourBusinessManager
             ObjectStorage storageSession = null;
             string storageName = "FlavourBusinessesResources";
             string storageLocation = "DevStorage";
-            
+
             if (!string.IsNullOrWhiteSpace(flavourBusinessStoragesLocation))
                 storageLocation = flavourBusinessStoragesLocation;
 
@@ -115,7 +120,7 @@ namespace FlavourBusinessManager
             {
                 storageSession = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
-                                                            storageType,accountName,acountkey);
+                                                            storageType, accountName, acountkey);
                 //storageSession.StorageMetaData.RegisterComponent(typeof(IsolatedComputingContext).Assembly.FullName);
                 //storageSession.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
                 //storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);

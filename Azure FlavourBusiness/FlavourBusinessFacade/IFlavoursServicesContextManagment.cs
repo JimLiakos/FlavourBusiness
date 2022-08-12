@@ -10,6 +10,8 @@ namespace FlavourBusinessFacade
     {
         event ObjectChangeStateHandle ObjectChangeState;
 
+        System.Collections.Generic.List<IFoodTypeTag> FoodTypeTags { get; }
+
         ///// <MetaDataID>{8ddeb708-1d66-4e8c-8db1-073987c7a9d1}</MetaDataID>
         //OrganizationStorageRef GetMenu(string servicePointIdentity);
 

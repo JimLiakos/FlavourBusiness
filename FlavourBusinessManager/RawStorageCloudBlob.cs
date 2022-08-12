@@ -66,11 +66,11 @@ namespace FlavourBusinessManager
 
         //public static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.DevelopmentStorageAccount;
         //static Microsoft.Azure.Cosmos.Table.CloudStorageAccount _CloudTableStorageAccount;
-        static Microsoft.Azure.Cosmos.Table.CloudStorageAccount CloudTableStorageAccount
+        static Azure.Data.Tables.TableServiceClient TablesAccount
         {
             get
             {
-                return FlavourBusinessManagerApp.CloudTableStorageAccount;
+                return FlavourBusinessManagerApp.TablesAccount;
                 //if (_CloudTableStorageAccount == null)
                 //    _CloudTableStorageAccount = new Microsoft.Azure.Cosmos.Table.CloudStorageAccount(new Microsoft.Azure.Cosmos.Table.StorageCredentials(FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey), true);
 

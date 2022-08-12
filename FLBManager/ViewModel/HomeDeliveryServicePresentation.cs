@@ -2,6 +2,7 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicesContextResources;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
 using OOAdvantech.Transactions;
@@ -137,9 +138,88 @@ namespace FLBManager.ViewModel
             }
         }
 
-
-        public HomeDeliveryServicePresentation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)
+        /// <exclude>Excluded</exclude>
+        decimal _MinimumOrderValue;
+        [HttpVisible]
+        [CachingDataOnClientSide]
+        public decimal MinimumOrderValue
         {
+            get
+            {
+                return _MinimumOrderValue;
+            }
+            set
+            {
+
+                if (_MinimumOrderValue != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MinimumOrderValue = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        decimal _ShippingCost;
+        [HttpVisible]
+        [CachingDataOnClientSide]
+        public decimal ShippingCost
+        {
+            get
+            {
+                return _ShippingCost;
+            }
+            set
+            {
+
+                if (_ShippingCost != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ShippingCost = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        decimal _FreeShippingMinimumOrderValue;
+        [HttpVisible]
+        [CachingDataOnClientSide]
+        public decimal FreeShippingMinimumOrderValue
+        {
+            get
+            {
+                return _FreeShippingMinimumOrderValue;
+            }
+            set
+            {
+
+                if (_FreeShippingMinimumOrderValue != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FreeShippingMinimumOrderValue = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
+        public HomeDeliveryServicePresentation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint, IFlavoursServicesContext servicesContext)
+        {
+            ServicesContext = servicesContext;
+
             HomeDeliveryServicePoint = homeDeliveryServicePoint;
             var placeOfDistribution = homeDeliveryServicePoint.PlaceOfDistribution;
             if (placeOfDistribution != null)
@@ -151,7 +231,14 @@ namespace FLBManager.ViewModel
             _ServiceAreaMap = HomeDeliveryServicePoint.ServiceAreaMap;
             _IsPolyline = HomeDeliveryServicePoint.IsPolyline;
             _Zoom = HomeDeliveryServicePoint.Zoom;
+
+            _MinimumOrderValue = HomeDeliveryServicePoint.MinimumOrderValue;
+            _ShippingCost = HomeDeliveryServicePoint.ShippingCost;
+            _FreeShippingMinimumOrderValue = HomeDeliveryServicePoint.FreeShippingMinimumOrderValue;
+
             WeeklyDeliverySchedule = HomeDeliveryServicePoint.WeeklyDeliverySchedule;
+
+
 
             BeforeTransactionCommitCommand = new RelayCommand((object sender) =>
             {
@@ -159,13 +246,67 @@ namespace FLBManager.ViewModel
                     HomeDeliveryServicePoint.PlaceOfDistribution = null;
                 else
                     HomeDeliveryServicePoint.PlaceOfDistribution = _Places[0];
-                HomeDeliveryServicePoint.Update(HomeDeliveryServicePoint.PlaceOfDistribution, MapCenter, ServiceAreaMap, IsPolyline, Zoom, WeeklyDeliverySchedule);
+                HomeDeliveryServicePoint.Update(HomeDeliveryServicePoint.PlaceOfDistribution, MapCenter, ServiceAreaMap, IsPolyline, Zoom, WeeklyDeliverySchedule,MinimumOrderValue,ShippingCost,FreeShippingMinimumOrderValue);
+                var foodTypeTags = _FoodTypeTags.Where(x => x.Selected && !SelectedFoodTypes.Any(y => y.Uri == x.Uri)).Select(x => x.FoodTypeTag).ToList();
+                ServicesContext.AddFoodTypes(foodTypeTags);
+
+                foodTypeTags = _FoodTypeTags.Where(x => !x.Selected && SelectedFoodTypes.Any(y => y.Uri == x.Uri)).Select(x => x.FoodTypeTag).ToList();
+                ServicesContext.RemoveFoodTypes(foodTypeTags);
+
             });
         }
         public HomeDeliveryServicePresentation()
         {
 
         }
+        /// <exclude>Excluded</exclude>
+        private List<FoodTypeTagPresentation> _FoodTypeTags;
+
+        [HttpVisible]
+        public Task<List<FoodTypeTagPresentation>> FoodTypeTags
+        {
+            get
+            {
+                return Task<List<FoodTypeTagPresentation>>.Run(() =>
+                {
+                    if (_FoodTypeTags == null)
+                    {
+                        SelectedFoodTypes = ServicesContext.FoodTypes;
+                        string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                        string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                        string serverUrl = AzureServerUrl;
+                        IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                        _FoodTypeTags = servicesContextManagment.FoodTypeTags.Select(x => new FoodTypeTagPresentation(x, SelectedFoodTypes.Where(y => y.Uri == x.Uri).Count() > 0)).ToList();
+                    }
+                    return _FoodTypeTags;
+                });
+            }
+        }
+        [HttpVisible]
+        public void AddFoodTypeTag(string foodTypeTagUri)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _FoodTypeTags.Where(x => x.Uri == foodTypeTagUri).FirstOrDefault().Selected = true;
+
+                stateTransition.Consistent = true;
+            }
+
+        }
+        [HttpVisible]
+        public void RemoveFoodTypeTag(string foodTypeTagUri)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _FoodTypeTags.Where(x => x.Uri == foodTypeTagUri).FirstOrDefault().Selected = false;
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+
         public WPFUIElementObjectBind.RelayCommand BeforeTransactionCommitCommand { get; set; }
 
         OOAdvantech.Collections.Generic.Set<IPlace> _Places = new OOAdvantech.Collections.Generic.Set<IPlace>();
@@ -174,6 +315,7 @@ namespace FLBManager.ViewModel
         public List<IPlace> Places => _Places.ToList();
 
         public IHomeDeliveryServicePoint HomeDeliveryServicePoint { get; }
+        public List<IFoodTypeTag> SelectedFoodTypes { get; private set; }
 
         public void SavePlace(IPlace place)
         {
@@ -203,7 +345,7 @@ namespace FLBManager.ViewModel
 
 
         Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
-
+        private IFlavoursServicesContext ServicesContext;
 
         public void SetDefaultPlace(IPlace place)
         {
@@ -223,6 +365,50 @@ namespace FLBManager.ViewModel
         }
     }
 
+    public class FoodTypeTagPresentation
+    {
+        public FoodTypeTagPresentation(IFoodTypeTag foodTypeTag, bool selected)
+        {
+            FoodTypeTag = foodTypeTag;
+            Selected = selected;
+        }
+        public OOAdvantech.Multilingual MultilingualName
+        {
+            get
+            {
+                return FoodTypeTag?.MultilingualName;
+            }
+            set
+            {
+            }
+        }
+
+        public string Uri
+        {
+            get
+            {
+                return FoodTypeTag?.Uri;
+            }
+            set
+            {
+            }
+        }
+
+        [JsonIgnore]
+        public string Name
+        {
+            get
+            {
+                return FoodTypeTag?.Name;
+            }
+            set
+            {
+            }
+        }
+        public readonly IFoodTypeTag FoodTypeTag;
+
+        public bool Selected { get; set; }
+    }
 
 
 }

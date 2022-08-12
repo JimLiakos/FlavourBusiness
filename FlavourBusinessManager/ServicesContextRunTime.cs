@@ -285,7 +285,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return _OperativeRestaurantMenu;
+                lock (this)
+                {
+                    return _OperativeRestaurantMenu;
+                }
             }
         }
 
@@ -295,16 +298,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
         [ObjectActivationCall]
         void ObjectActivation()
         {
-            var fbstorage = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
-
-            if (fbstorage != null)
+            lock (this)
             {
-                var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
-                FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(storageRef, null);
-                OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+                var fbstorage = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
 
-                _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
-                                            select menu).FirstOrDefault();
+                if (fbstorage != null)
+                {
+                    var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
+                    FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(storageRef, null);
+                    OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+
+                    _OperativeRestaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuModel.Menu>()
+                                                select menu).FirstOrDefault();
+                }
             }
             bool del = false;
 

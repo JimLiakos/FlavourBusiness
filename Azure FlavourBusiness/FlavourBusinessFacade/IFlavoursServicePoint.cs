@@ -13,13 +13,15 @@ namespace FlavourBusinessFacade
     public interface IFlavoursServicesContext
     {
         /// <MetaDataID>{770ae1ae-dc20-4fdb-83e1-8e4b6806f409}</MetaDataID>
-        void RemoveFoodType(IFoodTypeTag foodTypeTag);
+        void RemoveFoodTypes(List<IFoodTypeTag> foodTypeTags);
 
         /// <MetaDataID>{a5ae81a7-b59b-4cd5-96c8-73e3573492a1}</MetaDataID>
-        void AddFoodType(IFoodTypeTag foodTypeTag);
+        void AddFoodTypes(List<IFoodTypeTag> foodTypeTags);
 
+        
         [Association("FlavoursServicesContextFoodTypes", Roles.RoleA, "05ca45da-920e-451b-a1ef-5d0c5b894e5a")]
         [RoleAMultiplicityRange(1)]
+        [RoleBMultiplicityRange(0)]
         List<IFoodTypeTag> FoodTypes { get; }
 
 

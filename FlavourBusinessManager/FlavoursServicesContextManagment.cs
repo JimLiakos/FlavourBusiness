@@ -36,6 +36,17 @@ namespace FlavourBusinessManager
 
         }
 
+        public static FlavoursServicesContextManagment Current
+        {
+            get
+            {
+                return GetInstance(typeof(FlavoursServicesContextManagment)) as FlavoursServicesContextManagment;
+            }
+
+        }
+
+
+
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -239,6 +250,21 @@ namespace FlavourBusinessManager
 
         }
 
+        List<IFoodTypeTag> _FoodTypeTags;
+        public System.Collections.Generic.List<IFoodTypeTag> FoodTypeTags
+        {
+            get
+            {
+                if(_FoodTypeTags==null)
+                {
+                    var objectStorage = FlavoursServicesContext.OpenFlavourBusinessesStorage();
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                    _FoodTypeTags = (from s_foodTypeTag in storage.GetObjectCollection<IFoodTypeTag>()
+                                        select s_foodTypeTag).ToList();
+                }
+                return _FoodTypeTags.ToList();
+            }
+        }
         /// <MetaDataID>{9696eb0e-cbca-4371-af36-a7093c85dc15}</MetaDataID>
         public IServicePoint GetServicePoint(string servicePointIdentity)
         {

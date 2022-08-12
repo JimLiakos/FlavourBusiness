@@ -14,6 +14,7 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContextRuntime
     {
+        /// <MetaDataID>{8538c2c0-46b3-4d5c-b8ef-e4184193cfd6}</MetaDataID>
         IHomeDeliveryServicePoint DeliveryServicePoint { get; }
 
         /// <MetaDataID>{b220d064-7c8e-4ba5-85db-8f94babb3c96}</MetaDataID>

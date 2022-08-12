@@ -64,6 +64,23 @@
 		"OpeningHoursStartLabel": "Ανοίγει",
 		"OpeningHoursEndsLabel": "Κλείνει",
 		"AddOpeningHoursTooltip": "Προσθήκη ωρών λειτουργίας",
-		"OpeningHoursEditTooltip":"Κάνε click πάνω στην ημέρα για να τερματιστή η επεξεργασία"
+		"OpeningHoursEditTooltip": "Κάνε click πάνω στην ημέρα για να τερματιστή η επεξεργασία"
+	},
+	"FoodTypes": {
+		"SelectFoodTypeTagTooltip": "Κάντε κλικ για να επιλέξετε είδος φαγητού",
+		"RemoveFoodTypeTagTooltip": "Κάντε κλικ για να διαγράψετε αυτό το είδος φαγητού",
+		"FoodTypeFilterPlaceholder": "Γράψτε την λέξη φίλτρο είδος φαγητού",
+		"FoodTypeFilterLabel": "Φίλτρο είδος φαγητού"
+	},
+	"HomeDelivery": {
+		"FreeShippingMinimumOrderLabel": "Ελάχιστη Παραγγελία για Δωρεάν Αποστολή",
+		"FreeShippingMinimumOrderPlaceholder": "Γράψτε την ελάχιστη παραγγελία για δωρεάν αποστολή ",
+		"ShippingCostLabel": "Κόστος Διανομής",
+		"ShippingCostPlaceholder": "Γράψτε το κόστος κιανομής",
+		"MinimumOrderLabel": "Αξία Ελάχιστη Παραγγελία",
+		"MinimumOrderPlaceholder": "Γράψτε την αξία της ελάχιστη παραγγελία",
+		"MinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία που μπορεί να παραγγήλει ο πελάτης.",
+		"ShippingCostTooltip": "Ορίζεις το κόστος διανομής που χρεώνεται στον πελάτη για κάθε παραγγελλία.",
+		"FreeShippingMinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία για δωρεάν διανομή."
 	}
 }

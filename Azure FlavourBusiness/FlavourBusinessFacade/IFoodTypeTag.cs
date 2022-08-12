@@ -4,5 +4,8 @@ namespace FlavourBusinessFacade
     public interface IFoodTypeTag
     {
         string Name { get; set; }
+
+        OOAdvantech.Multilingual MultilingualName { get; }
+        string Uri { get; }
     }
 }

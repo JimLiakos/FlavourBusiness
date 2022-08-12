@@ -20,7 +20,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{71e97fe2-bb20-406a-b82b-a7097049bbd8}</MetaDataID>
         [BackwardCompatibilityID("+4")]
-        decimal MinimumShippingFee { get; set; }
+        decimal ShippingCost { get; set; }
 
         /// <MetaDataID>{6491ecf3-29a5-4254-a9e9-c2fa0abf3a34}</MetaDataID>
         [BackwardCompatibilityID("+3")]
@@ -47,7 +47,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [CachingDataOnClientSide]
         double Zoom { get; set; }
 
-        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<System.DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule);
+        /// <MetaDataID>{3b8096e5-9f00-4b91-a370-272611acb091}</MetaDataID>
+        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<System.DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue);
 
         /// <MetaDataID>{36217abe-f4f6-4029-b841-a99a609a540a}</MetaDataID>
         [BackwardCompatibilityID("+9")]

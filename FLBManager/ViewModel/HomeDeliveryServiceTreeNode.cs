@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.ServicesContextResources;
+﻿using FlavourBusinessFacade;
+using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.Transactions;
 using StyleableWindow;
 using System;
@@ -21,7 +22,8 @@ namespace FLBManager.ViewModel
         {
             HomeDeliveryService = homeDeliveryService;
             ServicesContextPresentation = servicesContextPresentation;
-            //CallerIDServer.ObjectStateChanged += CallerIDServer_ObjectStateChanged;
+
+
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
@@ -32,7 +34,7 @@ namespace FLBManager.ViewModel
                 OpenHomeDeliverySettings();
             });
         }
-
+   
         private void Delete()
         {
             throw new NotImplementedException();
@@ -73,10 +75,10 @@ namespace FLBManager.ViewModel
             System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-
+                
                 var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
                 Views.HomeDeliveryServicePage homeDeliveryServicePage = new Views.HomeDeliveryServicePage();
-                homeDeliveryServicePage.GetObjectContext().SetContextInstance(new HomeDeliveryServicePresentation(this.HomeDeliveryService));
+                homeDeliveryServicePage.GetObjectContext().SetContextInstance(new HomeDeliveryServicePresentation(HomeDeliveryService, ServicesContextPresentation.ServicesContext));
 
                 frame.ShowDialogPage(homeDeliveryServicePage);
                 stateTransition.Consistent = true;
