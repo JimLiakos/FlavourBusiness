@@ -59,6 +59,10 @@
           <source>2 Course Meal</source>
           <target state="new">2 Course Meal</target>
         </trans-unit>
+        <trans-unit id="OneCourseMealTypeName" translate="yes" xml:space="preserve">
+          <source>1 Course Meal</source>
+          <target state="new">1 Course Meal</target>
+        </trans-unit>
       </group>
     </body>
   </file>

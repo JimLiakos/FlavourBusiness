@@ -1,11 +1,16 @@
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessToolKit;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Authentication;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -214,9 +219,64 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+        /// <exclude>Excluded</exclude>
+        string _BrandName;
+
+        /// <MetaDataID>{d2e4dee5-03b9-4948-9f69-28c0e36b114b}</MetaDataID>
+        [PersistentMember(nameof(_BrandName))]
+        [BackwardCompatibilityID("+12")]
+        public string BrandName
+        {
+            get => _BrandName;
+            set
+            {
+                if (_BrandName != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _BrandName = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _LogoImageUrl;
+
+        /// <MetaDataID>{d55c84f7-803d-4684-a946-135dfdf49d7d}</MetaDataID>
+        [PersistentMember(nameof(_LogoImageUrl))]
+        [BackwardCompatibilityID("+13")]
+        public string LogoImageUrl
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_LogoImageUrl))
+                    return null;
+                return RawStorageCloudBlob.RootUri + "/" + _LogoImageUrl;
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _LogoBackgroundImageUrl;
+
+        /// <MetaDataID>{8ddadddb-aa2d-4383-927d-f5fab9a46357}</MetaDataID>
+        [PersistentMember(nameof(_LogoBackgroundImageUrl))]
+        [BackwardCompatibilityID("+14")]
+        public string LogoBackgroundImageUrl
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_LogoBackgroundImageUrl))
+                    return null;
+                return RawStorageCloudBlob.RootUri + "/" + _LogoBackgroundImageUrl;
+            }
+        }
+
 
         /// <MetaDataID>{1348a699-3c57-4358-a22a-845dcb992d0a}</MetaDataID>
-        public void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue)
+        public void Update(string brandName, IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -229,6 +289,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 WeeklyDeliverySchedule = weeklyDeliverySchedule;
                 MinimumOrderValue = minimumOrderValue;
                 ShippingCost = shippingCost;
+                BrandName = brandName;
                 FreeShippingMinimumOrderValue = freeShippingMinimumOrderValue;
 
 
@@ -279,6 +340,104 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (!string.IsNullOrWhiteSpace(PlaceOfDistributionJson))
                 _PlaceOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(PlaceOfDistributionJson);
+
+
+        }
+
+        /// <MetaDataID>{5ef13716-024b-4a7d-9d11-806aeefd906e}</MetaDataID>
+        public IUploadSlot GetUploadSlotForLogoImage()
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                var organizationIdentity = authUserRef?.GetContextRoleObject<Organization>(true)?.Identity;
+                if (string.IsNullOrEmpty(organizationIdentity))
+                    throw new AuthenticationException();
+                if (organizationIdentity != ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity)
+                    throw new AuthenticationException();
+
+                int version = 1;
+                string removePreviousVersionBlobUrl = null;
+                if (_LogoImageUrl != null && _LogoImageUrl.LastIndexOf("_v") != -1)
+                {
+                    version = int.Parse(_LogoImageUrl.Substring(_LogoImageUrl.LastIndexOf("_v")).Split('.')[0].Replace("_v", "")) + 1;
+                    removePreviousVersionBlobUrl = _LogoImageUrl;
+                }
+
+
+                string versionExtension = "_v" + version;
+                string blobUrl = "usersfolder/" + ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity + "/LogoImages/HomeDeliveryLogo" + ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + versionExtension + ".png";
+
+                var uploadSlot = new UploadSlot(blobUrl, removePreviousVersionBlobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer, "image/png");
+
+                uploadSlot.FileUploaded += LogoImageUploadSlot_FileUploaded;
+                return uploadSlot;
+            }
+            else
+                throw new AuthenticationException();
+
+        }
+
+        /// <MetaDataID>{daa89329-225f-4e59-9a4c-c2a31054e455}</MetaDataID>
+        private void LogoImageUploadSlot_FileUploaded(object sender, EventArgs e)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _LogoImageUrl = (sender as UploadSlot).BlobUrl;
+                (sender as UploadSlot).FileUploaded -= LogoImageUploadSlot_FileUploaded;
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+        /// <MetaDataID>{2f1ca4a1-24ba-4a88-94e2-8f5bd89402d1}</MetaDataID>
+        public IUploadSlot GetUploadSlotForLogoBackgroundImage()
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+                var organizationIdentity = authUserRef?.GetContextRoleObject<Organization>(true)?.Identity;
+                if (string.IsNullOrEmpty(organizationIdentity))
+                    throw new AuthenticationException();
+                if (organizationIdentity != ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity)
+                    throw new AuthenticationException();
+
+
+                int version = 1;
+                string removePreviousVersionBlobUrl = null;
+                if (_LogoBackgroundImageUrl != null && _LogoBackgroundImageUrl.LastIndexOf("_v") != -1)
+                {
+                    version = int.Parse(_LogoBackgroundImageUrl.Substring(_LogoBackgroundImageUrl.LastIndexOf("_v")).Split('.')[0].Replace("_v", "")) + 1;
+                    removePreviousVersionBlobUrl = _LogoBackgroundImageUrl;
+                }
+
+
+                string versionExtension = "_v" + version;
+                string blobUrl = "usersfolder/" + ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity + "/LogoImages/HomeDeliveryLogoBK" + ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + versionExtension+".avif";
+
+                var uploadSlot = new UploadSlot(blobUrl, removePreviousVersionBlobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer, "image/avif");
+
+                uploadSlot.FileUploaded += LogoBackgroundImageUploadSlot_FileUploaded;
+                return uploadSlot;
+            }
+            else
+                throw new AuthenticationException();
+
+        }
+
+        /// <MetaDataID>{0a16384f-6eea-40de-9219-93dd5d23b135}</MetaDataID>
+        private void LogoBackgroundImageUploadSlot_FileUploaded(object sender, EventArgs e)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _LogoBackgroundImageUrl = (sender as UploadSlot).BlobUrl;
+                (sender as UploadSlot).FileUploaded -= LogoBackgroundImageUploadSlot_FileUploaded;
+                stateTransition.Consistent = true;
+            }
 
 
         }

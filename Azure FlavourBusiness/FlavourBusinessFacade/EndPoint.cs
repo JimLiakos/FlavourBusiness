@@ -16,7 +16,7 @@ namespace FlavourBusinessFacade.ComputingResources
         public int Port { get; set; }
 
 
-        public static string Server = "192.168.2.51";//Braxati
+        public static string Server = "192.168.2.19";//Braxati
 
         //public static string Server = "192.168.2.8";//org
 

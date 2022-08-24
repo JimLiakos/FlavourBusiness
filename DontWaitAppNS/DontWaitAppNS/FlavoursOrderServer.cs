@@ -48,6 +48,45 @@ namespace DontWaitApp
     class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
+        Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>> NeighborhoodFoodServers = new Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>>();
+
+        public Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location)
+        {
+            if (NeighborhoodFoodServersTask != null && NeighborhoodFoodServersTask.Status == TaskStatus.Running)
+                return NeighborhoodFoodServersTask;
+
+            lock (NeighborhoodFoodServers)
+            {
+                if (NeighborhoodFoodServers.ContainsKey(location))
+                    return Task.FromResult<List<HomeDeliveryServicePointInfo>>(NeighborhoodFoodServers[location]);
+            }
+            NeighborhoodFoodServersTask = Task<List<HomeDeliveryServicePointInfo>>.Run(() =>
+            {
+                var servers = this.ServicesContextManagment.GetNeighborhoodFoodServers(location);
+                lock (NeighborhoodFoodServers)
+                {
+                    NeighborhoodFoodServers[location] = servers;
+                }
+
+
+#if !DeviceDotNet
+#if DEBUG
+
+                foreach (var server in servers)
+                {
+                    if (!string.IsNullOrWhiteSpace(server.LogoBackgroundImageUrl))
+                        server.LogoBackgroundImageUrl = "https://dev-localhost/" + server.LogoBackgroundImageUrl.Substring(server.LogoBackgroundImageUrl.IndexOf("devstoreaccount1"));
+
+                    if (!string.IsNullOrWhiteSpace(server.LogoImageUrl))
+                        server.LogoImageUrl = "https://dev-localhost/" + server.LogoImageUrl.Substring(server.LogoImageUrl.IndexOf("devstoreaccount1"));
+                }
+#endif
+#endif
+                return servers;
+            });
+
+            return NeighborhoodFoodServersTask;
+        }
 
         /// <MetaDataID>{d87c2614-3408-428f-80d7-3d590f546a27}</MetaDataID>
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
@@ -69,14 +108,17 @@ namespace DontWaitApp
             _EndUser = new FoodServiceClientVM();
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-
+            Task.Run(() =>
+            {
+                int? forceLoad = Places?.Count;
+            });
 
 #if DeviceDotNet
             (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
             (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
 
             device.MessageReceived += Device_MessageReceived;
-
+        
 
             //ScanPage.ZxingView.OnScanResult += (result) =>
             // Device.BeginInvokeOnMainThread(async () =>
@@ -309,14 +351,14 @@ namespace DontWaitApp
                 {
                     var location = await GetCurrentLocationNative();
                     if (location != null)
-                        return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
+                        return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
                 }
             }
             else
             {
                 var location = await GetCurrentLocationNative();
                 if (location != null)
-                    return new Location() { Latitude = location.Latitude, Longitude = location.Longitude };
+                    return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
             }
 #endif
 #if DEBUG
@@ -358,6 +400,9 @@ namespace DontWaitApp
                     if (places.Count > 0 && places.Where(x => x.Default).FirstOrDefault() == null)
                         ApplicationSettings.Current.ClientAsGuest.SetDefaultDelivaryPlace(places[0]);
 
+                    var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
+                    if (defaultPlace != null)
+                        GetNeighborhoodFoodServers(defaultPlace.Location);
                     return ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
                 }
                 else
@@ -385,7 +430,7 @@ namespace DontWaitApp
             ApplicationSettings.Current.ClientAsGuest.RemoveDeliveryPlace(deliveryPlace);
 
         }
-     
+
 
 
         public void SetDefaultPlace(IPlace deliveryPlace)
@@ -408,7 +453,7 @@ namespace DontWaitApp
                 cts = new CancellationTokenSource();
                 var location = await Geolocation.GetLocationAsync(request, cts.Token);
                 if (location == null)
-                     location = await Geolocation.GetLastKnownLocationAsync();
+                    location = await Geolocation.GetLastKnownLocationAsync();
                 return location;
 
 
@@ -439,6 +484,7 @@ namespace DontWaitApp
         {
             OnWebViewLoaded?.Invoke();
             GetMessages();
+          
         }
 
         /// <MetaDataID>{5f5cd24b-0745-4fc5-b8b1-bab7378d1868}</MetaDataID>
@@ -1698,21 +1744,12 @@ namespace DontWaitApp
                     //servicePoint = "b5ec4ed264c142adb26b73c95b185544;9967813ee9d943db823ca97779eb9fd7";
 
 
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                    string serverUrl = AzureServerUrl;
-
-
-                    var waiter = RemotingServices.GetPersistentObject(serverUrl, @"0470e076603e47b6a82556fe4c1bf335;3bdea2dc-3185-4331-bdb9-f17c535f2965\18\c6c9bce7-9c46-4f0b-8587-fc03526f6546") as IWaiter;
-                    var ee = RemotingServices.GetComputingContextPersistentUri(waiter);
-                    IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    servicesContextManagment.ObjectChangeState += ServicesContextManagment_ObjectChangeState;
 
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
 
-                    var foodServiceClientSession = servicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
+                    var foodServiceClientSession = ServicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
 
 
                     //menuData.MenuRoot = "http://192.168.2.3/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/";
@@ -2308,6 +2345,28 @@ namespace DontWaitApp
 
         public IFoodServiceSession MainSession => this.FoodServiceClientSession?.MainSession;
 
+        IFlavoursServicesContextManagment _ServicesContextManagment;
+
+        public IFlavoursServicesContextManagment ServicesContextManagment
+        {
+            get
+            {
+                if (_ServicesContextManagment == null)
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+
+                    _ServicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                    _ServicesContextManagment.ObjectChangeState += ServicesContextManagment_ObjectChangeState;
+                }
+                return _ServicesContextManagment;
+
+            }
+        }
+
+        public Task<List<HomeDeliveryServicePointInfo>> NeighborhoodFoodServersTask;
+
         public void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState)
         {
             foreach (var hall in Halls.OfType<RestaurantHallLayoutModel.HallLayout>())
@@ -2442,7 +2501,7 @@ namespace DontWaitApp
             throw new NotImplementedException();
         }
 
-   
+
 
 
 

@@ -26,6 +26,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Coordinate.cs" Link="Coordinate.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndPoint.cs" Link="EndPoint.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndUserData.cs" Link="EndUserData.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HomeDeliveryServicePointInfo.cs" Link="HomeDeliveryServicePointInfo.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IActivity.cs" Link="HumanResources\IActivity.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IServicesContextWorker.cs" Link="HumanResources\IServicesContextWorker.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITranslationActivity.cs" Link="HumanResources\ITranslationActivity.cs" />
@@ -38,6 +39,9 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDLine.cs" Link="ICallerIDLine.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDServer.cs" Link="ICallerIDServer.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICashierStationRuntime.cs" Link="ICashierStationRuntime.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodTypeTag.cs" Link="IFoodTypeTag.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IGeocoding.cs" Link="IGeocoding.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IHomeDeliveryServicePoint.cs" Link="IHomeDeliveryServicePoint.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPlace.cs" Link="IPlace.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ISettings.cs" Link="ISettings.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICashierStation.cs" Link="ICashierStation.cs" />
@@ -73,6 +77,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IWaiter.cs" Link="IWaiter.cs" />
 	 <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Message.cs" Link="Message.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Notification.cs" Link="Notification.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\OpeningHours.cs" Link="OpeningHours.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\OrganizationsManager.cs" Link="OrganizationsManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ResourceManager.cs" Link="ResourceManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ServiceContextHumanResources.cs" Link="HumanResources\ServiceContextHumanResources.cs" />

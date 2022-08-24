@@ -320,7 +320,7 @@ namespace FlavourBusinessManager
             else
             {
                 string blobUrl = fbStorage.Url;
-                return new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                return new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
             }
         }
 

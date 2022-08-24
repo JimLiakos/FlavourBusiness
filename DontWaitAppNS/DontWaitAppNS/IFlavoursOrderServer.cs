@@ -244,12 +244,13 @@ namespace DontWaitApp
         void CancelMealInvitation(Messmate messmate);
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
         Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
+        Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
 
         //void SaveDelivaryPlace(Place deliveryPlace);
         //void RemoveDelivaryPlace(Place deliveryPlace);
 
         //void SelectDelivaryPlace(Place deliveryPlace);
-      
+
 
 
         //List<IPlace> DeliveryPlaces { get; }
@@ -427,6 +428,8 @@ namespace DontWaitApp
         bool TransferPartialSession(string partialSessionID, string targetSessionID);
 
     }
+
+    
 
 }
 

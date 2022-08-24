@@ -129,6 +129,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{0d03f56d-2d6a-4e05-b3d3-4dec75667aee}</MetaDataID>
         internal bool CanIncludeAsPart(FoodServiceClientSession referencClientSession)
         {
             if (referencClientSession.MainSession != null && referencClientSession.MainSession != this)
@@ -522,6 +523,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+        /// <MetaDataID>{44c96e4d-408e-495e-80f5-59cc2927ca67}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         internal void OnBeforeObjectStateCommited()
         {
@@ -648,6 +650,26 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+        /// <exclude>Excluded</exclude>
+        SessionType _SessionType;
+        /// <MetaDataID>{ed6ac391-1de5-4a8b-935f-c7260a784eda}</MetaDataID>
+        [PersistentMember(nameof(_SessionType))]
+        [BackwardCompatibilityID("+14")]
+        public SessionType SessionType
+        {
+            get => _SessionType;
+            set
+            {
+                if (_SessionType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SessionType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
@@ -662,7 +684,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{598b3be1-30b6-493c-be76-2328a110a602}</MetaDataID>
         object PartialSessionsLock = new object();
+        /// <MetaDataID>{129d63d1-6ade-452e-b2e9-7e0601d6b728}</MetaDataID>
         internal void Merge(IFoodServiceSession foodServiceSession)
         {
             lock (PartialSessionsLock)
@@ -695,9 +719,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                             throw new FlavourBusinessFacade.Exceptions.TransferException("There are shared items left in the old session", 801);
                     }
                     var sessions = foodServiceSession.PartialClientSessions;
-                    if(Meal!=null)
+                    if (Meal != null)
                         (Meal as Meal).Merge(foodServiceSession.Meal as Meal);
-                    
+
                     stateTransition.Consistent = true;
                 }
             }

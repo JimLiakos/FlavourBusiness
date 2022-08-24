@@ -60,7 +60,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{1859dba8-9740-40df-92a0-ceacd7586667}</MetaDataID>
         SessionState SessionState { get; set; }
 
-
+        [BackwardCompatibilityID("+8")]
+        SessionType SessionType { get; }
 
     }
 

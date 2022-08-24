@@ -18,24 +18,38 @@ namespace FlavourBusinessToolKit
     {
         public Object Tag;
         Microsoft.Azure.Storage.CloudStorageAccount CloudStorageAccount;
-        string BlobUrl;
+        public readonly string BlobUrl;
         string RootContainer;
-        public UploadSlot(string blobUrl, CloudStorageAccount cloudStorageAccount, string rootContainer)
+        public UploadSlot(string blobUrl, CloudStorageAccount cloudStorageAccount, string rootContainer, string contentType = null)
         {
             BlobUrl = blobUrl;
             CloudStorageAccount = cloudStorageAccount;
             RootContainer = rootContainer;
+            ContentType = contentType;
 
+        }
+        public UploadSlot(string blobUrl, string removePreviousVersionBlobUrl, CloudStorageAccount cloudStorageAccount, string rootContainer, string contentType = null)
+        {
+            BlobUrl = blobUrl;
+            CloudStorageAccount = cloudStorageAccount;
+            RootContainer = rootContainer;
+            ContentType = contentType;
+            RemovePreviousVersionBlobUrl = removePreviousVersionBlobUrl;
         }
         public event EventHandler FileUploaded;
 
         static Dictionary<string, FileUploadEntry> FileUploads = new Dictionary<string, FileUploadEntry>();
 
+        string ContentType;
 
-        public string CreateFileUploadSession(int size, string contentType)
+        public string RemovePreviousVersionBlobUrl { get; }
+
+        public string CreateFileUploadSession(int size, string contentType = null)
         {
             try
             {
+                if (contentType == null)
+                    ContentType = contentType;
                 FileUploadEntry fileUploadEntry = new FileUploadEntry();
                 fileUploadEntry.FileName = BlobUrl;// userFolder + "/" + path;
                 fileUploadEntry.FileSize = size;
@@ -79,12 +93,19 @@ namespace FlavourBusinessToolKit
                     {
 
                         string blobUrl = fileUploadEntry.FileName;//.Substring(fileUploadEntry.FileName.IndexOf("/") + 1);
+                        string removeBlobUrl = RemovePreviousVersionBlobUrl;
                         string containerName = RootContainer;
                         if (string.IsNullOrWhiteSpace(containerName))
                         {
                             containerName = fileUploadEntry.FileName.Substring(0, fileUploadEntry.FileName.IndexOf("/"));
                             blobUrl = fileUploadEntry.FileName.Substring(fileUploadEntry.FileName.IndexOf("/") + 1);
+
                         }
+                        if (removeBlobUrl != null && removeBlobUrl.IndexOf(containerName + "/") == 0)
+                            removeBlobUrl = removeBlobUrl.Substring(removeBlobUrl.IndexOf("/") + 1);
+
+
+
                         var blobClient = CloudStorageAccount.CreateCloudBlobClient();
                         var container = blobClient.GetContainerReference(containerName);
                         container.CreateIfNotExists();
@@ -92,6 +113,13 @@ namespace FlavourBusinessToolKit
                         blob.Properties.ContentType = fileUploadEntry.ContentType;
                         blob.DeleteIfExists();
                         blob.UploadFromStream(stream);
+
+                        if (removeBlobUrl != null)
+                        {
+                            CloudBlockBlob previousVersionBlob = container.GetBlockBlobReference(removeBlobUrl);
+                            previousVersionBlob.DeleteIfExists();
+                        }
+
                     }
                 }
                 retVal = true;

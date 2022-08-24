@@ -27,7 +27,7 @@ namespace FlavourBusinessManager
 
             if (FlavoursServicesContextsMonitoringTimer == null)
             {
-                OnFlavoursServicesContextsMonitoring(this,default( System.Timers.ElapsedEventArgs));
+                OnFlavoursServicesContextsMonitoring(this, default(System.Timers.ElapsedEventArgs));
                 FlavoursServicesContextsMonitoringTimer = new System.Timers.Timer(20000);
                 FlavoursServicesContextsMonitoringTimer.Enabled = true;
                 FlavoursServicesContextsMonitoringTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnFlavoursServicesContextsMonitoring);
@@ -36,6 +36,7 @@ namespace FlavourBusinessManager
 
         }
 
+        /// <MetaDataID>{b7ee9e11-5fbd-493e-bd04-6c01b99983fc}</MetaDataID>
         public static FlavoursServicesContextManagment Current
         {
             get
@@ -50,7 +51,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
         {
-            
+
             //bool utd = true;
             //if (utd)
             //    return;
@@ -231,6 +232,7 @@ namespace FlavourBusinessManager
 
 
 
+        /// <MetaDataID>{7dc4b42e-3028-4c25-811c-86eda8f65811}</MetaDataID>
         public ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey)
         {
             string servicesContextIdentity = communicationCredentialKey.Substring(0, communicationCredentialKey.IndexOf("_"));
@@ -250,17 +252,19 @@ namespace FlavourBusinessManager
 
         }
 
+        /// <MetaDataID>{9797a103-75d3-4431-b2d4-593249086772}</MetaDataID>
         List<IFoodTypeTag> _FoodTypeTags;
+        /// <MetaDataID>{0ca6621f-99eb-489e-9ddf-7a6a55bdf29d}</MetaDataID>
         public System.Collections.Generic.List<IFoodTypeTag> FoodTypeTags
         {
             get
             {
-                if(_FoodTypeTags==null)
+                if (_FoodTypeTags == null)
                 {
                     var objectStorage = FlavoursServicesContext.OpenFlavourBusinessesStorage();
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                     _FoodTypeTags = (from s_foodTypeTag in storage.GetObjectCollection<IFoodTypeTag>()
-                                        select s_foodTypeTag).ToList();
+                                     select s_foodTypeTag).ToList();
                 }
                 return _FoodTypeTags.ToList();
             }
@@ -271,8 +275,11 @@ namespace FlavourBusinessManager
             return null;
         }
 
-       static object EventLogLock = new object();
+        /// <MetaDataID>{6b140fca-b1f5-4d7c-b4ec-fd93b8565076}</MetaDataID>
+        static object EventLogLock = new object();
+        /// <MetaDataID>{974a39c6-8ec9-4e91-a4ef-e09cbb3bd1a5}</MetaDataID>
         static System.Diagnostics.EventLog _FlavoursServicesEventLog;
+        /// <MetaDataID>{bc3d83e0-d26c-42bc-85df-697a6581316c}</MetaDataID>
         public static System.Diagnostics.EventLog FlavoursServicesEventLog
         {
             get
@@ -287,7 +294,7 @@ namespace FlavourBusinessManager
                     System.Diagnostics.EventLog myLog = new System.Diagnostics.EventLog();
                     myLog.Source = "FlavoursServices";
                     _FlavoursServicesEventLog = myLog;
-                    return _FlavoursServicesEventLog; 
+                    return _FlavoursServicesEventLog;
                 }
             }
         }
@@ -307,7 +314,7 @@ namespace FlavourBusinessManager
             catch (Exception error)
             {
             }
-        
+
 
             ObjectStorage objectStorage = null;
             try
@@ -323,9 +330,10 @@ namespace FlavourBusinessManager
                     System.Diagnostics.EventLog.CreateEventSource("PersistencySystem", "OOAdvance");
                 System.Diagnostics.EventLog myLog = new System.Diagnostics.EventLog();
                 myLog.Source = "PersistencySystem";
-                myLog.WriteEntry(string.Format("Open '{0}' storage timespan {1}",storageName,ss.ToString()), System.Diagnostics.EventLogEntryType.Information);
+                myLog.WriteEntry(string.Format("Open '{0}' storage timespan {1}", storageName, ss.ToString()), System.Diagnostics.EventLogEntryType.Information);
 
 
+                
                 lock (objectStorage)
                 {
                     try
@@ -347,7 +355,7 @@ namespace FlavourBusinessManager
                         throw;
                     }
                 }
-                
+
 
 
 
@@ -600,5 +608,118 @@ namespace FlavourBusinessManager
         //}
 
 
+        /// <MetaDataID>{93c6ffc2-01a1-4898-a165-47cdba49af2f}</MetaDataID>
+        public List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location)
+        {
+
+            List<IHomeDeliveryServicePoint> deliveryServicePoints = new List<IHomeDeliveryServicePoint>();
+
+            foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
+            {
+
+                var deliveryServicePoint = flavoursServicesContext.GetRunTime().DeliveryServicePoint;
+                if (deliveryServicePoint != null)
+                {
+                    double distance = CalDistance(location.Latitude, location.Longitude, deliveryServicePoint.PlaceOfDistribution.Location.Latitude, deliveryServicePoint.PlaceOfDistribution.Location.Longitude);
+
+                    var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
+
+                    if (polyGon.FindPoint(location.Latitude, location.Longitude))
+                        deliveryServicePoints.Add(deliveryServicePoint);
+                }
+            }
+
+            var servers= deliveryServicePoints.Select(x=>new HomeDeliveryServicePointInfo(x)).ToList();
+
+            return servers;
+
+        }
+
+        /// <MetaDataID>{d1f5e252-7a72-430c-950f-3efabc2835e0}</MetaDataID>
+        internal static double CalDistance(double Lat1, double Long1, double Lat2, double Long2)
+        {
+            /*
+                The Haversine formula according to Dr. Math.
+                http://mathforum.org/library/drmath/view/51879.html
+                
+                dlon = lon2 - lon1
+                dlat = lat2 - lat1
+                a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
+                c = 2 * atan2(sqrt(a), sqrt(1-a)) 
+                d = R * c
+                
+                Where
+                    * dlon is the change in longtitude
+                    * dlat is the change in latitude
+                    * c is the great circle distance in Radians.
+                    * R is the radius of a spherical Earth.
+                    * The locations of the two points in 
+                        spherical coordinates (longtitude and 
+                        latitude) are lon1,lat1 and lon2, lat2.
+            */
+            double dDistance = Double.MinValue;
+            double dLat1InRad = Lat1 * (Math.PI / 180.0);
+            double dLong1InRad = Long1 * (Math.PI / 180.0);
+            double dLat2InRad = Lat2 * (Math.PI / 180.0);
+            double dLong2InRad = Long2 * (Math.PI / 180.0);
+
+            double dlongtitude = dLong2InRad - dLong1InRad;
+            double dLatitude = dLat2InRad - dLat1InRad;
+
+            // Intermediate result a.
+            double a = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) +
+                       Math.Cos(dLat1InRad) * Math.Cos(dLat2InRad) *
+                       Math.Pow(Math.Sin(dlongtitude / 2.0), 2.0);
+
+            // Intermediate result c (great circle distance in Radians).
+            double c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
+
+            // Distance.
+            // const Double kEarthRadiusMiles = 3956.0;
+            const Double kEarthRadiusKms = 6376.5;
+            dDistance = kEarthRadiusKms * c;
+
+            return dDistance;
+        }
+
+
     }
+
+    /// <MetaDataID>{ae4070e9-17de-4a7a-9105-3639358bd4f7}</MetaDataID>
+    class MapPolyGon
+    {
+        /// <MetaDataID>{6d727f7b-4bdb-4569-aae4-687d657da1d4}</MetaDataID>
+        List<Coordinate> Points;
+
+        /// <MetaDataID>{00f1084e-aeff-4b69-a993-61ee5bb30c99}</MetaDataID>
+        public MapPolyGon(List<Coordinate> points)
+        {
+            Points = points.ToList();
+
+        }
+
+
+        //  The function will return true if the point x,y is inside the polygon, or
+        //  false if it is not.  If the point is exactly on the edge of the polygon,
+        //  then the function may return true or false.
+
+        /// <MetaDataID>{a429d4d6-ecb7-45b7-bc39-7fb0aba7cf2b}</MetaDataID>
+        public bool FindPoint(double latitude, double longitude)
+        {
+            int sides = Points.Count - 1;
+            int j = sides - 1;
+            bool pointStatus = false;
+            for (int i = 0; i < sides; i++)
+            {
+                if (Points[i].Longitude < longitude && Points[j].Longitude >= longitude || Points[j].Longitude < longitude && Points[i].Longitude >= longitude)
+                {
+                    if (Points[i].Latitude + (longitude - Points[i].Longitude) / (Points[j].Longitude - Points[i].Longitude) * (Points[j].Latitude - Points[i].Latitude) < latitude)
+                        pointStatus = !pointStatus;
+                }
+                j = i;
+            }
+            return pointStatus;
+        }
+    }
+
 }

@@ -324,5 +324,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<FlavourBusinessFacade.HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

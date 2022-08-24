@@ -135,6 +135,9 @@
     <None Include="..\..\MenuModel\JsonViewModel\Tag.cs">
       <Link>MenuModel\Tag.cs</Link>
     </None>
+    <Compile Include="..\FlavourBusinessFacade\OpeningHours.cs">
+      <Link>OpeningHours.cs</Link>
+    </Compile>
     <Compile Include="WaitView\Block.xaml.cs">
       <DependentUpon>Block.xaml</DependentUpon>
     </Compile>

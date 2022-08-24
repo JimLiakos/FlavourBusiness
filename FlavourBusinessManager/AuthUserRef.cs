@@ -433,12 +433,13 @@ namespace FlavourBusinessManager
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal T GetContextRoleObject<T>() where T : class
+        internal T GetContextRoleObject<T>(bool allowRemote=false) where T : class
         {
+            
             lock (rolesLock)
             {
                 GetRoles();
-                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName && x.ComputingContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID && x.RoleObject != null).FirstOrDefault();
+                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName &&( x.ComputingContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID|| allowRemote) && x.RoleObject != null).FirstOrDefault();
 
                 if (role != null)
                     return role.RoleObject as T;

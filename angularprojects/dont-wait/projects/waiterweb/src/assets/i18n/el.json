@@ -81,6 +81,9 @@
 		"MinimumOrderPlaceholder": "Γράψτε την αξία της ελάχιστη παραγγελία",
 		"MinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία που μπορεί να παραγγήλει ο πελάτης.",
 		"ShippingCostTooltip": "Ορίζεις το κόστος διανομής που χρεώνεται στον πελάτη για κάθε παραγγελλία.",
-		"FreeShippingMinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία για δωρεάν διανομή."
+		"FreeShippingMinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία για δωρεάν διανομή.",
+		"HomeDeliveryHeader":"Παραγγελίες Delivery",
+		"BrandNameLabel":"Brand Name",
+		"DeliveryPlaceLabel":"Διεύθυνση παράδοσης"
 	}
 }

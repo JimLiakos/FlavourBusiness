@@ -148,6 +148,9 @@
     <value>Meal course</value>
     <comment>Defines the name for new MealCourseType instance</comment>
   </data>
+  <data name="OneCourseMealTypeName" xml:space="preserve">
+    <value>1 Course Meal</value>
+  </data>
   <data name="PreparationOptionsGroupDefaultName" xml:space="preserve">
     <value>Options group</value>
     <comment>Defines the default name of PreparationOptionsGroupclass instances</comment>

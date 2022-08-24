@@ -18,7 +18,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{680d7ca1-c381-4be1-890b-e1b21451126e}</MetaDataID>
     [BackwardCompatibilityID("{680d7ca1-c381-4be1-890b-e1b21451126e}")]
     [Persistent()]
-    public class ServicePoint :MarshalByRefObject, IServicePoint
+    public class ServicePoint : MarshalByRefObject, IServicePoint
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -381,6 +381,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                         fsClientSession.SessionStarts = DateTime.UtcNow;
                         fsClientSession.ModificationTime = DateTime.UtcNow;
                         fsClientSession.PreviousYouMustDecideMessageTime = DateTime.UtcNow;
+
+                        if (this is HallServicePoint)
+                            fsClientSession.SessionType = SessionType.Hall;
+
+                        if (this is HomeDeliveryServicePoint)
+                            fsClientSession.SessionType = SessionType.HomeDelvery;
+
 
                         if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
                             fsClientSession.UserIdentity = user.Identity;
@@ -1034,7 +1041,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{5a6deea9-0208-441b-9b01-77a13dc8c126}</MetaDataID>
     [BackwardCompatibilityID("{5a6deea9-0208-441b-9b01-77a13dc8c126}")]
     [Persistent()]
-    public class HallServicePoint:ServicePoint, IHallServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class HallServicePoint : ServicePoint, IHallServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
         /// <exclude>Excluded</exclude>
@@ -1059,7 +1066,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-   
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<IServiceArea> _ServiceArea = new OOAdvantech.Member<IServiceArea>();

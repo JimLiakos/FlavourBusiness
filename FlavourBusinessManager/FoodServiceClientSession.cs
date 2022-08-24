@@ -69,11 +69,20 @@ namespace FlavourBusinessManager.EndUsers
                 var defaultMealTypeUri = this.ServicePoint.ServesMealTypesUris.FirstOrDefault();
                 var servedMealTypesUris = this.ServicePoint.ServesMealTypesUris.ToList();
 
-                if (defaultMealTypeUri == null)
+                if (defaultMealTypeUri == null && ServicePoint is IHallServicePoint)
                 {
                     defaultMealTypeUri = (this.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.FirstOrDefault();
                     servedMealTypesUris = (this.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.ToList();
                 }
+
+                if (defaultMealTypeUri == null && ServicePoint is IHomeDeliveryServicePoint)
+                {
+                    defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+                    servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
+                }
+
+
+
 
                 return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
 
@@ -211,7 +220,7 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+25")]
         public System.DateTime WillTakeCareTimestamp
         {
-            get => _WillTakeCareTimestamp; 
+            get => _WillTakeCareTimestamp;
             set
             {
                 if (_WillTakeCareTimestamp != value)
@@ -328,7 +337,7 @@ namespace FlavourBusinessManager.EndUsers
                     var implicitMainSession = _MainSession.Value;
                     if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
                     {
-                        
+
                         // Makes this partial session with implicit main session part of messmate session explicitly
                         if (_MainSession.Value != null)
                             _MainSession.Value.RemovePartialSession(this);
@@ -351,7 +360,7 @@ namespace FlavourBusinessManager.EndUsers
                         else if (implicitMainSessionMainSession != null && implicitMainSessionMainSession.PartialClientSessions.All(x => x.ImplicitMealParticipation))
                             foodServiceSession = implicitMainSessionMainSession as FoodServiceSession;
 
-                        if (foodServiceSession!=null)
+                        if (foodServiceSession != null)
                         {
                             // if all partial session are participate to main session implicitly then keep the main session and
                             // add messmate and this partial session to main session explicitly
@@ -372,7 +381,7 @@ namespace FlavourBusinessManager.EndUsers
                             ImplicitMealParticipation = false;
                             messmateClientSesion.ImplicitMealParticipation = false;
 
-                            if(foodServiceSession!=MainSession)
+                            if (foodServiceSession != MainSession)
                                 foodServiceSession.AddPartialSession(this);
 
                             if (foodServiceSession != messmateClientSesion.MainSession)
@@ -447,7 +456,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             if (MainSession == null)
                 CheckForMealConversationTimeout();
-            
+
         }
 
 
@@ -1300,7 +1309,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-        /// <MetaDataID>{262738fd-4b34-4477-8517-044442d3dc19}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         OrganizationStorageRef _Menu;
         /// <MetaDataID>{de05c789-52e9-4334-a959-f0b5556cb01d}</MetaDataID>
         public OrganizationStorageRef Menu
@@ -1874,6 +1883,26 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 return CheckForMealConversationTimeout();
+            }
+        }
+        /// <exclude>Excluded</exclude>
+        SessionType _SessionType;
+        /// <MetaDataID>{62f96036-7ea5-484d-8463-c4b4ac8c7a04}</MetaDataID>
+        [PersistentMember(nameof(_SessionType))]
+        [BackwardCompatibilityID("+27")]
+        public SessionType SessionType
+        {
+            get => _SessionType;
+            set
+            {
+                if (_SessionType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SessionType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 

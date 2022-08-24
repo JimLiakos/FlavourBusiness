@@ -30,5 +30,22 @@ namespace FlavourBusinessFacade.EndUsers
         {
             return !(left == right);
         }
+
+        public override int GetHashCode()
+        {
+            int num = -1162279000;
+            num = (-1521134295 * num) + GetHashCode(Latitude);
+            num = (-1521134295 * num) + GetHashCode(Longitude);
+        
+            return num;
+        }
+
+        private int GetHashCode(object partValue)
+        {
+            if (partValue == null)
+                return 0;
+            else
+                return partValue.GetHashCode();
+        }
     }
 }

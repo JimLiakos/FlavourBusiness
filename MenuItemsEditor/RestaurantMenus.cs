@@ -132,8 +132,8 @@ namespace MenuItemsEditor
             _Menus = (from menu in storageMenus select new MenuViewModel(menu, this)).ToDictionary(menuViewModel => menuViewModel.Menu);
 
 
-            MenuModel.FixedScaleType.UpdateStorage(ObjectStorage);
-            MenuModel.MealType.UpdateStorage(ObjectStorage);
+            FixedScaleType.UpdateStorage(ObjectStorage);
+            MealType.UpdateStorage(ObjectStorage);
 
 
 

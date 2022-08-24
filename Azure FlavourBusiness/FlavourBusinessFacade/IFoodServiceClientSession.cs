@@ -206,7 +206,9 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
-       
+        [BackwardCompatibilityID("+13")]
+       SessionType SessionType { get; }
+
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>
@@ -218,8 +220,15 @@ namespace FlavourBusinessFacade.EndUsers
         UrgesToDecide = 3,
         Inactive = 4,
         Closed = 100
+    }
 
 
+    /// <MetaDataID>{7ba25ccc-131e-4b10-b318-c36799f80a38}</MetaDataID>
+    public enum SessionType
+    {
+        Hall = 0,
+        Takeaway = 1,
+        HomeDelvery = 2
     }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages

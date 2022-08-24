@@ -583,7 +583,7 @@ namespace FlavourBusinessToolKit
         const long GB = MB * 1024;
         public static long NumBytesPerChunk = 40 * kB; // A block may be up to 40 KB in size. 
 
-        public static void Upload(MemoryStream memoryStream, IUploadSlot uploadSlot, string contentType = "")
+        public static void Upload(Stream memoryStream, IUploadSlot uploadSlot, string contentType = "")
         {
 
             //define the chunk size

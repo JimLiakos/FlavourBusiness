@@ -83,6 +83,9 @@
 		"MinimumOrderPlaceholder": "Minimum Order Value",
 		"MinimumOrderTooltip": "You defines the minimum value of customer order.",
 		"ShippingCostTooltip": "You defines the delivery cost charged to the customer for each order.",
-		"FreeShippingMinimumOrderTooltip": "You defines the minimum order value for free delivery."
+		"FreeShippingMinimumOrderTooltip": "You defines the minimum order value for free delivery.",
+		"HomeDeliveryHeader":"Home Delivery",
+		"BrandNameLabel":"Brand Name",
+		"DeliveryPlaceLabel":"Delivery address"
 	}
 }

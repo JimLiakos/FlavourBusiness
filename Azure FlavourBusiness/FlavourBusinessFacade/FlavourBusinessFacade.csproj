@@ -51,6 +51,7 @@
     <Compile Include="EndPoint.cs" />
     <Compile Include="EndUserData.cs" />
     <Compile Include="Exceptions\TransferException.cs" />
+    <Compile Include="HomeDeliveryServicePointInfo.cs" />
     <Compile Include="HumanResources\ITranslationActivity.cs" />
     <Compile Include="HumanResources\IWaiter.cs" />
     <Compile Include="HumanResources\IActivity.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="IUser.cs" />
     <Compile Include="HumanResources\IServicesContextWorker.cs" />
     <Compile Include="HumanResources\ServiceContextHumanResources.cs" />
+    <Compile Include="OpeningHours.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

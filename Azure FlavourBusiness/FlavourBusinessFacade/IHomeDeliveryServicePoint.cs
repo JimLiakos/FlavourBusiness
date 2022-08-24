@@ -8,6 +8,15 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{50c6d802-9608-43bd-93ec-0bff5800cce4}")]
     public interface IHomeDeliveryServicePoint : IServicePoint
     {
+        /// <MetaDataID>{b9bc9dc2-b444-4109-99c6-1a976c0ca7b5}</MetaDataID>
+        string BrandName { get; set; }
+
+        /// <MetaDataID>{1b9b4e82-ea23-4e58-affd-673fa5154d12}</MetaDataID>
+        string LogoImageUrl { get; }
+
+        /// <MetaDataID>{024a78c6-04ff-455e-8e14-8740031b1648}</MetaDataID>
+        string LogoBackgroundImageUrl { get; }
+
         /// <MetaDataID>{482d4de9-39ad-4f72-b395-acc6fe8b44d3}</MetaDataID>
         [Association("DeliveryServicePlace", Roles.RoleA, "00e54418-df8f-48ea-aed5-4c9a69e35c38")]
         [RoleAMultiplicityRange(1, 1)]
@@ -48,25 +57,25 @@ namespace FlavourBusinessFacade.ServicesContextResources
         double Zoom { get; set; }
 
         /// <MetaDataID>{3b8096e5-9f00-4b91-a370-272611acb091}</MetaDataID>
-        void Update(IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<System.DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue);
+        void Update(string brandName,IPlace placeOfDistribution, Coordinate? mapCenter, List<Coordinate> serviceAreaMap, bool isPolyline, double zoom, Dictionary<System.DayOfWeek, List<OpeningHours>> weeklyDeliverySchedule, decimal minimumOrderValue, decimal shippingCost, decimal freeShippingMinimumOrderValue);
 
         /// <MetaDataID>{36217abe-f4f6-4029-b841-a99a609a540a}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         [CachingDataOnClientSide]
         bool IsPolyline { get; set; }
 
-        
+
+        /// <MetaDataID>{e2a99b55-15ed-48a7-9ec0-5b9b2e8c62a2}</MetaDataID>
+        IUploadSlot GetUploadSlotForLogoImage();
+        /// <MetaDataID>{e1a5d545-2883-4c58-bdb5-da1d8f5d61a7}</MetaDataID>
+        IUploadSlot GetUploadSlotForLogoBackgroundImage();
+
 
     }
 
 
-    /// <MetaDataID>{78e89630-8ce4-4984-91c7-42ce083f1a4b}</MetaDataID>
-    public struct OpeningHours
-    {
-        /// <MetaDataID>{7e6ed39c-744d-4ee8-9f08-e27cd6819462}</MetaDataID>
-        public double StartsAt;
-        /// <MetaDataID>{531e0650-2eb1-4fa0-af19-00eec90d272c}</MetaDataID>
-        public double EndsAt;
-    }
+
+
+
 }
 

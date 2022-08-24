@@ -12,7 +12,7 @@ namespace MenuModel
     /// <MetaDataID>{692b8238-03dd-48de-a7df-a734878d6791}</MetaDataID>
     [BackwardCompatibilityID("{692b8238-03dd-48de-a7df-a734878d6791}")]
     [Persistent()]
-    public class MealType :  IMealType
+    public class MealType : IMealType
     {
         /// <MetaDataID>{97478e3f-39d5-4caa-bae7-3114a53758ca}</MetaDataID>
         public void SetDefaultMealCourse(IMealCourseType mealCourseType)
@@ -71,9 +71,9 @@ namespace MenuModel
             _MealTypeUri = mealTypeUri;
             _Name = new MultilingualMember<string>(multilingualName.Values);
 
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this,TransactionOption.Suppress))
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.Suppress))
             {
-                _Courses.AddRange(courses); 
+                _Courses.AddRange(courses);
                 stateTransition.Consistent = true;
             }
 
@@ -172,7 +172,7 @@ namespace MenuModel
                         _Name.Value = value;
                         stateTransition.Consistent = true;
                     }
-                    
+
                 }
             }
         }
@@ -188,14 +188,28 @@ namespace MenuModel
 
             var mealTypes = (from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
                              select mealType).ToList();
+            var oneCourseMealType = mealTypes.Where(x => x.Courses.Count() == 1).FirstOrDefault();//Takeaway HomeDelivery meal type
 
             var twoCourseMealType = mealTypes.Where(x => x.Courses.Count() == 2).FirstOrDefault();
             var threeCourseMealType = mealTypes.Where(x => x.Courses.Count() == 3).FirstOrDefault();
             var fourCourseMealType = mealTypes.Where(x => x.Courses.Count() == 4).FirstOrDefault();
 
-
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
+
+                if (oneCourseMealType == null)
+                {
+                    List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
+
+                    var mealCourse = new MealCourseType(MenuModel.Properties.Resources.MainMealCourseName);
+                    mealCourse.IsDefault = true;
+                    objectStorage.CommitTransientObjectState(mealCourse);
+                    mealCourses.Add(mealCourse);
+                    oneCourseMealType = new FixedMealType(MenuModel.Properties.Resources.OneCourseMealTypeName, mealCourses);
+                    objectStorage.CommitTransientObjectState(oneCourseMealType);
+
+                }
+
                 if (twoCourseMealType == null)
                 {
                     List<MenuModel.IMealCourseType> mealCourses = new List<IMealCourseType>();
