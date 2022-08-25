@@ -809,7 +809,8 @@ namespace DontWaitApp
                     ServicesPointName = clientSessionData.ServicesPointName,
                     ServicesContextLogo = clientSessionData.ServicesContextLogo,
                     DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
-                    ServedMealTypesUris = clientSessionData.ServedMealTypesUris
+                    ServedMealTypesUris = clientSessionData.ServedMealTypesUris,
+                    SessionType= clientSessionData.SessionType
 
                 };
                 menuData.OrderItems = OrderItems.ToList();

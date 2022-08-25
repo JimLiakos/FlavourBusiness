@@ -228,7 +228,7 @@ namespace FlavourBusinessFacade.EndUsers
     {
         Hall = 0,
         Takeaway = 1,
-        HomeDelvery = 2
+        HomeDelivery = 2
     }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages
@@ -271,6 +271,8 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{eea67de5-e4ff-44f5-9bd8-3de929b95c3c}</MetaDataID>
         public ServicePointState ServicePointState;
+
+        public SessionType SessionType { get; set; }
     }
 
 

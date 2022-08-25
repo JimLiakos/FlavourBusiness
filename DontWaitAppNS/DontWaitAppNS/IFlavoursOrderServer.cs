@@ -331,6 +331,9 @@ namespace DontWaitApp
                 }
             }
         }
+        [PersistentMember()]
+        [BackwardCompatibilityID("+12")]
+        public SessionType SessionType;
 
         [PersistentMember()]
         [BackwardCompatibilityID("+8")]

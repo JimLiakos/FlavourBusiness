@@ -441,5 +441,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+        public override IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
+        {
+            return new List<IFoodServiceClientSession>();
+        }
     }
 }

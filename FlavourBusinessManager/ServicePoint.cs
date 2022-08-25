@@ -386,7 +386,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             fsClientSession.SessionType = SessionType.Hall;
 
                         if (this is HomeDeliveryServicePoint)
-                            fsClientSession.SessionType = SessionType.HomeDelvery;
+                            fsClientSession.SessionType = SessionType.HomeDelivery;
 
 
                         if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
@@ -704,26 +704,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _ObjectChangeState?.Invoke(this, nameof(State));
             }
         }
-
-        /// <MetaDataID>{34345d6f-bc61-494d-9814-7644ba581c12}</MetaDataID>
-        public IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
+        public virtual IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
-
-
-            var collection = (from foodServiceClient in ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions
-                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession
-                              select foodServiceClient).ToList();
-
-            if (!serviceClientSession.IsWaiterSession)
-            {
-                collection = (from foodServiceClient in collection
-                              where !foodServiceClient.IsWaiterSession && !foodServiceClient.LongTimeForgotten
-                              select foodServiceClient).ToList();
-            }
-
-
-
-            return collection.OfType<IFoodServiceClientSession>().ToList();
+            return new List<IFoodServiceClientSession>();
         }
 
         /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
@@ -1075,6 +1058,26 @@ namespace FlavourBusinessManager.ServicesContextResources
         [PersistentMember(nameof(_ServiceArea))]
         [BackwardCompatibilityID("+9")]
         public IServiceArea ServiceArea => _ServiceArea.Value;
+
+
+        public override IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
+        {
+
+            var collection = (from foodServiceClient in ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions
+                              where foodServiceClient.ServicePoint == this && foodServiceClient != serviceClientSession
+                              select foodServiceClient).ToList();
+
+            if (!serviceClientSession.IsWaiterSession)
+            {
+                collection = (from foodServiceClient in collection
+                              where !foodServiceClient.IsWaiterSession && !foodServiceClient.LongTimeForgotten
+                              select foodServiceClient).ToList();
+            }
+
+
+
+            return collection.OfType<IFoodServiceClientSession>().ToList();
+        }
 
 
 
