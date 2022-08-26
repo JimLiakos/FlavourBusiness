@@ -8049,6 +8049,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
+			    compartment 	(object Compartment
+				Parent_View 	@1
+				location   	(37, 2145)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	51
+				max_width  	2384)
 			    width      	800
 			    height     	594
 			    annotation 	8)
@@ -8173,6 +8191,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5DF32099019D"
+			    compartment 	(object Compartment
+				Parent_View 	@6
+				location   	(340, 208)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	621)
 			    width      	494
 			    height     	269
 			    annotation 	8)
@@ -8290,24 +8326,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@10
-				location   	(4014, 369)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	11
-				max_width  	0)
 			    width      	569
 			    height     	300
 			    annotation 	8)
@@ -8339,6 +8357,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@11
+				location   	(2497, 167)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	20
+				max_width  	2459)
 			    width      	706
 			    height     	394
 			    annotation 	8)
@@ -8538,6 +8574,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D722E01C3"
+			    compartment 	(object Compartment
+				Parent_View 	@20
+				location   	(2643, 1755)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	475)
 			    width      	500
 			    height     	275
 			    annotation 	8)
@@ -8598,6 +8652,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D71BB026B"
+			    compartment 	(object Compartment
+				Parent_View 	@22
+				location   	(1474, 1658)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	3
+				max_width  	621)
 			    width      	588
 			    height     	281
 			    annotation 	8)
@@ -8775,6 +8847,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@30
+				location   	(1415, 1155)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	16
+				max_width  	715)
 			    width      	675
 			    height     	325
 			    annotation 	8)
@@ -8806,6 +8896,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
+			    compartment 	(object Compartment
+				Parent_View 	@31
+				location   	(1506, 2271)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	787)
 			    width      	656
 			    height     	343
 			    annotation 	8)
@@ -8980,6 +9088,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
+			    compartment 	(object Compartment
+				Parent_View 	@39
+				location   	(9, 1321)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	23
+				max_width  	2062)
 			    width      	638
 			    height     	488
 			    annotation 	8)
@@ -9494,6 +9620,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
+			    compartment 	(object Compartment
+				Parent_View 	@67
+				location   	(1241, 680)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	621)
 			    width      	594
 			    height     	319
 			    annotation 	8)
@@ -12569,7 +12713,7 @@
 				    supplier   	"$UNNAMED$21"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, organizationIdentity, unSafeGraphicMenus, create)"
+					(object Message "GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12591,7 +12735,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12613,7 +12757,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12644,7 +12788,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation(messmateClientSesion)"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12774,7 +12918,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@88
-				location   	(3779, 251)
+				location   	(3779, 256)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	551
@@ -12782,7 +12926,7 @@
 				label      	"Notification")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@88
-				location   	(3779, 205)
+				location   	(3779, 206)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -13122,7 +13266,7 @@
 			    quidu      	"5BF913870050"
 			    compartment 	(object Compartment
 				Parent_View 	@103
-				location   	(43, 972)
+				location   	(43, 980)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13137,7 +13281,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	11
-				max_width  	1525)
+				max_width  	1587)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -13171,7 +13315,7 @@
 			    quidu      	"5B8BB60401E2"
 			    compartment 	(object Compartment
 				Parent_View 	@104
-				location   	(1550, 2007)
+				location   	(1550, 2015)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13186,7 +13330,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	20
-				max_width  	2334)
+				max_width  	2459)
 			    width      	825
 			    height     	438
 			    annotation 	8)
@@ -13220,7 +13364,7 @@
 			    quidu      	"5C06122402B6"
 			    compartment 	(object Compartment
 				Parent_View 	@105
-				location   	(1606, 1050)
+				location   	(1606, 1054)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13235,7 +13379,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	44
-				max_width  	1331)
+				max_width  	1400)
 			    width      	732
 			    height     	482
 			    annotation 	8)
@@ -13612,24 +13756,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"62CF8F5F0018"
-			    compartment 	(object Compartment
-				Parent_View 	@123
-				location   	(4233, 975)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	12
-				max_width  	1031)
 			    width      	525
 			    height     	712
 			    annotation 	8)
@@ -13663,7 +13789,7 @@
 			    quidu      	"5C060C8B012B"
 			    compartment 	(object Compartment
 				Parent_View 	@124
-				location   	(3096, 916)
+				location   	(3096, 920)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13678,7 +13804,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	11
-				max_width  	1162)
+				max_width  	1212)
 			    width      	613
 			    height     	662
 			    annotation 	8)
@@ -13766,7 +13892,7 @@
 				    terminal_attachment 	(2329, 1134)
 				    label      	(object SegLabel @129
 					Parent_View 	@127
-					location   	(2462, 1134)
+					location   	(2460, 1134)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13780,7 +13906,7 @@
 					anchor     	5
 					anchor_loc 	1
 					nlines     	1
-					max_width  	228
+					max_width  	225
 					justify    	0
 					label      	"ClientIdentity"
 					pctDist    	0.900000
@@ -13976,7 +14102,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@139
-				location   	(4222, 1747)
+				location   	(4222, 1752)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	538
@@ -13984,7 +14110,7 @@
 				label      	"Coordinate")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@139
-				location   	(4222, 1701)
+				location   	(4222, 1702)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -14062,7 +14188,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@141
-				location   	(1291, 464)
+				location   	(1291, 465)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -14093,7 +14219,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@142
-				location   	(2406, 470)
+				location   	(2406, 471)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -14124,7 +14250,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@143
-				location   	(725, 1164)
+				location   	(725, 1165)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	726
@@ -14155,7 +14281,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@144
-				location   	(76, 1191)
+				location   	(76, 1192)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	280
@@ -14186,7 +14312,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@145
-				location   	(2031, 1198)
+				location   	(2031, 1199)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	757
@@ -14217,7 +14343,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@146
-				location   	(3338, 1233)
+				location   	(3338, 1234)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	414
@@ -14283,7 +14409,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, organizationIdentity, unSafeGraphicMenus, create)"
+				label      	"GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -14370,7 +14496,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(servicePointIdentity, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, user, create)"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -14457,7 +14583,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create)"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -14586,7 +14712,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@165
-				location   	(3055, 1477)
+				location   	(3055, 1478)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	626
@@ -14617,7 +14743,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@166
-				location   	(1299, 549)
+				location   	(1299, 550)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	651
@@ -14752,7 +14878,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation(messmateClientSesion)"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -17599,7 +17725,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@186
-				location   	(128, 1722)
+				location   	(128, 1727)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	495
@@ -17607,7 +17733,7 @@
 				label      	"ItemPreparationState")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@186
-				location   	(128, 1676)
+				location   	(128, 1677)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -17649,24 +17775,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@187
-				location   	(22, 595)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	11
-				max_width  	0)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -17727,24 +17835,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@189
-				location   	(1409, 807)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	44
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -20702,24 +20792,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@326
-				location   	(46, 636)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	11
-				max_width  	0)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -20751,24 +20823,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@327
-				location   	(1634, 891)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	44
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -21526,7 +21580,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@362
-				location   	(2908, 476)
+				location   	(2908, 477)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	450
@@ -21557,7 +21611,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@363
-				location   	(108, 461)
+				location   	(108, 462)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	388
@@ -21588,7 +21642,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@364
-				location   	(1839, 434)
+				location   	(1839, 435)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	682
@@ -21619,7 +21673,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@365
-				location   	(874, 436)
+				location   	(874, 437)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	507
@@ -21650,7 +21704,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@366
-				location   	(899, 911)
+				location   	(899, 912)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	482
@@ -21681,7 +21735,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@367
-				location   	(1966, 955)
+				location   	(1966, 956)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	458

@@ -445,17 +445,23 @@ namespace FlavourBusinessManager
                             string foodCategories = "Καφέδες(47); Σουβλάκια(61); Pizza(48); Κινέζικη(18); Κρέπες(21); Burgers(46); Sushi(26); Γλυκά(24); Μαγειρευτά(40); Ζυμαρικά(36); Μεξικάνικη(5); Νηστίσιμα(16); Βάφλες(10); Ινδική(13); Vegan(8); Brunch(20); Vegetarian(5); Hot Dog(5); Γαλακτοκομικά(1); Ασιατική(24); Σφολιάτες(8); Θαλασσινά(21); Σαλάτες(44); Ζαχαροπλαστείο(10); Cocktails(16); Ιταλική(16); Ψητά - Grill(95); Αρτοποιήματα(2); Sandwich(33); Παγωτό(21); Kebab(12); Πεϊνιρλί(7); Ποτά(13); Ethnic(10); Cool food(6); Κοτόπουλα(5); Ανατολίτικη(8); Φαλάφελ(6); Τσέχικη(1); Κεντροευρωπαϊκή(1); Μεζεδοπωλείο(7); Μεσογειακή(9); Ελληνική(9); Πατσάς(1); Snacks(4); Donuts(2); Πιροσκί(1); Λουκουμάδες(3)";
 
                             var foodCategoriesNames = foodCategories.Split(';').Select(x => x.Split('(')[0]).ToList();
-                            foreach (var foodCategory in foodCategoriesNames)
+
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-
-                                if (foodTypeTags.Where(x => x.Name == foodCategory).Count() == 0)
+                                foreach (var foodCategory in foodCategoriesNames)
                                 {
-                                    var foodTypeTag = new FoodTypeTag(); ;
-                                    foodTypeTag.Name = foodCategory.Trim();
-                                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
-                                }
 
+                                    if (foodTypeTags.Where(x => x.Name.Trim() == foodCategory.Trim()).Count() == 0)
+                                    {
+                                        var foodTypeTag = new FoodTypeTag(); ;
+                                        foodTypeTag.Name = foodCategory.Trim();
+                                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
+                                    }
+
+                                } 
+                                stateTransition.Consistent = true;
                             }
+
 #endif
                         }
                         catch (Exception error)
