@@ -372,6 +372,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
+                        https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepointid_Mega 
 
                         //fsClientSession = ServicesContextRunTime.NewFoodServiceClientSession(fsClientSession);
                         fsClientSession = new EndUsers.FoodServiceClientSession();

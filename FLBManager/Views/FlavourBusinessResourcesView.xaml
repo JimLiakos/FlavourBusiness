@@ -136,7 +136,7 @@
                             </StackPanel.Resources>
 
                             <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
-                            <ControlsEX:EditableTextBlock DragObject="DragMenuItemObject" IsEditable="{Binding IsEditable}"   IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                            <ControlsEX:EditableTextBlock DragObject="DragMenuItemObject" IsEditable="{Binding IsEditable}" MinWidth="20"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                         </StackPanel>
 
                     </HierarchicalDataTemplate>

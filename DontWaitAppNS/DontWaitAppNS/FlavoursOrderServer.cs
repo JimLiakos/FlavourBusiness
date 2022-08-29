@@ -746,7 +746,10 @@ namespace DontWaitApp
 #else
             return Task<MenuData>.Run(async () =>
             {
-                //var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                if (string.IsNullOrWhiteSpace(servicePointIdentity))
+                    servicePointIdentity = "MealInvitation;7f9bde62e6da45dc8c5661ee2220a7b0;fe51ba7e30954ee08209bd89a03469a8;38ec58d3bc5a4145b1a94851cfc43ade91000000296";
+
+               // var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
                 var clientSessionData = await GetFoodServiceSession(servicePointIdentity);
 
                 //if (FoodServiceClientSession != clientSessionData.FoodServiceClientSession)

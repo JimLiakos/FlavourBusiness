@@ -174,7 +174,7 @@
 
                                 <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                                 <Grid>
-                                    <ControlsEX:EditableTextBlock DragObject="DragMenuItemObject" Translator="{Binding Translator}" UnTranslated="{Binding UnTranslated}" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                    <ControlsEX:EditableTextBlock DragObject="DragMenuItemObject" MinWidth="20" Translator="{Binding Translator}" UnTranslated="{Binding UnTranslated}" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                 </Grid>
                             </StackPanel>
 
