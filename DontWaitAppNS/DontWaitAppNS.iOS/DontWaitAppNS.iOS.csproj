@@ -145,6 +145,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj">
+      <Project>{97999f66-2cd1-4b6e-bba2-41174367df1e}</Project>
+      <Name>OOAdvantech.NetStandard.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
       <Project>{EA6F820B-FA25-446F-8E4E-0DE2CF89BE75}</Project>
       <Name>DontWaitAppNS</Name>
