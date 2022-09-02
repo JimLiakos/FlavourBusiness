@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaiterApp.Android", "WaiterApp.Android\WaiterApp.Android.csproj", "{C660A958-22D5-4F92-BA52-DCFEBBD090A2}"
 EndProject
@@ -68,6 +68,7 @@ Global
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|Any CPU.ActiveCfg = Debug|iPhone
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|iPhone.Build.0 = Debug|iPhone
+		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|iPhone.Deploy.0 = Debug|iPhone
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{386B82BE-3BFC-49CA-BDBD-6E5E8350C016}.Release|Any CPU.ActiveCfg = Release|iPhone
