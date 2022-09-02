@@ -14,7 +14,7 @@
     <AssemblyName>DontWaitAppNS.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -130,9 +130,6 @@
   <ItemGroup>
     <PackageReference Include="SkiaSharp">
       <Version>2.80.1</Version>
-    </PackageReference>
-    <PackageReference Include="WebSocket4Net">
-      <Version>0.15.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.6.1</Version>
