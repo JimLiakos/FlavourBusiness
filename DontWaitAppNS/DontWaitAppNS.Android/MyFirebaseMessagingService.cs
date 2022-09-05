@@ -79,6 +79,11 @@ namespace DontWaitAppNS.Droid
             //  notificationManager.Notify(MainActivity.NOTIFICATION_ID, notificationBuilder.Build());
         }
 
+        public override void OnNewToken(string p0)
+        {
+            base.OnNewToken(p0);
+        }
+
 
     }
 }

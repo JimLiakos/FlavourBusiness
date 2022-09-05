@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech;
+using Plugin.Connectivity;
 
 namespace DontWaitApp
 {
@@ -64,12 +65,16 @@ namespace DontWaitApp
             //MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+ 
+
+        protected override async void OnStart()
         {
+            await CrossConnectivity.Current.IsRemoteReachable("10.0.0.13");
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
-            // Handle when your app starts
+
+
         }
 
         protected override void OnSleep()
