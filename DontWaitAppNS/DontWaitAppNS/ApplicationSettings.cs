@@ -73,12 +73,21 @@ namespace DontWaitApp
         {
             get
             {
+                if (_LastServicePoinMenuData.ClientSessionID == null)
+                {
+
+                    return _LastServicePoinMenuData;
+                }
                 return _LastServicePoinMenuData;
             }
             set
             {
                 if (_LastServicePoinMenuData != value)
                 {
+                    if (value.ClientSessionID == null)
+                    {
+
+                    }
                     if (_LastServicePoinMenuData != null)
                     {
                         //OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)
@@ -265,12 +274,16 @@ namespace DontWaitApp
         /// <exclude>Excluded</exclude>
         static ApplicationSettings _Current;
 
-        public static  ApplicationSettings Current
+        public static ApplicationSettings Current
         {
             get
             {
+                lock (AppSettingsStorageLock)
+                {
+                    if (_Current != null)
+                        return _Current;
+                }
                 GetCurrent().Wait();
-
                 return _Current;
             }
         }
@@ -279,6 +292,9 @@ namespace DontWaitApp
         {
             lock (AppSettingsStorageLock)
             {
+                if (_Current != null)
+                    return Task<ApplicationSettings>.FromResult(_Current);
+
                 if (AppSettingsTask != null)
                     return AppSettingsTask;
                 AppSettingsTask = Task<ApplicationSettings>.Run(() =>

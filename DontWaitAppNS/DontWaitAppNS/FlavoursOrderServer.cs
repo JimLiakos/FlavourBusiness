@@ -62,12 +62,23 @@ namespace DontWaitApp
             }
             NeighborhoodFoodServersTask = Task<List<HomeDeliveryServicePointInfo>>.Run(() =>
             {
-                var servers = this.ServicesContextManagment.GetNeighborhoodFoodServers(location);
-                lock (NeighborhoodFoodServers)
+                System.Collections.Generic.List<HomeDeliveryServicePointInfo> servers = null;
+                do
                 {
-                    NeighborhoodFoodServers[location] = servers;
-                }
+                    try
+                    {
+                         servers = this.ServicesContextManagment.GetNeighborhoodFoodServers(location);
+                        lock (NeighborhoodFoodServers)
+                        {
+                            NeighborhoodFoodServers[location] = servers;
+                        }
+                    }
+                    catch (Exception error)
+                    {
 
+                    }
+
+                } while (!NeighborhoodFoodServers.ContainsKey(location));
 
 #if !DeviceDotNet
 #if DEBUG
@@ -118,7 +129,7 @@ namespace DontWaitApp
             (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
 
             device.MessageReceived += Device_MessageReceived;
-        
+
 
             //ScanPage.ZxingView.OnScanResult += (result) =>
             // Device.BeginInvokeOnMainThread(async () =>
@@ -484,7 +495,7 @@ namespace DontWaitApp
         {
             OnWebViewLoaded?.Invoke();
             GetMessages();
-          
+
         }
 
         /// <MetaDataID>{5f5cd24b-0745-4fc5-b8b1-bab7378d1868}</MetaDataID>
@@ -748,9 +759,14 @@ namespace DontWaitApp
             {
                 //if (string.IsNullOrWhiteSpace(servicePointIdentity))
                 //    servicePointIdentity = "MealInvitation;7f9bde62e6da45dc8c5661ee2220a7b0;fe51ba7e30954ee08209bd89a03469a8;38ec58d3bc5a4145b1a94851cfc43ade91000000296";
+#if DeviceDotNet
+                if (string.IsNullOrWhiteSpace(servicePointIdentity))
+                {
+                    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                    servicePointIdentity = result.Text;
+                }
+#endif
 
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
-                servicePointIdentity = result.Text;
                 var clientSessionData = await GetFoodServiceSession(servicePointIdentity);
 
                 //if (FoodServiceClientSession != clientSessionData.FoodServiceClientSession)
@@ -814,7 +830,7 @@ namespace DontWaitApp
                     ServicesContextLogo = clientSessionData.ServicesContextLogo,
                     DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
                     ServedMealTypesUris = clientSessionData.ServedMealTypesUris,
-                    SessionType= clientSessionData.SessionType
+                    SessionType = clientSessionData.SessionType
 
                 };
                 menuData.OrderItems = OrderItems.ToList();
@@ -827,13 +843,13 @@ namespace DontWaitApp
             });
 #endif
 #endif
-        }
+            }
 
 
         //public Task<MenuData> GetServicePointData(string servicePointIdentity)
 
 
-        /// <MetaDataID>{73f366a8-2d78-456f-aacd-b70114704a4f}</MetaDataID>
+            /// <MetaDataID>{73f366a8-2d78-456f-aacd-b70114704a4f}</MetaDataID>
         public MenuData MenuData { get => ApplicationSettings.Current.LastServicePoinMenuData; set => ApplicationSettings.Current.LastServicePoinMenuData = value; }
 
         /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
@@ -1179,7 +1195,14 @@ namespace DontWaitApp
             if (ApplicationSettings.Current.LastServicePoinMenuData == null)
                 return null;
             string SigBase64 = "";
-            string codeValue = "MealInvitation;" + ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity + ";" + ApplicationSettings.Current.LastServicePoinMenuData.ClientSessionID;
+
+            var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            if (lastServicePoinMenuData.ClientSessionID == null)
+            {
+                lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            }
+            
+            string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()
             {
@@ -1954,7 +1977,7 @@ namespace DontWaitApp
 
             //var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
             //return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
-//#endif
+            //#endif
 #else
             return false;
 #endif
@@ -1965,7 +1988,7 @@ namespace DontWaitApp
         {
 #if DeviceDotNet
 
-            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
             return locationInUsePermisions == PermissionStatus.Granted;
 
             //var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
