@@ -746,10 +746,11 @@ namespace DontWaitApp
 #else
             return Task<MenuData>.Run(async () =>
             {
-                if (string.IsNullOrWhiteSpace(servicePointIdentity))
-                    servicePointIdentity = "MealInvitation;7f9bde62e6da45dc8c5661ee2220a7b0;fe51ba7e30954ee08209bd89a03469a8;38ec58d3bc5a4145b1a94851cfc43ade91000000296";
+                //if (string.IsNullOrWhiteSpace(servicePointIdentity))
+                //    servicePointIdentity = "MealInvitation;7f9bde62e6da45dc8c5661ee2220a7b0;fe51ba7e30954ee08209bd89a03469a8;38ec58d3bc5a4145b1a94851cfc43ade91000000296";
 
-               // var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                servicePointIdentity = result.Text;
                 var clientSessionData = await GetFoodServiceSession(servicePointIdentity);
 
                 //if (FoodServiceClientSession != clientSessionData.FoodServiceClientSession)
@@ -1943,13 +1944,17 @@ namespace DontWaitApp
         public async Task<bool> CheckPermissionsForServicePointScan()
         {
 #if DeviceDotNet
-#if IOSEmulator
-                    return true;
-#else
+            //#if IOSEmulator
+            //                    return true;
+            //#else
 
-            var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
-            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
-#endif
+            var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+
+
+            //var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
+            //return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+//#endif
 #else
             return false;
 #endif
@@ -1959,8 +1964,12 @@ namespace DontWaitApp
         public async Task<bool> RequestPermissionsForServicePointScan()
         {
 #if DeviceDotNet
-            var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
-            return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+
+            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+
+            //var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
+            //return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
 #else
             return true;
 #endif

@@ -5,6 +5,8 @@ using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System.Linq;
 using FlavourBusinessManager.RoomService;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace DontWaitApp
 {
@@ -82,7 +84,7 @@ namespace DontWaitApp
                         //OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)
                         foreach (ItemPreparation itemPreparation in _LastServicePoinMenuData.OrderItems)
                         {
-                            if (value.OrderItems!=null&&!value.OrderItems.Contains(itemPreparation))
+                            if (value.OrderItems != null && !value.OrderItems.Contains(itemPreparation))
                                 ObjectStorage.DeleteObject(itemPreparation);
                         }
 
@@ -204,6 +206,7 @@ namespace DontWaitApp
             }
         }
 
+        static object AppSettingsStorageLock = new object();
 
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
@@ -212,10 +215,13 @@ namespace DontWaitApp
         {
             get
             {
-                if (_AppSettingsStorage == null)
+
+                lock (AppSettingsStorageLock)
                 {
+                    if (_AppSettingsStorage == null)
+                    {
 #if DeviceDotNet
-                    string storageLocation = @"\DontWaitAppSettings.xml";
+                        string storageLocation = @"\DontWaitAppSettings.xml";
 #else
                     string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Microneme";
                     if (!System.IO.Directory.Exists(appDataPath))
@@ -229,27 +235,28 @@ namespace DontWaitApp
                     string storageLocation = appDataPath + "\\DontWaitAppSettings.xml";
 #endif
 
-                    try
-                    {
-                        _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("DontWaitAppSettings", storageLocation, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
-                    }
-                    catch (StorageException error)
-                    {
-
-                        if (error.Reason == StorageException.ExceptionReason.StorageDoesnotExist)
+                        try
                         {
-                            _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.NewStorage("DontWaitAppSettings",
-                                                                    storageLocation,
-                                                                    "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
+                            _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("DontWaitAppSettings", storageLocation, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
                         }
-                        else
-                            throw error;
+                        catch (StorageException error)
+                        {
+
+                            if (error.Reason == StorageException.ExceptionReason.StorageDoesnotExist)
+                            {
+                                _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.NewStorage("DontWaitAppSettings",
+                                                                        storageLocation,
+                                                                        "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
+                            }
+                            else
+                                throw error;
+                        }
+                        catch (Exception error)
+                        {
+                        }
                     }
-                    catch (Exception error)
-                    {
-                    }
+                    return _AppSettingsStorage;
                 }
-                return _AppSettingsStorage;
             }
         }
 
@@ -257,10 +264,24 @@ namespace DontWaitApp
 
         /// <exclude>Excluded</exclude>
         static ApplicationSettings _Current;
-        /// <MetaDataID>{82643791-08c8-4d09-a3db-c5e8de5e5061}</MetaDataID>
-        public static ApplicationSettings Current
+
+        public static  ApplicationSettings Current
         {
             get
+            {
+                GetCurrent().Wait();
+
+                return _Current;
+            }
+        }
+        /// <MetaDataID>{82643791-08c8-4d09-a3db-c5e8de5e5061}</MetaDataID>
+        public static Task<ApplicationSettings> GetCurrent()
+        {
+            lock (AppSettingsStorageLock)
+            {
+                if (AppSettingsTask != null)
+                    return AppSettingsTask;
+                AppSettingsTask = Task<ApplicationSettings>.Run(() =>
             {
                 if (_Current == null)
                 {
@@ -268,23 +289,33 @@ namespace DontWaitApp
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                     {
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(AppSettingsStorage);
-                        _Current = (from appSetting in storage.GetObjectCollection<ApplicationSettings>() select appSetting).FirstOrDefault();
-                        if (_Current == null)
+                        try
                         {
-                            _Current = new ApplicationSettings();
-                           // _Current.FriendlyName = "FriendlyName 1";
-                            AppSettingsStorage.CommitTransientObjectState(_Current);
-                        }
-                        else
-                        {
-                            //_Current.FriendlyName = "FriendlyName 2";
-                        }
-                
+                            _Current = (from appSetting in storage.GetObjectCollection<ApplicationSettings>() select appSetting).FirstOrDefault();
+                            if (_Current == null)
+                            {
+                                _Current = new ApplicationSettings();
+                                // _Current.FriendlyName = "FriendlyName 1";
+                                AppSettingsStorage.CommitTransientObjectState(_Current);
+                            }
+                            else
+                            {
+                                //_Current.FriendlyName = "FriendlyName 2";
+                            }
 
+
+                        }
+                        catch (Exception error)
+                        {
+
+                            throw;
+                        }
                         stateTransition.Consistent = true;
                     }
                 }
                 return _Current;
+            });
+                return AppSettingsTask;
             }
         }
 
@@ -339,6 +370,7 @@ namespace DontWaitApp
 
         /// <exclude>Excluded</exclude>
         string _FriendlyName;
+        private static Task<ApplicationSettings> AppSettingsTask;
 
         /// <MetaDataID>{d527686e-187a-4e4f-9128-7cc0d2275d63}</MetaDataID>
         [PersistentMember(nameof(_FriendlyName))]
@@ -352,7 +384,7 @@ namespace DontWaitApp
                     return null;
                 else
                     return _FriendlyName;
-                
+
             }
             set
             {

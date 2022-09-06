@@ -21,10 +21,22 @@ namespace DontWaitApp
         {
             InitializeComponent();
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            InitializeRemoteTypes();
+
+            ApplicationSettings.GetCurrent();
             MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
 
-            DontWaitApp.Proxies.CNSPr_IFlavoursOrderServer_PartOfMealRequest ss = new Proxies.CNSPr_IFlavoursOrderServer_PartOfMealRequest();
+            
 
+
+
+
+
+            //MainPage = new MainPage();
+        }
+
+        private static void InitializeRemoteTypes()
+        {
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.OptionMenuItemSpecific"] = typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific);
@@ -57,15 +69,8 @@ namespace DontWaitApp
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
-
-
-
-
-
-            //MainPage = new MainPage();
         }
 
- 
 
         protected override async void OnStart()
         {
