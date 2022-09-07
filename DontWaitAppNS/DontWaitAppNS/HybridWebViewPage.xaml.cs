@@ -89,7 +89,7 @@ namespace DontWaitApp
                 else
                     hybridWebView.Uri = url;
 
-                FlavoursOrderServer.Initialize();
+                
 
             }
 
@@ -135,48 +135,8 @@ namespace DontWaitApp
 
                 }
             }
+            FlavoursOrderServer.Initialize();
 
-
-            if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
-            {
-
-                string url = "http://192.168.2.2/DemoAngular";//DemoNPMTypeScript/index.html";
-                url = "http://localhost/demoangular/#/";
-                url = "http://192.168.2.7/DontWaitWeb/";
-                url = "http://192.168.2.10/DontWaitWeb/";
-                url = "http://localhost/DontWaitWeb/";
-                //hybridWebView.Uri = "http://192.168.2.3/DontWaitWeb/";
-
-
-                url = "http://192.168.2.4/DontWaitWeb/#/";
-                url = "http://192.168.2.8:4300/#/";
-                //url = "http://10.0.0.14:4300/#/";
-
-                FlavoursOrderServer.MenuData = ApplicationSettings.Current.LastServicePoinMenuData;
-
-
-
-                string path = FlavoursOrderServer.Path;
-
-                if (path != null && path.Split('/').Length > 0 &&
-                    path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
-                {
-                    if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.MenuData.ServicePointIdentity))
-                    {
-                        // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
-
-                        hybridWebView.Uri = (url + "room-service");
-                        //http://192.168.2.9:4300/#/room-service
-                    }
-                    else
-                        hybridWebView.Uri = url;
-                }
-                else
-                    hybridWebView.Uri = url;
-
-                FlavoursOrderServer.Initialize();
-
-            }
             //MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
 
         }

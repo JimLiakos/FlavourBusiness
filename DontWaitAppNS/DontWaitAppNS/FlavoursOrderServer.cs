@@ -67,7 +67,7 @@ namespace DontWaitApp
                 {
                     try
                     {
-                         servers = this.ServicesContextManagment.GetNeighborhoodFoodServers(location);
+                        servers = this.ServicesContextManagment.GetNeighborhoodFoodServers(location);
                         lock (NeighborhoodFoodServers)
                         {
                             NeighborhoodFoodServers[location] = servers;
@@ -116,110 +116,7 @@ namespace DontWaitApp
         /// <MetaDataID>{cc704161-f4c2-454b-9ff6-010d1e190a4b}</MetaDataID>
         public FlavoursOrderServer()
         {
-            _EndUser = new FoodServiceClientVM();
-            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            Task.Run(() =>
-            {
-                int? forceLoad = Places?.Count;
-            });
 
-#if DeviceDotNet
-            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
-            (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
-
-            device.MessageReceived += Device_MessageReceived;
-
-
-            //ScanPage.ZxingView.OnScanResult += (result) =>
-            // Device.BeginInvokeOnMainThread(async () =>
-            // {
-            //     if (OnScan)
-            //     {
-            //         TaskCompletionSource<bool> connectToServicePointTask = null;
-            //         lock (this)
-            //         {
-            //             connectToServicePointTask = ConnectToServicePointTask;
-            //             ConnectToServicePointTask = null;
-            //             OnScan = false;
-            //         }
-            //         // Stop analysis until we navigate away so we don't keep reading barcodes
-            //         ScanPage.ZxingView.IsAnalyzing = false;
-
-            //         // Show an alert
-            //         // await App.Current.MainPage.DisplayAlert("Scanned Barcode", result.Text, "OK");
-
-            //         // Navigate away
-            //         try
-            //         {
-            //             await ScanPage.Navigation.PopAsync();
-            //             var clientSessionData = await GetFoodServiceSession(result.Text);
-            //             var foodServiceClientSession = clientSessionData.FoodServiceClientSession;
-            //             //if (FoodServiceClientSession != clientSessionData.FoodServiceClientSession)
-            //             {
-            //                 if (FoodServiceClientSession != null)
-            //                 {
-            //                     FoodServiceClientSession.MessageReceived -= MessageReceived;
-            //                     FoodServiceClientSession.ObjectChangeState -= FoodServiceClientSessionChangeState;
-            //                     FoodServiceClientSession.ItemStateChanged -= FoodServiceClientSessionItemStateChanged;
-            //                     FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
-            //                 }
-            //                 FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-
-            //                 SessionID = clientSessionData.FoodServiceClientSession.SessionID;
-            //                 ApplicationSettings.Current.LastClientSessionID = SessionID;
-
-            //                 RefreshMessmates();
-
-            //                 foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
-            //                     OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
-
-            //                 foreach (var flavourItem in FoodServiceClientSession.SharedItems)
-            //                     OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
-
-
-            //                 ClientSessionToken = clientSessionData.Token;
-            //                 FoodServiceClientSession.MessageReceived += MessageReceived;
-            //                 FoodServiceClientSession.ObjectChangeState += FoodServiceClientSessionChangeState;
-            //                 FoodServiceClientSession.ItemStateChanged += FoodServiceClientSessionItemStateChanged;
-            //                 FoodServiceClientSession.ItemsStateChanged += FoodServiceClientSession_ItemsStateChanged;
-
-            //             }
-            //             var storeRef = FoodServiceClientSession.Menu;
-
-            //             MenuData menuData = new MenuData()
-            //             {
-            //                 MenuName = storeRef.Name,
-            //                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
-            //                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
-            //                 ClientSessionID = FoodServiceClientSession.SessionID,
-            //                 ServicePointIdentity = clientSessionData.ServicePointIdentity
-
-            //             };
-            //             menuData.OrderItems = OrderItems.Values.ToList();
-            //             MenuData = menuData;
-            //             ApplicationSettings.Current.LastServicePoinMenuData = menuData;
-            //             _ObjectChangeState?.Invoke(this, nameof(MenuData));
-
-            //             connectToServicePointTask.SetResult(true);
-            //         }
-            //         catch (Exception error)
-            //         {
-            //             connectToServicePointTask.SetResult(false);
-
-            //         }
-
-
-            //     }
-            // });
-
-            //ScanPage.Disappearing += (object sender, EventArgs e) =>
-            // {
-            //     OnScan = false;
-            //     if (ConnectToServicePointTask != null)
-            //         ConnectToServicePointTask.SetResult(false);
-            // };
-#endif
         }
 
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
@@ -843,13 +740,13 @@ namespace DontWaitApp
             });
 #endif
 #endif
-            }
+        }
 
 
         //public Task<MenuData> GetServicePointData(string servicePointIdentity)
 
 
-            /// <MetaDataID>{73f366a8-2d78-456f-aacd-b70114704a4f}</MetaDataID>
+        /// <MetaDataID>{73f366a8-2d78-456f-aacd-b70114704a4f}</MetaDataID>
         public MenuData MenuData { get => ApplicationSettings.Current.LastServicePoinMenuData; set => ApplicationSettings.Current.LastServicePoinMenuData = value; }
 
         /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
@@ -1201,7 +1098,7 @@ namespace DontWaitApp
             {
                 lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
             }
-            
+
             string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()
@@ -2453,9 +2350,31 @@ namespace DontWaitApp
         /// <MetaDataID>{3e58cac8-fc04-4ff0-9ec9-68df0268646b}</MetaDataID>
         private string SessionID;
 
+        bool Initialized;
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
         internal async void Initialize()
         {
+
+            if (Initialized)
+                return;
+
+            Initialized = true;
+
+            _EndUser = new FoodServiceClientVM();
+            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            await Task.Run(() =>
+             {
+                 int? forceLoad = Places?.Count;
+             });
+
+#if DeviceDotNet
+            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+            (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
+
+            device.MessageReceived += Device_MessageReceived;
+#endif
+
             if (MenuData.OrderItems != null)
                 OrderItems = MenuData.OrderItems.ToList();
 
