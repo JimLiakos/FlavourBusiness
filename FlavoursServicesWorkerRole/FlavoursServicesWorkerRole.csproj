@@ -243,7 +243,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\RestApiMessagesController.cs" />
+    <None Include="Controllers\RestApiMessagesController.cs" />
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WebSocketMessagesController.cs" />
