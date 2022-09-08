@@ -20,6 +20,8 @@ namespace DontWaitApp
         public App()
         {
             InitializeComponent();
+
+           
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
             InitializeRemoteTypes();
 

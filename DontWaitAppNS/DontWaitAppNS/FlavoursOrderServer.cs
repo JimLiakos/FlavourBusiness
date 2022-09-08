@@ -2352,7 +2352,7 @@ namespace DontWaitApp
 
         bool Initialized;
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
-        internal async void Initialize()
+        internal async Task Initialize()
         {
 
             if (Initialized)
@@ -2363,52 +2363,53 @@ namespace DontWaitApp
             _EndUser = new FoodServiceClientVM();
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            await Task.Run(() =>
+            await Task.Run(async () =>
              {
                  int? forceLoad = Places?.Count;
-             });
+
 
 #if DeviceDotNet
-            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
-            (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
+                 (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+                 (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
 
-            device.MessageReceived += Device_MessageReceived;
+                 device.MessageReceived += Device_MessageReceived;
 #endif
 
-            if (MenuData.OrderItems != null)
-                OrderItems = MenuData.OrderItems.ToList();
+                 if (MenuData.OrderItems != null)
+                     OrderItems = MenuData.OrderItems.ToList();
 
-            string path = ApplicationSettings.Current.Path;
-            if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
-            {
-                if (MenuData.ServicePointIdentity != path.Split('/')[0])
-                    Path = "";
-            }
+                 string path = ApplicationSettings.Current.Path;
+                 if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
+                 {
+                     if (MenuData.ServicePointIdentity != path.Split('/')[0])
+                         Path = "";
+                 }
 
-            if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
-            {
-                this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);
+                 if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
+                 {
+                     this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);
 
-                while (!await GetServicePointDataEx(MenuData.FoodServiceClientSessionUri))    //while (!await GetServicePointData(MenuData.ServicePointIdentity))
-                {
-                    if (string.IsNullOrWhiteSpace(Path) || Path.Split('/')[0] != MenuData.ServicePointIdentity)
-                        break;
-                }
-                if (this.FoodServiceClientSession != null)
-                {
-                    GetMessages();
+                     while (!await GetServicePointDataEx(MenuData.FoodServiceClientSessionUri))    //while (!await GetServicePointData(MenuData.ServicePointIdentity))
+                     {
+                         if (string.IsNullOrWhiteSpace(Path) || Path.Split('/')[0] != MenuData.ServicePointIdentity)
+                             break;
+                     }
+                     if (this.FoodServiceClientSession != null)
+                     {
+                         GetMessages();
 
-                }
-                else
-                {
+                     }
+                     else
+                     {
 
-                    _ObjectChangeState?.Invoke(this, nameof(FoodServiceClientSession));
-                    ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems = new List<ItemPreparation>() };
-                    ApplicationSettings.Current.LastClientSessionID = "";
-                    Path = "";
+                         _ObjectChangeState?.Invoke(this, nameof(FoodServiceClientSession));
+                         ApplicationSettings.Current.LastServicePoinMenuData = new MenuData() { OrderItems = new List<ItemPreparation>() };
+                         ApplicationSettings.Current.LastClientSessionID = "";
+                         Path = "";
 
-                }
-            }
+                     }
+                 }
+             });
         }
 
         /// <MetaDataID>{ba41dc5e-2e26-4830-963e-e9c3e5077f12}</MetaDataID>

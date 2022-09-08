@@ -34,7 +34,7 @@ namespace DontWaitAppNS.iOS
             global::OOAdvantech.iOS.HybridWebViewRenderer.Init();
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
             LoadApplication(new App());
-
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             return base.FinishedLaunching(app, options);
         }
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
