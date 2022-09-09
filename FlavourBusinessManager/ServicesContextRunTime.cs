@@ -1552,6 +1552,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        object DeliveryServicePointLock = new object();
+
         /// <exclude>Excluded</exclude>
         bool DeliveryServicePointLoaded;
 
@@ -1562,21 +1564,37 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                if (!DeliveryServicePointLoaded)
+                lock (DeliveryServicePointLock)
                 {
-                    var objectStorage = ObjectStorage.GetStorageOfObject(this);// OpenServicesContextStorageStorage();
-                    OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
-                    var servicesContextIdentity = ServicesContextIdentity;
-                    _DeliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
-                                             where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
-                                             select homeDeliveryServicePoint).FirstOrDefault();
-
-                    DeliveryServicePointLoaded = true;
+                    if (DeliveryServicePointLoaded)
+                    {
+                        if (_DeliveryServicePoint?.IsActive == true)
+                            return _DeliveryServicePoint;
+                        else
+                            return null;
+                    }
                 }
-                if (_DeliveryServicePoint?.IsActive == true)
-                    return _DeliveryServicePoint;
-                else
-                    return null;
+
+
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);// OpenServicesContextStorageStorage();
+                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+                var servicesContextIdentity = ServicesContextIdentity;
+                var deliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
+                                            where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
+                                            select homeDeliveryServicePoint).FirstOrDefault();
+
+                lock (DeliveryServicePointLock)
+                {
+                    if (!DeliveryServicePointLoaded)
+                    {
+                        _DeliveryServicePoint = deliveryServicePoint;
+                        DeliveryServicePointLoaded = true;
+                    }
+                    if (_DeliveryServicePoint?.IsActive == true)
+                        return _DeliveryServicePoint;
+                    else
+                        return null;
+                }
             }
         }
 
@@ -1666,7 +1684,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                 where aServicePoint.ServicesPointIdentity == servicePointIdentity
                                 select aServicePoint).OfType<IServicePoint>().FirstOrDefault();
 
-            if (servicePoint == null&&DeliveryServicePoint?.ServicesPointIdentity== servicePointIdentity)
+            if (servicePoint == null && DeliveryServicePoint?.ServicesPointIdentity == servicePointIdentity)
                 servicePoint = DeliveryServicePoint as IServicePoint;
 
             var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create);

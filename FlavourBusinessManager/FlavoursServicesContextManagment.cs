@@ -620,7 +620,8 @@ namespace FlavourBusinessManager
                 var deliveryServicePoint = flavoursServicesContext.GetRunTime().DeliveryServicePoint;
                 if (deliveryServicePoint != null)
                 {
-                    double distance = CalDistance(location.Latitude, location.Longitude, deliveryServicePoint.PlaceOfDistribution.Location.Latitude, deliveryServicePoint.PlaceOfDistribution.Location.Longitude);
+                    var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
+                    double distance = CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
 
                     var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 

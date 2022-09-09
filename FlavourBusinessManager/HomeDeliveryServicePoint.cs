@@ -19,6 +19,11 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class HomeDeliveryServicePoint : ServicePoint, IHomeDeliveryServicePoint
     {
+
+        public HomeDeliveryServicePoint()
+        {
+
+        }
         /// <MetaDataID>{f5213c16-1b33-465c-9c83-9ffb82f8259f}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+10")]

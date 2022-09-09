@@ -129,9 +129,9 @@ namespace FLBManager
 
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
-            //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
+            Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
-            // Backup(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
+            //Backup(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
             // Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
@@ -519,12 +519,12 @@ namespace FLBManager
 
             var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
             OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            demoStorage.Backup(archive);
+            //demoStorage.Backup(archive);
 
             storageName = "FlavourBusinessesResources";
             demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
             archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            demoStorage.Backup(archive);
+           // demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
             string suffix = "";
