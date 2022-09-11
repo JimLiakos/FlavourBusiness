@@ -2365,6 +2365,7 @@ namespace DontWaitApp
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             await Task.Run(async () =>
              {
+
                  int? forceLoad = Places?.Count;
 
 
@@ -2387,7 +2388,19 @@ namespace DontWaitApp
 
                  if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri))
                  {
-                     this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);
+                     var tryStartigTime = DateTime.Now;
+                     do
+                     {
+                         try
+                         {
+                             this.FoodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(AzureServerUrl, ApplicationSettings.Current.LastServicePoinMenuData.FoodServiceClientSessionUri);
+                             break;
+                         }
+                         catch (System.Exception error)
+                         {
+                         }
+                     } while (this.FoodServiceClientSession == null && (System.DateTime.Now - tryStartigTime).TotalSeconds < 60);
+
 
                      while (!await GetServicePointDataEx(MenuData.FoodServiceClientSessionUri))    //while (!await GetServicePointData(MenuData.ServicePointIdentity))
                      {
@@ -2409,6 +2422,7 @@ namespace DontWaitApp
 
                      }
                  }
+
              });
         }
 

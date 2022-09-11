@@ -135,7 +135,7 @@ namespace DontWaitApp
 
                 }
             }
-            await FlavoursOrderServer.Initialize();
+             FlavoursOrderServer.Initialize();
 
             //MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
 
