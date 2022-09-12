@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>881594421690-9vd38bspv798m93o79qj3eqlivaiogm0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDd13h9gHzQH8_fQev424pMBguLmX7aJEA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>881594421690</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.microneme.DontWaitAppIOS</string>
+	<key>PROJECT_ID</key>
+	<string>demomicroneme</string>
+	<key>STORAGE_BUCKET</key>
+	<string>demomicroneme.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:881594421690:ios:31fa5586acd305d3</string>
+	<key>DATABASE_URL</key>
+	<string>https://demomicroneme.firebaseio.com</string>
+</dict>
+</plist>
