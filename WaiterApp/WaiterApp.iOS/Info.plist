@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>WaiterApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.WaiterApp</string>
+	<string>com.microneme.dontwaitwaiterapp.ios</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -39,7 +39,13 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true />
+		<true/>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>No</string>
 </dict>
 </plist>

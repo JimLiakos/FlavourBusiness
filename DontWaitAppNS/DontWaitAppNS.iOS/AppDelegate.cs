@@ -38,29 +38,33 @@ namespace DontWaitAppNS.iOS
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
 
             global::Xamarin.Forms.Forms.Init();
-         
+
             global::ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             global::OOAdvantech.iOS.HybridWebViewRenderer.Init();
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
 
             Firebase.Core.App.Configure();
-            
-            
-            
+
+
+
 
             LoadApplication(new App());
 
+            RegisterForRemoteNotifications();
 
+            return base.FinishedLaunching(app, options);
+        }
 
-
-
+        private void RegisterForRemoteNotifications()
+        {
             // Register your app for remote notifications.
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {
                 // iOS 10 or later
                 var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
-                UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) => {
+                UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) =>
+                {
                     Console.WriteLine(granted);
                 });
 
@@ -79,14 +83,13 @@ namespace DontWaitAppNS.iOS
             }
 
             UIApplication.SharedApplication.RegisterForRemoteNotifications();
-
-            return base.FinishedLaunching(app, options);
         }
 
         [Export("messaging:didReceiveRegistrationToken:")]
         public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
         {
             Console.WriteLine($"Firebase registration token: {fcmToken}");
+            OOAdvantech.iOS.DeviceOOAdvantechCore.SetFirebaseToken(fcmToken);
 
             // TODO: If necessary send token to application server.
             // Note: This callback is fired at each app startup and whenever a new token is generated.

@@ -30,6 +30,14 @@ namespace WaiterApp.iOS
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
 
+            var coreType = typeof(Firebase.Core.App);
+            var authType = typeof(Firebase.Auth.Auth);
+            var sdhs = authType.FullName;
+
+
+            Firebase.Core.App.Configure();
+            
+
             //var token = await Task<string>.Run(() =>
             //{
             //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
@@ -42,6 +50,7 @@ namespace WaiterApp.iOS
 
             LoadApplication(new App());
 
+            var sds = Firebase.Auth.Auth.DefaultInstance;
             return base.FinishedLaunching(app, options);
         }
 
