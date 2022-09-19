@@ -941,7 +941,8 @@ namespace WaiterApp.ViewModel
                 IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
                 var isInSleepMode = device.IsinSleepMode;
 
-                Task.Run(() => {
+                Task.Run(() =>
+                {
 
                     ringtoneService.Play();
 
@@ -1010,11 +1011,14 @@ namespace WaiterApp.ViewModel
         {
             UserData = new UserData();
             AuthUser = null;
-            Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
-            Waiter.MessageReceived -= MessageReceived;
-            Waiter.ServingBatchesChanged -= ServingBatchesChanged;
-            if (Waiter is ITransparentProxy)
-                (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+            if (Waiter != null)
+            {
+                Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
+                Waiter.MessageReceived -= MessageReceived;
+                Waiter.ServingBatchesChanged -= ServingBatchesChanged;
+                if (Waiter is ITransparentProxy)
+                    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+            }
 
             Waiter = null;
             this._Halls = null;
