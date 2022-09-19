@@ -160,19 +160,34 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Label Visibility="{Binding DocumentSignerDeviceIPAddressVisible}"  Grid.Row="0" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS Device IP Address  "/>
                                 <wpftoolkitex:WatermarkTextBox Visibility="{Binding DocumentSignerDeviceIPAddressVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="1" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DeviceIPAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
                                 <Label  Visibility="{Binding DocumentSignerOutputFolderVisible}" Grid.Row="2" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="RBS output folder  "/>
                                 <wpftoolkitex:WatermarkTextBox Visibility="{Binding DocumentSignerOutputFolderVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="3" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding DocumentSignerOutputFolder, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+
+                                <Label  Visibility="{Binding AESKeyVisible}" Grid.Row="4" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="AES Key (Κλειδάριθμος)  "/>
+                                <wpftoolkitex:WatermarkTextBox Visibility="{Binding AESKeyVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="5" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding AESKey, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+
+                                <Label  Visibility="{Binding AESKeyVisible}" Grid.Row="6" Margin="0,4,0,4" Grid.Column="0"  VerticalAlignment="Bottom"  Content="Πύλη δεδομένων ΑΑΔΕ"/>
+                                <wpftoolkitex:WatermarkTextBox Visibility="{Binding AESKeyVisible}" IsEnabled="{Binding EditCompanyHeader}" Grid.Row="7" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto"  Grid.ColumnSpan="2" Text="{Binding AADESendDataUrl, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    ></wpftoolkitex:WatermarkTextBox>
+
+
+
+
                                 <!--DocumentSignerOutputFolderVisible 
                                     DocumentSignerDeviceIPAddressVisible 
                                     ZReportCommandVisible -->
-                                <TextBlock Grid.Row="4" Text="{Binding ZReportErrorMesage}" Foreground="Red" IsEnabled="False" Visibility="{Binding ZReportErrorMesageVisible}">
+                                <TextBlock Grid.Row="8" Text="{Binding ZReportErrorMesage}" Foreground="Red" IsEnabled="False" Visibility="{Binding ZReportErrorMesageVisible}">
                                     
                                 </TextBlock>
 
-                                <Button Visibility="{Binding ZReportCommandVisible}" Grid.Row="5" MinHeight="40" Margin="0,8,0,8" Command="{Binding ZReportCommand}"  >
+                                <Button Visibility="{Binding ZReportCommandVisible}" Grid.Row="9" MinHeight="40" Margin="0,8,0,8" Command="{Binding ZReportCommand}"  >
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Margin="4,0,0,0" Text="Z Report"></TextBlock>
                                     </StackPanel>

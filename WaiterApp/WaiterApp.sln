@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32819.101
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaiterApp.Android", "WaiterApp.Android\WaiterApp.Android.csproj", "{C660A958-22D5-4F92-BA52-DCFEBBD090A2}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOAdvantech.NetStandard.iOS", "..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj", "{97999F66-2CD1-4B6E-BBA2-41174367DF1E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlavourBusinessFacade", "..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj", "{1EF48EDD-34AF-49E2-A082-45E267479D3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.NetStandard", "..\..\..\..\..\RBS\New folder\PersistenceLayer\Xamarin\Parser.NetStandard\Parser.NetStandard.csproj", "{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -256,6 +258,18 @@ Global
 		{1EF48EDD-34AF-49E2-A082-45E267479D3A}.Release|iPhone.Build.0 = Release|Any CPU
 		{1EF48EDD-34AF-49E2-A082-45E267479D3A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{1EF48EDD-34AF-49E2-A082-45E267479D3A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|iPhone.Build.0 = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{DD114AA7-99B8-45BC-8ACA-4663F3B65F56}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

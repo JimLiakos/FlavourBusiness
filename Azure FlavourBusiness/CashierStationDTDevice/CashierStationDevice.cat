@@ -36,7 +36,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5"))
+		    value      	"7"))
 	    quid       	"61AD944301A2"
 	    operations 	(list Operations
 		(object Operation "AddTransactionPrinter"
@@ -280,6 +280,127 @@
 			    value      	"+4"))
 		    quid       	"62C80241020C"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AppDataPath"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{67eea655-69f7-47cc-bb8e-c531f1f8ff4f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6321E6B0015C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"6321E6B0015C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AADESendDataUrl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da6c0e0e-7200-4653-85ca-d6f1d9972f55}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6321E6B00242")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"6321E6B00242"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "AESKey"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d93d2d6e-f6f2-4d76-bb9d-914656abb7e2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6321E6B0029E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"6321E6B0029E"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "CashiersStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d033859f-8c04-47cd-8f7a-69b6af5ceab0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6321E6B002E0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"6321E6B002E0"
+		    type       	"FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime"
+		    exportControl 	"Public")
+		(object ClassAttribute "CompanyHeader"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1fe845a2-2aae-4f58-99cc-304d37e9311e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6321E6B00320")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"6321E6B00320"
+		    type       	"CashierStationDevice.CompanyHeader"
 		    exportControl 	"Public"))
 	    module     	"Component View::CashierStationDevice::CashierStationDevice"
 	    quidu      	"61AD947E00A7"

@@ -11,7 +11,7 @@ using System.Windows;
 namespace CashierStationDevice
 {
     /// <MetaDataID>{6a723107-e61c-4464-9a63-0fbc71c78020}</MetaDataID>
-    public class RBSDocSigner :  DocumentSignDevice
+    public class RBSDocSigner : DocumentSignDevice
     {
         ESDPROT RBSESD = new ESDPROT();
 
@@ -62,18 +62,20 @@ namespace CashierStationDevice
 
         public override event EventHandler<EventArgs> DeviceStatusChanged;
         object ConnectionLock = new object();
-        public void Start(string ethernetIP)
+        public void Start(string ethernetIP, string AESKey, string AADESendDataUrl)
         {
 
             //byte[] data = Read(typeof(CashierStationDevice.SamtecNext).Assembly.GetManifestResourceStream("CashierStationDevice.Resources.ValidChars.txt"));
             //InvalidChars = System.Text.Encoding.Unicode.GetString(data, 0, data.Length);
 
-
+            this.AADESendDataUrl = AADESendDataUrl;
+            this.AESKey = AESKey;
 
 
             string unlockKey = RBSESD.ReadUnlockKey();
-            CurDEV.GGPSKey = "";
+            CurDEV.GGPSKey = AESKey;
             CurDEV.EthernetIP = ethernetIP;
+
             CurDEV.IsEthernet = true;
             CurDEV.ProxyIP = "0.0.0.0";
             CurDEV.SerialNO = "***********";
@@ -152,6 +154,9 @@ namespace CashierStationDevice
         string errors;
 
         object rbsDiviceLock = new object();
+        private string AADESendDataUrl = "";
+        private string AESKey = "";
+
         public override SignatureData SignDocument(string document, EpsilonLineData epsilonLineData)
         {
             lock (ConnectionLock)
@@ -171,16 +176,16 @@ namespace CashierStationDevice
                         string line;
                         while ((line = reader.ReadLine()) != null)
                         {
-                            line= Regex.Replace(line, @"\p{C}+", string.Empty);
+                            line = Regex.Replace(line, @"\p{C}+", string.Empty);
                             if (document != null)
                                 document += Environment.NewLine;
                             document += line;
                         }
                     }
-                    
-                
 
-                     //document = Regex.Replace(document, @"\p{C}+", string.Empty);
+
+
+                    //document = Regex.Replace(document, @"\p{C}+", string.Empty);
 
                     SignatureData signatureData = new SignatureData();
                     errors = null;
@@ -189,25 +194,25 @@ namespace CashierStationDevice
                     string documentFile = CashierStationDevice.ApplicationSettings.AppDataPath + "\\RBS\\" + Guid.NewGuid().ToString("N") + ".txt";
                     //documentFile = @"F:\ESDtool.120522.RBS\ESD_DTool2\ESD_DTool\ESD_DTool\bin\Debug\TestDoc.txt";
                     //document=PrepareEpsilonLine(epsilonLineData) + Environment.NewLine + Environment.NewLine + document;
-                    
+
 
                     System.IO.File.WriteAllBytes(documentFile, Encoding.GetEncoding("windows-1253").GetBytes(document));
-                  
-                    
+
+
                     string signature = null;
-                    
+
                     //string vstream = System.IO.File.ReadLines(@"F:\ESDtool.120522.RBS\ESD_DTool2\ESD_DTool\ESD_DTool\bin\Debug\TestDoc.txt").First();
                     //string vstream2 = PrepareEpsilonLine(epsilonLineData);
                     //int ret = RBSESD.SignData(CurDEV, documentFile, vstream, ref signature);
 
-                    if(!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
+                    if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
                         RBSESD.SetOutputFolder(ApplicationSettings.Current.DocumentSignerOutputFolder);
 
                     int ret = RBSESD.SignData(CurDEV, documentFile, PrepareEpsilonLine(epsilonLineData), ref signature);
 
                     //int ret = RBSESD.SignData(CurDEV, documentFile, PrepareEpsilonLine(epsilonLineData), ref signature);
                     errors = RBSESD.RetErr;
-                    if (ret ==0)
+                    if (ret == 0)
                     {
                         this.DeviceStatusChanged?.Invoke(this, EventArgs.Empty);
 
@@ -239,7 +244,7 @@ namespace CashierStationDevice
             return epsilon_line;
         }
 
-        public override List<string>  CheckStatusForError()
+        public override List<string> CheckStatusForError()
         {
             if (!string.IsNullOrWhiteSpace(errors))
                 return new List<string>() { errors };
@@ -249,6 +254,10 @@ namespace CashierStationDevice
         public bool IssueZreport(out string message)
         {
             int ret = RBSESD.IssueZreport(CurDEV);
+
+
+
+
             if (ret > 0)
             {
                 message = RBSESD.RetErr;
@@ -256,6 +265,18 @@ namespace CashierStationDevice
             }
             else
             {
+                string reply = "";
+                string eeout = AADESendDataUrl.Trim() + "|" + 80 + "|" + AESKey.Trim();
+                ret = RBSESD.Upload_S_DATA(CurDEV, eeout, ref reply);
+                if (ret > 0)
+                {
+                    message =String.Format("Error({0}) {1}\r\n", ret, reply);
+                    //message = RBSESD.RetErr;
+
+                    return false;
+                }
+
+
                 message = "Procedure completed successfully\r\n";
                 return true;
             }

@@ -60,7 +60,7 @@ namespace CashierStationDevice.ViewModel
                 if (ApplicationSettings.Current.DocumentSignerType == typeof(RBSDocSigner).Name)
                 {
                     var rbsDocSigner = new RBSDocSigner();
-                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress);
+                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress, ApplicationSettings.Current.AESKey, ApplicationSettings.Current.AADESendDataUrl);
                     string message = null;
                     if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
                         rbsDocSigner.SetOutputFolder(ApplicationSettings.Current.DocumentSignerOutputFolder);
@@ -241,6 +241,8 @@ namespace CashierStationDevice.ViewModel
                     DocumentSignerOutputFolderVisible = Visibility.Collapsed;
                     DocumentSignerDeviceIPAddressVisible = Visibility.Collapsed;
                     ZReportCommandVisible = Visibility.Collapsed;
+                    AESKeyVisible = Visibility.Collapsed;
+                    AADESendDataUrlVisible = Visibility.Collapsed;
                     return typeof(SamtecNext);
                 }
                 if (ApplicationSettings.Current.DocumentSignerType == "RBSDocSigner")
@@ -248,6 +250,8 @@ namespace CashierStationDevice.ViewModel
                     DocumentSignerOutputFolderVisible = Visibility.Visible;
                     DocumentSignerDeviceIPAddressVisible = Visibility.Visible;
                     ZReportCommandVisible = Visibility.Visible;
+                    AESKeyVisible= Visibility.Visible;
+                    AADESendDataUrlVisible = Visibility.Visible;
 
                     return typeof(RBSDocSigner);
                 }
@@ -264,14 +268,16 @@ namespace CashierStationDevice.ViewModel
                     DocumentSignerOutputFolderVisible = Visibility.Visible;
                     DocumentSignerDeviceIPAddressVisible = Visibility.Visible;
                     ZReportCommandVisible = Visibility.Visible;
+                    AESKeyVisible = Visibility.Visible;
+                    AADESendDataUrlVisible = Visibility.Visible;
                 }
                 else
                 {
                     DocumentSignerOutputFolderVisible = Visibility.Collapsed;
                     DocumentSignerDeviceIPAddressVisible = Visibility.Collapsed;
                     ZReportCommandVisible = Visibility.Collapsed;
-
-
+                    AESKeyVisible = Visibility.Collapsed;
+                    AADESendDataUrlVisible = Visibility.Collapsed;
                 }
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditCompanyHeader)));
@@ -298,6 +304,29 @@ namespace CashierStationDevice.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DocumentSignerDeviceIPAddressVisible)));
             }
         }
+        System.Windows.Visibility _AESKeyVisible;
+        public System.Windows.Visibility AESKeyVisible
+        {
+            get => _AESKeyVisible;
+            set
+            {
+                _AESKeyVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AESKeyVisible)));
+            }
+        }
+
+        System.Windows.Visibility _AADESendDataUrlVisible;
+        public System.Windows.Visibility AADESendDataUrlVisible
+        {
+            get => _AADESendDataUrlVisible;
+            set
+            {
+                _AADESendDataUrlVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AADESendDataUrlVisible)));
+            }
+        }
+
+        //string AESKey
 
         System.Windows.Visibility _DocumentSignerOutputFolderVisible;
         public System.Windows.Visibility DocumentSignerOutputFolderVisible
@@ -477,6 +506,32 @@ namespace CashierStationDevice.ViewModel
                 ApplicationSettings.Current.DocumentSignerDeviceIPAddress = value;
             }
         }
+
+
+        public string AESKey
+        {
+            get
+            {
+                return ApplicationSettings.Current.AESKey;
+            }
+            set
+            {
+                ApplicationSettings.Current.AESKey = value;
+            }
+        }
+
+        public string AADESendDataUrl
+        {
+            get
+            {
+                return ApplicationSettings.Current.AADESendDataUrl;
+            }
+            set
+            {
+                ApplicationSettings.Current.AADESendDataUrl = value;
+            }
+        }
+
 
         string invalidOrder;
         public string DocumentSignerOutputFolder

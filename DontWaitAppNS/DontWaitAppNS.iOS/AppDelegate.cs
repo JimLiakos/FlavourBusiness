@@ -44,7 +44,7 @@ namespace DontWaitAppNS.iOS
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
 
-            Firebase.Core.App.Configure();
+            "App ID not found. Add a string value with your app ID for the key FacebookAppID to the Info.plist or call [FBSDKSettings setAppID:]."
 
 
 
@@ -88,8 +88,9 @@ namespace DontWaitAppNS.iOS
         [Export("messaging:didReceiveRegistrationToken:")]
         public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
         {
+            var esnn = Firebase.Core.App.DefaultInstance;
             Console.WriteLine($"Firebase registration token: {fcmToken}");
-            OOAdvantech.iOS.DeviceOOAdvantechCore.SetFirebaseToken(fcmToken);
+            //OOAdvantech.iOS.DeviceOOAdvantechCore.SetFirebaseToken(fcmToken);
 
             // TODO: If necessary send token to application server.
             // Note: This callback is fired at each app startup and whenever a new token is generated.
@@ -118,7 +119,7 @@ namespace DontWaitAppNS.iOS
                 DateTime.Now, exception.ToString());
                 File.WriteAllText(errorFilePath, errorMessage);
 
-               
+
             }
             catch
             {

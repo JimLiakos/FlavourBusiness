@@ -34,7 +34,7 @@ namespace CashierStationDevice
 
             }
         }
-    
+
 
         /// <exclude>Excluded</exclude>
         string _DocumentSignerType;
@@ -133,7 +133,7 @@ namespace CashierStationDevice
         {
             get
             {
-                
+
                 if (_Current == null)
                 {
 
@@ -257,5 +257,49 @@ namespace CashierStationDevice
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _AADESendDataUrl= "http://tam.gsis.gr/eafdss/myweb/websend.php";
+
+        /// <MetaDataID>{da6c0e0e-7200-4653-85ca-d6f1d9972f55}</MetaDataID>
+        [PersistentMember(nameof(_AADESendDataUrl))]
+        [BackwardCompatibilityID("+5")]
+        public string AADESendDataUrl
+        {
+            get => _AADESendDataUrl; 
+            set
+            {
+                if (_AADESendDataUrl != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AADESendDataUrl = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _AESKey;
+
+        /// <MetaDataID>{d93d2d6e-f6f2-4d76-bb9d-914656abb7e2}</MetaDataID>
+        [PersistentMember(nameof(_AESKey))]
+        [BackwardCompatibilityID("+6")]
+        public string AESKey
+        {
+            get => _AESKey;
+            set
+            {
+                if (_AESKey != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _AESKey = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }
