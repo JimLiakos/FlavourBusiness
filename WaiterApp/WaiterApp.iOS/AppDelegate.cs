@@ -36,7 +36,7 @@ namespace WaiterApp.iOS
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
 
-
+            
 
             //var token = "a";// Firebase.Iid.FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
 
