@@ -531,7 +531,7 @@ namespace CashierStationDevice.ViewModel
                 ApplicationSettings.Current.AADESendDataUrl = value;
             }
         }
-
+        //42EE701E6AFF0EF6283AC4238BE4CD8471C445FB1E48D98C649197F06A47D24C
 
         string invalidOrder;
         public string DocumentSignerOutputFolder

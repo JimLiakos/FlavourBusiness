@@ -265,6 +265,9 @@ namespace CashierStationDevice
             }
             else
             {
+                if (AESKey == null)
+                    AESKey = "";
+
                 string reply = "";
                 string eeout = AADESendDataUrl.Trim() + "|" + 80 + "|" + AESKey.Trim();
                 ret = RBSESD.Upload_S_DATA(CurDEV, eeout, ref reply);
