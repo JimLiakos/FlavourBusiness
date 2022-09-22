@@ -29,7 +29,7 @@ using ZXing;
 using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
-using FlavourBusinessManager.EndUsers;
+
 #else
 using System.IO;
 using System.Drawing.Imaging;
