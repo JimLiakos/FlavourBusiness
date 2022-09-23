@@ -45,7 +45,7 @@ namespace CashierStationDTDevice
                 if (ApplicationSettings.Current.DocumentSignerType == typeof(RBSDocSigner).Name)
                 {
                     var rbsDocSigner = new RBSDocSigner();
-                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress);
+                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress, ApplicationSettings.Current.AESKey, ApplicationSettings.Current.AADESendDataUrl);
                     CashierStationDevice.DocumentSignDevice.Init(rbsDocSigner);
                 }
 
