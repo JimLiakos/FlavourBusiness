@@ -14,7 +14,7 @@ namespace ServiceContextManagerApp.Droid
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.0.0.73")]
 	public partial class Resource
 	{
 		
@@ -18311,6 +18311,9 @@ namespace ServiceContextManagerApp.Droid
 			// aapt resource value: 0x7F0301E7
 			public const int imageZoom = 2130903527;
 			
+			// aapt resource value: 0x7F0301E7
+			public const int switchPreferenceCompatStyle = 2130903527;
+			
 			// aapt resource value: 0x7F0301E8
 			public const int indeterminateAnimationType = 2130903528;
 			
@@ -20586,6 +20589,9 @@ namespace ServiceContextManagerApp.Droid
 			
 			// aapt resource value: 0x7F05008D
 			public const int material_grey_850 = 2131034253;
+			
+			// aapt resource value: 0x7F050089
+			public const int mtrl_text_btn_text_color_selector = 2131034249;
 			
 			// aapt resource value: 0x7F05008E
 			public const int material_grey_900 = 2131034254;
@@ -23566,6 +23572,9 @@ namespace ServiceContextManagerApp.Droid
 			// aapt resource value: 0x7F0800F9
 			public const int italic = 2131230969;
 			
+			// aapt resource value: 0x7F080005
+			public const int SYM = 2131230725;
+			
 			// aapt resource value: 0x7F0800FA
 			public const int item_touch_helper_previous_elevation = 2131230970;
 			
@@ -23596,6 +23605,15 @@ namespace ServiceContextManagerApp.Droid
 			// aapt resource value: 0x7F080103
 			public const int light = 2131230979;
 			
+			// aapt resource value: 0x7F080101
+			public const int tag_on_receive_content_mime_types = 2131230977;
+			
+			// aapt resource value: 0x7F080102
+			public const int tag_screen_reader_focusable = 2131230978;
+			
+			// aapt resource value: 0x7F080103
+			public const int tag_state_description = 2131230979;
+			
 			// aapt resource value: 0x7F080104
 			public const int line1 = 2131230980;
 			
@@ -23613,6 +23631,15 @@ namespace ServiceContextManagerApp.Droid
 			
 			// aapt resource value: 0x7F080109
 			public const int main_appbar = 2131230985;
+			
+			// aapt resource value: 0x7F08010E
+			public const int textinput_counter = 2131230990;
+			
+			// aapt resource value: 0x7F08010F
+			public const int textinput_error = 2131230991;
+			
+			// aapt resource value: 0x7F080110
+			public const int textinput_helper_text = 2131230992;
 			
 			// aapt resource value: 0x7F08010A
 			public const int main_tablayout = 2131230986;
@@ -28604,6 +28631,7 @@ namespace ServiceContextManagerApp.Droid
 					2130903373,
 					2130903389,
 					2130903390,
+					2130903392,
 					2130903393,
 					2130903394,
 					2130903396,
@@ -28775,6 +28803,12 @@ namespace ServiceContextManagerApp.Droid
 			// aapt resource value: 38
 			public const int AppCompatTheme_alertDialogTheme = 38;
 			
+			// aapt resource value: 37
+			public const int AppCompatTheme_alertDialogStyle = 37;
+			
+			// aapt resource value: 38
+			public const int AppCompatTheme_alertDialogTheme = 38;
+			
 			// aapt resource value: 1
 			public const int AppCompatTheme_android_windowAnimationStyle = 1;
 			
@@ -28864,6 +28898,9 @@ namespace ServiceContextManagerApp.Droid
 			
 			// aapt resource value: 67
 			public const int AppCompatTheme_dropdownListPreferredItemHeight = 67;
+			
+			// aapt resource value: 66
+			public const int AppCompatTheme_dropDownListViewStyle = 66;
 			
 			// aapt resource value: 66
 			public const int AppCompatTheme_dropDownListViewStyle = 66;
