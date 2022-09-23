@@ -51,6 +51,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "881594421690-9vd38bspv798m93o79qj3eqlivaiogm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitmanager",
+            "certificate_hash": "8ac7e78bc63407d95e4757cae74cf5c3ac3b0ca4"
+          }
+        },
+        {
           "client_id": "881594421690-ek1kav54iq992m0shmooe76il6uvf5mc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -64,14 +72,6 @@
           "android_info": {
             "package_name": "com.microneme.dontwaitmanager",
             "certificate_hash": "3459d5bf3200a0c3e5bcad6887c4d5a9e409eb36"
-          }
-        },
-        {
-          "client_id": "881594421690-9vd38bspv798m93o79qj3eqlivaiogm0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.microneme.dontwaitmanager",
-            "certificate_hash": "8ac7e78bc63407d95e4757cae74cf5c3ac3b0ca4"
           }
         },
         {
