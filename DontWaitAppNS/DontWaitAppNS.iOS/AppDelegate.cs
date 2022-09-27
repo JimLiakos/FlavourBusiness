@@ -44,7 +44,7 @@ namespace DontWaitAppNS.iOS
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
 
 
-            "App ID not found. Add a string value with your app ID for the key FacebookAppID to the Info.plist or call [FBSDKSettings setAppID:]."
+            
 
 
 
