@@ -165,6 +165,12 @@
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.iOS\OOAdvantech.Pay.iOS.csproj">
+      <Project>{c1edb382-11d8-49ff-b4c4-21ef3a4cf0c4}</Project>
+      <Name>OOAdvantech.Pay.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
       <Project>{EA6F820B-FA25-446F-8E4E-0DE2CF89BE75}</Project>
       <Name>DontWaitAppNS</Name>

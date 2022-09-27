@@ -65,6 +65,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay\OOAdvantech.Pay.csproj" />
     <ProjectReference Include="..\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
 
