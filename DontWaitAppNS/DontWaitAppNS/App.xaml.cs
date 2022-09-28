@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech;
 using Plugin.Connectivity;
+using OOAdvantech.Pay;
 
 namespace DontWaitApp
 {
@@ -26,9 +27,10 @@ namespace DontWaitApp
             InitializeRemoteTypes();
 
             ApplicationSettings.GetCurrent();
-            MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
-
+            //MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
+            MainPage = new NavigationPage(new PaymentPage());
             
+
 
 
 
