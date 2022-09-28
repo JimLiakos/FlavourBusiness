@@ -140,6 +140,10 @@
       <Project>{98c53533-8117-40c2-b9a6-bbe3d5dee050}</Project>
       <Name>OOAdvantech.NetStandard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.Droid\OOAdvantech.Pay.Droid.csproj">
+      <Project>{942e7dc9-075a-4e8f-8150-adb7d725dbcd}</Project>
+      <Name>OOAdvantech.Pay.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
       <Project>{EA6F820B-FA25-446F-8E4E-0DE2CF89BE75}</Project>
       <Name>DontWaitAppNS</Name>

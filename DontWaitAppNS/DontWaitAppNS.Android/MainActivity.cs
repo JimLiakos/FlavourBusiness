@@ -15,6 +15,7 @@ using Firebase.Iid;
 using Android.Content;
 using System.Linq;
 using Android.Graphics;
+using Acr.UserDialogs;
 
 namespace DontWaitAppNS.Droid
 {
@@ -83,8 +84,9 @@ namespace DontWaitAppNS.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            UserDialogs.Init(this);
 
-           // Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
+            // Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
@@ -117,6 +119,7 @@ namespace DontWaitAppNS.Droid
             }
             var app = new DontWaitApp.App();
             LoadApplication(app);
+            
 
         }
 
