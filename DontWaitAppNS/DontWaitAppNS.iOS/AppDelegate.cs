@@ -42,9 +42,11 @@ namespace DontWaitAppNS.iOS
             global::ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             global::OOAdvantech.iOS.HybridWebViewRenderer.Init();
             global::OOAdvantech.iOS.DeviceInstantiator.Init();
+            global::OOAdvantech.Pay.iOS.PayService.Init();
 
 
-            
+
+            // Firebase.Core.App.Configure();
 
 
 
@@ -88,9 +90,15 @@ namespace DontWaitAppNS.iOS
         [Export("messaging:didReceiveRegistrationToken:")]
         public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
         {
-            var esnn = Firebase.Core.App.DefaultInstance;
             Console.WriteLine($"Firebase registration token: {fcmToken}");
-            //OOAdvantech.iOS.DeviceOOAdvantechCore.SetFirebaseToken(fcmToken);
+            
+
+
+            string webClientID = "881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com";
+            //"apps.googleusercontent.com.241222885422-bquei744e1i8q3h0r82k7fm31fbuej7m"
+
+
+            OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase(fcmToken, webClientID);
 
             // TODO: If necessary send token to application server.
             // Note: This callback is fired at each app startup and whenever a new token is generated.
@@ -119,7 +127,7 @@ namespace DontWaitAppNS.iOS
                 DateTime.Now, exception.ToString());
                 File.WriteAllText(errorFilePath, errorMessage);
 
-
+               
             }
             catch
             {
