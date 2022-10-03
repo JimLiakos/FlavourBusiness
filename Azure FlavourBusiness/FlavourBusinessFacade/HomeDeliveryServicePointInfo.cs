@@ -17,7 +17,7 @@ namespace FlavourBusinessFacade
         public string ServicePointIdentity;
         public HomeDeliveryServicePointInfo(IHomeDeliveryServicePoint homeDeliveryServicePoint)
         {
-            ServicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + "/" + homeDeliveryServicePoint.ServicesPointIdentity;
+            ServicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + ";" + homeDeliveryServicePoint.ServicesPointIdentity;
             LogoBackgroundImageUrl = homeDeliveryServicePoint.LogoBackgroundImageUrl;
             LogoImageUrl = homeDeliveryServicePoint.LogoImageUrl;
             BrandName = homeDeliveryServicePoint.BrandName;

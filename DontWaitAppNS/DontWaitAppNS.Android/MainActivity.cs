@@ -24,9 +24,15 @@ namespace DontWaitAppNS.Droid
 {
     //Keyboard-overlapping https://devlinduldulao.pro/how-to-fix-keyboard-overlapping-or-covering-entry/
     [Activity(Label = "DontWaitAppNS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTask, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+
     [IntentFilter(new[] { Android.Content.Intent.ActionView },
     DataScheme = "http",
-    DataHost = "example.com",
+    DataHost = "10.0.0.13",
+    DataPathPrefix = "/",
+    Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+    DataScheme = "http",
+    DataHost = "192.168.2.8",
     DataPathPrefix = "/",
     Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
     [IntentFilter(new[] { Android.Content.Intent.ActionView },

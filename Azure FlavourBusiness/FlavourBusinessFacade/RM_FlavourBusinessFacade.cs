@@ -5863,6 +5863,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string MealInvitationUrl
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_MealInvitationUrl", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message> Messages
         {
             get

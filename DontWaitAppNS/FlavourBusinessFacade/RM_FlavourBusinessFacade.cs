@@ -3656,6 +3656,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public string ServicePointUrl
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "get_ServicePointUrl", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string ServicesContextIdentity
         {
             get
@@ -5725,6 +5737,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_SessionType", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.SessionType>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string MealInvitationUrl
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_MealInvitationUrl", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         

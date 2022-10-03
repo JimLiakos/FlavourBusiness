@@ -375,6 +375,8 @@ namespace DontWaitApp
         [BackwardCompatibilityID("+5")]
         public string ClientSessionID;
 
+
+        
         ///// <MetaDataID>{bc390286-df9f-4e1a-9a37-6dcc0b32a7ad}</MetaDataID>
         //public List<ItemPreparation> OrderItems;
 

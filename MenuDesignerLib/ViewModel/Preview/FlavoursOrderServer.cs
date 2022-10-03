@@ -329,5 +329,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public void SendMealInvitationMessage(InvitationChannel channel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

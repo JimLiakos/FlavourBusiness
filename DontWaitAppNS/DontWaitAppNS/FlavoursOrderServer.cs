@@ -1058,6 +1058,8 @@ namespace DontWaitApp
 
         public async void SendMealInvitationMessage(InvitationChannel channel)
         {
+            string mealInvitationUri = null;
+
 
 #if DeviceDotNet
 
@@ -1074,7 +1076,7 @@ namespace DontWaitApp
             if (permissionsGranted)
             {
 
-                string mealInvitationUri = GetMealInvitationUri();
+                mealInvitationUri = GetMealInvitationUri();
                 mealInvitationUri=mealInvitationUri.Replace(";", "/");
 
                 if (Contacts == null)
@@ -1124,7 +1126,13 @@ namespace DontWaitApp
             }
 
 
+#else
+#if DEBUG
+            mealInvitationUri = GetMealInvitationUrl();
 #endif
+
+#endif
+
         }
 
         public async Task SendSms(string messageText, string recipient)
@@ -1250,7 +1258,7 @@ namespace DontWaitApp
 
         }
 
-        private static string GetMealInvitationUri()
+        private string GetMealInvitationUri()
         {
             var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
             if (lastServicePoinMenuData.ClientSessionID == null)
@@ -1260,6 +1268,21 @@ namespace DontWaitApp
 
             string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
             return codeValue;
+        }
+
+        private  string GetMealInvitationUrl()
+        {
+            return this.FoodServiceClientSession?.MealInvitationUrl;
+
+            
+            //var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            //if (lastServicePoinMenuData.ClientSessionID == null)
+            //{
+            //    lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            //}
+
+            //string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
+            //return codeValue;
         }
 
         /// <MetaDataID>{cebd99a0-8d4c-420a-a861-5aabc396dae5}</MetaDataID>
