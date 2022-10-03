@@ -16,11 +16,25 @@ using Android.Content;
 using System.Linq;
 using Android.Graphics;
 using Acr.UserDialogs;
+using Firebase;
+using Xamarin.Forms.Platform.Android.AppLinks;
+using Xamarin.Forms;
 
 namespace DontWaitAppNS.Droid
 {
     //Keyboard-overlapping https://devlinduldulao.pro/how-to-fix-keyboard-overlapping-or-covering-entry/
     [Activity(Label = "DontWaitAppNS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTask, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+    DataScheme = "http",
+    DataHost = "example.com",
+    DataPathPrefix = "/",
+    Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+    DataScheme = "https",
+    DataHost = "dontwait.com",
+    DataPathPrefix = "/",
+    Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
@@ -91,6 +105,8 @@ namespace DontWaitAppNS.Droid
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
+            FirebaseApp.InitializeApp(this);
+            AndroidAppLinks.Init(this);
 
             string webClientID = "";// "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
             //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this,FirebaseInstanceId.Instance.Token, webClientID);
@@ -113,16 +129,39 @@ namespace DontWaitAppNS.Droid
             //InitForgroundService(savedInstanceState);
             CreateNotificationChannel();
 
-            if(Intent.Extras!=null)
+            if (Intent.Extras != null)
             {
 
             }
             var app = new DontWaitApp.App();
+
             LoadApplication(app);
-            
+            //var appLink = GetAppLink();
+            //Xamarin.Forms.Application.Current.AppLinks.RegisterLink(appLink);
+
+
+
 
         }
 
+        Xamarin.Forms.AppLinkEntry GetAppLink()
+        {
+            var pageType = GetType().ToString();
+            var pageLink = new AppLinkEntry
+            {
+                Title = "Don't Wait",
+                Description = "Don't Wait",
+                AppLinkUri = new Uri($"http://dontwait/invitation?id=0", UriKind.RelativeOrAbsolute),
+                IsLinkActive = true,
+                //Thumbnail = ImageSource.FromFile("monkey.png")
+            };
+
+            pageLink.KeyValues.Add("contentType", "TodoItemPage");
+            pageLink.KeyValues.Add("appName", "dontwait");
+            pageLink.KeyValues.Add("companyName", "Xamarin");
+
+            return pageLink;
+        }
         void CreateNotificationChannel()
         {
             if (Build.VERSION.SdkInt < BuildVersionCodes.O)
@@ -268,7 +307,7 @@ namespace DontWaitAppNS.Droid
             stopServiceIntent = new Intent(this, typeof(TimestampService));
             stopServiceIntent.SetAction(Constants.ACTION_STOP_SERVICE);
 
-            
+
 
             //stopServiceButton = FindViewById<Button>(Resource.Id.stop_timestamp_service_button);
             //startServiceButton = FindViewById<Button>(Resource.Id.start_timestamp_service_button);

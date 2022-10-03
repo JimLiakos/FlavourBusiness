@@ -594,7 +594,7 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-        public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
+        public DeviceUtilities.NetStandard.ScanCode ScanCode ;
 #endif
 
 
@@ -1056,6 +1056,97 @@ namespace DontWaitApp
             });
         }
 
+        public async void SendMealInvitationMessage(InvitationChannel channel)
+        {
+
+#if DeviceDotNet
+
+
+            bool permissionsGranted = false;
+            if ((await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.ContactsRead>()) != Xamarin.Essentials.PermissionStatus.Granted)
+            {
+                if ((await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.ContactsRead>()) == Xamarin.Essentials.PermissionStatus.Granted)
+                    permissionsGranted = true;
+            }
+            else
+                permissionsGranted = true;
+
+            if (permissionsGranted)
+            {
+
+                string mealInvitationUri = GetMealInvitationUri();
+                mealInvitationUri=mealInvitationUri.Replace(";", "/");
+
+                if (Contacts == null)
+                {
+                    var contacts = (await Xamarin.Essentials.Contacts.GetAllAsync()).ToList();
+
+                    Contacts = contacts.ToDictionary(x => x.Id);
+                }
+
+
+                var contact = Contacts.FirstOrDefault().Value;
+
+                var id = contact.Id;
+                var NamePrefix = contact.NamePrefix;
+                var GivenName = contact.GivenName;
+                var MiddleName = contact.MiddleName;
+                var FamilyName = contact.FamilyName;
+                var DisplayName = contact.DisplayName;
+
+                System.Diagnostics.Debug.WriteLine("id : " + id);
+                System.Diagnostics.Debug.WriteLine("NamePrefix : " + NamePrefix);
+                System.Diagnostics.Debug.WriteLine("GivenName : " + GivenName);
+                System.Diagnostics.Debug.WriteLine("MiddleName : " + MiddleName);
+                System.Diagnostics.Debug.WriteLine("FamilyName : " + FamilyName);
+                System.Diagnostics.Debug.WriteLine("DisplayName : " + DisplayName);
+
+
+
+
+                string name = Contacts.FirstOrDefault().Value?.DisplayName;
+
+                var searchingItems = Contacts.Select(x => new FuzzySearchItem() { Description = x.Value.DisplayName, Id = x.Value.Id, Tag = x.Value }).ToList();
+                foreach (var searchingItem in searchingItems)
+                    searchingItem.Ration = FuzzySharp.Fuzz.PartialRatio(searchingItem.Description.ToUpper(), "Liak".ToUpper());
+
+                searchingItems = searchingItems.OrderByDescending(x => x.Ration).ToList();
+
+                name = searchingItems[1].Description;
+                var liakosContact = Contacts[searchingItems[1].Id];
+                var messagePhone = liakosContact.Phones.LastOrDefault();
+
+                //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
+
+                string message = "click meal invitation link" + Environment.NewLine + "https://dontwait.com/" + mealInvitationUri;
+                //SendSms(message, messagePhone.PhoneNumber);
+                //https://dontwait.com/MealInvitation_7f9bde62e6da45dc8c5661ee2220a7b0_fe51ba7e30954ee08209bd89a03469a8_1f44169a41744d6bb962c22bb9d76885ffffffff-8deb-dc43-ffff-fffffeb66b8c
+            }
+
+
+#endif
+        }
+
+        public async Task SendSms(string messageText, string recipient)
+        {
+#if DeviceDotNet
+            try
+            {
+                var message = new SmsMessage(messageText, new[] { recipient });
+                await Sms.ComposeAsync(message);
+
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                // Sms is not supported on this device.
+            }
+            catch (Exception ex)
+            {
+                // Other error has occurred.
+            }
+#endif
+        }
+
         /// <summary>
         /// Cancel the previous invitation
         /// </summary>
@@ -1093,13 +1184,7 @@ namespace DontWaitApp
                 return null;
             string SigBase64 = "";
 
-            var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
-            if (lastServicePoinMenuData.ClientSessionID == null)
-            {
-                lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
-            }
-
-            string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
+            string codeValue = GetMealInvitationUri();
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()
             {
@@ -1163,6 +1248,18 @@ namespace DontWaitApp
             return SigBase64;
             //return @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA0QAAANEBqyQtcAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAhUlEQVQ4T+2MsQ2AMAwEEQVVFmCjVAzBFMxGhcQ2bEBlHL9DCDwLIIqT7Pf7GhHhjH1QZifQjkJDf14VcdJMJY/AinjYlc1JM5VUixXK86AsTpqp5P0ZGQSYqeQqiF7AM7IiwJ4lMWdXQat0546sFiDrrOt7OTCY4AYNT37BRwSTwW6GNAdnJbxPs8oKKwAAAABJRU5ErkJggg==";
 
+        }
+
+        private static string GetMealInvitationUri()
+        {
+            var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            if (lastServicePoinMenuData.ClientSessionID == null)
+            {
+                lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
+            }
+
+            string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
+            return codeValue;
         }
 
         /// <MetaDataID>{cebd99a0-8d4c-420a-a861-5aabc396dae5}</MetaDataID>
@@ -2297,6 +2394,9 @@ namespace DontWaitApp
 
             }
         }
+#if DeviceDotNet
+        public Dictionary<string, Contact> Contacts { get; private set; }
+#endif
 
         public Task<List<HomeDeliveryServicePointInfo>> NeighborhoodFoodServersTask;
 
@@ -2359,6 +2459,9 @@ namespace DontWaitApp
                 return;
 
             Initialized = true;
+#if DeviceDotNet
+            ScanCode = new DeviceUtilities.NetStandard.ScanCode();
+#endif
 
             _EndUser = new FoodServiceClientVM();
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();

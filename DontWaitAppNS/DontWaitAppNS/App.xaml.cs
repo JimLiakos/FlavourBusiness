@@ -29,8 +29,8 @@ namespace DontWaitApp
             InitializeRemoteTypes();
 
             ApplicationSettings.GetCurrent();
-            //MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
-            MainPage = new NavigationPage(new PaymentPage());
+            MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
+            //MainPage = new NavigationPage(new PaymentPage());
 
 
 
@@ -88,30 +88,7 @@ namespace DontWaitApp
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
 
-            bool permissionsGranted = false;
-            if ((await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.ContactsRead>()) != Xamarin.Essentials.PermissionStatus.Granted)
-            {
-                if ((await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.ContactsRead>()) == Xamarin.Essentials.PermissionStatus.Granted)
-                    permissionsGranted = true;
-            }
-            else
-                permissionsGranted = true;
 
-            if (permissionsGranted)
-            {
-                var contacts = (await Xamarin.Essentials.Contacts.GetAllAsync()).ToList();
-
-               string name = contacts.FirstOrDefault()?.DisplayName;
-
-                var searchingItems = contacts.Select(x => new FuzzySearchItem() { Description = x.DisplayName, Tag = x }).ToList();
-                foreach (var searchingItem in searchingItems)
-                    searchingItem.Ration = FuzzySharp.Fuzz.PartialRatio(searchingItem.Description.ToUpper(), "Liak".ToUpper());
-
-                searchingItems = searchingItems.OrderByDescending(x => x.Ration).ToList();
-
-                 name = contacts.FirstOrDefault()?.DisplayName;
-
-            }
         }
 
 
@@ -151,6 +128,15 @@ namespace DontWaitApp
         }
 
 
+        protected override async void OnAppLinkRequestReceived(Uri uri)
+        {
+            base.OnAppLinkRequestReceived(uri);
+
+            Dispatcher.BeginInvokeOnMainThread(() =>
+            {
+                MainPage.DisplayAlert("message", uri.AbsoluteUri, "OK");
+            });
+        }
 
     }
 
@@ -160,6 +146,9 @@ namespace DontWaitApp
 
         public int Ration { get; set; }
 
+        public string Id { get; set; }
+
         public object Tag { get; set; }
+
     }
 }

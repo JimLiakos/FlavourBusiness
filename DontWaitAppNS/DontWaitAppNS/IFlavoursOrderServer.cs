@@ -226,6 +226,8 @@ namespace DontWaitApp
         /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
         void MealInvitation(Messmate messmate);
 
+        void SendMealInvitationMessage(InvitationChannel channel); 
+
         /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
         void AcceptInvitation(Messmate messmate, string messageID);
 
@@ -432,7 +434,12 @@ namespace DontWaitApp
 
     }
 
-    
 
+    public enum InvitationChannel
+    {
+        SMS = 1,
+        Email = 2,
+        FBMessenger = 3
+    }
 }
 

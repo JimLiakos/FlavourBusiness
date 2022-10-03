@@ -16,6 +16,7 @@ using FlavourBusinessManager.ServicePointRunTime;
 using System.Globalization;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -81,6 +82,12 @@ namespace FlavourBusinessManager.EndUsers
                     servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
 
+                //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
+                
+                //Uri myUri = new Uri("http://" + ServicePoint.ServicePointUrl);
+                //string param1 =HttpUtility.ParseQueryString(myUri.Query).Get("sc");
+
+                //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
                 return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description,SessionType=SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
 
             }
@@ -487,8 +494,8 @@ namespace FlavourBusinessManager.EndUsers
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
                             _ClientDeviceID = value;
-
-                            _SessionID = Guid.NewGuid().ToString("N") + _ClientDeviceID;
+                            
+                            //_SessionID = Guid.NewGuid().ToString("N") + _ClientDeviceID;
                             stateTransition.Consistent = true;
                         }
                     }
@@ -1021,7 +1028,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{981f30bb-1479-4652-8ec2-ce0ca2b7ef76}</MetaDataID>
         public FoodServiceClientSession()
         {
-
+            _SessionID = Guid.NewGuid().ToString("N");
         }
 
         /// <exclude>Excluded</exclude>

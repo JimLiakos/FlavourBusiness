@@ -104,6 +104,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+        
+        public string ServicePointUrl
+        {
+            get
+            {
+                return string.Format("{0}:4300/#/launch-app?sc={1}&sp={2}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, ServicesContextIdentity, ServicesPointIdentity);
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         string _ServicesPointIdentity;

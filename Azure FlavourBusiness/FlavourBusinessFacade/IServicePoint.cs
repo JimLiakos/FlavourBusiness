@@ -56,6 +56,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [CachingDataOnClientSide]
         string ServicesPointIdentity { get; set; }
 
+
+        string ServicePointUrl { get; }
+
         /// <MetaDataID>{52bd3eff-ab52-4b34-8a78-7a5e5020d5a4}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         [CachingDataOnClientSide]

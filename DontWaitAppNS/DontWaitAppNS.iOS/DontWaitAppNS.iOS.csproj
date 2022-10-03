@@ -165,6 +165,8 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.iOS\OOAdvantech.Pay.iOS.csproj">
       <Name>OOAdvantech.Pay.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
 </Project>
