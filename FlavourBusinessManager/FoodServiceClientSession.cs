@@ -486,8 +486,8 @@ namespace FlavourBusinessManager.EndUsers
 
             set
             {
-                if (string.IsNullOrEmpty(SessionID))
-                {
+                //if (string.IsNullOrEmpty(SessionID))
+                //{
 
                     if (_ClientDeviceID != value)
                     {
@@ -499,9 +499,9 @@ namespace FlavourBusinessManager.EndUsers
                             stateTransition.Consistent = true;
                         }
                     }
-                }
-                else
-                    throw new NotSupportedException("Changing ClientDeviceID is not supported");
+                //}
+                //else
+                //    throw new NotSupportedException("Changing ClientDeviceID is not supported");
 
             }
         }
@@ -1917,7 +1917,7 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
 
-                return string.Format("{0}:4300/#/launch-app?mealInvitation={1}&sc={2}&sp={3}&cs={3}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, true, ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity,SessionID);
+                return string.Format("http://{0}:4300/#/launch-app?mealInvitation={1}&sc={2}&sp={3}&cs={4}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, true, ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity,SessionID);
 
                 //return "";
             }

@@ -1076,8 +1076,8 @@ namespace DontWaitApp
             if (permissionsGranted)
             {
 
-                mealInvitationUri = GetMealInvitationUri();
-                mealInvitationUri=mealInvitationUri.Replace(";", "/");
+                mealInvitationUri = GetMealInvitationUrl();
+                //mealInvitationUri=mealInvitationUri.Replace(";", "/");
 
                 if (Contacts == null)
                 {
@@ -1120,8 +1120,8 @@ namespace DontWaitApp
 
                 //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
 
-                string message = "click meal invitation link" + Environment.NewLine + "https://dontwait.com/" + mealInvitationUri;
-                //SendSms(message, messagePhone.PhoneNumber);
+                string message = "click meal invitation link" + Environment.NewLine  + mealInvitationUri;
+                SendSms(message, messagePhone.PhoneNumber);
                 //https://dontwait.com/MealInvitation_7f9bde62e6da45dc8c5661ee2220a7b0_fe51ba7e30954ee08209bd89a03469a8_1f44169a41744d6bb962c22bb9d76885ffffffff-8deb-dc43-ffff-fffffeb66b8c
             }
 
@@ -1268,6 +1268,13 @@ namespace DontWaitApp
 
             string codeValue = "MealInvitation;" + lastServicePoinMenuData.ServicePointIdentity + ";" + lastServicePoinMenuData.ClientSessionID;
             return codeValue;
+        }
+
+        internal static string GetMealInvitationUri(string serviceContextIdentity, string servicePointIdentity,string clientSessionID)
+        {
+            string codeValue = "MealInvitation;" + serviceContextIdentity+";"+ servicePointIdentity + ";" + clientSessionID;
+            return codeValue;
+
         }
 
         private  string GetMealInvitationUrl()

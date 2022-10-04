@@ -132,9 +132,33 @@ namespace DontWaitApp
         {
             base.OnAppLinkRequestReceived(uri);
 
-            Dispatcher.BeginInvokeOnMainThread(() =>
+            Dispatcher.BeginInvokeOnMainThread(async () =>
             {
-                MainPage.DisplayAlert("message", uri.AbsoluteUri, "OK");
+                int queryStartPos = uri.OriginalString.IndexOf("?");
+                if (queryStartPos != -1)
+                {
+                    string query = uri.OriginalString.Substring(queryStartPos + 1);
+                    if (!string.IsNullOrWhiteSpace(query))
+                    {
+                        var parameters = System.Web.HttpUtility.ParseQueryString(query);
+
+                        if (parameters.Get("mealInvitation") != null && parameters.Get("mealInvitation").ToLower() == "true")
+                        {
+                            string serviceContextIdentity = parameters.Get("sc");
+                            string servicePointIdentity = parameters.Get("sp");
+                            string clientSessionIdentity = parameters.Get("cs");
+                            ((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).ExternalMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+
+                        }
+                    }
+
+                }
+
+
+
+
+                //System.Web.HttpUtility.ParseQueryString()
+                //MainPage.DisplayAlert("message", uri.AbsoluteUri, "OK");
             });
         }
 
