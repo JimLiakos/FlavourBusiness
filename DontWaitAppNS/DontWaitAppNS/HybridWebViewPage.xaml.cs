@@ -72,14 +72,14 @@ namespace DontWaitApp
 
 
                 string path = FlavoursOrderServer.Path;
-                
-                    path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
+
+                if (path != null && path.Split('/').Length > 0 &&
+                     path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
                 {
                     if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.MenuData.ServicePointIdentity))
                     {
                         // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
-
-                        hybridWebView.Uri = (url + "room-service");
+                        hybridWebView.Uri = url + "#/room-service;orderServerPath=.%2FEndUser";
                         //http://192.168.2.9:4300/#/room-service
                     }
                     else
@@ -94,7 +94,7 @@ namespace DontWaitApp
 
 
         }
-        
+
 
         bool check = false;
         protected override async void OnAppearing()
@@ -135,7 +135,7 @@ namespace DontWaitApp
 
                 }
             }
-             FlavoursOrderServer.Initialize();
+            FlavoursOrderServer.Initialize();
 
             //MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
 

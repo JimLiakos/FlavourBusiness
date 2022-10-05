@@ -2515,6 +2515,7 @@ namespace DontWaitApp
                  string path = ApplicationSettings.Current.Path;
                  if (!string.IsNullOrWhiteSpace(path) && path.Split('/').Length > 0)
                  {
+                     System.Diagnostics.Debug.WriteLine(MenuData.ServicePointIdentity);
                      if (MenuData.ServicePointIdentity != path.Split('/')[0])
                          Path = "";
                  }
