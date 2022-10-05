@@ -72,14 +72,15 @@ namespace DontWaitApp
 
 
                 string path = FlavoursOrderServer.Path;
-                
-                    path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
+
+                if (path != null && path.Split('/').Length > 0 &&
+                path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
                 {
                     if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.MenuData.ServicePointIdentity))
                     {
                         // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
 
-                        hybridWebView.Uri = (url + "room-service");
+                        hybridWebView.Uri = url + "#/room-service;orderServerPath=.%2FEndUser";
                         //http://192.168.2.9:4300/#/room-service
                     }
                     else
@@ -151,21 +152,7 @@ namespace DontWaitApp
             //return base.OnBackButtonPressed();
         }
 
-        internal async void ExternalMealInvitation(string serviceContextIdentity, string servicePointIdentity, string clientSessionIdentity)
-        {
-
-            var flavoursOrderServer = BindingContext as IFlavoursOrderServer;
-
-            string invitationUri = FlavoursOrderServer.GetMealInvitationUri(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
-
-            bool isConnected = await flavoursOrderServer.ConnectToServicePoint(invitationUri);
-            if (isConnected)
-            {
-                flavoursOrderServer.Path = flavoursOrderServer.MenuData.ServicePointIdentity;
-                var url = string.Format(@"http://{0}:4300/room-service", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
-                hybridWebView.Uri = url;
-            }
-        }
+      
     }
     public class EventTest
     {

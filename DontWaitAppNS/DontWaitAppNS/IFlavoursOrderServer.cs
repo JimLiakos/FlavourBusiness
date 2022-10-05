@@ -184,6 +184,7 @@ namespace DontWaitApp
         [GenerateEventConsumerProxy]
         event PartOfMealRequestHandle PartOfMealRequest;
 
+
         [GenerateEventConsumerProxy]
         event MenuItemProposalHandle MenuItemProposal;
 

@@ -147,7 +147,7 @@ namespace DontWaitApp
                             string serviceContextIdentity = parameters.Get("sc");
                             string servicePointIdentity = parameters.Get("sp");
                             string clientSessionIdentity = parameters.Get("cs");
-                            ((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).ExternalMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+                            (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer) .ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
 
                         }
                     }

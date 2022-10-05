@@ -434,16 +434,17 @@ namespace DontWaitApp
         {
             return Task.Run<string>(() =>
             {
-                var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-                OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                return default(string);
+                //var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                //OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-                if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
-                {
-                    CreateClientAsGuest();
-                    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
-                }
-                string friendlyName = ApplicationSettings.Current.FriendlyName;
-                return friendlyName;
+                //if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
+                //{
+                //    CreateClientAsGuest();
+                //    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
+                //}
+                //string friendlyName = ApplicationSettings.Current.FriendlyName;
+                //return friendlyName;
             });
             //return ApplicationSettings.Current.FriendlyName;
             //return "";
@@ -2605,8 +2606,27 @@ namespace DontWaitApp
         }
 
 
+        //implicit
+
+        internal async void ImplicitMealInvitation(string serviceContextIdentity, string servicePointIdentity, string clientSessionIdentity)
+        {
+
+            string invitationUri = FlavoursOrderServer.GetMealInvitationUri(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+
+            var theInviter = ServicesContextManagment.GetMealInvitationInviter(invitationUri);
+            var messmate = new Messmate(theInviter, new List<ItemPreparation>());
 
 
+           // _PartOfMealRequest?.Invoke(this,messmate, null);
+
+            //bool isConnected = await flavoursOrderServer.ConnectToServicePoint(invitationUri);
+            //if (isConnected)
+            //{
+            //    flavoursOrderServer.Path = flavoursOrderServer.MenuData.ServicePointIdentity;
+            //    var url = string.Format(@"http://{0}:4300/#/room-service;orderServerPath=.%2FEndUser", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+            //    hybridWebView.Uri = url;
+            //}
+        }
 
         //public async void TransferSession(string targetServicePointIdentity)
         //{
