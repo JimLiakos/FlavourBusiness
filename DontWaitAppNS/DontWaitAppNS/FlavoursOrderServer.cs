@@ -428,13 +428,13 @@ namespace DontWaitApp
             }
         }
 
-        public bool GetFriendlyNameCalled;
-        public bool PartOfMealRequestEventAdded;
+    
         /// <MetaDataID>{75fc6cad-1e29-4aa3-97fa-14462e970f67}</MetaDataID>
         public Task<string> GetFriendlyName()
         {
-            GetFriendlyNameCalled = true;
-            return null;
+            
+            return Task<string>.FromResult(default(string));
+
             //return Task.Run<string>(() =>
             //{
 
@@ -449,8 +449,7 @@ namespace DontWaitApp
             //    string friendlyName = ApplicationSettings.Current.FriendlyName;
             //    return friendlyName;
             //});
-            //return ApplicationSettings.Current.FriendlyName;
-            //return "";
+
 
         }
 
@@ -680,7 +679,7 @@ namespace DontWaitApp
                         FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
                     }
                     FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-
+                    
 
 
                     SessionID = clientSessionData.FoodServiceClientSession.SessionID;
@@ -1308,9 +1307,6 @@ namespace DontWaitApp
         {
             add
             {
-                PartOfMealRequestEventAdded = true;
-                _PartOfMealRequest += value;
-
                 if (PartOfMealMessage != null)
                 {
                     var message = PartOfMealMessage;
@@ -1350,6 +1346,9 @@ namespace DontWaitApp
                     });
                 }
 
+
+                _PartOfMealRequest += value;
+    
             }
             remove
             {
