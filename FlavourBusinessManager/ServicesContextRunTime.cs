@@ -1727,6 +1727,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = servicePoint.Description, ServicePointIdentity = servicesContextIdentity + ";" + servicePointIdentity, Token = token, FoodServiceClientSession = clientSession, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = servicePoint.State };
         }
 
+
+
+        public IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID)
+        {
+            return OpenClientSessions.Where(x => x.SessionID == mealInvitationSessionID).FirstOrDefault();
+        }
+
+
+
         /// <MetaDataID>{1f4f29a1-b453-4221-bdc0-dda0d3b40017}</MetaDataID>
         internal static string GetToken(IFoodServiceClientSession clientSession)
         {

@@ -428,23 +428,27 @@ namespace DontWaitApp
             }
         }
 
-
+        public bool GetFriendlyNameCalled;
+        public bool PartOfMealRequestEventAdded;
         /// <MetaDataID>{75fc6cad-1e29-4aa3-97fa-14462e970f67}</MetaDataID>
         public Task<string> GetFriendlyName()
         {
-            return Task.Run<string>(() =>
-            {
-                var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-                OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            GetFriendlyNameCalled = true;
+            return null;
+            //return Task.Run<string>(() =>
+            //{
 
-                if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
-                {
-                    CreateClientAsGuest();
-                    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
-                }
-                string friendlyName = ApplicationSettings.Current.FriendlyName;
-                return friendlyName;
-            });
+            //    var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            //    OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+            //    if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
+            //    {
+            //        CreateClientAsGuest();
+            //        return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
+            //    }
+            //    string friendlyName = ApplicationSettings.Current.FriendlyName;
+            //    return friendlyName;
+            //});
             //return ApplicationSettings.Current.FriendlyName;
             //return "";
 
@@ -473,46 +477,46 @@ namespace DontWaitApp
         public void SetFriendlyName(string friendlyName)
         {
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                if (!WaiterView)
-                {
-                    lock (ClientSessionLock)
-                    {
-                        if (ApplicationSettings.Current.ClientAsGuest == null)
-                            CreateClientAsGuest();
-                    }
-                }
-                ApplicationSettings.Current.FriendlyName = friendlyName;
-                stateTransition.Consistent = true;
-            }
+            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //{
+            //    if (!WaiterView)
+            //    {
+            //        lock (ClientSessionLock)
+            //        {
+            //            if (ApplicationSettings.Current.ClientAsGuest == null)
+            //                CreateClientAsGuest();
+            //        }
+            //    }
+            //    ApplicationSettings.Current.FriendlyName = friendlyName;
+            //    stateTransition.Consistent = true;
+            //}
 
-            if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
-            {
-                #region Sets client name of active session a sync for unstable connection 
-                SerializeTaskScheduler.AddTask(async () =>
-                {
-                    int tries = 30; //try for 30 time 
-                    while (tries > 0)
-                    {
-                        try
-                        {
-                            if (this.FoodServiceClientSession != null)
-                                this.FoodServiceClientSession.ClientName = friendlyName;
-                        }
-                        catch (System.Net.WebException commError)
-                        {
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
-                        }
-                        catch (Exception error)
-                        {
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
-                        }
-                    }
-                    return true;
-                });
-                #endregion
-            }
+            //if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
+            //{
+            //    #region Sets client name of active session a sync for unstable connection 
+            //    SerializeTaskScheduler.AddTask(async () =>
+            //    {
+            //        int tries = 30; //try for 30 time 
+            //        while (tries > 0)
+            //        {
+            //            try
+            //            {
+            //                if (this.FoodServiceClientSession != null)
+            //                    this.FoodServiceClientSession.ClientName = friendlyName;
+            //            }
+            //            catch (System.Net.WebException commError)
+            //            {
+            //                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
+            //            }
+            //            catch (Exception error)
+            //            {
+            //                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(2));
+            //            }
+            //        }
+            //        return true;
+            //    });
+            //    #endregion
+            //}
 
         }
 
@@ -594,7 +598,7 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-        public DeviceUtilities.NetStandard.ScanCode ScanCode ;
+        public DeviceUtilities.NetStandard.ScanCode ScanCode;
 #endif
 
 
@@ -1120,7 +1124,7 @@ namespace DontWaitApp
 
                 //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
 
-                string message = "click meal invitation link" + Environment.NewLine  + mealInvitationUri;
+                string message = "click meal invitation link" + Environment.NewLine + mealInvitationUri;
                 SendSms(message, messagePhone.PhoneNumber);
                 //https://dontwait.com/MealInvitation_7f9bde62e6da45dc8c5661ee2220a7b0_fe51ba7e30954ee08209bd89a03469a8_1f44169a41744d6bb962c22bb9d76885ffffffff-8deb-dc43-ffff-fffffeb66b8c
             }
@@ -1270,18 +1274,18 @@ namespace DontWaitApp
             return codeValue;
         }
 
-        internal static string GetMealInvitationUri(string serviceContextIdentity, string servicePointIdentity,string clientSessionID)
+        internal static string GetMealInvitationUri(string serviceContextIdentity, string servicePointIdentity, string clientSessionID)
         {
-            string codeValue = "MealInvitation;" + serviceContextIdentity+";"+ servicePointIdentity + ";" + clientSessionID;
+            string codeValue = "MealInvitation;" + serviceContextIdentity + ";" + servicePointIdentity + ";" + clientSessionID;
             return codeValue;
 
         }
 
-        private  string GetMealInvitationUrl()
+        private string GetMealInvitationUrl()
         {
             return this.FoodServiceClientSession?.MealInvitationUrl;
 
-            
+
             //var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
             //if (lastServicePoinMenuData.ClientSessionID == null)
             //{
@@ -1304,6 +1308,7 @@ namespace DontWaitApp
         {
             add
             {
+                PartOfMealRequestEventAdded = true;
                 _PartOfMealRequest += value;
 
                 if (PartOfMealMessage != null)
@@ -1331,6 +1336,16 @@ namespace DontWaitApp
                             }
 
                             _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
+                        }
+                        else
+                        {
+                            var messmate = (from theMessmate in this.CandidateMessmates
+                                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                            select theMessmate).FirstOrDefault();
+                            if (messmate != null)
+                            {
+                                _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
+                            }
                         }
                     });
                 }
@@ -2608,6 +2623,45 @@ namespace DontWaitApp
 
 
 
+        internal async void ImplicitMealInvitation(string serviceContextIdentity, string servicePointIdentity, string clientSessionID)
+        {
+
+            //"http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=827a9ed57dac4786a923cd27d0b52444"
+            string invitationUri = FlavoursOrderServer.GetMealInvitationUri(serviceContextIdentity, servicePointIdentity, clientSessionID);
+            var messmate = CandidateMessmates.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
+            if (messmate == null)
+            {
+                var theInviter = ServicesContextManagment.GetMealInvitationInviter(invitationUri);
+                messmate = new Messmate(theInviter, new List<ItemPreparation>());
+                CandidateMessmates.Add(messmate);
+            }
+
+            var message = new Message();
+            message.Data["ClientMessageType"] = ClientMessages.PartOfMealRequest;
+            message.Data["ClientSessionID"] = clientSessionID;
+            message.Notification = new Notification() { Title = "Make me part of meal" };
+
+            if (_PartOfMealRequest != null)
+            {
+                _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
+            }
+            else
+            {
+                PartOfMealMessage = message;
+            }
+
+
+
+            // _PartOfMealRequest?.Invoke(this,messmate, null);
+
+            //bool isConnected = await flavoursOrderServer.ConnectToServicePoint(invitationUri);
+            //if (isConnected)
+            //{
+            //    flavoursOrderServer.Path = flavoursOrderServer.MenuData.ServicePointIdentity;
+            //    var url = string.Format(@"http://{0}:4300/#/room-service;orderServerPath=.%2FEndUser", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+            //    hybridWebView.Uri = url;
+            //}
+        }
 
         //public async void TransferSession(string targetServicePointIdentity)
         //{

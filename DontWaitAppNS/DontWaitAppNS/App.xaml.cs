@@ -132,6 +132,7 @@ namespace DontWaitApp
         {
             base.OnAppLinkRequestReceived(uri);
 
+
             Dispatcher.BeginInvokeOnMainThread(async () =>
             {
                 int queryStartPos = uri.OriginalString.IndexOf("?");
@@ -147,7 +148,15 @@ namespace DontWaitApp
                             string serviceContextIdentity = parameters.Get("sc");
                             string servicePointIdentity = parameters.Get("sp");
                             string clientSessionIdentity = parameters.Get("cs");
-                            ((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).ExternalMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+
+                            string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
+                            MainPage.DisplayAlert("message", message, "OK");
+                            if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
+                                MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
+                            else
+                                MainPage.DisplayAlert("message", "FlavoursOrderServer","OK");
+
+                            //(((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer) .ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
 
                         }
                     }

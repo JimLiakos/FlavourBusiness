@@ -333,7 +333,7 @@ namespace FlavourBusinessManager
                 myLog.WriteEntry(string.Format("Open '{0}' storage timespan {1}", storageName, ss.ToString()), System.Diagnostics.EventLogEntryType.Information);
 
 
-                
+
                 lock (objectStorage)
                 {
                     try
@@ -630,7 +630,7 @@ namespace FlavourBusinessManager
                 }
             }
 
-            var servers= deliveryServicePoints.Select(x=>new HomeDeliveryServicePointInfo(x)).ToList();
+            var servers = deliveryServicePoints.Select(x => new HomeDeliveryServicePointInfo(x)).ToList();
 
             return servers;
 
@@ -683,7 +683,27 @@ namespace FlavourBusinessManager
             return dDistance;
         }
 
+        public IFoodServiceClientSession GetMealInvitationInviter(string invitationUri)
+        {
 
+            string[] servicePointIdentityParts = invitationUri.Split(';');
+            string servicesContextIdentity = servicePointIdentityParts[1];
+            string servicePointIdentity = servicePointIdentityParts[2];
+            string mealInvitationSessionID = servicePointIdentityParts[3];
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+
+            var graphicMenus = (flavoursServicesContext.Owner as Organization).UnSafeGraphicMenus;
+
+
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            string orgIdentity = flavoursServicesContext.Owner.Identity;
+
+            IFoodServiceClientSession clientSession = flavoursServicesContextRunTime.GetMealInvitationInviter( mealInvitationSessionID);
+
+            return clientSession;
+
+        }
     }
 
     /// <MetaDataID>{ae4070e9-17de-4a7a-9105-3639358bd4f7}</MetaDataID>

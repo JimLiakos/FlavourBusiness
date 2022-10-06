@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -81,8 +82,34 @@ namespace DontWaitApp
 
             FlavoursOrderServer_OnWebViewLoaded();
 
+            TestImplicitMealInvitation();
+
         }
 
+        private void TestImplicitMealInvitation()
+        {
+            Uri uri = new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=827a9ed57dac4786a923cd27d0b52444");
+            int queryStartPos = uri.OriginalString.IndexOf("?");
+            if (queryStartPos != -1)
+            {
+                string query = uri.OriginalString.Substring(queryStartPos + 1);
+                if (!string.IsNullOrWhiteSpace(query))
+                {
+
+                    var parameters = System.Web.HttpUtility.ParseQueryString(query);
+
+                    if (parameters.Get("mealInvitation") != null && parameters.Get("mealInvitation").ToLower() == "true")
+                    {
+                        string serviceContextIdentity = parameters.Get("sc");
+                        string servicePointIdentity = parameters.Get("sp");
+                        string clientSessionIdentity = parameters.Get("cs");
+
+                        (DataContext as FlavoursOrderServer).ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+                    }
+                }
+
+            }
+        }
 
         string address;
         private void Browser_Navigated(object sender, NavigatedEventArgs e)

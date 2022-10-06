@@ -1027,6 +1027,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetNeighborhoodFoodServers", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointInfo>>(retValue);
         }
+        
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetMealInvitationInviter(string invitationUri)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = invitationUri;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetMealInvitationInviter", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
+        }
     }
     
     public sealed class Pr_IFlavoursServicesContextRuntime : FlavourBusinessFacade.IFlavoursServicesContextRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -1612,6 +1622,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetCashiersStationRuntime", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = mealInvitationSessionID;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetMealInvitationInviter", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
     }
     
