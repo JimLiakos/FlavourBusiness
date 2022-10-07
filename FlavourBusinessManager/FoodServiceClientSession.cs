@@ -1820,14 +1820,14 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var flavourItem in clientSessionItems)
                 {
-                    if (flavourItem.State == ItemPreparationState.…nPreparation)
+                    if (flavourItem.State == ItemPreparationState.InPreparation)
                         flavourItem.State = ItemPreparationState.PendingPreparation;
                     else if (flavourItem.State == ItemPreparationState.IsPrepared && !flavourItem.IsCooked)
-                        flavourItem.State = ItemPreparationState.…nPreparation;
+                        flavourItem.State = ItemPreparationState.InPreparation;
                     else if (flavourItem.State == ItemPreparationState.IsPrepared && flavourItem.IsCooked)
                         flavourItem.State = ItemPreparationState.IsRoasting;
                     else if (flavourItem.State == ItemPreparationState.IsRoasting)
-                        flavourItem.State = ItemPreparationState.…nPreparation;
+                        flavourItem.State = ItemPreparationState.InPreparation;
                     else if (flavourItem.State == ItemPreparationState.Serving)
                         flavourItem.State = ItemPreparationState.IsPrepared;
 
@@ -1935,7 +1935,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{407f40f2-a77e-4c4e-b445-3a5e1f155639}</MetaDataID>
-        public void Items…nPreparation(List<IItemPreparation> flavourItems)
+        public void ItemsInPreparation(List<IItemPreparation> flavourItems)
         {
             CatchStateEvents();
             var clientSessionItems = flavourItems.Select(x => GetSessionItem(x));
@@ -1946,7 +1946,7 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var flavourItem in clientSessionItems)
                 {
                     //flavourItem.MealCourse.StartsAt = DateTime.UtcNow;
-                    flavourItem.State = ItemPreparationState.…nPreparation;
+                    flavourItem.State = ItemPreparationState.InPreparation;
                 }
 
                 stateTransition.Consistent = true;

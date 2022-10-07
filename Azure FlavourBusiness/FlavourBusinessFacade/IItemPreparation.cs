@@ -140,7 +140,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// The item is under preparation
         /// </summary>
-        ÉnPreparation = 4,
+        InPreparation = 4,
 
         /// <summary>
         /// The item is cooked

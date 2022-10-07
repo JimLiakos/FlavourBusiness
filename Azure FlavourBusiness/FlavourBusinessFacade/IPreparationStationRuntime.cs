@@ -61,7 +61,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// </returns>
         /// <MetaDataID>{d65ab68e-c18d-437d-80c4-f618fb068d7d}</MetaDataID>
         // <MetaDataID>{559e7066-f32e-4ac7-b308-9208d59c9e39}</MetaDataID>
-        Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris);
+        Dictionary<string, ItemPreparationPlan> ItemsInPreparation(List<string> itemPreparationUris);
 
 
         /// <summary>

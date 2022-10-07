@@ -244,9 +244,9 @@ namespace FlavourBusinessManager.RoomService
                         {
 
                         }
-                        if (_State == ItemPreparationState.ÉnPreparation)
+                        if (_State == ItemPreparationState.InPreparation)
                             _PreparationStartsAt = DateTime.UtcNow;
-                        if (_State.IsInPreviousState(ItemPreparationState.ÉnPreparation))
+                        if (_State.IsInPreviousState(ItemPreparationState.InPreparation))
                         {
                             _PreparationStartsAt = null;
                             PreparationTimeSpanInMin = -1;

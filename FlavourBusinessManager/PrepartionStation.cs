@@ -867,7 +867,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 int numberOfPendingsToPrepareItems = (from preparationSection in preparationStationStatus.NewItemsUnderPreparationControl
                                                       from itemPreparation in preparationSection.PreparationItems
-                                                      where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.…nPreparation
+                                                      where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.InPreparation
                                                       select itemPreparation).Count();
                 if (numberOfPendingsToPrepareItems == 0)
                     PrepartionVelocityMilestone = null;
@@ -1096,8 +1096,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        /// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
-        List<IItemPreparation> ItemsInPreparation;
+        ///// <MetaDataID>{099ce3b8-0473-4526-b3bd-c114990d4fd2}</MetaDataID>
+        //List<IItemPreparation> ItemsInPreparation;
         ///// <MetaDataID>{e8f2d2d9-d017-4c46-b82b-9ab788e46b0c}</MetaDataID>
         //Dictionary<string, ItemPreparationPlan> GetItemToServingtimespanPredictions()
         //{
@@ -1304,7 +1304,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
         /// <MetaDataID>{cf0856b6-a2cf-43a0-98e8-055fc4c070c0}</MetaDataID>
-        public Dictionary<string, ItemPreparationPlan> Items…nPreparation(List<string> itemPreparationUris)
+        public Dictionary<string, ItemPreparationPlan> ItemsInPreparation(List<string> itemPreparationUris)
         {
 
 
@@ -1316,7 +1316,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                        select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
             foreach (var clientSessionItems in clientSessionsItems)
-                clientSessionItems.clientSession.Items…nPreparation(clientSessionItems.ClientSessionItems);
+                clientSessionItems.clientSession.ItemsInPreparation(clientSessionItems.ClientSessionItems);
 
             return GetItemToServingTimespanPredictions();
         }
@@ -1630,7 +1630,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             //ServicesContextRunTime.Current.MealsController.RebuildPreparationPlanLastTime=DateTime.UtcNow+TimeSpan.FromMinutes()
             var preparedItems = (from servicePointPreparationItems in PreparationSessions
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
-                                 where itemPreparationUris.Contains(itemPreparation.uid) && itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.…nPreparation)
+                                 where itemPreparationUris.Contains(itemPreparation.uid) && itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.InPreparation)
                                  select itemPreparation).ToList();
 
             if (preparedItems.Count > 0)

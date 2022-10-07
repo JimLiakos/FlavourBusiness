@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -196,7 +196,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{71269afe-98d1-44e5-9065-1a5189f18053}</MetaDataID>
         bool LongTimeForgotten { get; }
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
-        void Items…nPreparation(List<IItemPreparation> clientSessionItems);
+        void ItemsInPreparation(List<IItemPreparation> clientSessionItems);
         /// <MetaDataID>{b08a831f-e2cb-4a7d-9c27-0b2d34653629}</MetaDataID>
         void CancelLastPreparationStep(List<IItemPreparation> clientSessionItems);
         /// <MetaDataID>{012cae87-db8c-4329-9255-b6558cd26407}</MetaDataID>

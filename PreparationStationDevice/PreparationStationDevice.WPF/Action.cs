@@ -551,7 +551,7 @@ namespace PreparationStationDevice.WPF
             if (LastChangeDateTime == null && slots.Count > 0)
             {
                 LastChangeDateTime = DateTime.UtcNow;
-                slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation;
+                slots[0].State = FlavourBusinessFacade.RoomService.ItemPreparationState.InPreparation;
                 var date = actionContext.GetPreparationEndsAt(slots[0]);
                 var action = PreparationSessions.Where(x => x.ItemsToPrepare.Any(y => y == slots[0])).First();
                 var tt = action.GetPreparationForecast(actionContext);
@@ -592,7 +592,7 @@ namespace PreparationStationDevice.WPF
             {
                 if (filteredPartialActions.Contains(partialAction))
                     actionStrings.Add(partialAction.ToString(actionContext));
-                else if (partialAction.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation))
+                else if (partialAction.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.InPreparation))
                     actionStrings.Add(partialAction.ToString(actionContext));
                 else
                 {
@@ -662,7 +662,7 @@ namespace PreparationStationDevice.WPF
 
                     filteredPartialActions.Add(partialAction);
                 }
-                else if (partialAction.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation))
+                else if (partialAction.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.InPreparation))
                 {
 
                     filteredPartialActions.Add(partialAction);

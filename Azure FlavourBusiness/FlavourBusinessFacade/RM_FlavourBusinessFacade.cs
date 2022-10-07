@@ -3309,13 +3309,13 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.PreparationStationStatus>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationPlan> ItemsΙnPreparation(System.Collections.Generic.List<string> itemPreparationUris)
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationPlan> ItemsInPreparation(System.Collections.Generic.List<string> itemPreparationUris)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparationUris;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsΙnPreparation", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "ItemsInPreparation", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationPlan>>(retValue);
         }
         
@@ -6104,13 +6104,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "MenuItemProposal", args, argsTypes);
         }
         
-        public void ItemsΙnPreparation(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> clientSessionItems)
+        public void ItemsInPreparation(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> clientSessionItems)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = clientSessionItems;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemsΙnPreparation", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemsInPreparation", args, argsTypes);
         }
         
         public void CancelLastPreparationStep(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> clientSessionItems)

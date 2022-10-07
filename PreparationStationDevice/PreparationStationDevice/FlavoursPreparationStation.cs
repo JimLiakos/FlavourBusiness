@@ -410,7 +410,7 @@ namespace PreparationStationDevice
                 {
                     try
                     {
-                        ServingTimeSpanPredictions = PreparationStation.ItemsΙnPreparation(itemPreparations.Select(x => x.uid).ToList());
+                        ServingTimeSpanPredictions = PreparationStation.ItemsInPreparation(itemPreparations.Select(x => x.uid).ToList());
                         PreparationVelocity = PreparationStation.PreparationVelocity;
 
                         UpdatePreparationItems(itemPreparations);

@@ -312,7 +312,7 @@ namespace FlavourBusinessManager.RoomService
 
                     IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                                                             where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
-                                                                            x.State == ItemPreparationState.ÉnPreparation ||
+                                                                            x.State == ItemPreparationState.InPreparation ||
                                                                             x.State == ItemPreparationState.IsRoasting ||
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();

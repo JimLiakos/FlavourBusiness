@@ -23,7 +23,7 @@ namespace ComputationalResources
     [DataContract]
     public class RoleInstanceInternalEndPoint
     {
-
+         
         /// <MetaDataID>{68ed4ffd-d26e-4b34-8913-32ceb9e4ee6f}</MetaDataID>
         [DataMember]
         public string RoleInstanceID { get; set; }

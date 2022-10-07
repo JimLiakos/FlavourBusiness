@@ -135,12 +135,12 @@ namespace FlavourBusinessManager.RoomService
         /// </summary>
         internal void RemoveOutOfPlanPreparationItems()
         {
-            foreach (var itemOutOfPlan in ItemPreparationsStartsAt.Keys.Where(x => x.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)).ToList())
+            foreach (var itemOutOfPlan in ItemPreparationsStartsAt.Keys.Where(x => x.State.IsInFollowingState(ItemPreparationState.InPreparation)).ToList())
                 ItemPreparationsStartsAt.Remove(itemOutOfPlan);
 
             foreach (var outOfPlanItemEntry in (from itemsInPreparationEntry in ItemsInPreparation
                                                 from itemInPreparation in itemsInPreparationEntry.Value
-                                                where itemInPreparation.State.IsInFollowingState(ItemPreparationState.ΙnPreparation)
+                                                where itemInPreparation.State.IsInFollowingState(ItemPreparationState.InPreparation)
                                                 select new
                                                 {
                                                     PreparationStation = itemsInPreparationEntry.Key,
@@ -195,7 +195,7 @@ namespace FlavourBusinessManager.RoomService
         public static DateTime GetPreparationForecast(this IMealCourse mealCourse, PreparationPlan preparationPlan)
         {
             var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null && x.PreparationItems.
-                    Any(y => y.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && y.State.IsInTheSameOrPreviousState(ItemPreparationState.ΙnPreparation))).ToList();
+                    Any(y => y.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && y.State.IsInTheSameOrPreviousState(ItemPreparationState.InPreparation))).ToList();
 
             var allPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
             if (allPreparationSessions.Count != pendingPreparationSessions.Count)
@@ -255,7 +255,7 @@ namespace FlavourBusinessManager.RoomService
             if (actionContext.PreparationSections.ContainsKey(preparationSection.GetPreparationStation()))
             {
                 var lastItemToPrepare = preparationSection.PreparationItems.
-                    Where(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && x.State.IsInTheSameOrPreviousState(ItemPreparationState.ΙnPreparation)).
+                    Where(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PreparationDelay) && x.State.IsInTheSameOrPreviousState(ItemPreparationState.InPreparation)).
                     OfType<ItemPreparation>().OrderBy(x => actionContext.GetPreparationEndsAt(x)+ TimeSpan.FromMinutes(x.CookingTimeSpanInMin)).LastOrDefault();
 
                 
@@ -346,8 +346,8 @@ namespace FlavourBusinessManager.RoomService
                 var lastPredictionItemsInPreparation = preparationStation.GetLastPredictionItemsInPreparation(actionContext);
 
 
-                List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && actionContext.ItemPreparationsStartsAt.ContainsKey(x)).OrderBy(x => actionContext.GetPreparationStartsAt(x)).ToList();
-                itemsInPreparation.AddRange(itemsToPrepare.Where(x => x.State == ItemPreparationState.ΙnPreparation && !actionContext.ItemPreparationsStartsAt.ContainsKey(x)));
+                List<ItemPreparation> itemsInPreparation = itemsToPrepare.Where(x => x.State == ItemPreparationState.InPreparation && actionContext.ItemPreparationsStartsAt.ContainsKey(x)).OrderBy(x => actionContext.GetPreparationStartsAt(x)).ToList();
+                itemsInPreparation.AddRange(itemsToPrepare.Where(x => x.State == ItemPreparationState.InPreparation && !actionContext.ItemPreparationsStartsAt.ContainsKey(x)));
 
                 if (itemsInPreparation.Count > 0 && (lastPredictionItemsInPreparation == null || lastPredictionItemsInPreparation.Count==0))//!itemsInPreparation.Any(x=>lastPredictionItemsInPreparation.Contains(x)))
                 {
@@ -604,7 +604,7 @@ namespace FlavourBusinessManager.RoomService
 
                     filteredPartialActions.Add(preparationSection);
                 }
-                else if (preparationSection.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.ΙnPreparation))
+                else if (preparationSection.PreparationItems.Any(x => x.State > FlavourBusinessFacade.RoomService.ItemPreparationState.InPreparation))
                 {
 
                     filteredPartialActions.Add(preparationSection);
