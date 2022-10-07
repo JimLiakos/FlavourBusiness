@@ -230,7 +230,7 @@ namespace DontWaitApp
         void SendMealInvitationMessage(InvitationChannel channel); 
 
         /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
-        void AcceptInvitation(Messmate messmate, string messageID);
+        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
 
         /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
         void DenyInvitation(Messmate messmate, string messageID);

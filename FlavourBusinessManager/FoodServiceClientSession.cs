@@ -1923,6 +1923,17 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public string MealInvitationUri
+        {
+            get
+            {
+
+                return string.Format("MealInvitation;{0};{1};{2}",ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity, SessionID);
+            }
+        }
+
+
+
         /// <MetaDataID>{407f40f2-a77e-4c4e-b445-3a5e1f155639}</MetaDataID>
         public void Items…nPreparation(List<IItemPreparation> flavourItems)
         {

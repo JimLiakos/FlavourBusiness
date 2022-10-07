@@ -149,14 +149,14 @@ namespace DontWaitApp
                             string servicePointIdentity = parameters.Get("sp");
                             string clientSessionIdentity = parameters.Get("cs");
 
-                            string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
-                            MainPage.DisplayAlert("message", message, "OK");
-                            if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
-                                MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
-                            else
-                                MainPage.DisplayAlert("message", "FlavoursOrderServer","OK");
+                            //string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
+                            //MainPage.DisplayAlert("message", message, "OK");
+                            //if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
+                            //    MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
+                            //else
+                            //    MainPage.DisplayAlert("message", "FlavoursOrderServer","OK");
 
-                            //(((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer) .ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+                            (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer) .ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
 
                         }
                     }

@@ -433,22 +433,22 @@ namespace DontWaitApp
         public Task<string> GetFriendlyName()
         {
             
-            return Task<string>.FromResult(default(string));
+            //return Task<string>.FromResult(default(string));
 
-            //return Task.Run<string>(() =>
-            //{
+            return Task.Run<string>(() =>
+            {
 
-            //    var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            //    OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-            //    if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
-            //    {
-            //        CreateClientAsGuest();
-            //        return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
-            //    }
-            //    string friendlyName = ApplicationSettings.Current.FriendlyName;
-            //    return friendlyName;
-            //});
+                if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
+                {
+                    CreateClientAsGuest();
+                    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
+                }
+                string friendlyName = ApplicationSettings.Current.FriendlyName;
+                return friendlyName;
+            });
 
 
         }
@@ -476,19 +476,19 @@ namespace DontWaitApp
         public void SetFriendlyName(string friendlyName)
         {
 
-            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //{
-            //    if (!WaiterView)
-            //    {
-            //        lock (ClientSessionLock)
-            //        {
-            //            if (ApplicationSettings.Current.ClientAsGuest == null)
-            //                CreateClientAsGuest();
-            //        }
-            //    }
-            //    ApplicationSettings.Current.FriendlyName = friendlyName;
-            //    stateTransition.Consistent = true;
-            //}
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                if (!WaiterView)
+                {
+                    lock (ClientSessionLock)
+                    {
+                        if (ApplicationSettings.Current.ClientAsGuest == null)
+                            CreateClientAsGuest();
+                    }
+                }
+                ApplicationSettings.Current.FriendlyName = friendlyName;
+                stateTransition.Consistent = true;
+            }
 
             //if (this.FoodServiceClientSession != null && this.FoodServiceClientSession.ClientName != friendlyName)
             //{
@@ -1357,52 +1357,73 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{546af2d0-8204-44e9-83fc-4d0d782e30f3}</MetaDataID>
-        public void AcceptInvitation(Messmate messmate, string messageID)
+        public async Task<bool> AcceptInvitation(Messmate messmate, string messageID)
         {
-
-
-            if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
-                PendingPartOfMealMessage = null;
 
             var clientSession = (from theMessmate in this.CandidateMessmates
                                  where theMessmate.ClientSessionID == messmate.ClientSessionID
                                  select theMessmate.ClientSession).FirstOrDefault();
 
-            if (clientSession == null && this.Messmates.Where(x => x.ClientSessionID == messmate.ClientSessionID).FirstOrDefault() != null)
-                return;
-
-            try
+            if (FoodServiceClientSession?.ServicePoint == clientSession.ServicePoint)
             {
-                if (messageID != null)
-                    FoodServiceClientSession.RemoveMessage(messageID);
+                if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
+                    PendingPartOfMealMessage = null;
 
-                this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-                var ss = this.FoodServiceClientSession.MainSession;
-                var ss1 = this.FoodServiceClientSession.MainSession?.SessionID;
-                if (MenuData.MainSessionID != FoodServiceClientSession.MainSession?.SessionID)
+
+                //invitation from current session service point.
+
+                if (clientSession == null && this.Messmates.Where(x => x.ClientSessionID == messmate.ClientSessionID).FirstOrDefault() != null)
+                    return false;
+
+                try
                 {
-                    var menuData = MenuData;
-                    menuData.MainSessionID = FoodServiceClientSession.MainSession?.SessionID;
-                    MenuData = menuData;
+                    if (messageID != null)
+                        FoodServiceClientSession.RemoveMessage(messageID);
 
-                }
-
-
-
-                GetMessages();
-            }
-            catch (Exception authenticationError)
-            {
-
-                Task<MenuData>.Run(async () =>
-                {
-                    var clientSessionData = await GetFoodServiceSession("");
-                    this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-                    RefreshMessmates();
-                    this.ClientSessionToken = clientSessionData.Token;
                     this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-                });
+                    var ss = this.FoodServiceClientSession.MainSession;
+                    var ss1 = this.FoodServiceClientSession.MainSession?.SessionID;
+                    if (MenuData.MainSessionID != FoodServiceClientSession.MainSession?.SessionID)
+                    {
+                        var menuData = MenuData;
+                        menuData.MainSessionID = FoodServiceClientSession.MainSession?.SessionID;
+                        MenuData = menuData;
+                    }
+                    GetMessages();
+
+                    return true;
+                }
+                catch (Exception authenticationError)
+                {
+
+                  await  Task<MenuData>.Run(async () =>
+                    {
+                        var clientSessionData = await GetFoodServiceSession("");
+                        this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
+                        RefreshMessmates();
+                        this.ClientSessionToken = clientSessionData.Token;
+                        this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+                    });
+                    return false;
+                }
+                
             }
+            else
+            {
+                if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
+                {
+
+                    string mealInvitationUri = PendingPartOfMealMessage.Data["MealInvitationUri"] as string;
+                    PendingPartOfMealMessage = null;
+
+                    var connected= await ConnectToServicePoint(mealInvitationUri);
+                    if (connected)
+                        Path = MenuData.ServicePointIdentity;
+
+                    return connected;
+                }
+            }
+            return false;
 
         }
 
@@ -1425,74 +1446,85 @@ namespace DontWaitApp
         /// <MetaDataID>{61e17863-b7ff-4963-9d5b-12ab551a9369}</MetaDataID>
         private void PartOfMealRequestMessageForward(Message message)
         {
-            if (_PartOfMealRequest != null)
+            if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == message.MessageID)
+                return;
+            var messmate = (from theMessmate in this.CandidateMessmates
+                            where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                            select theMessmate).FirstOrDefault();
+            if (messmate!=null&& messmate.ClientSession.ServicePoint!= FoodServiceClientSession?.ServicePoint)
             {
-                //
-                if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == message.MessageID)
-                    return;
-                if (MessmatesLoaded)
-                {
-                    PendingPartOfMealMessage = message;
-                    var messmate = (from theMessmate in this.CandidateMessmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-
-                    if (messmate == null)
-                    {
-                        var candidateMessmates = (from clientSession in FoodServiceClientSession.GetPeopleNearMe()
-                                                  select new Messmate(clientSession, OrderItems)).ToList();
-                        this.CandidateMessmates = candidateMessmates;
-                        messmate = (from theMessmate in this.CandidateMessmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-
-                    }
-                    if (messmate == null)
-                    {
-                        messmate = (from theMessmate in this.Messmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-                        if (messmate != null)
-                        {
-                            FoodServiceClientSession.RemoveMessage(message.MessageID);
-                            return;
-                        }
-                    }
+                //invitation from service point other than current session service point.
+                PendingPartOfMealMessage = message;
+                if (_PartOfMealRequest != null)
                     _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
+                else
+                    PartOfMealMessage = message;
+            }
+            else
+            {
+                if (_PartOfMealRequest != null)
+                {
+                    
+
+                    if (MessmatesLoaded)
+                    {
+                        PendingPartOfMealMessage = message;
+
+                        if (messmate == null)
+                        {
+                            var candidateMessmates = (from clientSession in FoodServiceClientSession.GetPeopleNearMe()
+                                                      select new Messmate(clientSession, OrderItems)).ToList();
+                            this.CandidateMessmates = candidateMessmates;
+                            messmate = (from theMessmate in this.CandidateMessmates
+                                        where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                        select theMessmate).FirstOrDefault();
+
+                        }
+                        if (messmate == null)
+                        {
+                            messmate = (from theMessmate in this.Messmates
+                                        where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
+                                        select theMessmate).FirstOrDefault();
+                            if (messmate != null)
+                            {
+                                FoodServiceClientSession.RemoveMessage(message.MessageID);
+                                return;
+                            }
+                        }
+                        _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
 
 #if DeviceDotNet
 
-                    var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-                    OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    if (device.IsinSleepMode)
-                    {
-                        var t = Task.Run(async delegate
+                        var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                        OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                        if (device.IsinSleepMode)
                         {
-                            while (device.IsinSleepMode)
+                            var t = Task.Run(async delegate
                             {
-                                await Task.Delay(2000);
-                                if (!device.IsinSleepMode)
-                                    break;
+                                while (device.IsinSleepMode)
+                                {
+                                    await Task.Delay(2000);
+                                    if (!device.IsinSleepMode)
+                                        break;
 
-                                device.PlaySound();
-                                await Task.Delay(2000);
-                                if (!device.IsinSleepMode)
-                                    break;
+                                    device.PlaySound();
+                                    await Task.Delay(2000);
+                                    if (!device.IsinSleepMode)
+                                        break;
 
-                                var duration = TimeSpan.FromSeconds(1);
-                                Vibration.Vibrate(duration);
+                                    var duration = TimeSpan.FromSeconds(1);
+                                    Vibration.Vibrate(duration);
 
-                            }
+                                }
 
-                        });
-                    }
+                            });
+                        }
 #endif
+                    }
                 }
+                else
+                    PartOfMealMessage = message;
             }
-            else
-                PartOfMealMessage = message;
-
-            return;
         }
 
         #endregion
@@ -2622,11 +2654,11 @@ namespace DontWaitApp
 
 
 
-        internal async void ImplicitMealInvitation(string serviceContextIdentity, string servicePointIdentity, string clientSessionID)
+        internal async void ImplicitMealInvitation(string servicesContextIdentity, string servicePointIdentity, string clientSessionID)
         {
 
             //"http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=827a9ed57dac4786a923cd27d0b52444"
-            string invitationUri = FlavoursOrderServer.GetMealInvitationUri(serviceContextIdentity, servicePointIdentity, clientSessionID);
+            string invitationUri = GetMealInvitationUri(servicesContextIdentity, servicePointIdentity, clientSessionID);
             var messmate = CandidateMessmates.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
             if (messmate == null)
             {
@@ -2639,16 +2671,12 @@ namespace DontWaitApp
             message.Data["ClientMessageType"] = ClientMessages.PartOfMealRequest;
             message.Data["ClientSessionID"] = clientSessionID;
             message.Notification = new Notification() { Title = "Make me part of meal" };
+            
 
-            if (_PartOfMealRequest != null)
-            {
-                _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
-            }
-            else
-            {
-                PartOfMealMessage = message;
-            }
+            message.Data["MealInvitationUri"] = invitationUri;
 
+
+            PartOfMealRequestMessageForward(message);
 
 
             // _PartOfMealRequest?.Invoke(this,messmate, null);
