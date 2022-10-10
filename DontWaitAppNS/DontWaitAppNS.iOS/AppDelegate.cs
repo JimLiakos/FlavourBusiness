@@ -166,6 +166,19 @@ namespace DontWaitAppNS.iOS
             };
             alertView.Show();
         }
+
+        public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)
+        {
+            return base.ContinueUserActivity(application, userActivity, completionHandler);
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            return true;
+            //return base.OpenUrl(app, url, options);
+        }
+
+
     }
 
     public class MyUNUserNotificationCenterDelegate : UNUserNotificationCenterDelegate
