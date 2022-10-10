@@ -73,9 +73,13 @@ namespace DontWaitApp
                             NeighborhoodFoodServers[location] = servers;
                         }
                     }
-                    catch (Exception error)
+                    catch (System.Net.WebException connectionError)
                     {
-
+                        if (connectionError.Status != System.Net.WebExceptionStatus.ConnectFailure)
+                            throw connectionError;
+                    }
+                    catch (TimeoutException timeoutError)
+                    {
                     }
 
                 } while (!NeighborhoodFoodServers.ContainsKey(location));
@@ -428,11 +432,11 @@ namespace DontWaitApp
             }
         }
 
-    
+
         /// <MetaDataID>{75fc6cad-1e29-4aa3-97fa-14462e970f67}</MetaDataID>
         public Task<string> GetFriendlyName()
         {
-            
+
             //return Task<string>.FromResult(default(string));
 
             return Task.Run<string>(() =>
@@ -679,7 +683,7 @@ namespace DontWaitApp
                         FoodServiceClientSession.ItemsStateChanged -= FoodServiceClientSession_ItemsStateChanged;
                     }
                     FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-                    
+
 
 
                     SessionID = clientSessionData.FoodServiceClientSession.SessionID;
@@ -1348,7 +1352,7 @@ namespace DontWaitApp
 
 
                 _PartOfMealRequest += value;
-    
+
             }
             remove
             {
@@ -1396,17 +1400,17 @@ namespace DontWaitApp
                 catch (Exception authenticationError)
                 {
 
-                  await  Task<MenuData>.Run(async () =>
-                    {
-                        var clientSessionData = await GetFoodServiceSession("");
-                        this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
-                        RefreshMessmates();
-                        this.ClientSessionToken = clientSessionData.Token;
-                        this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
-                    });
+                    await Task<MenuData>.Run(async () =>
+                     {
+                         var clientSessionData = await GetFoodServiceSession("");
+                         this.FoodServiceClientSession = clientSessionData.FoodServiceClientSession;
+                         RefreshMessmates();
+                         this.ClientSessionToken = clientSessionData.Token;
+                         this.FoodServiceClientSession.AcceptMealInvitation(ClientSessionToken, clientSession);
+                     });
                     return false;
                 }
-                
+
             }
             else
             {
@@ -1416,7 +1420,7 @@ namespace DontWaitApp
                     string mealInvitationUri = PendingPartOfMealMessage.Data["MealInvitationUri"] as string;
                     PendingPartOfMealMessage = null;
 
-                    var connected= await ConnectToServicePoint(mealInvitationUri);
+                    var connected = await ConnectToServicePoint(mealInvitationUri);
                     if (connected)
                         Path = MenuData.ServicePointIdentity;
 
@@ -1451,7 +1455,7 @@ namespace DontWaitApp
             var messmate = (from theMessmate in this.CandidateMessmates
                             where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
                             select theMessmate).FirstOrDefault();
-            if (messmate!=null&& messmate.ClientSession.ServicePoint!= FoodServiceClientSession?.ServicePoint)
+            if (messmate != null && messmate.ClientSession.ServicePoint != FoodServiceClientSession?.ServicePoint)
             {
                 //invitation from service point other than current session service point.
                 PendingPartOfMealMessage = message;
@@ -1464,7 +1468,7 @@ namespace DontWaitApp
             {
                 if (_PartOfMealRequest != null)
                 {
-                    
+
 
                     if (MessmatesLoaded)
                     {
@@ -1846,9 +1850,25 @@ namespace DontWaitApp
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
+                    ClientSessionData? foodServiceClientSession = null;
+                    do
+                    {
+                        try
+                        {
 
-                    var foodServiceClientSession = ServicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
+                            foodServiceClientSession = ServicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
 
+                        }
+                        catch (System.Net.WebException connectionError)
+                        {
+                            if (connectionError.Status != System.Net.WebExceptionStatus.ConnectFailure)
+                                throw connectionError;
+                        }
+                        catch (TimeoutException timeoutError)
+                        {
+
+                        }
+                    } while (foodServiceClientSession == null);
 
                     //menuData.MenuRoot = "http://192.168.2.3/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/";
                     //menuData.MenuFile = "Marzano Phone.json";
@@ -1858,8 +1878,9 @@ namespace DontWaitApp
                     //menuData.MenuName = "Marzano Phone";
 
 
-                    return foodServiceClientSession;
+                    return foodServiceClientSession.Value;
                 }
+
                 catch (Exception error)
                 {
 
@@ -2671,7 +2692,7 @@ namespace DontWaitApp
             message.Data["ClientMessageType"] = ClientMessages.PartOfMealRequest;
             message.Data["ClientSessionID"] = clientSessionID;
             message.Notification = new Notification() { Title = "Make me part of meal" };
-            
+
 
             message.Data["MealInvitationUri"] = invitationUri;
 
