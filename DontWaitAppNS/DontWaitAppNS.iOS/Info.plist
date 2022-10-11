@@ -53,6 +53,8 @@
 			<array>
 				<string>dontwaitapp</string>
 			</array>
+			<key>CFBundleURLIconFile</key>
+			<string>waiters</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 		</dict>

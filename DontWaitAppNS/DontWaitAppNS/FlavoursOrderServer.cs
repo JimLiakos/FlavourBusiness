@@ -1308,6 +1308,13 @@ namespace DontWaitApp
         [HttpInVisible]
         event PartOfMealRequestHandle _PartOfMealRequest;
 
+        public bool HasPartOfMealRequestSubscribers
+        {
+            get
+            {
+                return _PartOfMealRequest != null;
+            }
+        }
         [HttpInVisible]
         public event PartOfMealRequestHandle PartOfMealRequest
         {

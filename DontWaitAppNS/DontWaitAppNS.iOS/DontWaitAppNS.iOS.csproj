@@ -172,4 +172,7 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\waiters.png" />
+  </ItemGroup>
 </Project>

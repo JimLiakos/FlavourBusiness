@@ -7,6 +7,7 @@ using Plugin.Connectivity;
 using OOAdvantech.Pay;
 using System.Linq;
 using Plugin.Permissions.Abstractions;
+using System.Threading.Tasks;
 
 namespace DontWaitApp
 {
@@ -137,42 +138,77 @@ namespace DontWaitApp
             base.OnAppLinkRequestReceived(uri);
 
 
-            Dispatcher.BeginInvokeOnMainThread(async () =>
+            int queryStartPos = uri.OriginalString.IndexOf("?");
+            if (queryStartPos != -1)
             {
-                int queryStartPos = uri.OriginalString.IndexOf("?");
-                if (queryStartPos != -1)
+                string query = uri.OriginalString.Substring(queryStartPos + 1);
+                if (!string.IsNullOrWhiteSpace(query))
                 {
-                    string query = uri.OriginalString.Substring(queryStartPos + 1);
-                    if (!string.IsNullOrWhiteSpace(query))
+                    var parameters = System.Web.HttpUtility.ParseQueryString(query);
+
+                    if (parameters.Get("mealInvitation") != null && parameters.Get("mealInvitation").ToLower() == "true")
                     {
-                        var parameters = System.Web.HttpUtility.ParseQueryString(query);
+                        string serviceContextIdentity = parameters.Get("sc");
+                        string servicePointIdentity = parameters.Get("sp");
+                        string clientSessionIdentity = parameters.Get("cs");
 
-                        if (parameters.Get("mealInvitation") != null && parameters.Get("mealInvitation").ToLower() == "true")
+                        //string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
+                        //MainPage.DisplayAlert("message", "mealInvitation", "OK");
+                        //if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
+                        //    MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
+                        //else
+                        //    MainPage.DisplayAlert("message", "FlavoursOrderServer","OK");
+
+                        try
                         {
-                            string serviceContextIdentity = parameters.Get("sc");
-                            string servicePointIdentity = parameters.Get("sp");
-                            string clientSessionIdentity = parameters.Get("cs");
+                            await Task.Run(async () =>
+                            {
+                                bool invitationDelevered = false;
+                                do
+                                {
+                                    invitationDelevered = await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync<bool>(async () =>
+                                    {
+                                        try
+                                        {
+                                            if ((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage)?.BindingContext as FlavoursOrderServer) != null&&
+                                            (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage)?.BindingContext as FlavoursOrderServer).HasPartOfMealRequestSubscribers)
+                                            {
+                                                invitationDelevered = true;
+                                                (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                        catch (Exception error)
+                                        {
+                                            
+                                            return false;
+                                        }
+                                    });
+                                    if (!invitationDelevered)
+                                        System.Threading.Thread.Sleep(1000);
 
-                            //string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
-                            //MainPage.DisplayAlert("message", "mealInvitation", "OK");
-                            //if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
-                            //    MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
-                            //else
-                            //    MainPage.DisplayAlert("message", "FlavoursOrderServer","OK");
-
-                            (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer) .ImplicitMealInvitation(serviceContextIdentity, servicePointIdentity, clientSessionIdentity);
+                                } while (!invitationDelevered);
+                            });
 
                         }
-                    }
+                        catch (Exception error)
+                        {
 
+                            MainPage.DisplayAlert("message", error.Message, "OK");
+                        }
+
+                    }
                 }
 
+            }
 
 
 
-                //System.Web.HttpUtility.ParseQueryString()
-                //MainPage.DisplayAlert("message", uri.AbsoluteUri, "OK");
-            });
+
+            //System.Web.HttpUtility.ParseQueryString()
+            //MainPage.DisplayAlert("message", uri.AbsoluteUri, "OK");
+
         }
 
     }
