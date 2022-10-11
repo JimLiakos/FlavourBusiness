@@ -87,6 +87,7 @@ namespace DontWaitApp
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
+            //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
 
 
         }
@@ -127,7 +128,10 @@ namespace DontWaitApp
             // Handle when your app resumes
         }
 
-
+        public async void iOSOnAppLinkRequestReceived(Uri uri)
+        {
+            OnAppLinkRequestReceived(uri);
+        }
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
             base.OnAppLinkRequestReceived(uri);
@@ -150,7 +154,7 @@ namespace DontWaitApp
                             string clientSessionIdentity = parameters.Get("cs");
 
                             //string message= string.Format("GetFriendlyNameCalled:{0}  PartOfMealRequestEventAdded:{1}", (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).GetFriendlyNameCalled, (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer).PartOfMealRequestEventAdded);
-                            //MainPage.DisplayAlert("message", message, "OK");
+                            //MainPage.DisplayAlert("message", "mealInvitation", "OK");
                             //if((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage).BindingContext as FlavoursOrderServer)==null)
                             //    MainPage.DisplayAlert("message", "FlavoursOrderServer==Null", "OK");
                             //else

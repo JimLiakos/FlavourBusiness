@@ -91,7 +91,7 @@ namespace DontWaitAppNS.iOS
         public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
         {
             Console.WriteLine($"Firebase registration token: {fcmToken}");
-            
+
 
 
             string webClientID = "881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com";
@@ -127,7 +127,7 @@ namespace DontWaitAppNS.iOS
                 DateTime.Now, exception.ToString());
                 File.WriteAllText(errorFilePath, errorMessage);
 
-               
+
             }
             catch
             {
@@ -167,13 +167,15 @@ namespace DontWaitAppNS.iOS
             alertView.Show();
         }
 
-        public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)
-        {
-            return base.ContinueUserActivity(application, userActivity, completionHandler);
-        }
+
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
+            App myApp = App.Current as App;
+            if (null != myApp && null != url)
+            {
+                myApp.iOSOnAppLinkRequestReceived(new Uri(url.AbsoluteString));
+            }
             return true;
             //return base.OpenUrl(app, url, options);
         }

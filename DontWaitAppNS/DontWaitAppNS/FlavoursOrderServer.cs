@@ -1126,9 +1126,11 @@ namespace DontWaitApp
                 var messagePhone = liakosContact.Phones.LastOrDefault();
 
                 //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
-
-                string message = "click meal invitation link" + Environment.NewLine + mealInvitationUri;
-                SendSms(message, messagePhone.PhoneNumber);
+                if (messagePhone != null)
+                {
+                    string message = "click meal invitation link" + Environment.NewLine + mealInvitationUri;
+                    SendSms(message, messagePhone.PhoneNumber);
+                }
                 //https://dontwait.com/MealInvitation_7f9bde62e6da45dc8c5661ee2220a7b0_fe51ba7e30954ee08209bd89a03469a8_1f44169a41744d6bb962c22bb9d76885ffffffff-8deb-dc43-ffff-fffffeb66b8c
             }
 
@@ -1317,6 +1319,7 @@ namespace DontWaitApp
                     PartOfMealMessage = null;
                     Task.Run(() =>
                     {
+                        Thread.Sleep(2000);
                         if (MessmatesLoaded)
                         {
                             GetCandidateMessmates();
@@ -1437,13 +1440,15 @@ namespace DontWaitApp
             if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
                 PendingPartOfMealMessage = null;
 
-
-            FoodServiceClientSession.RemoveMessage(messageID);
-            var clientSession = (from theMessmate in this.CandidateMessmates
-                                 where theMessmate.ClientSessionID == messmate.ClientSessionID
-                                 select theMessmate.ClientSession).FirstOrDefault();
-            clientSession.MealInvitationDenied(FoodServiceClientSession);
-            GetMessages();
+            if (FoodServiceClientSession != null)
+            {
+                FoodServiceClientSession.RemoveMessage(messageID);
+                var clientSession = (from theMessmate in this.CandidateMessmates
+                                     where theMessmate.ClientSessionID == messmate.ClientSessionID
+                                     select theMessmate.ClientSession).FirstOrDefault();
+                clientSession.MealInvitationDenied(FoodServiceClientSession);
+                GetMessages();
+            }
         }
 
 

@@ -48,13 +48,13 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.myapp.urlscheme</string>
+			<string>com.microneme.DontWaitAppIOS.urlscheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>myapp</string>
+				<string>dontwaitapp</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 		</dict>
 	</array>
 </dict>
