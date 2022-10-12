@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace FlavourBusinessFacade.ComputingResources
 {
     /// <MetaDataID>{38d0468f-ec27-4515-8087-dfe1bf7d3665}</MetaDataID>
@@ -20,8 +22,36 @@ namespace FlavourBusinessFacade.ComputingResources
 
         //public static string Server = "192.168.2.8";//org
 
-        public static string Server = "10.0.0.13";//work
+        static string _Server;
 
+        public static string Server
+        {
+            get
+            {
+                try
+                {
+                    if (_Server == null)
+                    {
+                        using (WebClient wc = new WebClient())
+                        {
+                            var json = wc.DownloadString("https://angularhost.z16.web.core.windows.net/usersfolder/ServerAddress.json");
+                            _Server = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
+                            return _Server;
+                        }
+                    }
+                    else
+                        return _Server;
+
+                }
+                catch (System.Exception error)
+                {
+
+
+                }
+
+                return "10.0.0.13";//work
+            }
+        }
         //public static string Server = "meridian-services.northeurope.cloudapp.azure.com";
 
         //Sudo /Library/Application\\ Support/VMware\\ Tools/vmware-resolutionSet 1920 1080

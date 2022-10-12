@@ -1063,6 +1063,51 @@ namespace DontWaitApp
             });
         }
 
+
+        public async Task<Contact> PickContact()
+        {
+            Contact contuct = null;
+
+#if DeviceDotNet
+            var x_contact= await Xamarin.Essentials.Contacts.PickContactAsync();
+            if (x_contact != null)
+            {
+                contuct = new Contact(x_contact.Id,
+                                            x_contact.NameSuffix,
+                                            x_contact.GivenName,
+                                            x_contact.MiddleName,
+                                            x_contact.FamilyName,
+                                            x_contact.NameSuffix,
+                                            x_contact.Phones,
+                                            x_contact.Emails);
+                var contact_json = OOAdvantech.Json.JsonConvert.SerializeObject(contuct);
+
+            }
+#else
+            var contact_json = @"{
+                          ""Id"": ""116"",
+                          ""DisplayName"": ""Δημήτρης Λιάκος"",
+                          ""NamePrefix"": null,
+                          ""GivenName"": ""Δημήτρης"",
+                          ""MiddleName"": null,
+                          ""FamilyName"": ""Λιάκος"",
+                          ""NameSuffix"": null,
+                          ""Phones"": [
+                            ""6972992632"",
+                            ""6972992632""
+                          ],
+                          ""Emails"": [
+                            ""jim.liakos@gmail.com"",
+                            ""jim.liakos@gmail.com""
+                          ]
+                        }";
+            contuct = OOAdvantech.Json.JsonConvert.DeserializeObject<Contact>(contact_json);
+#endif
+
+            return contuct;
+
+        }
+
         public async void SendMealInvitationMessage(InvitationChannel channel)
         {
             string mealInvitationUri = null;
@@ -1086,44 +1131,55 @@ namespace DontWaitApp
                 mealInvitationUri = GetMealInvitationUrl();
                 //mealInvitationUri=mealInvitationUri.Replace(";", "/");
 
-                if (Contacts == null)
-                {
-                    var contacts = (await Xamarin.Essentials.Contacts.GetAllAsync()).ToList();
+                //if (Contacts == null)
+                //{
+                //    var contacts = (await Xamarin.Essentials.Contacts.GetAllAsync()).ToList();
 
-                    Contacts = contacts.ToDictionary(x => x.Id);
-                }
-
-
-                var contact = Contacts.FirstOrDefault().Value;
-
-                var id = contact.Id;
-                var NamePrefix = contact.NamePrefix;
-                var GivenName = contact.GivenName;
-                var MiddleName = contact.MiddleName;
-                var FamilyName = contact.FamilyName;
-                var DisplayName = contact.DisplayName;
-
-                System.Diagnostics.Debug.WriteLine("id : " + id);
-                System.Diagnostics.Debug.WriteLine("NamePrefix : " + NamePrefix);
-                System.Diagnostics.Debug.WriteLine("GivenName : " + GivenName);
-                System.Diagnostics.Debug.WriteLine("MiddleName : " + MiddleName);
-                System.Diagnostics.Debug.WriteLine("FamilyName : " + FamilyName);
-                System.Diagnostics.Debug.WriteLine("DisplayName : " + DisplayName);
+                //    Contacts = contacts.ToDictionary(x => x.Id);
+                //}
 
 
+                //var contact = Contacts.FirstOrDefault().Value;
+
+                //var id = contact.Id;
+                //var NamePrefix = contact.NamePrefix;
+                //var GivenName = contact.GivenName;
+                //var MiddleName = contact.MiddleName;
+                //var FamilyName = contact.FamilyName;
+                //var DisplayName = contact.DisplayName;
+
+                //System.Diagnostics.Debug.WriteLine("id : " + id);
+                //System.Diagnostics.Debug.WriteLine("NamePrefix : " + NamePrefix);
+                //System.Diagnostics.Debug.WriteLine("GivenName : " + GivenName);
+                //System.Diagnostics.Debug.WriteLine("MiddleName : " + MiddleName);
+                //System.Diagnostics.Debug.WriteLine("FamilyName : " + FamilyName);
+                //System.Diagnostics.Debug.WriteLine("DisplayName : " + DisplayName);
 
 
-                string name = Contacts.FirstOrDefault().Value?.DisplayName;
 
-                var searchingItems = Contacts.Select(x => new FuzzySearchItem() { Description = x.Value.DisplayName, Id = x.Value.Id, Tag = x.Value }).ToList();
-                foreach (var searchingItem in searchingItems)
-                    searchingItem.Ration = FuzzySharp.Fuzz.PartialRatio(searchingItem.Description.ToUpper(), "Liak".ToUpper());
 
-                searchingItems = searchingItems.OrderByDescending(x => x.Ration).ToList();
+                //string name = Contacts.FirstOrDefault().Value?.DisplayName;
 
-                name = searchingItems[1].Description;
-                var liakosContact = Contacts[searchingItems[1].Id];
+                //var searchingItems = Contacts.Select(x => new FuzzySearchItem() { Description = x.Value.DisplayName, Id = x.Value.Id, Tag = x.Value }).ToList();
+                //foreach (var searchingItem in searchingItems)
+                //    searchingItem.Ration = FuzzySharp.Fuzz.PartialRatio(searchingItem.Description.ToUpper(), "Liak".ToUpper());
+
+                //searchingItems = searchingItems.OrderByDescending(x => x.Ration).ToList();
+
+                //name = searchingItems[1].Description;
+                //var liakosContact = Contacts[searchingItems[1].Id];
+                //var messagePhone = liakosContact.Phones.LastOrDefault();
+                var contact = await Xamarin.Essentials.Contacts.PickContactAsync();
+
+
+
+                if (contact == null)
+                    return;
+
+
+                var liakosContact = contact;
                 var messagePhone = liakosContact.Phones.LastOrDefault();
+
 
                 //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
                 if (messagePhone != null)

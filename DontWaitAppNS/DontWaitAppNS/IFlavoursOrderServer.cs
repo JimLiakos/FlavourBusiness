@@ -70,7 +70,7 @@ namespace DontWaitApp
         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
-        
+
 
         ServicePointState ServicePointState { get; }
 
@@ -227,7 +227,11 @@ namespace DontWaitApp
         /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
         void MealInvitation(Messmate messmate);
 
-        void SendMealInvitationMessage(InvitationChannel channel); 
+        void SendMealInvitationMessage(InvitationChannel channel);
+
+        Task<Contact> PickContact();
+
+
 
         /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
         Task<bool> AcceptInvitation(Messmate messmate, string messageID);
@@ -257,8 +261,77 @@ namespace DontWaitApp
 
 
         //List<IPlace> DeliveryPlaces { get; }
+
+
+
+
     }
 
+    public class Contact
+    {
+        string displayName;
+
+        public Contact()
+        {
+        }
+#if DeviceDotNet
+        public Contact(
+            string id,
+            string namePrefix,
+            string givenName,
+            string middleName,
+            string familyName,
+            string nameSuffix,
+            IEnumerable<ContactPhone> phones,
+            IEnumerable<ContactEmail> email,
+            string displayName = null)
+        {
+            Id = id;
+            NamePrefix = namePrefix;
+            GivenName = givenName;
+            MiddleName = middleName;
+            FamilyName = familyName;
+            NameSuffix = nameSuffix;
+            Phones.AddRange(phones?.Select(x=>x.PhoneNumber).ToList());
+            Emails.AddRange(email?.Select(x => x.EmailAddress).ToList());
+            DisplayName = displayName;
+        }
+#endif
+
+        public string Id { get; set; }
+
+        public string DisplayName
+        {
+            get => !string.IsNullOrWhiteSpace(displayName) ? displayName : BuildDisplayName();
+            private set => displayName = value;
+        }
+
+        public string NamePrefix { get; set; }
+
+        public string GivenName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string FamilyName { get; set; }
+
+        public string NameSuffix { get; set; }
+
+        public List<string> Phones { get; set; } = new List<string>();
+
+        public List<string> Emails { get; set; } = new List<string>();
+
+        public override string ToString() => DisplayName;
+
+        string BuildDisplayName()
+        {
+            if (string.IsNullOrWhiteSpace(GivenName))
+                return FamilyName;
+            if (string.IsNullOrWhiteSpace(FamilyName))
+                return GivenName;
+
+            return String.Format("{0} {1}", GivenName, FamilyName);
+        }
+    }
 
     public delegate void WebViewLoadedHandle();
 
@@ -377,7 +450,7 @@ namespace DontWaitApp
         public string ClientSessionID;
 
 
-        
+
         ///// <MetaDataID>{bc390286-df9f-4e1a-9a37-6dcc0b32a7ad}</MetaDataID>
         //public List<ItemPreparation> OrderItems;
 
