@@ -921,7 +921,7 @@ namespace DontWaitApp
                         {
                             //Clear cache  the last session has ended
                             OrderItems.Clear();
-                            this.MenuData = new MenuData();
+                            this.MenuData = null;
                             Path = "";
                             return true;
                         }
@@ -1121,14 +1121,50 @@ namespace DontWaitApp
                 if (messagePhone != null)
                 {
                     string message = "click meal invitation link" + Environment.NewLine + mealInvitationUri;
-                  await SendSms(message, messagePhone);
+                    await SendSms(message, messagePhone);
                 }
-            } else if (channel == InvitationChannel.Email)
+            }
+            else if (channel == InvitationChannel.Email)
             {
                 string emailAddress = endPoint;
 
-                string body = @"<p style=""color:red;"">click meal invitation link.</p>";// + Environment.NewLine + mealInvitationUri;
-                await SendEmail("Meal Invitation", body, new List<string>() { emailAddress });
+                string htmlBody =String.Format( @"<a style=""color:red;"" href=""{0}""  >click meal invitation link.</a>", mealInvitationUri);// + Environment.NewLine + mealInvitationUri;
+                string plainTextBody = "click meal invitation link." + Environment.NewLine + mealInvitationUri; 
+                try
+                {
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        await SendEmail(new List<string>() { emailAddress }, "Meal Invitation", htmlBody, EmailBodyFormat.Html);
+                    }
+                    else if (Device.RuntimePlatform == Device.Android)
+                    {
+                        await SendEmail(new List<string>() { emailAddress }, "Meal Invitation", plainTextBody, EmailBodyFormat.PlainText);
+                    }
+
+                    
+                }
+
+                catch (FeatureNotSupportedException fbsEx)
+                {
+                    if (fbsEx.Message.IndexOf("PlainText") != -1)
+                    {
+                        try
+                        {
+                            var hResult = fbsEx.HResult;
+                            await SendEmail(new List<string>() { emailAddress }, "Meal Invitation", plainTextBody, EmailBodyFormat.PlainText);
+
+                        }
+                        catch (Exception error)
+                        {
+                        }
+                    }
+                    // Email is not supported on this device  
+                }
+                catch (Exception ex)
+                {
+                    // Some other exception occurred  
+                }
+
             }
 
 #else
@@ -1139,33 +1175,25 @@ namespace DontWaitApp
 #endif
 
         }
-        public async Task SendEmail(string subject, string body, List<string> recipients)
+#if DeviceDotNet
+        public async Task SendEmail(List<string> recipients, string subject, string body, EmailBodyFormat bodyFormat)
         {
-            try
+
+            var message = new EmailMessage
             {
-                var message = new EmailMessage
-                {
-                    Subject = subject,
-                    Body = body,
-                    To = recipients,
-                    BodyFormat=EmailBodyFormat.Html,
-                };
-                await Email.ComposeAsync(message);
-            }
-            catch (FeatureNotSupportedException fbsEx)
-            {
-                // Email is not supported on this device  
-            }
-            catch (Exception ex)
-            {
-                // Some other exception occurred  
-            }
+                Subject = subject,
+                Body = body,
+                To = recipients,
+                BodyFormat = bodyFormat,
+            };
+            await Email.ComposeAsync(message);
+
         }
 
 
         public async Task SendSms(string messageText, string recipient)
         {
-#if DeviceDotNet
+
             try
             {
                 var message = new SmsMessage(messageText, new[] { recipient });
@@ -1180,9 +1208,9 @@ namespace DontWaitApp
             {
                 // Other error has occurred.
             }
-#endif
-        }
 
+    }
+#endif
         /// <summary>
         /// Cancel the previous invitation
         /// </summary>
@@ -2451,7 +2479,7 @@ namespace DontWaitApp
             {
                 try
                 {
-                    MenuData menuData = new MenuData();
+                    
                     string servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
 
 

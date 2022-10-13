@@ -340,17 +340,17 @@ namespace DontWaitApp
     /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>
     [BackwardCompatibilityID("{5718fadd-9a57-4d87-a6ea-ba669ab3388a}")]
     [Persistent()]
-    public struct MenuData
+    public class MenuData
     {
-        //public MenuData()
-        //{
-        //    _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
-        //    this.ServicePointIdentity = null;
-        //    this.MenuName = null;
-        //    this.MenuFile = null;
-        //    this.MenuRoot = null;
-        //    this.ClientSessionID = null;
-        //}
+        public MenuData()
+        {
+            _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
+            this.ServicePointIdentity = null;
+            this.MenuName = null;
+            this.MenuFile = null;
+            this.MenuRoot = null;
+            this.ClientSessionID = null;
+        }
 
 
         /// <exclude>Excluded</exclude>
