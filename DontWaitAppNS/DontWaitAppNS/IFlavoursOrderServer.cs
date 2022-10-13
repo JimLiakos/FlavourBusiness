@@ -227,7 +227,7 @@ namespace DontWaitApp
         /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
         void MealInvitation(Messmate messmate);
 
-        void SendMealInvitationMessage(InvitationChannel channel);
+        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
 
         Task<Contact> PickContact();
 

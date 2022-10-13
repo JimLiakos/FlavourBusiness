@@ -1068,7 +1068,7 @@ namespace DontWaitApp
         {
             Contact contuct = null;
 
-#if DeviceDotNet
+#if DeviceDotNet_a
             var x_contact= await Xamarin.Essentials.Contacts.PickContactAsync();
             if (x_contact != null)
             {
@@ -1094,11 +1094,12 @@ namespace DontWaitApp
                           ""NameSuffix"": null,
                           ""Phones"": [
                             ""6972992632"",
-                            ""6972992632""
+                            ""2108822590""
                           ],
                           ""Emails"": [
                             ""jim.liakos@gmail.com"",
-                            ""jim.liakos@gmail.com""
+                            ""jim.liakos@hotmail.com"",
+                            ""jim.dontwait@hotmail.com""
                           ]
                         }";
             contuct = OOAdvantech.Json.JsonConvert.DeserializeObject<Contact>(contact_json);
@@ -1108,88 +1109,27 @@ namespace DontWaitApp
 
         }
 
-        public async void SendMealInvitationMessage(InvitationChannel channel)
+        public async void SendMealInvitationMessage(InvitationChannel channel, string endPoint)
         {
-            string mealInvitationUri = null;
-
+            string mealInvitationUri = GetMealInvitationUrl();
 
 #if DeviceDotNet
 
-
-            bool permissionsGranted = false;
-            if ((await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.ContactsRead>()) != Xamarin.Essentials.PermissionStatus.Granted)
+            if (channel == InvitationChannel.SMS)
             {
-                if ((await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.ContactsRead>()) == Xamarin.Essentials.PermissionStatus.Granted)
-                    permissionsGranted = true;
-            }
-            else
-                permissionsGranted = true;
-
-            if (permissionsGranted)
-            {
-
-                mealInvitationUri = GetMealInvitationUrl();
-                //mealInvitationUri=mealInvitationUri.Replace(";", "/");
-
-                //if (Contacts == null)
-                //{
-                //    var contacts = (await Xamarin.Essentials.Contacts.GetAllAsync()).ToList();
-
-                //    Contacts = contacts.ToDictionary(x => x.Id);
-                //}
-
-
-                //var contact = Contacts.FirstOrDefault().Value;
-
-                //var id = contact.Id;
-                //var NamePrefix = contact.NamePrefix;
-                //var GivenName = contact.GivenName;
-                //var MiddleName = contact.MiddleName;
-                //var FamilyName = contact.FamilyName;
-                //var DisplayName = contact.DisplayName;
-
-                //System.Diagnostics.Debug.WriteLine("id : " + id);
-                //System.Diagnostics.Debug.WriteLine("NamePrefix : " + NamePrefix);
-                //System.Diagnostics.Debug.WriteLine("GivenName : " + GivenName);
-                //System.Diagnostics.Debug.WriteLine("MiddleName : " + MiddleName);
-                //System.Diagnostics.Debug.WriteLine("FamilyName : " + FamilyName);
-                //System.Diagnostics.Debug.WriteLine("DisplayName : " + DisplayName);
-
-
-
-
-                //string name = Contacts.FirstOrDefault().Value?.DisplayName;
-
-                //var searchingItems = Contacts.Select(x => new FuzzySearchItem() { Description = x.Value.DisplayName, Id = x.Value.Id, Tag = x.Value }).ToList();
-                //foreach (var searchingItem in searchingItems)
-                //    searchingItem.Ration = FuzzySharp.Fuzz.PartialRatio(searchingItem.Description.ToUpper(), "Liak".ToUpper());
-
-                //searchingItems = searchingItems.OrderByDescending(x => x.Ration).ToList();
-
-                //name = searchingItems[1].Description;
-                //var liakosContact = Contacts[searchingItems[1].Id];
-                //var messagePhone = liakosContact.Phones.LastOrDefault();
-                var contact = await Xamarin.Essentials.Contacts.PickContactAsync();
-
-
-
-                if (contact == null)
-                    return;
-
-
-                var liakosContact = contact;
-                var messagePhone = liakosContact.Phones.LastOrDefault();
-
-
-                //"https://dontwait.com/mealInvitationUri/"+mealInvitationUri
+                string messagePhone = endPoint;
                 if (messagePhone != null)
                 {
                     string message = "click meal invitation link" + Environment.NewLine + mealInvitationUri;
-                    SendSms(message, messagePhone.PhoneNumber);
+                  await SendSms(message, messagePhone);
                 }
-                //https://dontwait.com/MealInvitation_7f9bde62e6da45dc8c5661ee2220a7b0_fe51ba7e30954ee08209bd89a03469a8_1f44169a41744d6bb962c22bb9d76885ffffffff-8deb-dc43-ffff-fffffeb66b8c
-            }
+            } else if (channel == InvitationChannel.Email)
+            {
+                string emailAddress = endPoint;
 
+                string body = @"<p style=""color:red;"">click meal invitation link.</p>";// + Environment.NewLine + mealInvitationUri;
+                await SendEmail("Meal Invitation", body, new List<string>() { emailAddress });
+            }
 
 #else
 #if DEBUG
@@ -1199,6 +1139,29 @@ namespace DontWaitApp
 #endif
 
         }
+        public async Task SendEmail(string subject, string body, List<string> recipients)
+        {
+            try
+            {
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = body,
+                    To = recipients,
+                    BodyFormat=EmailBodyFormat.Html,
+                };
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException fbsEx)
+            {
+                // Email is not supported on this device  
+            }
+            catch (Exception ex)
+            {
+                // Some other exception occurred  
+            }
+        }
+
 
         public async Task SendSms(string messageText, string recipient)
         {
