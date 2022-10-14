@@ -51,13 +51,13 @@ namespace DontWaitApp
 
 
 
-    public delegate void PartOfMealRequestHandle(IFlavoursOrderServer flavoursOrderServer, Messmate messmate, string messageID);
+    public delegate void PartOfMealRequestHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string messageID);
 
-    public delegate void MenuItemProposalHandle(IFlavoursOrderServer flavoursOrderServer, Messmate messmate, string menuItemUri, string messageID);
+    public delegate void MenuItemProposalHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string menuItemUri, string messageID);
 
-    public delegate void SharedItemChangedHandle(IFlavoursOrderServer flavoursOrderServer, Messmate messmate, string sharedItemUid, string messageID);
+    public delegate void SharedItemChangedHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string sharedItemUid, string messageID);
 
-    public delegate void MessmatesWaitForYouToDecideHandle(IFlavoursOrderServer flavoursOrderServer, List<Messmate> messmates, string messageID);
+    public delegate void MessmatesWaitForYouToDecideHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, List<Messmate> messmates, string messageID);
 
 
 
@@ -65,9 +65,7 @@ namespace DontWaitApp
     [HttpVisible]
     public interface IFlavoursOrderServer
     {
-        [HttpInVisible]
-        IFoodServiceSession MainSession { get; }
-        /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
+         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
 
@@ -140,39 +138,18 @@ namespace DontWaitApp
         Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
 
 
-        #region  Meal invitation
-        /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
-        void MealInvitation(Messmate messmate);
 
-        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
-
-        Task<Contact> PickContact();
-
-        /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
-        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
-
-        /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
-        void DenyInvitation(Messmate messmate, string messageID);
-
-        /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
-        void CancelMealInvitation(Messmate messmate);
-        #endregion
-
-        ServicePointState ServicePointState { get; }
-
-        //void TableIsLay();
+        [GenerateEventConsumerProxy]
+        event PartOfMealRequestHandle PartOfMealRequest;
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
-        string GetMealInvitationQRCode(string color);
 
-     
-        
+
+
+
+
+
+
         /// <MetaDataID>{ab9ec6c8-5f98-4020-9832-dd90ac068f28}</MetaDataID>
         string Name { get; set; }
         /// <MetaDataID>{10656240-faac-4a11-94d7-168b7788c05b}</MetaDataID>
@@ -180,22 +157,11 @@ namespace DontWaitApp
 
     
 
-        /// <MetaDataID>{9307ddb6-eccf-42f0-920a-3f022bd6c958}</MetaDataID>
-        MenuData MenuData { get; }
-
+ 
 
 
 
    
-        /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
-        IList<Messmate> GetCandidateMessmates();
-
-        /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
-        IList<Messmate> GetMessmates();
-
-
-        /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
-        void RefreshMessmates();
 
      
 
@@ -212,8 +178,7 @@ namespace DontWaitApp
 
       
 
-        /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
-        Task<bool> SendItemsForPreparation();
+
 
 
 
@@ -226,18 +191,9 @@ namespace DontWaitApp
         /// <MetaDataID>{9c56bc8e-7682-4589-8e34-a76996e6b77a}</MetaDataID>
         FlavourBusinessFacade.ViewModel.IUser EndUser { get; set; }
 
-        [GenerateEventConsumerProxy]
-        event PartOfMealRequestHandle PartOfMealRequest;
 
 
-        [GenerateEventConsumerProxy]
-        event MenuItemProposalHandle MenuItemProposal;
-
-        [GenerateEventConsumerProxy]
-        event SharedItemChangedHandle SharedItemChanged;
-
-        [GenerateEventConsumerProxy]
-        event MessmatesWaitForYouToDecideHandle MessmatesWaitForYouToDecide;
+  
 
 
 
@@ -247,32 +203,14 @@ namespace DontWaitApp
      
 
 
-        /// <MetaDataID>{f7534611-0be9-4b2b-93f7-9cb0ff64d602}</MetaDataID>
-        IList<ItemPreparation> PreparationItems { get; }
 
 
 
-        /// <MetaDataID>{397f6f36-da35-4f39-9e7e-0512e87b8b79}</MetaDataID>
-        void AddItem(FlavourBusinessManager.RoomService.ItemPreparation item);
-
-        /// <MetaDataID>{bac19771-bd08-445b-9ed1-601e0dfa67d1}</MetaDataID>
-        void RemoveItem(FlavourBusinessManager.RoomService.ItemPreparation item);
-
-        /// <MetaDataID>{69fba72b-056c-43d5-a999-2ba977e87a7c}</MetaDataID>
-        void ItemChanged(FlavourBusinessManager.RoomService.ItemPreparation item);
-
-        /// <MetaDataID>{2e3da50d-bf09-43b3-ae13-4feaf667b2f2}</MetaDataID>
-        void AddSharingItem(ItemPreparation item);
 
 
 
-        /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
-        void EndOfMenuItemProposal(Messmate messmate, string messageID);
 
-
-        /// <MetaDataID>{ddc0de45-90e3-4ad6-ad3b-ba01880aef0a}</MetaDataID>
-        void SuggestMenuItem(Messmate messmate, string menuItemUri);
-
+      
 
         
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);

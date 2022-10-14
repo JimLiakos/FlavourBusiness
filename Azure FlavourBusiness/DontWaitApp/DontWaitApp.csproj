@@ -139,6 +139,8 @@
     <Compile Include="..\FlavourBusinessFacade\OpeningHours.cs">
       <Link>OpeningHours.cs</Link>
     </Compile>
+    <Compile Include="FoodServicesClientSessionViewModel.cs" />
+    <Compile Include="IFoodServicesClientSessionViewModel.cs" />
     <Compile Include="WaitView\Block.xaml.cs">
       <DependentUpon>Block.xaml</DependentUpon>
     </Compile>
