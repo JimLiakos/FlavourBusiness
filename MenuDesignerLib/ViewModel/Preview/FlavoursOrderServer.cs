@@ -31,7 +31,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         public string ISOCurrencySymbol => System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol;
 
-        public string Identity { get; set; }
+        
         public string Name { get => "Preview"; set { } }
         public string Trademark { get; set; }
 

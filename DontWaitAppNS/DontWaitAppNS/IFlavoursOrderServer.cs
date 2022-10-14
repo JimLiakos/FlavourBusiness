@@ -71,73 +71,36 @@ namespace DontWaitApp
         void WebViewLoaded();
 
 
-
-        ServicePointState ServicePointState { get; }
-
-        //void TableIsLay();
-
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
-        string GetMealInvitationQRCode(string color);
-
         /// <MetaDataID>{71dba63a-ee1a-457e-aa4a-dc758bc11a06}</MetaDataID>
         string ISOCurrencySymbol { get; }
-        /// <MetaDataID>{d08465b7-c023-44ea-825d-00daabc0af5e}</MetaDataID>
-        string Identity { get; set; }
-        /// <MetaDataID>{ab9ec6c8-5f98-4020-9832-dd90ac068f28}</MetaDataID>
-        string Name { get; set; }
-        /// <MetaDataID>{10656240-faac-4a11-94d7-168b7788c05b}</MetaDataID>
-        string Trademark { get; set; }
 
         /// <MetaDataID>{ee325a62-08c4-4121-aed8-03e1f94eb337}</MetaDataID>
         string Language { get; }
 
         string FontsLink { get; }
 
+
+
         /// <MetaDataID>{9022a0ee-4e3b-4ebf-9fdc-b51bf6e4443e}</MetaDataID>
         void WebViewAttached();
-        /// <MetaDataID>{9307ddb6-eccf-42f0-920a-3f022bd6c958}</MetaDataID>
-        MenuData MenuData { get; }
+
 
         /// <MetaDataID>{6c4436d3-a29e-4835-9076-68c772696479}</MetaDataID>
         string Path { get; set; }
 
 
-
-        /// <MetaDataID>{9006f63a-f41f-4ca5-81ba-91578660d4d4}</MetaDataID>
-        void Speak(string text);
-        /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
-        IList<Messmate> GetCandidateMessmates();
-
-        /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
-        IList<Messmate> GetMessmates();
-
-
-        /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
-        void RefreshMessmates();
-
         /// <MetaDataID>{e7762c6c-3f6e-49b7-b795-ade0e705aac8}</MetaDataID>
         Task<bool> ConnectToServicePoint(string servicePointIdentity = "");
 
 
-        /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
-        Task<HallLayout> GetHallLayout();
-
-        IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls
-        {
-            get;
-            set;
-        }
+        /// <MetaDataID>{9006f63a-f41f-4ca5-81ba-91578660d4d4}</MetaDataID>
+        void Speak(string text);
 
 
+        #region Permissions
         /// <summary>
         /// Check if application is granted to access infrastructure for service point scanning 
         /// </summary>
@@ -147,16 +110,6 @@ namespace DontWaitApp
         /// </returns>
         /// <MetaDataID>{f5ade777-4b64-49ed-8a59-248d2140ec49}</MetaDataID>
         Task<bool> CheckPermissionsForServicePointScan();
-
-
-        Task<bool> CheckPermissionsToAccessCurrentLocation();
-
-        Task<bool> RequestPermissionsToAccessCurrentLocation();
-
-        /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
-        Task<bool> SendItemForPreparation();
-
-
 
         /// <summary>
         /// Request Permission to access infrastructure for service point scanning 
@@ -170,9 +123,101 @@ namespace DontWaitApp
 
         /// <MetaDataID>{55d5e7c5-5e7f-45c5-a6cc-9e9dcb322cd0}</MetaDataID>
         Task<bool> CheckPermissionsPassivePushNotification();
-
         /// <MetaDataID>{1f1dc909-3bb8-480d-897b-8b48b65ad373}</MetaDataID>
         Task<bool> RequestPermissionsPassivePushNotification();
+
+
+        Task<bool> CheckPermissionsToAccessCurrentLocation();
+        Task<bool> RequestPermissionsToAccessCurrentLocation();
+        #endregion
+
+        /// <MetaDataID>{f4667ff4-da0b-4ea8-9f99-b892383facf2}</MetaDataID>
+        Task<string> GetFriendlyName();
+
+        /// <MetaDataID>{46d4ae2e-cbe8-4597-bf34-a3d4755e098b}</MetaDataID>
+        void SetFriendlyName(string firendlyName);
+
+        Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
+
+
+        #region  Meal invitation
+        /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
+        void MealInvitation(Messmate messmate);
+
+        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
+
+        Task<Contact> PickContact();
+
+        /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
+        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
+
+        /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
+        void DenyInvitation(Messmate messmate, string messageID);
+
+        /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
+        void CancelMealInvitation(Messmate messmate);
+        #endregion
+
+        ServicePointState ServicePointState { get; }
+
+        //void TableIsLay();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
+        string GetMealInvitationQRCode(string color);
+
+     
+        
+        /// <MetaDataID>{ab9ec6c8-5f98-4020-9832-dd90ac068f28}</MetaDataID>
+        string Name { get; set; }
+        /// <MetaDataID>{10656240-faac-4a11-94d7-168b7788c05b}</MetaDataID>
+        string Trademark { get; set; }
+
+    
+
+        /// <MetaDataID>{9307ddb6-eccf-42f0-920a-3f022bd6c958}</MetaDataID>
+        MenuData MenuData { get; }
+
+
+
+
+   
+        /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
+        IList<Messmate> GetCandidateMessmates();
+
+        /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
+        IList<Messmate> GetMessmates();
+
+
+        /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
+        void RefreshMessmates();
+
+     
+
+
+        /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
+        Task<HallLayout> GetHallLayout();
+
+        IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls
+        {
+            get;
+            set;
+        }
+
+
+      
+
+        /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
+        Task<bool> SendItemsForPreparation();
+
+
+
+        
 
         /// <MetaDataID>{68a07293-c4b2-44e2-a86a-aa1b7d858fb9}</MetaDataID>
         Task<bool> IsSessionActive();
@@ -199,11 +244,7 @@ namespace DontWaitApp
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
-        /// <MetaDataID>{f4667ff4-da0b-4ea8-9f99-b892383facf2}</MetaDataID>
-        Task<string> GetFriendlyName();
-
-        /// <MetaDataID>{46d4ae2e-cbe8-4597-bf34-a3d4755e098b}</MetaDataID>
-        void SetFriendlyName(string firendlyName);
+     
 
 
         /// <MetaDataID>{f7534611-0be9-4b2b-93f7-9cb0ff64d602}</MetaDataID>
@@ -224,20 +265,6 @@ namespace DontWaitApp
         void AddSharingItem(ItemPreparation item);
 
 
-        /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
-        void MealInvitation(Messmate messmate);
-
-        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
-
-        Task<Contact> PickContact();
-
-
-
-        /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
-        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
-
-        /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
-        void DenyInvitation(Messmate messmate, string messageID);
 
         /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
         void EndOfMenuItemProposal(Messmate messmate, string messageID);
@@ -247,26 +274,17 @@ namespace DontWaitApp
         void SuggestMenuItem(Messmate messmate, string menuItemUri);
 
 
-        /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
-        void CancelMealInvitation(Messmate messmate);
+        
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
-        Task<bool> GetServicePointDataEx(string foodServiceClientSessionUri);
-        Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
-
-        //void SaveDelivaryPlace(Place deliveryPlace);
-        //void RemoveDelivaryPlace(Place deliveryPlace);
-
-        //void SelectDelivaryPlace(Place deliveryPlace);
-
-
-
-        //List<IPlace> DeliveryPlaces { get; }
-
+        Task<bool> GetFoodServicesClientSessionData(string foodServiceClientSessionUri);
+   
+   
 
 
 
     }
 
+    /// <MetaDataID>{b955c48a-3bb5-4c3e-b97e-9799ad7a1cbe}</MetaDataID>
     public class Contact
     {
         string displayName;
