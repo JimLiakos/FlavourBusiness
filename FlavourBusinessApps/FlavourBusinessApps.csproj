@@ -54,6 +54,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\FoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\FoodServicesClientSessionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\IFoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\IFoodServicesClientSessionViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
       <Link>ViewModel\FlavoursOrderServer.cs</Link>
     </Compile>

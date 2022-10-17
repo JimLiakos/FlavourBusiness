@@ -51,7 +51,7 @@ namespace DontWaitApp
 
 
 
-    public delegate void PartOfMealRequestHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string messageID);
+    public delegate void PartOfMealRequestHandle(IFlavoursOrderServer flavoursOrderServer, Messmate messmate, string messageID);
 
     public delegate void MenuItemProposalHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string menuItemUri, string messageID);
 
@@ -69,6 +69,9 @@ namespace DontWaitApp
         void WebViewLoaded();
 
 
+        /// <MetaDataID>{8fedff9e-af0f-4f35-98de-a9bf18486a23}</MetaDataID>
+        IFoodServicesClientSessionViewModel CurrentFoodServicesClientSession { get; }
+
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
 
@@ -78,6 +81,7 @@ namespace DontWaitApp
         /// <MetaDataID>{ee325a62-08c4-4121-aed8-03e1f94eb337}</MetaDataID>
         string Language { get; }
 
+        /// <MetaDataID>{07d8eaf5-a147-4f73-9176-9700a86ebe64}</MetaDataID>
         string FontsLink { get; }
 
 
@@ -125,9 +129,41 @@ namespace DontWaitApp
         Task<bool> RequestPermissionsPassivePushNotification();
 
 
+        /// <MetaDataID>{a330bb9e-1b46-439b-b7a8-1792b7bb011f}</MetaDataID>
         Task<bool> CheckPermissionsToAccessCurrentLocation();
+        /// <MetaDataID>{6932fafa-61f2-49fe-916c-4fea36a28676}</MetaDataID>
         Task<bool> RequestPermissionsToAccessCurrentLocation();
         #endregion
+
+        #region  Meal invitation
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
+        string GetMealInvitationQRCode(string color);
+
+        /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
+        void MealInvitation(Messmate messmate);
+
+        /// <MetaDataID>{8b5ff64f-4f61-432f-b325-0c60437e55c0}</MetaDataID>
+        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
+
+        /// <MetaDataID>{540090f5-2088-4e12-9219-e9c7264b7076}</MetaDataID>
+        Task<Contact> PickContact();
+
+        /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
+        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
+
+        /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
+        void DenyInvitation(Messmate messmate, string messageID);
+
+        /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
+        void CancelMealInvitation(Messmate messmate);
+        #endregion
+
 
         /// <MetaDataID>{f4667ff4-da0b-4ea8-9f99-b892383facf2}</MetaDataID>
         Task<string> GetFriendlyName();
@@ -135,6 +171,7 @@ namespace DontWaitApp
         /// <MetaDataID>{46d4ae2e-cbe8-4597-bf34-a3d4755e098b}</MetaDataID>
         void SetFriendlyName(string firendlyName);
 
+        /// <MetaDataID>{8491fd19-2882-4b78-ac5e-84db4b54ccde}</MetaDataID>
         Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
 
 
@@ -169,6 +206,7 @@ namespace DontWaitApp
         /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
         Task<HallLayout> GetHallLayout();
 
+        /// <MetaDataID>{86b22218-7670-4c8d-be56-e4e68c2ad7fc}</MetaDataID>
         IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> Halls
         {
             get;
@@ -176,13 +214,13 @@ namespace DontWaitApp
         }
 
 
-      
 
 
 
 
 
-        
+
+
 
         /// <MetaDataID>{68a07293-c4b2-44e2-a86a-aa1b7d858fb9}</MetaDataID>
         Task<bool> IsSessionActive();
@@ -200,25 +238,10 @@ namespace DontWaitApp
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
-     
-
-
-
-
-
-
-
-
-
-      
-
-        
+        /// <MetaDataID>{1296cf3c-a0c6-4483-a8ec-3c2ac3874660}</MetaDataID>
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
-        Task<bool> GetFoodServicesClientSessionData(string foodServiceClientSessionUri);
-   
-   
-
-
+        /// <MetaDataID>{d4579596-157a-494d-ba17-908edbf4586b}</MetaDataID>
+    
 
     }
 
@@ -296,17 +319,17 @@ namespace DontWaitApp
     /// <MetaDataID>{5718fadd-9a57-4d87-a6ea-ba669ab3388a}</MetaDataID>
     [BackwardCompatibilityID("{5718fadd-9a57-4d87-a6ea-ba669ab3388a}")]
     [Persistent()]
-    public class MenuData
+    public struct MenuData
     {
-        public MenuData()
-        {
-            _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
-            this.ServicePointIdentity = null;
-            this.MenuName = null;
-            this.MenuFile = null;
-            this.MenuRoot = null;
-            this.ClientSessionID = null;
-        }
+        //public MenuData()
+        //{
+        //    _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
+        //    this.ServicePointIdentity = null;
+        //    this.MenuName = null;
+        //    this.MenuFile = null;
+        //    this.MenuRoot = null;
+        //    this.ClientSessionID = null;
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -328,19 +351,23 @@ namespace DontWaitApp
 
 
 
+        /// <MetaDataID>{b7cd60c7-28c0-4857-a66b-c185898f3105}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+10")]
         public string FoodServiceClientSessionUri;
 
+        /// <MetaDataID>{8e686499-7cc6-4df6-a9de-89e00c76896e}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+11")]
         public string MainSessionID;
 
 
+        /// <MetaDataID>{e369fe65-855e-4cc1-ba68-cf95b145ee10}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+9")]
         string ServedMealTypesUrisStream;
 
+        /// <MetaDataID>{002deed5-f826-4e71-96b7-cad17bbf201d}</MetaDataID>
         public List<string> ServedMealTypesUris
         {
             get
@@ -363,10 +390,12 @@ namespace DontWaitApp
                 }
             }
         }
+        /// <MetaDataID>{94b21849-ddf7-4553-9b1b-76bf018e6f84}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+12")]
         public SessionType SessionType;
 
+        /// <MetaDataID>{2507296d-28a6-4771-841d-0bf3c1f5f4d4}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+8")]
         public string DefaultMealTypeUri;
@@ -410,6 +439,7 @@ namespace DontWaitApp
         ///// <MetaDataID>{bc390286-df9f-4e1a-9a37-6dcc0b32a7ad}</MetaDataID>
         //public List<ItemPreparation> OrderItems;
 
+        /// <MetaDataID>{d367de1a-32b5-43bd-a482-b29a81ff2634}</MetaDataID>
         List<ItemPreparation> GetOrderItems()
         {
             if (_OrderItems == null)
@@ -467,6 +497,7 @@ namespace DontWaitApp
     }
 
 
+    /// <MetaDataID>{94fb1d70-f4e2-400d-b228-aea0bfac4bc9}</MetaDataID>
     public enum InvitationChannel
     {
         SMS = 1,

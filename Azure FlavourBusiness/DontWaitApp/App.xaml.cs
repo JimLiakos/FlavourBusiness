@@ -33,8 +33,8 @@ namespace DontWaitApp
         {
             SerializeTaskScheduler.RunAsync();
 
-            FlavourBusinessManager.FlavoursServicesContext ss = new FlavourBusinessManager.FlavoursServicesContext();
-            var sdf=System.Runtime.Remoting.RemotingServices.GetRealProxy(ss);
+            //FlavourBusinessManager.FlavoursServicesContext ss = new FlavourBusinessManager.FlavoursServicesContext();
+            //var sdf=System.Runtime.Remoting.RemotingServices.GetRealProxy(ss);
 
             //CultureInfo ci = new CultureInfo(1033);
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el-GR");

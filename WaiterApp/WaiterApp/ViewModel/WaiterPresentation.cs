@@ -1722,17 +1722,17 @@ namespace WaiterApp.ViewModel
         {
             if (targetSessionID == "WaiterSession")
             {
-                if (string.IsNullOrWhiteSpace(this.FlavoursOrderServer.MenuData.MainSessionID))
+                if (string.IsNullOrWhiteSpace(FlavoursOrderServer.CurrentFoodServicesClientSession.MenuData.MainSessionID))
                 {
-                    var messmate = FlavoursOrderServer.GetCandidateMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
+                    var messmate = FlavoursOrderServer.CurrentFoodServicesClientSession.GetCandidateMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
                     if (messmate == null)
-                        messmate = FlavoursOrderServer.GetMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
+                        messmate = FlavoursOrderServer.CurrentFoodServicesClientSession.GetMessmates().Where(x => x.ClientSessionID == partialSessionID).FirstOrDefault();
                     FlavoursOrderServer.AcceptInvitation(messmate, null);
                     return true;
                 }
                 else
                 {
-                    Waiter.TransferPartialSession(partialSessionID, this.FlavoursOrderServer.MenuData.MainSessionID);
+                    Waiter.TransferPartialSession(partialSessionID, this.FlavoursOrderServer.CurrentFoodServicesClientSession.MenuData.MainSessionID);
                     return true;
                 }
             }

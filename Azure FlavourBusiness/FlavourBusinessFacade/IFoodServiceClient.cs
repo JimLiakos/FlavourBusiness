@@ -7,6 +7,7 @@ namespace FlavourBusinessFacade.EndUsers
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{8ebba0ed-26f3-45ae-98da-4e890296e72b}")]
     public interface IFoodServiceClient
     {
+        /// <MetaDataID>{fb847b67-e534-4395-a1b2-665a97ac6ce6}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]
         string FriendlyName { get; set; }

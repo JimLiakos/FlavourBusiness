@@ -18,6 +18,7 @@ namespace DontWaitApp
     /// <summary>
     /// Interaction logic for DeviceSelectorWindow.xaml
     /// </summary>
+    /// <MetaDataID>{1eb60a4f-9ada-4820-8d2c-371798fae1e7}</MetaDataID>
     public partial class DeviceSelectorWindow : Window
     {
         public DeviceSelectorWindow()
@@ -25,7 +26,7 @@ namespace DontWaitApp
             InitializeComponent();
             SelectedIndex = 0;
 
-            
+
             DataContext = this;
         }
 
@@ -39,7 +40,7 @@ namespace DontWaitApp
 
         }
 
-        public int SelectedIndex {get;set;}
+        public int SelectedIndex { get; set; }
 
 
 

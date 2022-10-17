@@ -304,11 +304,11 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{5362302f-4733-4cad-a9f3-00e61f0db570}</MetaDataID>
         public void SetDefaultDelivaryPlace(IPlace place)
         {
-            Place existingPlace = null;
-            lock (this)
-                existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault();
+            
+            Place existingPlace = DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() as Place;
             if (existingPlace != null)
             {
                 foreach (var thePlace in DeliveryPlaces)

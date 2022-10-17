@@ -15,6 +15,48 @@ namespace DontWaitApp
     [Persistent()]
     public class ApplicationSettings
     {
+        /// <MetaDataID>{e700e295-1444-4fdf-bdaa-6bcd201ff59e}</MetaDataID>
+        public void RemoveClientSession(FoodServicesClientSessionViewModel clientSession)
+        {
+            if (clientSession != null)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    if (clientSession == DisplayedFoodServicesClientSession)
+                        DisplayedFoodServicesClientSession = null;
+
+
+                    _ActiveSessions.Remove(clientSession);
+                    stateTransition.Consistent = true;
+                }
+            }
+
+        }
+
+        /// <MetaDataID>{5ed898fa-9013-4fd3-b897-c7bcb0dba827}</MetaDataID>
+        public void AddClientSession(FoodServicesClientSessionViewModel clientSession)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ActiveSessions.Add(clientSession);
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<FoodServicesClientSessionViewModel> _ActiveSessions = new OOAdvantech.Collections.Generic.Set<FoodServicesClientSessionViewModel>();
+
+        [RoleAMultiplicityRange(0)]
+        [Association("AppFoodServicesClientSession", Roles.RoleA, "263140f9-632e-43dc-a923-9e37a5d9a348")]
+        [RoleBMultiplicityRange(1, 1)]
+        [PersistentMember(nameof(_ActiveSessions))]
+        [AssociationEndBehavior(PersistencyFlag.ReferentialIntegrity | PersistencyFlag.CascadeDelete)]
+        public System.Collections.Generic.List<FoodServicesClientSessionViewModel> ActiveSessions => _ActiveSessions.ToThreadSafeList();
+
+
         /// <exclude>Excluded</exclude>
         FlavourBusinessManager.EndUsers.FoodServiceClient _ClientAsGuest;
 
@@ -62,6 +104,27 @@ namespace DontWaitApp
 
             }
         }
+
+        /// <MetaDataID>{ab7fda42-2d66-4593-81f5-1f0e3a95382d}</MetaDataID>
+        public FoodServicesClientSessionViewModel DisplayedFoodServicesClientSession
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(LastClientSessionID))
+                    return null;
+                return ActiveSessions.Where(x => x.ClientSessionID == LastClientSessionID).FirstOrDefault();
+
+            }
+            set
+            {
+                if (value == null)
+                    LastClientSessionID = "";
+                else
+                    LastClientSessionID = value.ClientSessionID;
+
+            }
+        }
+
 
         /// <exclude>Excluded</exclude>
         MenuData _LastServicePoinMenuData;
@@ -145,7 +208,7 @@ namespace DontWaitApp
         /// <MetaDataID>{1706785f-72bf-4b66-9307-8f8c310ccc3f}</MetaDataID>
         [PersistentMember(nameof(_LastClientSessionID))]
         [BackwardCompatibilityID("+14")]
-        public string LastClientSessionID
+        private string LastClientSessionID
         {
             get
             {
@@ -215,6 +278,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{568752b1-76f6-4a8f-8a81-273e5c24243f}</MetaDataID>
         static object AppSettingsStorageLock = new object();
 
         /// <exclude>Excluded</exclude>
@@ -232,16 +296,16 @@ namespace DontWaitApp
 #if DeviceDotNet
                         string storageLocation = @"\DontWaitAppSettings.xml";
 #else
-                    string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Microneme";
-                    if (!System.IO.Directory.Exists(appDataPath))
-                        System.IO.Directory.CreateDirectory(appDataPath);
-                    appDataPath += "\\DontWaitWater";
-                    if (!string.IsNullOrEmpty(ExtraStoragePath))
-                        appDataPath += "\\" + ExtraStoragePath;
+                        string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Microneme";
+                        if (!System.IO.Directory.Exists(appDataPath))
+                            System.IO.Directory.CreateDirectory(appDataPath);
+                        appDataPath += "\\DontWaitWater";
+                        if (!string.IsNullOrEmpty(ExtraStoragePath))
+                            appDataPath += "\\" + ExtraStoragePath;
 
-                    if (!System.IO.Directory.Exists(appDataPath))
-                        System.IO.Directory.CreateDirectory(appDataPath);
-                    string storageLocation = appDataPath + "\\DontWaitAppSettings.xml";
+                        if (!System.IO.Directory.Exists(appDataPath))
+                            System.IO.Directory.CreateDirectory(appDataPath);
+                        string storageLocation = appDataPath + "\\DontWaitAppSettings.xml";
 #endif
 
                         try
@@ -274,6 +338,7 @@ namespace DontWaitApp
         /// <exclude>Excluded</exclude>
         static ApplicationSettings _Current;
 
+        /// <MetaDataID>{392dfc5c-a5b1-46d6-a5a1-4f456e14e755}</MetaDataID>
         public static ApplicationSettings Current
         {
             get
@@ -386,6 +451,7 @@ namespace DontWaitApp
 
         /// <exclude>Excluded</exclude>
         string _FriendlyName;
+        /// <MetaDataID>{94684440-5506-4756-a0b2-130a0146ad1b}</MetaDataID>
         private static Task<ApplicationSettings> AppSettingsTask;
 
         /// <MetaDataID>{d527686e-187a-4e4f-9128-7cc0d2275d63}</MetaDataID>

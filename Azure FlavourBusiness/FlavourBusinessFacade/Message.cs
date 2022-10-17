@@ -10,6 +10,7 @@ namespace FlavourBusinessFacade.EndUsers
     [Persistent()]
     public class Message
     {
+        /// <MetaDataID>{31260b9e-36d9-4e1f-a3ed-25f57039e54d}</MetaDataID>
         public Message()
         {
 
@@ -141,12 +142,13 @@ namespace FlavourBusinessFacade.EndUsers
             }
 
         }
-        public bool HasDataValue<T>(string property,T value)
+        /// <MetaDataID>{dab42425-81c2-4418-8ec9-00b097e0c440}</MetaDataID>
+        public bool HasDataValue<T>(string property, T value)
         {
             object dataValue = null;
             Data.TryGetValue(property, out dataValue);
-            if(dataValue is T)
-                return  EqualityComparer<T>.Default.Equals((T)dataValue, value);
+            if (dataValue is T)
+                return EqualityComparer<T>.Default.Equals((T)dataValue, value);
             return (dataValue == null && value == null);
         }
         /// <MetaDataID>{b01f8750-cb6f-4279-b2ea-685d8fb4fdde}</MetaDataID>

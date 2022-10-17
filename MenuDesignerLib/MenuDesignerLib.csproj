@@ -124,6 +124,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\IFoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\Preview\IFoodServicesClientSessionViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
       <Link>ViewModel\Preview\IFlavoursOrderServer.cs</Link>
     </Compile>
@@ -198,6 +201,7 @@
     <Compile Include="ViewModel\Menu\TreeBlankItemViewModel.cs" />
     <Compile Include="ViewModel\Menu\TreeFoodItemViewModel.cs" />
     <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
+    <Compile Include="ViewModel\Preview\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="ViewModel\Preview\PseudoCode.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="Views\BackgroundSelectorWindow.xaml.cs">

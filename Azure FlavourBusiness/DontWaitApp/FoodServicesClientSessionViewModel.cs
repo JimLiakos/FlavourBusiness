@@ -1,23 +1,370 @@
-﻿using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.RoomService;
-using FlavourBusinessFacade.ServicesContextResources;
-using FlavourBusinessManager.RoomService;
-using OOAdvantech.MetaDataRepository;
-using OOAdvantech.Remoting.RestApi;
-using QRCoder;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using FlavourBusinessFacade.EndUsers;
+using OOAdvantech.MetaDataRepository;
 
+using OOAdvantech.Remoting.RestApi;
+using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.RoomService;
+
+
+
+
+
+#if DeviceDotNet
+using Xamarin.Forms;
+using Xamarin.Essentials;
+using ZXing.Net.Mobile.Forms;
+using ZXing;
+using ZXing.QrCode;
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+using FlavourBusinessFacade.ServicesContextResources;
+
+#else
+using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Transactions;
+
+#endif
+
+#if FlavourBusinessDevice
+using RestaurantHallLayoutModel;
+#else
+using HallLayout=System.Object;
+#endif 
 namespace DontWaitApp
 {
     /// <MetaDataID>{5ce0ff0c-1c71-4161-85e4-12150431675e}</MetaDataID>
-    public class FoodServicesClientSessionViewModel: IFoodServicesClientSessionViewModel
+    [BackwardCompatibilityID("{5ce0ff0c-1c71-4161-85e4-12150431675e}")]
+    [Persistent()]
+    public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+
+
+        /// <MetaDataID>{1d430442-9e08-4282-aab1-0a78cffa06f7}</MetaDataID>
+        internal FoodServicesClientSessionViewModel()
+        {
+        }
+
+        /// <MetaDataID>{a5f046d9-c7fa-43f3-8c49-24c32be142f1}</MetaDataID>
+        internal FoodServicesClientSessionViewModel(FlavourBusinessFacade.EndUsers.ClientSessionData clientSessionData, DontWaitApp.FlavoursOrderServer flavoursOrderServer)
+        {
+            FlavoursOrderServer = flavoursOrderServer;
+            FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
+            ClientSessionToken = clientSessionData.Token;
+
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ItemPreparation> _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
+
+        /// <MetaDataID>{67a87990-9414-48bc-8d1d-bc20335eb6ea}</MetaDataID>
+        [PersistentMember(nameof(_OrderItems))]
+        [BackwardCompatibilityID("+13")]
+        public List<FlavourBusinessManager.RoomService.ItemPreparation> OrderItems => _OrderItems.ToThreadSafeList();
+
+
+        /// <exclude>Excluded</exclude>
+        SessionType _SessionType;
+
+        /// <MetaDataID>{44cbee97-c7e1-40e1-bcd0-af06664d1732}</MetaDataID>
+        [PersistentMember(nameof(_SessionType))]
+        [BackwardCompatibilityID("+12")]
+        public SessionType SessionType
+        {
+            get => _SessionType;
+            set
+            {
+                if (_SessionType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SessionType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{4ea3afdd-49f4-4466-a7f0-f8af9c15732f}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+11")]
+        string ServedMealTypesUrisStream;
+
+        /// <MetaDataID>{3141a8af-e238-4b7b-96a0-b9e4f102974d}</MetaDataID>
+        public List<string> ServedMealTypesUris
+        {
+            get
+            {
+                if (ServedMealTypesUrisStream == null)
+                    return new List<string>();
+
+                return ServedMealTypesUrisStream.Split(';').ToList();
+            }
+            internal set
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    ServedMealTypesUrisStream = "";
+                    foreach (var uri in value)
+                    {
+                        if (string.IsNullOrWhiteSpace(ServedMealTypesUrisStream))
+                            ServedMealTypesUrisStream = uri;
+                        else
+                            ServedMealTypesUrisStream += ";" + uri;
+
+                    }
+                    stateTransition.Consistent = true;
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _DefaultMealTypeUri;
+
+        /// <MetaDataID>{3f2b9ae9-82ad-4b3e-90ed-a9c417051c22}</MetaDataID>
+        [PersistentMember(nameof(_DefaultMealTypeUri))]
+        [BackwardCompatibilityID("+10")]
+        public string DefaultMealTypeUri
+        {
+            get => _DefaultMealTypeUri;
+            set
+            {
+                if (_DefaultMealTypeUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DefaultMealTypeUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _FoodServiceClientSessionUri;
+
+
+        /// <MetaDataID>{884da2a5-7653-4335-86a0-d68ba6f3e5b3}</MetaDataID>
+        [PersistentMember(nameof(_FoodServiceClientSessionUri))]
+        [BackwardCompatibilityID("+9")]
+        public string FoodServiceClientSessionUri
+        {
+            get => _FoodServiceClientSessionUri;
+            set
+            {
+                if (_FoodServiceClientSessionUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FoodServiceClientSessionUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _MainSessionID;
+
+        /// <MetaDataID>{d9f5d9ac-a2a5-4dbc-b592-b042d696a42b}</MetaDataID>
+        [PersistentMember(nameof(_MainSessionID))]
+        [BackwardCompatibilityID("+8")]
+        public string MainSessionID
+        {
+            get => _MainSessionID;
+            set
+            {
+                if (_MainSessionID != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MainSessionID = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _ServicePointIdentity;
+        /// <MetaDataID>{af736c3a-101a-4861-8d08-5c7aebc3240c}</MetaDataID>
+        [PersistentMember(nameof(_ServicePointIdentity))]
+        [BackwardCompatibilityID("+1")]
+        public string ServicePointIdentity
+        {
+            get => _ServicePointIdentity;
+            set
+            {
+
+                if (_ServicePointIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicePointIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _MenuName;
+
+        /// <MetaDataID>{c2a37f04-cc75-4af0-8cff-e716cc7b733d}</MetaDataID>
+        [PersistentMember(nameof(_MenuName))]
+        [BackwardCompatibilityID("+2")]
+        public string MenuName
+        {
+            get => _MenuName;
+            set
+            {
+                if (_MenuName != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MenuName = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _MenuFile;
+
+
+        /// <MetaDataID>{ae56ec83-fb03-4330-bb36-afd078191be7}</MetaDataID>
+        [PersistentMember(nameof(_MenuFile))]
+        [BackwardCompatibilityID("+3")]
+        public string MenuFile
+        {
+            get => _MenuFile;
+            set
+            {
+                if (_MenuFile != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MenuFile = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _MenuRoot;
+
+        /// <MetaDataID>{54a19a1a-6f07-4e80-be81-352a12d88b9c}</MetaDataID>
+        [PersistentMember(nameof(_MenuRoot))]
+        [BackwardCompatibilityID("+4")]
+        public string MenuRoot
+        {
+            get => _MenuRoot;
+            set
+            {
+                if (_MenuRoot != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MenuRoot = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _ClientSessionID;
+        /// <MetaDataID>{9f1c50f4-2a52-4c89-a3d6-4c3acecf7a74}</MetaDataID>
+        [PersistentMember(nameof(_ClientSessionID))]
+        [BackwardCompatibilityID("+5")]
+        public string ClientSessionID
+        {
+            get => _ClientSessionID;
+            set
+            {
+                if (_ClientSessionID != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ClientSessionID = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        string _ServicesPointName;
+        /// <MetaDataID>{489084e0-abfa-4bc7-970d-59cd80ca09e7}</MetaDataID>
+        [PersistentMember(nameof(_ServicesPointName))]
+        [BackwardCompatibilityID("+6")]
+        public string ServicesPointName
+        {
+            get => _ServicesPointName;
+            set
+            {
+                if (_ServicesPointName != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicesPointName = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _ServicesContextLogo;
+
+
+        /// <MetaDataID>{5406671a-d0c3-4f26-926c-1901a904bf65}</MetaDataID>
+        [PersistentMember(nameof(_ServicesContextLogo))]
+        [BackwardCompatibilityID("+7")]
+        public string ServicesContextLogo
+        {
+            get => _ServicesContextLogo;
+            set
+            {
+                if (_ServicesContextLogo != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicesContextLogo = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
 
 
 
@@ -26,7 +373,7 @@ namespace DontWaitApp
         /// <MetaDataID>{9714f9b4-1950-4bd5-9a10-a482c42d355e}</MetaDataID>
         object MessagesLock = new object();
 
-    
+
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
         internal void GetMessages()
         {
@@ -38,7 +385,7 @@ namespace DontWaitApp
 
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
                     {
-                      this.FlavoursOrderServer.PartOfMealRequestMessageForward(message);
+                        this.FlavoursOrderServer.PartOfMealRequestMessageForward(message);
                         return;
                     }
 
@@ -68,7 +415,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{4a4ab174-50dd-4220-88c1-cb6e1d925628}</MetaDataID>
-        private void YouMustDecideMessageForward(Message message)
+        private void YouMustDecideMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
             FoodServicesClientSession.RemoveMessage(message.MessageID);
             Task.Run(() =>
@@ -96,7 +443,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
-        private void ShareItemHasChangeMessageForward(Message message)
+        private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
             string itemUid = message.GetDataValue<string>("SharedItemUid");
             string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
@@ -121,7 +468,7 @@ namespace DontWaitApp
 
         #region Food services client session events consumers
         /// <MetaDataID>{2784806b-281e-44df-af8d-dd847bb7c8a9}</MetaDataID>
-        private void FoodServicesClientSessionItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        private void FoodServicesClientSessionItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
         {
 
             foreach (var entry in newItemsState)
@@ -161,7 +508,7 @@ namespace DontWaitApp
             }
         }
         /// <MetaDataID>{eaba9b2e-24d1-40c9-a56c-245a47e9c3cb}</MetaDataID>
-        private async void FoodServicesClientSessionItemStateChanged(string itemUid, string itemOwnerSession, bool isShared, List<string> shareInSessions)
+        private async void FoodServicesClientSessionItemStateChanged(string itemUid, string itemOwnerSession, bool isShared, System.Collections.Generic.List<string> shareInSessions)
         {
             #region the item removed and isn't shared
 
@@ -187,10 +534,16 @@ namespace DontWaitApp
 
                 if (shareInSessions.Contains(FoodServicesClientSession.SessionID))
                 {
-                    var orderItem = OrderItems.Where(x => x.uid == itemUid).FirstOrDefault();
-                    if (orderItem != null)
-                        OrderItems.Remove(orderItem);
-                    OrderItems.Add(preparationItem);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        var orderItem = _OrderItems.Where(x => x.uid == itemUid).FirstOrDefault();
+                        if (orderItem != null)
+                            _OrderItems.Remove(orderItem);
+                        _OrderItems.Add(preparationItem); 
+                        stateTransition.Consistent = true;
+                    }
+
                 }
 
                 //Updates the messmates which have sessionID among the item shareInSessions.
@@ -229,9 +582,9 @@ namespace DontWaitApp
             }
             #endregion
 
-            var menuData = this.MenuData;
-            menuData.OrderItems = OrderItems.ToList();
-            MenuData = menuData;
+            //var menuData = this.MenuData;
+            //menuData.OrderItems = OrderItems.ToList();
+            //MenuData = menuData;
 
             _ObjectChangeState?.Invoke(this, null);
 
@@ -244,24 +597,26 @@ namespace DontWaitApp
         {
             if (member == nameof(IFoodServiceClientSession.FlavourItems))
             {
-                OrderItems.Clear();
-                //foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
-                //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
-                //foreach (var flavourItem in FoodServiceClientSession.SharedItems)
-                //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _OrderItems.Clear();
+                    //foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
+                    //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
+                    //foreach (var flavourItem in FoodServiceClientSession.SharedItems)
+                    //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
 
 
-                OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
-                OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+                    _OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
+                    _OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+                    stateTransition.Consistent = true;
+                }
 
-                ///RefreshMessmates();
-                //var menuData = MenuData;
-                //menuData.OrderItems = OrderItems.Values.ToList();
-                //MenuData= menuData;
 
-                var menuData = this.MenuData;
-                menuData.OrderItems = OrderItems.ToList();
-                MenuData = menuData;
+
+                //var menuData = this.MenuData;
+                //menuData.OrderItems = OrderItems.ToList();
+                //MenuData = menuData;
 
                 _ObjectChangeState?.Invoke(this, null);
 
@@ -274,6 +629,10 @@ namespace DontWaitApp
             else if (member == nameof(IFoodServiceClientSession.ServicePoint))
             {
                 var foodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession);
+                FoodServiceClientSessionUri = foodServiceClientSessionUri;
+                //var menuData = MenuData;
+                //menuData.FoodServiceClientSessionUri = foodServiceClientSessionUri;
+                //MenuData = menuData;
                 GetFoodServicesClientSessionData(foodServiceClientSessionUri);
             }
             else
@@ -283,27 +642,156 @@ namespace DontWaitApp
 
         }
 
+        /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
+        object ClientSessionLock = new object();
+        /// <MetaDataID>{1019ceeb-b902-4e3a-af00-af2b159e0a96}</MetaDataID>
+        System.Collections.Generic.Dictionary<string, System.Threading.Tasks.Task<bool>> GetServicePointDataTasks = new Dictionary<string, Task<bool>>();
+
+        /// <summary>
+        /// this method gets food services client session  data and synchronize caching data 
+        /// </summary>
+        /// <param name="foodServicesClientSessionUri">
+        /// Defines the Uri of food services client session necessary to access the  FoodServicesClientSession from server
+        /// </param>
+        /// <returns>
+        /// true when device connected to server successfully 
+        /// otherwise return false
+        /// </returns>
+        /// <MetaDataID>{72f72a6c-225e-4775-a059-9aab2871f785}</MetaDataID>
+        Task<bool> GetFoodServicesClientSessionData(string foodServicesClientSessionUri)
+        {
+
+            lock (ClientSessionLock)
+            {
+                if (foodServicesClientSessionUri != FoodServiceClientSessionUri)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        ApplicationSettings.Current.LastServicePoinMenuData = default(MenuData);
+                        _OrderItems.Clear();
+                        this.FoodServicesClientSession = null;
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+                Task<bool> getServicePointDataTask = null;
+                GetServicePointDataTasks.TryGetValue(foodServicesClientSessionUri, out getServicePointDataTask);
+                if (getServicePointDataTask != null && !getServicePointDataTask.IsCompleted)
+                    return getServicePointDataTask; // returns the active task to get service point data
+
+                //There isn't active task.
+                //Starts task to get service point data
+                getServicePointDataTask = Task<bool>.Run(async () =>
+                {
+
+                    try
+                    {
+                        DateTime start = DateTime.UtcNow;
+                        IFoodServiceClientSession foodServiceClientSession = null;
+                        bool retry = false;
+                        do
+                        {
+
+                            try
+                            {
+                                foodServiceClientSession = RemotingServices.GetPersistentObject<IFoodServiceClientSession>(FlavoursOrderServer.AzureServerUrl, foodServicesClientSessionUri);
+                            }
+                            catch (System.Net.WebException connectionError)
+                            {
+                                if (connectionError.Status != System.Net.WebExceptionStatus.ConnectFailure)
+                                    throw connectionError;
+                                retry = true;
+                            }
+                            catch (TimeoutException timeoutError)
+                            {
+                                retry = true;
+                            }
+                        } while (retry);
+
+
+                        if (foodServiceClientSession != null && foodServiceClientSession.SessionState != ClientSessionState.Closed)
+                        {
+                            var clientSessionData = foodServiceClientSession.ClientSessionData;
+                            FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
+                            ClientSessionToken = clientSessionData.Token;
+
+                        }
+                        else
+                        {
+                            FoodServicesClientSession = null;
+                            return true;
+                        }
+                    }
+                    catch (Exception error)
+                    {
+
+                        return false;
+                    }
+                    return true;
+
+                });
+                GetServicePointDataTasks[foodServicesClientSessionUri] = getServicePointDataTask;
+                return getServicePointDataTask;
+            }
+
+
+        }
+
+        /// <MetaDataID>{64cca5c3-be6b-43ce-a7dd-d3bc2486a79e}</MetaDataID>
+        public async Task<bool?> IsActive()
+        {
+
+            if (FoodServicesClientSession != null)
+                return (bool?)true;
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(FoodServiceClientSessionUri))
+                {
+
+                    if (await GetFoodServicesClientSessionData(FoodServiceClientSessionUri))
+                    {
+                        if (FoodServicesClientSession != null && FoodServicesClientSession.SessionState != ClientSessionState.Closed)
+                            return (bool?)true;
+                    }
+                    else
+                        return null;
+                }
+                return false;
+            }
+        }
+
+
+
+
         /// <MetaDataID>{c8a403e0-d804-40a6-8543-4bee48d1319f}</MetaDataID>
         private void FoodServicesClientSessionReconnected(object sender)
         {
 
             var foodServiceClientSession = RemotingServices.CastTransparentProxy<IFoodServiceClientSession>(sender);
-            OrderItems.Clear();
 
-            //foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
-            //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _OrderItems.Clear();
 
-            //foreach (var flavourItem in FoodServiceClientSession.SharedItems)
-            //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
+                //foreach (var flavourItem in FoodServiceClientSession.FlavourItems)
+                //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
 
-            OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
-            OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+                //foreach (var flavourItem in FoodServiceClientSession.SharedItems)
+                //    OrderItems[flavourItem.uid] = flavourItem as ItemPreparation;
+
+                _OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
+                _OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+
+                stateTransition.Consistent = true;
+            }
 
 
 
-            var menuData = this.MenuData;
-            menuData.OrderItems = OrderItems.ToList();
-            MenuData = menuData;
+            //var menuData = this.MenuData;
+            //menuData.OrderItems = OrderItems.ToList();
+            //MenuData = menuData;
 
 
             //foreach (var messmate in Messmates)
@@ -315,13 +803,36 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{73f366a8-2d78-456f-aacd-b70114704a4f}</MetaDataID>
-        public MenuData MenuData { get => ApplicationSettings.Current.LastServicePoinMenuData; set => ApplicationSettings.Current.LastServicePoinMenuData = value; }
+        public DontWaitApp.MenuData MenuData
+        {
+            get
+            {
+                MenuData menuData = new MenuData()
+                {
+                    MenuName = MenuName,
+                    MenuRoot = MenuRoot,
+                    MenuFile = MenuFile,
+                    ClientSessionID = ClientSessionID,
+                    MainSessionID = MainSessionID,
+                    FoodServiceClientSessionUri = FoodServiceClientSessionUri,
+                    ServicePointIdentity = ServicePointIdentity,
+                    ServicesPointName = ServicesPointName,
+                    ServicesContextLogo = ServicesContextLogo,
+                    DefaultMealTypeUri = DefaultMealTypeUri,
+                    ServedMealTypesUris = ServedMealTypesUris,
+                    SessionType = SessionType,
+                    OrderItems = OrderItems
+                };
+                return menuData;
 
-        /// <MetaDataID>{e31b5e23-a2de-4d2e-879b-727f7ff1dc41}</MetaDataID>
+            }
+        }// => ApplicationSettings.Current.LastServicePoinMenuData; set => ApplicationSettings.Current.LastServicePoinMenuData = value; }
+
+        /// <exclude>Excluded</exclude>
         IFoodServiceClientSession _FoodServicesClientSession;
 
         /// <MetaDataID>{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}</MetaDataID>
-        public IFoodServiceClientSession FoodServicesClientSession
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServicesClientSession
         {
             get
             {
@@ -350,22 +861,39 @@ namespace DontWaitApp
 
                 if (value == null)
                 {
-                    _FoodServicesClientSession = null;
-                    //Clear cache  the last session has ended
-                    OrderItems.Clear();
-                    this.MenuData = null;
-                    Path = "";
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FoodServicesClientSession = null;
+                        //Clear cache  the last session has ended
+                        _OrderItems.Clear();
+                        //this.MenuData = default(MenuData);
+                        FlavoursOrderServer.Path = "";
+                        MenuName = "";
+                        MenuRoot = "";
+                        MenuFile = "";
+                        ClientSessionID = "";
+                        MainSessionID = ""; ;
+                        FoodServiceClientSessionUri = ""; 
+                        ServicePointIdentity = "";
+                        ServicesPointName ="";
+                        ServicesContextLogo = "";
+                        DefaultMealTypeUri = "";
+                        ServedMealTypesUris = new List<string>();
+
+                        stateTransition.Consistent = true;
+                    }
                     return;
                 }
 
                 ClientSessionData clientSessionData = value.ClientSessionData;
-                string path = Path;
+                string path = FlavoursOrderServer.Path;
                 if (!string.IsNullOrWhiteSpace(this.MenuData.ServicePointIdentity) && this.MenuData.ServicePointIdentity != clientSessionData.ServicePointIdentity)
                 {
                     //The session has  moved to other service point
                     if (path != null && path.IndexOf(this.MenuData.ServicePointIdentity) != -1)
                         path = path.Replace(this.MenuData.ServicePointIdentity, clientSessionData.ServicePointIdentity);
-                    Path = path;
+                    FlavoursOrderServer.Path = path;
                 }
 
                 _FoodServicesClientSession = value;
@@ -375,23 +903,33 @@ namespace DontWaitApp
 
                 //## ### ####
                 SessionID = FoodServicesClientSession.SessionID;
-                ApplicationSettings.Current.LastClientSessionID = SessionID;
+
 
                 #region synchronize cached order items
-                foreach (var flavourItem in FoodServicesClientSession.FlavourItems)
-                {
-                    var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
-                    if (cachedOrderItem != null)
-                        OrderItems.Remove(cachedOrderItem);
-                    OrderItems.Add(flavourItem as ItemPreparation);
-                }
 
-                foreach (var flavourItem in FoodServicesClientSession.SharedItems)
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
-                    if (cachedOrderItem != null)
-                        OrderItems.Remove(cachedOrderItem);
-                    OrderItems.Add(flavourItem as ItemPreparation);
+                    var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+
+                    foreach (var flavourItem in FoodServicesClientSession.FlavourItems)
+                    {
+                        var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
+                        if (cachedOrderItem != null)
+                            _OrderItems.Remove(cachedOrderItem);
+                        _OrderItems.Add(flavourItem as ItemPreparation);
+                        objectStarage.CommitTransientObjectState(flavourItem);
+                    }
+
+
+
+                    foreach (var flavourItem in FoodServicesClientSession.SharedItems)
+                    {
+                        var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
+                        if (cachedOrderItem != null)
+                            _OrderItems.Remove(cachedOrderItem);
+                        _OrderItems.Add(flavourItem as ItemPreparation);
+                    }
+                    stateTransition.Consistent = true;
                 }
                 #endregion
                 RefreshMessmates();
@@ -406,39 +944,53 @@ namespace DontWaitApp
                 storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
 #endif
 
+                MenuName = storeRef.Name;
+                MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
+                MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+                ClientSessionID = FoodServicesClientSession.SessionID;
+                MainSessionID = FoodServicesClientSession.MainSession?.SessionID;
+                FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession);
+                ServicePointIdentity = clientSessionData.ServicePointIdentity;
+                ServicesPointName = clientSessionData.ServicesPointName;
+                ServicesContextLogo = clientSessionData.ServicesContextLogo;
+                DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri;
+                ServedMealTypesUris = clientSessionData.ServedMealTypesUris;
+                SessionType = clientSessionData.SessionType;
 
 
-                MenuData menuData = new MenuData()
-                {
-                    MenuName = storeRef.Name,
-                    MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
-                    MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
-                    ClientSessionID = FoodServicesClientSession.SessionID,
-                    MainSessionID = FoodServicesClientSession.MainSession?.SessionID,
-                    FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession),
-                    ServicePointIdentity = clientSessionData.ServicePointIdentity,
-                    ServicesPointName = clientSessionData.ServicesPointName,
-                    ServicesContextLogo = clientSessionData.ServicesContextLogo,
-                    DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
-                    ServedMealTypesUris = clientSessionData.ServedMealTypesUris,
-                    SessionType = clientSessionData.SessionType
+                //MenuData menuData = new MenuData()
+                //{
+                //    MenuName = storeRef.Name,
+                //    MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
+                //    MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                //    ClientSessionID = FoodServicesClientSession.SessionID,
+                //    MainSessionID = FoodServicesClientSession.MainSession?.SessionID,
+                //    FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession),
+                //    ServicePointIdentity = clientSessionData.ServicePointIdentity,
+                //    ServicesPointName = clientSessionData.ServicesPointName,
+                //    ServicesContextLogo = clientSessionData.ServicesContextLogo,
+                //    DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri,
+                //    ServedMealTypesUris = clientSessionData.ServedMealTypesUris,
+                //    SessionType = clientSessionData.SessionType
 
-                };
-                menuData.OrderItems = OrderItems.ToList();
-                MenuData = menuData;
-                ApplicationSettings.Current.LastServicePoinMenuData = menuData;
+                //};
+                //menuData.OrderItems = OrderItems.ToList();
+                //MenuData = menuData;
+                //ApplicationSettings.Current.LastServicePoinMenuData = menuData;
                 _ServicePointState = clientSessionData.ServicePointState;
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
                 GetMessages();
             }
         }
 
+        /// <exclude>Excluded</exclude>
         ServicePointState _ServicePointState = ServicePointState.Laying;
 
         /// <summary>
         /// Defines the state of service point  
         /// </summary>
-        public ServicePointState ServicePointState
+        /// <MetaDataID>{f4b050ec-01e9-4aab-9067-55c68e958c75}</MetaDataID>
+        public FlavourBusinessFacade.ServicesContextResources.ServicePointState ServicePointState
         {
             get
             {
@@ -447,7 +999,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{2cb552e5-2926-44aa-a051-93f9d81d4045}</MetaDataID>
-        string ClientSessionToken;
+        internal string ClientSessionToken;
 
 
         #region Messmates
@@ -458,7 +1010,7 @@ namespace DontWaitApp
         internal bool MessmatesLoaded;
 
         /// <MetaDataID>{7872a80f-383a-4e7e-a7c0-c81c99c9573a}</MetaDataID>
-        public IList<Messmate> GetCandidateMessmates()
+        public System.Collections.Generic.IList<DontWaitApp.Messmate> GetCandidateMessmates()
         {
             if (!MessmatesLoaded)
                 GetMessmatesFromServer().Wait(2);
@@ -470,11 +1022,12 @@ namespace DontWaitApp
         /// <MetaDataID>{d1b44dee-1753-48a2-89ba-fa7df5d31ecc}</MetaDataID>
         IList<Messmate> Messmates = new List<Messmate>();
         /// <MetaDataID>{af6e8091-4784-46b6-82af-70336ac8b8fd}</MetaDataID>
-        public IList<Messmate> GetMessmates()
+        public System.Collections.Generic.IList<DontWaitApp.Messmate> GetMessmates()
         {
             return Messmates;
         }
 
+        /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
         public void RefreshMessmates()
         {
             GetMessmatesFromServer();
@@ -544,11 +1097,11 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{63add039-3bee-4d8b-8d15-002e6e67aa63}</MetaDataID>
-        public IList<ItemPreparation> PreparationItems => OrderItems.ToList();
+        public System.Collections.Generic.IList<FlavourBusinessManager.RoomService.ItemPreparation> PreparationItems => OrderItems.ToList();
 
 
         /// <MetaDataID>{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}</MetaDataID>
-        public async Task<bool> SendItemsForPreparation()
+        public async System.Threading.Tasks.Task<bool> SendItemsForPreparation()
         {
 
 
@@ -561,9 +1114,6 @@ namespace DontWaitApp
             }
             return true;
         }
-
-        /// <MetaDataID>{67a87990-9414-48bc-8d1d-bc20335eb6ea}</MetaDataID>
-        List<ItemPreparation> OrderItems = new List<ItemPreparation>();
 
 
         /// <exclude>Excluded</exclude>
@@ -588,10 +1138,16 @@ namespace DontWaitApp
         public void AddItem(ItemPreparation item)
         {
 
-            OrderItems.Add(item);
-            var menuData = MenuData;
-            menuData.OrderItems = OrderItems.ToList();
-            MenuData = menuData;
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _OrderItems.Add(item);
+                stateTransition.Consistent = true;
+            }
+
+
+            //var menuData = MenuData;
+            //menuData.OrderItems = OrderItems.ToList();
+            //MenuData = menuData;
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
                 var datetime = DateTime.Now;
@@ -623,10 +1179,16 @@ namespace DontWaitApp
         /// <MetaDataID>{045d624f-d908-4164-a3be-e9d408ed4b70}</MetaDataID>
         public void AddSharingItem(ItemPreparation item)
         {
-            OrderItems.Add(item);
-            var menuData = MenuData;
-            menuData.OrderItems = OrderItems.ToList();
-            MenuData = menuData;
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _OrderItems.Add(item); 
+                stateTransition.Consistent = true;
+            }
+
+            //var menuData = MenuData;
+            //menuData.OrderItems = OrderItems.ToList();
+            //MenuData = menuData;
 
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
@@ -663,9 +1225,9 @@ namespace DontWaitApp
             bool hasChanges = OrderItemsDictionary[item.uid].Update(item);
             if (hasChanges)
             {
-                var menuData = MenuData;
-                menuData.OrderItems = OrderItems.ToList();
-                MenuData = menuData;
+                //var menuData = MenuData;
+                //menuData.OrderItems = OrderItems.ToList();
+                //MenuData = menuData;
                 FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
                 {
                     var datetime = DateTime.Now;
@@ -693,8 +1255,8 @@ namespace DontWaitApp
                 });
             }
         }
-
-        Dictionary<string, ItemPreparation> OrderItemsDictionary
+        /// <MetaDataID>{b44c1f47-af25-4dcf-b59f-f818941c6397}</MetaDataID>
+        System.Collections.Generic.Dictionary<string, FlavourBusinessManager.RoomService.ItemPreparation> OrderItemsDictionary
         {
             get
             {
@@ -721,13 +1283,19 @@ namespace DontWaitApp
                 shareItem.Update(item);
             }
 
-            var orderItem = OrderItems.Where(x => x.uid == item.uid).FirstOrDefault();
-            if (orderItem != null)
-                OrderItems.Remove(orderItem);
 
-            var menuData = MenuData;
-            menuData.OrderItems = OrderItems.ToList();
-            MenuData = menuData;
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var orderItem = _OrderItems.Where(x => x.uid == item.uid).FirstOrDefault();
+                if (orderItem != null)
+                    _OrderItems.Remove(orderItem);
+                stateTransition.Consistent = true;
+            }
+
+
+            //var menuData = MenuData;
+            //menuData.OrderItems = OrderItems.ToList();
+            //MenuData = menuData;
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
                 var datetime = DateTime.Now;
@@ -870,7 +1438,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{1ad75d89-e702-4d8e-8577-316b6b2a7977}</MetaDataID>
-        private void MenuItemProposalMessageForword(Message message)
+        private void MenuItemProposalMessageForword(FlavourBusinessFacade.EndUsers.Message message)
         {
             if (_MenuItemProposal != null)
             {
@@ -899,14 +1467,14 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{50033e95-3a4d-492d-98ba-f14f0e359418}</MetaDataID>
-        public void EndOfMenuItemProposal(Messmate messmate, string messageID)
+        public void EndOfMenuItemProposal(DontWaitApp.Messmate messmate, string messageID)
         {
             FoodServicesClientSession.RemoveMessage(messageID);
             GetMessages();
         }
 
         /// <MetaDataID>{c36bf954-e18c-4f82-aef4-ea94b18a4747}</MetaDataID>
-        public void SuggestMenuItem(Messmate messmate, string menuItemUri)
+        public void SuggestMenuItem(DontWaitApp.Messmate messmate, string menuItemUri)
         {
             var clientSession = (from theMessmate in this.Messmates
                                  where theMessmate.ClientSessionID == messmate.ClientSessionID
@@ -916,40 +1484,22 @@ namespace DontWaitApp
 
         }
 
-           #endregion
+        #endregion
 
-    
 
+
+        /// <MetaDataID>{0575115b-ff76-471d-b365-a880011b0050}</MetaDataID>
         public IFoodServiceSession MainSession => this.FoodServicesClientSession?.MainSession;
-
-
-   
-
-
-
-        /// <MetaDataID>{d048d779-11d6-4c80-b308-24e58a0359f8}</MetaDataID>
-        Message MenuItemProposalMessage;
+        /// <MetaDataID>{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}</MetaDataID>
+        FlavourBusinessFacade.EndUsers.Message MenuItemProposalMessage;
         /// <MetaDataID>{3e58cac8-fc04-4ff0-9ec9-68df0268646b}</MetaDataID>
         private string SessionID;
-        private ClientSessionData clientSessionData;
+        /// <MetaDataID>{356d9786-15a7-41f6-a44c-19ff475abbe8}</MetaDataID>
+        private FlavourBusinessFacade.EndUsers.ClientSessionData clientSessionData;
+        /// <MetaDataID>{20bd8838-4798-4082-a3e4-c40299bce52d}</MetaDataID>
         private MenuData lastServicePoinMenuData;
-        private FlavoursOrderServer FlavoursOrderServer;
+        /// <MetaDataID>{b57c2c39-f423-4c81-b4d4-e6459daed045}</MetaDataID>
+        internal DontWaitApp.FlavoursOrderServer FlavoursOrderServer;
 
-        public FoodServicesClientSessionViewModel(ClientSessionData clientSessionData, FlavoursOrderServer flavoursOrderServer)
-        {
-            FlavoursOrderServer = flavoursOrderServer;
-            FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
-            ClientSessionToken = clientSessionData.Token;
-            
-        }
-
-        public FoodServicesClientSessionViewModel(MenuData menuData, FlavoursOrderServer flavoursOrderServer)
-        {
-            MenuData = menuData;
-            FlavoursOrderServer = flavoursOrderServer;
-            if (MenuData.OrderItems != null)
-                OrderItems = MenuData.OrderItems.ToList();
-
-        }
     }
 }

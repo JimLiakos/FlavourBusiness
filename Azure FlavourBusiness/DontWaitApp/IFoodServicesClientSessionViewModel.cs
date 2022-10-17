@@ -13,47 +13,41 @@ namespace DontWaitApp
     [HttpVisible]
     public interface IFoodServicesClientSessionViewModel
     {
-
-        [HttpInVisible]
-        IFoodServiceSession MainSession { get; }
-
-
-        ServicePointState ServicePointState { get; }
-
-        void SendMealInvitationMessage(InvitationChannel channel, string endPoint);
-
-        [GenerateEventConsumerProxy]
-        event SharedItemChangedHandle SharedItemChanged;
+        [RoleAMultiplicityRange(0)]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
+        [Association("ClientSesionOrderItems", Roles.RoleA, "d5c354c5-f20e-409b-b824-6f0d350186b3")]
+        List<FlavourBusinessManager.RoomService.ItemPreparation> OrderItems { get; }
 
         /// <MetaDataID>{ddc0de45-90e3-4ad6-ad3b-ba01880aef0a}</MetaDataID>
         void SuggestMenuItem(Messmate messmate, string menuItemUri);
 
+        /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
+        void EndOfMenuItemProposal(Messmate messmate, string messageID);
 
-        #region  Meal invitation
-        /// <MetaDataID>{8fabd5f0-b381-439c-a726-932a70dcdf4d}</MetaDataID>
-        void MealInvitation(Messmate messmate);
+        /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
+        Task<bool> SendItemsForPreparation();
 
+        /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
+        void RefreshMessmates();
 
-        Task<Contact> PickContact();
+        /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
+        IList<Messmate> GetMessmates();
 
-        /// <MetaDataID>{009b6efd-a074-450e-b2d7-58755a212bb3}</MetaDataID>
-        Task<bool> AcceptInvitation(Messmate messmate, string messageID);
+        
 
-        /// <MetaDataID>{149a02ff-8930-49cb-ae78-fa52cbea5b39}</MetaDataID>
-        void DenyInvitation(Messmate messmate, string messageID);
-
-        /// <MetaDataID>{a7914fd9-b836-4504-ab6a-407c4803f4f6}</MetaDataID>
-        void CancelMealInvitation(Messmate messmate);
-        #endregion
+  
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        /// <MetaDataID>{9a168c2f-de48-47d1-ab4c-d46d48292364}</MetaDataID>
-        string GetMealInvitationQRCode(string color);
+        /// <MetaDataID>{c3c9d4ab-41b4-41a5-a0cb-6d2d6cba58e5}</MetaDataID>
+        [HttpInVisible]
+        IFoodServiceSession MainSession { get; }
+
+
+        /// <MetaDataID>{e48a2bb1-481f-4417-bef0-b2e7b9401b45}</MetaDataID>
+        ServicePointState ServicePointState { get; }
+
+        [GenerateEventConsumerProxy]
+        event SharedItemChangedHandle SharedItemChanged;
 
 
         /// <MetaDataID>{9307ddb6-eccf-42f0-920a-3f022bd6c958}</MetaDataID>
@@ -62,18 +56,6 @@ namespace DontWaitApp
 
         /// <MetaDataID>{0d8183bc-41b0-4601-a291-16c18ad31b08}</MetaDataID>
         IList<Messmate> GetCandidateMessmates();
-
-        /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
-        IList<Messmate> GetMessmates();
-
-
-        /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
-        void RefreshMessmates();
-
-
-
-        /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
-        Task<bool> SendItemsForPreparation();
 
 
    
@@ -98,11 +80,6 @@ namespace DontWaitApp
 
         /// <MetaDataID>{2e3da50d-bf09-43b3-ae13-4feaf667b2f2}</MetaDataID>
         void AddSharingItem(FlavourBusinessManager.RoomService.ItemPreparation item);
-
-
-
-        /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
-        void EndOfMenuItemProposal(Messmate messmate, string messageID);
 
 
         /// <MetaDataID>{f7534611-0be9-4b2b-93f7-9cb0ff64d602}</MetaDataID>

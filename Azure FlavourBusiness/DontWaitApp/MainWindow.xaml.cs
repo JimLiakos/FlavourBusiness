@@ -67,7 +67,7 @@ namespace DontWaitApp
 
                 FlavoursOrderServer_OnWebViewLoaded();
 
-                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity))
+                if (ApplicationSettings.Current.DisplayedFoodServicesClientSession!=null)
                 {
                     Browser.Navigate(new Uri(url + "/#/room-service;orderServerPath=.%2FEndUser"));
                     //http://192.168.2.8:4300/#/room-service

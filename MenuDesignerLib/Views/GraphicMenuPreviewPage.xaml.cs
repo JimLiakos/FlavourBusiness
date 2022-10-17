@@ -47,7 +47,8 @@ namespace MenuDesigner.Views
                     string defaultMealTypeUri=(from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
                      select mealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault()?.MealTypeUri;
 
-                    FlavoursOrderServer.MenuData = new DontWaitApp.MenuData()
+                    
+                    FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData = new DontWaitApp.MenuData()
                     {
                         ServicesPointName = "",
                         ServicesContextLogo = "",
@@ -61,7 +62,7 @@ namespace MenuDesigner.Views
                     //MenuModel.FixedMealType
                 }
 
-                BookViewModel.CreateMenuPreview(FlavoursOrderServer.MenuData.MenuRoot, FlavoursOrderServer.MenuData.MenuName, GraphickMenuResources);
+                BookViewModel.CreateMenuPreview(FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuRoot, FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuName, GraphickMenuResources);
 
             }));
             string url = @"https://localhost:4300/";
