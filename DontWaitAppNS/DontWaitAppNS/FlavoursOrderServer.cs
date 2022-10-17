@@ -709,10 +709,11 @@ namespace DontWaitApp
                 }
                 else
                 {
-                    _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
                     
                     ApplicationSettings.Current.DisplayedFoodServicesClientSession = null;
                     Path = "";
+                    _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
+
                 }
             });
         }
@@ -838,6 +839,20 @@ namespace DontWaitApp
                 else
                     PartOfMealMessage = message;
             }
+        }
+
+        internal void SessionIsNoLongerActive(FoodServicesClientSessionViewModel foodServicesClientSessionViewModel)
+        {
+            ApplicationSettings.Current.RemoveClientSession(foodServicesClientSessionViewModel);
+            if (ApplicationSettings.Current.DisplayedFoodServicesClientSession == null)
+            {
+                Path = "";
+                _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
+            }
+
+
+            
+
         }
 
 

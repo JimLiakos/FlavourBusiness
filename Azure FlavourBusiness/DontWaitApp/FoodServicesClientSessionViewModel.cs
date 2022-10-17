@@ -540,7 +540,15 @@ namespace DontWaitApp
                         var orderItem = _OrderItems.Where(x => x.uid == itemUid).FirstOrDefault();
                         if (orderItem != null)
                             _OrderItems.Remove(orderItem);
-                        _OrderItems.Add(preparationItem); 
+                        _OrderItems.Add(preparationItem);
+
+                        if (!OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(preparationItem))
+                        {
+                            var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                            objectStarage.CommitTransientObjectState(preparationItem);
+                        }
+
+
                         stateTransition.Consistent = true;
                     }
 
@@ -609,6 +617,16 @@ namespace DontWaitApp
 
                     _OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
                     _OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+
+                    foreach (var preparationItem in _OrderItems)
+                    {
+                        if (!OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(preparationItem))
+                        {
+                            var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                            objectStarage.CommitTransientObjectState(preparationItem);
+                        }
+
+                    }
                     stateTransition.Consistent = true;
                 }
 
@@ -768,6 +786,16 @@ namespace DontWaitApp
         /// <MetaDataID>{c8a403e0-d804-40a6-8543-4bee48d1319f}</MetaDataID>
         private void FoodServicesClientSessionReconnected(object sender)
         {
+            try
+            {
+                sender = RemotingServices.RefreshCacheData(RemotingServices.CastTransparentProxy<MarshalByRefObject>(sender));
+            }
+            catch (OOAdvantech.Remoting.MissingServerObjectException)
+            {
+                FoodServicesClientSession = null;
+                FlavoursOrderServer.SessionIsNoLongerActive(this);
+                return;
+            }
 
             var foodServiceClientSession = RemotingServices.CastTransparentProxy<IFoodServiceClientSession>(sender);
 
@@ -783,6 +811,15 @@ namespace DontWaitApp
 
                 _OrderItems.AddRange(FoodServicesClientSession.FlavourItems.OfType<ItemPreparation>());
                 _OrderItems.AddRange(FoodServicesClientSession.SharedItems.OfType<ItemPreparation>());
+                foreach (var preparationItem in _OrderItems)
+                {
+                    if (!OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(preparationItem))
+                    {
+                        var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                        objectStarage.CommitTransientObjectState(preparationItem);
+                    }
+
+                }
 
                 stateTransition.Consistent = true;
             }
@@ -842,18 +879,25 @@ namespace DontWaitApp
             {
                 if (_FoodServicesClientSession != null)
                 {
-                    FoodServicesClientSession.MessageReceived -= MessageReceived;
-                    FoodServicesClientSession.ObjectChangeState -= FoodServicesClientSessionChangeState;
-                    FoodServicesClientSession.ItemStateChanged -= FoodServicesClientSessionItemStateChanged;
-                    FoodServicesClientSession.ItemsStateChanged -= FoodServicesClientSessionItemsStateChanged;
+                    try
+                    {
+                        _FoodServicesClientSession.MessageReceived -= MessageReceived;
+                        _FoodServicesClientSession.ObjectChangeState -= FoodServicesClientSessionChangeState;
+                        _FoodServicesClientSession.ItemStateChanged -= FoodServicesClientSessionItemStateChanged;
+                        _FoodServicesClientSession.ItemsStateChanged -= FoodServicesClientSessionItemsStateChanged;
+                        if (_FoodServicesClientSession is ITransparentProxy)
+                            (_FoodServicesClientSession as ITransparentProxy).Reconnected -= FoodServicesClientSessionReconnected;
+
+
+                    }
+                    catch (Exception error)
+                    {
+                    }
                 }
 
                 if (_FoodServicesClientSession == null && value != null)
                     value.DeviceResume();
 
-
-                if (_FoodServicesClientSession is ITransparentProxy)
-                    (_FoodServicesClientSession as ITransparentProxy).Reconnected -= FoodServicesClientSessionReconnected;
 
 
 
@@ -874,9 +918,9 @@ namespace DontWaitApp
                         MenuFile = "";
                         ClientSessionID = "";
                         MainSessionID = ""; ;
-                        FoodServiceClientSessionUri = ""; 
+                        FoodServiceClientSessionUri = "";
                         ServicePointIdentity = "";
-                        ServicesPointName ="";
+                        ServicesPointName = "";
                         ServicesContextLogo = "";
                         DefaultMealTypeUri = "";
                         ServedMealTypesUris = new List<string>();
@@ -1141,6 +1185,8 @@ namespace DontWaitApp
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _OrderItems.Add(item);
+                var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                objectStarage.CommitTransientObjectState(item);
                 stateTransition.Consistent = true;
             }
 
@@ -1182,7 +1228,9 @@ namespace DontWaitApp
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _OrderItems.Add(item); 
+                _OrderItems.Add(item);
+                var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                objectStarage.CommitTransientObjectState(item);
                 stateTransition.Consistent = true;
             }
 
