@@ -74,11 +74,13 @@ namespace DontWaitApp
                 }
                 else
                     Browser.Navigate(new Uri(url));
-                FlavoursOrderServer.Initialize();
+             
 
             }
             else
                 Browser.Navigate(new Uri(url));
+
+            FlavoursOrderServer.Initialize();
 
             FlavoursOrderServer_OnWebViewLoaded();
 

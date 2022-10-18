@@ -385,6 +385,11 @@ namespace DontWaitApp
 
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
                     {
+                        string clientSessionID = message.GetDataValue("ClientSessionID") as string;
+
+                        var messmate = this.GetCandidateMessmates().Union(this.GetMessmates()).Where(x => x.ClientSessionID == "clientSessionID").FirstOrDefault();
+                        if(messmate==null)
+                             GetMessmatesFromServer()s; 
                         this.FlavoursOrderServer.PartOfMealRequestMessageForward(message);
                         return;
                     }
@@ -972,6 +977,7 @@ namespace DontWaitApp
                         if (cachedOrderItem != null)
                             _OrderItems.Remove(cachedOrderItem);
                         _OrderItems.Add(flavourItem as ItemPreparation);
+                        objectStarage.CommitTransientObjectState(flavourItem);
                     }
                     stateTransition.Consistent = true;
                 }
@@ -1072,9 +1078,9 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
-        public void RefreshMessmates()
+        public async void RefreshMessmates()
         {
-            GetMessmatesFromServer();
+            await GetMessmatesFromServer();
         }
         /// <MetaDataID>{4f182b25-801d-44a9-bb30-ca0320c4c7d5}</MetaDataID>
         public Task GetMessmatesFromServer()
@@ -1104,7 +1110,7 @@ namespace DontWaitApp
                             CandidateMessmates = candidateMessmates;
 
                             MessmatesLoaded = true;
-                            GetMessages();
+                            //GetMessages();
                         }
                         _ObjectChangeState?.Invoke(this, null);
                     }
