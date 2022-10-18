@@ -388,8 +388,11 @@ namespace DontWaitApp
                         string clientSessionID = message.GetDataValue("ClientSessionID") as string;
 
                         var messmate = this.GetCandidateMessmates().Union(this.GetMessmates()).Where(x => x.ClientSessionID == "clientSessionID").FirstOrDefault();
-                        if(messmate==null)
-                             GetMessmatesFromServer()s; 
+                        if (messmate == null)
+                        {
+                            GetMessmatesFromServer().Wait();
+                            messmate = this.GetCandidateMessmates().Union(this.GetMessmates()).Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
+                        }
                         this.FlavoursOrderServer.PartOfMealRequestMessageForward(message);
                         return;
                     }
@@ -1063,7 +1066,7 @@ namespace DontWaitApp
         public System.Collections.Generic.IList<DontWaitApp.Messmate> GetCandidateMessmates()
         {
             if (!MessmatesLoaded)
-                GetMessmatesFromServer().Wait(2);
+                GetMessmatesFromServer().Wait();
             return CandidateMessmates;
 
         }
