@@ -1613,7 +1613,14 @@ namespace DontWaitApp
         /// <MetaDataID>{df563e71-7bde-477c-82a6-b97a6b8d1f72}</MetaDataID>
         IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession => FoodServicesClientSessionViewModel;
 
-    
+
+        public List<IFoodServicesClientSessionViewModel> ActiveSessions
+        {
+            get
+            {
+                return ApplicationSettings.Current.ActiveSessions.OfType<IFoodServicesClientSessionViewModel>().ToList();
+            }
+        }
         /// <MetaDataID>{3b8f1bd2-0697-4d3e-81d2-e304771ac9b6}</MetaDataID>
         public void Speak(string text)
         {

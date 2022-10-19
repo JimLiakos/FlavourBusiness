@@ -79,6 +79,8 @@ namespace MenuDesigner.ViewModel.Preview
         internal FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel { get; private set; } = new FoodServicesClientSessionViewModel();
         IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession => FoodServicesClientSessionViewModel;
 
+        public List<IFoodServicesClientSessionViewModel> ActiveSessions => FoodServicesClientSessionViewModel!=null? new List<IFoodServicesClientSessionViewModel>(){FoodServicesClientSessionViewModel}: new List<IFoodServicesClientSessionViewModel>();
+
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
         public event SharedItemChangedHandle SharedItemChanged;

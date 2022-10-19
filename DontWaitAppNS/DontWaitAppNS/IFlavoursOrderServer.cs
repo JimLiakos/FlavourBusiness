@@ -72,6 +72,8 @@ namespace DontWaitApp
         /// <MetaDataID>{8fedff9e-af0f-4f35-98de-a9bf18486a23}</MetaDataID>
         IFoodServicesClientSessionViewModel CurrentFoodServicesClientSession { get; }
 
+        List<IFoodServicesClientSessionViewModel> ActiveSessions { get; }
+
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
 

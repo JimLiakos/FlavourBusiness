@@ -25,6 +25,8 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{f12b11f7-8597-4551-9f68-702e88cd1fd5}</MetaDataID>
         public IList<ItemPreparation> PreparationItems => throw new NotImplementedException();
 
+        public List<ItemPreparation> OrderItems => throw new NotImplementedException();
+
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
         public event MessmatesWaitForYouToDecideHandle MessmatesWaitForYouToDecide;
