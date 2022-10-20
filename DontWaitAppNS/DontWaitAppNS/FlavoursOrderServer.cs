@@ -1622,21 +1622,25 @@ namespace DontWaitApp
                    {
 
 
+                       var areNoLongerActiveSesions = new List<FoodServicesClientSessionViewModel>();
 
-                       using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                       foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
                        {
-                           foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
-                           {
-                               var isActive = await foodServicesClientSession.IsActive();
+                           var isActive = await foodServicesClientSession.IsActive();
 
-                               if (isActive.HasValue && isActive.Value == false)
-                                   ApplicationSettings.Current.RemoveClientSession(foodServicesClientSession);
-                           }
-
-                           stateTransition.Consistent = true;
+                           if (isActive.HasValue && isActive.Value == false)
+                               areNoLongerActiveSesions.Add(foodServicesClientSession);
                        }
+                       if (areNoLongerActiveSesions.Count > 0)
+                       {
+                           using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                           {
+                               foreach (var foodServicesClientSession in areNoLongerActiveSesions)
+                                   ApplicationSettings.Current.RemoveClientSession(foodServicesClientSession);
 
-
+                               stateTransition.Consistent = true;
+                           }
+                       }
 
                        return ApplicationSettings.Current.ActiveSessions.OfType<IFoodServicesClientSessionViewModel>().ToList();
                    });
