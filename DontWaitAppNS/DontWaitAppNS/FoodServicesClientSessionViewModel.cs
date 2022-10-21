@@ -340,11 +340,13 @@ namespace DontWaitApp
             }
         }
 
+#if DeviceDotNet
         internal void Device_MessageReceived(IRemoteMessage remoteMessage)
         {
             if (remoteMessage.Data.ContainsKey("MessageID") && FoodServicesClientSession != null)
                 MessageReceived(FoodServicesClientSession);
         }
+#endif
 
 
         /// <exclude>Excluded</exclude>

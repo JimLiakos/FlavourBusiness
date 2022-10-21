@@ -24,11 +24,16 @@ using System.Reflection;
 using System.Threading;
 using OOAdvantech.Transactions;
 using FlavourBusinessManager.EndUsers;
+using System.Net;
+using OOAdvantech.Authentication;
+using static System.Net.WebRequestMethods;
+
 
 
 
 
 #if DeviceDotNet
+using ZXing.QrCode.Internal;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using ZXing.Net.Mobile.Forms;
@@ -666,7 +671,24 @@ namespace DontWaitApp
             if (Initialized)
                 return;
 
-            Initialized = true;
+            using (HttpClient wc = new HttpClient())
+            {
+                try
+                {
+                    var resp = await wc.GetStringAsync(@"http://10.0.0.13:8090/api/values");
+                    System.Diagnostics.Debug.WriteLine("sds");
+                }
+                catch (Exception error)
+                {
+//                    { System.Net.Http.HttpRequestException: The Internet connection appears to be offline. --->Foundation.NSErrorException: Error Domain = NSURLErrorDomain Code = -1009 "The Internet connection appears to be offline." UserInfo ={ _kCFStreamErrorCodeKey = 50, NSUnderlyingError = 0x281d35470 { Error Domain = kCFErrorDomainCFNetwork Code = -1009 "(null)" UserInfo ={ _NSURLErrorNWPathKey = unsatisfied(Local network prohibited), interface: en0, ipv4, _kCFStreamErrorCodeKey=50, _kCFStreamErrorDomainKey=1}
+//}, _NSURLErrorFailingURLSessionTaskErrorKey = LocalDataTask < 6CF91F8F - 33F5 - 4F6B - B500 - D05CBEB3404D >.< 1 >, _NSURLErrorRelatedURLSessionTaskErrorKey = (\n "LocalDataTask <6CF91F8F-33F5-4F6B-B500-D05CBEB3404D>.<1>"\n), NSLocalizedDescription = The Internet connection appears to be offline., NSErrorFailingURLStringKey = http://10.0.0.13:8090/api/values, NSErrorFailingURLKey=http://10.0.0.13:8090/api/values, _kCFStreamErrorDomainKey=1}\n   --- End of inner exception stack trace ---\n  at System.Net.Http.NSUrlSessionHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x001ad] in /Library/Frameworks/Xamarin.iOS.framework/Versions/16.0.0.75/src/Xamarin.iOS/Foundation/NSUrlSessionHandler.cs:529 \n  at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered (System.Threading.Tasks.Task`1[TResult] sendTask, System.Net.Http.HttpRequestMessage request, System.Threading.CancellationTokenSource cts, System.Boolean disposeCts) [0x000b3] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:531 \n  at System.Net.Http.HttpClient.GetStringAsyncCore (System.Threading.Tasks.Task`1[TResult] getTask) [0x0002e] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:147 \n  at DontWaitApp.FlavoursOrderServer.Initialize () [0x0007d] in F:\myproject\terpo\OpenVersions\FlavourBusiness\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs:674 }
+                    
+                }
+                
+
+            }
+
+                Initialized = true;
 #if DeviceDotNet
             ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif

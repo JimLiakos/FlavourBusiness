@@ -12,15 +12,15 @@ namespace FlavoursServicesWorkerRole.Controllers
     // [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
-        //public string[] Get()
-        //{
+        public string[] Get()
+        {
 
 
-        //        LogMessage .WriteLog( " Valuse :");
-        //    return new string[] { "value 1.85", "value2--" };
+            LogMessage.WriteLog(" Valuse :");
+            return new string[] { "value 1.85", "value2--" };
 
-        //    //return new HttpResponseMessage() { Version = new Version("1.1.1.3") } ;
-        //}
+            //return new HttpResponseMessage() { Version = new Version("1.1.1.3") } ;
+        }
 
         public HttpResponseMessage Get(string id)
         {
