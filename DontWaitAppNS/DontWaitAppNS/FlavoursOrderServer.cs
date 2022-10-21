@@ -270,8 +270,8 @@ namespace DontWaitApp
 #if DeviceDotNet
         private void Device_MessageReceived(OOAdvantech.IRemoteMessage remoteMessage)
         {
-            if (remoteMessage.Data.ContainsKey("MessageID") && FoodServiceClientSession != null)
-                MessageReceived(FoodServiceClientSession);
+            if (remoteMessage.Data.ContainsKey("MessageID") && FoodServicesClientSessionViewModel != null)
+                FoodServicesClientSessionViewModel.Device_MessageReceived(remoteMessage);
         }
 #endif
 
@@ -919,11 +919,11 @@ namespace DontWaitApp
                 //if (string.IsNullOrWhiteSpace(servicePointIdentity))
                 //    servicePointIdentity = "MealInvitation;7f9bde62e6da45dc8c5661ee2220a7b0;fe51ba7e30954ee08209bd89a03469a8;38ec58d3bc5a4145b1a94851cfc43ade91000000296";
 #if DeviceDotNet
-                if (string.IsNullOrWhiteSpace(servicePointIdentity))
-                {
-                    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
-                    servicePointIdentity = result.Text;
-                }
+                //if (string.IsNullOrWhiteSpace(servicePointIdentity))
+                //{
+                //    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+                //    servicePointIdentity = result.Text;
+                //}
 #endif
 
                 FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity);

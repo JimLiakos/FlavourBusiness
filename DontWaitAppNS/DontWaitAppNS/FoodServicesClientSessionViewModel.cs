@@ -8,7 +8,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
-
+using OOAdvantech.Transactions;
 
 
 
@@ -21,10 +21,11 @@ using ZXing;
 using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech;
 
 #else
 using FlavourBusinessFacade.ServicesContextResources;
-using OOAdvantech.Transactions;
+
 
 #endif
 
@@ -337,6 +338,12 @@ namespace DontWaitApp
                 }
 
             }
+        }
+
+        internal void Device_MessageReceived(IRemoteMessage remoteMessage)
+        {
+            if (remoteMessage.Data.ContainsKey("MessageID") && FoodServicesClientSession != null)
+                MessageReceived(FoodServicesClientSession);
         }
 
 

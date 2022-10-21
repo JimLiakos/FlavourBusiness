@@ -66,17 +66,16 @@ namespace DontWaitApp
                 // long count = AssemblyMetaObject.Residents.Count;
 
 
-                FlavoursOrderServer.MenuData = ApplicationSettings.Current.LastServicePoinMenuData;
-
+         
 
 
 
                 string path = FlavoursOrderServer.Path;
 
                 if (path != null && path.Split('/').Length > 0 &&
-                path.Split('/')[0] == FlavoursOrderServer.MenuData.ServicePointIdentity)
+                path.Split('/')[0] == ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity)
                 {
-                    if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.MenuData.ServicePointIdentity))
+                    if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity))
                     {
                         // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
 
