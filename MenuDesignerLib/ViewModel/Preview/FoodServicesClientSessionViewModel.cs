@@ -11,21 +11,21 @@ using System.Threading.Tasks;
 namespace MenuDesigner.ViewModel.Preview
 {
     /// <MetaDataID>{7a078ffa-ba00-43b7-89f7-73f9f625ee67}</MetaDataID>
-    class FoodServicesClientSessionViewModel : IFoodServicesClientSessionViewModel
+    class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
         /// <MetaDataID>{cda04e9a-c2cc-407a-b290-e3841a086a25}</MetaDataID>
-        public IFoodServiceSession MainSession => throw new NotImplementedException();
+        public IFoodServiceSession MainSession => null;
 
         /// <MetaDataID>{f0125bcd-3096-40f0-b22e-42680d45f3d8}</MetaDataID>
-        public ServicePointState ServicePointState => throw new NotImplementedException();
+        public ServicePointState ServicePointState => ServicePointState.Conversation;
 
         /// <MetaDataID>{cdffa8d8-3788-4688-bfeb-4dcdf0b283f5}</MetaDataID>
         public MenuData MenuData { get; set; }
 
         /// <MetaDataID>{f12b11f7-8597-4551-9f68-702e88cd1fd5}</MetaDataID>
-        public IList<ItemPreparation> PreparationItems => throw new NotImplementedException();
+        public IList<ItemPreparation> PreparationItems => OrderItems;
 
-        public List<ItemPreparation> OrderItems => throw new NotImplementedException();
+        public List<ItemPreparation> OrderItems => new List<ItemPreparation>();
 
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -53,13 +53,13 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{725f7147-e8bf-4395-8f09-44bc316b9c39}</MetaDataID>
         public IList<Messmate> GetCandidateMessmates()
         {
-            throw new NotImplementedException();
+            return new List<Messmate>();
         }
 
         /// <MetaDataID>{c643936a-8fdb-4418-acf1-d273994afccb}</MetaDataID>
         public IList<Messmate> GetMessmates()
         {
-            throw new NotImplementedException();
+            return new List<Messmate>();
         }
 
         /// <MetaDataID>{bdb20e62-ceda-4610-9297-e2b02d34c586}</MetaDataID>

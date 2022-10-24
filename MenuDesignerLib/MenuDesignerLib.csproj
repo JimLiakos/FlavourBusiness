@@ -124,11 +124,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\IFoodServicesClientSessionViewModel.cs">
-      <Link>ViewModel\Preview\IFoodServicesClientSessionViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs">
       <Link>ViewModel\Preview\IFlavoursOrderServer.cs</Link>
+    </Compile>
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\IFoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\Preview\IFoodServicesClientSessionViewModel.cs</Link>
     </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\Messmate.cs">
       <Link>ViewModel\Preview\Messmate.cs</Link>

@@ -169,6 +169,20 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        ITranslator _Translator;
+        public ITranslator Translator
+        {
+            get
+            {
+                if (_Translator == null)
+                    _Translator = new Translator();
+                return _Translator;
+            }
+        }
+
+
+
         public string SetSelectedScaleTypeLevelUncheckTooltip
         {
             get

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel
 {
@@ -44,6 +45,17 @@ namespace MenuItemsEditor.ViewModel
             set
             {
                 Level.PriceFactor = value;
+            }
+        }
+        /// <exclude>Excluded</exclude>
+        ITranslator _Translator;
+        public ITranslator Translator
+        {
+            get
+            {
+                if (_Translator == null)
+                    _Translator = new Translator();
+                return _Translator;
             }
         }
 

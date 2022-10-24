@@ -79,7 +79,9 @@ namespace MenuDesigner.ViewModel.Preview
         internal FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel { get; private set; } = new FoodServicesClientSessionViewModel();
         IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession => FoodServicesClientSessionViewModel;
 
-        public List<IFoodServicesClientSessionViewModel> ActiveSessions => FoodServicesClientSessionViewModel!=null? new List<IFoodServicesClientSessionViewModel>(){FoodServicesClientSessionViewModel}: new List<IFoodServicesClientSessionViewModel>();
+        public List<IFoodServicesClientSessionViewModel> ActiveSessions => FoodServicesClientSessionViewModel != null ? new List<IFoodServicesClientSessionViewModel>() { FoodServicesClientSessionViewModel } : new List<IFoodServicesClientSessionViewModel>();
+
+        Task<List<IFoodServicesClientSessionViewModel>> IFlavoursOrderServer.ActiveSessions => throw new NotImplementedException();
 
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -421,6 +423,11 @@ namespace MenuDesigner.ViewModel.Preview
 
         /// <MetaDataID>{80d1e29e-2cdf-4d64-aef7-d348a0a26a4a}</MetaDataID>
         public Task<bool> GetFoodServicesClientSessionData(string foodServiceClientSessionUri)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> OpenFoodServicesClientSession(string clientSessionID)
         {
             throw new NotImplementedException();
         }

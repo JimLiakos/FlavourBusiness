@@ -111,6 +111,22 @@ namespace DontWaitApp
         }
 
 
+
+        public async Task<bool>  OpenFoodServicesClientSession(string clientSessionID)
+        {
+            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel= ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
+            if (foodServicesClientSessionViewModel == null || (await foodServicesClientSessionViewModel.IsActive()) != true)
+            {
+                FoodServicesClientSessionViewModel = null;
+                return false;
+            }
+            ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
+            FoodServicesClientSessionViewModel= foodServicesClientSessionViewModel;
+            return true;
+        }
+
+
+
         /// <MetaDataID>{3b2f428f-f1e1-4845-b4e7-6ec49a2502fb}</MetaDataID>
         public Task<HallLayout> GetHallLayout()
         {
@@ -675,7 +691,7 @@ namespace DontWaitApp
             {
                 try
                 {
-                    var resp = await wc.GetStringAsync(@"http://10.0.0.13:8090/api/values");
+                    var resp = await wc.GetStringAsync(@"http://192.168.2.8:8090/api/values");
                     System.Diagnostics.Debug.WriteLine("sds");
                 }
                 catch (Exception error)

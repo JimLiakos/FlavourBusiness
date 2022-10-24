@@ -54,12 +54,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\FoodServicesClientSessionViewModel.cs">
-      <Link>ViewModel\FoodServicesClientSessionViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Azure FlavourBusiness\DontWaitApp\IFoodServicesClientSessionViewModel.cs">
-      <Link>ViewModel\IFoodServicesClientSessionViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
       <Link>ViewModel\FlavoursOrderServer.cs</Link>
     </Compile>
@@ -69,6 +63,12 @@
     <None Include="..\MenuModel\JsonViewModel\Tag.cs">
       <Link>MenuModel\Tag.cs</Link>
     </None>
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\FoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\FoodServicesClientSessionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\DontWaitAppNS\DontWaitAppNS\IFoodServicesClientSessionViewModel.cs">
+      <Link>ViewModel\IFoodServicesClientSessionViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\ApplicationSettings.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\ApplicationSettings.cs</Link>
     </Compile>

@@ -755,6 +755,9 @@ namespace DontWaitApp
                         }
                         else
                         {
+                            if (ApplicationSettings.Current.DisplayedFoodServicesClientSession == this)
+                                this.FlavoursOrderServer.SessionIsNoLongerActive(this);
+
                             FoodServicesClientSession = null;
                             return true;
                         }
@@ -922,7 +925,6 @@ namespace DontWaitApp
 
                 if (value == null)
                 {
-
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _FoodServicesClientSession = null;

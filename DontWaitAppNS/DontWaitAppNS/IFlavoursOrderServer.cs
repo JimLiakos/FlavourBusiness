@@ -175,6 +175,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{8491fd19-2882-4b78-ac5e-84db4b54ccde}</MetaDataID>
         Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
+        Task<bool> OpenFoodServicesClientSession(string clientSessionID);
 
 
 
