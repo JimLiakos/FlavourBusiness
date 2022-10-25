@@ -58,8 +58,8 @@ namespace DontWaitApp
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true); 
 
             Browser.Navigated += Browser_Navigated;
-            
-            
+
+            FlavoursOrderServer.Initialize();
 
             if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.Path) && FlavoursOrderServer.Path.Split('/').Length > 0)
             {
@@ -80,7 +80,7 @@ namespace DontWaitApp
             else
                 Browser.Navigate(new Uri(url));
 
-            FlavoursOrderServer.Initialize();
+            
 
             FlavoursOrderServer_OnWebViewLoaded();
 

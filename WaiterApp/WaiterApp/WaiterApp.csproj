@@ -22,7 +22,9 @@
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\ViewModelWrappers.cs" Link="UIBaseEx\ViewModelWrappers.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServiceClientVM.cs" Link="ViewModel\FoodServiceClientVM.cs" />
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServicesClientSessionViewModel.cs" Link="ViewModel\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFlavoursOrderServer.cs" Link="ViewModel\IFlavoursOrderServer.cs" />
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFoodServicesClientSessionViewModel.cs" Link="ViewModel\IFoodServicesClientSessionViewModel.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\Messmate.cs" Link="ViewModel\Messmate.cs" />
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs" Link="ViewModel\FlavoursOrderServer.cs" />
     <Compile Include="..\..\FlavourBusinessManager\FoodServiceClient.cs" Link="FoodServiceClient.cs" />
