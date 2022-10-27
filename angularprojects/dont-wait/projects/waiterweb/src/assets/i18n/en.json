@@ -20,7 +20,8 @@
 		"SessionTransferErrorMessage": "Partial transfer of the '{0}' session is not possible",
 		"SharedItemsTransferErrorMessage": "Partial transfer of the sharing item '{0}' is not possible",
 		"TransferItemsWillBeDoneMessage": "The items will be transferred to table {0}",
-		"TransferErrorMessageOKButton": "OK"
+		"TransferErrorMessageOKButton": "OK",
+        "TotalLabel":"Total"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "OK",

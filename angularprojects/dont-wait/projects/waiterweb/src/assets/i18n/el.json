@@ -20,7 +20,8 @@
 		"SessionTransferErrorMessage": "Μερική μεταφορά της ενότητας '{0}' δεν επιτρέπεται.",
 		"SharedItemsTransferErrorMessage": "Μερική μεταφορά του κοινού είδους '{0}' δεν επιτρέπεται.",
 		"TransferItemsWillBeDoneMessage": "Τα είδη θα μεταφερθούν στο τραπέζι {0}",
-		"TransferErrorMessageOKButton": "OK"
+		"TransferErrorMessageOKButton": "OK",
+        "TotalLabel":"Σύνολο"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "Εντάξει",
