@@ -214,7 +214,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	1538
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ModView "Component View::FlavourBusinessFacade::FlavourBusinessFacade" "NotAModuleType" "NotAModulePart" @1
@@ -231,18 +231,18 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(1270, 771)
+			location   	(1276, 771)
 			fill_color 	13434879
 			anchor_loc 	3
 			nlines     	2
-			max_width  	240
+			max_width  	214
 			label      	"FlavourBusinessFacade")
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AA773E702B6"
-		    width      	434
-		    width      	434
+		    width      	388
+		    width      	388
 		    height     	162)
 		(object InterfaceView "Logical View::FlavourBusinessFacade::IOrganization" @2
 		    location   	(1267, 208)
@@ -713,18 +713,18 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@27
-			location   	(2214, 1233)
+			location   	(2220, 1233)
 			fill_color 	13434879
 			anchor_loc 	3
 			nlines     	2
-			max_width  	240
+			max_width  	214
 			label      	"FlavourBusinessFacade")
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AA773E702B6"
-		    width      	434
-		    width      	434
+		    width      	388
+		    width      	388
 		    height     	162)
 		(object InterfaceView "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClient" @28
 		    location   	(1469, 1833)
@@ -1933,11 +1933,40 @@
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"62EA035D035E")
+		    quidu      	"62EA035D035E"
+		    width      	180
+		    height     	60)
 		(object RealizeView "" @98
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"62EA0AFF0087"
 		    client     	@1
 		    supplier   	@97
-		    line_style 	0)))))
+		    line_style 	0)
+		(object InterfaceView "Logical View::FinanceFacade::IPayment" @99
+		    location   	(3539, 753)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@99
+			location   	(3538, 861)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPayment")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"635CB39B0177"
+		    width      	180
+		    height     	60)))))

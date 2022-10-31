@@ -2995,6 +2995,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_BillingPayments", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FinanceFacade.IPayment>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.DateTime WillTakeCareTimestamp
         {
             get
@@ -3164,6 +3176,24 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void AddPayment(FinanceFacade.IPayment payment)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = payment;
+            argsTypes[0] = typeof(FinanceFacade.IPayment);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "AddPayment", args, argsTypes);
+        }
+        
+        public void RemovePayment(FinanceFacade.IPayment payment)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = payment;
+            argsTypes[0] = typeof(FinanceFacade.IPayment);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "RemovePayment", args, argsTypes);
         }
         
         public void AddPartialSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession partialSession)
@@ -5969,6 +5999,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = item;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "AddItem", args, argsTypes);
+        }
+        
+        public FinanceFacade.IPayment Pay()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "Pay", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.IPayment>(retValue);
         }
         
         public void DeviceResume()

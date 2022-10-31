@@ -2394,6 +2394,11 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public IPayment Pay()
+        {
+            return null;
+        }
+
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
         {

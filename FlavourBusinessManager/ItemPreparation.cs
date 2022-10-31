@@ -896,6 +896,16 @@ namespace FlavourBusinessManager.RoomService
             return changed;
         }
 
+        public void AddPayment(IPayment payment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePayment(IPayment payment)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <MetaDataID>{74e7c1c6-6831-4122-89fe-dc4336cee82f}</MetaDataID>
         public List<string> SharedInSessions
         {
@@ -1041,6 +1051,8 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+        public List<IPayment> Payments =>  new List<IPayment>() ;
 
 
 

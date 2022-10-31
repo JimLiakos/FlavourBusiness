@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
@@ -78,6 +79,9 @@ namespace FlavourBusinessFacade.EndUsers
         event ItemsStateChangedHandle ItemsStateChanged;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+
+        IPayment Pay();
 
 
 

@@ -671,6 +671,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public List<IPayment> BillingPayments =>new List<IPayment>();
+
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
         internal void ReassignSharedItem(ItemPreparation flavourItem)
@@ -727,6 +729,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
 
+        }
+
+        public void AddPayment(IPayment payment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePayment(IPayment payment)
+        {
+            throw new NotImplementedException();
         }
     }
 }

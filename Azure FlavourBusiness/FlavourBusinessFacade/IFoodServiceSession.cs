@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FinanceFacade;
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 
@@ -10,6 +11,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        [Association("BillingPayment", Roles.RoleA, "27108d66-3180-46e0-881f-6b52acda72ce")]
+        [RoleAMultiplicityRange(1)]
+        List<IPayment> BillingPayments { get; }
+
+        /// <MetaDataID>{ebb02282-df96-4989-8e11-5f78e47ac3df}</MetaDataID>
+        void AddPayment(IPayment payment);
+
+        /// <MetaDataID>{eb4da815-da0f-48a4-bd0a-edab7d76c371}</MetaDataID>
+        void RemovePayment(IPayment payment);
+
         /// <MetaDataID>{57dcf2ab-8af0-470f-a50a-b6c812373164}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         DateTime WillTakeCareTimestamp { get; set; }
@@ -60,6 +71,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{1859dba8-9740-40df-92a0-ceacd7586667}</MetaDataID>
         SessionState SessionState { get; set; }
 
+        /// <MetaDataID>{fad1d85a-a4bc-45ae-b332-452430da318a}</MetaDataID>
         [BackwardCompatibilityID("+8")]
         SessionType SessionType { get; }
 

@@ -30,6 +30,10 @@ namespace DontWaitApp
         /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
         void RefreshMessmates();
 
+
+        FlavourBusinessFacade.RoomService.IPayment Pay();
+
+
         /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
         IList<Messmate> GetMessmates();
 

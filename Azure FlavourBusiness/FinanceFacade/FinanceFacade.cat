@@ -3054,6 +3054,68 @@
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#")
+	(object Class "IPayment"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}"))
+	    quid       	"635CB39B0177"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"635CBA750221")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{45d235f7-ea8f-476a-a5b7-93112d49437f}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"635CBA750221"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3df25632-5ef6-420a-95bf-a342f7e3588a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"635CCEAD008A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"635CCEAD008A"
+		    type       	"FlavourBusinessFacade.RoomService.PaymentType"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
 	(object Association "TransactionItem"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -4570,7 +4632,7 @@
 		    quidu      	"5C6CE6AD03E4"
 		    compartment 	(object Compartment
 			Parent_View 	@53
-			location   	(212, 1266)
+			location   	(212, 1262)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4585,7 +4647,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	24
-			max_width  	1550)
+			max_width  	1459)
 		    width      	569
 		    height     	368
 		    annotation 	8)
@@ -4618,7 +4680,7 @@
 		    quidu      	"5C6CE6CF0194"
 		    compartment 	(object Compartment
 			Parent_View 	@54
-			location   	(1178, 1314)
+			location   	(1178, 1310)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4633,7 +4695,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	8
-			max_width  	1340)
+			max_width  	1259)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -4665,24 +4727,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
-		    compartment 	(object Compartment
-			Parent_View 	@55
-			location   	(1168, 662)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	400)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -4715,7 +4759,7 @@
 		    quidu      	"5C6BD7AB00BA"
 		    compartment 	(object Compartment
 			Parent_View 	@56
-			location   	(2311, 705)
+			location   	(2311, 701)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4730,7 +4774,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	384)
+			max_width  	359)
 		    width      	581
 		    height     	263
 		    annotation 	8)
@@ -4910,7 +4954,7 @@
 		    quidu      	"5C6BBD69034C"
 		    compartment 	(object Compartment
 			Parent_View 	@64
-			location   	(225, 683)
+			location   	(225, 679)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4925,7 +4969,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	11
-			max_width  	668)
+			max_width  	637)
 		    width      	531
 		    height     	394
 		    annotation 	8)
@@ -5391,4 +5435,213 @@
 			    supplier   	@81
 			    line_style 	3
 			    origin_attachment 	(1768, 2270)
-			    terminal_attachment 	(1447, 2270))))))))
+			    terminal_attachment 	(1447, 2270))))))
+	(object ClassDiagram "Payments"
+	    quid       	"635EB5B700FF"
+	    title      	"Payments"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	553
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @88
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1322, 1616)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@88
+			location   	(988, 1540)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	669
+			justify    	0
+			label      	"IPayment")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"635CB39B0177"
+		    width      	687
+		    height     	350
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @89
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2688, 1612)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@89
+			location   	(2479, 1584)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	418
+			justify    	0
+			label      	"IItem")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6BBDA2021E"
+		    width      	436
+		    height     	254
+		    annotation 	8)
+		(object AssociationViewNew "PaymentItem" @90
+		    location   	(2067, 1613)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @91
+			Parent_View 	@90
+			location   	(2067, 1554)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"PaymentItem"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"635EB36E02E8"
+		    roleview_list 	(list RoleViews
+			(object RoleView "Items" @92
+			    Parent_View 	@90
+			    location   	(745, -3)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @93
+				Parent_View 	@92
+				location   	(2389, 1571)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	122
+				justify    	0
+				label      	"+Items"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"635EB36F03A4"
+			    client     	@90
+			    supplier   	@89
+			    line_style 	0
+			    label      	(object SegLabel @94
+				Parent_View 	@92
+				location   	(2428, 1666)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "" @95
+			    Parent_View 	@90
+			    location   	(745, -3)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"635EB36F03BC"
+			    client     	@90
+			    supplier   	@88
+			    line_style 	0
+			    label      	(object SegLabel @96
+				Parent_View 	@95
+				location   	(1706, 1668)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))))))
