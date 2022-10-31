@@ -14,6 +14,7 @@ using OOAdvantech;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessFacade.HumanResources;
 
+
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{a44c2bf7-1fd4-4e5a-b831-f9f7a1c381ac}</MetaDataID>
@@ -671,7 +672,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        public List<IPayment> BillingPayments =>new List<IPayment>();
+        public List<FinanceFacade.IPayment> BillingPayments =>new List<FinanceFacade.IPayment>();
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
@@ -731,12 +732,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-        public void AddPayment(IPayment payment)
+        public void AddPayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
         }
 
-        public void RemovePayment(IPayment payment)
+        public void RemovePayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
         }

@@ -10,6 +10,7 @@ using System;
 using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
+
 #if !FlavourBusinessDevice
 
 using FlavourBusinessManager.ServicePointRunTime;
@@ -896,12 +897,12 @@ namespace FlavourBusinessManager.RoomService
             return changed;
         }
 
-        public void AddPayment(IPayment payment)
+        public void AddPayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
         }
 
-        public void RemovePayment(IPayment payment)
+        public void RemovePayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
         }
@@ -1052,7 +1053,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        public List<IPayment> Payments =>  new List<IPayment>() ;
+        public List<FinanceFacade.IPayment> Payments =>  new List<FinanceFacade.IPayment>() ;
 
 
 

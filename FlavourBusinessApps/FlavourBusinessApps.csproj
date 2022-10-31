@@ -390,6 +390,10 @@
       <Project>{d83eae0a-82cd-4496-8524-c734c6236b78}</Project>
       <Name>WindowsBaseEx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
       <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
       <Name>FlavourBusinessFacade</Name>

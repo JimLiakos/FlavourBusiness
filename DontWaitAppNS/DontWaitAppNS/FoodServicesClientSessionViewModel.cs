@@ -25,7 +25,8 @@ using OOAdvantech;
 
 #else
 using FlavourBusinessFacade.ServicesContextResources;
-using FinanceFacade;
+
+
 
 
 #endif
@@ -1091,7 +1092,7 @@ namespace DontWaitApp
         {
             return Messmates;
         }
-        public IPayment Pay()
+        public FinanceFacade.IPayment Pay()
         {
             return null;
         }
@@ -1556,7 +1557,12 @@ namespace DontWaitApp
 
         }
 
-       
+        FinanceFacade.IPayment IFoodServicesClientSessionViewModel.Pay()
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         #endregion
 

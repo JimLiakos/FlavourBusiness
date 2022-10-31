@@ -3111,11 +3111,263 @@
 			    name       	"GenerateSetOperation"
 			    value      	TRUE))
 		    quid       	"635CCEAD008A"
-		    type       	"FlavourBusinessFacade.RoomService.PaymentType"
+		    type       	"FinanceFacade.PaymentType"
+		    exportControl 	"Public")
+		(object ClassAttribute "Currency"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c25d9c8d-f279-4a72-85fd-1f53655030c8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63600582024D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"63600582024D"
+		    documentation 	
+|
+|Defines ISO Currency Symbol 
+|
+		    
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{def3eb8b-4fc3-41a3-9d56-8a4c83b95e0f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63600AB803A0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"63600AB803A0"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#")
+	(object Class "Payment"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{e777abd6-c8a8-45d4-921b-29c10a6c1f7e}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"4")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{e777abd6-c8a8-45d4-921b-29c10a6c1f7e}"))
+	    quid       	"635FFC480366"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"635FFD72017C"
+		    supplier   	"Logical View::FinanceFacade::IPayment"
+		    quidu      	"635CB39B0177"))
+	    operations 	(list Operations
+		(object Operation "ObjectActivation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c6400a9f-da1d-409f-860b-7d46c76643cd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360072B03A4"))
+		    quid       	"6360072B03A4"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ItemsJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4c7bdca1-0a7e-47cd-a10f-7e0306ba04fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360001C00D0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"6360001C00D0"
+		    type       	"string")
+		(object ClassAttribute "Amount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{83e4b5ff-08c6-474c-a342-881f6e7919b1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636000270228")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"636000270228"
+		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1b3ee769-e800-4f12-9b92-444c022e89f7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636000270248")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"636000270248"
+		    type       	"FinanceFacade.PaymentType"
+		    exportControl 	"Public")
+		(object ClassAttribute "Items"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f3f15640-076f-4d1e-b993-418ac5f6c521}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636000270276")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"636000270276"
+		    type       	"System.Collections.Generic.List<FinanceFacade.IItem>"
+		    exportControl 	"Public")
+		(object ClassAttribute "Currency"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cdab1bd4-351b-4d1e-bfd5-f69c49555adb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360072B03D9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"6360072B03D9"
+		    type       	"string"
+		    exportControl 	"Public"))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#"
+	    persistence 	"Persistent")
 	(object Association "TransactionItem"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -4632,7 +4884,7 @@
 		    quidu      	"5C6CE6AD03E4"
 		    compartment 	(object Compartment
 			Parent_View 	@53
-			location   	(212, 1262)
+			location   	(212, 1266)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4646,8 +4898,8 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	24
-			max_width  	1459)
+			nlines     	23
+			max_width  	1550)
 		    width      	569
 		    height     	368
 		    annotation 	8)
@@ -4680,7 +4932,7 @@
 		    quidu      	"5C6CE6CF0194"
 		    compartment 	(object Compartment
 			Parent_View 	@54
-			location   	(1178, 1310)
+			location   	(1178, 1314)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4695,7 +4947,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	8
-			max_width  	1259)
+			max_width  	1340)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -4727,6 +4979,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
+		    compartment 	(object Compartment
+			Parent_View 	@55
+			location   	(1168, 662)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	400)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -4759,7 +5029,7 @@
 		    quidu      	"5C6BD7AB00BA"
 		    compartment 	(object Compartment
 			Parent_View 	@56
-			location   	(2311, 701)
+			location   	(2311, 705)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4774,7 +5044,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	359)
+			max_width  	384)
 		    width      	581
 		    height     	263
 		    annotation 	8)
@@ -4954,7 +5224,7 @@
 		    quidu      	"5C6BBD69034C"
 		    compartment 	(object Compartment
 			Parent_View 	@64
-			location   	(225, 679)
+			location   	(225, 683)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4969,7 +5239,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	11
-			max_width  	637)
+			max_width  	668)
 		    width      	531
 		    height     	394
 		    annotation 	8)
@@ -5443,11 +5713,11 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	553
+	    origin_y   	394
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @88
+		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @88
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(1322, 1616)
+		    location   	(2557, 574)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5460,36 +5730,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@88
-			location   	(988, 1540)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	669
-			justify    	0
-			label      	"IPayment")
-		    icon       	"Interface"
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"635CB39B0177"
-		    width      	687
-		    height     	350
-		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @89
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(2688, 1612)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@89
-			location   	(2479, 1584)
+			location   	(2348, 547)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	418
@@ -5503,8 +5744,37 @@
 		    width      	436
 		    height     	254
 		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @89
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1191, 578)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@89
+			location   	(857, 503)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	669
+			justify    	0
+			label      	"IPayment")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"635CB39B0177"
+		    width      	687
+		    height     	350
+		    annotation 	8)
 		(object AssociationViewNew "PaymentItem" @90
-		    location   	(2067, 1613)
+		    location   	(1936, 575)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5517,7 +5787,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @91
 			Parent_View 	@90
-			location   	(2067, 1554)
+			location   	(1936, 516)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5543,7 +5813,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "Items" @92
 			    Parent_View 	@90
-			    location   	(745, -3)
+			    location   	(614, -1041)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -5556,7 +5826,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @93
 				Parent_View 	@92
-				location   	(2389, 1571)
+				location   	(2258, 533)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5580,11 +5850,11 @@
 			    line_color 	3342489
 			    quidu      	"635EB36F03A4"
 			    client     	@90
-			    supplier   	@89
+			    supplier   	@88
 			    line_style 	0
 			    label      	(object SegLabel @94
 				Parent_View 	@92
-				location   	(2428, 1666)
+				location   	(2297, 628)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5606,7 +5876,7 @@
 				orientation 	1))
 			(object RoleView "" @95
 			    Parent_View 	@90
-			    location   	(745, -3)
+			    location   	(614, -1041)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -5621,11 +5891,11 @@
 			    line_color 	3342489
 			    quidu      	"635EB36F03BC"
 			    client     	@90
-			    supplier   	@88
+			    supplier   	@89
 			    line_style 	0
 			    label      	(object SegLabel @96
 				Parent_View 	@95
-				location   	(1706, 1668)
+				location   	(1575, 630)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5644,4 +5914,78 @@
 				label      	"1"
 				pctDist    	0.900000
 				height     	54
-				orientation 	0))))))))
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::FinanceFacade::Item" @97
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2589, 1253)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@97
+			location   	(2361, 1174)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	457
+			justify    	0
+			label      	"Item")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C6CE6CF0194"
+		    width      	475
+		    height     	182
+		    annotation 	8)
+		(object RealizeView "" @98
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"5C6CEA98014C"
+		    client     	@97
+		    supplier   	@88
+		    line_style 	3
+		    origin_attachment 	(2563, 1162)
+		    terminal_attachment 	(2563, 701))
+		(object ClassView "Class" "Logical View::FinanceFacade::Payment" @99
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1162, 1237)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@99
+			location   	(875, 1112)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	575
+			justify    	0
+			label      	"Payment")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"635FFC480366"
+		    width      	593
+		    height     	275
+		    annotation 	8)
+		(object RealizeView "" @100
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"635FFD72017C"
+		    client     	@99
+		    supplier   	@89
+		    line_style 	3
+		    origin_attachment 	(1171, 1100)
+		    terminal_attachment 	(1171, 753))))))

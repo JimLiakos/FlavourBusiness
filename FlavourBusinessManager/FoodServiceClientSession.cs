@@ -18,6 +18,7 @@ using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace FlavourBusinessManager.EndUsers
 {
 
@@ -2394,7 +2395,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        public IPayment Pay()
+        public FinanceFacade.IPayment Pay()
         {
             return null;
         }

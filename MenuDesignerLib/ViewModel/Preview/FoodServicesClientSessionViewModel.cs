@@ -1,4 +1,5 @@
 ﻿using DontWaitApp;
+using FinanceFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
@@ -64,6 +65,11 @@ namespace MenuDesigner.ViewModel.Preview
 
         /// <MetaDataID>{bdb20e62-ceda-4610-9297-e2b02d34c586}</MetaDataID>
         public void ItemChanged(ItemPreparation item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPayment Pay()
         {
             throw new NotImplementedException();
         }

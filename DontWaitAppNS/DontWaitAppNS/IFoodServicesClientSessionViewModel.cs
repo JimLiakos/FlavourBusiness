@@ -31,7 +31,7 @@ namespace DontWaitApp
         void RefreshMessmates();
 
 
-        FlavourBusinessFacade.RoomService.IPayment Pay();
+        FinanceFacade.IPayment Pay();
 
 
         /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
