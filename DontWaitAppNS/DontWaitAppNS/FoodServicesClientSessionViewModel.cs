@@ -125,6 +125,7 @@ namespace DontWaitApp
                             ServedMealTypesUrisStream += ";" + uri;
 
                     }
+                    
                     stateTransition.Consistent = true;
                 }
 
@@ -705,7 +706,7 @@ namespace DontWaitApp
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        ApplicationSettings.Current.LastServicePoinMenuData = default(MenuData);
+                        //ApplicationSettings.Current.LastServicePoinMenuData = default(MenuData);
                         _OrderItems.Clear();
                         this.FoodServicesClientSession = null;
 
@@ -1094,7 +1095,10 @@ namespace DontWaitApp
         }
         public FinanceFacade.IPayment Pay()
         {
-            return null;
+            var payment= FoodServicesClientSession?.Pay();
+            return payment;
+
+
         }
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
         public async void RefreshMessmates()

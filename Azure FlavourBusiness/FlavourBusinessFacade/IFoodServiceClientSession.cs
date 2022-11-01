@@ -81,6 +81,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
+        /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
         IPayment Pay();
 
 
@@ -210,10 +211,13 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
+        /// <MetaDataID>{dc05706a-50a3-44ad-9dbf-5a74cad9ce7a}</MetaDataID>
         [BackwardCompatibilityID("+13")]
         SessionType SessionType { get; }
+        /// <MetaDataID>{8b960d94-5d4d-4467-bca3-f4a8aaa0c9ad}</MetaDataID>
         string MealInvitationUrl { get; }
 
+        /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
         string MealInvitationUri { get; }
     }
 

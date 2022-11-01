@@ -3188,7 +3188,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4")
+		    value      	"5")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3211,6 +3211,80 @@
 			    name       	"UniqueID"
 			    value      	"6360072B03A4"))
 		    quid       	"6360072B03A4"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Payment"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{762d1d71-4f66-4454-a3ed-b695f6ca611e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360B40F02E5"))
+		    quid       	"6360B40F02E5"
+		    parameters 	(list Parameters
+			(object Parameter "paymentIdentity"
+			    quid       	"6360B40F0302"
+			    type       	"string")
+			(object Parameter "paymentItems"
+			    quid       	"6360B40F0311"
+			    type       	"System.Collections.Generic.List<FinanceFacade.Item>")
+			(object Parameter "currency"
+			    quid       	"6360B40F0321"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Payment"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e68605e1-f9d0-4000-a4eb-3e2e55176818}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360B40F033C"))
+		    quid       	"6360B40F033C"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BeforeCommitObjectState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a1551750-8abf-45bc-8c3f-ca6da68f7458}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360B40F0369"))
+		    quid       	"6360B40F0369"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Update"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{95ef39af-d230-4d08-b6e7-16855a0941e8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360B40F039F"))
+		    quid       	"6360B40F039F"
+		    parameters 	(list Parameters
+			(object Parameter "paymentItems"
+			    quid       	"6360B40F03B0"
+			    type       	"System.Collections.Generic.List<FinanceFacade.Item>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -3362,6 +3436,39 @@
 			    name       	"Identity"
 			    value      	"+3"))
 		    quid       	"6360072B03D9"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{05e7a9c4-2762-4283-b7d7-70319f271da3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6360B40F03E5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"6360B40F03E5"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
@@ -4882,24 +4989,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6AD03E4"
-		    compartment 	(object Compartment
-			Parent_View 	@53
-			location   	(212, 1266)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	23
-			max_width  	1550)
 		    width      	569
 		    height     	368
 		    annotation 	8)
@@ -4930,24 +5019,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6CF0194"
-		    compartment 	(object Compartment
-			Parent_View 	@54
-			location   	(1178, 1314)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	1340)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -4979,24 +5050,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
-		    compartment 	(object Compartment
-			Parent_View 	@55
-			location   	(1168, 662)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	400)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -5027,24 +5080,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BD7AB00BA"
-		    compartment 	(object Compartment
-			Parent_View 	@56
-			location   	(2311, 705)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	384)
 		    width      	581
 		    height     	263
 		    annotation 	8)
@@ -5222,24 +5257,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBD69034C"
-		    compartment 	(object Compartment
-			Parent_View 	@64
-			location   	(225, 683)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	11
-			max_width  	668)
 		    width      	531
 		    height     	394
 		    annotation 	8)
@@ -5713,7 +5730,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	394
+	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @88
 		    ShowCompartmentStereotypes 	TRUE

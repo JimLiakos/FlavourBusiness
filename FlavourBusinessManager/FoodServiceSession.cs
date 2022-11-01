@@ -671,8 +671,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+        /// <exclude>Excluded</exclude>
+        public OOAdvantech.Collections.Generic.Set<FinanceFacade.IPayment> _BillingPayments = new OOAdvantech.Collections.Generic.Set<FinanceFacade.IPayment>();
 
-        public List<FinanceFacade.IPayment> BillingPayments =>new List<FinanceFacade.IPayment>();
+        /// <MetaDataID>{f2b50824-7139-47a4-83ac-4e5a4a01fa9e}</MetaDataID>
+        public List<FinanceFacade.IPayment> BillingPayments => _BillingPayments.ToThreadSafeList();
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
@@ -732,14 +735,28 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{888779e0-26b1-4fda-95a9-2bb47b7a9efd}</MetaDataID>
         public void AddPayment(FinanceFacade.IPayment payment)
         {
-            throw new NotImplementedException();
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _BillingPayments.Add(payment); 
+                stateTransition.Consistent = true;
+            }
+
         }
 
+        /// <MetaDataID>{4a963a47-520a-4a30-811b-ce78fe4834a1}</MetaDataID>
         public void RemovePayment(FinanceFacade.IPayment payment)
         {
-            throw new NotImplementedException();
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _BillingPayments.Remove(payment); 
+                stateTransition .Consistent = true;
+            }
+
         }
     }
 }

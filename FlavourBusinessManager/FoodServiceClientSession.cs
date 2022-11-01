@@ -84,12 +84,12 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
-                
+
                 //Uri myUri = new Uri("http://" + ServicePoint.ServicePointUrl);
                 //string param1 =HttpUtility.ParseQueryString(myUri.Query).Get("sc");
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
-                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description,SessionType=SessionType, ServicePointIdentity =  ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity,  Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
+                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
 
             }
         }
@@ -490,16 +490,16 @@ namespace FlavourBusinessManager.EndUsers
                 //if (string.IsNullOrEmpty(SessionID))
                 //{
 
-                    if (_ClientDeviceID != value)
+                if (_ClientDeviceID != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                        {
-                            _ClientDeviceID = value;
-                            
-                            //_SessionID = Guid.NewGuid().ToString("N") + _ClientDeviceID;
-                            stateTransition.Consistent = true;
-                        }
+                        _ClientDeviceID = value;
+
+                        //_SessionID = Guid.NewGuid().ToString("N") + _ClientDeviceID;
+                        stateTransition.Consistent = true;
                     }
+                }
                 //}
                 //else
                 //    throw new NotSupportedException("Changing ClientDeviceID is not supported");
@@ -1910,26 +1910,26 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary></summary>
+        /// <MetaDataID>{63419fc0-9ea8-4327-8c32-b3cdfc89d33b}</MetaDataID>
         public string MealInvitationUrl
         {
             get
             {
 
-                return string.Format("http://{0}:4300/#/launch-app?mealInvitation={1}&sc={2}&sp={3}&cs={4}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, true, ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity,SessionID);
+                return string.Format("http://{0}:4300/#/launch-app?mealInvitation={1}&sc={2}&sp={3}&cs={4}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, true, ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity, SessionID);
 
                 //return "";
             }
         }
 
+        /// <MetaDataID>{a0e181ef-e2e4-462c-b28b-227ad1ebbf3f}</MetaDataID>
         public string MealInvitationUri
         {
             get
             {
 
-                return string.Format("MealInvitation;{0};{1};{2}",ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity, SessionID);
+                return string.Format("MealInvitation;{0};{1};{2}", ServicePoint.ServicesContextIdentity, ServicePoint.ServicesPointIdentity, SessionID);
             }
         }
 
@@ -2395,9 +2395,34 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
         public FinanceFacade.IPayment Pay()
         {
-            return null;
+            string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+
+            FinanceFacade.Payment payment = null;
+            payment = this.MainSession.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
+            var paymentItems = this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
+            if (paymentItems.Count > 0)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    if (payment == null)
+                    {
+                        payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+                        this.MainSession.AddPayment(payment);
+                    }
+                    else
+                        payment.Update(paymentItems);
+
+                    stateTransition.Consistent = true;
+                }
+
+            }
+
+
+            return payment;
         }
 
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>

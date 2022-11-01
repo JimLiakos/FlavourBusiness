@@ -1,5 +1,6 @@
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,9 +76,28 @@ namespace FinanceFacade
         public List<IItem> Items => _Items;
 
 
+
+
+        /// <MetaDataID>{762d1d71-4f66-4454-a3ed-b695f6ca611e}</MetaDataID>
+        public Payment(string paymentIdentity, List<Item> paymentItems, string currency)
+        {
+            this.Identity = paymentIdentity;
+            _Items = paymentItems.OfType<IItem>().ToList();
+            _Currency = currency;
+        }
+
+
+        /// <MetaDataID>{e68605e1-f9d0-4000-a4eb-3e2e55176818}</MetaDataID>
+        public Payment()
+        {
+
+        }
+
+
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{eea11458-36b8-498e-868d-a56063322308}</MetaDataID>
         string _Currency;
+
 
         /// <MetaDataID>{cdab1bd4-351b-4d1e-bfd5-f69c49555adb}</MetaDataID>
         [PersistentMember(nameof(_Currency))]
@@ -98,7 +118,27 @@ namespace FinanceFacade
             }
         }
 
-        public string Identity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        /// <exclude>Excluded</exclude>
+        string _Identity;
+
+        /// <MetaDataID>{05e7a9c4-2762-4283-b7d7-70319f271da3}</MetaDataID>
+        [PersistentMember(nameof(_Identity))]
+        [BackwardCompatibilityID("+4")]
+        public string Identity
+        {
+            get => _Identity;
+            set
+            {
+                if (_Identity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Identity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
 
@@ -118,7 +158,10 @@ namespace FinanceFacade
             ItemsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Items);
         }
 
-
-
+        /// <MetaDataID>{95ef39af-d230-4d08-b6e7-16855a0941e8}</MetaDataID>
+        public void Update(List<Item> paymentItems)
+        {
+            _Items = paymentItems.OfType<IItem>().ToList();
+        }
     }
 }

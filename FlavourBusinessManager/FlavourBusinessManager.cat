@@ -13184,24 +13184,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@49
-				location   	(5120, 682)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	0)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -16331,24 +16313,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
-			    compartment 	(object Compartment
-				Parent_View 	@197
-				location   	(3316, 488)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	1868)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -16409,24 +16373,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
-			    compartment 	(object Compartment
-				Parent_View 	@199
-				location   	(1278, 446)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	16
-				max_width  	700)
 			    width      	750
 			    height     	437
 			    annotation 	8)
@@ -18301,24 +18247,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@247
-				location   	(105, 1074)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	0)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -22415,6 +22343,44 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "AddPayment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{888779e0-26b1-4fda-95a9-2bb47b7a9efd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6360A072000E"))
+			    quid       	"6360A072000E"
+			    parameters 	(list Parameters
+				(object Parameter "payment"
+				    quid       	"6360A0720020"
+				    type       	"FinanceFacade.IPayment"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemovePayment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4a963a47-520a-4a30-811b-ce78fe4834a1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6360A072003B"))
+			    quid       	"6360A072003B"
+			    parameters 	(list Parameters
+				(object Parameter "payment"
+				    quid       	"6360A0720049"
+				    type       	"FinanceFacade.IPayment"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "ServicePoint"
@@ -23097,7 +23063,32 @@
 				    name       	"As Property"
 				    value      	FALSE))
 			    quid       	"63051CD801CC"
-			    type       	"object"))
+			    type       	"object")
+			(object ClassAttribute "BillingPayments"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f2b50824-7139-47a4-83ac-4e5a4a01fa9e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6360A0720303")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
+			    quid       	"6360A0720303"
+			    type       	"System.Collections.Generic.List<FinanceFacade.IPayment>"
+			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A0C6A40060"
 			states     	(list States
@@ -36994,7 +36985,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@596
-			location   	(56, 182)
+			location   	(56, 184)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	576
