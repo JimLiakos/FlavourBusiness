@@ -12,7 +12,7 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{45d235f7-ea8f-476a-a5b7-93112d49437f}</MetaDataID>
-        double Amount { get; set; }
+        decimal Amount { get; set; }
         /// <MetaDataID>{3df25632-5ef6-420a-95bf-a342f7e3588a}</MetaDataID>
         PaymentType PaymentType { get; set; }
 

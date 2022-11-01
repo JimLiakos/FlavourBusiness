@@ -11,9 +11,10 @@ namespace FinanceFacade
     [Persistent()]
     public class Payment : IPayment
     {
-        /// <exclude>Excluded</exclude>
-        string _ItemsJson;
+  
 
+
+        [OOAdvantech.Json.JsonProperty]
         /// <MetaDataID>{4c7bdca1-0a7e-47cd-a10f-7e0306ba04fd}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+7")]
@@ -23,11 +24,11 @@ namespace FinanceFacade
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
-        double _Amount;
+        decimal _Amount;
         /// <MetaDataID>{83e4b5ff-08c6-474c-a342-881f6e7919b1}</MetaDataID>
         [PersistentMember(nameof(_Amount))]
         [BackwardCompatibilityID("+1")]
-        public double Amount
+        public decimal Amount
         {
             get => _Amount;
             set
@@ -81,15 +82,26 @@ namespace FinanceFacade
         /// <MetaDataID>{762d1d71-4f66-4454-a3ed-b695f6ca611e}</MetaDataID>
         public Payment(string paymentIdentity, List<Item> paymentItems, string currency)
         {
-            this.Identity = paymentIdentity;
+            Identity = paymentIdentity;
             _Items = paymentItems.OfType<IItem>().ToList();
             _Currency = currency;
+            _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
+
+
+        }
+        protected Payment()
+        {
+
         }
 
-
         /// <MetaDataID>{e68605e1-f9d0-4000-a4eb-3e2e55176818}</MetaDataID>
-        public Payment()
+        [OOAdvantech.Json.JsonConstructor]
+        public Payment(decimal amount,string currency,string Identity, string itemsJson)
         {
+            _Amount = amount;
+            _Currency = currency;
+            _Identity = Identity;
+            ItemsJson = itemsJson;
 
         }
 
@@ -162,6 +174,7 @@ namespace FinanceFacade
         public void Update(List<Item> paymentItems)
         {
             _Items = paymentItems.OfType<IItem>().ToList();
+            _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
         }
     }
 }

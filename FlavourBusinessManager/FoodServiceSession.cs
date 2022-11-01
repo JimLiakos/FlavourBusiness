@@ -22,6 +22,8 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
+     
+
         /// <exclude>Excluded</exclude>
         string _SessionID = Guid.NewGuid().ToString("N");
 
@@ -674,8 +676,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <exclude>Excluded</exclude>
         public OOAdvantech.Collections.Generic.Set<FinanceFacade.IPayment> _BillingPayments = new OOAdvantech.Collections.Generic.Set<FinanceFacade.IPayment>();
 
+
         /// <MetaDataID>{f2b50824-7139-47a4-83ac-4e5a4a01fa9e}</MetaDataID>
+        [PersistentMember(nameof(_BillingPayments))]
+        [BackwardCompatibilityID("+15")]
         public List<FinanceFacade.IPayment> BillingPayments => _BillingPayments.ToThreadSafeList();
+
+
 
 
         /// <MetaDataID>{1b4da94a-7178-4595-a8d4-5084488ee46b}</MetaDataID>
@@ -750,13 +757,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{4a963a47-520a-4a30-811b-ce78fe4834a1}</MetaDataID>
         public void RemovePayment(FinanceFacade.IPayment payment)
         {
-
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _BillingPayments.Remove(payment); 
                 stateTransition .Consistent = true;
             }
-
         }
     }
 }

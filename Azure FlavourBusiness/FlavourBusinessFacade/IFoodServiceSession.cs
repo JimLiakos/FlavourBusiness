@@ -11,9 +11,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+        [RoleBMultiplicityRange(0, 1)]
         [Association("BillingPayment", Roles.RoleA, "27108d66-3180-46e0-881f-6b52acda72ce")]
         [RoleAMultiplicityRange(1)]
-        List<IPayment> BillingPayments { get; }
+        System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments { get; }
 
         /// <MetaDataID>{ebb02282-df96-4989-8e11-5f78e47ac3df}</MetaDataID>
         void AddPayment(IPayment payment);
