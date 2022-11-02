@@ -1098,7 +1098,6 @@ namespace DontWaitApp
             var payment= FoodServicesClientSession?.Pay();
             return payment;
 
-
         }
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
         public async void RefreshMessmates()
@@ -1153,6 +1152,7 @@ namespace DontWaitApp
         {
             add
             {
+                
                 _MessmatesWaitForYouToDecide += value;
             }
             remove
@@ -1586,4 +1586,6 @@ namespace DontWaitApp
         internal DontWaitApp.FlavoursOrderServer FlavoursOrderServer;
 
     }
+
+    
 }

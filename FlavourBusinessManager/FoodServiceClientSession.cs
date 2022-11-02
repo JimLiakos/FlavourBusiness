@@ -2403,6 +2403,7 @@ namespace FlavourBusinessManager.EndUsers
             FinanceFacade.Payment payment = null;
             payment = this.MainSession.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
             var paymentItems = this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity/ flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price , uid = flavourItem.uid }).ToList();
+            paymentItems.AddRange(this._SharedItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList());
             if (paymentItems.Count > 0)
             {
 
@@ -2422,8 +2423,6 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
             }
-
-
             return payment;
         }
 
