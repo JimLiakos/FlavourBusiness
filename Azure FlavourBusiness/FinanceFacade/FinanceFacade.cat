@@ -682,7 +682,19 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"MetaObjectID"
-		    value      	"{1efed191-267f-4beb-90d6-8ffe00bd2fa8}"))
+		    value      	"{1efed191-267f-4beb-90d6-8ffe00bd2fa8}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{1efed191-267f-4beb-90d6-8ffe00bd2fa8}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"9"))
 	    quid       	"5C6BBDA2021E"
 	    stereotype 	"Interface"
 	    class_attributes 	(list class_attribute_list
@@ -707,7 +719,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
 		    quid       	"5C6C0DF50383"
 		    type       	"string"
 		    exportControl 	"Public")
@@ -732,7 +752,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
 		    quid       	"5C6C0DF60078"
 		    type       	"string"
 		    exportControl 	"Public")
@@ -757,7 +785,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
 		    quid       	"5C6C0DF6013F"
 		    type       	"string"
 		    exportControl 	"Public")
@@ -782,7 +818,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
 		    quid       	"5C6C0DF60246"
 		    type       	"decimal"
 		    exportControl 	"Public")
@@ -807,7 +851,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
 		    quid       	"5C6C0DF6030B"
 		    type       	"decimal"
 		    exportControl 	"Public")
@@ -832,7 +884,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
 		    quid       	"5C6C0DF603CD"
 		    type       	"string"
 		    exportControl 	"Public")
@@ -857,9 +917,50 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
 		    quid       	"61BB72D803DF"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "QuantityDescription"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ac10223e-ee3c-4e25-b315-1269b70191b3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63629FCA027E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"63629FCA027E"
+		    type       	"decimal"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -1533,7 +1634,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8")
+		    value      	"9")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -1771,6 +1872,39 @@
 			    value      	"+2"))
 		    quid       	"5C6CFA240116"
 		    type       	"System.Collections.Generic.IList<FinanceFacade.TaxAmount>"
+		    exportControl 	"Public")
+		(object ClassAttribute "QuantityDescription"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8e495f37-bad8-481b-a8f2-fd4be507d26d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6362A0B00204")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"6362A0B00204"
+		    type       	"decimal"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -5019,6 +5153,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6CF0194"
+		    compartment 	(object Compartment
+			Parent_View 	@54
+			location   	(1178, 1314)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	0)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -5050,6 +5202,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
+		    compartment 	(object Compartment
+			Parent_View 	@55
+			location   	(1168, 662)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	0)
 		    width      	613
 		    height     	469
 		    annotation 	8)

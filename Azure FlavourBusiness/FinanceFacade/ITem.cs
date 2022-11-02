@@ -11,9 +11,15 @@ namespace FinanceFacade
 {
 
     /// <MetaDataID>{1efed191-267f-4beb-90d6-8ffe00bd2fa8}</MetaDataID>
+    [BackwardCompatibilityID("{1efed191-267f-4beb-90d6-8ffe00bd2fa8}")]
     public interface IItem
     {
+        /// <MetaDataID>{ac10223e-ee3c-4e25-b315-1269b70191b3}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
+        string QuantityDescription { get; set; }
+
         /// <MetaDataID>{8d545d0c-7b8c-4f0a-8501-e41cdfabf17b}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
         string uid { get; set; }
 
         /// <MetaDataID>{50f519ce-2209-4ef9-827f-a2bd8c8cc5a2}</MetaDataID>
@@ -33,6 +39,7 @@ namespace FinanceFacade
         // Summary:
         //     /// Category type of the item. ///
         /// <MetaDataID>{b8f353b8-33d4-4fb3-9a63-c907e11d0845}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
         string Category { get; set; }
         //
         // Summary:
@@ -44,6 +51,7 @@ namespace FinanceFacade
         //     /// Description of the item. Only supported when the `payment_method` is set
         //     to `paypal`. ///
         /// <MetaDataID>{63d34d84-fbf8-49b7-a68c-ad8da36023ae}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
         string Description { get; set; }
 
 
@@ -51,6 +59,7 @@ namespace FinanceFacade
         // Summary:
         //     /// Item name. 127 characters max. ///
         /// <MetaDataID>{dfd8fa23-486f-4db4-9926-882aa8e32b55}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
         string Name { get; set; }
 
         //
@@ -58,18 +67,21 @@ namespace FinanceFacade
         //     /// Item cost. 10 characters max. ///
 
         /// <MetaDataID>{ac726086-6b84-4c99-907d-9a047a53094b}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
         decimal Price { get; set; }
         //
         // Summary:
         //     /// Number of a particular item. 10 characters max. ///
 
         /// <MetaDataID>{26e6f527-6ad6-44a8-ac17-1b5923504fc2}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
         decimal Quantity { get; set; }
         //
         // Summary:
         //     /// Stock keeping unit corresponding (SKU) to item. ///
 
         /// <MetaDataID>{83f35f0f-2421-4d4a-b93f-f56a31e35085}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
         string Sku { get; set; }
 
 
@@ -82,14 +94,38 @@ namespace FinanceFacade
     [Persistent()]
     public class Item : IItem
     {
+        /// <exclude>Excluded</exclude>
+        string _QuantityDescription;
+        /// <MetaDataID>{8e495f37-bad8-481b-a8f2-fd4be507d26d}</MetaDataID>
+        [PersistentMember(nameof(_QuantityDescription))]
+        [BackwardCompatibilityID("+8")]
+        public string QuantityDescription
+        {
+            get => _QuantityDescription;
+            set
+            {
 
+                if (_QuantityDescription != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _QuantityDescription = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
 
-        public  Item()
-        { 
+            }
         }
 
+
+        /// <MetaDataID>{4d913c21-f612-428e-8d2b-de79963c6329}</MetaDataID>
+        public Item()
+        {
+        }
+
+        /// <MetaDataID>{5e431ad4-251b-4434-9021-d89f37d5e5ca}</MetaDataID>
         [JsonConstructor]
-        public  Item(string category, string description, string name, decimal price, decimal quantity, string sku, System.Collections.Generic.List<FinanceFacade.TaxAmount> taxes,string uid)
+        public Item(string category, string description, string name, decimal price, decimal quantity, string sku, System.Collections.Generic.List<FinanceFacade.TaxAmount> taxes, string uid, string quantityDescription)
         {
             _Category = category;
             _Description = description;
@@ -98,6 +134,7 @@ namespace FinanceFacade
             _Quantity = quantity;
             _Sku = sku;
             _Taxes = new Set<TaxAmount>(taxes);
+            _QuantityDescription = quantityDescription;
             this.uid = uid;
 
         }
@@ -285,7 +322,7 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Taxes.Add(taxAmount); 
+                _Taxes.Add(taxAmount);
                 stateTransition.Consistent = true;
             }
 
@@ -297,7 +334,7 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Taxes.Remove(taxAmount); 
+                _Taxes.Remove(taxAmount);
                 stateTransition.Consistent = true;
             }
 
@@ -307,7 +344,7 @@ namespace FinanceFacade
         Set<TaxAmount> _Taxes = new Set<TaxAmount>();
 
         /// <MetaDataID>{74c47746-adec-4859-91bf-07340565354e}</MetaDataID>
-        
+
         [BackwardCompatibilityID("+2")]
         public System.Collections.Generic.IList<FinanceFacade.TaxAmount> Taxes
         {
@@ -326,6 +363,8 @@ namespace FinanceFacade
 
         /// <MetaDataID>{38cd5338-a098-41bd-a30a-80ad5a068e6e}</MetaDataID>
         public string uid { get; set; }
+
+
     }
 
 }

@@ -45,6 +45,12 @@ namespace FinanceFacade
         }
 
 
+        public void LockPayment()
+        {
+
+        }
+
+
         /// <exclude>Excluded</exclude>
         PaymentType _PaymentType;
 

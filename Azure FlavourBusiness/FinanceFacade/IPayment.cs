@@ -14,6 +14,11 @@ namespace FinanceFacade
 
 
 
+
+        /// <MetaDataID>{bf901995-1915-47bc-bbae-cb1643677b3e}</MetaDataID>
+        void LockPayment();
+
+
         /// <MetaDataID>{45d235f7-ea8f-476a-a5b7-93112d49437f}</MetaDataID>
         [CachingDataOnClientSide]
         decimal Amount { get; set; }
