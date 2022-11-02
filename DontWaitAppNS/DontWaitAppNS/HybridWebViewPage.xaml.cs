@@ -66,9 +66,9 @@ namespace DontWaitApp
                 // long count = AssemblyMetaObject.Residents.Count;
 
 
-         
 
 
+                System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
 

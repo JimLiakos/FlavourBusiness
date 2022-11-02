@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk" ProjectGUID="a47bab0a-fd03-44d0-8cf2-f22b6618ca5c">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>

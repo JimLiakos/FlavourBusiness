@@ -9,7 +9,7 @@ namespace FinanceFacade
     /// <MetaDataID>{e777abd6-c8a8-45d4-921b-29c10a6c1f7e}</MetaDataID>
     [BackwardCompatibilityID("{e777abd6-c8a8-45d4-921b-29c10a6c1f7e}")]
     [Persistent()]
-    public class Payment : IPayment
+    public class Payment : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPayment
     {
   
 
