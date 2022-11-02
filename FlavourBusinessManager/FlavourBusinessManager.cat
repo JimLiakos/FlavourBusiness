@@ -22049,7 +22049,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"15")
+			    value      	"16")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -23085,7 +23085,11 @@
 				(object Attribute
 				    tool       	"Persistent"
 				    name       	"Persistent"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+15"))
 			    quid       	"6360A0720303"
 			    type       	"System.Collections.Generic.List<FinanceFacade.IPayment>"
 			    exportControl 	"Public"))

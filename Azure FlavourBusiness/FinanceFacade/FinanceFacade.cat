@@ -3086,7 +3086,7 @@
 			    name       	"GenerateSetOperation"
 			    value      	TRUE))
 		    quid       	"635CBA750221"
-		    type       	"double"
+		    type       	"decimal"
 		    exportControl 	"Public")
 		(object ClassAttribute "PaymentType"
 		    attributes 	(list Attribute_Set
@@ -3345,7 +3345,7 @@
 			    name       	"GenerateSetOperation"
 			    value      	TRUE))
 		    quid       	"636000270228"
-		    type       	"double"
+		    type       	"decimal"
 		    exportControl 	"Public")
 		(object ClassAttribute "PaymentType"
 		    attributes 	(list Attribute_Set
