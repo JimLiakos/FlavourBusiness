@@ -45,7 +45,8 @@ namespace FinanceFacade
         }
 
 
-        public void LockPayment()
+        /// <MetaDataID>{6a08f486-7859-4ea3-ad1b-00e568d88fea}</MetaDataID>
+        public void PaymentInProgress()
         {
 
         }
@@ -158,6 +159,9 @@ namespace FinanceFacade
             }
         }
 
+        /// <MetaDataID>{a4fbb956-f9d0-44c3-99d2-96e8de5c3e93}</MetaDataID>
+        public PaymentState State => throw new NotImplementedException();
+
 
 
         /// <MetaDataID>{c6400a9f-da1d-409f-860b-7d46c76643cd}</MetaDataID>
@@ -181,6 +185,39 @@ namespace FinanceFacade
         {
             _Items = paymentItems.OfType<IItem>().ToList();
             _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
+        }
+
+        /// <MetaDataID>{d31c99a2-c628-437e-ba87-5e2cb197a2c3}</MetaDataID>
+        public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
+        {
+
+        }
+
+        /// <MetaDataID>{da962a27-c80c-40a0-91e7-7ec87c017179}</MetaDataID>
+        public void CashPaymentCompleted(decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary></summary>
+        /// <param name="bankDescription"></param>
+        /// <param name="bic"></param>
+        /// <param name="iban"></param>
+        /// <param name="checkID"></param>
+        /// <param name="issuer"></param>
+        /// <param name="issueDate"></param>
+        /// <param name="checkNotes"></param>
+        /// <param name="totalAmount"></param>
+        /// <param name="tipAmount"></param>
+        /// <MetaDataID>{3193cc4c-50f8-4c3c-9f1e-fd01255f5458}</MetaDataID>
+        public void CheckPaymentCompleted(string bankDescription, string bic, string iban, string checkID, string issuer, DateTime issueDate, string checkNotes, decimal totalAmount, decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{c25bafa9-31da-465a-b9a1-801d415b82e9}</MetaDataID>
+        public void PaymentRequestCanceled()
+        {
+            throw new NotImplementedException();
         }
     }
 }

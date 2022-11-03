@@ -6,6 +6,22 @@ namespace FinanceFacade
     [HttpVisible]
     public interface IPayment
     {
+        /// <MetaDataID>{da05e520-55c7-42ea-9102-bd74b4f6394b}</MetaDataID>
+        PaymentState State { get; }
+
+        /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
+        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID,decimal tipAmount);
+
+        /// <MetaDataID>{28e03d9b-bf11-400b-add0-e052213aaf05}</MetaDataID>
+        void CashPaymentCompleted(decimal tipAmount);
+
+        /// <MetaDataID>{971787bb-c85e-4e5c-bd80-1bacc148db44}</MetaDataID>
+        void CheckPaymentCompleted(string bankDescription, string bic, string iban, string checkID, string issuer, System.DateTime issueDate, string checkNotes, decimal totalAmount, decimal tipAmount);
+
+        /// <MetaDataID>{b81d6b69-d293-4ec4-b108-65eae0dde1be}</MetaDataID>
+        void Refund();
+
+        /// <MetaDataID>{83e36bd4-23e3-4f71-a261-9abd85134dac}</MetaDataID>
         [Association("PaymentItem", Roles.RoleA, "d4adad7e-5b24-4d4c-9785-07c27b196a3f")]
         [RoleAMultiplicityRange(1)]
         [RoleBMultiplicityRange(1, 1)]
@@ -16,7 +32,12 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{bf901995-1915-47bc-bbae-cb1643677b3e}</MetaDataID>
-        void LockPayment();
+        void PaymentInProgress();
+
+        /// <MetaDataID>{ff361440-c40d-42a2-a5d5-9946ced65f08}</MetaDataID>
+        void PaymentRequestCanceled();
+
+
 
 
         /// <MetaDataID>{45d235f7-ea8f-476a-a5b7-93112d49437f}</MetaDataID>
@@ -50,5 +71,12 @@ namespace FinanceFacade
         DebitCard,
         CreditCard,
         Check
+    }
+
+    public enum PaymentState
+    {
+        New,
+        InProgress,
+        Completed
     }
 }
