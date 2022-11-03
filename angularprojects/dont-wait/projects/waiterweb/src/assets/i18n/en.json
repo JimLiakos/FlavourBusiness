@@ -21,7 +21,11 @@
 		"SharedItemsTransferErrorMessage": "Partial transfer of the sharing item '{0}' is not possible",
 		"TransferItemsWillBeDoneMessage": "The items will be transferred to table {0}",
 		"TransferErrorMessageOKButton": "OK",
-        "TotalLabel":"Total"
+        "TotalLabel":"Total",
+        "PaidLabel":"Is Paid !",
+        "OpenSessionCommandLabel":"Open",
+        "CancelCommandLabel":"Cancel",
+        "PayCommandLabel":"Pay"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "OK",

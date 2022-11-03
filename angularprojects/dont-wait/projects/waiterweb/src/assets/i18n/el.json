@@ -21,7 +21,11 @@
 		"SharedItemsTransferErrorMessage": "Μερική μεταφορά του κοινού είδους '{0}' δεν επιτρέπεται.",
 		"TransferItemsWillBeDoneMessage": "Τα είδη θα μεταφερθούν στο τραπέζι {0}",
 		"TransferErrorMessageOKButton": "OK",
-        "TotalLabel":"Σύνολο"
+        "TotalLabel":"Σύνολο",
+        "PaidLabel":"Πληρώθηκε !",
+        "OpenSessionCommandLabel":"Open",
+        "CancelCommandLabel":"Cancel",
+        "PayCommandLabel":"Πληρωμή"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "Εντάξει",

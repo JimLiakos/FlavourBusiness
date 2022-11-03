@@ -1609,9 +1609,87 @@ namespace DontWaitApp
             return this;
         }
         /// <MetaDataID>{c0940399-45e2-4b51-b66e-b0845718f098}</MetaDataID>
+        /// <MetaDataID>{c0940399-45e2-4b51-b66e-b0845718f098}</MetaDataID>
         public string GetString(string langCountry, string key)
         {
-            return "";
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return null;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            return (jToken as JValue).Value as string;
+                    }
+                    return null;
+                }
+
+                if (jObject.TryGetValue(member, out jToken))
+                {
+                    jObject = jToken as JObject;
+
+                }
+                else
+                    return null;
+                i++;
+            }
+
+            return null;
+        }
+
+        public void SetString(string langCountry, string key, string newValue)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            (jToken as JValue).Value = newValue;
+                    }
+                    else
+                        jObject.Add(member, new JValue(newValue));
+                }
+                else
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                        jObject = jToken as JObject;
+                    else
+                    {
+                        jObject.Add(member, new JObject());
+                        jObject = jObject[member] as JObject;
+                    }
+                }
+                i++;
+            }
+
         }
         /// <MetaDataID>{dcdc6be7-cdbd-4326-804b-333dfdac6e16}</MetaDataID>
         Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
@@ -1643,13 +1721,7 @@ namespace DontWaitApp
             }
             return json;
         }
-        /// <MetaDataID>{0aebc7bc-03d5-42ee-9660-b55e28728558}</MetaDataID>
-        public void SetString(string langCountry, string key, string newValue)
-        {
-            throw new NotImplementedException();
-        }
-
-
+       
         /// <MetaDataID>{476a7ac1-8847-481e-b1cd-b2b9874137d1}</MetaDataID>
         public string AppIdentity => throw new NotImplementedException();
 

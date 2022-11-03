@@ -11,9 +11,18 @@ namespace FinanceFacade
     [Persistent()]
     public class Payment : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPayment
     {
-  
+
+        /// <exclude>Excluded</exclude>
+        decimal _TipsAmount;
+
+        /// <MetaDataID>{dea089ad-5a2c-450a-be8f-081f61c55b23}</MetaDataID>
+        [PersistentMember(nameof(_TipsAmount))]
+        [BackwardCompatibilityID("+8")]
+        public decimal TipsAmount => _TipsAmount;
 
 
+
+        /// <MetaDataID>{5d873702-9a79-4fe1-ae82-02ad6c7d4652}</MetaDataID>
         [OOAdvantech.Json.JsonProperty]
         /// <MetaDataID>{4c7bdca1-0a7e-47cd-a10f-7e0306ba04fd}</MetaDataID>
         [PersistentMember()]
@@ -96,6 +105,7 @@ namespace FinanceFacade
 
 
         }
+        /// <MetaDataID>{a106846c-0a0d-49e0-80bd-d72f4067f22e}</MetaDataID>
         protected Payment()
         {
 
@@ -103,12 +113,13 @@ namespace FinanceFacade
 
         /// <MetaDataID>{e68605e1-f9d0-4000-a4eb-3e2e55176818}</MetaDataID>
         [OOAdvantech.Json.JsonConstructor]
-        public Payment(decimal amount,string currency,string Identity, string itemsJson)
+        public Payment(decimal amount,string currency,string Identity, string itemsJson,string paymentInfoFieldsJson)
         {
             _Amount = amount;
             _Currency = currency;
             _Identity = Identity;
             ItemsJson = itemsJson;
+            PaymentInfoFieldsJson = paymentInfoFieldsJson;
 
         }
 
@@ -190,6 +201,9 @@ namespace FinanceFacade
 
             if (!string.IsNullOrWhiteSpace(ItemsJson))
                 _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<Item>>(ItemsJson).OfType<IItem>().ToList();
+
+            if (!string.IsNullOrWhiteSpace(PaymentInfoFieldsJson))
+                PaymentInfoFields = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string,string>>(PaymentInfoFieldsJson);
         }
 
         /// <MetaDataID>{a1551750-8abf-45bc-8c3f-ca6da68f7458}</MetaDataID>
@@ -197,6 +211,7 @@ namespace FinanceFacade
         public void BeforeCommitObjectState()
         {
             ItemsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Items);
+            PaymentInfoFieldsJson = OOAdvantech.Json.JsonConvert.SerializeObject(PaymentInfoFields);
         }
 
         /// <MetaDataID>{95ef39af-d230-4d08-b6e7-16855a0941e8}</MetaDataID>
@@ -209,13 +224,43 @@ namespace FinanceFacade
         /// <MetaDataID>{d31c99a2-c628-437e-ba87-5e2cb197a2c3}</MetaDataID>
         public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
         {
+            if (State == PaymentState.Completed)
+                throw new Exception("Payment already completed");
 
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                PaymentInfoFields["CardType"] = cardType;
+                PaymentInfoFields["AccountNumber"] = accountNumber;
+                PaymentInfoFields["TransactionID"] = transactionID;
+                _TipsAmount = tipAmount;
+
+                State = PaymentState.Completed; 
+                stateTransition.Consistent = true;
+            }
         }
+
+        /// <MetaDataID>{185fe21f-7fb4-47aa-9ea1-31941c36d82a}</MetaDataID>
+        Dictionary<string, string> PaymentInfoFields = new Dictionary<string, string>();
+
+
+        /// <MetaDataID>{949b5e42-af19-4a82-a567-8e7982a4c23b}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+6")]
+        string PaymentInfoFieldsJson;
+
 
         /// <MetaDataID>{da962a27-c80c-40a0-91e7-7ec87c017179}</MetaDataID>
         public void CashPaymentCompleted(decimal tipAmount)
         {
-            throw new NotImplementedException();
+            if (State == PaymentState.Completed)
+                throw new Exception("Payment already completed");
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _TipsAmount = tipAmount;
+                State = PaymentState.Completed;
+                stateTransition.Consistent = true;
+            }
         }
         /// <summary></summary>
         /// <param name="bankDescription"></param>
@@ -230,7 +275,24 @@ namespace FinanceFacade
         /// <MetaDataID>{3193cc4c-50f8-4c3c-9f1e-fd01255f5458}</MetaDataID>
         public void CheckPaymentCompleted(string bankDescription, string bic, string iban, string checkID, string issuer, DateTime issueDate, string checkNotes, decimal totalAmount, decimal tipAmount)
         {
-            throw new NotImplementedException();
+            if (State == PaymentState.Completed)
+                throw new Exception("Payment already completed");
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                PaymentInfoFields["BankDescription"] = bankDescription;
+                PaymentInfoFields["BIC"] = bic;
+                PaymentInfoFields["IBAN"] = iban;
+                PaymentInfoFields["CheckID"] = checkID;
+                PaymentInfoFields["Issuer"] = issuer;
+                PaymentInfoFields["issueDateAsLong"] = issueDate.Ticks.ToString();
+                PaymentInfoFields["CheckNotes"] = checkNotes;
+
+                _TipsAmount = tipAmount;
+                State = PaymentState.Completed; 
+                stateTransition.Consistent = true;
+            }
+
         }
 
         /// <MetaDataID>{c25bafa9-31da-465a-b9a1-801d415b82e9}</MetaDataID>
@@ -241,6 +303,7 @@ namespace FinanceFacade
 
         }
 
+        /// <MetaDataID>{37608630-70ad-42af-a372-b7ca81506a8b}</MetaDataID>
         public void Refund()
         {
             throw new NotImplementedException();

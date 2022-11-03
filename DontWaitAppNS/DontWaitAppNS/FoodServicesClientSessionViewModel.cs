@@ -1098,6 +1098,7 @@ namespace DontWaitApp
         public FinanceFacade.IPayment Pay()
         {
             Payment = FoodServicesClientSession?.Pay();
+            var state = Payment.State;
             return Payment;
 
         }
