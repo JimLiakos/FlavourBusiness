@@ -3,14 +3,21 @@ using OOAdvantech.MetaDataRepository;
 namespace FinanceFacade
 {
     /// <MetaDataID>{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}</MetaDataID>
+    [BackwardCompatibilityID("{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}")]
     [HttpVisible]
     public interface IPayment
     {
         /// <MetaDataID>{da05e520-55c7-42ea-9102-bd74b4f6394b}</MetaDataID>
-        PaymentState State { get; }
+        [BackwardCompatibilityID("+5")]
+        [CachingDataOnClientSide]
+        PaymentState State
+        {
+            set;
+            get;
+        }
 
         /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
-        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID,decimal tipAmount);
+        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount);
 
         /// <MetaDataID>{28e03d9b-bf11-400b-add0-e052213aaf05}</MetaDataID>
         void CashPaymentCompleted(decimal tipAmount);
@@ -41,11 +48,13 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{45d235f7-ea8f-476a-a5b7-93112d49437f}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
         [CachingDataOnClientSide]
         decimal Amount { get; set; }
 
 
         /// <MetaDataID>{3df25632-5ef6-420a-95bf-a342f7e3588a}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
         [CachingDataOnClientSide]
         PaymentType PaymentType { get; set; }
 
@@ -53,11 +62,13 @@ namespace FinanceFacade
         /// Defines ISO Currency Symbol 
         /// </summary>
         /// <MetaDataID>{c25d9c8d-f279-4a72-85fd-1f53655030c8}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
         [CachingDataOnClientSide]
         string Currency { get; set; }
 
 
         /// <MetaDataID>{def3eb8b-4fc3-41a3-9d56-8a4c83b95e0f}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
         [CachingDataOnClientSide]
         string Identity { get; set; }
 
@@ -73,6 +84,7 @@ namespace FinanceFacade
         Check
     }
 
+    /// <MetaDataID>{f3fd7c47-599e-4736-9f69-1d823cfbf1da}</MetaDataID>
     public enum PaymentState
     {
         New,

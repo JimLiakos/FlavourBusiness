@@ -48,7 +48,7 @@ namespace FinanceFacade
         /// <MetaDataID>{6a08f486-7859-4ea3-ad1b-00e568d88fea}</MetaDataID>
         public void PaymentInProgress()
         {
-
+            State = PaymentState.InProgress;
         }
 
 
@@ -159,8 +159,27 @@ namespace FinanceFacade
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        PaymentState _State;
+
         /// <MetaDataID>{a4fbb956-f9d0-44c3-99d2-96e8de5c3e93}</MetaDataID>
-        public PaymentState State => throw new NotImplementedException();
+        [PersistentMember(nameof(_State))]
+        [BackwardCompatibilityID("+5")]
+        public PaymentState State
+        {
+            get => _State;
+            set
+            {
+                if (_State != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _State = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
 
@@ -216,6 +235,13 @@ namespace FinanceFacade
 
         /// <MetaDataID>{c25bafa9-31da-465a-b9a1-801d415b82e9}</MetaDataID>
         public void PaymentRequestCanceled()
+        {
+            if(State == PaymentState.InProgress)
+                State = PaymentState.New;
+
+        }
+
+        public void Refund()
         {
             throw new NotImplementedException();
         }

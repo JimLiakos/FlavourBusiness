@@ -3193,9 +3193,160 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"MetaObjectID"
-		    value      	"{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}"))
+		    value      	"{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"6"))
 	    quid       	"635CB39B0177"
 	    stereotype 	"Interface"
+	    operations 	(list Operations
+		(object Operation "CardPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6363407A013A")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{23bd0625-6451-4298-b1b2-ecc990469eb7}"))
+		    quid       	"6363407A013A"
+		    parameters 	(list Parameters
+			(object Parameter "cardType"
+			    quid       	"6363615803AE"
+			    type       	"string")
+			(object Parameter "accountNumber"
+			    quid       	"6363615803C0"
+			    type       	"string")
+			(object Parameter "isDebit"
+			    quid       	"6363615803D0"
+			    type       	"bool")
+			(object Parameter "transactionID"
+			    quid       	"6363615803E3"
+			    type       	"string")
+			(object Parameter "tipAmount"
+			    quid       	"63636159000B"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PaymentInProgress"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bf901995-1915-47bc-bbae-cb1643677b3e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361580356"))
+		    quid       	"636361580356"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CashPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{28e03d9b-bf11-400b-add0-e052213aaf05}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361590019"))
+		    quid       	"636361590019"
+		    parameters 	(list Parameters
+			(object Parameter "tipAmount"
+			    quid       	"636361590039"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{971787bb-c85e-4e5c-bd80-1bacc148db44}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6363615900A7"))
+		    quid       	"6363615900A7"
+		    parameters 	(list Parameters
+			(object Parameter "bankDescription"
+			    quid       	"6363615900C8"
+			    type       	"string")
+			(object Parameter "bic"
+			    quid       	"6363615900E4"
+			    type       	"string")
+			(object Parameter "iban"
+			    quid       	"6363615900F6"
+			    type       	"string")
+			(object Parameter "checkID"
+			    quid       	"636361590108"
+			    type       	"string")
+			(object Parameter "issuer"
+			    quid       	"636361590119"
+			    type       	"string")
+			(object Parameter "issueDate"
+			    quid       	"63636159012A"
+			    type       	"System.DateTime")
+			(object Parameter "checkNotes"
+			    quid       	"636361590139"
+			    type       	"string")
+			(object Parameter "totalAmount"
+			    quid       	"63636159014B"
+			    type       	"decimal")
+			(object Parameter "tipAmount"
+			    quid       	"63636159015E"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PaymentRequestCanceled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ff361440-c40d-42a2-a5d5-9946ced65f08}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361590178"))
+		    quid       	"636361590178"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Refund"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b81d6b69-d293-4ec4-b108-65eae0dde1be}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361590205"))
+		    quid       	"636361590205"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Amount"
 		    attributes 	(list Attribute_Set
@@ -3218,7 +3369,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
 		    quid       	"635CBA750221"
 		    type       	"decimal"
 		    exportControl 	"Public")
@@ -3243,7 +3402,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
 		    quid       	"635CCEAD008A"
 		    type       	"FinanceFacade.PaymentType"
 		    exportControl 	"Public")
@@ -3268,7 +3435,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
 		    quid       	"63600582024D"
 		    documentation 	
 |
@@ -3298,9 +3473,50 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
 		    quid       	"63600AB803A0"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "State"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636340CB0323")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da05e520-55c7-42ea-9102-bd74b4f6394b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"636340CB0323"
+		    type       	"FinanceFacade.PaymentState"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -3322,7 +3538,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5")
+		    value      	"6")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3332,7 +3548,11 @@
 		(object Realize_Relationship
 		    quid       	"635FFD72017C"
 		    supplier   	"Logical View::FinanceFacade::IPayment"
-		    quidu      	"635CB39B0177"))
+		    quidu      	"635CB39B0177")
+		(object Realize_Relationship
+		    quid       	"636361E70012"
+		    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+		    quidu      	"416244F90271"))
 	    operations 	(list Operations
 		(object Operation "ObjectActivation"
 		    attributes 	(list Attribute_Set
@@ -3362,13 +3582,13 @@
 		    quid       	"6360B40F02E5"
 		    parameters 	(list Parameters
 			(object Parameter "paymentIdentity"
-			    quid       	"6360B40F0302"
+			    quid       	"636361E80004"
 			    type       	"string")
 			(object Parameter "paymentItems"
-			    quid       	"6360B40F0311"
+			    quid       	"636361E80030"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>")
 			(object Parameter "currency"
-			    quid       	"6360B40F0321"
+			    quid       	"636361E80042"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3385,9 +3605,22 @@
 			    name       	"UniqueID"
 			    value      	"6360B40F033C"))
 		    quid       	"6360B40F033C"
+		    parameters 	(list Parameters
+			(object Parameter "amount"
+			    quid       	"636361E80128"
+			    type       	"decimal")
+			(object Parameter "currency"
+			    quid       	"636361E8013D"
+			    type       	"string")
+			(object Parameter "Identity"
+			    quid       	"636361E80148"
+			    type       	"string")
+			(object Parameter "itemsJson"
+			    quid       	"636361E80156"
+			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
+		    opExportControl 	"Protected"
 		    uid        	0)
 		(object Operation "BeforeCommitObjectState"
 		    attributes 	(list Attribute_Set
@@ -3417,8 +3650,131 @@
 		    quid       	"6360B40F039F"
 		    parameters 	(list Parameters
 			(object Parameter "paymentItems"
-			    quid       	"6360B40F03B0"
+			    quid       	"636361E8008D"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CardPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d31c99a2-c628-437e-ba87-5e2cb197a2c3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E801A9"))
+		    quid       	"636361E801A9"
+		    parameters 	(list Parameters
+			(object Parameter "cardType"
+			    quid       	"636361E801D5"
+			    type       	"string")
+			(object Parameter "accountNumber"
+			    quid       	"636361E801ED"
+			    type       	"string")
+			(object Parameter "isDebit"
+			    quid       	"636361E8020E"
+			    type       	"bool")
+			(object Parameter "transactionID"
+			    quid       	"636361E8022E"
+			    type       	"string")
+			(object Parameter "tipAmount"
+			    quid       	"636361E80245"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CashPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da962a27-c80c-40a0-91e7-7ec87c017179}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E80259"))
+		    quid       	"636361E80259"
+		    parameters 	(list Parameters
+			(object Parameter "tipAmount"
+			    quid       	"636361E8026E"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckPaymentCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3193cc4c-50f8-4c3c-9f1e-fd01255f5458}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E8028A"))
+		    quid       	"636361E8028A"
+		    parameters 	(list Parameters
+			(object Parameter "bankDescription"
+			    quid       	"636361E8029A"
+			    type       	"string")
+			(object Parameter "bic"
+			    quid       	"636361E802AA"
+			    type       	"string")
+			(object Parameter "iban"
+			    quid       	"636361E802B5"
+			    type       	"string")
+			(object Parameter "checkID"
+			    quid       	"636361E802BF"
+			    type       	"string")
+			(object Parameter "issuer"
+			    quid       	"636361E802C7"
+			    type       	"string")
+			(object Parameter "issueDate"
+			    quid       	"636361E802D2"
+			    type       	"System.DateTime")
+			(object Parameter "checkNotes"
+			    quid       	"636361E802DC"
+			    type       	"string")
+			(object Parameter "totalAmount"
+			    quid       	"636361E802E7"
+			    type       	"decimal")
+			(object Parameter "tipAmount"
+			    quid       	"636361E802F3"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PaymentInProgress"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a08f486-7859-4ea3-ad1b-00e568d88fea}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E80319"))
+		    quid       	"636361E80319"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PaymentRequestCanceled"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c25bafa9-31da-465a-b9a1-801d415b82e9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E80335"))
+		    quid       	"636361E80335"
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -3604,6 +3960,39 @@
 			    value      	"+4"))
 		    quid       	"6360B40F03E5"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "State"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a4fbb956-f9d0-44c3-99d2-96e8de5c3e93}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"636361E80306")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"636361E80306"
+		    type       	"PaymentState"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -5153,24 +5542,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6CE6CF0194"
-		    compartment 	(object Compartment
-			Parent_View 	@54
-			location   	(1178, 1314)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	9
-			max_width  	0)
 		    width      	618
 		    height     	319
 		    annotation 	8)
@@ -5202,24 +5573,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
-		    compartment 	(object Compartment
-			Parent_View 	@55
-			location   	(1168, 662)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	0)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -5933,7 +6286,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @89
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(1191, 578)
+		    location   	(1190, 578)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5946,7 +6299,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@89
-			location   	(857, 503)
+			location   	(856, 503)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	669
@@ -5961,7 +6314,7 @@
 		    height     	350
 		    annotation 	8)
 		(object AssociationViewNew "PaymentItem" @90
-		    location   	(1936, 575)
+		    location   	(1935, 575)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5974,7 +6327,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @91
 			Parent_View 	@90
-			location   	(1936, 516)
+			location   	(1935, 516)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6000,7 +6353,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "Items" @92
 			    Parent_View 	@90
-			    location   	(614, -1041)
+			    location   	(613, -1041)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6013,7 +6366,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @93
 				Parent_View 	@92
-				location   	(2258, 533)
+				location   	(2256, 533)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6041,7 +6394,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @94
 				Parent_View 	@92
-				location   	(2297, 628)
+				location   	(2298, 628)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6063,7 +6416,7 @@
 				orientation 	1))
 			(object RoleView "" @95
 			    Parent_View 	@90
-			    location   	(614, -1041)
+			    location   	(613, -1041)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6082,7 +6435,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @96
 				Parent_View 	@95
-				location   	(1575, 630)
+				location   	(1574, 630)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6175,4 +6528,4 @@
 		    supplier   	@89
 		    line_style 	3
 		    origin_attachment 	(1171, 1100)
-		    terminal_attachment 	(1171, 753))))))
+		    terminal_attachment 	(1171, 752))))))

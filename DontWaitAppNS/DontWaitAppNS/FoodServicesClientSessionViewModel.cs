@@ -1093,10 +1093,12 @@ namespace DontWaitApp
         {
             return Messmates;
         }
+
+        FinanceFacade.IPayment Payment;
         public FinanceFacade.IPayment Pay()
         {
-            var payment= FoodServicesClientSession?.Pay();
-            return payment;
+            Payment = FoodServicesClientSession?.Pay();
+            return Payment;
 
         }
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
