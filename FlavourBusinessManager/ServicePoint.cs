@@ -104,7 +104,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
-        
+
         public string ServicePointUrl
         {
             get
@@ -699,6 +699,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 var oldState = State;
                 State = newState;
+                _ObjectChangeState?.Invoke(this, nameof(State));
                 switch (State)
                 {
                     case ServicePointState.Laying:
@@ -710,7 +711,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     default:
                         break;
                 }
-                _ObjectChangeState?.Invoke(this, nameof(State));
+
             }
         }
         public virtual IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)

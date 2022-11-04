@@ -231,6 +231,7 @@
     <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\WaiterWeb\src\assets\i18n\en.json" Link="i18n\en.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Plugin.LocalNotification" Version="10.0.2" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="SkiaSharp" Version="2.80.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />

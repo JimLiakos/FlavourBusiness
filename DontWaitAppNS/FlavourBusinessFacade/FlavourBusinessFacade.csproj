@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk" ProjectGUID="a47bab0a-fd03-44d0-8cf2-f22b6618ca5c">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;FlavourBusinessDevice</DefineConstants>
@@ -20,6 +20,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IIsolatedComputingContext.cs" Link="IIsolatedComputingContext.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IAddress.cs" Link="IAddress.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IFisicalParty.cs" Link="IFisicalParty.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IPayment.cs" Link="IPayment.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ITem.cs" Link="ITem.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\TaxAmount.cs" Link="TaxAmount.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ΙTransaction.cs" Link="ΙTransaction.cs" />

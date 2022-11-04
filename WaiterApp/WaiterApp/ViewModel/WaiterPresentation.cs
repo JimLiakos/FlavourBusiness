@@ -635,7 +635,7 @@ namespace WaiterApp.ViewModel
 
                 }
                 catch (Exception error)
-                {
+                 {
 
                     throw;
                 }
@@ -1414,6 +1414,7 @@ namespace WaiterApp.ViewModel
                     var message = Waiter.PeekMessage();
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable)
                     {
+                        var tmp = (DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes;
                         if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 40)
                             Waiter.RemoveMessage(message.MessageID);
                         else
@@ -1469,6 +1470,64 @@ namespace WaiterApp.ViewModel
                     }
                 }
             }
+        }
+
+
+        private async Task GenerateLocalNotificationAsync()
+        {
+
+            //List<Location> _locList = JsonHandler.getLocationsFromReports(data);
+
+            //for (int i = 0; i < _locList.Count; i++)
+            //{
+            //    double Distance = LocationExtensions.CalculateDistance(_locList[i], _location, DistanceUnits.Kilometers);
+            //    if (Distance < 5)
+            //    {
+            //        try
+            //        {
+            //            await ReadTripFile("LocalNotificationTime.txt");
+            //            if (FileData != "")
+            //            {
+            //                var Data = FileData.Split('!');
+            //                var loc = Data[1].Split('*');
+            //                double latitude = Convert.ToDouble(loc[0]);
+            //                double longitude = Convert.ToDouble(loc[1]);
+
+            //                DateTime t1 = DateTime.ParseExact(Data[0], "yyyy|MM|dd|hh:mm:ss", CultureInfo.InvariantCulture);
+
+
+            //                string dt = DateTime.Now.ToString("yyyy|MM|dd|hh:mm:ss");
+
+            //                DateTime t2 = DateTime.ParseExact(dt, "yyyy|MM|dd|hh:mm:ss", CultureInfo.InvariantCulture);
+
+            //                TimeSpan ts = t2.TimeOfDay - t1.TimeOfDay;
+            //                double Dis = LocationExtensions.CalculateDistance(new Location(latitude, longitude), _location, DistanceUnits.Kilometers);
+            //                if (ts.TotalHours > 24 || (Dis > 20))
+            //                {
+            //                    await BuildTripFile(_location);
+            //                    //Generate Local Notification
+
+            //                    JsonHandler.ShowNotification(StringResource.LocalNotificationTitle, StringResource.LocalNotificationDec);
+
+            //                    return;
+
+
+            //                }
+            //            }
+            //            else
+            //            {
+            //                JsonHandler.ShowNotification(StringResource.LocalNotificationTitle, StringResource.LocalNotificationDec);
+            //                await BuildTripFile(_location);
+            //                return;
+            //            }
+            //        }
+            //        catch (Exception ex)
+
+            //        {
+            //        }
+
+            //    }
+            //}
         }
 
         public void ItemsReadyToServeMessageReceived(string messageID)
