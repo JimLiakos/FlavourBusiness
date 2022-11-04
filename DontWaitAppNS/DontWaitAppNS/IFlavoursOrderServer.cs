@@ -68,6 +68,7 @@ namespace DontWaitApp
          /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
+        Task Initialize();
 
         /// <MetaDataID>{8fedff9e-af0f-4f35-98de-a9bf18486a23}</MetaDataID>
         IFoodServicesClientSessionViewModel CurrentFoodServicesClientSession { get; }

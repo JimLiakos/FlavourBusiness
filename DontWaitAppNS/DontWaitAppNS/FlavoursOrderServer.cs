@@ -681,7 +681,7 @@ namespace DontWaitApp
         /// <MetaDataID>{504eca6e-cf99-45c5-8d67-21c5f4968f31}</MetaDataID>
         bool Initialized;
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
-        internal async Task Initialize()
+        public async Task Initialize()
         {
 
             if (Initialized)

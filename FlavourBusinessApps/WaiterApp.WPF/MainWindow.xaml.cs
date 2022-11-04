@@ -37,6 +37,7 @@ namespace WaiterApp.WPF
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));
+            ViewModel.WaiterPresentation.Current.FlavoursOrderServer.Initialize();
         }
     }
 }
