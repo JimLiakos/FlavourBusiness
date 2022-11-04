@@ -681,7 +681,7 @@ namespace DontWaitApp
         /// <MetaDataID>{504eca6e-cf99-45c5-8d67-21c5f4968f31}</MetaDataID>
         bool Initialized;
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
-        public async Task Initialize()
+        internal async Task Initialize()
         {
 
             if (Initialized)
@@ -1828,7 +1828,7 @@ namespace DontWaitApp
                     //// servicePoint = "6746e4178dd041f09a7b4130af0edacf;6171631179bf4c26aeb99546fdce6a7a";
                     //servicePoint = "b5ec4ed264c142adb26b73c95b185544;9967813ee9d943db823ca97779eb9fd7";
 
-                    OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                     ClientSessionData? clientSessionData = null;
                     do
                     {
