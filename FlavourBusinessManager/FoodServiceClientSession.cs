@@ -1187,10 +1187,8 @@ namespace FlavourBusinessManager.EndUsers
             {
                 return _SessionStarts;
             }
-
             set
             {
-
                 if (_SessionStarts.ToUniversalTime() != value.ToUniversalTime())
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1199,7 +1197,6 @@ namespace FlavourBusinessManager.EndUsers
                         stateTransition.Consistent = true;
                     }
                 }
-
             }
         }
 
