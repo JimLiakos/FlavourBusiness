@@ -5,6 +5,7 @@ namespace FinanceFacade
     /// <MetaDataID>{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}</MetaDataID>
     [BackwardCompatibilityID("{3836664e-5f1a-4e75-9bbb-4c9d6f963fe0}")]
     [HttpVisible]
+    [GenerateFacadeProxy]
     public interface IPayment
     {
         /// <MetaDataID>{2a5b9053-54e1-4a3c-825e-49199b184b3b}</MetaDataID>

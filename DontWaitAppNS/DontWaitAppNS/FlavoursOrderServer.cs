@@ -112,16 +112,16 @@ namespace DontWaitApp
 
 
 
-        public async Task<bool>  OpenFoodServicesClientSession(string clientSessionID)
+        public async Task<bool> OpenFoodServicesClientSession(string clientSessionID)
         {
-            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel= ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
+            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
             if (foodServicesClientSessionViewModel == null || (await foodServicesClientSessionViewModel.IsActive()) != true)
             {
                 FoodServicesClientSessionViewModel = null;
                 return false;
             }
             ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
-            FoodServicesClientSessionViewModel= foodServicesClientSessionViewModel;
+            FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
             return true;
         }
 
@@ -199,7 +199,7 @@ namespace DontWaitApp
                 {
                     try
                     {
-                        if (this.FoodServicesClientSessionViewModel.FoodServicesClientSession != null)
+                        if (this.FoodServicesClientSessionViewModel?.FoodServicesClientSession != null)
                         {
                             try
                             {
@@ -210,7 +210,8 @@ namespace DontWaitApp
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
                         }
-                        FoodServicesClientSessionViewModel.GetMessages();
+                        if (FoodServicesClientSessionViewModel != null)
+                            FoodServicesClientSessionViewModel.GetMessages();
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -681,15 +682,15 @@ namespace DontWaitApp
         /// <MetaDataID>{504eca6e-cf99-45c5-8d67-21c5f4968f31}</MetaDataID>
         bool Initialized;
         /// <MetaDataID>{7c812852-1690-4bdb-bbb4-2605f03476ab}</MetaDataID>
-        internal async Task Initialize()
+        public async Task Initialize()
         {
 
             if (Initialized)
                 return;
 
-         
 
-                Initialized = true;
+
+            Initialized = true;
 #if DeviceDotNet
             ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
@@ -697,7 +698,7 @@ namespace DontWaitApp
             _EndUser = new FoodServiceClientVM();
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            InitializationTask= Task.Run(async () =>
+            InitializationTask = Task.Run(async () =>
             {
 
                 using (HttpClient wc = new HttpClient())
@@ -720,10 +721,10 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-                 (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
-                 (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
+                (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+                (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
 
-                 device.MessageReceived += Device_MessageReceived;
+                device.MessageReceived += Device_MessageReceived;
 #endif
 
                 foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
@@ -1011,7 +1012,7 @@ namespace DontWaitApp
         {
             Contact contuct = null;
 
-#if DeviceDotNet_a
+#if DeviceDotNet
             var x_contact= await Xamarin.Essentials.Contacts.PickContactAsync();
             if (x_contact != null)
             {
@@ -1072,8 +1073,8 @@ namespace DontWaitApp
             {
                 string emailAddress = endPoint;
 
-                string htmlBody =String.Format( @"<a style=""color:red;"" href=""{0}""  >click meal invitation link.</a>", mealInvitationUri);// + Environment.NewLine + mealInvitationUri;
-                string plainTextBody = "click meal invitation link." + Environment.NewLine + mealInvitationUri; 
+                string htmlBody = String.Format(@"<a style=""color:red;"" href=""{0}""  >click meal invitation link.</a>", mealInvitationUri);// + Environment.NewLine + mealInvitationUri;
+                string plainTextBody = "click meal invitation link." + Environment.NewLine + mealInvitationUri;
                 try
                 {
                     if (Device.RuntimePlatform == Device.iOS)
@@ -1085,7 +1086,7 @@ namespace DontWaitApp
                         await SendEmail(new List<string>() { emailAddress }, "Meal Invitation", plainTextBody, EmailBodyFormat.PlainText);
                     }
 
-                    
+
                 }
 
                 catch (FeatureNotSupportedException fbsEx)
@@ -1153,7 +1154,7 @@ namespace DontWaitApp
                 // Other error has occurred.
             }
 
-    }
+        }
 #endif
         /// <summary>
         /// Cancel the previous invitation
@@ -1349,21 +1350,21 @@ namespace DontWaitApp
                 }
 
             }
-            //else
-            //{
-            //    if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
-            //    {
+            else
+            {
+                if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == messageID)
+                {
 
-            //        string mealInvitationUri = PendingPartOfMealMessage.Data["MealInvitationUri"] as string;
-            //        PendingPartOfMealMessage = null;
+                    string mealInvitationUri = PendingPartOfMealMessage.Data["MealInvitationUri"] as string;
+                    PendingPartOfMealMessage = null;
 
-            //        var connected = await ConnectToServicePoint(mealInvitationUri);
-            //        if (connected)
-            //            Path =this. MenuData.ServicePointIdentity;
+                    var connected = await ConnectToServicePoint(mealInvitationUri);
+                    if (connected)
+                        Path = this.FoodServicesClientSessionViewModel?.MenuData.ServicePointIdentity;
 
-            //        return connected;
-            //    }
-            //}
+                    return connected;
+                }
+            }
             return false;
 
         }
@@ -1721,7 +1722,7 @@ namespace DontWaitApp
             }
             return json;
         }
-       
+
         /// <MetaDataID>{476a7ac1-8847-481e-b1cd-b2b9874137d1}</MetaDataID>
         public string AppIdentity => throw new NotImplementedException();
 
@@ -1828,7 +1829,7 @@ namespace DontWaitApp
                     //// servicePoint = "6746e4178dd041f09a7b4130af0edacf;6171631179bf4c26aeb99546fdce6a7a";
                     //servicePoint = "b5ec4ed264c142adb26b73c95b185544;9967813ee9d943db823ca97779eb9fd7";
 
-                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                     ClientSessionData? clientSessionData = null;
                     do
                     {

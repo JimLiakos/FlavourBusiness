@@ -975,7 +975,7 @@ namespace DontWaitApp
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                    var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current);
 
                     foreach (var flavourItem in FoodServicesClientSession.FlavourItems)
                     {

@@ -65,6 +65,11 @@ namespace DontWaitApp
             SerializationBinder.NamesTypesDictionary["UIBaseEx.Margin"] = typeof(UIBaseEx.Margin);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
 
+            SerializationBinder.NamesTypesDictionary["FinanceFacade.IPayment"] = typeof(FinanceFacade.IPayment);
+            SerializationBinder.NamesTypesDictionary["FinanceFacade.IItem"] = typeof(FinanceFacade.IItem);
+            SerializationBinder.NamesTypesDictionary["FinanceFacade.Item"] = typeof(FinanceFacade.Item);
+
+
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
@@ -79,6 +84,12 @@ namespace DontWaitApp
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
+
+            SerializationBinder.TypesNamesDictionary[typeof(FinanceFacade.IPayment)] = "FinanceFacade.IPayment";
+            SerializationBinder.TypesNamesDictionary[typeof(FinanceFacade.IItem)] = "FinanceFacade.IItem";
+            SerializationBinder.TypesNamesDictionary[typeof(FinanceFacade.Item)] = "FinanceFacade.Item";
+
+
         }
 
 
