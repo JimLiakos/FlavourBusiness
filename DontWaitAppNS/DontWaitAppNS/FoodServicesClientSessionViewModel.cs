@@ -1045,6 +1045,13 @@ namespace DontWaitApp
                 //MenuData = menuData;
                 //ApplicationSettings.Current.LastServicePoinMenuData = menuData;
                 _ServicePointState = clientSessionData.ServicePointState;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+
+                    if (Application.Current?.MainPage != null)
+                        Application.Current.MainPage.DisplayAlert("MenuData ", "ObjectChangeState MenuData", "OK");
+                });
+
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
                 GetMessages();
             }

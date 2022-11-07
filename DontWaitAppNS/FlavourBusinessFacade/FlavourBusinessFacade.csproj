@@ -20,8 +20,6 @@
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IIsolatedComputingContext.cs" Link="IIsolatedComputingContext.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IAddress.cs" Link="IAddress.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IFisicalParty.cs" Link="IFisicalParty.cs" />
-    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IPayment.cs" Link="IPayment.cs" />
-    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ITem.cs" Link="ITem.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\TaxAmount.cs" Link="TaxAmount.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ΙTransaction.cs" Link="ΙTransaction.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Coordinate.cs" Link="Coordinate.cs" />
@@ -97,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+    <ProjectReference Include="..\FinanceFacade\FinanceFacade.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HumanResources\" />

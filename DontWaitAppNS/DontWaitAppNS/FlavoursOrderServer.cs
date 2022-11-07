@@ -806,11 +806,13 @@ namespace DontWaitApp
         /// <MetaDataID>{61e17863-b7ff-4963-9d5b-12ab551a9369}</MetaDataID>
         internal void PartOfMealRequestMessageForward(Message message)
         {
+            FoodServicesClientSessionViewModel?.FoodServicesClientSession?.RemoveMessage("A1");
             if (PendingPartOfMealMessage != null && PendingPartOfMealMessage.MessageID == message.MessageID)
                 return;
             var messmate = (from theMessmate in this.CandidateMessmates
                             where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
                             select theMessmate).FirstOrDefault();
+            FoodServicesClientSessionViewModel?.FoodServicesClientSession?.RemoveMessage("A2");
             if (messmate != null && messmate.ClientSession.ServicePoint != FoodServicesClientSessionViewModel?.FoodServicesClientSession?.ServicePoint)
             {
                 //invitation from service point other than current session service point.
@@ -819,9 +821,11 @@ namespace DontWaitApp
                     _PartOfMealRequest?.Invoke(this, messmate, message.MessageID);
                 else
                     PartOfMealMessage = message;
+                FoodServicesClientSessionViewModel?.FoodServicesClientSession?.RemoveMessage("A3");
             }
             else
             {
+                FoodServicesClientSessionViewModel?.FoodServicesClientSession?.RemoveMessage("A4");
                 if (_PartOfMealRequest != null)
                 {
 

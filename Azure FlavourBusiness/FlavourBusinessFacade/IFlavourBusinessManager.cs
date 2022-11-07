@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FlavourBusinessFacade
 {
-    public interface IFlavourBusinessManager 
+    /// <MetaDataID>{eb04fe5e-c1d7-4239-81e1-623609670270}</MetaDataID>
+    public interface IFlavourBusinessManager
     {
         //void PublishMenu
     }

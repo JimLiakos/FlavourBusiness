@@ -2449,6 +2449,9 @@ namespace FlavourBusinessManager.EndUsers
                                 where itemsIDS.Contains(storedItem.uid)
                                 select storedItem).ToList();
 
+            if (itemsIDS.Count != flavourItems.Count)
+                throw new Exception("there is an item that does not belong to this session");
+
             List<RoomService.ItemPreparation> changeStateFlavourItems = new List<RoomService.ItemPreparation>();
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
