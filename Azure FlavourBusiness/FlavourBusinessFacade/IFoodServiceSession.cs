@@ -11,6 +11,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IFoodServiceSession
     {
+    
         [RoleBMultiplicityRange(0, 1)]
         [Association("BillingPayment", Roles.RoleA, "27108d66-3180-46e0-881f-6b52acda72ce")]
         [RoleAMultiplicityRange(1)]
