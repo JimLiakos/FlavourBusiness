@@ -1047,7 +1047,7 @@ namespace DontWaitApp
                 _ServicePointState = clientSessionData.ServicePointState;
 
 #if DeviceDotNet
-                var storeRef = FoodServicesClientSession.Menu;
+                
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
 

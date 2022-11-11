@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwait.android",
+            "certificate_hash": "9fdecfc66b22aaa379f217d90f02a86be21dee5d"
+          }
+        },
+        {
+          "client_id": "881594421690-ns3b3m9g3e4vcq71r0ji7sv0l18kb66h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwait.android",
+            "certificate_hash": "3459d5bf3200a0c3e5bcad6887c4d5a9e409eb36"
+          }
+        },
+        {
+          "client_id": "881594421690-o3aap2s5r6a5ljvs5g2o9hbegb1h6tum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwait.android",
+            "certificate_hash": "8ac7e78bc63407d95e4757cae74cf5c3ac3b0ca4"
+          }
+        },
+        {
           "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +54,133 @@
             {
               "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "881594421690-80nqrgoqmi0r1erpnrcnqtrjqar1jsrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.microneme.dontwaitmanager.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881594421690:android:33e2e457af664ff6194d83",
+        "android_client_info": {
+          "package_name": "com.microneme.dontwaitmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881594421690-9vd38bspv798m93o79qj3eqlivaiogm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitmanager",
+            "certificate_hash": "8ac7e78bc63407d95e4757cae74cf5c3ac3b0ca4"
+          }
+        },
+        {
+          "client_id": "881594421690-ek1kav54iq992m0shmooe76il6uvf5mc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitmanager",
+            "certificate_hash": "9fdecfc66b22aaa379f217d90f02a86be21dee5d"
+          }
+        },
+        {
+          "client_id": "881594421690-u85mik9q4g9qs91gnud78qfq31tai1rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitmanager",
+            "certificate_hash": "3459d5bf3200a0c3e5bcad6887c4d5a9e409eb36"
+          }
+        },
+        {
+          "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2rKvbQGj1DLFxVIRd3wsF7AuTrRBKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881594421690-80nqrgoqmi0r1erpnrcnqtrjqar1jsrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.microneme.dontwaitmanager.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881594421690:android:6ca3ff24ca62fa38194d83",
+        "android_client_info": {
+          "package_name": "com.microneme.dontwaitwaiterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881594421690-e9pdod0i35mvvfbohg316pndjgael5oi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitwaiterapp",
+            "certificate_hash": "3459d5bf3200a0c3e5bcad6887c4d5a9e409eb36"
+          }
+        },
+        {
+          "client_id": "881594421690-kqf8st9knvc0fip5ab3islhlbikj2to0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitwaiterapp",
+            "certificate_hash": "8ac7e78bc63407d95e4757cae74cf5c3ac3b0ca4"
+          }
+        },
+        {
+          "client_id": "881594421690-qt1ufcfq8s58sprkaioao2phjioboohv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.microneme.dontwaitwaiterapp",
+            "certificate_hash": "9fdecfc66b22aaa379f217d90f02a86be21dee5d"
+          }
+        },
+        {
+          "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG2rKvbQGj1DLFxVIRd3wsF7AuTrRBKWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "881594421690-80nqrgoqmi0r1erpnrcnqtrjqar1jsrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.microneme.dontwaitmanager.ios"
+              }
             }
           ]
         }

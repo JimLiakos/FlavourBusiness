@@ -19,6 +19,7 @@ using Acr.UserDialogs;
 using Firebase;
 using Xamarin.Forms.Platform.Android.AppLinks;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace DontWaitAppNS.Droid
 {
@@ -93,7 +94,7 @@ namespace DontWaitAppNS.Droid
             return base.StartForegroundService(service);
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void  OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -114,9 +115,17 @@ namespace DontWaitAppNS.Droid
             FirebaseApp.InitializeApp(this);
             AndroidAppLinks.Init(this);
 
-            string webClientID = "";// "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
-            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this,FirebaseInstanceId.Instance.Token, webClientID);
-            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(FirebaseInstanceId.Instance.Token);
+            
+            var token = await Task<string>.Run(() =>
+            {
+                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            });
+
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
+            string webClientID = "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com";
+            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
+
 
             string sdfsd = getDeviceUniqueID();
 
