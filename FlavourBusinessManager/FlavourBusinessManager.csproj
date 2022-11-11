@@ -50,8 +50,8 @@
     <Reference Include="Firebase.Notification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Firebase.Notification.1.0.0\lib\net45\Firebase.Notification.exe</HintPath>
     </Reference>
-    <Reference Include="FirebaseAdmin, Version=2.2.0.0, Culture=neutral, PublicKeyToken=97c8d00c348326ed, processorArchitecture=MSIL">
-      <HintPath>..\packages\FirebaseAdmin.2.2.0\lib\net461\FirebaseAdmin.dll</HintPath>
+    <Reference Include="FirebaseAdmin, Version=2.3.0.0, Culture=neutral, PublicKeyToken=97c8d00c348326ed, processorArchitecture=MSIL">
+      <HintPath>..\packages\FirebaseAdmin.2.3.0\lib\net461\FirebaseAdmin.dll</HintPath>
     </Reference>
     <Reference Include="Google.Api.Gax, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3ec5ea7f18953e47, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Api.Gax.3.2.0\lib\net461\Google.Api.Gax.dll</HintPath>

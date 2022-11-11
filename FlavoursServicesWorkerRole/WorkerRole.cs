@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
+using OOAdvantech.PersistenceLayerRunTime;
 using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
 using System;
@@ -28,7 +29,7 @@ namespace FlavoursServicesWorkerRole
         {
             Trace.TraceInformation("FlavoursServicesWorkerRole is running");
             FlavoursServicesContextManagment.Init();
-
+            System.Collections.Immutable.ImmutableStack<string> tt = null;
             //string message = "Role instance run ";
             //try
             //{
