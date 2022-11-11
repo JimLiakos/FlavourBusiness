@@ -280,7 +280,7 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         /// <MetaDataID>{325a70f5-d4a1-4524-ba6b-9567f6c240fd}</MetaDataID>
-        internal async void Initialize()
+        public  async Task Initialize()
         {
             //if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.LastServicePoinMenuData.ServicePointIdentity))
             //{

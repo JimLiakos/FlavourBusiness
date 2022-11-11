@@ -1045,13 +1045,16 @@ namespace DontWaitApp
                 //MenuData = menuData;
                 //ApplicationSettings.Current.LastServicePoinMenuData = menuData;
                 _ServicePointState = clientSessionData.ServicePointState;
+
+#if DeviceDotNet
+                var storeRef = FoodServicesClientSession.Menu;
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
 
                     if (Application.Current?.MainPage != null)
                         Application.Current.MainPage.DisplayAlert("MenuData ", "ObjectChangeState MenuData", "OK");
                 });
-
+#endif
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
                 GetMessages();
             }

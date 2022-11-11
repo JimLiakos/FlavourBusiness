@@ -17,7 +17,6 @@ namespace FinanceFacade
         [CachingDataOnClientSide]
         string CountryCode { get; set; }
 
-
         /// <MetaDataID>{166dab6e-f381-4ef5-8dc6-bfef9f092ab9}</MetaDataID>
         [CachingDataOnClientSide]
         string VATNumber { get; set; }
@@ -28,6 +27,7 @@ namespace FinanceFacade
         string Name { get; set; }
 
         string FisicalPartyUri { get; }
+
 
     }
 }
