@@ -17832,7 +17832,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	13
+				nlines     	14
 				max_width  	1587)
 			    width      	668
 			    height     	487
@@ -25755,7 +25755,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	0
+	    origin_y   	48
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @481
 		    ShowCompartmentStereotypes 	TRUE
@@ -26230,7 +26230,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	216
+				max_width  	228
 				justify    	0
 				label      	"+Resources"
 				pctDist    	0.511299
@@ -26599,9 +26599,9 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@517
-			location   	(1514, 581)
+			location   	(1514, 583)
 			fill_color 	13434879
-			nlines     	1
+			nlines     	2
 			max_width  	457
 			justify    	0
 			label      	"IFlavoursServicesContext")
