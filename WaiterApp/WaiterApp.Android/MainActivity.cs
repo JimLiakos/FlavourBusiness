@@ -100,6 +100,9 @@ namespace WaiterApp.Droid
 
 
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
+            //Search for package name
+            //"google-services.json   {client[1].oauth_client[where client_type=3].client_id "
+
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
 
