@@ -2147,11 +2147,15 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{b050cbd5-497a-48cc-bc73-436e31e3a80e}</MetaDataID>
         public void RemoveSharingItem(IItemPreparation item)
         {
-            var flavourItem = (from clientSession in MainSession.PartialClientSessions
-                               where clientSession != this
-                               from storedItem in clientSession.FlavourItems
-                               where storedItem.uid == item.uid
-                               select storedItem).OfType<RoomService.ItemPreparation>().FirstOrDefault();
+            RoomService.ItemPreparation flavourItem = null;
+            if (MainSession != null)
+            {
+                flavourItem=(from clientSession in MainSession.PartialClientSessions
+                 where clientSession != this
+                 from storedItem in clientSession.FlavourItems
+                 where storedItem.uid == item.uid
+                 select storedItem).OfType<RoomService.ItemPreparation>().FirstOrDefault();
+            }
             if (flavourItem != null)
             {
 
