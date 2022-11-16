@@ -70,11 +70,14 @@ namespace DontWaitAppNS.iOS
                     Console.WriteLine(granted);
                 });
 
-                // For iOS 10 display notification (sent via APNS)
-                UNUserNotificationCenter.Current.Delegate = this;
+                if (Messaging.SharedInstance != null)
+                {
+                    // For iOS 10 display notification (sent via APNS)
+                    UNUserNotificationCenter.Current.Delegate = this;
 
-                // For iOS 10 data message (sent via FCM)
-                Messaging.SharedInstance.Delegate = this;
+                    // For iOS 10 data message (sent via FCM)
+                    Messaging.SharedInstance.Delegate = this;
+                }
             }
             else
             {
