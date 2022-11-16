@@ -270,8 +270,8 @@ namespace DontWaitApp
                 {
                     try
                     {
-                        if (FoodServicesClientSessionViewModel != null)
-                            FoodServicesClientSessionViewModel.FoodServicesClientSession.DeviceSleep();
+                        //if (FoodServicesClientSessionViewModel != null)
+                        FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -1017,7 +1017,7 @@ namespace DontWaitApp
             Contact contuct = null;
 
 #if DeviceDotNet
-            var x_contact= await Xamarin.Essentials.Contacts.PickContactAsync();
+            var x_contact = await Xamarin.Essentials.Contacts.PickContactAsync();
             if (x_contact != null)
             {
                 contuct = new Contact(x_contact.Id,
