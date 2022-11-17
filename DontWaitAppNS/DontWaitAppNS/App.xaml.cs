@@ -128,6 +128,19 @@ namespace DontWaitApp
         {
             try
             {
+                try
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        Application.Current?.MainPage?.DisplayAlert("App", "Application Resume", "")
+                        // Code to run on the main thread
+                    });
+
+                }
+                catch (Exception error)
+                {
+                    
+                }
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 device.IsinSleepMode = false;
 
