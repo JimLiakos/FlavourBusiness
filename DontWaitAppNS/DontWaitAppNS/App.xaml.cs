@@ -32,13 +32,30 @@ namespace DontWaitApp
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
             InitializeRemoteTypes();
 
+            if (Device.RuntimePlatform=="Android")
+            {
+                bool delete = false;
+
+                try
+                {
+                    string text = DeviceApplication.Current.ReadLog();
+
+                }
+                catch
+                {
+                    // just suppress any error logging exceptions
+                }
+
+                if (delete)
+                    DeviceApplication.Current.ClearLog();
+            }
+
+
+         
+
             ApplicationSettings.GetCurrent();
             MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
             //MainPage = new NavigationPage(new PaymentPage());
-
-
-
-
 
 
 
@@ -100,7 +117,7 @@ namespace DontWaitApp
         {
 
 
-            await CrossConnectivity.Current.IsRemoteReachable("10.0.0.13");
+            //await CrossConnectivity.Current.IsRemoteReachable("10.0.0.13");
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;

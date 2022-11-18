@@ -1055,6 +1055,9 @@ namespace DontWaitApp
                         Application.Current.MainPage.DisplayAlert("MenuData ", "ObjectChangeState MenuData", "OK");
                 });
 #endif
+#if DeviceDotNet
+                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "_ObjectChangeState?.Invoke(this, nameof(MenuData))" });
+#endif
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
                 GetMessages();
             }
