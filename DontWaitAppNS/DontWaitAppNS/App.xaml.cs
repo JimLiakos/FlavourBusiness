@@ -8,6 +8,9 @@ using OOAdvantech.Pay;
 using System.Linq;
 using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
+using System.IO;
+using OOAdvantech.Collections.Generic;
 
 namespace DontWaitApp
 {
@@ -95,11 +98,35 @@ namespace DontWaitApp
 
         protected override async void OnStart()
         {
+
+
             await CrossConnectivity.Current.IsRemoteReachable("10.0.0.13");
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
             //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
+
+
+            bool delete = false;
+        
+            try
+            {
+                string text = DeviceApplication.Current.ReadLog();
+
+            }
+            catch
+            {
+                // just suppress any error logging exceptions
+            }
+
+            if (delete)
+                DeviceApplication.Current.ClearLog();
+
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnStart" });
+#endif
+
 
 
         }
@@ -112,6 +139,11 @@ namespace DontWaitApp
 
         protected override void OnSleep()
         {
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnSleep" });
+#endif
+
             try
             {
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -126,21 +158,14 @@ namespace DontWaitApp
 
         protected override void OnResume()
         {
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnResume" });
+#endif
+
             try
             {
-                try
-                {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        Application.Current?.MainPage?.DisplayAlert("App", "Application Resume", "")
-                        // Code to run on the main thread
-                    });
 
-                }
-                catch (Exception error)
-                {
-                    
-                }
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 device.IsinSleepMode = false;
 
@@ -205,7 +230,7 @@ namespace DontWaitApp
                                         }
                                         catch (Exception error)
                                         {
-                                            
+
                                             return false;
                                         }
                                     });

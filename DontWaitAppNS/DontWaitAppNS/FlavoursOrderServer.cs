@@ -191,7 +191,10 @@ namespace DontWaitApp
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
         private void ApplicationResuming(object sender, EventArgs e)
         {
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer Resuming" });
 
+#endif
             SerializeTaskScheduler.AddTask(async () =>
             {
                 int tries = 30;
@@ -207,6 +210,9 @@ namespace DontWaitApp
                             }
                             catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
+#if DeviceDotNet
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "1 :"+ error.Message }); 
+#endif
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
                         }
@@ -216,10 +222,16 @@ namespace DontWaitApp
                     }
                     catch (System.Net.WebException commError)
                     {
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "2 :"+commError.Message }); 
+#endif
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
                     catch (Exception error)
                     {
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "3 : "+error.Message }); 
+#endif
                         var er = error;
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
