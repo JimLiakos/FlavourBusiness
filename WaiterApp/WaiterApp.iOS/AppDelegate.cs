@@ -145,7 +145,8 @@ namespace WaiterApp.iOS
                 UNUserNotificationCenter.Current.Delegate = this;
 
                 // For iOS 10 data message (sent via FCM)
-                Messaging.SharedInstance.Delegate = this;
+                if(Messaging.SharedInstance!=null)
+                    Messaging.SharedInstance.Delegate = this;
             }
             else
             {

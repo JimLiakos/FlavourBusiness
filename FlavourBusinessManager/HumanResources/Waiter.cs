@@ -764,7 +764,18 @@ namespace FlavourBusinessManager.HumanResources
 
 
         }
-        public event ServingBatchesChangedHandler ServingBatchesChanged;
+        event ServingBatchesChangedHandler _ServingBatchesChanged;
+        public event ServingBatchesChangedHandler ServingBatchesChanged
+        {
+            add
+            {
+                _ServingBatchesChanged+=value;
+            } 
+            remove
+            {
+                _ServingBatchesChanged-=value;
+            }
+        }
 
         /// <summary>
         /// Checks servingBatches for waiter 
@@ -780,12 +791,12 @@ namespace FlavourBusinessManager.HumanResources
             if (assignedServingBatches.Count != AssignedServingBatches.Count ||
                 unAssignedservingBatches.Count != ServingBatches.Count)
             {
-                ServingBatchesChanged?.Invoke();
+                _ServingBatchesChanged?.Invoke();
             }
             if (AssignedServingBatches.Count > 0 && !AssignedServingBatches.ContainsAll(assignedServingBatches))
-                ServingBatchesChanged?.Invoke();
+                _ServingBatchesChanged?.Invoke();
             else if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
-                ServingBatchesChanged?.Invoke();
+                _ServingBatchesChanged?.Invoke();
 
         }
 

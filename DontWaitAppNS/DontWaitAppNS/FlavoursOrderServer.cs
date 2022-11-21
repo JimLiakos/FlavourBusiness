@@ -191,9 +191,9 @@ namespace DontWaitApp
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
         private void ApplicationResuming(object sender, EventArgs e)
         {
+
 #if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer Resuming" });
-
 #endif
             SerializeTaskScheduler.AddTask(async () =>
             {
@@ -211,7 +211,7 @@ namespace DontWaitApp
                             catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
 #if DeviceDotNet
-                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "1 :"+ error.Message }); 
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "1 :"+ error.Message });
 #endif
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
@@ -223,19 +223,21 @@ namespace DontWaitApp
                     catch (System.Net.WebException commError)
                     {
 #if DeviceDotNet
-                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "2 :"+commError.Message }); 
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "2 :"+commError.Message });
 #endif
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
                     catch (Exception error)
                     {
 #if DeviceDotNet
-                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "3 : "+error.Message }); 
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "3 : "+error.Message });
 #endif
                         var er = error;
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
                 }
+
+
                 return true;
             });
 
@@ -717,8 +719,8 @@ namespace DontWaitApp
                 {
                     try
                     {
-                        //var resp = await wc.GetStringAsync(@"http://192.168.2.8:8090/api/values");
-                        //System.Diagnostics.Debug.WriteLine("sds");
+                        var resp = await wc.GetStringAsync(@"http://192.168.2.8:8090/api/values");
+                        System.Diagnostics.Debug.WriteLine("sds");
                     }
                     catch (Exception error)
                     {
@@ -733,8 +735,9 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-                (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+                
                 (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
+                (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
 
                 device.MessageReceived += Device_MessageReceived;
 #endif
@@ -908,6 +911,9 @@ namespace DontWaitApp
             {
                 Path = "";
                 _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
+#if DeviceDotNet
+                DeviceApplication.Current.Log(new List<string>() { " _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel))" });
+#endif
             }
 
 
@@ -1743,7 +1749,16 @@ namespace DontWaitApp
         public string AppIdentity => throw new NotImplementedException();
 
         /// <MetaDataID>{df563e71-7bde-477c-82a6-b97a6b8d1f72}</MetaDataID>
-        IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession => FoodServicesClientSessionViewModel;
+        IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession
+        {
+            get
+            {
+#if DeviceDotNet
+                DeviceApplication.Current.Log(new List<string>() { "get_CurrentFoodServicesClientSession" });
+#endif
+                return FoodServicesClientSessionViewModel;
+            }
+        }
 
 
         public Task<List<IFoodServicesClientSessionViewModel>> ActiveSessions

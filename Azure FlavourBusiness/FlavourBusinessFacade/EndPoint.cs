@@ -32,12 +32,18 @@ namespace FlavourBusinessFacade.ComputingResources
                 {
                     if (_Server == null)
                     {
-                        using (WebClient wc = new WebClient())
+                        _Server = "192.168.2.8";//work
+                        if (_Server == null)
                         {
-                            var json = wc.DownloadString("https://angularhost.z16.web.core.windows.net/usersfolder/ServerAddress.json");
-                            _Server = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
-                            return _Server;
+                            using (WebClient wc = new WebClient())
+                            {
+                                var json = wc.DownloadString("https://angularhost.z16.web.core.windows.net/usersfolder/ServerAddress.json");
+                                _Server = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
+                                return _Server;
+                            }
                         }
+                        else
+                            return _Server;
                     }
                     else
                         return _Server;

@@ -7,6 +7,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
 using DontWaitApp;
+using static System.Net.WebRequestMethods;
 
 namespace DontWaitApp
 {
@@ -60,18 +61,21 @@ namespace DontWaitApp
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
 
                 url = string.Format(@"http://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+                //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+                //url = "http://dontwaitwaiter.com/DontWaitWeb/#/";
+                //url = "http://dontwaitwaiter.com";
                 //url = string.Format(@"https://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
                 //var AssemblyMetaObject =OOAdvantech.DotNetMetaDataRepository.Assembly.GetComponent(typeof(ApplicationSettings).GetMetaData().Assembly);
                 // long count = AssemblyMetaObject.Residents.Count;
 
 
-
-
+                //url= "local://index.html#/";
+                //url = "local://m-index.html";
                 System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
-
+                path = "";
                 if (path != null && path.Split('/').Length > 0 &&
                 path.Split('/')[0] == ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity)
                 {
@@ -79,7 +83,7 @@ namespace DontWaitApp
                     {
                         // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
 
-                        hybridWebView.Uri = url + "/#/room-service;orderServerPath=.%2FEndUser";
+                        hybridWebView.Uri = url + "room-service;orderServerPath=.%2FEndUser";
                         //http://192.168.2.9:4300/#/room-service
                     }
                     else
@@ -88,6 +92,8 @@ namespace DontWaitApp
                 else
                     hybridWebView.Uri = url;
 
+                hybridWebView.Navigated += HybridWebView_Navigated;
+
 
 
             }
@@ -95,6 +101,10 @@ namespace DontWaitApp
 
         }
 
+        private void HybridWebView_Navigated(object sender, OOAdvantech.Web.NavigatedEventArgs e)
+        {
+            
+        }
 
         bool check = false;
         protected override async void OnAppearing()
