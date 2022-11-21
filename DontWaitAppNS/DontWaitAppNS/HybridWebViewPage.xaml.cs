@@ -61,7 +61,7 @@ namespace DontWaitApp
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
 
                 url = string.Format(@"http://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
-                //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+                url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
                 //url = "http://dontwaitwaiter.com/DontWaitWeb/#/";
                 //url = "http://dontwaitwaiter.com";
                 //url = string.Format(@"https://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);

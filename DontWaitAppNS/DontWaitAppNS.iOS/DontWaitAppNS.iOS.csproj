@@ -54,6 +54,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignProvision>VS: com.microneme.DontWaitAppIOS Development</CodesignProvision>
     <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <MtouchInterpreter>-all</MtouchInterpreter>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -162,14 +164,15 @@
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
-    <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
-      <Project>{BA784564-15E8-4D09-96B7-B6D79F557EA8}</Project>
-      <Name>DontWaitAppNS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.iOS\OOAdvantech.Pay.iOS.csproj">
+      <Project>{c1edb382-11d8-49ff-b4c4-21ef3a4cf0c4}</Project>
       <Name>OOAdvantech.Pay.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
+      <Project>{BA784564-15E8-4D09-96B7-B6D79F557EA8}</Project>
+      <Name>DontWaitAppNS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

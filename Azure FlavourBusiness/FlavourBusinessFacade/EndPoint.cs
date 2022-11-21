@@ -32,7 +32,7 @@ namespace FlavourBusinessFacade.ComputingResources
                 {
                     if (_Server == null)
                     {
-                        _Server = "192.168.2.8";//work
+                        //_Server = "192.168.2.8";//work
                         if (_Server == null)
                         {
                             using (WebClient wc = new WebClient())
