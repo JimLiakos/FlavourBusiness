@@ -40,9 +40,12 @@ namespace FlavoursServicesWorkerRole.Controllers
         //}
 
         // POST api/values
-        public void Post([FromBody] string value)
+        public void Post([FromBody] List<logLine> value)
         {
+            
         }
+
+        //static string LogText;
 
         // PUT api/values/5
         public void Put(int id, [FromBody] string value)
@@ -53,5 +56,11 @@ namespace FlavoursServicesWorkerRole.Controllers
         public void Delete(int id)
         {
         }
+    }
+    public class logLine
+    {
+        public long Timestamp { get; set; }
+
+        public string Line { get; set; }
     }
 }
