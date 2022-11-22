@@ -72,10 +72,10 @@ namespace DontWaitApp
 
                 //url= "local://index.html#/";
                 //url = "local://m-index.html";
-                System.Reflection.DispatchProxy dispatchProxy;
+                //System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
-                path = "";
+                //path = "";
                 if (path != null && path.Split('/').Length > 0 &&
                 path.Split('/')[0] == ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity)
                 {
