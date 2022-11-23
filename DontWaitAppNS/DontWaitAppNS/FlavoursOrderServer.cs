@@ -195,6 +195,9 @@ namespace DontWaitApp
 #if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer Resuming" });
 #endif
+            var run = SerializeTaskScheduler.Runs;
+            var remainingTasks = SerializeTaskScheduler.RemainingTasks;
+
             SerializeTaskScheduler.AddTask(async () =>
             {
                 int tries = 30;
@@ -235,6 +238,7 @@ namespace DontWaitApp
                         var er = error;
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
+                    tries--;
                 }
 
 
@@ -277,6 +281,11 @@ namespace DontWaitApp
         /// <MetaDataID>{efa7ab05-f66c-42a1-850c-c825f70ce948}</MetaDataID>
         private void ApplicationSleeping(object sender, EventArgs e)
         {
+            var run = SerializeTaskScheduler.Runs;
+            var remainingTasks = SerializeTaskScheduler.RemainingTasks;
+
+
+
             SerializeTaskScheduler.AddTask(async () =>
             {
                 int tries = 30;
@@ -296,6 +305,7 @@ namespace DontWaitApp
                     {
                         await Task.Delay(TimeSpan.FromSeconds(1));
                     }
+                    tries--;
                 }
                 return true;
             });

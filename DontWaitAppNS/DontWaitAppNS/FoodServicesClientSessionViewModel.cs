@@ -1243,6 +1243,7 @@ namespace DontWaitApp
             //var menuData = MenuData;
             //menuData.OrderItems = OrderItems.ToList();
             //MenuData = menuData;
+
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
                 var datetime = DateTime.Now;

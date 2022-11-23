@@ -116,20 +116,11 @@ namespace DontWaitAppNS.Droid
             AndroidAppLinks.Init(this);
 
             
-            var token = await Task<string>.Run(() =>
-            {
-                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            });
+     
 
-            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
-            string webClientID = "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com";
-            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
-            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
+            getDeviceUniqueID();
 
-
-            string sdfsd = getDeviceUniqueID();
-
-            GetDeviceData();
+            
 
 
 
@@ -144,13 +135,25 @@ namespace DontWaitAppNS.Droid
             //InitForgroundService(savedInstanceState);
             CreateNotificationChannel();
 
-            if (Intent.Extras != null)
-            {
-
-            }
+           
             var app = new DontWaitApp.App();
 
             LoadApplication(app);
+
+            var tokenTask = Task<string>.Run(() =>
+            {
+                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            });
+
+            //tokenTask.Wait();
+
+            string token = await tokenTask;
+
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
+            string webClientID = "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com";
+            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
+
             //var appLink = GetAppLink();
             //Xamarin.Forms.Application.Current.AppLinks.RegisterLink(appLink);
 
@@ -295,20 +298,20 @@ namespace DontWaitAppNS.Droid
                 }
             }
         }
-        //protected override void OnStart()
-        //{
-        //    base.OnStart();
-        //}
+        protected override void OnStart()
+        {
+            base.OnStart();
+        }
         //protected override void OnRestart()
         //{
         //    base.OnRestart();
         //}
 
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            outState.PutBoolean(Constants.SERVICE_STARTED_KEY, isStarted);
-            base.OnSaveInstanceState(outState);
-        }
+        //protected override void OnSaveInstanceState(Bundle outState)
+        //{
+        //    outState.PutBoolean(Constants.SERVICE_STARTED_KEY, isStarted);
+        //    base.OnSaveInstanceState(outState);
+        //}
         private void InitForgroundService(Bundle savedInstanceState)
         {
             if (savedInstanceState != null)
