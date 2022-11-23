@@ -201,6 +201,8 @@ namespace DontWaitApp
             OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnSleep" });
 #endif
 
+
+
             try
             {
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;

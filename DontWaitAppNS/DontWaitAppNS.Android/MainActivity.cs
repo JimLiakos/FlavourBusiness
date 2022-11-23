@@ -295,14 +295,14 @@ namespace DontWaitAppNS.Droid
                 }
             }
         }
-        protected override void OnStart()
-        {
-            base.OnStart();
-        }
-        protected override void OnRestart()
-        {
-            base.OnRestart();
-        }
+        //protected override void OnStart()
+        //{
+        //    base.OnStart();
+        //}
+        //protected override void OnRestart()
+        //{
+        //    base.OnRestart();
+        //}
 
         protected override void OnSaveInstanceState(Bundle outState)
         {

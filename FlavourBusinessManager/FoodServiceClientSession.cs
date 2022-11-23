@@ -2373,11 +2373,18 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{239c856f-008a-4e7e-9b1c-fdf7899ea5d6}</MetaDataID>
         public void DeviceResume()
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            DeviceAppLifecycle deviceAppState = DeviceAppLifecycle.InUse;
+            lock (StateMachineLock)
+                deviceAppState=DeviceAppState;
+            if (deviceAppState!=DeviceAppLifecycle.InUse)
             {
-                DeviceAppActivationTime = DateTime.UtcNow;
-                DeviceAppState = DeviceAppLifecycle.InUse;
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    DeviceAppActivationTime = DateTime.UtcNow;
+                    lock (StateMachineLock)
+                        DeviceAppState = DeviceAppLifecycle.InUse;
+                    stateTransition.Consistent = true;
+                }
             }
 
         }
@@ -2388,11 +2395,18 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{e91f2250-533d-4aab-b78c-bb88fd0c2106}</MetaDataID>
         public void DeviceSleep()
         {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            DeviceAppLifecycle deviceAppState = DeviceAppLifecycle.InUse;
+            lock (StateMachineLock)
+                deviceAppState=DeviceAppState;
+            if (deviceAppState!=DeviceAppLifecycle.Sleep)
             {
-                DeviceAppSleepTime = DateTime.UtcNow;
-                DeviceAppState = DeviceAppLifecycle.Sleep;
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    DeviceAppSleepTime = DateTime.UtcNow;
+                    lock (StateMachineLock)
+                        DeviceAppState = DeviceAppLifecycle.Sleep;
+                    stateTransition.Consistent = true;
+                }
             }
         }
 

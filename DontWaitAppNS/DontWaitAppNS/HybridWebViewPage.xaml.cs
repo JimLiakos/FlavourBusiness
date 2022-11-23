@@ -8,6 +8,7 @@ using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
 using DontWaitApp;
 using static System.Net.WebRequestMethods;
+using System.Linq;
 
 namespace DontWaitApp
 {
@@ -61,7 +62,7 @@ namespace DontWaitApp
                 //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
 
                 url = string.Format(@"http://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
-                //url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
+                url = "https://angularhost.z16.web.core.windows.net/DontWaitWeb/#/";
                 //url = "http://dontwaitwaiter.com/DontWaitWeb/#/";
                 //url = "http://dontwaitwaiter.com";
                 //url = string.Format(@"https://{0}:4300/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
@@ -75,6 +76,7 @@ namespace DontWaitApp
                 //System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
+               // Refresh=true;
                 //path = "";
                 if (path != null && path.Split('/').Length > 0 &&
                 path.Split('/')[0] == ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity)
@@ -94,16 +96,20 @@ namespace DontWaitApp
 
                 hybridWebView.Navigated += HybridWebView_Navigated;
 
-
+                
 
             }
 
 
         }
-
+        bool Refresh;
         private void HybridWebView_Navigated(object sender, OOAdvantech.Web.NavigatedEventArgs e)
         {
-            
+            if(Refresh)
+            {
+                Refresh=false;
+                hybridWebView.RefreshPage();
+            }
         }
 
         bool check = false;
