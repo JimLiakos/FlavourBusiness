@@ -164,6 +164,10 @@
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+      <Project>{98c53533-8117-40c2-b9a6-bbe3d5dee050}</Project>
+      <Name>OOAdvantech.NetStandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.iOS\OOAdvantech.Pay.iOS.csproj">
       <Project>{c1edb382-11d8-49ff-b4c4-21ef3a4cf0c4}</Project>
       <Name>OOAdvantech.Pay.iOS</Name>

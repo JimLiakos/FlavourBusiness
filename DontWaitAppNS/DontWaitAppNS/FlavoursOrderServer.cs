@@ -210,11 +210,12 @@ namespace DontWaitApp
                             try
                             {
                                 this.FoodServicesClientSessionViewModel.FoodServicesClientSession.DeviceResume();
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer after DeviceResume" });
                             }
                             catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
 #if DeviceDotNet
-                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "1 :"+ error.Message });
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "DeviceResume :"+ error.Message,error.StackTrace });
 #endif
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
