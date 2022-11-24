@@ -13,6 +13,7 @@ using System.IO;
 using OOAdvantech.Collections.Generic;
 using System.Net.Http;
 using Plugin.Connectivity;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DontWaitApp
 {
@@ -135,6 +136,24 @@ namespace DontWaitApp
         protected override void OnStart()
         {
 
+
+            //try
+            //{
+            //    OOAdvantech.FileSystem.WriteAllText(@"\Demo.log", "hello");
+
+            //    System.Threading.Thread.Sleep(1000);
+
+            //    string text = OOAdvantech.FileSystem.ReadAllText(@"\Demo.log");
+            //    System.Diagnostics.Debug.WriteLine(text);
+
+            //}
+            //catch (Exception error)
+            //{
+
+
+            //}
+
+
             Task.Run(async () =>
             {
 
@@ -171,6 +190,7 @@ namespace DontWaitApp
             try
             {
                 string text = DeviceApplication.Current.ReadLog();
+                System.Diagnostics.Debug.Write(text);
 
             }
             catch
@@ -183,9 +203,17 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnStart" });
+           OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnStart" });
 #endif
+            try
+            {
+                string text = DeviceApplication.Current.ReadLog();
 
+            }
+            catch
+            {
+                // just suppress any error logging exceptions
+            }
 
 
         }
