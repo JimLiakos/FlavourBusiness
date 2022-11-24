@@ -110,33 +110,34 @@ namespace DontWaitAppNS.iOS
 
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {
-            var newExc = new Exception("TaskSchedulerOnUnobservedTaskException", unobservedTaskExceptionEventArgs.Exception);
-            LogUnhandledException(newExc);
+            var error = new Exception("TaskSchedulerOnUnobservedTaskException", unobservedTaskExceptionEventArgs.Exception);
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:"+ error.Message, error.StackTrace });
         }
+
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
         {
-            var newExc = new Exception("CurrentDomainOnUnhandledException", unhandledExceptionEventArgs.ExceptionObject as Exception);
-            LogUnhandledException(newExc);
+            var error = new Exception("CurrentDomainOnUnhandledException", unhandledExceptionEventArgs.ExceptionObject as Exception);
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:"+ error.Message, error.StackTrace });
         }
 
-        internal static void LogUnhandledException(Exception exception)
-        {
-            try
-            {
-                const string errorFileName = "Fatal.log";
-                var libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); // iOS: Environment.SpecialFolder.Resources
-                var errorFilePath = Path.Combine(libraryPath, errorFileName);
-                var errorMessage = String.Format("Time: {0}\r\nError: Unhandled Exception\r\n{1}",
-                DateTime.Now, exception.ToString());
-                File.WriteAllText(errorFilePath, errorMessage);
+        //internal static void LogUnhandledException(Exception exception)
+        //{
+        //    try
+        //    {
+        //        const string errorFileName = "Fatal.log";
+        //        var libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); // iOS: Environment.SpecialFolder.Resources
+        //        var errorFilePath = Path.Combine(libraryPath, errorFileName);
+        //        var errorMessage = String.Format("Time: {0}\r\nError: Unhandled Exception\r\n{1}",
+        //        DateTime.Now, exception.ToString());
+        //        File.WriteAllText(errorFilePath, errorMessage);
 
 
-            }
-            catch
-            {
-                // just suppress any error logging exceptions
-            }
-        }
+        //    }
+        //    catch
+        //    {
+        //        // just suppress any error logging exceptions
+        //    }
+        //}
 
 
         //iOS: Different than Android. Must be in FinishedLaunching, not in Main.

@@ -20,6 +20,7 @@ using Firebase;
 using Xamarin.Forms.Platform.Android.AppLinks;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using OOAdvantech;
 
 namespace DontWaitAppNS.Droid
 {
@@ -101,6 +102,10 @@ namespace DontWaitAppNS.Droid
 
             base.OnCreate(savedInstanceState);
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+
+
             //this.Window.AddFlags(WindowManagerFlags.Fullscreen);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -146,7 +151,7 @@ namespace DontWaitAppNS.Droid
             });
 
             //tokenTask.Wait();
-
+            //string token = tokenTask.Result;
             string token = await tokenTask;
 
             OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
@@ -161,7 +166,17 @@ namespace DontWaitAppNS.Droid
 
 
         }
+        private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
+        {
+            var error = new Exception("TaskSchedulerOnUnobservedTaskException", unobservedTaskExceptionEventArgs.Exception);
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:"+ error.Message, error.StackTrace });
+        }
 
+        private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
+        {
+            var error = new Exception("CurrentDomainOnUnhandledException", unhandledExceptionEventArgs.ExceptionObject as Exception);
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:"+ error.Message, error.StackTrace });
+        }
         Xamarin.Forms.AppLinkEntry GetAppLink()
         {
             var pageType = GetType().ToString();
