@@ -194,10 +194,9 @@ namespace DontWaitApp
 
 #if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer Resuming" });
-#endif
-            var run = SerializeTaskScheduler.Runs;
-            var remainingTasks = SerializeTaskScheduler.RemainingTasks;
 
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#endif
             SerializeTaskScheduler.AddTask(async () =>
             {
                 int tries = 30;
@@ -209,13 +208,20 @@ namespace DontWaitApp
                         {
                             try
                             {
-                                this.FoodServicesClientSessionViewModel.FoodServicesClientSession.DeviceResume();
+#if DeviceDotNet
                                 OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "FlavoursOrderServer after DeviceResume" });
+
+
+                                if (!device.IsinSleepMode)
+                                    this.FoodServicesClientSessionViewModel.FoodServicesClientSession.DeviceResume();
+#else
+                                this.FoodServicesClientSessionViewModel.FoodServicesClientSession.DeviceResume();
+#endif
                             }
                             catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
 #if DeviceDotNet
-                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "DeviceResume :"+ error.Message,error.StackTrace });
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "DeviceResume :"+ error.Message, error.StackTrace });
 #endif
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
@@ -282,20 +288,29 @@ namespace DontWaitApp
         /// <MetaDataID>{efa7ab05-f66c-42a1-850c-c825f70ce948}</MetaDataID>
         private void ApplicationSleeping(object sender, EventArgs e)
         {
-            var run = SerializeTaskScheduler.Runs;
-            var remainingTasks = SerializeTaskScheduler.RemainingTasks;
+            //var run = SerializeTaskScheduler.Runs;
+            //var remainingTasks = SerializeTaskScheduler.RemainingTasks;
 
 
 
             SerializeTaskScheduler.AddTask(async () =>
             {
+
+#if DeviceDotNet
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#endif
                 int tries = 30;
                 while (tries > 0)
                 {
                     try
                     {
-                        //if (FoodServicesClientSessionViewModel != null)
+#if DeviceDotNet
+                        if (device.IsinSleepMode)
+                            FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
+#else
                         FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
+#endif
+
                         break;
                     }
                     catch (System.Net.WebException commError)

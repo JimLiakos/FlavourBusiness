@@ -1,0 +1,411 @@
+﻿Thread finished: <Thread Pool> #7
+The thread 0x7 has exited with code 0 (0x0).
+[0:] 11/25/2022 10:14:12 AM : OnStart
+11/25/2022 10:14:17 AM : get_CurrentFoodServicesClientSession
+11/25/2022 10:14:17 AM : ctor ServerSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/onb2xguejzn_7qputrhlf5a6_11.rem
+11/25/2022 10:14:17 AM : Opens : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:14:17 AM : WebSocketClient  in :1
+11/25/2022 10:14:17 AM : WebSocketClient  exit :1
+11/25/2022 10:14:18 AM : get_CurrentFoodServicesClientSession
+11/25/2022 10:14:18 AM : get_MenuData
+11/25/2022 10:14:22 AM : WebSocketClient  in :2
+11/25/2022 10:14:22 AM : ReplaceWebSocketClient  in :2
+11/25/2022 10:14:22 AM : RestApp channel replace WebSocketClient :2
+11/25/2022 10:14:22 AM : CloseWebSocket :2
+11/25/2022 10:14:22 AM : ClientSessionPart.Reconnect :2
+11/25/2022 10:14:22 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/onb2xguejzn_7qputrhlf5a6_11.rem
+11/25/2022 10:14:22 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:14:22 AM : ReplaceWebSocketClient  out :2
+11/25/2022 10:14:22 AM : WebSocketClient  exit :2
+11/25/2022 10:14:22 AM : get_MenuData
+11/25/2022 10:14:22 AM : get_MenuData
+11/25/2022 10:14:24 AM : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+11/25/2022 10:14:24 AM : get_MenuData
+11/25/2022 10:14:37 AM : OnSleep
+11/25/2022 10:14:37 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:15:21 AM : timeout for 1343582858 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:43.8699030
+11/25/2022 10:15:21 AM : WebSocketClient_Closed : 
+11/25/2022 10:15:21 AM : WebSocketClient  in :3
+11/25/2022 10:15:21 AM : ReplaceWebSocketClient  in :3
+11/25/2022 10:15:21 AM : RestApp channel replace WebSocketClient :3
+11/25/2022 10:15:21 AM : CloseWebSocket :3
+11/25/2022 10:15:21 AM : ReplaceWebSocketClient  out :3
+11/25/2022 10:15:21 AM : WebSocketClient  exit :3
+11/25/2022 10:15:21 AM : WebSocketReconnect : 11/25/2022 10:15:21 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:15:32 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:15:32 AM : WebSocketClient  in :4
+11/25/2022 10:15:32 AM : WebSocketClient  exit :4
+11/25/2022 10:15:32 AM : WebSocketClient  in :5
+11/25/2022 10:15:32 AM : ReplaceWebSocketClient  in :5
+11/25/2022 10:15:32 AM : RestApp channel replace WebSocketClient :5
+11/25/2022 10:15:32 AM : CloseWebSocket :5
+11/25/2022 10:15:32 AM : ClientSessionPart.Reconnect :5
+11/25/2022 10:15:32 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/qjn_z6otezutklpih0vftuzn_14.rem
+11/25/2022 10:15:33 AM : OnResume
+11/25/2022 10:15:33 AM : FlavoursOrderServer Resuming
+11/25/2022 10:15:33 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:15:33 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:15:37 AM : channelSubscriptions
+11/25/2022 10:15:43 AM : OnSleep
+11/25/2022 10:15:43 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:15:43 AM : 2 :The operation has timed out.
+11/25/2022 10:16:27 AM : ReplaceWebSocketClient  out :5
+11/25/2022 10:16:27 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:16:27 AM : WebSocketClient  exit :5
+11/25/2022 10:16:27 AM : WebSocketClient_Closed : 
+11/25/2022 10:16:27 AM : WebSocketClient  in :6
+11/25/2022 10:16:27 AM : ProcessRequest : 
+11/25/2022 10:16:27 AM : ReplaceWebSocketClient  in :6
+11/25/2022 10:16:27 AM : WebSocketReconnect : 11/25/2022 10:16:27 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:16:27 AM : RestApp channel replace WebSocketClient :6
+11/25/2022 10:16:27 AM : CloseWebSocket :6
+11/25/2022 10:16:27 AM : ReplaceWebSocketClient  out :6
+11/25/2022 10:16:27 AM : WebSocketClient  exit :6
+11/25/2022 10:16:27 AM : WebSocketReconnect : 11/25/2022 10:16:27 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:16:27 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:16:27 AM : WebSocketClient  in :7
+11/25/2022 10:16:27 AM : WebSocketClient  exit :7
+11/25/2022 10:16:37 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0121830
+11/25/2022 10:16:37 AM : Broken Session 
+11/25/2022 10:16:38 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:16:38 AM : 
+11/25/2022 10:16:38 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:16:38 AM : 
+11/25/2022 10:16:38 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/nz61_5ecpadrmar7n9+77n1e_17.rem
+11/25/2022 10:16:48 AM : channelSubscriptions
+11/25/2022 10:16:48 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0437560
+11/25/2022 10:16:48 AM : OnResume
+11/25/2022 10:16:48 AM : FlavoursOrderServer Resuming
+11/25/2022 10:16:48 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:16:51 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:16:51 AM : WebSocketClient  in :8
+11/25/2022 10:16:51 AM : ReplaceWebSocketClient  in :8
+11/25/2022 10:16:51 AM : RestApp channel replace WebSocketClient :8
+11/25/2022 10:16:52 AM : CloseWebSocket :8
+11/25/2022 10:16:52 AM : ClientSessionPart.Reconnect :8
+11/25/2022 10:16:52 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/nz61_5ecpadrmar7n9+77n1e_17.rem
+11/25/2022 10:16:52 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:16:52 AM : ReplaceWebSocketClient  out :8
+11/25/2022 10:16:52 AM : WebSocketClient  exit :8
+11/25/2022 10:16:58 AM : timeout for -782239894 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0213770
+11/25/2022 10:17:05 AM : OnSleep
+11/25/2022 10:17:05 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:17:08 AM : timeout for -782239894 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0549660
+11/25/2022 10:17:10 AM : OnResume
+11/25/2022 10:17:10 AM : FlavoursOrderServer Resuming
+11/25/2022 10:17:10 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:17:10 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:17:15 AM : OnSleep
+11/25/2022 10:17:15 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:18:12 AM : WebSocketClient_Closed : 
+11/25/2022 10:18:12 AM : timeout for -782239894 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0063030
+11/25/2022 10:18:12 AM : WebSocketClient  in :9
+11/25/2022 10:18:12 AM : ReplaceWebSocketClient  in :9
+11/25/2022 10:18:12 AM : RestApp channel replace WebSocketClient :9
+11/25/2022 10:18:12 AM : CloseWebSocket :9
+11/25/2022 10:18:12 AM : ReplaceWebSocketClient  out :9
+11/25/2022 10:18:12 AM : WebSocketClient  exit :9
+11/25/2022 10:18:12 AM : WebSocketReconnect : 11/25/2022 10:18:12 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:18:12 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:18:12 AM : WebSocketClient  in :10
+11/25/2022 10:18:12 AM : WebSocketClient  exit :10
+11/25/2022 10:18:12 AM : OnResume
+11/25/2022 10:18:12 AM : FlavoursOrderServer Resuming
+11/25/2022 10:18:12 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:18:13 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:18:15 AM : Broken Session 
+11/25/2022 10:18:15 AM : WebSocketClient  in :11
+11/25/2022 10:18:15 AM : ReplaceWebSocketClient  in :11
+11/25/2022 10:18:15 AM : RestApp channel replace WebSocketClient :11
+11/25/2022 10:18:15 AM : CloseWebSocket :11
+11/25/2022 10:18:15 AM : ClientSessionPart.Reconnect :11
+11/25/2022 10:18:15 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/_xghnvspewpjynep_bz2yvbk_20.rem
+11/25/2022 10:18:15 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/_xghnvspewpjynep_bz2yvbk_20.rem
+11/25/2022 10:18:21 AM : channelSubscriptions
+11/25/2022 10:18:21 AM : channelSubscriptions
+11/25/2022 10:18:28 AM : OnSleep
+11/25/2022 10:18:28 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:19:17 AM : ReplaceWebSocketClient  out :11
+11/25/2022 10:19:17 AM : WebSocketClient  exit :11
+11/25/2022 10:19:18 AM : WebSocketClient_Closed : 
+11/25/2022 10:19:18 AM : WebSocketClient  in :12
+11/25/2022 10:19:18 AM : 2 :The remote party closed the WebSocket connection without completing the close handshake.
+11/25/2022 10:19:18 AM : timeout for 713932611 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0353000
+11/25/2022 10:19:18 AM : ReplaceWebSocketClient  in :12
+11/25/2022 10:19:18 AM : RestApp channel replace WebSocketClient :12
+11/25/2022 10:19:18 AM : CloseWebSocket :12
+11/25/2022 10:19:18 AM : ReplaceWebSocketClient  out :12
+11/25/2022 10:19:18 AM : WebSocketClient  exit :12
+11/25/2022 10:19:18 AM : WebSocketReconnect : 11/25/2022 10:19:18 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:19:18 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:19:18 AM : WebSocketClient  in :13
+11/25/2022 10:19:18 AM : WebSocketClient  exit :13
+11/25/2022 10:19:18 AM : OnResume
+11/25/2022 10:19:18 AM : FlavoursOrderServer Resuming
+11/25/2022 10:19:18 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:19:19 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:19:21 AM : Broken Session 
+11/25/2022 10:19:21 AM : WebSocketClient  in :14
+11/25/2022 10:19:21 AM : ReplaceWebSocketClient  in :14
+11/25/2022 10:19:21 AM : RestApp channel replace WebSocketClient :14
+11/25/2022 10:19:21 AM : CloseWebSocket :14
+11/25/2022 10:19:21 AM : ClientSessionPart.Reconnect :14
+11/25/2022 10:19:21 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/nzsueby2wj5ej0mgsjywevej_23.rem
+11/25/2022 10:19:21 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/nzsueby2wj5ej0mgsjywevej_23.rem
+11/25/2022 10:19:24 AM : channelSubscriptions
+11/25/2022 10:19:34 AM : 2 :The operation has timed out.
+11/25/2022 10:19:34 AM : ReplaceWebSocketClient  out :14
+11/25/2022 10:19:34 AM : WebSocketClient  exit :14
+11/25/2022 10:19:34 AM : timeout for -2041357871 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0288290
+11/25/2022 10:19:35 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:19:35 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:19:37 AM : timeout for -2041357871 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0205950
+11/25/2022 10:19:47 AM : timeout for -2041357871 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0192110
+11/25/2022 10:19:57 AM : timeout for -2041357871 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0175790
+11/25/2022 10:20:03 AM : OnSleep
+11/25/2022 10:20:03 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:20:50 AM : WebSocketClient_Closed : 
+11/25/2022 10:20:50 AM : WebSocketClient  in :15
+11/25/2022 10:20:50 AM : ReplaceWebSocketClient  in :15
+11/25/2022 10:20:50 AM : RestApp channel replace WebSocketClient :15
+11/25/2022 10:20:50 AM : CloseWebSocket :15
+11/25/2022 10:20:50 AM : ReplaceWebSocketClient  out :15
+11/25/2022 10:20:50 AM : WebSocketClient  exit :15
+11/25/2022 10:20:50 AM : WebSocketReconnect : 11/25/2022 10:20:50 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:20:51 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:20:51 AM : WebSocketClient  in :16
+11/25/2022 10:20:51 AM : WebSocketClient  exit :16
+11/25/2022 10:20:51 AM : OnResume
+11/25/2022 10:20:51 AM : FlavoursOrderServer Resuming
+11/25/2022 10:20:51 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:20:51 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:20:53 AM : Broken Session 
+11/25/2022 10:20:54 AM : WebSocketClient  in :17
+11/25/2022 10:20:54 AM : ReplaceWebSocketClient  in :17
+11/25/2022 10:20:54 AM : RestApp channel replace WebSocketClient :17
+11/25/2022 10:20:54 AM : CloseWebSocket :17
+11/25/2022 10:20:54 AM : ClientSessionPart.Reconnect :17
+11/25/2022 10:20:54 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/loqqbdyiidfsgkfiek42+vna_26.rem
+11/25/2022 10:20:54 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/loqqbdyiidfsgkfiek42+vna_26.rem
+11/25/2022 10:20:58 AM : channelSubscriptions
+11/25/2022 10:21:03 AM : OnSleep
+11/25/2022 10:21:03 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:22:03 AM : ReplaceWebSocketClient  out :17
+11/25/2022 10:22:03 AM : 2 :The operation has timed out.
+11/25/2022 10:22:03 AM : WebSocketClient_Closed : 
+11/25/2022 10:22:03 AM : WebSocketClient  in :18
+11/25/2022 10:22:03 AM : WebSocketClient  exit :17
+11/25/2022 10:22:03 AM : ReplaceWebSocketClient  in :18
+11/25/2022 10:22:03 AM : RestApp channel replace WebSocketClient :18
+11/25/2022 10:22:03 AM : CloseWebSocket :18
+11/25/2022 10:22:03 AM : ReplaceWebSocketClient  out :18
+11/25/2022 10:22:03 AM : WebSocketClient  exit :18
+11/25/2022 10:22:03 AM : WebSocketReconnect : 11/25/2022 10:22:03 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:22:03 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:22:03 AM : WebSocketClient  in :19
+11/25/2022 10:22:03 AM : WebSocketClient  exit :19
+11/25/2022 10:22:03 AM : OnResume
+11/25/2022 10:22:03 AM : FlavoursOrderServer Resuming
+11/25/2022 10:22:03 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:22:04 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:22:07 AM : Broken Session 
+11/25/2022 10:22:07 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/xpkfhhqzbtaeikolfwmh96vu_29.rem
+11/25/2022 10:22:12 AM : channelSubscriptions
+11/25/2022 10:22:13 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0117050
+11/25/2022 10:22:13 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:22:16 AM : WebSocketClient  in :20
+11/25/2022 10:22:16 AM : ReplaceWebSocketClient  in :20
+11/25/2022 10:22:16 AM : RestApp channel replace WebSocketClient :20
+11/25/2022 10:22:16 AM : CloseWebSocket :20
+11/25/2022 10:22:16 AM : ClientSessionPart.Reconnect :20
+11/25/2022 10:22:16 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/xpkfhhqzbtaeikolfwmh96vu_29.rem
+11/25/2022 10:22:16 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:22:16 AM : ReplaceWebSocketClient  out :20
+11/25/2022 10:22:16 AM : WebSocketClient  exit :20
+11/25/2022 10:22:17 AM : OnSleep
+11/25/2022 10:22:18 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:22:34 AM : WebSocketClient_Closed : 
+11/25/2022 10:22:34 AM : WebSocketClient  in :21
+11/25/2022 10:22:34 AM : timeout for -1039800838 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0281290
+11/25/2022 10:22:34 AM : ReplaceWebSocketClient  in :21
+11/25/2022 10:22:34 AM : RestApp channel replace WebSocketClient :21
+11/25/2022 10:22:34 AM : CloseWebSocket :21
+11/25/2022 10:22:34 AM : ReplaceWebSocketClient  out :21
+11/25/2022 10:22:34 AM : WebSocketClient  exit :21
+11/25/2022 10:22:35 AM : WebSocketReconnect : 11/25/2022 10:22:35 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:22:35 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:22:35 AM : WebSocketClient  in :22
+11/25/2022 10:22:35 AM : WebSocketClient  exit :22
+11/25/2022 10:22:35 AM : OnResume
+11/25/2022 10:22:35 AM : FlavoursOrderServer Resuming
+11/25/2022 10:22:35 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:22:35 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:22:40 AM : Broken Session 
+11/25/2022 10:22:40 AM : WebSocketClient  in :23
+11/25/2022 10:22:40 AM : ReplaceWebSocketClient  in :23
+11/25/2022 10:22:40 AM : RestApp channel replace WebSocketClient :23
+11/25/2022 10:22:40 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/xpkfhhqzbtaeikolfwmh96vu_29.rem
+11/25/2022 10:22:40 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:22:40 AM : CloseWebSocket :23
+11/25/2022 10:22:40 AM : ClientSessionPart.Reconnect :23
+11/25/2022 10:22:40 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/xpkfhhqzbtaeikolfwmh96vu_29.rem
+11/25/2022 10:22:40 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:22:40 AM : ReplaceWebSocketClient  out :23
+11/25/2022 10:22:40 AM : WebSocketClient  exit :23
+11/25/2022 10:22:40 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:22:40 AM : 
+11/25/2022 10:22:40 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:22:40 AM : 
+11/25/2022 10:22:44 AM : timeout for 480564322 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0253390
+11/25/2022 10:22:51 AM : OnSleep
+11/25/2022 10:22:51 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:23:59 AM : WebSocketClient_Closed : 
+11/25/2022 10:23:59 AM : WebSocketClient  in :24
+11/25/2022 10:23:59 AM : timeout for 480564322 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0108250
+11/25/2022 10:23:59 AM : ReplaceWebSocketClient  in :24
+11/25/2022 10:23:59 AM : RestApp channel replace WebSocketClient :24
+11/25/2022 10:23:59 AM : CloseWebSocket :24
+11/25/2022 10:23:59 AM : ReplaceWebSocketClient  out :24
+11/25/2022 10:23:59 AM : WebSocketClient  exit :24
+11/25/2022 10:23:59 AM : WebSocketReconnect : 11/25/2022 10:23:59 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:23:59 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:23:59 AM : WebSocketClient  in :25
+11/25/2022 10:23:59 AM : WebSocketClient  exit :25
+11/25/2022 10:23:59 AM : OnResume
+11/25/2022 10:23:59 AM : FlavoursOrderServer Resuming
+11/25/2022 10:23:59 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:24:00 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:24:00 AM : Broken Session 
+11/25/2022 10:24:00 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/zekgzq14jhqdbrakjsxpsxc7_34.rem
+11/25/2022 10:24:04 AM : WebSocketClient  in :26
+11/25/2022 10:24:04 AM : channelSubscriptions
+11/25/2022 10:24:04 AM : ReplaceWebSocketClient  in :26
+11/25/2022 10:24:04 AM : RestApp channel replace WebSocketClient :26
+11/25/2022 10:24:04 AM : CloseWebSocket :26
+11/25/2022 10:24:04 AM : ClientSessionPart.Reconnect :26
+11/25/2022 10:24:04 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/zekgzq14jhqdbrakjsxpsxc7_34.rem
+11/25/2022 10:24:04 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:24:04 AM : ReplaceWebSocketClient  out :26
+11/25/2022 10:24:04 AM : WebSocketClient  exit :26
+11/25/2022 10:24:09 AM : timeout for -1060932042 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0190660
+11/25/2022 10:24:19 AM : OnSleep
+11/25/2022 10:24:19 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:24:19 AM : timeout for -1060932042 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0120420
+11/25/2022 10:26:03 AM : timeout for -1060932042 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0018880
+11/25/2022 10:26:03 AM : WebSocketClient_Closed : 
+11/25/2022 10:26:03 AM : WebSocketClient  in :27
+11/25/2022 10:26:03 AM : ReplaceWebSocketClient  in :27
+11/25/2022 10:26:03 AM : RestApp channel replace WebSocketClient :27
+11/25/2022 10:26:03 AM : CloseWebSocket :27
+11/25/2022 10:26:03 AM : ReplaceWebSocketClient  out :27
+11/25/2022 10:26:03 AM : WebSocketClient  exit :27
+11/25/2022 10:26:03 AM : WebSocketReconnect : 11/25/2022 10:26:03 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:26:03 AM : OnResume
+11/25/2022 10:26:03 AM : FlavoursOrderServer Resuming
+11/25/2022 10:26:03 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:26:03 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:26:03 AM : WebSocketClient  in :28
+11/25/2022 10:26:03 AM : WebSocketClient  exit :28
+11/25/2022 10:26:04 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:26:04 AM : Broken Session 
+11/25/2022 10:26:04 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/2jmxjxe6t+67kwa2lyz+g5dn_37.rem
+11/25/2022 10:26:08 AM : WebSocketClient  in :29
+11/25/2022 10:26:08 AM : channelSubscriptions
+11/25/2022 10:26:08 AM : ReplaceWebSocketClient  in :29
+11/25/2022 10:26:08 AM : RestApp channel replace WebSocketClient :29
+11/25/2022 10:26:08 AM : CloseWebSocket :29
+11/25/2022 10:26:08 AM : ClientSessionPart.Reconnect :29
+11/25/2022 10:26:08 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/2jmxjxe6t+67kwa2lyz+g5dn_37.rem
+11/25/2022 10:26:08 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:26:08 AM : ReplaceWebSocketClient  out :29
+11/25/2022 10:26:08 AM : WebSocketClient  exit :29
+11/25/2022 10:26:12 AM : timeout for 1103288974 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0200620
+11/25/2022 10:26:22 AM : timeout for 1103288974 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0198040
+11/25/2022 10:26:27 AM : OnSleep
+11/25/2022 10:26:27 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:45:54 AM : WebSocketClient_Closed : 
+11/25/2022 10:45:54 AM : WebSocketClient  in :30
+11/25/2022 10:45:54 AM : timeout for 1103288974 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0035420
+11/25/2022 10:45:54 AM : ReplaceWebSocketClient  in :30
+11/25/2022 10:45:54 AM : RestApp channel replace WebSocketClient :30
+11/25/2022 10:45:54 AM : CloseWebSocket :30
+11/25/2022 10:45:54 AM : ReplaceWebSocketClient  out :30
+11/25/2022 10:45:54 AM : WebSocketClient  exit :30
+11/25/2022 10:45:54 AM : WebSocketReconnect : 11/25/2022 10:45:54 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:45:54 AM : OnResume
+11/25/2022 10:45:54 AM : FlavoursOrderServer Resuming
+11/25/2022 10:45:54 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:45:55 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:45:55 AM : WebSocketClient  in :31
+11/25/2022 10:45:55 AM : WebSocketClient  exit :31
+11/25/2022 10:45:55 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:45:56 AM : Broken Session 
+11/25/2022 10:45:56 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/e6dszxnvhetugdjhqgj1retn_42.rem
+11/25/2022 10:46:00 AM : channelSubscriptions
+11/25/2022 10:46:00 AM : WebSocketClient  in :32
+11/25/2022 10:46:00 AM : ReplaceWebSocketClient  in :32
+11/25/2022 10:46:00 AM : RestApp channel replace WebSocketClient :32
+11/25/2022 10:46:00 AM : CloseWebSocket :32
+11/25/2022 10:46:00 AM : ClientSessionPart.Reconnect :32
+11/25/2022 10:46:00 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/e6dszxnvhetugdjhqgj1retn_42.rem
+11/25/2022 10:46:00 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:46:00 AM : ReplaceWebSocketClient  out :32
+11/25/2022 10:46:00 AM : WebSocketClient  exit :32
+11/25/2022 10:46:01 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:46:01 AM : 
+11/25/2022 10:46:01 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:46:01 AM : 
+11/25/2022 10:46:01 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:46:01 AM : 
+11/25/2022 10:46:04 AM : timeout for -687445130 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0191470
+11/25/2022 10:46:14 AM : timeout for -687445130 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0215850
+11/25/2022 10:46:24 AM : timeout for -687445130 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0213470
+11/25/2022 10:46:27 AM : OnSleep
+11/25/2022 10:46:27 AM : WebSocketChannel : ApplicationSleeping
+11/25/2022 10:47:54 AM : WebSocketClient_Closed : 
+11/25/2022 10:47:54 AM : timeout for -687445130 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0069430
+11/25/2022 10:47:54 AM : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+11/25/2022 10:47:54 AM : 
+11/25/2022 10:47:54 AM : WebSocketClient  in :33
+11/25/2022 10:47:54 AM : ReplaceWebSocketClient  in :33
+11/25/2022 10:47:54 AM : RestApp channel replace WebSocketClient :33
+11/25/2022 10:47:54 AM : CloseWebSocket :33
+11/25/2022 10:47:54 AM : ReplaceWebSocketClient  out :33
+11/25/2022 10:47:54 AM : WebSocketClient  exit :33
+11/25/2022 10:47:54 AM : WebSocketReconnect : 11/25/2022 10:47:54 AM - ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+11/25/2022 10:47:54 AM : OnResume
+11/25/2022 10:47:54 AM : FlavoursOrderServer Resuming
+11/25/2022 10:47:54 AM : WebSocketChannel : ApplicationResuming
+11/25/2022 10:47:55 AM : WebSocketReconnect : replace webSocketClient
+11/25/2022 10:47:55 AM : WebSocketClient  in :34
+11/25/2022 10:47:55 AM : WebSocketClient  exit :34
+11/25/2022 10:47:55 AM : FlavoursOrderServer after DeviceResume
+11/25/2022 10:47:56 AM : Broken Session 
+11/25/2022 10:47:56 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/zds3z0fa1euf6fvlg+pzfpy3_45.rem
+11/25/2022 10:48:09 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:05.0046380
+11/25/2022 10:48:19 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:05.0044810
+11/25/2022 10:48:29 AM : timeout for -1668530986 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:05.0038210
+11/25/2022 10:48:32 AM : channelSubscriptions
+11/25/2022 10:48:32 AM : WebSocketClient  in :35
+11/25/2022 10:48:32 AM : ReplaceWebSocketClient  in :35
+11/25/2022 10:48:32 AM : RestApp channel replace WebSocketClient :35
+11/25/2022 10:48:32 AM : CloseWebSocket :35
+11/25/2022 10:48:32 AM : ClientSessionPart.Reconnect :35
+11/25/2022 10:48:32 AM : serverSessionPartUri  : /0a2dcad0_6826_4ef6_9828_cb438a984418/zds3z0fa1euf6fvlg+pzfpy3_45.rem
+11/25/2022 10:48:32 AM : Reconnect without channelSubscriptions 
+11/25/2022 10:48:32 AM : ReplaceWebSocketClient  out :35
+11/25/2022 10:48:32 AM : WebSocketClient  exit :35
+11/25/2022 10:48:34 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0421330
+11/25/2022 10:48:44 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0199320
+11/25/2022 10:48:54 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0207760
+11/25/2022 10:49:04 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0213320
+11/25/2022 10:49:14 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0162410
+11/25/2022 10:49:24 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0210500
+11/25/2022 10:49:34 AM : timeout for 784843514 : ws://192.168.2.8:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0209800
+11/25/2022 10:49:37 AM : OnSleep
+11/25/2022 10:49:37 AM : WebSocketChannel : ApplicationSleeping
+2022-11-25 10:50:49.332 Xamarin.PreBuilt.iOS[1512:251167] Xamarin.iOS: Processing: 'exit process'
+
+2022-11-25 10:50:49.332 Xamarin.PreBuilt.iOS[1512:251167] Xamarin.iOS: The IDE requested an exit, will exit immediately.
+
+The app has been terminated.

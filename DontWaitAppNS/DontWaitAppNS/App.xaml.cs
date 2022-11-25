@@ -138,8 +138,7 @@ namespace DontWaitApp
             //}
 
 
-            Task.Run(async () =>
-            {
+           
 
             bool isRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
             if (isRemoteReachable)
