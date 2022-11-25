@@ -233,14 +233,14 @@ namespace DontWaitApp
                     catch (System.Net.WebException commError)
                     {
 #if DeviceDotNet
-                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "2 :"+commError.Message });
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { $"2 ApplicationResuming error tries {tries} :{commError.Message}" });
 #endif
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
                     catch (Exception error)
                     {
 #if DeviceDotNet
-                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "3 : "+error.Message });
+                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { $"3 ApplicationResuming error tries {tries} :{error.Message}" });
 #endif
                         var er = error;
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
