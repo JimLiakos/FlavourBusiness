@@ -297,19 +297,26 @@ namespace FlavourBusinessManager.ServicesContextResources
                 //All messmates are in committed state for specific timespan event
                 if (partialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited || x.SessionState == ClientSessionState.Inactive).Count() == partialClientSessions.Count)
                 {
-                    bool mealValidationDelaySessionState = false;
+                    var itemsToPrepare = (from clientSession in PartialClientSessions
+                                          from itemPreparation in clientSession.FlavourItems
+                                          select itemPreparation).OfType<ItemPreparation>().ToList();
 
-                    lock (StateMachineLock)
+                    if (itemsToPrepare.Count > 0)
                     {
-                        if (SessionState != SessionState.MealValidationDelay && SessionState != SessionState.MealMonitoring)
-                        {
-                            mealValidationDelaySessionState = true;
-                            SessionState = SessionState.MealValidationDelay;
-                        }
-                    }
+                        bool mealValidationDelaySessionState = false;
 
-                    if (mealValidationDelaySessionState)
-                        MealValidationDelayRun();
+                        lock (StateMachineLock)
+                        {
+                            if (SessionState != SessionState.MealValidationDelay && SessionState != SessionState.MealMonitoring)
+                            {
+                                mealValidationDelaySessionState = true;
+                                SessionState = SessionState.MealValidationDelay;
+                            }
+                        }
+
+                        if (mealValidationDelaySessionState)
+                            MealValidationDelayRun();
+                    }
                 }
             }
             else

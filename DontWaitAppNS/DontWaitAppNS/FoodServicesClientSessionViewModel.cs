@@ -1011,7 +1011,7 @@ namespace DontWaitApp
 
                 var storeRef = FoodServicesClientSession.Menu;
 #if !DeviceDotNet
-                storeRef.StorageUrl = "https://dev-localhost/devstoreaccount1" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
+                storeRef.StorageUrl = "https://dev-localhost/devstoreaccount1/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
 #endif
                 storeRef.StorageUrl = "https://angularhost.z16.web.core.windows.net/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
 
