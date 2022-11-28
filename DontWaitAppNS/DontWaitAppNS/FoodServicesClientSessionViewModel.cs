@@ -815,12 +815,22 @@ namespace DontWaitApp
             }
             catch (OOAdvantech.Remoting.MissingServerObjectException)
             {
+
+#if DeviceDotNet
+                OOAdvantech.DeviceApplication.Current.Log(new List<string> { "MissingServerObjectException" });
+#endif
+
                 FoodServicesClientSession = null;
                 FlavoursOrderServer.SessionIsNoLongerActive(this);
                 return;
             }
 
             var foodServiceClientSession = RemotingServices.CastTransparentProxy<IFoodServiceClientSession>(sender);
+
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "befor order items" });
+#endif
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
@@ -847,7 +857,9 @@ namespace DontWaitApp
                 stateTransition.Consistent = true;
             }
 
-
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "get ClientSessionData" });
+#endif
             var clientSessionData = FoodServicesClientSession.ClientSessionData;
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
             ClientSessionToken = clientSessionData.Token;
