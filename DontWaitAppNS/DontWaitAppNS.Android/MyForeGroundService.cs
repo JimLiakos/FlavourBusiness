@@ -30,15 +30,15 @@ namespace DontWaitAppNS.Droid
         {
             ForegroundService.ServiceState serviceState = new ForegroundService.ServiceState()
             {
-                NotificationTitle = "Waiter app",
-                NotificationContentText = "The started service is running.",
+                NotificationTitle = "Don't wait waiter live order",
+                NotificationContentText = "Main work is to keep you updated for order progress.",
                 NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
                 StopServiceCommandTitle = "Stop Service",
                 StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
-                StopActionID = "dontwaitwaiterapp.action.STOP_SERVICE",
+                StopActionID = "dontwaitapp.action.STOP_SERVICE",
                 DelayBetweenLogMessage = 5000, // milliseconds,
                 ServiceRunningNotificationID = 10000,
-                ActionsMainActivity = "dontwaitwaiterapp.action.MAIN_ACTIVITY",
+                ActionsMainActivity = "dontwaitapp.action.MAIN_ACTIVITY",
                 ServiceStartedKey = "has_service_been_started",
                 BackgroundServiceState = backgroundServiceState,
                 Terminate = false
