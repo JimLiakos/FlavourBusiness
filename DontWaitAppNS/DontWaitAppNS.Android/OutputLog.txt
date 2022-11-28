@@ -1,1 +1,210 @@
-﻿
+﻿28/11/2022 14:26:33 : OnStart
+28/11/2022 14:26:46 : ctor ServerSessionPartUri  : /fcd7d00c_2d5a_4c41_8c3a_f0d503652968/jooysyv7ianbvtm9myz3jclj_11.rem
+28/11/2022 14:26:46 : Opens : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:26:46 : WebSocketClient  in :1
+28/11/2022 14:26:46 : WebSocketClient  exit :1
+28/11/2022 14:26:47 : get_CurrentFoodServicesClientSession
+28/11/2022 14:26:48 : get_CurrentFoodServicesClientSession
+28/11/2022 14:26:48 : get_MenuData
+28/11/2022 14:26:49 : get_MenuData
+28/11/2022 14:26:49 : get_MenuData
+28/11/2022 14:26:50 : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+28/11/2022 14:26:50 : WebSocketClient  in :2
+28/11/2022 14:26:50 : ReplaceWebSocketClient  in :2
+28/11/2022 14:26:50 : RestApp channel replace WebSocketClient :2
+28/11/2022 14:26:51 : get_MenuData
+28/11/2022 14:26:51 : CloseWebSocket :2
+28/11/2022 14:26:51 : ClientSessionPart.Reconnect :2
+28/11/2022 14:26:55 : serverSessionPartUri  : /fcd7d00c_2d5a_4c41_8c3a_f0d503652968/jooysyv7ianbvtm9myz3jclj_11.rem
+28/11/2022 14:26:55 : Reconnect without channelSubscriptions 
+28/11/2022 14:26:55 : ReplaceWebSocketClient  out :2
+28/11/2022 14:26:55 : WebSocketClient  exit :2
+28/11/2022 14:27:07 : timeout for -428369223 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0235020
+28/11/2022 14:27:17 : timeout for -428369223 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0786740
+28/11/2022 14:27:27 : timeout for -428369223 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0469090
+28/11/2022 14:27:35 : WebSocketClient_Closed : 
+28/11/2022 14:27:35 : WebSocketReconnect : 28/11/2022 14:27:35 - ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:29:08 : WebSocketReconnect : replace webSocketClient
+28/11/2022 14:29:08 : WebSocketClient  in :3
+28/11/2022 14:29:08 : ReplaceWebSocketClient  in :3
+28/11/2022 14:29:08 : RestApp channel replace WebSocketClient :3
+28/11/2022 14:29:08 : CloseWebSocket :3
+28/11/2022 14:29:08 : ClientSessionPart.Reconnect :3
+28/11/2022 14:29:19 : serverSessionPartUri  : /6562821a_ac28_46c8_afdb_bdabf2ed8620/+v7npk05vcp2zdetc439dctm_8.rem
+28/11/2022 14:29:30 : channelSubscriptions
+28/11/2022 14:30:47 : OnSleep
+28/11/2022 14:30:47 : WebSocketChannel : ApplicationSleeping
+28/11/2022 14:30:48 : ReplaceWebSocketClient  out :3
+28/11/2022 14:30:48 : WebSocketClient  exit :3
+28/11/2022 14:30:48 : timeout for 1874982461 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0073530
+28/11/2022 14:30:53 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+28/11/2022 14:30:53 : 
+28/11/2022 14:30:53 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+28/11/2022 14:30:53 : 
+28/11/2022 14:30:53 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+28/11/2022 14:30:53 : 
+28/11/2022 14:30:53 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+28/11/2022 14:30:53 : 
+28/11/2022 14:30:54 : WebSocketClient  in :4
+28/11/2022 14:30:54 : ReplaceWebSocketClient  in :4
+28/11/2022 14:30:54 : RestApp channel replace WebSocketClient :4
+28/11/2022 14:30:54 : CloseWebSocket :4
+28/11/2022 14:30:54 : ClientSessionPart.Reconnect :4
+28/11/2022 14:30:58 : serverSessionPartUri  : /6562821a_ac28_46c8_afdb_bdabf2ed8620/+v7npk05vcp2zdetc439dctm_8.rem
+28/11/2022 14:31:04 : Reconnect without channelSubscriptions 
+28/11/2022 14:31:04 : ReplaceWebSocketClient  out :4
+28/11/2022 14:31:04 : WebSocketClient  exit :4
+28/11/2022 14:31:04 : timeout for -2131571908 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0311050
+28/11/2022 14:31:08 : timeout for -2131571908 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0262790
+28/11/2022 14:31:17 : OnResume
+28/11/2022 14:31:17 : FlavoursOrderServer Resuming
+28/11/2022 14:31:17 : WebSocketChannel : ApplicationResuming
+28/11/2022 14:31:22 : FlavoursOrderServer after DeviceResume
+28/11/2022 14:31:22 : timeout for -2131571908 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0198030
+28/11/2022 14:31:30 : WebSocketClient_Closed : 
+28/11/2022 14:31:30 : WebSocketReconnect : 28/11/2022 14:31:30 - ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:32:18 : WebSocketReconnect : replace webSocketClient
+28/11/2022 14:32:18 : WebSocketClient  in :5
+28/11/2022 14:32:18 : ReplaceWebSocketClient  in :5
+28/11/2022 14:32:18 : RestApp channel replace WebSocketClient :5
+28/11/2022 14:32:18 : CloseWebSocket :5
+28/11/2022 14:32:18 : ClientSessionPart.Reconnect :5
+28/11/2022 14:32:31 : serverSessionPartUri  : /16508347_9804_4550_b5dc_155471039a46/yh_w_5fdlb19krvw0t4o7pvg_7.rem
+28/11/2022 14:32:35 : channelSubscriptions
+28/11/2022 14:38:31 : OnStart
+28/11/2022 14:38:34 : ctor ServerSessionPartUri  : /b82321cb_bdc4_40d4_8efe_3bb84926dc75/d+yaao8utpokjukhq40sllzw_11.rem
+28/11/2022 14:38:35 : Opens : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:38:35 : WebSocketClient  in :1
+28/11/2022 14:38:35 : WebSocketClient  exit :1
+28/11/2022 14:38:36 : get_MenuData
+28/11/2022 14:38:37 : get_MenuData
+28/11/2022 14:38:38 : WebSocketClient  in :2
+28/11/2022 14:38:38 : ReplaceWebSocketClient  in :2
+28/11/2022 14:38:38 : RestApp channel replace WebSocketClient :2
+28/11/2022 14:38:38 : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+28/11/2022 14:38:44 : CloseWebSocket :2
+28/11/2022 14:38:44 : ClientSessionPart.Reconnect :2
+28/11/2022 14:38:47 : serverSessionPartUri  : /b82321cb_bdc4_40d4_8efe_3bb84926dc75/d+yaao8utpokjukhq40sllzw_11.rem
+28/11/2022 14:38:48 : Reconnect without channelSubscriptions 
+28/11/2022 14:38:48 : ReplaceWebSocketClient  out :2
+28/11/2022 14:38:48 : WebSocketClient  exit :2
+28/11/2022 14:38:55 : timeout for 703945160 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.1595060
+28/11/2022 14:38:57 : get_CurrentFoodServicesClientSession
+28/11/2022 14:38:57 : get_CurrentFoodServicesClientSession
+28/11/2022 14:38:58 : get_MenuData
+28/11/2022 14:38:59 : get_MenuData
+28/11/2022 14:38:59 : get_CurrentFoodServicesClientSession
+28/11/2022 14:39:05 : timeout for 703945160 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0343510
+28/11/2022 14:39:06 : ctor ServerSessionPartUri  : /d14f671c_3da8_41e4_a66f_807ca59aeef5/0sp8xru9mnyfy+pniqxkx60e_11.rem
+28/11/2022 14:39:06 : Opens : ws://10.0.0.13:8090/api/
+28/11/2022 14:39:06 : WebSocketClient  in :3
+28/11/2022 14:39:06 : WebSocketClient  exit :3
+28/11/2022 14:39:11 : get_MenuData
+28/11/2022 14:39:11 : get_MenuData
+28/11/2022 14:39:12 : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+28/11/2022 14:39:12 : get_MenuData
+28/11/2022 14:39:12 : get_CurrentFoodServicesClientSession
+28/11/2022 14:39:13 : get_MenuData
+28/11/2022 14:39:13 : get_CurrentFoodServicesClientSession
+28/11/2022 14:39:13 : get_MenuData
+28/11/2022 14:39:13 : get_CurrentFoodServicesClientSession
+28/11/2022 14:39:14 : get_CurrentFoodServicesClientSession
+28/11/2022 14:39:14 : get_MenuData
+28/11/2022 14:39:15 : timeout for 703945160 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0196360
+28/11/2022 14:39:25 : timeout for 703945160 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0255850
+28/11/2022 14:39:26 : timeout for -1803229118 : ws://10.0.0.13:8090/api/  00:00:00.0424220
+28/11/2022 14:39:27 : WebSocketClient_Closed : 
+28/11/2022 14:39:27 : WebSocketReconnect : 28/11/2022 14:39:27 - ws://10.0.0.13:8090/api/
+28/11/2022 14:39:30 : WebSocketClient_Closed : 
+28/11/2022 14:39:30 : WebSocketReconnect : 28/11/2022 14:39:30 - ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:47:36 : OnSleep
+28/11/2022 14:50:31 : OnStart
+28/11/2022 14:51:42 : OnSleep
+28/11/2022 14:51:46 : OnStart
+28/11/2022 14:51:51 : ctor ServerSessionPartUri  : /e2b34f85_461d_41c9_81aa_5172fed82f55/l4qmgo1dmfxva6w5kxbxszgz_11.rem
+28/11/2022 14:51:52 : Opens : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:51:52 : WebSocketClient  in :1
+28/11/2022 14:51:52 : WebSocketClient  exit :1
+28/11/2022 14:51:54 : get_MenuData
+28/11/2022 14:51:54 : get_MenuData
+28/11/2022 14:51:59 : WebSocketClient  in :2
+28/11/2022 14:51:59 : ReplaceWebSocketClient  in :2
+28/11/2022 14:51:59 : RestApp channel replace WebSocketClient :2
+28/11/2022 14:51:59 : CloseWebSocket :2
+28/11/2022 14:51:59 : ClientSessionPart.Reconnect :2
+28/11/2022 14:52:04 : serverSessionPartUri  : /e2b34f85_461d_41c9_81aa_5172fed82f55/l4qmgo1dmfxva6w5kxbxszgz_11.rem
+28/11/2022 14:52:09 : Reconnect without channelSubscriptions 
+28/11/2022 14:52:09 : ReplaceWebSocketClient  out :2
+28/11/2022 14:52:09 : WebSocketClient  exit :2
+28/11/2022 14:52:10 : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+28/11/2022 14:52:12 : timeout for -205560382 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0621870
+28/11/2022 14:52:12 : get_CurrentFoodServicesClientSession
+28/11/2022 14:52:13 : get_CurrentFoodServicesClientSession
+28/11/2022 14:52:14 : get_MenuData
+28/11/2022 14:52:22 : timeout for -205560382 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0411270
+28/11/2022 14:52:24 : OnResume
+28/11/2022 14:52:24 : FlavoursOrderServer Resuming
+28/11/2022 14:52:24 : WebSocketChannel : ApplicationResuming
+28/11/2022 14:53:07 : OnStart
+28/11/2022 14:53:12 : get_CurrentFoodServicesClientSession
+28/11/2022 14:53:12 : get_CurrentFoodServicesClientSession
+28/11/2022 14:53:12 : get_MenuData
+28/11/2022 14:53:17 : ctor ServerSessionPartUri  : /e2b34f85_461d_41c9_81aa_5172fed82f55/idxcsivp7+f0ycfebrne6ac7_14.rem
+28/11/2022 14:53:17 : Opens : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:53:17 : WebSocketClient  in :1
+28/11/2022 14:53:17 : WebSocketClient  exit :1
+28/11/2022 14:53:18 : get_MenuData
+28/11/2022 14:53:18 : get_MenuData
+28/11/2022 14:53:19 : _ObjectChangeState?.Invoke(this, nameof(MenuData))
+28/11/2022 14:53:19 : get_MenuData
+28/11/2022 14:53:20 : WebSocketClient  in :2
+28/11/2022 14:53:21 : ReplaceWebSocketClient  in :2
+28/11/2022 14:53:21 : RestApp channel replace WebSocketClient :2
+28/11/2022 14:53:21 : CloseWebSocket :2
+28/11/2022 14:53:21 : ClientSessionPart.Reconnect :2
+28/11/2022 14:53:21 : serverSessionPartUri  : /e2b34f85_461d_41c9_81aa_5172fed82f55/idxcsivp7+f0ycfebrne6ac7_14.rem
+28/11/2022 14:53:21 : Reconnect without channelSubscriptions 
+28/11/2022 14:53:21 : ReplaceWebSocketClient  out :2
+28/11/2022 14:53:21 : WebSocketClient  exit :2
+28/11/2022 14:53:37 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0227880
+28/11/2022 14:53:47 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0304070
+28/11/2022 14:53:57 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0179690
+28/11/2022 14:54:07 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0219590
+28/11/2022 14:54:17 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0181350
+28/11/2022 14:54:27 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0178470
+28/11/2022 14:54:37 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0360870
+28/11/2022 14:54:47 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0169410
+28/11/2022 14:54:57 : timeout for 814464949 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0163180
+28/11/2022 14:55:05 : WebSocketClient_Closed : 
+28/11/2022 14:55:05 : WebSocketReconnect : 28/11/2022 14:55:05 - ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+28/11/2022 14:55:54 : WebSocketReconnect : replace webSocketClient
+28/11/2022 14:55:54 : WebSocketClient  in :3
+28/11/2022 14:55:54 : ReplaceWebSocketClient  in :3
+28/11/2022 14:55:54 : RestApp channel replace WebSocketClient :3
+28/11/2022 14:55:54 : CloseWebSocket :3
+28/11/2022 14:55:54 : ClientSessionPart.Reconnect :3
+28/11/2022 14:56:00 : serverSessionPartUri  : /cdbbb695_55ab_4b31_b51b_8b414946827d/odophdfbvfonrwuzp3valgba_6.rem
+28/11/2022 14:56:03 : channelSubscriptions
+28/11/2022 14:56:04 : OnSleep
+28/11/2022 14:56:04 : WebSocketChannel : ApplicationSleeping
+28/11/2022 14:56:12 : OnResume
+28/11/2022 14:56:12 : FlavoursOrderServer Resuming
+28/11/2022 14:56:12 : WebSocketChannel : ApplicationResuming
+28/11/2022 14:56:13 : ReplaceWebSocketClient  out :3
+28/11/2022 14:56:13 : WebSocketClient  exit :3
+28/11/2022 14:56:13 : timeout for -879471814 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0840770
+28/11/2022 14:56:13 : FlavoursOrderServer after DeviceResume
+28/11/2022 14:56:16 : WebSocketClient  in :4
+28/11/2022 14:56:16 : ReplaceWebSocketClient  in :4
+28/11/2022 14:56:16 : RestApp channel replace WebSocketClient :4
+28/11/2022 14:56:16 : CloseWebSocket :4
+28/11/2022 14:56:16 : ClientSessionPart.Reconnect :4
+28/11/2022 14:56:16 : serverSessionPartUri  : /cdbbb695_55ab_4b31_b51b_8b414946827d/odophdfbvfonrwuzp3valgba_6.rem
+28/11/2022 14:56:16 : Reconnect without channelSubscriptions 
+28/11/2022 14:56:16 : ReplaceWebSocketClient  out :4
+28/11/2022 14:56:16 : WebSocketClient  exit :4
+28/11/2022 14:56:18 : timeout for -1301434089 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.2337320
+28/11/2022 14:56:27 : timeout for -1301434089 : ws://10.0.0.13:8090/api/(0470e076603e47b6a82556fe4c1bf335)  00:00:00.0317160
+28/11/2022 14:56:34 : OnSleep
+28/11/2022 14:56:34 : WebSocketChannel : ApplicationSleeping
+28/11/2022 15:00:05 : OnSleep
