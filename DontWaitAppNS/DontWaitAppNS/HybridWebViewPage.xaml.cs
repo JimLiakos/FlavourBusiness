@@ -153,7 +153,27 @@ namespace DontWaitApp
             }
             FlavoursOrderServer.Initialize();
 
-            //MyLabel.Text = ApplicationSettings.Current.FriendlyName; ;
+
+            //IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+          
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+                    //var message = Waiter.PeekMessage();
+                    //Waiter.MessageReceived += Waiter_MessageReceived;
+                  
+                    do
+                    {
+                        System.Threading.Thread.Sleep(3000);
+
+                    } while (!serviceState.Terminate);
+
+                    //Waiter.MessageReceived -= Waiter_MessageReceived;
+                    
+                }), serviceState);
+            }
 
         }
 

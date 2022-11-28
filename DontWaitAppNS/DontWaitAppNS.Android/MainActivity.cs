@@ -21,6 +21,9 @@ using Xamarin.Forms.Platform.Android.AppLinks;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using OOAdvantech;
+using Firebase.Messaging;
+using Android.Gms.Extensions;
+using Android.Gms.Tasks;
 
 namespace DontWaitAppNS.Droid
 {
@@ -43,7 +46,7 @@ namespace DontWaitAppNS.Droid
     DataPathPrefix = "/",
     Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
 
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IOnSuccessListener
     {
 
         internal static readonly string CHANNEL_ID = "my_notification_channel";
@@ -95,7 +98,7 @@ namespace DontWaitAppNS.Droid
             return base.StartForegroundService(service);
         }
 
-        protected override async void  OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -119,13 +122,18 @@ namespace DontWaitAppNS.Droid
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
             FirebaseApp.InitializeApp(this);
             AndroidAppLinks.Init(this);
+            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
-            
-     
+
+            //var token = await Task<string>.Run(() =>
+            //{
+            //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            //});
+
 
             getDeviceUniqueID();
 
-            
+
 
 
 
@@ -137,26 +145,32 @@ namespace DontWaitAppNS.Droid
                     // Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
                 }
             }
-            //InitForgroundService(savedInstanceState);
+            
+            FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this,this);
+        
+
+            // string token = FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            // //InitForgroundService(savedInstanceState);
             CreateNotificationChannel();
 
-           
             var app = new DontWaitApp.App();
 
             LoadApplication(app);
 
-            var tokenTask = Task<string>.Run(() =>
-            {
-                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            });
+            FirebaseMessaging.Instance.GetToken();
+
+            //var tokenTask = Task<string>.Run(() =>
+            //{
+            //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            //});
 
             //tokenTask.Wait();
             //string token = tokenTask.Result;
-            string token = await tokenTask;
+            //string token = await tokenTask;
 
-            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
+            //  OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
             string webClientID = "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com";
-            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+           // OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
             //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
 
             //var appLink = GetAppLink();
@@ -169,13 +183,13 @@ namespace DontWaitAppNS.Droid
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {
             var error = new Exception("TaskSchedulerOnUnobservedTaskException", unobservedTaskExceptionEventArgs.Exception);
-            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:"+ error.Message, error.StackTrace });
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:" + error.Message, error.StackTrace });
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
         {
             var error = new Exception("CurrentDomainOnUnhandledException", unhandledExceptionEventArgs.ExceptionObject as Exception);
-            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:"+ error.Message, error.StackTrace });
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:" + error.Message, error.StackTrace });
         }
         Xamarin.Forms.AppLinkEntry GetAppLink()
         {
@@ -215,6 +229,8 @@ namespace DontWaitAppNS.Droid
 
             var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
             notificationManager.CreateNotificationChannel(channel);
+
+
         }
         public override void OnBackPressed()
         {
@@ -369,6 +385,12 @@ namespace DontWaitAppNS.Droid
         {
             StopService(stopServiceIntent);
             isStarted = false;
+        }
+
+        public void OnSuccess(Java.Lang.Object result)
+        {
+            string token = result.ToString();
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
         }
     }
 }

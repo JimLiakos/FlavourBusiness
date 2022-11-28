@@ -548,7 +548,6 @@ namespace WaiterApp.ViewModel
 
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
 
                             if (!device.IsBackgroundServiceStarted)

@@ -19,6 +19,10 @@ namespace DontWaitAppNS.Droid
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class MyFirebaseMessagingService : FirebaseMessagingService
     {
+
+        public MyFirebaseMessagingService() 
+        { 
+        }
         const string TAG = "MyFirebaseMsgService";
 
         public override void OnMessageReceived(RemoteMessage message)
@@ -82,7 +86,10 @@ namespace DontWaitAppNS.Droid
         public override void OnNewToken(string p0)
         {
             base.OnNewToken(p0);
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(p0);
         }
+      
+       
 
 
     }

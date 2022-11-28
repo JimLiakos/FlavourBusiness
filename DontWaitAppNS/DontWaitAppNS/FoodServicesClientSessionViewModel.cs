@@ -125,7 +125,7 @@ namespace DontWaitApp
                             ServedMealTypesUrisStream += ";" + uri;
 
                     }
-                    
+
                     stateTransition.Consistent = true;
                 }
 
@@ -848,6 +848,9 @@ namespace DontWaitApp
             }
 
 
+            var clientSessionData = FoodServicesClientSession.ClientSessionData;
+            FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
+            ClientSessionToken = clientSessionData.Token;
 
             //var menuData = this.MenuData;
             //menuData.OrderItems = OrderItems.ToList();
@@ -1051,7 +1054,7 @@ namespace DontWaitApp
                 _ServicePointState = clientSessionData.ServicePointState;
 
 #if DeviceDotNet
-                
+
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
 
@@ -1172,7 +1175,7 @@ namespace DontWaitApp
         {
             add
             {
-                
+
                 _MessmatesWaitForYouToDecide += value;
             }
             remove
@@ -1557,6 +1560,17 @@ namespace DontWaitApp
                     string menuItemUri = message.GetDataValue<string>("MenuItemUri");
 
                     _MenuItemProposal?.Invoke(this, messmate, menuItemUri, message.MessageID);
+
+                    //try
+                    //{
+                    //    var notificationManager = DependencyService.Get<INotificationManager>();
+                    //    notificationManager.SendNotification(message.Notification.Title, message.Notification.Body, DateTime.Now.AddSeconds(10));
+
+                    //}
+                    //catch (Exception error)
+                    //{
+
+                    //}                
                 }
             }
             else
@@ -1608,5 +1622,5 @@ namespace DontWaitApp
 
     }
 
-    
+
 }

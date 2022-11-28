@@ -182,4 +182,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\waiters.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="OutputLog.txt" />
+  </ItemGroup>
 </Project>
