@@ -17,6 +17,7 @@ using System.Globalization;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.Web;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -2151,10 +2152,10 @@ namespace FlavourBusinessManager.EndUsers
             if (MainSession != null)
             {
                 flavourItem=(from clientSession in MainSession.PartialClientSessions
-                 where clientSession != this
-                 from storedItem in clientSession.FlavourItems
-                 where storedItem.uid == item.uid
-                 select storedItem).OfType<RoomService.ItemPreparation>().FirstOrDefault();
+                             where clientSession != this
+                             from storedItem in clientSession.FlavourItems
+                             where storedItem.uid == item.uid
+                             select storedItem).OfType<RoomService.ItemPreparation>().FirstOrDefault();
             }
             if (flavourItem != null)
             {
@@ -2416,7 +2417,7 @@ namespace FlavourBusinessManager.EndUsers
             string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
 
             FinanceFacade.Payment payment = null;
-            payment = this.MainSession.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
+            payment = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
 
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
@@ -2424,13 +2425,13 @@ namespace FlavourBusinessManager.EndUsers
                 if (flavourItem.NumberOfShares > 1)
                 {
                     string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
-                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid,QuantityDescription = quantityDescription });
+                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription = quantityDescription });
                 }
                 else
-                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString()});
+                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString() });
 
             }
-         
+
 
             //paymentItems= this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
 
@@ -2445,6 +2446,12 @@ namespace FlavourBusinessManager.EndUsers
                         payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
 
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
+
+                        if (_MainSession.Value == null)
+                            AutoMealParticipation();
+
+                        var sds = MainSession.PartialClientSessions.Count;
+
                         this.MainSession.AddPayment(payment);
                     }
                     else
@@ -2452,9 +2459,88 @@ namespace FlavourBusinessManager.EndUsers
 
                     stateTransition.Consistent = true;
                 }
+            }
+
+
+            CreatePaymentOrder(payment);
+
+
+            return payment;
+        }
+
+        private async void CreatePaymentOrder(FinanceFacade.Payment payment)
+        {
+
+            using (var client = new System.Net.Http.HttpClient())
+            {
+
+
+                //client.
+                //viva Merchant ID : 5a330629-00b7-49e7-9be9-9a317f71af50
+                //API Key : COrMC5
+                string username = "5a330629-00b7-49e7-9be9-9a317f71af50";
+                string password = "COrMC5";
+                //Viva.VivaPaymentOrder vivaPaymentOrder = new Viva.VivaPaymentOrder()
+                //{
+                //    amount=1000
+                //}
+                string jsonPaymentOrder = @"{
+    ""amount"": 1000,
+    ""customerTrns"": ""Short description of purchased items/services to display to your customer"",
+    ""customer"":
+    {
+        ""email"": ""jim.liakos@gmail.com"",
+        ""fullName"": ""John Doe"",
+        ""phone"": ""+30999999999"",
+        ""countryCode"": ""GB"",
+        ""requestLang"": ""en-GB""
+    },
+    ""paymentTimeout"": 300,
+    ""preauth"": false,
+    ""allowRecurring"": false,
+    ""maxInstallments"": 12,
+    ""paymentNotification"": true,
+    ""tipAmount"": 100,
+    ""disableExactAmount"": false,
+    ""disableCash"": true,
+    ""disableWallet"": true,
+    ""sourceCode"": ""1234"",
+    ""merchantTrns"": ""Short description of items/services purchased by customer"",
+    ""tags"":
+    [
+        ""tags for grouping and filtering the transactions"",
+        ""this tag can be searched on VivaWallet sales dashboard"",
+        ""Sample tag 1"",
+        ""Sample tag 2"",
+        ""Another string""
+    ],
+    ""cardTokens"":
+    [
+        ""ct_5d0a4e3a7e04469f82da228ca98fd661""
+    ]
+}";
+                try
+                {
+                    string encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1")
+                                                    .GetBytes(username + ":" + password));
+
+                    var url = @"https://demo-api.vivapayments.com/checkout/v2/orders";
+                    var content = new System.Net.Http.StringContent(jsonPaymentOrder, System.Text.Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
+                    var responseAppTask = client.PostAsync(url, content);
+                    responseAppTask.Wait();
+                    var responseApp = responseAppTask.Result;
+                    var resp = await responseApp.Content.ReadAsStringAsync();
+                }
+                catch (Exception error)
+                {
+
+
+                }
+
 
             }
-            return payment;
+
         }
 
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
@@ -2556,6 +2642,51 @@ namespace FlavourBusinessManager.EndUsers
             MealConsulting
         }
     }
+
+}
+
+
+namespace Viva
+{ 
+    /// <MetaDataID>{84f6ea09-cb48-4c4c-a2e3-a98744554145}</MetaDataID>
+    public class Customer
+    {
+        public string email { get; set; }
+        public string fullName { get; set; }
+        public string phone { get; set; }
+        public string countryCode { get; set; }
+        public string requestLang { get; set; }
+    }
+
+    /// <MetaDataID>{5572cdb0-060b-4044-8754-6207f02ae85d}</MetaDataID>
+    public class PaymentMethodFee
+    {
+        public string paymentMethodId { get; set; }
+        public int fee { get; set; }
+    }
+
+    /// <MetaDataID>{ec950554-b785-46c2-8739-4f7e3422629a}</MetaDataID>
+    public class VivaPaymentOrder
+    {
+        public int amount { get; set; }
+        public string customerTrns { get; set; }
+        public Customer customer { get; set; }
+        public int paymentTimeout { get; set; }
+        public bool preauth { get; set; }
+        public bool allowRecurring { get; set; }
+        public int maxInstallments { get; set; }
+        public bool paymentNotification { get; set; }
+        public int tipAmount { get; set; }
+        public bool disableExactAmount { get; set; }
+        public bool disableCash { get; set; }
+        public bool disableWallet { get; set; }
+        public string sourceCode { get; set; }
+        public string merchantTrns { get; set; }
+        public List<string> tags { get; set; }
+        public List<PaymentMethodFee> paymentMethodFees { get; set; }
+        public List<string> cardTokens { get; set; }
+    }
+
 
 
 }
