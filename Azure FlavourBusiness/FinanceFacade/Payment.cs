@@ -2,7 +2,9 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.AccessControl;
 
 namespace FinanceFacade
 {
@@ -113,7 +115,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{e68605e1-f9d0-4000-a4eb-3e2e55176818}</MetaDataID>
         [OOAdvantech.Json.JsonConstructor]
-        public Payment(decimal amount,string currency,string Identity, string itemsJson,string paymentInfoFieldsJson)
+        public Payment(decimal amount, string currency, string Identity, string itemsJson, string paymentInfoFieldsJson)
         {
             _Amount = amount;
             _Currency = currency;
@@ -192,6 +194,27 @@ namespace FinanceFacade
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _PaymentProviderJson;
+        /// <MetaDataID>{c2593fbd-309f-4205-808a-221920425787}</MetaDataID>
+        [PersistentMember(nameof(_PaymentProviderJson))]
+        [BackwardCompatibilityID("+9")]
+        public string PaymentProviderJson
+        {
+            get => _PaymentProviderJson;
+            set
+            {
+                if (_PaymentProviderJson != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PaymentProviderJson = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
 
         /// <MetaDataID>{c6400a9f-da1d-409f-860b-7d46c76643cd}</MetaDataID>
@@ -203,7 +226,7 @@ namespace FinanceFacade
                 _Items = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<Item>>(ItemsJson).OfType<IItem>().ToList();
 
             if (!string.IsNullOrWhiteSpace(PaymentInfoFieldsJson))
-                PaymentInfoFields = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string,string>>(PaymentInfoFieldsJson);
+                PaymentInfoFields = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(PaymentInfoFieldsJson);
         }
 
         /// <MetaDataID>{a1551750-8abf-45bc-8c3f-ca6da68f7458}</MetaDataID>
@@ -235,7 +258,7 @@ namespace FinanceFacade
                 PaymentInfoFields["TransactionID"] = transactionID;
                 _TipsAmount = tipAmount;
 
-                State = PaymentState.Completed; 
+                State = PaymentState.Completed;
                 stateTransition.Consistent = true;
             }
         }
@@ -289,7 +312,7 @@ namespace FinanceFacade
                 PaymentInfoFields["CheckNotes"] = checkNotes;
 
                 _TipsAmount = tipAmount;
-                State = PaymentState.Completed; 
+                State = PaymentState.Completed;
                 stateTransition.Consistent = true;
             }
 
@@ -298,7 +321,7 @@ namespace FinanceFacade
         /// <MetaDataID>{c25bafa9-31da-465a-b9a1-801d415b82e9}</MetaDataID>
         public void PaymentRequestCanceled()
         {
-            if(State == PaymentState.InProgress)
+            if (State == PaymentState.InProgress)
                 State = PaymentState.New;
 
         }

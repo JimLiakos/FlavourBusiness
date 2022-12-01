@@ -22,6 +22,7 @@ using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
+using OOAdvantech.Web;
 
 #else
 using FlavourBusinessFacade.ServicesContextResources;
@@ -1131,6 +1132,18 @@ namespace DontWaitApp
         {
             Payment = FoodServicesClientSession?.Pay();
             var state = Payment.State;
+
+            var providerJson = Payment.PaymentProviderJson;
+            if (!string.IsNullOrWhiteSpace(providerJson))
+            {
+                var orderCode = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(providerJson)?.orderCode;
+ 
+                var webView = ((App.Current.MainPage as Xamarin.Forms.NavigationPage).CurrentPage as HybridWebViewPage).hybridWebView;
+                webView.NativeWebBrowser.Navigate($"https://demo.vivapayments.com/web/checkout?ref={orderCode}");
+
+            }
+
+
             return Payment;
         }
 
@@ -1633,6 +1646,13 @@ namespace DontWaitApp
         /// <MetaDataID>{b57c2c39-f423-4c81-b4d4-e6459daed045}</MetaDataID>
         internal DontWaitApp.FlavoursOrderServer FlavoursOrderServer;
 
+    }
+
+
+    public class PaymentOrderResponse 
+
+    {
+        public long orderCode { get; set; }
     }
 
 

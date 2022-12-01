@@ -20,6 +20,8 @@ namespace FinanceFacade
             set;
             get;
         }
+        /// <MetaDataID>{2925c6e1-ba42-496b-85b0-fc322d435c4d}</MetaDataID>
+        string PaymentProviderJson { get; set; }
 
         /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
         void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount);

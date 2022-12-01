@@ -8,7 +8,7 @@
         <Grid>
             
 
-            <local:HybridWebView  x:Name="hybridWebView" EnableRestApi="True"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+            <local:HybridWebView  x:Name="hybridWebView" EnableRestApi="True" x:FieldModifier="public"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
             
         </Grid>
     </ContentPage.Content>

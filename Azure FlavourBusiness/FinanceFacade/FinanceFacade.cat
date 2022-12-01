@@ -3550,6 +3550,31 @@
 			    value      	"+6"))
 		    quid       	"6363D14E02F2"
 		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentProviderJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2925c6e1-ba42-496b-85b0-fc322d435c4d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6388C7B000C5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"6388C7B000C5"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -3571,7 +3596,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"9")
+		    value      	"10")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3615,13 +3640,13 @@
 		    quid       	"6360B40F02E5"
 		    parameters 	(list Parameters
 			(object Parameter "paymentIdentity"
-			    quid       	"6363C9E20148"
+			    quid       	"6388C7BE0070"
 			    type       	"string")
 			(object Parameter "paymentItems"
-			    quid       	"6363C9E20162"
+			    quid       	"6388C7BE0091"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>")
 			(object Parameter "currency"
-			    quid       	"6363C9E2016F"
+			    quid       	"6388C7BE00A0"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3686,7 +3711,7 @@
 		    quid       	"6360B40F039F"
 		    parameters 	(list Parameters
 			(object Parameter "paymentItems"
-			    quid       	"6363C9E201D0"
+			    quid       	"6388C7BE017E"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3705,19 +3730,19 @@
 		    quid       	"636361E801A9"
 		    parameters 	(list Parameters
 			(object Parameter "cardType"
-			    quid       	"6363C9E201F2"
+			    quid       	"6388C7BE01A6"
 			    type       	"string")
 			(object Parameter "accountNumber"
-			    quid       	"6363C9E20205"
+			    quid       	"6388C7BE01B5"
 			    type       	"string")
 			(object Parameter "isDebit"
-			    quid       	"6363C9E2020F"
+			    quid       	"6388C7BE01C6"
 			    type       	"bool")
 			(object Parameter "transactionID"
-			    quid       	"6363C9E20218"
+			    quid       	"6388C7BE01D5"
 			    type       	"string")
 			(object Parameter "tipAmount"
-			    quid       	"6363C9E20221"
+			    quid       	"6388C7BE01E0"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3736,7 +3761,7 @@
 		    quid       	"636361E80259"
 		    parameters 	(list Parameters
 			(object Parameter "tipAmount"
-			    quid       	"6363C9E20236"
+			    quid       	"6388C7BE01FB"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3755,31 +3780,31 @@
 		    quid       	"636361E8028A"
 		    parameters 	(list Parameters
 			(object Parameter "bankDescription"
-			    quid       	"6363C9E20254"
+			    quid       	"6388C7BE021E"
 			    type       	"string")
 			(object Parameter "bic"
-			    quid       	"6363C9E20261"
+			    quid       	"6388C7BE022A"
 			    type       	"string")
 			(object Parameter "iban"
-			    quid       	"6363C9E2026F"
+			    quid       	"6388C7BE023A"
 			    type       	"string")
 			(object Parameter "checkID"
-			    quid       	"6363C9E20279"
+			    quid       	"6388C7BE0245"
 			    type       	"string")
 			(object Parameter "issuer"
-			    quid       	"6363C9E20285"
+			    quid       	"6388C7BE024F"
 			    type       	"string")
 			(object Parameter "issueDate"
-			    quid       	"6363C9E20292"
+			    quid       	"6388C7BE0259"
 			    type       	"System.DateTime")
 			(object Parameter "checkNotes"
-			    quid       	"6363C9E2029E"
+			    quid       	"6388C7BE0264"
 			    type       	"string")
 			(object Parameter "totalAmount"
-			    quid       	"6363C9E202B5"
+			    quid       	"6388C7BE026F"
 			    type       	"decimal")
 			(object Parameter "tipAmount"
-			    quid       	"6363C9E202C1"
+			    quid       	"6388C7BE027B"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -4136,7 +4161,56 @@
 			    value      	"+8"))
 		    quid       	"6363D1BF003C"
 		    type       	"decimal"
-		    exportControl 	"Public"))
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentProviderJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c2593fbd-309f-4205-808a-221920425787}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6388C7BE0303")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+9"))
+		    quid       	"6388C7BE0303"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemsJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5d873702-9a79-4fe1-ae82-02ad6c7d4652}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6388C7BE03C0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"6388C7BE03C0"
+		    type       	"string"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#"
@@ -4536,6 +4610,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6D02014E"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(2848, 370)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	384)
 		    width      	419
 		    height     	300
 		    annotation 	8)
@@ -4566,6 +4658,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2CFC0371"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1240, 1351)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	1465)
 		    width      	519
 		    height     	288
 		    annotation 	8)
@@ -4596,6 +4706,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D3E021D"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(2093, 1301)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	671)
 		    width      	550
 		    height     	332
 		    annotation 	8)
@@ -4626,6 +4754,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D80037E"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(3486, 1314)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	671)
 		    width      	563
 		    height     	262
 		    annotation 	8)
@@ -4656,6 +4802,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2DB701D6"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(2765, 1298)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	890)
 		    width      	556
 		    height     	319
 		    annotation 	8)
@@ -4693,6 +4857,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C7104940072"
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(72, 2180)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	14
+			max_width  	1546)
 		    width      	575
 		    height     	406
 		    annotation 	8)
@@ -4755,6 +4937,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6160024B"
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(2101, 717)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	412)
 		    width      	538
 		    height     	388
 		    annotation 	8)
@@ -4793,6 +4993,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A61DE02D0"
+		    compartment 	(object Compartment
+			Parent_View 	@11
+			location   	(1297, 824)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	412)
 		    width      	438
 		    height     	281
 		    annotation 	8)
@@ -5115,6 +5333,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A63D303B2"
+		    compartment 	(object Compartment
+			Parent_View 	@27
+			location   	(3456, 811)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	412)
 		    width      	525
 		    height     	300
 		    annotation 	8)
@@ -5287,6 +5523,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
+		    compartment 	(object Compartment
+			Parent_View 	@36
+			location   	(102, 1421)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	475)
 		    width      	538
 		    height     	375
 		    annotation 	8)
