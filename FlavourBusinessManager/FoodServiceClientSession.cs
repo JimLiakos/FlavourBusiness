@@ -2457,87 +2457,13 @@ namespace FlavourBusinessManager.EndUsers
             }
 
 
-            CreatePaymentOrder(payment);
+            PaymentProviders.VivaWallet.CreatePaymentOrder(payment);
 
 
             return payment;
         }
 
-        private async void CreatePaymentOrder(FinanceFacade.Payment payment)
-        {
-
-            using (var client = new System.Net.Http.HttpClient())
-            {
-
-
-                //client.
-                //viva Merchant ID : 5a330629-00b7-49e7-9be9-9a317f71af50
-                //API Key : COrMC5
-                string username = "5a330629-00b7-49e7-9be9-9a317f71af50";
-                string password = "COrMC5";
-                //Viva.VivaPaymentOrder vivaPaymentOrder = new Viva.VivaPaymentOrder()
-                //{
-                //    amount=1000
-                //}
-                string jsonPaymentOrder = @"{
-    ""amount"": 1000,
-    ""customerTrns"": ""Short description of purchased items/services to display to your customer"",
-    ""customer"":
-    {
-        ""email"": ""jim.liakos@gmail.com"",
-        ""fullName"": ""John Doe"",
-        ""phone"": ""+30999999999"",
-        ""countryCode"": ""GB"",
-        ""requestLang"": ""en-GB""
-    },
-    ""paymentTimeout"": 300,
-    ""preauth"": false,
-    ""allowRecurring"": false,
-    ""maxInstallments"": 12,
-    ""paymentNotification"": true,
-    ""tipAmount"": 100,
-    ""disableExactAmount"": false,
-    ""disableCash"": true,
-    ""disableWallet"": true,
-    ""sourceCode"": ""1234"",
-    ""merchantTrns"": ""Short description of items/services purchased by customer"",
-    ""tags"":
-    [
-        ""tags for grouping and filtering the transactions"",
-        ""this tag can be searched on VivaWallet sales dashboard"",
-        ""Sample tag 1"",
-        ""Sample tag 2"",
-        ""Another string""
-    ],
-    ""cardTokens"":
-    [
-        ""ct_5d0a4e3a7e04469f82da228ca98fd661""
-    ]
-}";
-                try
-                {
-                    string encoded = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1")
-                                                    .GetBytes(username + ":" + password));
-
-                    var url = @"https://demo-api.vivapayments.com/checkout/v2/orders";
-                    var content = new System.Net.Http.StringContent(jsonPaymentOrder, System.Text.Encoding.UTF8, "application/json");
-                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
-                    var responseAppTask = client.PostAsync(url, content);
-                    responseAppTask.Wait();
-                    var responseApp = responseAppTask.Result;
-                    var resp = await responseApp.Content.ReadAsStringAsync();
-                }
-                catch (Exception error)
-                {
-
-
-                }
-
-
-            }
-
-        }
-
+   
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
         {
@@ -2641,47 +2567,4 @@ namespace FlavourBusinessManager.EndUsers
 }
 
 
-namespace Viva
-{ 
-    /// <MetaDataID>{84f6ea09-cb48-4c4c-a2e3-a98744554145}</MetaDataID>
-    public class Customer
-    {
-        public string email { get; set; }
-        public string fullName { get; set; }
-        public string phone { get; set; }
-        public string countryCode { get; set; }
-        public string requestLang { get; set; }
-    }
 
-    /// <MetaDataID>{5572cdb0-060b-4044-8754-6207f02ae85d}</MetaDataID>
-    public class PaymentMethodFee
-    {
-        public string paymentMethodId { get; set; }
-        public int fee { get; set; }
-    }
-
-    /// <MetaDataID>{ec950554-b785-46c2-8739-4f7e3422629a}</MetaDataID>
-    public class VivaPaymentOrder
-    {
-        public int amount { get; set; }
-        public string customerTrns { get; set; }
-        public Customer customer { get; set; }
-        public int paymentTimeout { get; set; }
-        public bool preauth { get; set; }
-        public bool allowRecurring { get; set; }
-        public int maxInstallments { get; set; }
-        public bool paymentNotification { get; set; }
-        public int tipAmount { get; set; }
-        public bool disableExactAmount { get; set; }
-        public bool disableCash { get; set; }
-        public bool disableWallet { get; set; }
-        public string sourceCode { get; set; }
-        public string merchantTrns { get; set; }
-        public List<string> tags { get; set; }
-        public List<PaymentMethodFee> paymentMethodFees { get; set; }
-        public List<string> cardTokens { get; set; }
-    }
-
-
-
-}
