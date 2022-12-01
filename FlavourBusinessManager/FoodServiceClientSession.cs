@@ -2447,6 +2447,10 @@ namespace FlavourBusinessManager.EndUsers
                         payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
 
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
+                        if (_MainSession.Value == null)
+                            (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+                        
+
                         this.MainSession.AddPayment(payment);
                     }
                     else
