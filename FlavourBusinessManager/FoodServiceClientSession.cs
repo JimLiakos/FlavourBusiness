@@ -2416,7 +2416,7 @@ namespace FlavourBusinessManager.EndUsers
             string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
 
             FinanceFacade.Payment payment = null;
-            payment = this.MainSession.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
+            payment = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
 
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
@@ -2430,7 +2430,8 @@ namespace FlavourBusinessManager.EndUsers
                     paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString()});
 
             }
-         
+      
+
 
             //paymentItems= this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
 
@@ -2445,6 +2446,9 @@ namespace FlavourBusinessManager.EndUsers
                         payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
 
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
+                        if (_MainSession.Value == null)
+                            AutoMealParticipation();
+                        
                         this.MainSession.AddPayment(payment);
                     }
                     else

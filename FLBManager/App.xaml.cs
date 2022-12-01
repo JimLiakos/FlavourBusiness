@@ -135,7 +135,9 @@ namespace FLBManager
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "", true);
             //Restore(@"C:\Projects\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "", true);
-            //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
+
+            Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
+
         //    Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
 
@@ -519,12 +521,12 @@ namespace FLBManager
 
             var demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
             OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-            //demoStorage.Backup(archive);
+            demoStorage.Backup(archive);
 
             storageName = "FlavourBusinessesResources";
             demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
             archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-           // demoStorage.Backup(archive);
+           demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
             string suffix = "";
@@ -567,7 +569,9 @@ namespace FLBManager
             catch (Exception error)
             {
             }
+           
         }
+
 
         private static void MetaDataRepositoryMultiThreadTest()
         {
