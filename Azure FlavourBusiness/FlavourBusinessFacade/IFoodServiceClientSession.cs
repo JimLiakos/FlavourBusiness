@@ -211,6 +211,8 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
+        
+
         /// <MetaDataID>{dc05706a-50a3-44ad-9dbf-5a74cad9ce7a}</MetaDataID>
         [BackwardCompatibilityID("+13")]
         SessionType SessionType { get; }

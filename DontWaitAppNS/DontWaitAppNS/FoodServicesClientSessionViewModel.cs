@@ -1138,7 +1138,12 @@ namespace DontWaitApp
             
 
             Payment = FoodServicesClientSession?.Pay();
-            await this.FlavoursOrderServer.Pay(Payment);
+            if(await this.FlavoursOrderServer.Pay(Payment))
+            {
+                
+
+                Payment.CompletePayment();
+            }
             return null;
             //var state = Payment.State;
 

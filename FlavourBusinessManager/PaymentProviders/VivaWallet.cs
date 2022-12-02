@@ -19,25 +19,20 @@ namespace FlavourBusinessManager.PaymentProviders
             PaymentOrderResponse paymentOrderResponse = null;
             if (!string.IsNullOrWhiteSpace(payment.PaymentProviderJson))
             {
-                
                 paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(payment.PaymentProviderJson);
 
-                TimeSpan.FromMinutes(1).Ticks
-
-                return;
+                if (paymentOrderResponse.expiring<DateTime.UtcNow.Ticks-TimeSpan.FromMinutes(1).Ticks)
+                    payment.PaymentProviderJson=null;
+                else
+                    return;
             }
 
 
-            
+
             string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
             string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
 
             string accessToken = GetAccessToken(clientID, clientSecret);
-
-
-
-
-
             var client = new RestClient("https://demo-api.vivapayments.com/checkout/v2/orders");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
@@ -78,15 +73,15 @@ namespace FlavourBusinessManager.PaymentProviders
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
 
-            var paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(response.Content);
+            paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(response.Content);
             paymentOrderResponse.expiring=(DateTime.UtcNow+TimeSpan.FromSeconds(vivaPaymentOrder.paymentTimeout)).Ticks;
 
             payment.PaymentProviderJson=OOAdvantech.Json.JsonConvert.SerializeObject(paymentOrderResponse);
-            
+
         }
         public class PaymentOrderResponse
         {
-            public int orderCode { get; set; }
+            public long orderCode { get; set; }
             public long expiring { get; set; }
         }
 
@@ -110,6 +105,11 @@ namespace FlavourBusinessManager.PaymentProviders
             return AccessToken.access_token;
 
             //eyJhbGciOiJSUzI1NiIsImtpZCI6IjBEOEZCOEQ2RURFQ0Y1Qzk3RUY1MjdDMDYxNkJCMjMzM0FCNjVGOUZSUzI1NiIsIng1dCI6IkRZLTQxdTNzOWNsLTlTZkFZV3V5TXpxMlg1OCIsInR5cCI6ImF0K2p3dCJ9.eyJpc3MiOiJodHRwczovL2RlbW8tYWNjb3VudHMudml2YXBheW1lbnRzLmNvbSIsIm5iZiI6MTY2OTkwMDUwNiwiaWF0IjoxNjY5OTAwNTA2LCJleHAiOjE2Njk5MDQxMDYsImF1ZCI6WyJjb3JlX2FwaSIsImh0dHBzOi8vZGVtby1hY2NvdW50cy52aXZhcGF5bWVudHMuY29tL3Jlc291cmNlcyJdLCJzY29wZSI6WyJ1cm46dml2YTpwYXltZW50czpjb3JlOmFwaTphY3F1aXJpbmciLCJ1cm46dml2YTpwYXltZW50czpjb3JlOmFwaTphY3F1aXJpbmc6Y2FyZHRva2VuaXphdGlvbiIsInVybjp2aXZhOnBheW1lbnRzOmNvcmU6YXBpOnJlZGlyZWN0Y2hlY2tvdXQiXSwiY2xpZW50X2lkIjoieTJrN2tsd29jdnpldDM4dTBjcTNtbm96Y3VqdWh1N2JwZGVoY3JteDdqMW05LmFwcHMudml2YXBheW1lbnRzLmNvbSIsInVybjp2aXZhOnBheW1lbnRzOmNsaWVudF9wZXJzb25faWQiOiI1QTMzMDYyOS0wMEI3LTQ5RTctOUJFOS05QTMxN0Y3MUFGNTAifQ.MAKb3UTs7OQMkI_bhqOiHnOqHXZATFL_R5S0U6mvIFLbjRnck_urpBHDRDlWPOI1EA-tfcJlqnj-vmo6w3Av6HetjdS0urrkC1pyjh0QEWm9Hftmi0t4_SvVhQS3veshO4N9dUTguba-u0GoSlLTHpQhtz3Y6cGrDhMqKiGEc5mOKbp7Epqwvh9oi4MkZdcwCoO0_ywhFRBpQbpoXSXRXBSexMCuCzLiUAZoD3fxx7bNdIBdTAsIylNj72c09afOSl6rIdAeRb-wFF9WT4_b-Vo3xJHTp6pOF0knoliKZgDSqO-QL-UAiyeR6grVfh2WicOPUqZ6ranMVu0EhCpAsg
+        }
+
+        internal static void CompletePayment(IPayment payment)
+        {
+            
         }
     }
 

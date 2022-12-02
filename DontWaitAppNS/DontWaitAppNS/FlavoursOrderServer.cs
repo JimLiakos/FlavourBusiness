@@ -2062,10 +2062,12 @@ namespace DontWaitApp
 #if DeviceDotNet
         PaymentService PaymentService = new PaymentService(); 
 #endif
-        internal async Task Pay(IPayment payment)
+        internal async Task<bool> Pay(IPayment payment)
         {
 #if DeviceDotNet
-            await PaymentService.Pay(payment);
+            return await PaymentService.Pay(payment);
+#else
+            return true;
 #endif
         }
     }

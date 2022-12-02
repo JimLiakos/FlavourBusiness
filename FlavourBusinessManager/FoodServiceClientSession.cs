@@ -18,6 +18,7 @@ using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using FinanceFacade;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -2409,6 +2410,11 @@ namespace FlavourBusinessManager.EndUsers
                     stateTransition.Consistent = true;
                 }
             }
+        }
+
+        public void CompletePayment(FinanceFacade.IPayment payment)
+        {
+            PaymentProviders.VivaWallet.CompletePayment(payment);
         }
 
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
