@@ -234,7 +234,9 @@ namespace DontWaitAppNS.Droid
         }
         public override void OnBackPressed()
         {
-            OOAdvantech.Droid.HybridWebViewRenderer.BackPressed();
+            OOAdvantech.Droid.DeviceOOAdvantechCore.BackPressed();
+            
+            base.OnBackPressed();
 
         }
 

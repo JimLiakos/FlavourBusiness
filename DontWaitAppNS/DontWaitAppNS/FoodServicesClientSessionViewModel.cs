@@ -23,6 +23,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Web;
+using OOAdvantech.Pay;
 
 #else
 using FlavourBusinessFacade.ServicesContextResources;
@@ -1124,25 +1125,33 @@ namespace DontWaitApp
         /// <MetaDataID>{af6e8091-4784-46b6-82af-70336ac8b8fd}</MetaDataID>
         public System.Collections.Generic.IList<DontWaitApp.Messmate> GetMessmates()
         {
+            
             return Messmates;
         }
 
+        
+
+
         FinanceFacade.IPayment Payment;
-        public FinanceFacade.IPayment Pay()
+        public async Task< FinanceFacade.IPayment> Pay()
         {
+            
+
             Payment = FoodServicesClientSession?.Pay();
-            var state = Payment.State;
+            await this.FlavoursOrderServer.Pay(Payment);
+            return null;
+            //var state = Payment.State;
 
-            var providerJson = Payment.PaymentProviderJson;
-            if (!string.IsNullOrWhiteSpace(providerJson))
-            {
-                var orderCode = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(providerJson)?.orderCode;
- 
-                var webView = ((App.Current.MainPage as Xamarin.Forms.NavigationPage).CurrentPage as HybridWebViewPage).hybridWebView;
-                webView.NativeWebBrowser.Navigate($"https://demo.vivapayments.com/web/checkout?ref={orderCode}");
+            //var providerJson = Payment.PaymentProviderJson;
+            //if (!string.IsNullOrWhiteSpace(providerJson))
+            //{
+            //    var orderCode = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(providerJson)?.orderCode;
 
-            }
+            //    var webView = ((App.Current.MainPage as Xamarin.Forms.NavigationPage).CurrentPage as HybridWebViewPage).hybridWebView;
+            //    webView.NativeWebBrowser.Navigate($"https://demo.vivapayments.com/web/checkout?ref={orderCode}");
 
+            //}
+            //this.FlavoursOrderServer.Pay(Payment);
 
             return Payment;
         }
@@ -1649,11 +1658,6 @@ namespace DontWaitApp
     }
 
 
-    public class PaymentOrderResponse 
-
-    {
-        public long orderCode { get; set; }
-    }
-
+   
 
 }

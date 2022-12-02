@@ -16,6 +16,19 @@ namespace FlavourBusinessManager.PaymentProviders
 
         internal static void CreatePaymentOrder(Payment payment)
         {
+            PaymentOrderResponse paymentOrderResponse = null;
+            if (!string.IsNullOrWhiteSpace(payment.PaymentProviderJson))
+            {
+                
+                paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(payment.PaymentProviderJson);
+
+                TimeSpan.FromMinutes(1).Ticks
+
+                return;
+            }
+
+
+            
             string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
             string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
 
@@ -34,25 +47,25 @@ namespace FlavourBusinessManager.PaymentProviders
 
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
-                amount=1000,
-                customerTrns="Short description of purchased items/services to display to your customer",
-                customer=new Customer()
-                {
-                    email="jim.liakos@gmail.com",
-                    fullName="Jim Liakos",
-                    phone="30999999999",
-                    countryCode="GR",
-                    requestLang="el-GR"
-                },
+                amount=(int)payment.Amount*100,
+                customerTrns="a Short description of purchased items/services to display to your customer",
+                //customer=new Customer()
+                //{
+                //    //email="jim.liakos@gmail.com",
+                //    fullName="Jim Liakos",
+                //    phone="30999999999",
+                //    countryCode="GR",
+                //    requestLang="el-GR"
+                //},
                 paymentTimeout=300,
                 preauth=false,
                 allowRecurring=false,
                 maxInstallments=12,
                 paymentNotification=true,
-                tipAmount=10,
+                tipAmount=(int)payment.TipsAmount*100,
                 disableCash=true,
                 disableWallet=false,
-                merchantTrns="Short description of items/services purchased by customer",
+                merchantTrns="b Short description of items/services purchased by customer",
                 tags=new List<string>()
                 {
                     "tags for grouping and filtering the transactions",
@@ -64,7 +77,17 @@ namespace FlavourBusinessManager.PaymentProviders
             request.AddParameter("application/json", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            payment.PaymentProviderJson=response.Content;
+
+            var paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrderResponse>(response.Content);
+            paymentOrderResponse.expiring=(DateTime.UtcNow+TimeSpan.FromSeconds(vivaPaymentOrder.paymentTimeout)).Ticks;
+
+            payment.PaymentProviderJson=OOAdvantech.Json.JsonConvert.SerializeObject(paymentOrderResponse);
+            
+        }
+        public class PaymentOrderResponse
+        {
+            public int orderCode { get; set; }
+            public long expiring { get; set; }
         }
 
         private static string GetAccessToken(string clientID, string clientSecret)

@@ -27,6 +27,9 @@ using FlavourBusinessManager.EndUsers;
 using System.Net;
 using OOAdvantech.Authentication;
 using static System.Net.WebRequestMethods;
+using FinanceFacade;
+
+
 
 
 
@@ -40,11 +43,11 @@ using ZXing.Net.Mobile.Forms;
 using ZXing;
 using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+using OOAdvantech.Pay;
 #else
 using QRCoder;
 using System.IO;
 using System.Drawing.Imaging;
-using System;
 #endif
 
 namespace DontWaitApp
@@ -2056,6 +2059,14 @@ namespace DontWaitApp
             var obj = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(_object);
 
         }
-
+#if DeviceDotNet
+        PaymentService PaymentService = new PaymentService(); 
+#endif
+        internal async Task Pay(IPayment payment)
+        {
+#if DeviceDotNet
+            await PaymentService.Pay(payment);
+#endif
+        }
     }
 }
