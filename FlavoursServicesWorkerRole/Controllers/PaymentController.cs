@@ -47,8 +47,6 @@ namespace FlavoursServicesWorkerRole.Controllers
                 flavoursServicesContextRuntime = FlavoursServicesContext.GetServicesContextRuntime(serviceContextIdentity);
                 FlavoursServicesContextRuntimes[serviceContextIdentity] = flavoursServicesContextRuntime;
             }
-
-
             var hookRespnose = flavoursServicesContextRuntime.WebHook("POST", webHookName, headers, Json);
             //var hookRespnose = ServiceBusWebHook(serviceContextIdentity, "POST", webHookName, headers, Json);  
 

@@ -63,6 +63,11 @@ namespace MenuDesigner.ViewModel.Preview
             return new List<Messmate>();
         }
 
+        public Task<IPayment> GetPayment()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <MetaDataID>{bdb20e62-ceda-4610-9297-e2b02d34c586}</MetaDataID>
         public void ItemChanged(ItemPreparation item)
         {
@@ -70,6 +75,11 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         public IPayment Pay()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Pay(IPayment payment, decimal tipAmount)
         {
             throw new NotImplementedException();
         }

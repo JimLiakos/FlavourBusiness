@@ -24,7 +24,7 @@ using FinanceFacade;
 using MenuModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using WebhooksToLocalServer;
+//using WebhooksToLocalServer;
 using FlavourBusinessManager.PaymentProviders;
 
 namespace FlavourBusinessManager.ServicePointRunTime
@@ -338,7 +338,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             });
 
 
-#if DEBUG
+#if _DEBUG
             try
             {
                 Webhookservice = new WebhooksToLocalServer.Webhookservice();
@@ -1688,7 +1688,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{1513e163-7a1b-4747-97cf-161a9fc8e55a}</MetaDataID>
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
-        private Webhookservice Webhookservice;
+        //private Webhookservice Webhookservice;
 
         //clientDeviceID="81000000296"
         //clientName="clientName"
