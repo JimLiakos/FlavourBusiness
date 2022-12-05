@@ -126,6 +126,10 @@ namespace FlavourBusinessManager
                     where flavoursServicesContext.ServicesContextIdentity == servicesContextIdentity
                     select flavoursServicesContext).FirstOrDefault();
         }
+        public static IFlavoursServicesContextRuntime GetServicesContextRuntime(string servicesContextIdentity)
+        {
+            return GetServicesContext(servicesContextIdentity).GetRunTime();
+        }
 
         /// <MetaDataID>{0112e364-4f4b-4c70-bc60-efe9d2b23737}</MetaDataID>
         internal static List<IFlavoursServicesContext> ActiveFlavoursServicesContexts

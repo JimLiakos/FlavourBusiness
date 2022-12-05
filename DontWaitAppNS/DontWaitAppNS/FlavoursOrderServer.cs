@@ -2065,7 +2065,10 @@ namespace DontWaitApp
         internal async Task<bool> Pay(IPayment payment)
         {
 #if DeviceDotNet
-            return await PaymentService.Pay(payment);
+            
+
+
+            return await PaymentService.Pay(payment, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
 #else
             return true;
 #endif

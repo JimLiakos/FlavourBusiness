@@ -89,11 +89,12 @@ namespace FlavourBusinessManager
 
 
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
 
             var graphicMenus = (flavoursServicesContext.Owner as Organization).UnSafeGraphicMenus;
 
 
-            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
             var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, orgIdentity, graphicMenus, create);

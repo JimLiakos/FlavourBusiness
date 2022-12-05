@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using FinanceFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
@@ -170,5 +171,17 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{2eb4a008-d3a3-4fc9-ad3f-4c0e9031b71d}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
         IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID);
+        HookRespnose WebHook(string method, string webHookName, Dictionary<string,string> headers, string content);
+    }
+
+    public class HookRespnose
+    {
+        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
+
+        public string Content { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+
+
     }
 }

@@ -1125,26 +1125,22 @@ namespace DontWaitApp
         /// <MetaDataID>{af6e8091-4784-46b6-82af-70336ac8b8fd}</MetaDataID>
         public System.Collections.Generic.IList<DontWaitApp.Messmate> GetMessmates()
         {
-            
+
             return Messmates;
         }
 
-        
+
 
 
         FinanceFacade.IPayment Payment;
-        public async Task< FinanceFacade.IPayment> Pay()
+        public async Task<FinanceFacade.IPayment> GetPayment()
         {
-            
+
 
             Payment = FoodServicesClientSession?.Pay();
-            if(await this.FlavoursOrderServer.Pay(Payment))
-            {
-                
 
-                Payment.CompletePayment();
-            }
-            return null;
+
+            return Payment;
             //var state = Payment.State;
 
             //var providerJson = Payment.PaymentProviderJson;
@@ -1159,6 +1155,18 @@ namespace DontWaitApp
             //this.FlavoursOrderServer.Pay(Payment);
 
             return Payment;
+        }
+        public async void Pay(FinanceFacade.IPayment payment)
+        {
+#if DeviceDotNet
+            FoodServicesClientSession.CreatePaymentOrder(payment);
+            if (await this.FlavoursOrderServer.Pay(Payment))
+            {
+
+            }
+#endif
+            
+
         }
 
 
@@ -1636,11 +1644,6 @@ namespace DontWaitApp
 
         }
 
-        FinanceFacade.IPayment IFoodServicesClientSessionViewModel.Pay()
-        {
-            throw new NotImplementedException();
-        }
-
 
 
         #endregion
@@ -1663,6 +1666,6 @@ namespace DontWaitApp
     }
 
 
-   
+
 
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlavourBusinessWorkerRole", "Azure FlavourBusiness\FlavourBusinessWorkerRole\FlavourBusinessWorkerRole.csproj", "{E1C14B7A-AD69-451E-BC37-5CD091301219}"
 EndProject
@@ -136,6 +136,8 @@ EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "FlavoursServices", "FlavoursServices\FlavoursServices.ccproj", "{1E9121AA-49AF-4D28-8C5A-DB8F417B7786}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlavoursServicesWorkerRole", "FlavoursServicesWorkerRole\FlavoursServicesWorkerRole.csproj", "{E34DF33A-4755-43AC-A652-11AF8ED6ABB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebhooksToLocalServer", "WebhooksToLocalServer\WebhooksToLocalServer.csproj", "{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -951,6 +953,18 @@ Global
 		{E34DF33A-4755-43AC-A652-11AF8ED6ABB0}.Release|x64.Build.0 = Release|Any CPU
 		{E34DF33A-4755-43AC-A652-11AF8ED6ABB0}.Release|x86.ActiveCfg = Release|Any CPU
 		{E34DF33A-4755-43AC-A652-11AF8ED6ABB0}.Release|x86.Build.0 = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x64.Build.0 = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
