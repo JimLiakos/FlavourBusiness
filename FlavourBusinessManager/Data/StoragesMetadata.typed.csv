@@ -1,0 +1,4 @@
+PartitionKey,RowKey,Timestamp,StorageName,StorageName@type,StoragePrefix,StoragePrefix@type,UnderConstruction,UnderConstruction@type
+AAA,5f438de0-7565-4d2a-a657-a1f76cd6befa,2019-05-05T07:35:10.253Z,FlavourBusinesses,Edm.String,FlavourBusinesses,Edm.String,false,Edm.Boolean
+AAA,781547f9-8734-4191-b5ed-f54a157fc266,2019-05-05T14:02:33.697Z,FlavourBusinessesResources,Edm.String,FlavourBusinessesResources,Edm.String,false,Edm.Boolean
+AAA,e7c2ea72-03f2-429d-aa15-54a9bea4b98a,2019-05-05T15:27:21.610Z,jimliakosgmailcom,Edm.String,jimliakosgmailcom,Edm.String,false,Edm.Boolean

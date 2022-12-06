@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,Address,Address@type,Email,Email@type,IOrganization_Identity,IOrganization_Identity@type,Name,Name@type,PhoneNumber,PhoneNumber@type,TypeID,TypeID@type
+3,c8d9dcab-a1ce-4b1b-870c-b9f049b5fbaf,2019-05-05T14:39:27.717Z,Λαζαράδων 29 Αθήνα,Edm.String,jim.liakos@gmail.com,Edm.String,ykCR5c6aHVUUpGJ8J7ZqpLLY97i1,Edm.String,Δημήτρης Λιάκος,Edm.String,2108822590,Edm.String,8,Edm.Int32

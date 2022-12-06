@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,TypeID,TypeID@type,ServicesContextIdentity,ServicesContextIdentity@type
+4,e07235b1-ea0f-4f0d-96fe-367da02a3688,2019-05-05T15:36:39.503Z,10,Edm.Int32,b5ec4ed264c142adb26b73c95b185544,Edm.String

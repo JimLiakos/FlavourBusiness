@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,MultipleObjectContext,MultipleObjectContext@type,StorageLocation,StorageLocation@type,StorageName,StorageName@type,StorageType,StorageType@type
+AAA,6f059ab0-e7cd-4d3d-9e1b-5bf896797cda,2019-05-05T15:27:22.873Z,true,Edm.Boolean,DevStorage,Edm.String,jimliakosgmailcom,Edm.String,OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider,Edm.String

@@ -19,6 +19,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IComputingResource.cs" Link="IComputingResource.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\ComputationalResources\IIsolatedComputingContext.cs" Link="IIsolatedComputingContext.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IAddress.cs" Link="IAddress.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IBill.cs" Link="IBill.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IFisicalParty.cs" Link="IFisicalParty.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\TaxAmount.cs" Link="TaxAmount.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ΙTransaction.cs" Link="ΙTransaction.cs" />

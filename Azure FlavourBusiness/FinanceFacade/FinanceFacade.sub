@@ -69,7 +69,11 @@
 		(object Realize_Relationship
 		    quid       	"635EB6C00323"
 		    supplier   	"Logical View::FinanceFacade::IPayment"
-		    quidu      	"635CB39B0177"))
+		    quidu      	"635CB39B0177")
+		(object Realize_Relationship
+		    quid       	"638E47AA02CC"
+		    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IBill"
+		    quidu      	"638E432C02F9"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -515,4 +519,36 @@
 		    quidu      	"635EB6C00323"
 		    client     	@1
 		    supplier   	@24
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::EndUsers::IBill" @26
+		    location   	(1289, 1473)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(1288, 1581)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IBill")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"638E432C02F9")
+		(object RealizeView "" @27
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"638E47AA02CC"
+		    client     	@1
+		    supplier   	@26
 		    line_style 	0)))))

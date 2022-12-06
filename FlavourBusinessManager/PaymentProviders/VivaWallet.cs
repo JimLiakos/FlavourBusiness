@@ -12,6 +12,7 @@ using static FlavourBusinessManager.PaymentProviders.VivaWallet;
 
 namespace FlavourBusinessManager.PaymentProviders
 {
+    /// <MetaDataID>{a98904ba-1e24-4771-93ce-73a3786988d7}</MetaDataID>
     public class VivaWallet
     {
         static AccessToken AccessToken { get; set; }
@@ -139,8 +140,8 @@ namespace FlavourBusinessManager.PaymentProviders
                 {
                     var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK", DateTimeZoneHandling = OOAdvantech.Json.DateTimeZoneHandling.Utc };
                     VivaEvent vivaEvent = OOAdvantech.Json.JsonConvert.DeserializeObject<VivaEvent>(content, jSetttings);
-                    
-                    
+
+
                     if (vivaEvent.EventTypeId == 1796)
                     {
 
@@ -168,7 +169,7 @@ namespace FlavourBusinessManager.PaymentProviders
 
                         try
                         {
-                            
+
                             var client = new RestClient($"https://demo-api.vivapayments.com/checkout/v2/transactions/{paymentOrder.TransactionId}");
                             client.Timeout = -1;
                             var request = new RestRequest(Method.GET);
@@ -179,19 +180,19 @@ namespace FlavourBusinessManager.PaymentProviders
 
                             inProgressPayment.payment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
 
-                            
+
                         }
                         catch (Exception error)
                         {
 
                             throw;
                         }
-                        
+
                         #endregion
                     }
 
-                    
-                    
+
+
 
                 }
 
@@ -204,6 +205,7 @@ namespace FlavourBusinessManager.PaymentProviders
     }
 
 
+    /// <MetaDataID>{cf2173b3-2255-46c8-ac80-4722f83fa9f5}</MetaDataID>
     public class AccessToken
     {
         public string access_token { get; set; }
@@ -216,6 +218,7 @@ namespace FlavourBusinessManager.PaymentProviders
 
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    /// <MetaDataID>{b57a74a6-b0f3-46f3-81d2-a1db71aefffe}</MetaDataID>
     public class Customer
     {
         public string email { get; set; }
@@ -225,6 +228,7 @@ namespace FlavourBusinessManager.PaymentProviders
         public string requestLang { get; set; }
     }
 
+    /// <MetaDataID>{a776e12d-0694-4049-bf39-e658fe42556e}</MetaDataID>
     public class VivaPaymentOrder
     {
         public int amount { get; set; }
@@ -245,6 +249,7 @@ namespace FlavourBusinessManager.PaymentProviders
     }
 
 
+    /// <MetaDataID>{2d3f8aa4-5414-46e0-ae39-8d26255d69f9}</MetaDataID>
     public class EventData
     {
         public bool Moto { get; set; }
@@ -310,6 +315,7 @@ namespace FlavourBusinessManager.PaymentProviders
         public string ElectronicCommerceIndicator { get; set; }
     }
 
+    /// <MetaDataID>{0f4eb427-24c5-40b8-b849-5ff6405a51d2}</MetaDataID>
     public class VivaEvent
     {
         public string Url { get; set; }
@@ -323,9 +329,10 @@ namespace FlavourBusinessManager.PaymentProviders
         public int MessageTypeId { get; set; }
     }
 
+    /// <MetaDataID>{9977de77-c743-4074-8e65-61eff156cdc7}</MetaDataID>
     public static class VivaIPaymentExtMethods
     {
-        public static PaymentOrder GetPaymentOrder(this IPayment payment )
+        public static PaymentOrder GetPaymentOrder(this IPayment payment)
         {
             if (string.IsNullOrEmpty(payment?.PaymentProviderJson))
                 return null;
@@ -334,9 +341,9 @@ namespace FlavourBusinessManager.PaymentProviders
             return paymentOrderResponse;
         }
 
-        public static void  SetPaymentOrder(this IPayment payment, PaymentOrder paymentOrder)
+        public static void SetPaymentOrder(this IPayment payment, PaymentOrder paymentOrder)
         {
-            if(paymentOrder!=null)
+            if (paymentOrder!=null)
                 payment.PaymentProviderJson = OOAdvantech.Json.JsonConvert.SerializeObject(paymentOrder);
             else
                 payment.PaymentProviderJson= null;
@@ -346,6 +353,7 @@ namespace FlavourBusinessManager.PaymentProviders
     }
 
 
+    /// <MetaDataID>{b00a81fe-a55d-488c-80c3-ff61e5793da5}</MetaDataID>
     public class TransactionData
     {
         public string email { get; set; }

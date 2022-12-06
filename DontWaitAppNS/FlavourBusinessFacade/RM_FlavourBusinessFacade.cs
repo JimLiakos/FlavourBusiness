@@ -2087,657 +2087,6 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
 }
-namespace FlavourBusinessFacade.RoomService.Proxies
-{
-    using System;
-    
-    
-    public sealed class Pr_IMeal : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMeal, OOAdvantech.Remoting.RestApi.ITransparentProxy
-    {
-        
-        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
-        
-        public FlavourBusinessFacade.RoomService.IMeal Org;
-        
-public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-            }
-        
-        public Pr_IMeal(OOAdvantech.Remoting.RestApi.Proxy proxy)
-        {
-            this.Proxy = proxy;
-        }
-        
-        // The Width property for the object.
-        public string Name
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Name", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "set_Name", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession Session
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Session", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> Courses
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Courses", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
-            }
-        }
-        
-        public OOAdvantech.Remoting.IProxy GetProxy()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
-            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
-        }
-    }
-    
-    public sealed class Pr_IMealsController : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealsController, OOAdvantech.Remoting.RestApi.ITransparentProxy
-    {
-        
-        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
-        
-        public FlavourBusinessFacade.RoomService.IMealsController Org;
-        
-public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-            }
-public event FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel NewMealCoursesInrogress
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_NewMealCoursesInrogress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_NewMealCoursesInrogress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel)});
-                }
-            }
-public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-            }
-        
-        public Pr_IMealsController(OOAdvantech.Remoting.RestApi.Proxy proxy)
-        {
-            this.Proxy = proxy;
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> MealCoursesInProgress
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "get_MealCoursesInProgress", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
-            }
-        }
-        
-        public OOAdvantech.Remoting.IProxy GetProxy()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
-            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
-        }
-        
-        public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
-        {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
-            args[0] = mealCourseAsReferenceUri;
-            argsTypes[0] = typeof(string);
-            args[1] = movedMealCourseUri;
-            argsTypes[1] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseBefore", args, argsTypes);
-        }
-        
-        public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
-        {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
-            args[0] = mealCourseAsReferenceUri;
-            argsTypes[0] = typeof(string);
-            args[1] = movedMealCourseUri;
-            argsTypes[1] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseAfter", args, argsTypes);
-        }
-    }
-    
-    public sealed class Pr_IMealCourse : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy
-    {
-        
-        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
-        
-        public FlavourBusinessFacade.RoomService.IMealCourse Org;
-        
-public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-            }
-public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
-                }
-            }
-public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-            }
-        
-        public Pr_IMealCourse(OOAdvantech.Remoting.RestApi.Proxy proxy)
-        {
-            this.Proxy = proxy;
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMealCourse Next
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Next", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public int SortID
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_SortID", args, argsTypes);
-                return this.Proxy.GetValue<int>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMealCourse Previous
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Previous", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IMealCourse);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_Previous", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMealCourse HeaderCourse
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_HeaderCourse", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch> ServingBatches
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServingBatches", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMeal Meal
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Meal", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMeal>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public string Name
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Name", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_Name", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> FoodItems
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_FoodItems", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.ItemPreparationState PreparationState
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_PreparationState", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ItemPreparationState>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.ItemPreparationState);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_PreparationState", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Nullable<System.DateTime> StartsAt
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_StartsAt", args, argsTypes);
-                return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(System.Nullable<System.DateTime>);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_StartsAt", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Nullable<System.DateTime> ServedAtForecast
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServedAtForecast", args, argsTypes);
-                return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> FoodItemsInProgress
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_FoodItemsInProgress", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.EndUsers.SessionData SessionData
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_SessionData", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.SessionData>(retValue);
-            }
-        }
-        
-        public OOAdvantech.Remoting.IProxy GetProxy()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
-            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
-        }
-        
-        public void RemoveItem(FlavourBusinessFacade.RoomService.IItemPreparation itemPreparation)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = itemPreparation;
-            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "RemoveItem", args, argsTypes);
-        }
-        
-        public void AddItem(FlavourBusinessFacade.RoomService.IItemPreparation itemPreparation)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = itemPreparation;
-            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "AddItem", args, argsTypes);
-        }
-        
-        public void RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = newItemsState;
-            argsTypes[0] = typeof(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "RaiseItemsStateChanged", args, argsTypes);
-        }
-    }
-    
-    public sealed class Pr_IServingBatch : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IServingBatch, OOAdvantech.Remoting.RestApi.ITransparentProxy
-    {
-        
-        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
-        
-        public FlavourBusinessFacade.RoomService.IServingBatch Org;
-        
-public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-            }
-public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-            }
-public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
-            {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
-                }
-            }
-        
-        public Pr_IServingBatch(OOAdvantech.Remoting.RestApi.Proxy proxy)
-        {
-            this.Proxy = proxy;
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicePointType", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ServicePointType>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.ServicePointType);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicePointType", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.RoomService.IMealCourse MealCourse
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_MealCourse", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public bool IsAssigned
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_IsAssigned", args, argsTypes);
-                return this.Proxy.GetValue<bool>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public int SortID
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_SortID", args, argsTypes);
-                return this.Proxy.GetValue<int>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public string MealCourseUri
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_MealCourseUri", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public FlavourBusinessFacade.ServicesContextResources.IServicePoint ServicePoint
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicePoint", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> PreparedItems
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_PreparedItems", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> ContextsOfUnderPreparationItems
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ContextsOfUnderPreparationItems", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> ContextsOfPreparedItems
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ContextsOfPreparedItems", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public string Description
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_Description", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
-        public string ServicesPointIdentity
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesPointIdentity", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicesPointIdentity", args, argsTypes);
-            }
-        }
-        
-        public OOAdvantech.Remoting.IProxy GetProxy()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
-            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
-        }
-        
-        public void PrintReceiptAgain()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "PrintReceiptAgain", args, argsTypes);
-        }
-    }
-}
 namespace FlavourBusinessFacade.ServicesContextResources.Proxies
 {
     using System;
@@ -5850,6 +5199,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public FlavourBusinessFacade.RoomService.IBill GetBill()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "GetBill", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
         public void RemoveSharingItem(FlavourBusinessFacade.RoomService.IItemPreparation item)
         {
             object[] args = new object[1];
@@ -5893,14 +5250,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = item;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "AddItem", args, argsTypes);
-        }
-        
-        public FinanceFacade.IPayment Pay()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "Pay", args, argsTypes);
-            return this.Proxy.GetValue<FinanceFacade.IPayment>(retValue);
         }
         
         public void CreatePaymentOrder(FinanceFacade.IPayment payment)
@@ -6232,6 +5581,657 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = message;
             argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Message);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PushMessage", args, argsTypes);
+        }
+    }
+}
+namespace FlavourBusinessFacade.RoomService.Proxies
+{
+    using System;
+    
+    
+    public sealed class Pr_IMeal : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMeal, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.RoomService.IMeal Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+        
+        public Pr_IMeal(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string Name
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Name", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession Session
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Session", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> Courses
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMeal), "get_Courses", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+    }
+    
+    public sealed class Pr_IMealsController : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealsController, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.RoomService.IMealsController Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel NewMealCoursesInrogress
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_NewMealCoursesInrogress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_NewMealCoursesInrogress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInrogressHandel)});
+                }
+            }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
+        
+        public Pr_IMealsController(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> MealCoursesInProgress
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "get_MealCoursesInProgress", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = mealCourseAsReferenceUri;
+            argsTypes[0] = typeof(string);
+            args[1] = movedMealCourseUri;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseBefore", args, argsTypes);
+        }
+        
+        public void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = mealCourseAsReferenceUri;
+            argsTypes[0] = typeof(string);
+            args[1] = movedMealCourseUri;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseAfter", args, argsTypes);
+        }
+    }
+    
+    public sealed class Pr_IMealCourse : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.RoomService.IMealCourse Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+            }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
+        
+        public Pr_IMealCourse(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMealCourse Next
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Next", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public int SortID
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_SortID", args, argsTypes);
+                return this.Proxy.GetValue<int>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMealCourse Previous
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Previous", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IMealCourse);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_Previous", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMealCourse HeaderCourse
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_HeaderCourse", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch> ServingBatches
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServingBatches", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMeal Meal
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Meal", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMeal>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Name
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Name", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> FoodItems
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_FoodItems", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.ItemPreparationState PreparationState
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_PreparationState", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ItemPreparationState>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.ItemPreparationState);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_PreparationState", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Nullable<System.DateTime> StartsAt
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_StartsAt", args, argsTypes);
+                return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(System.Nullable<System.DateTime>);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "set_StartsAt", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Nullable<System.DateTime> ServedAtForecast
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_ServedAtForecast", args, argsTypes);
+                return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> FoodItemsInProgress
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_FoodItemsInProgress", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.EndUsers.SessionData SessionData
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_SessionData", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.SessionData>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemoveItem(FlavourBusinessFacade.RoomService.IItemPreparation itemPreparation)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemPreparation;
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "RemoveItem", args, argsTypes);
+        }
+        
+        public void AddItem(FlavourBusinessFacade.RoomService.IItemPreparation itemPreparation)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemPreparation;
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "AddItem", args, argsTypes);
+        }
+        
+        public void RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = newItemsState;
+            argsTypes[0] = typeof(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "RaiseItemsStateChanged", args, argsTypes);
+        }
+    }
+    
+    public sealed class Pr_IServingBatch : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IServingBatch, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.RoomService.IServingBatch Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
+public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "add_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "remove_ItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle)});
+                }
+            }
+        
+        public Pr_IServingBatch(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicePointType", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ServicePointType>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.ServicePointType);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicePointType", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.RoomService.IMealCourse MealCourse
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_MealCourse", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IMealCourse>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool IsAssigned
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_IsAssigned", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public int SortID
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_SortID", args, argsTypes);
+                return this.Proxy.GetValue<int>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string MealCourseUri
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_MealCourseUri", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.ServicesContextResources.IServicePoint ServicePoint
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicePoint", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> PreparedItems
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_PreparedItems", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> ContextsOfUnderPreparationItems
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ContextsOfUnderPreparationItems", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext> ContextsOfPreparedItems
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ContextsOfPreparedItems", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Description
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_Description", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string ServicesPointIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesPointIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicesPointIdentity", args, argsTypes);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void PrintReceiptAgain()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "PrintReceiptAgain", args, argsTypes);
         }
     }
 }

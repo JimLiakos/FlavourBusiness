@@ -294,6 +294,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="AuthFlavourBusiness.cs" />
     <Compile Include="AuthUserRef.cs" />
+    <Compile Include="Bill.cs" />
     <Compile Include="CallerIDLine.cs" />
     <Compile Include="CallerIDServer.cs" />
     <Compile Include="CashierStation.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="ServingShiftWork.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Simulator.cs" />
+    <Compile Include="Webhookservice.cs" />
     <None Include="app.config" />
     <None Include="FlavourBusinessManager.cat" />
     <None Include="FlavourBusinessManager.sub" />

@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,TypeID,TypeID@type,Description,Description@type,ServicesContextIdentity,ServicesContextIdentity@type
+9,3e1822ae-6071-42ba-b240-240cd72e79ae,2019-05-05T15:49:42.887Z,16,Edm.Int32,Cashier Station,Edm.String,b5ec4ed264c142adb26b73c95b185544,Edm.String

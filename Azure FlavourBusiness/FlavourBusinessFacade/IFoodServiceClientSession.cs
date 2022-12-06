@@ -12,6 +12,9 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+        /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
+        FlavourBusinessFacade.RoomService.IBill GetBill();
+
         /// <MetaDataID>{0251075a-b9d0-47c0-b664-36acf13674ac}</MetaDataID>
         [BackwardCompatibilityID("+10")]
         bool ImplicitMealParticipation { get; set; }
@@ -79,12 +82,10 @@ namespace FlavourBusinessFacade.EndUsers
         event ItemsStateChangedHandle ItemsStateChanged;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+     
 
 
-        /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
-        IPayment Pay();
-
-
+        /// <MetaDataID>{1d25a168-7cbe-49e4-9823-639d78a27ee5}</MetaDataID>
         void CreatePaymentOrder(FinanceFacade.IPayment payment);
 
 

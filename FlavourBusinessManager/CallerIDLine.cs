@@ -10,6 +10,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class CallerIDLine : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ICallerIDLine
     {
 
+
         /// <MetaDataID>{4388fdbb-070e-4757-8280-21342024ab91}</MetaDataID>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 

@@ -31,7 +31,7 @@ namespace DontWaitApp
         void RefreshMessmates();
 
 
-        Task<FinanceFacade.IPayment> GetPayment();
+        Task<FlavourBusinessFacade.RoomService.IBill> GetBill();
 
         void Pay(FinanceFacade.IPayment payment, decimal tipAmount);
 

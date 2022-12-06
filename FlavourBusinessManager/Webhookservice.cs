@@ -11,6 +11,7 @@ using System.Xml.Linq;
 
 namespace WebhooksToLocalServer
 {
+    /// <MetaDataID>{951718dd-4fa5-49b3-946a-ae1e25913e1b}</MetaDataID>
     public class Webhookservice
     {
         public ServiceHost DeviceMessageServerServiceBusProxy { get; private set; }
@@ -44,11 +45,12 @@ namespace WebhooksToLocalServer
             }
             catch (Exception error)
             {
-                
+
             }
         }
     }
 
+    /// <MetaDataID>{f4d1226d-0ef4-4a1c-96f5-9216853ca0e2}</MetaDataID>
     [ServiceBehavior(Name = "DeviceMessageServer", Namespace = "https://samples.microsoft.com/ServiceModel/Relay/")]
     class DeviceMessageServer : IDeviceMessageServer
     {
@@ -70,12 +72,12 @@ namespace WebhooksToLocalServer
             var messageDoc = XDocument.Parse(xmlMessage);
 
             string method = messageDoc.Root.Attribute("Method").Value;
-            string headersjSON=messageDoc.Root.Attribute("Headers").Value;
+            string headersjSON = messageDoc.Root.Attribute("Headers").Value;
             string content = messageDoc.Root.Attribute("Content").Value;
-            string webHookName= messageDoc.Root.Attribute("WebHookName").Value;
-            var headers=OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(headersjSON);
+            string webHookName = messageDoc.Root.Attribute("WebHookName").Value;
+            var headers = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(headersjSON);
 
-           var response= FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.WebHook(method, webHookName, headers, content);
+            var response = FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.WebHook(method, webHookName, headers, content);
 
             headersjSON = OOAdvantech.Json.JsonConvert.SerializeObject(response.Headers);
 
@@ -93,6 +95,7 @@ namespace WebhooksToLocalServer
 }
 namespace DeviceMessageServer
 {
+    /// <MetaDataID>{f6dc7ce9-d648-41d5-a378-1380fd97f130}</MetaDataID>
     [ServiceContract(Namespace = "urn:ps")]
     public interface IDeviceMessageServer
     {

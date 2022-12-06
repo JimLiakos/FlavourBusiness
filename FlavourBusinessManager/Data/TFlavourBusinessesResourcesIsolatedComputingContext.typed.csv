@@ -1,0 +1,4 @@
+PartitionKey,RowKey,Timestamp,ComputingResourceID,ComputingResourceID@type,ContextID,ContextID@type,Description,Description@type,FixedComputingResource,FixedComputingResource@type,TypeID,TypeID@type
+1,495ffe2e-9d2e-4d4d-9aeb-7db522abba7b,2019-05-05T16:41:51.163Z,0,Edm.Int32,b5ec4ed264c142adb26b73c95b185544,Edm.String,Restaurant,Edm.String,false,Edm.Boolean,6,Edm.Int32
+1,657bffb0-a6b9-4a6c-80be-9ffc542cc33c,2019-05-05T16:41:51.167Z,0,Edm.Int32,055980081b674aec9e774e8403cdc972,Edm.String,Manage computing resources,Edm.String,false,Edm.Boolean,6,Edm.Int32
+1,794c6768-e135-4b7a-aed3-1c032e0386a6,2019-05-05T16:41:51.180Z,0,Edm.Int32,14e60576b74146cb839c7904298f11c2,Edm.String,Manage flavour business,Edm.String,false,Edm.Boolean,6,Edm.Int32

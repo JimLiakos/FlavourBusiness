@@ -1132,15 +1132,17 @@ namespace DontWaitApp
 
 
 
-        FinanceFacade.IPayment Payment;
-        public async Task<FinanceFacade.IPayment> GetPayment()
+        IBill Bill;
+        public async Task<IBill> GetBill()
         {
 
 
-            Payment = FoodServicesClientSession?.Pay();
+            Bill = FoodServicesClientSession?.GetBill();
+
+            var ss = Bill.Payments;
 
 
-            return Payment;
+            return Bill;
             //var state = Payment.State;
 
             //var providerJson = Payment.PaymentProviderJson;
@@ -1154,7 +1156,7 @@ namespace DontWaitApp
             //}
             //this.FlavoursOrderServer.Pay(Payment);
 
-            return Payment;
+            
         }
         public async void Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {

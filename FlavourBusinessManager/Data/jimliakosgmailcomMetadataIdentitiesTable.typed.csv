@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,NextOID,NextOID@type
+AAA,a8c0b500-69bf-4a98-9b6c-df0a0edbff54,2019-05-05T16:48:49.930Z,2187,Edm.Int32

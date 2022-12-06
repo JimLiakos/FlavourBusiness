@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAddress.cs" />
+    <Compile Include="IBill.cs" />
     <Compile Include="ICashierDevice.cs" />
     <Compile Include="IFisicalParty.cs" />
     <Compile Include="IPayment.cs" />

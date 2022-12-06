@@ -174,6 +174,7 @@ namespace FlavourBusinessFacade
         HookRespnose WebHook(string method, string webHookName, Dictionary<string,string> headers, string content);
     }
 
+    /// <MetaDataID>{74f3d8bd-a984-4071-8361-0ff3be4d2c7d}</MetaDataID>
     public class HookRespnose
     {
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();

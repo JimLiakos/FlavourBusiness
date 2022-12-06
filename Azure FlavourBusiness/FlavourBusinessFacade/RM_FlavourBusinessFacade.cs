@@ -5972,6 +5972,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public FlavourBusinessFacade.RoomService.IBill GetBill()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "GetBill", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
         public void RemoveSharingItem(FlavourBusinessFacade.RoomService.IItemPreparation item)
         {
             object[] args = new object[1];
@@ -6015,14 +6023,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = item;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "AddItem", args, argsTypes);
-        }
-        
-        public FinanceFacade.IPayment Pay()
-        {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "Pay", args, argsTypes);
-            return this.Proxy.GetValue<FinanceFacade.IPayment>(retValue);
         }
         
         public void CreatePaymentOrder(FinanceFacade.IPayment payment)

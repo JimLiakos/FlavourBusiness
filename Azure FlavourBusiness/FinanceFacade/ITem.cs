@@ -363,8 +363,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{38cd5338-a098-41bd-a30a-80ad5a068e6e}</MetaDataID>
         public string uid { get; set; }
-
-
+        public decimal PaidAmount { get; set; }
     }
 
 }

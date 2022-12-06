@@ -2412,39 +2412,55 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
         public void CreatePaymentOrder(FinanceFacade.IPayment payment)
         {
             PaymentProviders.VivaWallet.CreatePaymentOrder(payment);
         }
 
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
-        public FinanceFacade.IPayment Pay()
+        public IBill GetBill()
         {
             string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
 
-            FinanceFacade.Payment payment = null;
-            payment = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).FirstOrDefault() as FinanceFacade.Payment;
+            //FinanceFacade.Payment payment = null;
+            var payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
+
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
 
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
             {
+                var itemPayments = payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid==flavourItem.uid);
+                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Price*paidItem.Quantity);
+                FinanceFacade.Item item = null;
                 if (flavourItem.NumberOfShares > 1)
                 {
                     string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
-                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription = quantityDescription });
+                    item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
                 }
                 else
-                    paymentItems.Add(new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString() });
+                    item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+
+                if (item.PaidAmount<item.Amount)
+                    paymentItems.Add(item);
 
             }
+
+
          
 
 
             //paymentItems= this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
 
             //paymentItems.AddRange(this._SharedItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList());
+
+
             if (paymentItems.Count > 0)
             {
+                var payment = payments.Where(x => x.State==FinanceFacade.PaymentState.New).FirstOrDefault();
+                if(payment==null)
+                    payment = payments.Where(x => x.State==FinanceFacade.PaymentState.New).FirstOrDefault();
+
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
@@ -2455,22 +2471,23 @@ namespace FlavourBusinessManager.EndUsers
                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
                         if (_MainSession.Value == null)
                             (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                        
 
                         this.MainSession.AddPayment(payment);
+                        payments.Add(payment);
+
                     }
                     else
-                        payment.Update(paymentItems);
+                        payments[0].Update(paymentItems);
 
                     stateTransition.Consistent = true;
                 }
             }
 
 
-            
+
+            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
 
 
-            return payment;
         }
 
    

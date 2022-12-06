@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,CallerIDLines_ObjectIDB,CallerIDLines_ObjectIDB@type,LineDescription,LineDescription@type,TypeID,TypeID@type
+7,16b284fd-531c-46f7-b28d-2f676e7ad113,2019-05-05T16:28:50.120Z,f5e894af-4fc6-4ced-8ed3-17c5bc504267,Edm.Guid,2108822590,Edm.String,14,Edm.Int32

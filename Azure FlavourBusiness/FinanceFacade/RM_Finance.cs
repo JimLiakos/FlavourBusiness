@@ -8,6 +8,56 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+namespace FlavourBusinessFacade.RoomService.Proxies
+{
+    using System;
+    
+    
+    public sealed class Pr_IBill : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IBill, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.RoomService.IBill Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+        
+        public Pr_IBill(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FinanceFacade.IPayment> Payments
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IBill), "get_Payments", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FinanceFacade.IPayment>>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+    }
+}
 namespace FinanceFacade.Proxies
 {
     using System;

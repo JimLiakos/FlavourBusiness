@@ -1,0 +1,2 @@
+PartitionKey,RowKey,Timestamp,TypeID,TypeID@type,ContextStorageName,ContextStorageName@type,ServicesContextIdentity,ServicesContextIdentity@type,Description,Description@type,OrganizationServicesContext_ObjectIDB,OrganizationServicesContext_ObjectIDB@type
+2,183156dc-4ce9-481b-9c94-0fb45d667aca,2019-05-05T14:39:27.607Z,6,Edm.Int32,jimliakosgmailcom,Edm.String,b5ec4ed264c142adb26b73c95b185544,Edm.String,Restaurant,Edm.String,c8d9dcab-a1ce-4b1b-870c-b9f049b5fbaf,Edm.Guid
