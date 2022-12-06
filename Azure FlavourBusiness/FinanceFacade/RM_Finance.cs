@@ -38,6 +38,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FinanceFacade.IItem> CanceledItems
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IBill), "get_CanceledItems", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FinanceFacade.IItem>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FinanceFacade.IPayment> Payments
         {
             get

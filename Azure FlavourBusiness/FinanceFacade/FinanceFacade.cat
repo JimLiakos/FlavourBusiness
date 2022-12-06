@@ -5790,6 +5790,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6BBDA2021E"
+		    compartment 	(object Compartment
+			Parent_View 	@55
+			location   	(1384, 778)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	0)
 		    width      	613
 		    height     	469
 		    annotation 	8)
@@ -6472,7 +6490,63 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @88
+		(object ClassView "Class" "Logical View::FinanceFacade::Item" @88
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3362, 1270)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@88
+			location   	(3134, 1191)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	457
+			justify    	0
+			label      	"Item")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	4227327
+		    quidu      	"5C6CE6CF0194"
+		    width      	475
+		    height     	182
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::Payment" @89
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1938, 1253)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@89
+			location   	(1651, 1128)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	575
+			justify    	0
+			label      	"Payment")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	4227327
+		    quidu      	"635FFC480366"
+		    width      	593
+		    height     	275
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @90
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(3330, 591)
 		    font       	(object Font
@@ -6486,7 +6560,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@88
+			Parent_View 	@90
 			location   	(3121, 564)
 			fill_color 	13434879
 			nlines     	1
@@ -6501,46 +6575,18 @@
 		    width      	436
 		    height     	254
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::Item" @89
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3362, 1270)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@89
-			location   	(3134, 1191)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	457
-			justify    	0
-			label      	"Item")
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	4227327
-		    quidu      	"5C6CE6CF0194"
-		    width      	475
-		    height     	182
-		    annotation 	8)
-		(object RealizeView "" @90
+		(object RealizeView "" @91
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"5C6CEA98014C"
-		    client     	@89
-		    supplier   	@88
+		    client     	@88
+		    supplier   	@90
 		    line_style 	3
 		    origin_attachment 	(3336, 1179)
 		    terminal_attachment 	(3336, 717))
-		(object ClassView "Class" "Logical View::FinanceFacade::Payment" @91
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @92
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(1938, 1253)
+		    location   	(481, 575)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -6552,21 +6598,22 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@91
-			location   	(1651, 1128)
+			Parent_View 	@92
+			location   	(175, 534)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	575
+			max_width  	613
 			justify    	0
-			label      	"Payment")
+			label      	"IBill")
+		    icon       	"Interface"
 		    icon_style 	"Decoration"
 		    line_color 	3342489
-		    fill_color 	4227327
-		    quidu      	"635FFC480366"
-		    width      	593
-		    height     	275
+		    fill_color 	13434879
+		    quidu      	"638E432C02F9"
+		    width      	631
+		    height     	282
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @92
+		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @93
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(1963, 595)
 		    font       	(object Font
@@ -6580,7 +6627,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@92
+			Parent_View 	@93
 			location   	(1629, 520)
 			fill_color 	13434879
 			nlines     	1
@@ -6595,7 +6642,7 @@
 		    width      	687
 		    height     	350
 		    annotation 	8)
-		(object AssociationViewNew "PaymentItem" @93
+		(object AssociationViewNew "PaymentItem" @94
 		    location   	(2708, 592)
 		    font       	(object Font
 			size       	10
@@ -6607,8 +6654,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @94
-			Parent_View 	@93
+		    label      	(object SegLabel @95
+			Parent_View 	@94
 			location   	(2708, 533)
 			font       	(object Font
 			    size       	10
@@ -6633,8 +6680,8 @@
 		    line_color 	3342489
 		    quidu      	"635EB36E02E8"
 		    roleview_list 	(list RoleViews
-			(object RoleView "Items" @95
-			    Parent_View 	@93
+			(object RoleView "Items" @96
+			    Parent_View 	@94
 			    location   	(1386, -1024)
 			    font       	(object Font
 				size       	10
@@ -6646,8 +6693,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @96
-				Parent_View 	@95
+			    label      	(object SegLabel @97
+				Parent_View 	@96
 				location   	(3029, 550)
 				font       	(object Font
 				    size       	10
@@ -6671,11 +6718,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"635EB36F03A4"
-			    client     	@93
-			    supplier   	@88
+			    client     	@94
+			    supplier   	@90
 			    line_style 	0
-			    label      	(object SegLabel @97
-				Parent_View 	@95
+			    label      	(object SegLabel @98
+				Parent_View 	@96
 				location   	(3071, 645)
 				font       	(object Font
 				    size       	10
@@ -6696,8 +6743,8 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "" @98
-			    Parent_View 	@93
+			(object RoleView "" @99
+			    Parent_View 	@94
 			    location   	(1386, -1024)
 			    font       	(object Font
 				size       	10
@@ -6712,11 +6759,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"635EB36F03BC"
-			    client     	@93
-			    supplier   	@92
+			    client     	@94
+			    supplier   	@93
 			    line_style 	0
-			    label      	(object SegLabel @99
-				Parent_View 	@98
+			    label      	(object SegLabel @100
+				Parent_View 	@99
 				location   	(2347, 647)
 				font       	(object Font
 				    size       	10
@@ -6737,44 +6784,15 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object RealizeView "" @100
+		(object RealizeView "" @101
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"635FFD72017C"
-		    client     	@91
-		    supplier   	@92
+		    client     	@89
+		    supplier   	@93
 		    line_style 	3
 		    origin_attachment 	(1947, 1115)
 		    terminal_attachment 	(1947, 770))
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @101
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(481, 575)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@101
-			location   	(175, 534)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	613
-			justify    	0
-			label      	"IBill")
-		    icon       	"Interface"
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"638E432C02F9"
-		    width      	631
-		    height     	282
-		    annotation 	8)
 		(object AssociationViewNew "BillPayments" @102
 		    location   	(1208, 568)
 		    font       	(object Font
@@ -6853,7 +6871,7 @@
 			    line_color 	3342489
 			    quidu      	"638E450402E0"
 			    client     	@102
-			    supplier   	@101
+			    supplier   	@92
 			    line_style 	3
 			    origin_attachment 	(1208, 568)
 			    terminal_attachment 	(796, 568))
@@ -6896,7 +6914,7 @@
 			    line_color 	3342489
 			    quidu      	"638E450402DA"
 			    client     	@102
-			    supplier   	@92
+			    supplier   	@93
 			    line_style 	3
 			    origin_attachment 	(1208, 568)
 			    terminal_attachment 	(1620, 568)

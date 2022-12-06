@@ -117,6 +117,8 @@ namespace FinanceFacade
             }
         }
 
+        
+
 
         /// <MetaDataID>{4d913c21-f612-428e-8d2b-de79963c6329}</MetaDataID>
         public Item()

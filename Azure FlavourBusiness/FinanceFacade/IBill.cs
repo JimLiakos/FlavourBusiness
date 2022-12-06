@@ -7,6 +7,10 @@ namespace FlavourBusinessFacade.RoomService
     [GenerateFacadeProxy]
     public interface IBill
     {
+        [Association("BillCanceledItems", Roles.RoleA, "76726b95-340b-4e2a-976e-698aa19eb5c9")]
+        System.Collections.Generic.List<FinanceFacade.IItem> CanceledItems { get; }
+
+
         [Association("BillPayments", Roles.RoleA, "34270487-a2a1-40fe-a098-e8ddc37cfca6")]
         [RoleAMultiplicityRange(1)]
         System.Collections.Generic.List<FinanceFacade.IPayment> Payments { get; }

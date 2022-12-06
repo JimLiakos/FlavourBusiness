@@ -1140,6 +1140,7 @@ namespace DontWaitApp
             Bill = FoodServicesClientSession?.GetBill();
 
             var ss = Bill.Payments;
+            var cItems = Bill.CanceledItems;
 
 
             return Bill;

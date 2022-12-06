@@ -2427,6 +2427,7 @@ namespace FlavourBusinessManager.EndUsers
             var payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
 
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
+            var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>());
 
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
             {
@@ -2482,10 +2483,10 @@ namespace FlavourBusinessManager.EndUsers
                     stateTransition.Consistent = true;
                 }
             }
+            var flavourItemsUids=FlavourItems.Select(x=>x.uid).ToList();
+            var canceledItems=payments.SelectMany(x => x.Items).Where(x => !flavourItemsUids.Contains(x.uid)).ToList();
 
-
-
-            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList(), canceledItems);
 
 
         }

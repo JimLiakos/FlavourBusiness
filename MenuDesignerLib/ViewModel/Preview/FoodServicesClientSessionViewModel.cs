@@ -1,5 +1,6 @@
 ﻿using DontWaitApp;
 using FinanceFacade;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
@@ -47,6 +48,11 @@ namespace MenuDesigner.ViewModel.Preview
 
         /// <MetaDataID>{08cb638b-bf94-4be4-a8da-c9eec5d50469}</MetaDataID>
         public void EndOfMenuItemProposal(Messmate messmate, string messageID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IBill> GetBill()
         {
             throw new NotImplementedException();
         }
