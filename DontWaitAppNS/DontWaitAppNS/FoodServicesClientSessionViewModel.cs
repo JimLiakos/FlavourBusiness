@@ -1135,15 +1135,10 @@ namespace DontWaitApp
         IBill Bill;
         public async Task<IBill> GetBill()
         {
-
-
             Bill = FoodServicesClientSession?.GetBill();
-
             var ss = Bill.Payments;
-            var cItems = Bill.CanceledItems;
-
-
             return Bill;
+
             //var state = Payment.State;
 
             //var providerJson = Payment.PaymentProviderJson;

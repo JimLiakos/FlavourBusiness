@@ -20,7 +20,6 @@ using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
-
 namespace FlavourBusinessManager.EndUsers
 {
 
@@ -2448,13 +2447,21 @@ namespace FlavourBusinessManager.EndUsers
             }
 
 
-         
+
 
 
             //paymentItems= this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
 
             //paymentItems.AddRange(this._SharedItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList());
+            var flavourItemsUids = FlavourItems.Select(x => x.uid).ToList();
+            var canceledItems = payments.SelectMany(x => x.Items).Where(x => x.Quantity>0/*ignore netting items*/ &&!flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
 
+            foreach(var canceledItem in canceledItems)
+            {
+                var nettingItem=new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity , Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription= canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
+                paymentItems.Add(nettingItem);
+            }
+            
 
             if (paymentItems.Count > 0)
             {
@@ -2478,17 +2485,13 @@ namespace FlavourBusinessManager.EndUsers
 
                     }
                     else
-                        payments[0].Update(paymentItems);
+                        payment.Update(paymentItems);
 
                     stateTransition.Consistent = true;
                 }
             }
-            var flavourItemsUids=FlavourItems.Select(x=>x.uid).ToList();
-            var canceledItems=payments.SelectMany(x => x.Items).Where(x => !flavourItemsUids.Contains(x.uid)).ToList();
 
-            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList(), canceledItems);
-
-
+            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
         }
 
    

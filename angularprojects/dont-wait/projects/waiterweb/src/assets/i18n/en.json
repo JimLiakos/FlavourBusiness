@@ -22,6 +22,7 @@
 		"TransferItemsWillBeDoneMessage": "The items will be transferred to table {0}",
 		"TransferErrorMessageOKButton": "OK",
         "TotalLabel":"Total",
+        "RefundLabel":"Refund",
         "PaidLabel":"Is Paid !",
         "OpenSessionCommandLabel":"Open",
         "CancelCommandLabel":"Cancel",
