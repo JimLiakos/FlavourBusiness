@@ -14,5 +14,7 @@ namespace FlavourBusinessFacade.RoomService
         [Association("BillPayments", Roles.RoleA, "34270487-a2a1-40fe-a098-e8ddc37cfca6")]
         [RoleAMultiplicityRange(1)]
         System.Collections.Generic.List<FinanceFacade.IPayment> Payments { get; }
+
+        FinanceFacade.IPayment OpenPayment { get; }
     }
 }

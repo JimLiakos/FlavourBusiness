@@ -28,6 +28,7 @@ namespace FinanceFacade
         [RoleBMultiplicityRange(0, 1)]
         IList<TaxAmount> Taxes { get; }
 
+        decimal Amount { get; }
 
         /// <MetaDataID>{1cb77c22-fd7f-4f62-9583-255dff947245}</MetaDataID>
         void AddTax(TaxAmount taxAmount);
