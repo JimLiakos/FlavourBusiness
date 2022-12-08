@@ -2433,17 +2433,24 @@ namespace FlavourBusinessManager.EndUsers
                 var itemPayments = payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid==flavourItem.uid);
                 decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Price*paidItem.Quantity);
                 FinanceFacade.Item item = null;
-                if (flavourItem.NumberOfShares > 1)
+                string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
+                decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
+                decimal itemPrice = (decimal)flavourItem.Price/quantity;
+                quantity=((decimal)flavourItem.Price-paidAmount) /itemPrice;
+                
+                if (((decimal)(int)quantity)==quantity)
+                    quantity=(int)quantity;
+
+                if (quantity>0)
                 {
-                    string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
-                    item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
-                }
-                else
-                    item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+                    if (flavourItem.NumberOfShares > 1)
+                        item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity =quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                    else
+                        item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity =quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription= quantity.ToString(), PaidAmount = paidAmount };
 
-                if (item.PaidAmount<item.Amount)
                     paymentItems.Add(item);
-
+                }
+               
             }
 
 
@@ -2456,18 +2463,16 @@ namespace FlavourBusinessManager.EndUsers
             var flavourItemsUids = FlavourItems.Select(x => x.uid).ToList();
             var canceledItems = payments.SelectMany(x => x.Items).Where(x => x.Quantity>0/*ignore netting items*/ &&!flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
 
-            foreach(var canceledItem in canceledItems)
+            foreach (var canceledItem in canceledItems)
             {
-                var nettingItem=new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity , Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription= canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
+                var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription= canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
                 paymentItems.Add(nettingItem);
             }
-            
 
-            if (paymentItems.Count > 0)
+
+            //if (paymentItems.Count > 0)
             {
                 var payment = payments.Where(x => x.State==FinanceFacade.PaymentState.New).FirstOrDefault();
-                if(payment==null)
-                    payment = payments.Where(x => x.State==FinanceFacade.PaymentState.New).FirstOrDefault();
 
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -2494,7 +2499,7 @@ namespace FlavourBusinessManager.EndUsers
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
         }
 
-   
+
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
         {
