@@ -10,6 +10,7 @@ namespace FinanceFacade
     {
         /// <MetaDataID>{2a5b9053-54e1-4a3c-825e-49199b184b3b}</MetaDataID>
         [BackwardCompatibilityID("+6")]
+        [CachingDataOnClientSide]
         decimal TipsAmount { get; }
 
         /// <MetaDataID>{da05e520-55c7-42ea-9102-bd74b4f6394b}</MetaDataID>

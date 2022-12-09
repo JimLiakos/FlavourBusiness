@@ -2428,7 +2428,9 @@ namespace FlavourBusinessManager.EndUsers
             if (payments==null)
                 payments=new List<FinanceFacade.Payment>();
 
-            #region sort by transaction date
+
+
+                #region sort by transaction date
             var tmpPayments = payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
             tmpPayments.AddRange(payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed));
             payments=tmpPayments; 
