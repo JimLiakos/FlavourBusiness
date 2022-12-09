@@ -2424,6 +2424,8 @@ namespace FlavourBusinessManager.EndUsers
 
             //FinanceFacade.Payment payment = null;
             var payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
+            if (payments==null)
+                payments=new List<FinanceFacade.Payment>();
 
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
             var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>());
@@ -2446,7 +2448,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (flavourItem.NumberOfShares > 1)
                         item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity =quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
                     else
-                        item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity =quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription= quantity.ToString(), PaidAmount = paidAmount };
+                        item=new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity =quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription= flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
 
                     paymentItems.Add(item);
                 }
