@@ -12660,7 +12660,7 @@
 				    supplier   	"$UNNAMED$21"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+					(object Message "GetClientSession(        )"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12682,7 +12682,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+					(object Message "GetClientSession(       )"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12704,7 +12704,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
+					(object Message "GetFoodServiceClientSession(     )"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12735,7 +12735,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+					(object Message "MealInvitation( )"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -14046,7 +14046,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	0
+		    origin_y   	772
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClientSession" @141
 			    ShowCompartmentStereotypes 	TRUE
@@ -14710,7 +14710,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @169
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1965, 1788)
+			    location   	(1965, 1789)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14723,7 +14723,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@169
-				location   	(1631, 1713)
+				location   	(1631, 1714)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	669
@@ -14790,7 +14790,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @173
 					Parent_View 	@172
-					location   	(1713, 1443)
+					location   	(1714, 1444)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14818,7 +14818,7 @@
 				    line_style 	0
 				    label      	(object SegLabel @174
 					Parent_View 	@172
-					location   	(1751, 1526)
+					location   	(1752, 1527)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14932,7 +14932,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @180
 					Parent_View 	@179
-					location   	(2317, 1463)
+					location   	(2318, 1463)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -14960,7 +14960,7 @@
 				    line_style 	0
 				    label      	(object SegLabel @181
 					Parent_View 	@179
-					location   	(2237, 1599)
+					location   	(2237, 1600)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -15253,7 +15253,7 @@
 				    supplier   	@169
 				    line_style 	3
 				    origin_attachment 	(1997, 1344)
-				    terminal_attachment 	(1997, 1613)
+				    terminal_attachment 	(1997, 1614)
 				    label      	(object SegLabel @196
 					Parent_View 	@194
 					location   	(2051, 1586)
@@ -15532,7 +15532,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+				label      	"GetClientSession(        )"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -15619,7 +15619,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+				label      	"GetClientSession(       )"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -15706,7 +15706,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
+				label      	"GetFoodServiceClientSession(     )"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -16001,7 +16001,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+				label      	"MealInvitation( )"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)

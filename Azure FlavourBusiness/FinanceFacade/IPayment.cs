@@ -23,6 +23,11 @@ namespace FinanceFacade
         /// <MetaDataID>{2925c6e1-ba42-496b-85b0-fc322d435c4d}</MetaDataID>
         string PaymentProviderJson { get; set; }
 
+        /// <MetaDataID>{144808de-5908-4b69-bea9-0195b13f7f20}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        [CachingDataOnClientSide]
+        System.DateTime? TransactionDate { get; }
+
         /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
         void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount);
 

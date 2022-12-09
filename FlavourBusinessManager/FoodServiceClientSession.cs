@@ -2424,8 +2424,15 @@ namespace FlavourBusinessManager.EndUsers
 
             //FinanceFacade.Payment payment = null;
             var payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
+
             if (payments==null)
                 payments=new List<FinanceFacade.Payment>();
+
+            #region sort by transaction date
+            var tmpPayments = payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
+            tmpPayments.AddRange(payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed));
+            payments=tmpPayments; 
+            #endregion
 
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
             var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>());
@@ -2439,7 +2446,7 @@ namespace FlavourBusinessManager.EndUsers
                 decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
                 decimal itemPrice = (decimal)flavourItem.Price/quantity;
                 quantity=((decimal)flavourItem.Price-paidAmount) /itemPrice;
-                
+
                 if (((decimal)(int)quantity)==quantity)
                     quantity=(int)quantity;
 
@@ -2452,7 +2459,7 @@ namespace FlavourBusinessManager.EndUsers
 
                     paymentItems.Add(item);
                 }
-               
+
             }
 
 
@@ -2467,8 +2474,12 @@ namespace FlavourBusinessManager.EndUsers
 
             foreach (var canceledItem in canceledItems)
             {
-                var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription= canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
-                paymentItems.Add(nettingItem);
+
+                if (payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid==canceledItem.uid&&x.Quantity<0 /*netting item*/).FirstOrDefault()==null)
+                {
+                    var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription= canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
+                    paymentItems.Add(nettingItem);
+                }
             }
 
 

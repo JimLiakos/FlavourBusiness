@@ -188,6 +188,10 @@ namespace FinanceFacade
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _State = value;
+                        
+                        if(_State==PaymentState.Completed)
+                            TransactionDate= DateTime.Now;
+
                         stateTransition.Consistent = true;
                     }
                 }
@@ -214,6 +218,32 @@ namespace FinanceFacade
                 }
             }
         }
+
+
+        /// <exclude>Excluded</exclude>
+        DateTime? _TransactionDate;
+
+        /// <MetaDataID>{863c31da-f7e3-4efc-934c-4a44a02aec20}</MetaDataID>
+        [PersistentMember(nameof(_TransactionDate))]
+        [BackwardCompatibilityID("+10")]
+        public System.DateTime? TransactionDate
+        {
+            get => _TransactionDate;
+            private set
+            {
+
+                if (_TransactionDate!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TransactionDate=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
 
 
 
@@ -332,6 +362,6 @@ namespace FinanceFacade
             throw new NotImplementedException();
         }
 
-       
+
     }
 }

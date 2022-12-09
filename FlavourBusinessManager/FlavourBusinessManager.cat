@@ -19729,7 +19729,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @315
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(2971, 843)
+			    location   	(2970, 843)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -19742,7 +19742,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@315
-				location   	(2751, 809)
+				location   	(2750, 809)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	440
@@ -19763,199 +19763,9 @@
 			    client     	@311
 			    supplier   	@315
 			    line_style 	3
-			    origin_attachment 	(2970, 1241)
-			    terminal_attachment 	(2970, 977))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @317
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1736, 837)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@317
-				location   	(1533, 803)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	406
-				justify    	0
-				label      	"IBill")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"638E432C02F9"
-			    width      	424
-			    height     	268
-			    annotation 	8)
-			(object UsesView "" @318
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"638E44FB01F2"
-			    client     	@310
-			    supplier   	@317
-			    line_style 	0)
-			(object AssociationViewNew "BillPayments" @319
-			    location   	(2345, 838)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object SegLabel @320
-				Parent_View 	@319
-				location   	(2277, 739)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	TRUE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				anchor     	1
-				anchor_loc 	1
-				nlines     	1
-				max_width  	450
-				justify    	0
-				label      	"BillPayments"
-				pctDist    	-0.650000
-				height     	100
-				orientation 	0)
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"638E45030016"
-			    roleview_list 	(list RoleViews
-				(object RoleView "" @321
-				    Parent_View 	@319
-				    location   	(-277, -9)
-				    font       	(object Font
-					size       	10
-					face       	"Arial"
-					charSet    	161
-					bold       	FALSE
-					italics    	FALSE
-					underline  	FALSE
-					strike     	FALSE
-					color      	0
-					default_color 	TRUE)
-				    label      	(object SegLabel @322
-					Parent_View 	@321
-					location   	(2027, 797)
-					font       	(object Font
-					    size       	10
-					    face       	"Arial"
-					    charSet    	161
-					    bold       	FALSE
-					    italics    	FALSE
-					    underline  	FALSE
-					    strike     	FALSE
-					    color      	0
-					    default_color 	TRUE)
-					hidden     	TRUE
-					anchor     	1
-					anchor_loc 	1
-					nlines     	1
-					max_width  	450
-					justify    	0
-					label      	""
-					pctDist    	0.800000
-					height     	42
-					orientation 	1)
-				    stereotype 	TRUE
-				    line_color 	3342489
-				    quidu      	"638E450402E0"
-				    client     	@319
-				    supplier   	@317
-				    line_style 	3
-				    origin_attachment 	(2345, 838)
-				    terminal_attachment 	(1948, 838))
-				(object RoleView "Payments" @323
-				    Parent_View 	@319
-				    location   	(-277, -9)
-				    font       	(object Font
-					size       	10
-					face       	"Arial"
-					charSet    	161
-					bold       	FALSE
-					italics    	FALSE
-					underline  	FALSE
-					strike     	FALSE
-					color      	0
-					default_color 	TRUE)
-				    label      	(object SegLabel @324
-					Parent_View 	@323
-					location   	(2597, 783)
-					font       	(object Font
-					    size       	10
-					    face       	"Arial"
-					    charSet    	161
-					    bold       	FALSE
-					    italics    	FALSE
-					    underline  	FALSE
-					    strike     	FALSE
-					    color      	0
-					    default_color 	TRUE)
-					anchor     	1
-					anchor_loc 	1
-					nlines     	1
-					max_width  	224
-					justify    	0
-					label      	"+Payments"
-					pctDist    	0.637280
-					height     	56
-					orientation 	0)
-				    stereotype 	TRUE
-				    line_color 	3342489
-				    quidu      	"638E450402DA"
-				    client     	@319
-				    supplier   	@315
-				    line_style 	3
-				    origin_attachment 	(2345, 838)
-				    terminal_attachment 	(2742, 834)
-				    label      	(object SegLabel @325
-					Parent_View 	@323
-					location   	(2701, 892)
-					font       	(object Font
-					    size       	10
-					    face       	"Arial"
-					    charSet    	161
-					    bold       	FALSE
-					    italics    	FALSE
-					    underline  	FALSE
-					    strike     	FALSE
-					    color      	0
-					    default_color 	TRUE)
-					anchor     	2
-					anchor_loc 	1
-					nlines     	1
-					max_width  	15
-					justify    	0
-					label      	"1..*"
-					pctDist    	0.900000
-					height     	54
-					orientation 	1))))
-			(object RealizeView "" @326
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"638E4AAF02B8"
-			    client     	@314
-			    supplier   	@317
-			    line_style 	0)
-			(object ClassView "Class" "Logical View::FinanceFacade::IItem" @327
+			    origin_attachment 	(2969, 1241)
+			    terminal_attachment 	(2969, 977))
+			(object ClassView "Class" "Logical View::FinanceFacade::IItem" @317
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3976, 850)
 			    font       	(object Font
@@ -19969,7 +19779,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@327
+				Parent_View 	@317
 				location   	(3756, 816)
 				fill_color 	13434879
 				nlines     	1
@@ -19984,8 +19794,8 @@
 			    width      	458
 			    height     	268
 			    annotation 	8)
-			(object AssociationViewNew "PaymentItem" @328
-			    location   	(3473, 846)
+			(object AssociationViewNew "PaymentItem" @318
+			    location   	(3473, 847)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -19996,9 +19806,9 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @329
-				Parent_View 	@328
-				location   	(3442, 785)
+			    label      	(object SegLabel @319
+				Parent_View 	@318
+				location   	(3442, 786)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -20022,9 +19832,9 @@
 			    line_color 	3342489
 			    quidu      	"635EB36E02E8"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @330
-				    Parent_View 	@328
-				    location   	(-297, -63)
+				(object RoleView "" @320
+				    Parent_View 	@318
+				    location   	(-297, -62)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -20035,9 +19845,9 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @331
-					Parent_View 	@330
-					location   	(3255, 805)
+				    label      	(object SegLabel @321
+					Parent_View 	@320
+					location   	(3254, 806)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -20061,14 +19871,14 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"635EB36F03BC"
-				    client     	@328
+				    client     	@318
 				    supplier   	@315
 				    line_style 	3
-				    origin_attachment 	(3473, 846)
-				    terminal_attachment 	(3200, 846)
-				    label      	(object SegLabel @332
-					Parent_View 	@330
-					location   	(3227, 900)
+				    origin_attachment 	(3473, 847)
+				    terminal_attachment 	(3199, 847)
+				    label      	(object SegLabel @322
+					Parent_View 	@320
+					location   	(3226, 901)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -20088,9 +19898,9 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "Items" @333
-				    Parent_View 	@328
-				    location   	(-297, -63)
+				(object RoleView "Items" @323
+				    Parent_View 	@318
+				    location   	(-297, -62)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -20101,9 +19911,9 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @334
-					Parent_View 	@333
-					location   	(3692, 805)
+				    label      	(object SegLabel @324
+					Parent_View 	@323
+					location   	(3692, 806)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -20126,14 +19936,14 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"635EB36F03A4"
-				    client     	@328
-				    supplier   	@327
+				    client     	@318
+				    supplier   	@317
 				    line_style 	3
-				    origin_attachment 	(3473, 846)
-				    terminal_attachment 	(3747, 846)
-				    label      	(object SegLabel @335
-					Parent_View 	@333
-					location   	(3720, 900)
+				    origin_attachment 	(3473, 847)
+				    terminal_attachment 	(3747, 847)
+				    label      	(object SegLabel @325
+					Parent_View 	@323
+					location   	(3720, 901)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -20153,6 +19963,196 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @326
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1736, 837)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@326
+				location   	(1533, 803)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	406
+				justify    	0
+				label      	"IBill")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"638E432C02F9"
+			    width      	424
+			    height     	268
+			    annotation 	8)
+			(object UsesView "" @327
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"638E44FB01F2"
+			    client     	@310
+			    supplier   	@326
+			    line_style 	0)
+			(object AssociationViewNew "BillPayments" @328
+			    location   	(2344, 838)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @329
+				Parent_View 	@328
+				location   	(2276, 739)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"BillPayments"
+				pctDist    	-0.650000
+				height     	100
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"638E45030016"
+			    roleview_list 	(list RoleViews
+				(object RoleView "" @330
+				    Parent_View 	@328
+				    location   	(-278, -9)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @331
+					Parent_View 	@330
+					location   	(2028, 797)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					hidden     	TRUE
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	450
+					justify    	0
+					label      	""
+					pctDist    	0.800000
+					height     	42
+					orientation 	1)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"638E450402E0"
+				    client     	@328
+				    supplier   	@326
+				    line_style 	3
+				    origin_attachment 	(2344, 838)
+				    terminal_attachment 	(1948, 838))
+				(object RoleView "Payments" @332
+				    Parent_View 	@328
+				    location   	(-278, -9)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @333
+					Parent_View 	@332
+					location   	(2596, 783)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	224
+					justify    	0
+					label      	"+Payments"
+					pctDist    	0.637280
+					height     	56
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"638E450402DA"
+				    client     	@328
+				    supplier   	@315
+				    line_style 	3
+				    origin_attachment 	(2344, 838)
+				    terminal_attachment 	(2741, 838)
+				    label      	(object SegLabel @334
+					Parent_View 	@332
+					location   	(2700, 892)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1..*"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))))
+			(object RealizeView "" @335
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"638E4AAF02B8"
+			    client     	@314
+			    supplier   	@326
+			    line_style 	0)
 			(object AssociationViewNew "BillCanceledItems" @336
 			    location   	(2844, 438)
 			    font       	(object Font
@@ -20230,7 +20230,7 @@
 				    line_color 	3342489
 				    quidu      	"638F5A080380"
 				    client     	@336
-				    supplier   	@327
+				    supplier   	@317
 				    vertices   	(list Points
 					(2844, 438)
 					(3916, 438)
@@ -20245,7 +20245,7 @@
 				    line_color 	3342489
 				    quidu      	"638F5A08038E"
 				    client     	@336
-				    supplier   	@317
+				    supplier   	@326
 				    vertices   	(list Points
 					(2844, 438)
 					(1760, 438)
