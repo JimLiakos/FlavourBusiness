@@ -13,7 +13,7 @@ namespace FlavourBusinessFacade.Proxies
     using System;
     
     
-    public sealed class Pr_IAuthFlavourBusiness : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IAuthFlavourBusiness, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IAuthFlavourBusiness : FlavourBusinessFacade.IAuthFlavourBusiness, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -213,7 +213,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IParty : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IParty, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IParty : FlavourBusinessFacade.IParty, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -290,7 +290,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IUser : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IUser, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IUser : FlavourBusinessFacade.IUser, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -447,7 +447,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IFlavoursServicesContext : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContext, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IFlavoursServicesContext : FlavourBusinessFacade.IFlavoursServicesContext, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -865,7 +865,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IFlavoursServicesContextManagment : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContextManagment, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IFlavoursServicesContextManagment : FlavourBusinessFacade.IFlavoursServicesContextManagment, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -1039,7 +1039,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IFlavoursServicesContextRuntime : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContextRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IFlavoursServicesContextRuntime : FlavourBusinessFacade.IFlavoursServicesContextRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -1651,7 +1651,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IOrganization : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IOrganization, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IOrganization : FlavourBusinessFacade.IOrganization, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2092,7 +2092,7 @@ namespace FlavourBusinessFacade.RoomService.Proxies
     using System;
     
     
-    public sealed class Pr_IMeal : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMeal, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IMeal : FlavourBusinessFacade.RoomService.IMeal, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2169,7 +2169,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IMealsController : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealsController, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IMealsController : FlavourBusinessFacade.RoomService.IMealsController, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2258,7 +2258,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IMealCourse : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IMealCourse : FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2528,7 +2528,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IServingBatch : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IServingBatch, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IServingBatch : FlavourBusinessFacade.RoomService.IServingBatch, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2743,7 +2743,7 @@ namespace FlavourBusinessFacade.ServicesContextResources.Proxies
     using System;
     
     
-    public sealed class Pr_IPreparationStation : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationStation, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IPreparationStation : FlavourBusinessFacade.ServicesContextResources.IPreparationStation, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -2986,7 +2986,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IFoodServiceSession : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IFoodServiceSession : FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -3231,7 +3231,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IPreparationStationRuntime : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IPreparationStationRuntime : FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -3405,7 +3405,7 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
         }
     }
     
-    public sealed class Pr_IServiceArea : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IServiceArea, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IServiceArea : FlavourBusinessFacade.ServicesContextResources.IServiceArea, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -3600,7 +3600,7 @@ public event FlavourBusinessFacade.ServicesContextResources.ServicePointChangeSt
         }
     }
     
-    public sealed class Pr_IServicePoint : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IServicePoint, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IServicePoint : FlavourBusinessFacade.ServicesContextResources.IServicePoint, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -3888,7 +3888,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IItemsPreparationInfo : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IItemsPreparationInfo : FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -4178,7 +4178,7 @@ namespace FlavourBusinessFacade.HumanResources.Proxies
     using System;
     
     
-    public sealed class Pr_IWaiter : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IWaiter, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IWaiter : FlavourBusinessFacade.HumanResources.IWaiter, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -4773,7 +4773,7 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
     }
     
-    public sealed class Pr_IServiceContextSupervisor : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IServiceContextSupervisor, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IServiceContextSupervisor : FlavourBusinessFacade.HumanResources.IServiceContextSupervisor, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -5151,7 +5151,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
-    public sealed class Pr_IServicesContextWorker : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IServicesContextWorker, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IServicesContextWorker : FlavourBusinessFacade.HumanResources.IServicesContextWorker, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -5286,7 +5286,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
     }
     
-    public sealed class Pr_IShiftWork : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IShiftWork, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IShiftWork : FlavourBusinessFacade.HumanResources.IShiftWork, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -5404,7 +5404,7 @@ namespace FlavourBusinessFacade.EndUsers.Proxies
     using System;
     
     
-    public sealed class Pr_IMessageConsumer : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.EndUsers.IMessageConsumer, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IMessageConsumer : FlavourBusinessFacade.EndUsers.IMessageConsumer, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -5504,7 +5504,7 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
     }
     
-    public sealed class Pr_IFoodServiceClientSession : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IFoodServiceClientSession : FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
