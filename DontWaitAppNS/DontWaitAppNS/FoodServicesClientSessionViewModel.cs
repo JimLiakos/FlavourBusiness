@@ -1156,15 +1156,15 @@ namespace DontWaitApp
         }
         public async void Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-//#if DeviceDotNet
-//            FoodServicesClientSession.CreatePaymentOrder(payment);
-//            if (await this.FlavoursOrderServer.Pay(payment))
-//            {
+#if DeviceDotNet
+            FoodServicesClientSession.CreatePaymentOrder(payment,tipAmount);
+            if (await this.FlavoursOrderServer.Pay(payment))
+            {
 
-//            }
-//#else
+            }
+#else
             payment.CashPaymentCompleted(tipAmount);
-//#endif
+#endif
 
 
 

@@ -17,13 +17,16 @@ namespace FlavourBusinessManager.PaymentProviders
     {
         static AccessToken AccessToken { get; set; }
 
-        internal static void CreatePaymentOrder(IPayment payment)
+        internal static void CreatePaymentOrder(IPayment payment, decimal tipAmount)
         {
+            if (payment.State==PaymentState.Completed)
+                return;
             PaymentOrder paymentOrderResponse = payment.GetPaymentOrder();
             if (paymentOrderResponse!=null)
             {
-
-                if (paymentOrderResponse.expiring < DateTime.UtcNow.Ticks - TimeSpan.FromMinutes(1).Ticks)
+                if(payment.TipsAmount!=tipAmount)
+                    payment.SetPaymentOrder(null);
+                else if (paymentOrderResponse.expiring < DateTime.UtcNow.Ticks - TimeSpan.FromMinutes(1).Ticks)
                     payment.SetPaymentOrder(null);
                 else
                 {
@@ -32,7 +35,7 @@ namespace FlavourBusinessManager.PaymentProviders
                 }
             }
 
-
+            
 
 #if DEBUG
             string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
@@ -48,8 +51,12 @@ namespace FlavourBusinessManager.PaymentProviders
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Cookie", "ak_bmsc=CA754BFFAC46566A3861BDCF0EECE27B~000000000000000000000000000000~YAAQTkUVAixpd4OEAQAA1+nmzRHNStaVAzCoktrpJOEhos8yoQJWDW0eGWBxgt9FhPCUVo2jyFdpqIeDJz0Oh3oNRlB9cdliBgsrNoABb3RJ1OGTi4QsuzQPZF/I40/hCrX89gxi1VZ5bWwep/o+bWqL898ihLLP3HCJ8cupTYndVK1ni8bnjUNVcujhVij52hzHc/YKVH8ZA+FbgiCw9L2xna7jP0SZ287FnPTcKTZ1LMJpwNgOu/PBIv5QQpqoIke5REAoghpPSkYJvO568Tr57Z9oW0pnWgqDViaInl+rW0Sg0yz8Q5JghbNPFka9kxYrHLQGHwCz3zEuj8z9uzSYu6pHmxlw6ShVJO/PPs04G3aesvsszWf3s64IrxgJwq4=");
 
+            (payment as Payment).TipsAmount=tipAmount;
+
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
+                
+
                 amount = (int)(payment.Amount * 100),
                 customerTrns = "a Short description of purchased items/services to display to your customer",
                 //customer=new Customer()

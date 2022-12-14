@@ -86,7 +86,7 @@ namespace FlavourBusinessFacade.EndUsers
 
 
         /// <MetaDataID>{1d25a168-7cbe-49e4-9823-639d78a27ee5}</MetaDataID>
-        void CreatePaymentOrder(FinanceFacade.IPayment payment);
+        void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount);
 
 
 

@@ -1,3 +1,4 @@
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -20,7 +21,14 @@ namespace FinanceFacade
         /// <MetaDataID>{dea089ad-5a2c-450a-be8f-081f61c55b23}</MetaDataID>
         [PersistentMember(nameof(_TipsAmount))]
         [BackwardCompatibilityID("+8")]
-        public decimal TipsAmount => _TipsAmount;
+        public decimal TipsAmount
+        {
+            get => _TipsAmount;
+            set
+            {
+            }
+        }
+
 
 
 
@@ -188,8 +196,8 @@ namespace FinanceFacade
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _State = value;
-                        
-                        if(_State==PaymentState.Completed)
+
+                        if (_State==PaymentState.Completed)
                             TransactionDate= DateTime.Now;
 
                         stateTransition.Consistent = true;
