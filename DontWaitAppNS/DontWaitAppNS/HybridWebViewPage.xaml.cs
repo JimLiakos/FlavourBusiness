@@ -85,7 +85,7 @@ namespace DontWaitApp
                     {
                         // FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.MenuData.ServicePointIdentity);
 
-                        hybridWebView.Uri = url + "room-service;orderServerPath=.%2FEndUser";
+                        hybridWebView.Uri = url + "#/?orderServerPath=.%2FEndUser";
                         //http://192.168.2.9:4300/#/room-service
                     }
                     else

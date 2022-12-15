@@ -69,7 +69,7 @@ namespace DontWaitApp
 
                 if (ApplicationSettings.Current.DisplayedFoodServicesClientSession!=null)
                 {
-                    Browser.Navigate(new Uri(url + "/#/room-service;orderServerPath=.%2FEndUser"));
+                    Browser.Navigate(new Uri(url + "#/?orderServerPath=.%2FEndUser"));
                     //http://192.168.2.8:4300/#/room-service
                 }
                 else
