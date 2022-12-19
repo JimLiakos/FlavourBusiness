@@ -503,7 +503,7 @@ namespace FlavourBusinessManager
 
                         var proxy = System.Runtime.Remoting.RemotingServices.GetRealProxy(FlavoursServicesContextRuntime) as OOAdvantech.Remoting.RestApi.Proxy;
 
-                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRefForRole(Owner.SignUpUserIdentity);
+                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRefForRole(Owner.OAuthUserIdentity);
 
 
                         IServiceContextSupervisor masterSupervisor = authUserRef.GetRoles().Where(x => UserData.UserRole.GetRoleType(x.TypeFullName) == UserData.RoleType.ServiceContextSupervisor && (x.RoleObject is IServiceContextSupervisor) && (x.RoleObject as IServiceContextSupervisor).ServicesContextIdentity == this.ServicesContextIdentity).Select(x => x.RoleObject).OfType<IServiceContextSupervisor>().FirstOrDefault();
@@ -511,7 +511,7 @@ namespace FlavourBusinessManager
                         if (masterSupervisor == null)
                         {
 
-                            masterSupervisor = FlavoursServicesContextRuntime.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity == Owner.SignUpUserIdentity).FirstOrDefault();
+                            masterSupervisor = FlavoursServicesContextRuntime.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity == Owner.OAuthUserIdentity).FirstOrDefault();
                             if (masterSupervisor != null && !authUserRef.HasRole(masterSupervisor))
                                 authUserRef.AddRole(masterSupervisor);
                             else if (masterSupervisor == null)
@@ -533,7 +533,7 @@ namespace FlavourBusinessManager
                                 {
                                     tries--;
                                     string supervisorAssignKey = FlavoursServicesContextRuntime.NewSupervisor();
-                                    masterSupervisor = FlavoursServicesContextRuntime.AssignSupervisorUser(supervisorAssignKey, Owner.SignUpUserIdentity, authUserRef.FullName);
+                                    masterSupervisor = FlavoursServicesContextRuntime.AssignSupervisorUser(supervisorAssignKey, Owner.OAuthUserIdentity, authUserRef.FullName);
                                     if (masterSupervisor != null)
                                     {
                                         masterSupervisor.Name = authUserRef.FullName;

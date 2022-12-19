@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OOAdvantech.MetaDataRepository;
+using OOAdvantech;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +47,25 @@ namespace FlavourBusinessFacade.ViewModel
 
         /// <MetaDataID>{e1b0bcde-7694-4b3d-a5ba-e8f8d83aa55a}</MetaDataID>
         string AppIdentity { get; }
+
+    }
+
+
+
+    /// <MetaDataID>{6fe8b63a-548e-4d58-9763-b765030a87d4}</MetaDataID>
+    [HttpVisible]
+    public interface ISecureUser : FlavourBusinessFacade.ViewModel.IUser
+    {
+        [GenerateEventConsumerProxy]
+        event ObjectChangeStateHandle ObjectChangeState;
+
+        /// <MetaDataID>{a5bb9008-1509-44ac-961c-170a742ba163}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
+        string SignInProvider { get; set; }
+
+
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
+        string OAuthUserIdentity { get; set; }
 
     }
 

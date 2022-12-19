@@ -292,35 +292,6 @@
 		    quid       	"5B0E4393034E"
 		    type       	"System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>"
 		    exportControl 	"Public")
-		(object ClassAttribute "SignUpUserIdentity"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
-			    value      	"{fbe9af00-028a-4e3a-9870-5295d7167e6a}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"5CD71CCB0339")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"As Property"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"GenerateGetOperation"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Generate Backward ID"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Identity"
-			    value      	"+1"))
-		    quid       	"5CD71CCB0339"
-		    type       	"string"
-		    exportControl 	"Public")
 		(object ClassAttribute "Trademark"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -3231,7 +3202,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8")
+		    value      	"9")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -3270,6 +3241,7 @@
 			    name       	"Identity"
 			    value      	"+1"))
 		    quid       	"5F756B7E02C1"
+		    documentation 	"Defines the identity of user"
 		    type       	"string"
 		    exportControl 	"Public")
 		(object ClassAttribute "UserName"
@@ -3465,6 +3437,36 @@
 			    value      	"+7"))
 		    quid       	"6043C5EC0061"
 		    type       	"System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole>"
+		    exportControl 	"Public")
+		(object ClassAttribute "OAuthUserIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1deb5075-cf5b-4f7f-b3ec-974d3d65f7f5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"639F0B7500B2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"639F0B7500B2"
+		    documentation 	"Defines the unique identifier for the OAuth2 user which is assigned to native user "
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 	    quidu      	"5AA773E702B6"
@@ -9858,9 +9860,14 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8"))
+			    value      	"11"))
 		    quid       	"5C060C8B012B"
 		    stereotype 	"Interface"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"639E06D0009E"
+			    supplier   	"Logical View::FlavourBusinessFacade::IUser"
+			    quidu      	"5F756AF90177"))
 		    operations 	(list Operations
 			(object Operation "RemoveDeliveryPlace"
 			    attributes 	(list Attribute_Set
@@ -9918,103 +9925,46 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveDeliveryPlace"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{138fb579-d435-4a56-b524-e27e4d817591}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639E06D000F6"))
+			    quid       	"639E06D000F6"
+			    parameters 	(list Parameters
+				(object Parameter "place"
+				    quid       	"639E06D00128"
+				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddDeliveryPlace"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5d7d54a7-c72f-4ffe-9716-c97ff7cc8e14}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639E06D0017A"))
+			    quid       	"639E06D0017A"
+			    parameters 	(list Parameters
+				(object Parameter "place"
+				    quid       	"639E06D001B4"
+				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "Identity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{44faf246-0cd0-48d7-a728-76e716c1eb10}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C060D6500C0")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+1"))
-			    quid       	"5C060D6500C0"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "Name"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{cff6a3b8-d3b3-49ba-8882-38a316db8923}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C060D6500C1")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+2"))
-			    quid       	"5C060D6500C1"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "PhoneNumber"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{bcbe7058-ff31-4643-80cc-a2bd0b917832}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C060D6500C2")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+3"))
-			    quid       	"5C060D6500C2"
-			    type       	"string"
-			    exportControl 	"Public")
 			(object ClassAttribute "Address"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -10046,39 +9996,6 @@
 				    name       	"Identity"
 				    value      	"+4"))
 			    quid       	"5C060D6500C3"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "Email"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{672e0963-b347-4315-9528-893063e6ad99}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5C060D6500C4")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+5"))
-			    quid       	"5C060D6500C4"
 			    type       	"string"
 			    exportControl 	"Public")
 			(object ClassAttribute "SIMCardData"
@@ -10119,7 +10036,7 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{894fa8ee-a48d-43c4-b8d7-7d3b60033632}")
+				    value      	"{fb847b67-e534-4395-a1b2-665a97ac6ce6}")
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
@@ -10145,6 +10062,76 @@
 				    name       	"Identity"
 				    value      	"+7"))
 			    quid       	"62D00115007B"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceFirebaseToken"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c9ddeac9-2051-4618-a520-0defcb6bb398}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639E128C0320")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"639E128C0320"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Name"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cff6a3b8-d3b3-49ba-8882-38a316db8923}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639EB35A0080")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"639EB35A0080"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
@@ -13211,6 +13198,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@103
+				location   	(43, 980)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	1587)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -13242,6 +13247,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@104
+				location   	(1550, 2015)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	20
+				max_width  	2459)
 			    width      	825
 			    height     	438
 			    annotation 	8)
@@ -13273,6 +13296,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@105
+				location   	(1606, 1054)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	48
+				max_width  	1400)
 			    width      	732
 			    height     	482
 			    annotation 	8)
@@ -13649,6 +13690,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"62CF8F5F0018"
+			    compartment 	(object Compartment
+				Parent_View 	@123
+				location   	(4233, 979)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	12
+				max_width  	1078)
 			    width      	525
 			    height     	712
 			    annotation 	8)
@@ -13656,7 +13715,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(3393, 1090)
+			    location   	(3394, 1090)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13669,7 +13728,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@124
-				location   	(3096, 859)
+				location   	(3097, 859)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	595
@@ -13680,6 +13739,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
+			    compartment 	(object Compartment
+				Parent_View 	@124
+				location   	(3097, 920)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	11
+				max_width  	1212)
 			    width      	613
 			    height     	662
 			    annotation 	8)
@@ -13767,7 +13844,7 @@
 				    terminal_attachment 	(2329, 1134)
 				    label      	(object SegLabel @129
 					Parent_View 	@127
-					location   	(2457, 1134)
+					location   	(2460, 1134)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13781,7 +13858,7 @@
 					anchor     	5
 					anchor_loc 	1
 					nlines     	1
-					max_width  	228
+					max_width  	225
 					justify    	0
 					label      	"ClientIdentity"
 					pctDist    	0.900000
@@ -13802,7 +13879,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @131
 					Parent_View 	@130
-					location   	(3010, 1093)
+					location   	(3012, 1093)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -13829,7 +13906,7 @@
 				    supplier   	@124
 				    line_style 	3
 				    origin_attachment 	(2708, 1134)
-				    terminal_attachment 	(3087, 1134)
+				    terminal_attachment 	(3089, 1134)
 				    label      	(object SegLabel @132
 					Parent_View 	@130
 					location   	(3049, 1188)
@@ -14036,6 +14113,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
+			    compartment 	(object Compartment
+				Parent_View 	@140
+				location   	(278, 433)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	11
+				max_width  	0)
 			    width      	756
 			    height     	531
 			    annotation 	8)))
@@ -14076,24 +14171,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@141
-				location   	(1669, 378)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	48
-				max_width  	1400)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -14125,24 +14202,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@142
-				location   	(56, 363)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	13
-				max_width  	1587)
 			    width      	768
 			    height     	537
 			    annotation 	8)
@@ -23673,39 +23732,6 @@
 			    quid       	"5F9D7D9B019F"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "SignUpUserIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{5286bb2d-b59e-43bc-9a73-cdf66128eb44}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F9D8067005E")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+6"))
-			    quid       	"5F9D8067005E"
-			    type       	"string"
-			    exportControl 	"Public")
 			(object ClassAttribute "Suspended"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -23927,39 +23953,6 @@
 				    name       	"Identity"
 				    value      	"+2"))
 			    quid       	"5F59B5D200B5"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "SignUpUserIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{6c52c98d-2c97-4201-a90b-2cc86c8bda2d}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F59B8340279")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+4"))
-			    quid       	"5F59B8340279"
 			    type       	"string"
 			    exportControl 	"Public")
 			(object ClassAttribute "SupervisorAssignKey"
@@ -24519,7 +24512,11 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{16175185-5c62-454b-81bd-62eeb5c5a5c7}"))
+			    value      	"{16175185-5c62-454b-81bd-62eeb5c5a5c7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"2"))
 		    quid       	"603F203B0399"
 		    stereotype 	"Interface"
 		    superclasses 	(list inheritance_relationship_list
@@ -24527,6 +24524,92 @@
 			    quid       	"60459E5400DF"
 			    supplier   	"Logical View::FlavourBusinessFacade::IParty"
 			    quidu      	"6044F792000D"))
+		    operations 	(list Operations
+			(object Operation "NewMenuDesignActivity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6bfd6889-192c-446d-8bb0-fd81f54cb071}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639EAFE0030E"))
+			    quid       	"639EAFE0030E"
+			    parameters 	(list Parameters
+				(object Parameter "menuMakingAccountability"
+				    quid       	"639EAFE0031D"
+				    type       	"FlavourBusinessFacade.HumanResources.IAccountability")
+				(object Parameter "subjectDescription"
+				    quid       	"639EAFE0032C"
+				    type       	"string")
+				(object Parameter "selectedTranslationType"
+				    quid       	"639EAFE0033C"
+				    type       	"FlavourBusinessFacade.HumanResources.DesignSubjectType")
+				(object Parameter "subjcectIdentity"
+				    quid       	"639EAFE0034B"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.HumanResources.IActivity"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetStorage"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cdb01e59-d4ff-4a2c-8dd6-04585cb47766}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639EAFE0038B"))
+			    quid       	"639EAFE0038B"
+			    parameters 	(list Parameters
+				(object Parameter "dataType"
+				    quid       	"639EAFE0039F"
+				    type       	"FlavourBusinessFacade.OrganizationStorages"))
+			    result     	"FlavourBusinessFacade.OrganizationStorageRef"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetGraphicMenu"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c3a25f17-d70e-4773-8ab0-d6ad6bfc39f2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639EAFE003CB"))
+			    quid       	"639EAFE003CB"
+			    parameters 	(list Parameters
+				(object Parameter "menuMakingActivity"
+				    quid       	"639EAFE003DB"
+				    type       	"FlavourBusinessFacade.HumanResources.IActivity"))
+			    result     	"FlavourBusinessFacade.OrganizationStorageRef"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetGraphicMenuItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{02b8db90-d5b6-46f6-b8dc-70bd4d250169}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"639EAFE1001E"))
+			    quid       	"639EAFE1001E"
+			    parameters 	(list Parameters
+				(object Parameter "menuMakingActivity"
+				    quid       	"639EAFE1002E"
+				    type       	"FlavourBusinessFacade.HumanResources.IActivity"))
+			    result     	"FlavourBusinessFacade.OrganizationStorageRef"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
@@ -25997,7 +26080,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	47
+	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @489
 		    ShowCompartmentStereotypes 	TRUE

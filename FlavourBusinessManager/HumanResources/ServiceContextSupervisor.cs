@@ -306,21 +306,21 @@ namespace FlavourBusinessManager.HumanResources
 
 
         /// <exclude>Excluded</exclude>
-        string _SignUpUserIdentity;
+        string _OAuthUserIdentity;
 
         /// <MetaDataID>{1726a5c8-bb41-4e24-a782-51d9a2154645}</MetaDataID>
-        [PersistentMember(nameof(_SignUpUserIdentity))]
+        [PersistentMember(nameof(_OAuthUserIdentity))]
         [BackwardCompatibilityID("+1")]
-        public string SignUpUserIdentity
+        public string OAuthUserIdentity
         {
-            get => _SignUpUserIdentity;
+            get => _OAuthUserIdentity;
             set
             {
-                if (_SignUpUserIdentity != value)
+                if (_OAuthUserIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignUpUserIdentity = value;
+                        _OAuthUserIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }

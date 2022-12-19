@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -101,7 +102,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                return _Address;
+                return _Identity;
             }
         }
 
@@ -222,6 +223,117 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _PhotoUrl;
+        /// <MetaDataID>{06174522-1452-417b-86fa-1b23c61e48cb}</MetaDataID>
+        [PersistentMember(nameof(_PhotoUrl))]
+        [BackwardCompatibilityID("+11")]
+        public string PhotoUrl
+        {
+            get => _PhotoUrl;
+            set
+            {
+                if (_PhotoUrl!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PhotoUrl=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _FullName;
+        /// <MetaDataID>{4d462ce9-99da-4e2c-b4ac-c9856327fd59}</MetaDataID>
+        [PersistentMember(nameof(_FullName))]
+        [BackwardCompatibilityID("+12")]
+        public string FullName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_FullName))
+                    return Name;
+                return _FullName;
+            }
+            set
+            {
+                if (_FullName!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FullName=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _UserName;
+        /// <MetaDataID>{35a0869d-da55-423c-9169-baa1c6261cec}</MetaDataID>
+        [PersistentMember(nameof(_UserName))]
+        [BackwardCompatibilityID("+13")]
+        public string UserName
+        {
+            get => _UserName;
+            set
+            {
+                if (_UserName!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserName=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole> _Roles;
+
+        /// <MetaDataID>{d25d755b-3ced-4ca2-814e-d07d7be5cf20}</MetaDataID>
+        public List<UserData.UserRole> Roles
+        {
+            get
+            {
+                if (_Roles == null)
+                {
+                    FlavourBusinessFacade.UserData.UserRole role = new FlavourBusinessFacade.UserData.UserRole() { User = this, RoleType = FlavourBusinessFacade.UserData.UserRole.GetRoleType(GetType().FullName) };
+                    _Roles = new List<FlavourBusinessFacade.UserData.UserRole>() { role };
+                }
+                return _Roles;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _DeviceFirebaseToken;
+
+        /// <MetaDataID>{d866abbb-15f1-4f0d-a936-5d4e8cfbdbda}</MetaDataID>
+        [PersistentMember(nameof(_DeviceFirebaseToken))]
+        [BackwardCompatibilityID("+14")]
+        public string DeviceFirebaseToken
+        {
+            get => _DeviceFirebaseToken;
+            set
+            {
+                if (_DeviceFirebaseToken!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceFirebaseToken=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{a2292de8-f2bf-4093-9e13-0db9e99b5a91}</MetaDataID>
+        public string OAuthUserIdentity { get => Identity; }
+
         /// <MetaDataID>{7e30445f-1aeb-4ff7-91b2-b83606628ad5}</MetaDataID>
         public void RemoveDeliveryPlace(IPlace place)
         {
@@ -307,7 +419,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{5362302f-4733-4cad-a9f3-00e61f0db570}</MetaDataID>
         public void SetDefaultDelivaryPlace(IPlace place)
         {
-            
+
             Place existingPlace = DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() as Place;
             if (existingPlace != null)
             {

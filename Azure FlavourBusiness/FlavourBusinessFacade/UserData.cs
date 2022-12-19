@@ -35,6 +35,8 @@ namespace FlavourBusinessFacade
 
         public string Address { get; set; }
 
+        public string OAuthUserIdentity { get; set; }
+
         object rolesLock = new object();
 
         public IUser GetRoleObject(UserData.RoleType roleType)
@@ -79,6 +81,8 @@ namespace FlavourBusinessFacade
                     return RoleType.Organization;
                 if ("FlavourBusinessManager.HumanResources.MenuMaker" == typeFullName)
                     return RoleType.MenuMaker;
+                if ("FlavourBusinessManager.EndUsers.FoodServiceClient" == typeFullName)
+                    return RoleType.EndUser;
 
                 return RoleType.Unknown;
             }

@@ -50,9 +50,7 @@ namespace FlavourBusinessFacade.HumanResources
         bool Suspended { get; }
 
 
-        /// <MetaDataID>{5286bb2d-b59e-43bc-9a73-cdf66128eb44}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+6")]
-        string SignUpUserIdentity { get; set; }
+   
 
         /// <MetaDataID>{915f5c19-eff7-4bc5-81a2-ee312d6f8902}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+5")]

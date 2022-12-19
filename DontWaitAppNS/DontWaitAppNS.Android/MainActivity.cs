@@ -169,10 +169,13 @@ namespace DontWaitAppNS.Droid
             //string token = await tokenTask;
 
             //  OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
-            string webClientID = "881594421690-nc0bn82rc0kdvt13seevrl36ct0h9hc4.apps.googleusercontent.com";
-           // OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+            string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
+
+            OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
+            OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, null, webClientID);
             //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
 
+            
             //var appLink = GetAppLink();
             //Xamarin.Forms.Application.Current.AppLinks.RegisterLink(appLink);
 

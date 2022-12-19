@@ -4,9 +4,14 @@ namespace FlavourBusinessFacade
 {
     /// <MetaDataID>{87146d61-e4a0-448e-b3ef-7e88b867e5a1}</MetaDataID>
     [BackwardCompatibilityID("{87146d61-e4a0-448e-b3ef-7e88b867e5a1}")]
-    [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
+    [GenerateFacadeProxy]
     public interface IUser
     {
+        /// <MetaDataID>{1deb5075-cf5b-4f7f-b3ec-974d3d65f7f5}</MetaDataID>
+        /// <summary>Defines the unique identifier for the OAuth2 user which is assigned to native user </summary>
+        [BackwardCompatibilityID("+8")]
+        string OAuthUserIdentity { get; }
+
         /// <MetaDataID>{15203774-3abf-4857-ba78-d75c592b8dcd}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         string PhotoUrl { get; set; }

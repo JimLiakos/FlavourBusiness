@@ -21,7 +21,7 @@ namespace FlavourBusinessManager.HumanResources
     public class Waiter : MarshalByRefObject, IWaiter, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
-
+        
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
@@ -386,20 +386,20 @@ namespace FlavourBusinessManager.HumanResources
 
 
         /// <exclude>Excluded</exclude>
-        string _SignUpUserIdentity;
+        string _OAuthUserIdentity;
         /// <MetaDataID>{bc6a1bf7-4cea-4ce5-8b1b-eb338eb47fd3}</MetaDataID>
-        [PersistentMember(nameof(_SignUpUserIdentity))]
+        [PersistentMember(nameof(_OAuthUserIdentity))]
         [BackwardCompatibilityID("+6")]
-        public string SignUpUserIdentity
+        public string OAuthUserIdentity
         {
-            get => _SignUpUserIdentity;
+            get => _OAuthUserIdentity;
             set
             {
-                if (_SignUpUserIdentity != value)
+                if (_OAuthUserIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignUpUserIdentity = value;
+                        _OAuthUserIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -553,6 +553,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
+        /// <MetaDataID>{7671a400-56bd-4783-98e5-2bae505a387f}</MetaDataID>
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{7943daf2-7520-4f77-a801-ce925d7f689b}</MetaDataID>
@@ -681,7 +682,9 @@ namespace FlavourBusinessManager.HumanResources
             ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
         }
 
+        /// <MetaDataID>{fd404382-f911-4559-bfb8-0b68057583d9}</MetaDataID>
         List<IServingBatch> AssignedServingBatches = new List<IServingBatch>();
+        /// <MetaDataID>{ad7e24a5-1ef4-4d5d-ac44-b889bc5040b5}</MetaDataID>
         List<IServingBatch> ServingBatches = new List<IServingBatch>();
         /// <MetaDataID>{974d10d9-2579-492d-b939-10fe4244c319}</MetaDataID>
         public IList<IServingBatch> GetServingBatches()

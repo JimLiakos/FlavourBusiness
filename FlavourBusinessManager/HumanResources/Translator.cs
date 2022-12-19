@@ -50,22 +50,22 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _SignUpUserIdentity;
+        string _OAuthUserIdentity;
 
         /// <MetaDataID>{53da5ab7-d83b-43df-b84d-728a67f2a6f9}</MetaDataID>
-        [PersistentMember(nameof(_SignUpUserIdentity))]
+        [PersistentMember(nameof(_OAuthUserIdentity))]
         [BackwardCompatibilityID("+7")]
-        public string SignUpUserIdentity
+        public string OAuthUserIdentity
         {
-            get => _SignUpUserIdentity;
+            get => _OAuthUserIdentity;
             set
             {
 
-                if (_SignUpUserIdentity != value)
+                if (_OAuthUserIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignUpUserIdentity = value;
+                        _OAuthUserIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }

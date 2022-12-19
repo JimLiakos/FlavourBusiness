@@ -82,24 +82,24 @@ namespace FlavourBusinessManager
         }
 
         /// <exclude>Excluded</exclude>
-        string _SignUpUserIdentity;
+        string _OAuthUserIdentity;
         /// <MetaDataID>{ad08a771-a0d3-48f1-816e-cb08cae9b93c}</MetaDataID>
-        [PersistentMember(nameof(_SignUpUserIdentity))]
+        [PersistentMember(nameof(_OAuthUserIdentity))]
         [BackwardCompatibilityID("+8")]
-        public string SignUpUserIdentity
+        public string OAuthUserIdentity
         {
             get
             {
-                return _SignUpUserIdentity;
+                return _OAuthUserIdentity;
             }
             set
             {
 
-                if (_SignUpUserIdentity != value)
+                if (_OAuthUserIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignUpUserIdentity = value;
+                        _OAuthUserIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -209,7 +209,7 @@ namespace FlavourBusinessManager
         public Organization(string signUpUserIdentity)
         {
 
-            _SignUpUserIdentity = signUpUserIdentity;
+            _OAuthUserIdentity = signUpUserIdentity;
             //_Identity = identity;
             _Identity = Guid.NewGuid().ToString("N");
         }
@@ -285,7 +285,7 @@ namespace FlavourBusinessManager
             get
             {
                 if (_Identity == null)
-                    _Identity = SignUpUserIdentity;
+                    _Identity = OAuthUserIdentity;
                 return _Identity;
             }
         }
@@ -325,12 +325,13 @@ namespace FlavourBusinessManager
         }
 
 
+        /// <MetaDataID>{63e2922e-522e-4410-ac66-d0dce99eef1e}</MetaDataID>
         private bool UploadPermissionsGranted(AuthUser authUser, OrganizationStorageRef storageRef)
         {
 
             foreach (var accountability in Commissions)
             {
-                if (authUser != null && accountability.Responsible is HumanResources.MenuMaker && (accountability.Responsible as HumanResources.MenuMaker).SignUpUserIdentity == authUser.User_ID)
+                if (authUser != null && accountability.Responsible is HumanResources.MenuMaker && (accountability.Responsible as HumanResources.MenuMaker).OAuthUserIdentity == authUser.User_ID)
                 {
                     foreach (var activity in accountability.Activities.OfType<IMenuDesignActivity>().Where(x => x.DesignActivityType == DesignSubjectType.Menu))
                     {
@@ -1023,6 +1024,7 @@ namespace FlavourBusinessManager
             existBlob.Delete();
         }
 
+        /// <MetaDataID>{e5a2b4e3-b326-4926-b805-aea57de36bf2}</MetaDataID>
         private void RemovePublishedGraphicMenu(string storageIdentity, string version, string newName)
         {
             string publishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
@@ -1424,7 +1426,7 @@ namespace FlavourBusinessManager
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                 {
                     translator = new HumanResources.Translator();
-                    translator.SignUpUserIdentity = userData.Identity;
+                    translator.OAuthUserIdentity = userData.Identity;
                     translator.Name = userData.FullName;
                     translator.Email = userData.Email;
                     translator.PhotoUrl = userData.PhotoUrl;
@@ -1496,7 +1498,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{94607e6b-bb09-49e9-8644-5f2dd5ec14bf}</MetaDataID>
         public void RemoveTranslator(ITranslator translator)
         {
-            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef((translator as HumanResources.Translator).SignUpUserIdentity);
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef((translator as HumanResources.Translator).OAuthUserIdentity);
             if (authUserRef != null)
                 authUserRef.RemoveRole(translator);
 

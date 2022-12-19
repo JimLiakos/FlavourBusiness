@@ -5,7 +5,7 @@ namespace FlavourBusinessFacade.EndUsers
 {
     /// <MetaDataID>{8ebba0ed-26f3-45ae-98da-4e890296e72b}</MetaDataID>
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{8ebba0ed-26f3-45ae-98da-4e890296e72b}")]
-    public interface IFoodServiceClient
+    public interface IFoodServiceClient:IUser
     {
         /// <MetaDataID>{fb847b67-e534-4395-a1b2-665a97ac6ce6}</MetaDataID>
         [BackwardCompatibilityID("+7")]
@@ -15,7 +15,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{a045a4d1-553e-448b-8b4c-788ccb287566}</MetaDataID>
         void UpdateDeliveryPlace(IPlace place);
 
-        [Association("ClientPlaces", Roles.RoleA, "dff911d5-ede0-4355-b47b-108d265027e3")]
+        [Association("ClientPlaces",OOAdvantech.MetaDataRepository.Roles.RoleA, "dff911d5-ede0-4355-b47b-108d265027e3")]
         System.Collections.Generic.List<IPlace> DeliveryPlaces { get; }
 
         /// <MetaDataID>{138fb579-d435-4a56-b524-e27e4d817591}</MetaDataID>
@@ -29,27 +29,23 @@ namespace FlavourBusinessFacade.EndUsers
         [CachingDataOnClientSide]
         SIMCardData SIMCardData { get; set; }
 
-        /// <MetaDataID>{672e0963-b347-4315-9528-893063e6ad99}</MetaDataID>
-        [BackwardCompatibilityID("+5")]
-        string Email { get; set; }
 
         /// <MetaDataID>{8fdcc10d-71b6-4909-93a3-b940f53856c9}</MetaDataID>
         [BackwardCompatibilityID("+4")]
         string Address { get; set; }
 
-        /// <MetaDataID>{bcbe7058-ff31-4643-80cc-a2bd0b917832}</MetaDataID>
-        [BackwardCompatibilityID("+3")]
-        string PhoneNumber { get; set; }
+
 
         /// <MetaDataID>{cff6a3b8-d3b3-49ba-8882-38a316db8923}</MetaDataID>
-        [BackwardCompatibilityID("+2")]
+        [BackwardCompatibilityID("+9")]
         string Name { get; set; }
 
-        /// <MetaDataID>{44faf246-0cd0-48d7-a728-76e716c1eb10}</MetaDataID>
-        [BackwardCompatibilityID("+1")]
-        string Identity { get; }
 
-
+        /// <MetaDataID>{c9ddeac9-2051-4618-a520-0defcb6bb398}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
+        string DeviceFirebaseToken { get; set; }
+        /// <MetaDataID>{a12366be-3156-4489-881d-5ac188559fc7}</MetaDataID>
+       
     }
 
     /// <MetaDataID>{d2445458-7d5d-4cc1-ae85-45143f5d2944}</MetaDataID>

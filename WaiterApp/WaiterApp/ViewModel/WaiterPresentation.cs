@@ -37,27 +37,9 @@ namespace WaiterApp.ViewModel
 
 
 
-    /// <MetaDataID>{6fe8b63a-548e-4d58-9763-b765030a87d4}</MetaDataID>
-    [HttpVisible]
-    public interface ISecureUser : FlavourBusinessFacade.ViewModel.IUser
-    {
-        [GenerateEventConsumerProxy]
-        event ObjectChangeStateHandle ObjectChangeState;
-
-
-        /// <MetaDataID>{a5bb9008-1509-44ac-961c-170a742ba163}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
-        string SignInProvider { get; set; }
-
-        /// <MetaDataID>{e3960766-524c-4b88-8e0e-a347501a87f1}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
-        string UserIdentity { get; set; }
-
-
-    }
 
     /// <MetaDataID>{5ec91d09-d693-4c4e-9dca-858a9e09a233}</MetaDataID>
-    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
         /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
@@ -264,17 +246,17 @@ namespace WaiterApp.ViewModel
 
 
         /// <MetaDataID>{207007a7-cf74-4413-b852-e0e780f36ada}</MetaDataID>
-        string _UserIdentity;
+        string _OAuthUserIdentity;
         /// <MetaDataID>{06310bcd-8a04-480a-a42c-fdcd16e6be97}</MetaDataID>
-        public string UserIdentity
+        public string OAuthUserIdentity
         {
             get
             {
-                return _UserIdentity;// ApplicationSettings.Current.SignInUserIdentity;
+                return _OAuthUserIdentity;// ApplicationSettings.Current.SignInUserIdentity;
             }
             set
             {
-                _UserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
+                _OAuthUserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
             }
         }
 
@@ -429,7 +411,7 @@ namespace WaiterApp.ViewModel
                         }
 
                         //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
-                        if (Waiter != null && Waiter.SignUpUserIdentity == authUser.User_ID)
+                        if (Waiter != null && Waiter.OAuthUserIdentity == authUser.User_ID)
                         {
 
                             AuthUser = authUser;
@@ -518,7 +500,7 @@ namespace WaiterApp.ViewModel
                         _UserName = UserData.UserName;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
-                        _UserIdentity = UserData.Identity;
+                        _OAuthUserIdentity = UserData.OAuthUserIdentity;
                         var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter).FirstOrDefault();
                         if (role.RoleType == UserData.RoleType.Waiter)
                         {
@@ -1081,6 +1063,17 @@ namespace WaiterApp.ViewModel
 
                     if (UserData != null)
                     {
+                        FullName = UserData.FullName;
+                        _UserName = UserData.UserName;
+                        _PhoneNumber = UserData.PhoneNumber;
+                        _Address = UserData.Address;
+                        _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        AuthUser=authUser;
+                        ObjectChangeState?.Invoke(this, null);
+                        
+                        
+
+
                         //var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
                         //if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
                         //    ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);

@@ -27,22 +27,9 @@ namespace ServiceContextManagerApp
 {
 
 
-    /// <MetaDataID>{ea6845c9-27df-41fd-a588-1ca10c84f5e6}</MetaDataID>
-    [HttpVisible]
-    public interface ISecureUser : FlavourBusinessFacade.ViewModel.IUser
-    {
-        [GenerateEventConsumerProxy]
-        event ObjectChangeStateHandle ObjectChangeState;
 
-
-        string SignInProvider { get; set; }
-
-        string UserIdentity { get; set; }
-
-        
-    }
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
-    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, ISecureUser, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
 
@@ -435,6 +422,14 @@ namespace ServiceContextManagerApp
                         else
                             _ServicesContexts = new List<IServicesContextPresentation>();
 
+                         FullName = UserData.FullName;
+                        _UserName = UserData.UserName;
+                        _PhoneNumber = UserData.PhoneNumber;
+                        _Address = UserData.Address;
+                        _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        AuthUser=authUser;
+                        _ObjectChangeState?.Invoke(this, null);
+
                     //if(Organization!=null&& ServiceContextSupervisor!=null)
                     //{
                     //    var serviceContex= Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
@@ -458,16 +453,16 @@ namespace ServiceContextManagerApp
             });
         }
 
-        string _UserIdentity;
-        public string UserIdentity
+        string _OAuthUserIdentity;
+        public string OAuthUserIdentity
         {
             get
             {
-                return _UserIdentity;// ApplicationSettings.Current.SignInUserIdentity;
+                return _OAuthUserIdentity;// ApplicationSettings.Current.SignInUserIdentity;
             }
             set
             {
-                _UserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
+                _OAuthUserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
             }
         }
 
@@ -656,7 +651,7 @@ namespace ServiceContextManagerApp
                             {
                                 administratorIdentity = ServiceContextSupervisor.Identity;
                                 var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                                ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity != ServiceContextSupervisor.SignUpUserIdentity).ToList();
+                                ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
                             }
                             else
                             {

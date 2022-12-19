@@ -21,21 +21,21 @@ namespace FlavourBusinessManager.HumanResources
 
 
         /// <exclude>Excluded</exclude>
-        string _SignUpUserIdentity;
+        string _OAuthUserIdentity;
 
         /// <MetaDataID>{ad2f85c4-fcbf-48d3-82c0-dd209474a67e}</MetaDataID>
-        [PersistentMember(nameof(_SignUpUserIdentity))]
+        [PersistentMember(nameof(_OAuthUserIdentity))]
         [BackwardCompatibilityID("+9")]
-        public string SignUpUserIdentity
+        public string OAuthUserIdentity
         {
-            get => _SignUpUserIdentity;
+            get => _OAuthUserIdentity;
             set
             {
-                if (_SignUpUserIdentity != value)
+                if (_OAuthUserIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignUpUserIdentity = value;
+                        _OAuthUserIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -216,7 +216,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{8d19c86d-ba14-4f8e-bcf7-0331b1c21ca5}</MetaDataID>
         public MenuMaker(string signUpUserIdentity)
         {
-            _SignUpUserIdentity = signUpUserIdentity;
+            _OAuthUserIdentity = signUpUserIdentity;
             _Identity = Guid.NewGuid().ToString("N");
         }
 
@@ -270,13 +270,14 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
+        /// <MetaDataID>{7a64d377-6a1d-43f8-aa90-dcee138c2a33}</MetaDataID>
         public OrganizationStorageRef GetStorage(OrganizationStorages dataType)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
 
-            bool authorized=false;
+            bool authorized = false;
             if (authUser != null)
             {
                 AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
@@ -300,6 +301,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
+        /// <MetaDataID>{4dbd6a1e-46f1-4cc7-996d-905f7940a424}</MetaDataID>
         public OrganizationStorageRef GetGraphicMenu(IActivity menuMakingActivity)
         {
             IResourceManager organization = menuMakingActivity.Accountability.Commissioner as IResourceManager;
@@ -311,6 +313,7 @@ namespace FlavourBusinessManager.HumanResources
             }
             return null;
         }
+        /// <MetaDataID>{02ea7e15-59d7-41ed-a2f1-f96bbc5558e9}</MetaDataID>
         public OrganizationStorageRef GetGraphicMenuItems(IActivity menuMakingActivity)
         {
             IResourceManager organization = menuMakingActivity.Accountability.Commissioner as IResourceManager;
@@ -319,8 +322,8 @@ namespace FlavourBusinessManager.HumanResources
                 OrganizationStorageRef graphicMenu = organization.GraphicMenus.Where(x => x.StorageIdentity == (menuMakingActivity as MenuDesignActivity).DesigneSubjectIdentity).FirstOrDefault();
                 if (graphicMenu != null)
                 {
-                    var graphicMenuItems=organization.GetStorage(OrganizationStorages.RestaurantMenus);
-                    graphicMenuItems.UploadService = organization as IUploadService; 
+                    var graphicMenuItems = organization.GetStorage(OrganizationStorages.RestaurantMenus);
+                    graphicMenuItems.UploadService = organization as IUploadService;
                     return graphicMenuItems;
                 }
 
@@ -328,6 +331,6 @@ namespace FlavourBusinessManager.HumanResources
             return null;
         }
 
-        
+
     }
 }

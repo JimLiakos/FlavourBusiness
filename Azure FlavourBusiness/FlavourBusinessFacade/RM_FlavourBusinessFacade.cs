@@ -315,6 +315,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_OAuthUserIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string PhotoUrl
         {
             get
@@ -1699,18 +1711,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
-        public string SignUpUserIdentity
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IOrganization), "get_SignUpUserIdentity", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.IFlavoursServicesContext> ServicesContexts
         {
             get
@@ -1803,6 +1803,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.IParty), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_OAuthUserIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -4292,26 +4304,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public string SignUpUserIdentity
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "get_SignUpUserIdentity", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "set_SignUpUserIdentity", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
         public string WaiterAssignKey
         {
             get
@@ -4448,6 +4440,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.IParty), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_OAuthUserIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -4853,26 +4857,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
-        public string SignUpUserIdentity
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "get_SignUpUserIdentity", args, argsTypes);
-                return this.Proxy.GetValue<string>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "set_SignUpUserIdentity", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
         public string ServicesContextIdentity
         {
             get
@@ -4981,6 +4965,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.IParty), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_OAuthUserIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -6256,6 +6252,36 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = message;
             argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Message);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "PushMessage", args, argsTypes);
+        }
+    }
+}
+namespace FlavourBusinessFacade.ViewModel.Proxies
+{
+    using System;
+    
+    
+    public sealed class CNSPr_ISecureUser_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(object _object, string member)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = _object;
+            argsTypes[0] = typeof(object);
+            args[1] = member;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
     }
 }

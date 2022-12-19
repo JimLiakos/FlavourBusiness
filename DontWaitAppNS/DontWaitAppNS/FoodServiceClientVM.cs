@@ -61,7 +61,7 @@ namespace DontWaitApp
         }
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
-        public string UserIdentity
+        public string AuthUserIdentity
         {
             get
             {

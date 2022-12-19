@@ -51,9 +51,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{3a545216-8803-4775-843c-6b2c5ca94e81}</MetaDataID>
         IUploadSlot GetUploadSlotFor(OrganizationStorageRef storageRef);
 
-        /// <MetaDataID>{fbe9af00-028a-4e3a-9870-5295d7167e6a}</MetaDataID>
-        [BackwardCompatibilityID("+1")]
-        string SignUpUserIdentity { get; }
+   
 
         event ObjectChangeStateHandle ObjectChangeState;
     

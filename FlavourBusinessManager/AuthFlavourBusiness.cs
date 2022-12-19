@@ -26,20 +26,17 @@ namespace FlavourBusinessManager
             var foodServiceClient = (from _organization in storage.GetObjectCollection<FoodServiceClient>()
                                      where _organization.Identity == userId
                                      select _organization).FirstOrDefault();
-
             if (foodServiceClient == null)
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     foodServiceClient = new FoodServiceClient(userId);
                     foodServiceClient.Name = endUser.Name;
+                    foodServiceClient.FriendlyName=endUser.Name;
                     foodServiceClient.SIMCardData = new SIMCardData() { SIMCardDescription = endUser.SIMCard.SIMCardDescription, SIMCardIdentity = endUser.SIMCard.SIMCardIdentity, SIMCardPhoneNumber = endUser.SIMCard.SIMCardPhoneNumber };
-                    //organization.Trademark = organizationData.Trademark;
-                    //organization.PhoneNumber = organizationData.PhoneNumber;
-                    //organization.Address = organizationData.Address;
                     foodServiceClient.Email = authUser.Email;
-                    objectStorage.CommitTransientObjectState(foodServiceClient);
 
+                    objectStorage.CommitTransientObjectState(foodServiceClient);
                     if (string.IsNullOrWhiteSpace(foodServiceClient.Email))
                         throw new System.Exception("Sign up error: 'Sign up only users with email'");
                     //TODO:Να ελεχθεί όταν δεν υπάρχει Email
@@ -107,6 +104,7 @@ namespace FlavourBusinessManager
 
             else
                 return SignUp(userData);
+            
         }
 
         private IUser SignUpMenuMaker(UserData userData)
@@ -125,7 +123,7 @@ namespace FlavourBusinessManager
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     menuMaker = new HumanResources.MenuMaker(userId);
-                    menuMaker.SignUpUserIdentity = authUser.User_ID;
+                    menuMaker.OAuthUserIdentity = authUser.User_ID;
                     menuMaker.Name = userData.FullName;
                     menuMaker.Email = userData.Email;
                     menuMaker.PhoneNumber = userData.PhoneNumber;
@@ -168,7 +166,7 @@ namespace FlavourBusinessManager
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     organization = new Organization(authUser.User_ID);
-                    organization.SignUpUserIdentity = authUser.User_ID;
+                    organization.OAuthUserIdentity = authUser.User_ID;
                     organization.Name = organizationData.FullName;
                     organization.Trademark = organizationData.Trademark;
                     organization.PhoneNumber = organizationData.PhoneNumber;
@@ -320,7 +318,7 @@ namespace FlavourBusinessManager
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                 menuMaker = (from _menuMaker in storage.GetObjectCollection<HumanResources.MenuMaker>()
-                             where _menuMaker.SignUpUserIdentity == userId
+                             where _menuMaker.OAuthUserIdentity == userId
                              select _menuMaker).FirstOrDefault();
             }
             return menuMaker;
@@ -356,7 +354,7 @@ namespace FlavourBusinessManager
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                 organization = (from _organization in storage.GetObjectCollection<Organization>()
-                                where _organization.SignUpUserIdentity == userId
+                                where _organization.OAuthUserIdentity == userId
                                 select _organization).FirstOrDefault();
                 if (organization != null)
                     authUserRef.AddRole(organization);
@@ -530,7 +528,7 @@ namespace FlavourBusinessManager
             string userId = authUser.User_ID;
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
             var organization = (from _organization in storage.GetObjectCollection<Organization>()
-                                where _organization.SignUpUserIdentity == userId
+                                where _organization.OAuthUserIdentity == userId
                                 select _organization).FirstOrDefault();
             if (organization != null)
             {

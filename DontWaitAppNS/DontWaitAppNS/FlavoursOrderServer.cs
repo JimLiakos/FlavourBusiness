@@ -25,7 +25,7 @@ using System.Threading;
 using OOAdvantech.Transactions;
 using FlavourBusinessManager.EndUsers;
 using System.Net;
-using OOAdvantech.Authentication;
+
 using static System.Net.WebRequestMethods;
 using FinanceFacade;
 
@@ -52,8 +52,14 @@ using System.Drawing.Imaging;
 
 namespace DontWaitApp
 {
+
+
+
+
+
+
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
-    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject, FlavourBusinessFacade.ViewModel.ISecureUser
     {
 
         /// <MetaDataID>{5f360b37-d769-4114-a29c-43bbcbfeffd1}</MetaDataID>
@@ -2060,18 +2066,226 @@ namespace DontWaitApp
 
         }
 #if DeviceDotNet
-        PaymentService PaymentService = new PaymentService(); 
+        PaymentService PaymentService = new PaymentService();
 #endif
         internal async Task<bool> Pay(IPayment payment)
         {
 #if DeviceDotNet
-            
+
 
 
             return await PaymentService.Pay(payment, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
 #else
             return true;
 #endif
+        }
+
+
+        EndUserData EndUserData;
+
+        public IFoodServiceClient FoodServiceClient { get; private set; }
+        public bool OnSignIn { get; private set; }
+        public Task<bool> SignInTask { get; private set; }
+        public string FullName { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string SignInProvider { get; set; }
+        public string OAuthUserIdentity { get; set; }
+
+        AuthUser AuthUser;
+
+
+        /// <MetaDataID>{0b631e28-fc5c-46ab-85c1-944ce7ead3eb}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public async Task<bool> SignIn()
+        {
+
+            //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
+            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+
+            if (authUser == null)
+                return false;
+            var ddd = FoodServiceClient?.Identity;
+            if (FoodServiceClient!=null&& FoodServiceClient.OAuthUserIdentity==authUser.User_ID)
+                return true;
+
+
+            if (OnSignIn && SignInTask != null)
+                return await SignInTask;
+            else
+            {
+
+                SignInTask = Task<bool>.Run(async () =>
+                {
+
+                    OnSignIn = true;
+                    try
+                    {
+                        string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                        string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                        System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                        string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                        serverUrl = "http://localhost:8090/api/";
+                        serverUrl = AzureServerUrl;
+
+                        IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+                        try
+                        {
+                            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+
+                        }
+                        catch (System.Net.WebException error)
+                        {
+                            throw;
+                        }
+                        catch (Exception error)
+                        {
+                            throw;
+                        }
+                        authUser = DeviceAuthentication.AuthUser;
+
+                        FoodServiceClient = pAuthFlavourBusiness.SignInEndUser();
+                        if (FoodServiceClient != null)
+                        {
+                            FullName= FoodServiceClient.FullName;
+                            UserName= FoodServiceClient.UserName;
+                            Email= FoodServiceClient.Email;
+
+                            ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
+
+#if DeviceDotNet
+                            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                            FoodServiceClient.DeviceFirebaseToken = device.FirebaseToken;
+#endif
+                            CurrentUser = FoodServiceClient;
+                            AuthUser = authUser;
+                            _ObjectChangeState?.Invoke(this, null);
+                            OAuthUserIdentity=CurrentUser.OAuthUserIdentity;
+                            return true;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(FullName))
+                                FullName=ApplicationSettings.Current.FriendlyName;
+                            return false;
+                        }
+
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
+                    }
+                    finally
+                    {
+                        OnSignIn = false;
+                    }
+                });
+
+                var result = await SignInTask;
+                SignInTask = null;
+                return result;
+
+            }
+
+        }
+
+        /// <MetaDataID>{d38d4827-a9a7-48bb-b272-1f897c86cf1b}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public void SignOut()
+        {
+            EndUserData = new EndUserData();
+            AuthUser = null;
+            FoodServiceClient=null;
+            FullName= null;
+            UserName= null;
+            Email= null;
+            CurrentUser=null;
+        }
+
+
+        /// <MetaDataID>{8bb16524-ef68-4a38-94f4-71776a04d4d5}</MetaDataID>
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public async Task<bool> SignUp()
+        {
+            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+
+            return await Task<bool>.Run(async () =>
+            {
+
+                OnSignIn = true;
+                try
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                    serverUrl = "http://localhost:8090/api/";
+                    serverUrl = AzureServerUrl;
+                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
+                    try
+                    {
+                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                        pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                    }
+                    catch (System.Net.WebException error)
+                    {
+                        throw;
+                    }
+                    catch (Exception error)
+                    {
+                        throw;
+                    }
+
+                    if (authUser == null)
+                    {
+
+                    }
+                    EndUserData = new EndUserData() { Email = authUser.Email, Name = ApplicationSettings.Current.FriendlyName, Identity=authUser.User_ID };
+                    FoodServiceClient = pAuthFlavourBusiness.SignUpEndUser(EndUserData);
+
+                    if (FoodServiceClient != null)
+                    {
+                        FullName= FoodServiceClient.FullName;
+                        UserName= FoodServiceClient.UserName;
+                        Email= FoodServiceClient.Email;
+
+                        ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
+
+#if DeviceDotNet
+                        IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                        FoodServiceClient.DeviceFirebaseToken = device.FirebaseToken;
+#endif
+                        CurrentUser = FoodServiceClient;
+                        AuthUser = authUser;
+                        _ObjectChangeState?.Invoke(this, null);
+                        OAuthUserIdentity=CurrentUser.OAuthUserIdentity;
+                        return true;
+                    }
+                    else
+                        return false;
+
+                }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    OnSignIn = false;
+                }
+            });
         }
     }
 }

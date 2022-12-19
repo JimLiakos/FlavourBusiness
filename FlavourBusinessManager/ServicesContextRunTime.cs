@@ -26,6 +26,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using Microsoft.WindowsAzure.ServiceRuntime;
 //using WebhooksToLocalServer;
 using FlavourBusinessManager.PaymentProviders;
+using FlavourBusinessManager.HumanResources;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -194,7 +195,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (SupervisorsLock)
             {
                 var unassignedWaiter = (from waiter in Waiters
-                                        select waiter).ToList().Where((x => string.IsNullOrWhiteSpace(x.SignUpUserIdentity))).FirstOrDefault();
+                                        select waiter).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
                 string WaiterAssignKey = "";
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -1414,7 +1415,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.SignUpUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2012,7 +2013,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (SupervisorsLock)
             {
                 var unassignedSupervisor = (from supervisor in Supervisors
-                                            select supervisor).ToList().Where((x => string.IsNullOrWhiteSpace(x.SignUpUserIdentity))).FirstOrDefault();
+                                            select supervisor).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
                 string supervisorAssignKey = "";
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -2057,7 +2058,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         unassignedSupervisor.SupervisorAssignKey = null;
-                        unassignedSupervisor.SignUpUserIdentity = signUpUserIdentity;
+                        (unassignedSupervisor as  ServiceContextSupervisor).OAuthUserIdentity = signUpUserIdentity;
                         unassignedSupervisor.Name = userName;
                         stateTransition.Consistent = true;
                     }
@@ -2095,7 +2096,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         unassignedWaiter.WaiterAssignKey = null;
-                        unassignedWaiter.SignUpUserIdentity = signUpUserIdentity;
+                        (unassignedWaiter as Waiter).OAuthUserIdentity = signUpUserIdentity;
                         unassignedWaiter.Name = userName;
                         stateTransition.Consistent = true;
                     }

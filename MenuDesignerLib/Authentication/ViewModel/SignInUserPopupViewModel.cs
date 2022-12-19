@@ -565,7 +565,7 @@ namespace FLBAuthentication.ViewModel
 
         public string UserName { get; set; }
         [OOAdvantech.MetaDataRepository.HttpVisible]
-        public string UserIdentity { get; set; }
+        public string AuthUserIdentity { get; set; }
 
 
         [OOAdvantech.MetaDataRepository.HttpVisible]

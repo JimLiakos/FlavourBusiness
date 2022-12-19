@@ -27,11 +27,7 @@ namespace FlavourBusinessFacade.HumanResources
         event ObjectChangeStateHandle ObjectChangeState;
 
 
-        /// <MetaDataID>{6c52c98d-2c97-4201-a90b-2cc86c8bda2d}</MetaDataID>
-        [BackwardCompatibilityID("+4")]
-        [CachingDataOnClientSide]
-        string SignUpUserIdentity { get; set; }
-
+    
         /// <MetaDataID>{149349fa-11af-4b3a-9a0a-87f48eca6862}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         [CachingDataOnClientSide]
