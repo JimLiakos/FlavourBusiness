@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -62,6 +63,7 @@ namespace DontWaitApp
     class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject, FlavourBusinessFacade.ViewModel.ISecureUser
     {
 
+        public int Age = 12;
         /// <MetaDataID>{5f360b37-d769-4114-a29c-43bbcbfeffd1}</MetaDataID>
         Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>> NeighborhoodFoodServers = new Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>>();
 
@@ -1190,7 +1192,7 @@ namespace DontWaitApp
                 To = recipients,
                 BodyFormat = bodyFormat,
             };
-            await Email.ComposeAsync(message);
+            await Xamarin.Essentials.Email.ComposeAsync(message);
 
         }
 
@@ -2166,14 +2168,18 @@ namespace DontWaitApp
 #endif
                             CurrentUser = FoodServiceClient;
                             AuthUser = authUser;
-                            _ObjectChangeState?.Invoke(this, null);
                             OAuthUserIdentity=CurrentUser.OAuthUserIdentity;
+                            _ObjectChangeState?.Invoke(this, null);
+
                             return true;
                         }
                         else
                         {
                             if (string.IsNullOrWhiteSpace(FullName))
+                            {
                                 FullName=ApplicationSettings.Current.FriendlyName;
+                                _ObjectChangeState?.Invoke(this, null);
+                            }
                             return false;
                         }
 

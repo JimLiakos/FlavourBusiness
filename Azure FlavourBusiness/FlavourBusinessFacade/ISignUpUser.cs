@@ -16,7 +16,7 @@ namespace FlavourBusinessFacade.ViewModel
         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string FullName { get; set; }
         /// <MetaDataID>{a43d4066-ecf3-4a87-bf30-0c30c8a8e074}</MetaDataID>
-         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
+        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string UserName { get; set; }
         /// <MetaDataID>{10cf6d90-36b8-421b-9c35-350a2c5f0a95}</MetaDataID>
         string Email { get; set; }
@@ -56,8 +56,10 @@ namespace FlavourBusinessFacade.ViewModel
     [HttpVisible]
     public interface ISecureUser : FlavourBusinessFacade.ViewModel.IUser
     {
+
         [GenerateEventConsumerProxy]
         event ObjectChangeStateHandle ObjectChangeState;
+
 
         /// <MetaDataID>{a5bb9008-1509-44ac-961c-170a742ba163}</MetaDataID>
         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]

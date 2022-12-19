@@ -24,6 +24,7 @@ using OOAdvantech;
 using Firebase.Messaging;
 using Android.Gms.Extensions;
 using Android.Gms.Tasks;
+using OOAdvantech.Authentication.Droid;
 
 namespace DontWaitAppNS.Droid
 {
@@ -397,5 +398,12 @@ namespace DontWaitAppNS.Droid
             string token = result.ToString();
             OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
         }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            FirebaseAuthentication.OnActivityResult(requestCode, resultCode, data);
+        }
+
     }
 }
