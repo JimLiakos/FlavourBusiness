@@ -1069,12 +1069,12 @@ namespace DontWaitApp
 
 #if DeviceDotNet
 
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
+                //MainThread.BeginInvokeOnMainThread(() =>
+                //{
 
-                    if (Application.Current?.MainPage != null)
-                        Application.Current.MainPage.DisplayAlert("MenuData ", "ObjectChangeState MenuData", "OK");
-                });
+                //    if (Application.Current?.MainPage != null)
+                //        Application.Current.MainPage.DisplayAlert("MenuData ", "ObjectChangeState MenuData", "OK");
+                //});
 #endif
 #if DeviceDotNet
                 OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "_ObjectChangeState?.Invoke(this, nameof(MenuData))" });
