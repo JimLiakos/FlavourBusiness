@@ -2088,22 +2088,17 @@ namespace DontWaitApp
         public IFoodServiceClient FoodServiceClient { get; private set; }
         public bool OnSignIn { get; private set; }
         public Task<bool> SignInTask { get; private set; }
-
-        /// <exclude>Excluded</exclude>
-        string _FullName;
         public string FullName
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(_FullName))
-                    return _FullName;
+
+
                 return ApplicationSettings.Current.FriendlyName;
             }
             set
             {
-                _FullName=value;
-                if (!string.IsNullOrWhiteSpace(value))
-                    ApplicationSettings.Current.FriendlyName=value;
+                ApplicationSettings.Current.FriendlyName=value;
             }
         }
         public string UserName { get; set; }
