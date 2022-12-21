@@ -2088,20 +2088,41 @@ namespace DontWaitApp
         public IFoodServiceClient FoodServiceClient { get; private set; }
         public bool OnSignIn { get; private set; }
         public Task<bool> SignInTask { get; private set; }
+
+
+        /// <exclude>Excluded</exclude>
+        string _FullName;
         public string FullName
         {
             get
             {
+                if (!string.IsNullOrWhiteSpace(_FullName))
+                    return _FullName;
 
 
                 return ApplicationSettings.Current.FriendlyName;
             }
             set
             {
-                ApplicationSettings.Current.FriendlyName=value;
+                _FullName=value;
+                if (!string.IsNullOrWhiteSpace(value))
+                    ApplicationSettings.Current.FriendlyName=value;
             }
         }
-        public string UserName { get; set; }
+
+        /// <exclude>Excluded</exclude>
+        string _UserName;
+        public string UserName
+        {
+            get
+            {
+                return _UserName;
+            }
+            set
+            {
+                _UserName=value;
+            }
+        }
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
@@ -2190,8 +2211,17 @@ namespace DontWaitApp
                             if (string.IsNullOrWhiteSpace(FullName))
                             {
                                 FullName=ApplicationSettings.Current.FriendlyName;
+                                if (string.IsNullOrWhiteSpace(UserName))
+                                    UserName=authUser.Email;
                                 _ObjectChangeState?.Invoke(this, null);
                             }
+                            else if (string.IsNullOrWhiteSpace(UserName))
+                            {
+                                UserName=authUser.Email;
+                                _ObjectChangeState?.Invoke(this, null);
+                            }
+
+
                             return false;
                         }
 
@@ -2226,6 +2256,8 @@ namespace DontWaitApp
             UserName= null;
             Email= null;
             CurrentUser=null;
+
+            _ObjectChangeState?.Invoke(this, null);
         }
 
 
