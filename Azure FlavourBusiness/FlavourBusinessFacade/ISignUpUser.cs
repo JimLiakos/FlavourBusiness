@@ -69,6 +69,12 @@ namespace FlavourBusinessFacade.ViewModel
         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string OAuthUserIdentity { get; set; }
 
+        void SignOut();
+
+        Task<bool> SignUp();
+
+        Task<bool> SignIn();
+
     }
 
 }
