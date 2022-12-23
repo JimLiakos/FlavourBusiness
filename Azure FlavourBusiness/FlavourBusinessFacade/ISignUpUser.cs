@@ -75,6 +75,8 @@ namespace FlavourBusinessFacade.ViewModel
 
         Task<bool> SignIn();
 
+        void SaveUserProfile();
+
     }
 
 }

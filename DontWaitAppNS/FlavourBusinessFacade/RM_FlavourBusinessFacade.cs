@@ -2812,6 +2812,314 @@ namespace FlavourBusinessFacade.EndUsers.Proxies
     using System;
     
     
+    public sealed class Pr_IFoodServiceClient : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.EndUsers.IFoodServiceClient, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClient Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+        
+        public Pr_IFoodServiceClient(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string FriendlyName
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_FriendlyName", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "set_FriendlyName", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IPlace> DeliveryPlaces
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_DeliveryPlaces", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IPlace>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.EndUsers.SIMCardData SIMCardData
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_SIMCardData", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.SIMCardData>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.SIMCardData);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "set_SIMCardData", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Address
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_Address", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "set_Address", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Name
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_Name", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "set_Name", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string DeviceFirebaseToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_DeviceFirebaseToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "set_DeviceFirebaseToken", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_OAuthUserIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string PhotoUrl
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_PhotoUrl", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "set_PhotoUrl", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string FullName
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_FullName", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "set_FullName", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Email
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_Email", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "set_Email", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string PhoneNumber
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_PhoneNumber", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "set_PhoneNumber", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string UserName
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_UserName", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "set_UserName", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Identity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_Identity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole> Roles
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IUser), "get_Roles", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole>>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void UpdateDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace place)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = place;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "UpdateDeliveryPlace", args, argsTypes);
+        }
+        
+        public void RemoveDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace place)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = place;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "RemoveDeliveryPlace", args, argsTypes);
+        }
+        
+        public void AddDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace place)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = place;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "AddDeliveryPlace", args, argsTypes);
+        }
+    }
+    
     public sealed class Pr_IFoodServiceClientSession : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
