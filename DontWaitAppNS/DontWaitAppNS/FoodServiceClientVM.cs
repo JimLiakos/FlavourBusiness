@@ -9,12 +9,17 @@ using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
+#if DeviceDotNet
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+#else
+using MarshalByRefObject = System.MarshalByRefObject;
+#endif
 
 namespace DontWaitApp
 {
     /// <MetaDataID>{ceaf19ab-2b52-45d6-a7f7-5dd4e251ed92}</MetaDataID>
     [OOAdvantech.MetaDataRepository.HttpVisible]
-    public class FoodServiceClientVM : OOAdvantech.Remoting.MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser
+    public class FoodServiceClientVM : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser
     {
         [GenerateEventConsumerProxy]
         public event ObjectChangeStateHandle ObjectChangeState;
@@ -249,6 +254,8 @@ namespace DontWaitApp
                             FullName = FoodServiceClient.FullName;
                             UserName = FoodServiceClient.UserName;
                             Email = FoodServiceClient.Email;
+                            if (string.IsNullOrWhiteSpace(UserName))
+                                UserName=Email;
 
                             ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 
@@ -409,6 +416,8 @@ namespace DontWaitApp
                         FullName = FoodServiceClient.FullName;
                         UserName = FoodServiceClient.UserName;
                         Email = FoodServiceClient.Email;
+                        if (string.IsNullOrWhiteSpace(UserName))
+                            UserName=Email;
 
                         ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 

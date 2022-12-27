@@ -14088,7 +14088,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	0
+		    origin_y   	1862
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::MenuPresentationModel::MenuCanvas::MenuCanvasColumn" @1
 			    ShowCompartmentStereotypes 	TRUE
@@ -31728,7 +31728,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
+			nlines     	1
 			max_width  	456
 			compartmentItems 	(list Compartment
 			    "+ Name : System.string"))

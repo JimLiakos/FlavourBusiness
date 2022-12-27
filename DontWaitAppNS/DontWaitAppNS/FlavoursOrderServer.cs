@@ -63,6 +63,7 @@ namespace DontWaitApp
     class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
+        /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
         public int Age = 12;
         /// <MetaDataID>{5f360b37-d769-4114-a29c-43bbcbfeffd1}</MetaDataID>
         Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>> NeighborhoodFoodServers = new Dictionary<Coordinate, List<HomeDeliveryServicePointInfo>>();
@@ -123,6 +124,7 @@ namespace DontWaitApp
 
 
 
+        /// <MetaDataID>{aa0d2f51-3139-4cf2-8abf-7b6d91896e72}</MetaDataID>
         public async Task<bool> OpenFoodServicesClientSession(string clientSessionID)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == clientSessionID).FirstOrDefault();
@@ -729,6 +731,7 @@ namespace DontWaitApp
         public DeviceUtilities.NetStandard.ScanCode ScanCode;
 #endif
 
+        /// <MetaDataID>{bd654e13-a483-4d4b-960b-1640a04b9181}</MetaDataID>
         Task InitializationTask;
         /// <MetaDataID>{504eca6e-cf99-45c5-8d67-21c5f4968f31}</MetaDataID>
         bool Initialized;
@@ -941,6 +944,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{a02f8ab0-6c5a-49af-b84c-5fee1271991d}</MetaDataID>
         internal void SessionIsNoLongerActive(FoodServicesClientSessionViewModel foodServicesClientSessionViewModel)
         {
             ApplicationSettings.Current.RemoveClientSession(foodServicesClientSessionViewModel);
@@ -1712,6 +1716,7 @@ namespace DontWaitApp
             return null;
         }
 
+        /// <MetaDataID>{d57f870a-f7e7-4b0c-8449-264b9ec2ca73}</MetaDataID>
         public void SetString(string langCountry, string key, string newValue)
         {
             JObject jObject = null;
@@ -1800,6 +1805,7 @@ namespace DontWaitApp
         }
 
 
+        /// <MetaDataID>{e3c37591-9eb6-44c0-8470-d9c0ac8491ad}</MetaDataID>
         public Task<List<IFoodServicesClientSessionViewModel>> ActiveSessions
         {
             get
@@ -1939,6 +1945,7 @@ namespace DontWaitApp
                             stateTransition.Consistent = true;
                         }
                     }
+               
                     foodServicesClientSessionViewModel.FlavoursOrderServer = this;
                     return foodServicesClientSessionViewModel;
                 }
@@ -2070,6 +2077,7 @@ namespace DontWaitApp
 #if DeviceDotNet
         PaymentService PaymentService = new PaymentService();
 #endif
+        /// <MetaDataID>{a34440a6-11d3-4378-8cdc-58bc87f87269}</MetaDataID>
         internal async Task<bool> Pay(IPayment payment)
         {
 #if DeviceDotNet
@@ -2085,18 +2093,19 @@ namespace DontWaitApp
 
 
 
-     
 
 
+
+        /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>
         internal AuthUser AuthUser;
 
 
-      
 
 
-     
 
 
-      
+
+
+
     }
 }

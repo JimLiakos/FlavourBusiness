@@ -3023,6 +3023,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.EndUsers.IPlace DeleiveryPlace
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_DeleiveryPlace", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IPlace>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_DeleiveryPlace", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments
         {
             get
@@ -6274,6 +6294,16 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public bool CanDeliveredAt(FlavourBusinessFacade.EndUsers.Coordinate location)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = location;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CanDeliveredAt", args, argsTypes);
+            return this.Proxy.GetValue<bool>(retValue);
         }
         
         public FlavourBusinessFacade.RoomService.IBill GetBill()

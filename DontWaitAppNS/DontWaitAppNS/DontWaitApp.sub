@@ -21,6 +21,15 @@
 		    value      	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\DontWaitApp\\DontWaitApp.csproj"))
 	    quid       	"5EFCA653000D"
 	    stereotype 	""
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"634B76180308"
+		    supplier   	"Logical View::DontWaitApp::IFlavoursOrderServer"
+		    quidu      	"634B76050333")
+		(object Realize_Relationship
+		    quid       	"634B76910331"
+		    supplier   	"Logical View::DontWaitApp::IFoodServicesClientSessionViewModel"
+		    quidu      	"634B7686016C"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -46,17 +55,80 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(618, 595)
+			location   	(668, 600)
 			fill_color 	13434879
 			anchor_loc 	3
 			nlines     	2
-			max_width  	318
+			max_width  	126
 			label      	"DontWaitApp")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5EFCA653000D"
-		    width      	575
-		    height     	200
-		    width      	575
-		    height     	200)))))
+		    width      	228
+		    width      	228
+		    height     	162)
+		(object InterfaceView "Logical View::DontWaitApp::IFlavoursOrderServer" @2
+		    location   	(749, 123)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(748, 231)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IFlavoursOrderServer")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"634B76050333")
+		(object RealizeView "" @3
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"634B76180308"
+		    client     	@1
+		    supplier   	@2
+		    line_style 	0)
+		(object InterfaceView "Logical View::DontWaitApp::IFoodServicesClientSessionViewModel" @4
+		    location   	(749, 1023)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(748, 1131)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IFoodServicesClientSessionViewModel")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"634B7686016C")
+		(object RealizeView "" @5
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"634B76910331"
+		    client     	@1
+		    supplier   	@4
+		    line_style 	0)))))

@@ -12,6 +12,10 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+
+
+        bool CanDeliveredAt(Coordinate location);
+
         /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
         FlavourBusinessFacade.RoomService.IBill GetBill();
 
@@ -242,7 +246,8 @@ namespace FlavourBusinessFacade.EndUsers
     {
         Hall = 0,
         Takeaway = 1,
-        HomeDelivery = 2
+        HomeDelivery = 2,
+        HomeDeliveryGuest= 3
     }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages

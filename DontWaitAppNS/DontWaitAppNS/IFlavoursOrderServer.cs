@@ -68,11 +68,13 @@ namespace DontWaitApp
          /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
+        /// <MetaDataID>{d1d313ab-62a7-4401-985d-e82be2a48f57}</MetaDataID>
         Task Initialize();
 
         /// <MetaDataID>{8fedff9e-af0f-4f35-98de-a9bf18486a23}</MetaDataID>
         IFoodServicesClientSessionViewModel CurrentFoodServicesClientSession { get; }
 
+        /// <MetaDataID>{eaf8b91a-e179-470d-bb17-64fd3f195fcb}</MetaDataID>
         Task<List<IFoodServicesClientSessionViewModel>> ActiveSessions { get; }
 
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
@@ -176,6 +178,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{8491fd19-2882-4b78-ac5e-84db4b54ccde}</MetaDataID>
         Task<List<HomeDeliveryServicePointInfo>> GetNeighborhoodFoodServers(Coordinate location);
+        /// <MetaDataID>{a60057b9-4ed5-425b-9e44-9d698e95c202}</MetaDataID>
         Task<bool> OpenFoodServicesClientSession(string clientSessionID);
 
 

@@ -12033,7 +12033,7 @@
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
+			nlines     	1
 			max_width  	637
 			compartmentItems 	(list Compartment
 			    "+ Price : decimal"))
@@ -12860,7 +12860,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
+			nlines     	1
 			max_width  	1037
 			compartmentItems 	(list Compartment
 			    "+ MenuItemPrice : MenuModel.IMenuItemPrice"))
@@ -14278,7 +14278,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
+			nlines     	1
 			max_width  	303
 			compartmentItems 	(list Compartment
 			    "+ Name : string"))
@@ -14557,7 +14557,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
+			nlines     	1
 			max_width  	303
 			compartmentItems 	(list Compartment
 			    "+ Name : string"))
@@ -14606,7 +14606,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	3
+			nlines     	1
 			max_width  	540
 			compartmentItems 	(list Compartment
 			    "+ DurationInMinutes : double"
