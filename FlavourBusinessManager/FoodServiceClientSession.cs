@@ -18,6 +18,7 @@ using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Microsoft.Azure.Documents.Spatial;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -39,6 +40,18 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
+
+
+      public  bool CanDeliveredAt(Coordinate location )
+        {
+            if (ServicesContextRunTime.Current.DeliveryServicePoint==null)
+                return false;
+            var polyGon = new MapPolyGon(ServicesContextRunTime.Current.DeliveryServicePoint.ServiceAreaMap);
+            if (polyGon.FindPoint(location.Latitude, location.Longitude))
+                return true;
+            else
+                return false;
+        }
         /// <exclude>Excluded</exclude>
         bool _ImplicitMealParticipation;
 

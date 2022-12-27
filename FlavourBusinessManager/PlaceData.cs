@@ -4,48 +4,51 @@ using OOAdvantech.Transactions;
 
 namespace FlavourBusinessManager.EndUsers
 {
-    /// <MetaDataID>{affca228-cac8-42fa-be5b-7da4d5f457bb}</MetaDataID>
-    [BackwardCompatibilityID("{affca228-cac8-42fa-be5b-7da4d5f457bb}")]
+    /// <MetaDataID>{0202486a-b558-467c-a4ae-575d7d1e5924}</MetaDataID>
+    [BackwardCompatibilityID("{0202486a-b558-467c-a4ae-575d7d1e5924}")]
     [Persistent()]
-    public class Place : FlavourBusinessFacade.EndUsers.IPlace
+    public struct PlaceData
     {
-
-        /// <MetaDataID>{1012419e-b619-497b-8a29-b6d2e6da2940}</MetaDataID>
-        public Place() { }
-
-        /// <MetaDataID>{08bc67e4-cd1e-484f-a046-68b9727d79df}</MetaDataID>
-        static internal Place GetPlace(FlavourBusinessManager.EndUsers.PlaceData placeData)
+        /// <MetaDataID>{ccedaa1c-cc2e-427a-af4e-41000f8bf19a}</MetaDataID>
+        public static PlaceData GetPlaceData(IPlace place)
         {
-            if (placeData.Street==null&&placeData.Area==null&&placeData.Location.Latitude==0&&placeData.Location.Longitude==0)
-                return null;
-
-            Place place = new Place(placeData.PlaceID, placeData.Location, placeData.Country,
-                                               placeData.StateProvinceRegion, placeData.CityTown,
-                                               placeData.Area, placeData.PostalCode, placeData.Street,
-                                               placeData.StreetNumber, placeData.Description);
-
-          
-            return place;
-
+            if (place == null)
+                return new PlaceData();
+            PlaceData placeData = new PlaceData(place.PlaceID, place.Location, place.Country,
+                                                place.StateProvinceRegion, place.CityTown,
+                                                place.Area, place.PostalCode, place.Street,
+                                                place.StreetNumber, place.Description);
+            return placeData;
         }
-        /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink;
-        /// <exclude>Excluded</exclude> 
-        string _CityTown;
 
-        /// <MetaDataID>{7eb014e0-7a36-4c25-893a-412b359f6f15}</MetaDataID>
+        /// <MetaDataID>{72aa5870-d68a-4e49-8b10-d4b7a54222ea}</MetaDataID>
+        public static bool operator ==(PlaceData left, PlaceData right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <MetaDataID>{fafbf187-5dee-444f-b600-78d55976938f}</MetaDataID>
+        public static bool operator !=(PlaceData left, PlaceData right)
+        {
+            return !(left==right);
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _CityTown;
+        /// <MetaDataID>{50c93377-b741-40bc-97b3-755cc1568cc2}</MetaDataID>
         [PersistentMember(nameof(_CityTown))]
-        [BackwardCompatibilityID("+10")]
+        [BackwardCompatibilityID("+7")]
         public string CityTown
         {
             get => _CityTown;
             set
             {
-                if (_CityTown != value)
+
+                if (_CityTown!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _CityTown = value;
+                        _CityTown=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -53,42 +56,43 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         string _StateProvinceRegion;
-        /// <MetaDataID>{b4d5f3d4-5d69-47c1-946a-1ac148028d1c}</MetaDataID>
+        /// <MetaDataID>{d252edfd-c038-4551-ad7b-619a11fca2b9}</MetaDataID>
         [PersistentMember(nameof(_StateProvinceRegion))]
-        [BackwardCompatibilityID("+9")]
+        [BackwardCompatibilityID("+6")]
         public string StateProvinceRegion
         {
             get => _StateProvinceRegion;
             set
             {
-                if (_StateProvinceRegion != value)
+                if (_StateProvinceRegion!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _StateProvinceRegion = value;
+                        _StateProvinceRegion=value;
                         stateTransition.Consistent = true;
                     }
                 }
 
             }
         }
-        /// <exclude>Excluded</exclude> 
+
+        /// <exclude>Excluded</exclude>
         string _Description;
-        /// <MetaDataID>{f3172f6f-396c-4e7b-a697-9bd74fbde7be}</MetaDataID>
+        /// <MetaDataID>{abb00cd5-58fc-4d0c-a388-2f88ba91cec4}</MetaDataID>
         [PersistentMember(nameof(_Description))]
-        [BackwardCompatibilityID("+8")]
+        [BackwardCompatibilityID("+5")]
         public string Description
         {
             get => _Description;
             set
             {
-                if (_Description != value)
+                if (_Description!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Description = value;
+                        _Description=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -96,21 +100,22 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         string _StreetNumber;
-        /// <MetaDataID>{e7d750d4-0b65-4edb-b198-27c164054820}</MetaDataID>
+        /// <MetaDataID>{48fea14e-04b5-49c9-8e23-9c4a7bfb6c55}</MetaDataID>
         [PersistentMember(nameof(_StreetNumber))]
-        [BackwardCompatibilityID("+7")]
+        [BackwardCompatibilityID("+8")]
         public string StreetNumber
         {
             get => _StreetNumber;
             set
             {
-                if (_StreetNumber != value)
+
+                if (_StreetNumber!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _StreetNumber = value;
+                        _StreetNumber=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -118,22 +123,21 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         string _Street;
-
-        /// <MetaDataID>{22c6a6d2-ad36-4f3e-b78b-04e17c227beb}</MetaDataID>
+        /// <MetaDataID>{3b91c84b-869f-4a36-83f3-5ce232ee49ca}</MetaDataID>
         [PersistentMember(nameof(_Street))]
-        [BackwardCompatibilityID("+6")]
+        [BackwardCompatibilityID("+4")]
         public string Street
         {
             get => _Street;
             set
             {
-                if (_Street != value)
+                if (_Street!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Street = value;
+                        _Street=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -141,21 +145,21 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         string _Area;
-        /// <MetaDataID>{1ec77077-0630-4275-918e-fc097c49ea13}</MetaDataID>
+        /// <MetaDataID>{e5c0a99a-371c-441f-a248-aa5929025bd9}</MetaDataID>
         [PersistentMember(nameof(_Area))]
-        [BackwardCompatibilityID("+5")]
+        [BackwardCompatibilityID("+9")]
         public string Area
         {
             get => _Area;
             set
             {
-                if (_Area != value)
+                if (_Area!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Area = value;
+                        _Area=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -163,21 +167,22 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+
+        /// <exclude>Excluded</exclude>
         string _PostalCode;
-        /// <MetaDataID>{c9133f08-2ce2-423e-b717-4337fd0d29f8}</MetaDataID>
+        /// <MetaDataID>{66c17d30-9585-4f2c-a0f8-4288eaae020c}</MetaDataID>
         [PersistentMember(nameof(_PostalCode))]
-        [BackwardCompatibilityID("+4")]
+        [BackwardCompatibilityID("+10")]
         public string PostalCode
         {
             get => _PostalCode;
             set
             {
-                if (_PostalCode != value)
+                if (_PostalCode!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PostalCode = value;
+                        _PostalCode=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -185,9 +190,9 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         string _Country;
-        /// <MetaDataID>{a7e70d5f-0a18-47c2-b0ec-497843d1f5ab}</MetaDataID>
+        /// <MetaDataID>{25ea321a-e827-464a-8b21-cf01c1886022}</MetaDataID>
         [PersistentMember(nameof(_Country))]
         [BackwardCompatibilityID("+3")]
         public string Country
@@ -195,20 +200,21 @@ namespace FlavourBusinessManager.EndUsers
             get => _Country;
             set
             {
-                if (_Country != value)
+                if (_Country!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Country = value;
+                        _Country=value;
                         stateTransition.Consistent = true;
                     }
                 }
+
             }
         }
 
-        /// <exclude>Excluded</exclude> 
+        /// <exclude>Excluded</exclude>
         FlavourBusinessFacade.EndUsers.Coordinate _Location;
-        /// <MetaDataID>{b9588635-cef0-48b6-b6b9-d12a5b4c011a}</MetaDataID>
+        /// <MetaDataID>{b005a5ac-97ec-4c6d-b65b-1408130c9e30}</MetaDataID>
         [PersistentMember(nameof(_Location))]
         [BackwardCompatibilityID("+2")]
         public FlavourBusinessFacade.EndUsers.Coordinate Location
@@ -216,46 +222,23 @@ namespace FlavourBusinessManager.EndUsers
             get => _Location;
             set
             {
-                if (_Location != value)
+                if (_Location!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Location = value;
+                        _Location=value;
                         stateTransition.Consistent = true;
                     }
                 }
 
             }
         }
-
-        /// <exclude>Excluded</exclude> 
-        string _PlaceID;
-        /// <MetaDataID>{9407928d-6c94-4570-844d-cdd6b53534be}</MetaDataID>
-        [PersistentMember(nameof(_PlaceID))]
-        [BackwardCompatibilityID("+1")]
-        public string PlaceID
-        {
-            get => _PlaceID;
-            set
-            {
-                if (_PlaceID != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _PlaceID = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-
-            }
-        }
-
 
         /// <exclude>Excluded</exclude>
-        bool _Default;
+        string _PlaceID;
 
-        /// <MetaDataID>{69840cba-a26b-43f7-ada5-18fc9bfce6ca}</MetaDataID>
-        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description)
+        /// <MetaDataID>{d1f20d85-c3a5-4c27-9750-f4ff9745bc7e}</MetaDataID>
+        public PlaceData(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description) : this()
         {
             _PlaceID=placeID;
             _Location=location;
@@ -269,22 +252,23 @@ namespace FlavourBusinessManager.EndUsers
             _Description=description;
         }
 
-        /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>
-        [PersistentMember(nameof(_Default))]
-        [BackwardCompatibilityID("+11")]
-        public bool Default
+        /// <MetaDataID>{0120bade-d1d0-4ef9-8c0f-cbb12f53a1fe}</MetaDataID>
+        [PersistentMember(nameof(_PlaceID))]
+        [BackwardCompatibilityID("+1")]
+        public string PlaceID
         {
-            get => _Default;
+            get => _PlaceID;
             set
             {
-                if (_Default != value)
+                if (_PlaceID!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Default = value;
+                        _PlaceID=value;
                         stateTransition.Consistent = true;
                     }
                 }
+
             }
         }
     }

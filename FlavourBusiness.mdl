@@ -597,7 +597,7 @@
 	    (object Class_Category "DontWaitApp"
 		is_unit    	TRUE
 		is_loaded  	FALSE
-		file_name  	"$dot Net Projects Path\\PersistenceLayer\\Xamarin\\DontWaitAppNS\\DontWaitAppNS\\DontWaitApp.cat"
+		file_name  	"$dot Net Projects Path\\FlavourBusiness\\DontWaitAppNS\\DontWaitAppNS\\DontWaitApp.cat"
 		quid       	"5EFD677F0222")
 	    (object Class_Category "Global Data Types"
 		attributes 	(list Attribute_Set
@@ -1335,7 +1335,7 @@
 	    (object SubSystem "DontWaitApp"
 		is_unit    	TRUE
 		is_loaded  	FALSE
-		file_name  	"$dot Net Projects Path\\PersistenceLayer\\Xamarin\\DontWaitAppNS\\DontWaitAppNS\\DontWaitApp.sub"
+		file_name  	"$dot Net Projects Path\\FlavourBusiness\\DontWaitAppNS\\DontWaitAppNS\\DontWaitApp.sub"
 		quid       	"5EFCA60C02B0")
 	    (object SubSystem "CashierStationDevice"
 		is_unit    	TRUE

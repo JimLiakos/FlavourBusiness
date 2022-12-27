@@ -17,6 +17,7 @@ using OOAdvantech.Json.Linq;
 using FlavourBusinessFacade.RoomService;
 using UIBaseEx;
 using RestaurantHallLayoutModel;
+using FlavourBusinessManager;
 
 
 
@@ -616,7 +617,7 @@ namespace WaiterApp.ViewModel
 
                 }
                 catch (Exception error)
-                 {
+                {
 
                     throw;
                 }
@@ -1070,8 +1071,8 @@ namespace WaiterApp.ViewModel
                         _OAuthUserIdentity = UserData.OAuthUserIdentity;
                         AuthUser=authUser;
                         ObjectChangeState?.Invoke(this, null);
-                        
-                        
+
+
 
 
                         //var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
@@ -1112,6 +1113,23 @@ namespace WaiterApp.ViewModel
                     OnSignIn = false;
                 }
             });
+        }
+
+        public void SaveUserProfile()
+        {
+            Task<bool>.Run(() =>
+            {
+                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+                string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                serverUrl = "http://localhost:8090/api/";
+                serverUrl = AzureServerUrl;
+                IAuthFlavourBusiness pAuthFlavourBusiness = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
+                UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
+                pAuthFlavourBusiness.UpdateUserProfile(UserData, UserData.RoleType.Waiter);
+            });
+
         }
 
         /// <MetaDataID>{187d772f-a845-4262-9f4a-1efed97515fe}</MetaDataID>
@@ -1803,5 +1821,7 @@ namespace WaiterApp.ViewModel
         {
             this.Waiter.TransferItems(itemPreparations, targetServicePointIdentity);
         }
+
+
     }
 }

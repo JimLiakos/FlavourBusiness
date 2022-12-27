@@ -1,5 +1,6 @@
 ﻿using DontWaitApp;
 using FinanceFacade;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
@@ -28,6 +29,8 @@ namespace MenuDesigner.ViewModel.Preview
         public IList<ItemPreparation> PreparationItems => OrderItems;
 
         public List<ItemPreparation> OrderItems => new List<ItemPreparation>();
+
+        public IPlace DeliveryPlace { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;

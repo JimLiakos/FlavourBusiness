@@ -689,6 +689,29 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+15")]
         public List<FinanceFacade.IPayment> BillingPayments => _BillingPayments.ToThreadSafeList();
 
+        /// <MetaDataID>{ba60826c-7385-4e09-a87e-7952c74f69e0}</MetaDataID>
+        [BackwardCompatibilityID("+16")]
+        public FlavourBusinessFacade.EndUsers.IPlace DeleiveryPlace
+        {
+            get => Place.GetPlace(DeleiveryPlaceData);
+            set
+            {
+                if (DeleiveryPlaceData!=PlaceData.GetPlaceData( value))
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        DeleiveryPlaceData=PlaceData.GetPlaceData(value);
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <MetaDataID>{d47efdba-03b6-4e84-83ba-82f194341ebb}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+17")]
+        private PlaceData DeleiveryPlaceData;
 
 
 

@@ -27,6 +27,7 @@ using OOAdvantech.Pay;
 
 #else
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 
 
 
@@ -45,6 +46,10 @@ namespace DontWaitApp
     [Persistent()]
     public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <MetaDataID>{ccaeca74-9ca0-4cbe-aebc-f9d785696fdf}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+14")]
+        private string DeliveryPlaceJson;
 
 
         /// <exclude>Excluded</exclude>
@@ -62,6 +67,8 @@ namespace DontWaitApp
             FlavoursOrderServer = flavoursOrderServer;
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
             ClientSessionToken = clientSessionData.Token;
+            if (FoodServicesClientSession.SessionType==SessionType.HomeDelivery)
+                _DeliveryPlace=ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces.OfType<Place>().Where(x => x.Default).FirstOrDefault();
 
         }
 
@@ -1132,7 +1139,9 @@ namespace DontWaitApp
 
 
 
+        /// <MetaDataID>{4ad45d89-6e83-4805-8f54-19858baaf192}</MetaDataID>
         IBill Bill;
+        /// <MetaDataID>{dfe09297-df83-49c4-8767-8c4627cccaf4}</MetaDataID>
         public async Task<IBill> GetBill()
         {
             Bill = FoodServicesClientSession?.GetBill();
@@ -1152,8 +1161,9 @@ namespace DontWaitApp
             //}
             //this.FlavoursOrderServer.Pay(Payment);
 
-            
+
         }
+        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async void Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
@@ -1653,6 +1663,51 @@ namespace DontWaitApp
 
         /// <MetaDataID>{0575115b-ff76-471d-b365-a880011b0050}</MetaDataID>
         public IFoodServiceSession MainSession => this.FoodServicesClientSession?.MainSession;
+
+
+
+        /// <exclude>Excluded</exclude>
+        FlavourBusinessManager.EndUsers.Place _DeliveryPlace;
+        /// <MetaDataID>{ec5a44a6-bb30-4a35-aa38-67b6ab70a130}</MetaDataID>
+        public IPlace DeliveryPlace
+        {
+            get => _DeliveryPlace;
+            set
+            {
+
+                if (_DeliveryPlace!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeliveryPlace=value as Place;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+
+            }
+        }
+
+        public bool CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
+        {
+        
+           return _FoodServicesClientSession?.CanDeliveredAt(newDeliveryPlace.Location)==true;
+        }
+        /// <MetaDataID>{ebc255f7-6774-4f15-b12a-d8a9cb85c1c3}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            if (DeliveryPlaceJson != null)
+                _DeliveryPlace = OOAdvantech.Json.JsonConvert.DeserializeObject<Place>(DeliveryPlaceJson);
+        }
+
+        /// <MetaDataID>{4c3d8994-d157-4a4c-94ba-a3d6d645331b}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        void BeforeCommitObjectState()
+        {
+            DeliveryPlaceJson=OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlace);
+        }
+
         /// <MetaDataID>{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}</MetaDataID>
         FlavourBusinessFacade.EndUsers.Message MenuItemProposalMessage;
         /// <MetaDataID>{3e58cac8-fc04-4ff0-9ec9-68df0268646b}</MetaDataID>

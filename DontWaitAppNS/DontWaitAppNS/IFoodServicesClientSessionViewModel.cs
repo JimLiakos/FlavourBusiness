@@ -13,6 +13,10 @@ namespace DontWaitApp
     [HttpVisible]
     public interface IFoodServicesClientSessionViewModel
     {
+        [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
+        FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
+
+        bool CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace);
         [RoleAMultiplicityRange(0)]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         [Association("ClientSesionOrderItems", Roles.RoleA, "d5c354c5-f20e-409b-b824-6f0d350186b3")]
@@ -31,8 +35,10 @@ namespace DontWaitApp
         void RefreshMessmates();
 
 
+        /// <MetaDataID>{3cbedb95-504f-48f5-bfdf-597798842253}</MetaDataID>
         Task<FlavourBusinessFacade.RoomService.IBill> GetBill();
 
+        /// <MetaDataID>{ff44b605-d9c9-4796-9b41-5bd22ed8e965}</MetaDataID>
         void Pay(FinanceFacade.IPayment payment, decimal tipAmount);
 
 

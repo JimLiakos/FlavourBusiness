@@ -38,6 +38,45 @@
 		    name       	"Identity"
 		    value      	"{d2560ed7-6c28-4e1d-8f49-98a4ef93784a}"))
 	    quid       	"5EFD67BC02AC"
+	    operations 	(list Operations
+		(object Operation "AddClientSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B9FC1016E")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5ed898fa-9013-4fd3-b897-c7bcb0dba827}"))
+		    quid       	"634B9FC1016E"
+		    parameters 	(list Parameters
+			(object Parameter "clientSession"
+			    quid       	"634B9FEF02D5"
+			    type       	"FoodServicesClientSessionViewModel"
+			    quidu      	"634B7B940315"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveClientSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA00401FE")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e700e295-1444-4fdf-bdaa-6bcd201ff59e}"))
+		    quid       	"634BA00401FE"
+		    parameters 	(list Parameters
+			(object Parameter "clientSession"
+			    quid       	"634BA00401FF"
+			    type       	"FoodServicesClientSessionViewModel"
+			    quidu      	"634B7B940315"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "IsForegroundServiceStarted"
 		    attributes 	(list Attribute_Set
@@ -673,6 +712,2325 @@
 	    quidu      	"5EFCA653000D"
 	    language   	"C#"
 	    persistence 	"Persistent")
+	(object Class "IFlavoursOrderServer"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{90fe460d-7996-49ca-a085-054466973111}"))
+	    quid       	"634B76050333"
+	    stereotype 	"Interface"
+	    operations 	(list Operations
+		(object Operation "WebViewLoaded"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460054"))
+		    quid       	"634B76460054"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "WebViewAttached"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9022a0ee-4e3b-4ebf-9fdc-b51bf6e4443e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460084"))
+		    quid       	"634B76460084"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ConnectToServicePoint"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e7762c6c-3f6e-49b7-b795-ade0e705aac8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460168"))
+		    quid       	"634B76460168"
+		    parameters 	(list Parameters
+			(object Parameter "servicePointIdentity"
+			    quid       	"634B7646017F"
+			    type       	"string"))
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Speak"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9006f63a-f41f-4ca5-81ba-91578660d4d4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764601BB"))
+		    quid       	"634B764601BB"
+		    parameters 	(list Parameters
+			(object Parameter "text"
+			    quid       	"634B764601CF"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckPermissionsForServicePointScan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f5ade777-4b64-49ed-8a59-248d2140ec49}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764601F8"))
+		    quid       	"634B764601F8"
+		    documentation 	
+|
+|Check if application is granted to access infrastructure for service point scanning 
+|
+		    
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RequestPermissionsForServicePointScan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ba8d35eb-61c2-4e41-9464-66a58f9e7e7b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460227"))
+		    quid       	"634B76460227"
+		    documentation 	
+|
+|Request Permission to access infrastructure for service point scanning 
+|
+		    
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckPermissionsPassivePushNotification"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{55d5e7c5-5e7f-45c5-a6cc-9e9dcb322cd0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460251"))
+		    quid       	"634B76460251"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RequestPermissionsPassivePushNotification"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1f1dc909-3bb8-480d-897b-8b48b65ad373}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764602C9"))
+		    quid       	"634B764602C9"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckPermissionsToAccessCurrentLocation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a330bb9e-1b46-439b-b7a8-1792b7bb011f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460300"))
+		    quid       	"634B76460300"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RequestPermissionsToAccessCurrentLocation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6932fafa-61f2-49fe-916c-4fea36a28676}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460333"))
+		    quid       	"634B76460333"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMealInvitationQRCode"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9a168c2f-de48-47d1-ab4c-d46d48292364}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76460361"))
+		    quid       	"634B76460361"
+		    parameters 	(list Parameters
+			(object Parameter "color"
+			    quid       	"634B76460372"
+			    type       	"string"))
+		    result     	"string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "MealInvitation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8fabd5f0-b381-439c-a726-932a70dcdf4d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764603BD"))
+		    quid       	"634B764603BD"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B764603CB"
+			    type       	"DontWaitApp.Messmate"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendMealInvitationMessage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8b5ff64f-4f61-432f-b325-0c60437e55c0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76470039"))
+		    quid       	"634B76470039"
+		    parameters 	(list Parameters
+			(object Parameter "channel"
+			    quid       	"634B7647004A"
+			    type       	"DontWaitApp.InvitationChannel")
+			(object Parameter "endPoint"
+			    quid       	"634B76470055"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PickContact"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{540090f5-2088-4e12-9219-e9c7264b7076}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764700D5"))
+		    quid       	"634B764700D5"
+		    result     	"System.Threading.Tasks.Task`1[[DontWaitApp.Contact,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AcceptInvitation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{009b6efd-a074-450e-b2d7-58755a212bb3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76470119"))
+		    quid       	"634B76470119"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B76470125"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "messageID"
+			    quid       	"634B7647013A"
+			    type       	"string"))
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DenyInvitation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{149a02ff-8930-49cb-ae78-fa52cbea5b39}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7647016D"))
+		    quid       	"634B7647016D"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B7647017A"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "messageID"
+			    quid       	"634B76470186"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CancelMealInvitation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a7914fd9-b836-4504-ab6a-407c4803f4f6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764701B6"))
+		    quid       	"634B764701B6"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B764701CB"
+			    type       	"DontWaitApp.Messmate"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetFriendlyName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f4667ff4-da0b-4ea8-9f99-b892383facf2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76470235"))
+		    quid       	"634B76470235"
+		    result     	"System.Threading.Tasks.Task`1[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetFriendlyName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{46d4ae2e-cbe8-4597-bf34-a3d4755e098b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7647026B"))
+		    quid       	"634B7647026B"
+		    parameters 	(list Parameters
+			(object Parameter "firendlyName"
+			    quid       	"634B76470278"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetNeighborhoodFoodServers"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8491fd19-2882-4b78-ac5e-84db4b54ccde}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7647030E"))
+		    quid       	"634B7647030E"
+		    parameters 	(list Parameters
+			(object Parameter "location"
+			    quid       	"634B7647031A"
+			    type       	"FlavourBusinessFacade.EndUsers.Coordinate"))
+		    result     	"System.Threading.Tasks.Task<System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointInfo>>"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetHallLayout"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{232e53ac-ddc8-4e58-9083-dbbb26002e43}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76470392"))
+		    quid       	"634B76470392"
+		    result     	"System.Threading.Tasks.Task`1[[RestaurantHallLayoutModel.HallLayout,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsSessionActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{68a07293-c4b2-44e2-a86a-aa1b7d858fb9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764703B7"))
+		    quid       	"634B764703B7"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "UpdateHallsServicePointStates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1296cf3c-a0c6-4483-a8ec-3c2ac3874660}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7648007C"))
+		    quid       	"634B7648007C"
+		    parameters 	(list Parameters
+			(object Parameter "hallsServicePointsState"
+			    quid       	"634B7648008D"
+			    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.ServicesContextResources.ServicePointState>"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "CurrentFoodServicesClientSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8fedff9e-af0f-4f35-98de-a9bf18486a23}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764800CA")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B764800CA"
+		    type       	"DontWaitApp.IFoodServicesClientSessionViewModel"
+		    exportControl 	"Public")
+		(object ClassAttribute "WaiterView"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c4fef46e-2e44-414e-89a8-cdebcff380cc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76480125")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B76480125"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "ISOCurrencySymbol"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{71dba63a-ee1a-457e-aa4a-dc758bc11a06}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7648018A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B7648018A"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Language"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ee325a62-08c4-4121-aed8-03e1f94eb337}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764801CE")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B764801CE"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "FontsLink"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{07d8eaf5-a147-4f73-9176-9700a86ebe64}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7648020C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B7648020C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Path"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6c4436d3-a29e-4835-9076-68c772696479}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7648024D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7648024D"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Name"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ab9ec6c8-5f98-4020-9832-dd90ac068f28}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B76480294")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B76480294"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Trademark"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{10656240-faac-4a11-94d7-168b7788c05b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764802DD")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B764802DD"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Halls"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{86b22218-7670-4c8d-be56-e4e68c2ad7fc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7648034D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7648034D"
+		    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout>"
+		    exportControl 	"Public")
+		(object ClassAttribute "EndUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9c56bc8e-7682-4589-8e34-a76996e6b77a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B764803D0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B764803D0"
+		    type       	"FlavourBusinessFacade.ViewModel.IUser"
+		    exportControl 	"Public"))
+	    module     	"Component View::DontWaitApp::DontWaitApp"
+	    quidu      	"5EFCA653000D"
+	    language   	"C#")
+	(object Class "IFoodServicesClientSessionViewModel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{54e86af5-3fd6-4b5e-94ef-ca06f9bbfe0d}"))
+	    quid       	"634B7686016C"
+	    stereotype 	"Interface"
+	    operations 	(list Operations
+		(object Operation "SuggestMenuItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ddc0de45-90e3-4ad6-ad3b-ba01880aef0a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D022F"))
+		    quid       	"634B769D022F"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B769D023A"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "menuItemUri"
+			    quid       	"634B769D0245"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetCandidateMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0d8183bc-41b0-4601-a291-16c18ad31b08}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D02B6"))
+		    quid       	"634B769D02B6"
+		    result     	"System.Collections.Generic.IList`1[[DontWaitApp.Messmate,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1956fcb0-8a1a-4df8-ac01-057fac87a883}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D02D5"))
+		    quid       	"634B769D02D5"
+		    result     	"System.Collections.Generic.IList`1[[DontWaitApp.Messmate,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RefreshMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a2590c45-f6aa-404e-9547-897155c1ed10}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D02EE"))
+		    quid       	"634B769D02EE"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendItemsForPreparation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{89a16f62-175a-41b9-bb83-31c88100e6b8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D033E"))
+		    quid       	"634B769D033E"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AddItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{397f6f36-da35-4f39-9e7e-0512e87b8b79}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D0366"))
+		    quid       	"634B769D0366"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"634B769D0371"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bac19771-bd08-445b-9ed1-601e0dfa67d1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D0391"))
+		    quid       	"634B769D0391"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"634B769D039C"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ItemChanged"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{69fba72b-056c-43d5-a999-2ba977e87a7c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769D03C2"))
+		    quid       	"634B769D03C2"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"634B769D03CD"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AddSharingItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2e3da50d-bf09-43b3-ae13-4feaf667b2f2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769E0005"))
+		    quid       	"634B769E0005"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"634B769E0011"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EndOfMenuItemProposal"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d7ff4093-88ba-4478-93a2-fe911236cb04}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769E003A"))
+		    quid       	"634B769E003A"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"634B769E0045"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "messageID"
+			    quid       	"634B769E004E"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "MainSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c3c9d4ab-41b4-41a5-a0cb-6d2d6cba58e5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B769E006F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B769E006F"
+		    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"
+		    exportControl 	"Public"))
+	    module     	"Component View::DontWaitApp::DontWaitApp"
+	    quidu      	"5EFCA653000D"
+	    language   	"C#")
+	(object Class "FoodServicesClientSessionViewModel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{5ce0ff0c-1c71-4161-85e4-12150431675e}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"15")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{5ce0ff0c-1c71-4161-85e4-12150431675e}"))
+	    quid       	"634B7B940315"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"634B7BDC0062"
+		    supplier   	"Logical View::DontWaitApp::IFoodServicesClientSessionViewModel"
+		    quidu      	"634B7686016C")
+		(object Realize_Relationship
+		    quid       	"634B7BDC0073"
+		    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+		    quidu      	"416244F90271"))
+	    operations 	(list Operations
+		(object Operation "GetMessages"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ca16b127-1d5f-46e5-aac6-633a14ae9794}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0133"))
+		    quid       	"634B7BDD0133"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "YouMustDecideMessageForward"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4a4ab174-50dd-4220-88c1-cb6e1d925628}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0161"))
+		    quid       	"634B7BDD0161"
+		    parameters 	(list Parameters
+			(object Parameter "message"
+			    quid       	"634B7BDD016E"
+			    type       	"FlavourBusinessFacade.EndUsers.Message"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "ShareItemHasChangeMessageForward"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{24360209-3b94-4a93-8d33-364f5c406bae}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0193"))
+		    quid       	"634B7BDD0193"
+		    parameters 	(list Parameters
+			(object Parameter "message"
+			    quid       	"634B7BDD01A0"
+			    type       	"FlavourBusinessFacade.EndUsers.Message"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "MessageReceived"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{837f1943-f15c-49d8-a50b-2832acab8771}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0207"))
+		    quid       	"634B7BDD0207"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"634B7BDD0212"
+			    type       	"FlavourBusinessFacade.EndUsers.IMessageConsumer"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionItemsStateChanged"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2784806b-281e-44df-af8d-dd847bb7c8a9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0293"))
+		    quid       	"634B7BDD0293"
+		    parameters 	(list Parameters
+			(object Parameter "newItemsState"
+			    quid       	"63A7561A0270"
+			    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionItemStateChanged"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{eaba9b2e-24d1-40c9-a56c-245a47e9c3cb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0327"))
+		    quid       	"634B7BDD0327"
+		    parameters 	(list Parameters
+			(object Parameter "itemUid"
+			    quid       	"63A7561A02FF"
+			    type       	"string")
+			(object Parameter "itemOwnerSession"
+			    quid       	"63A7561A031F"
+			    type       	"string")
+			(object Parameter "isShared"
+			    quid       	"63A7561A033A"
+			    type       	"bool")
+			(object Parameter "shareInSessions"
+			    quid       	"63A7561A0367"
+			    type       	"System.Collections.Generic.List<string>"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionChangeState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0dce1877-b96f-4558-98b6-66fb704a80f1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDD0396"))
+		    quid       	"634B7BDD0396"
+		    parameters 	(list Parameters
+			(object Parameter "_object"
+			    quid       	"634B7BDD03A3"
+			    type       	"object")
+			(object Parameter "member"
+			    quid       	"634B7BDD03AE"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "GetOrUpdateFoodServicesClientSessionData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{357b89ea-2005-40f0-96aa-5f69095e1954}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE001B"))
+		    quid       	"634B7BDE001B"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetFoodServicesClientSessionData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{72f72a6c-225e-4775-a059-9aab2871f785}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE004A"))
+		    quid       	"634B7BDE004A"
+		    documentation 	
+|
+|this method gets food services client session  data and synchronize caching data 
+|
+		    
+		    parameters 	(list Parameters
+			(object Parameter "foodServicesClientSessionUri"
+			    quid       	"634B7BDE0058"
+			    documentation 	
+|
+|Defines the Uri of food services client session necessary to access the  FoodServicesClientSession from server
+|
+			    
+			    type       	"string"))
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionReconnected"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c8a403e0-d804-40a6-8543-4bee48d1319f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE007D"))
+		    quid       	"634B7BDE007D"
+		    parameters 	(list Parameters
+			(object Parameter "sender"
+			    quid       	"634B7BDE008A"
+			    type       	"object"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "GetCandidateMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7872a80f-383a-4e7e-a7c0-c81c99c9573a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE00AF"))
+		    quid       	"634B7BDE00AF"
+		    result     	"System.Collections.Generic.IList`1[[DontWaitApp.Messmate,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{af6e8091-4784-46b6-82af-70336ac8b8fd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE00CA"))
+		    quid       	"634B7BDE00CA"
+		    result     	"System.Collections.Generic.IList`1[[DontWaitApp.Messmate,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RefreshMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE00E0"))
+		    quid       	"634B7BDE00E0"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMessmatesFromServer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4f182b25-801d-44a9-bb30-ca0320c4c7d5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0142"))
+		    quid       	"634B7BDE0142"
+		    result     	"System.Threading.Tasks.Task"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendItemsForPreparation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE015F"))
+		    quid       	"634B7BDE015F"
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AddItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9748ebb1-5f4e-4afc-839d-40a2b3667c25}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0173"))
+		    quid       	"634B7BDE0173"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"63A7561B03B7"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AddSharingItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{045d624f-d908-4164-a3be-e9d408ed4b70}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0190"))
+		    quid       	"634B7BDE0190"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"63A7561C0002"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ItemChanged"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0f73c1f0-60e8-4045-b512-6f80f7a71888}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE01AC"))
+		    quid       	"634B7BDE01AC"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"63A7561C0031"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ea4782f3-0b61-4478-a9e0-9deaac39207e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE01C7"))
+		    quid       	"634B7BDE01C7"
+		    parameters 	(list Parameters
+			(object Parameter "item"
+			    quid       	"63A7561C0061"
+			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetItemFromOwner"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6a9b4e5b-be1a-40c7-bc79-3d3a86e8ad87}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0232"))
+		    quid       	"634B7BDE0232"
+		    documentation 	
+|
+|Gets itemPreparation
+|
+		    
+		    parameters 	(list Parameters
+			(object Parameter "itemUid"
+			    quid       	"634B7BDE0240"
+			    documentation 	
+|
+|Defines the item unique identity
+|
+			    
+			    type       	"string")
+			(object Parameter "itemOwnerSession"
+			    quid       	"634B7BDE024B"
+			    documentation 	
+|
+|Defines the session where item created
+|
+			    
+			    type       	"string"))
+		    result     	"System.Threading.Tasks.Task`1[[FlavourBusinessManager.RoomService.ItemPreparation,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "MenuItemProposalMessageForword"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1ad75d89-e702-4d8e-8577-316b6b2a7977}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0275"))
+		    quid       	"634B7BDE0275"
+		    parameters 	(list Parameters
+			(object Parameter "message"
+			    quid       	"634B7BDE0283"
+			    type       	"FlavourBusinessFacade.EndUsers.Message"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "EndOfMenuItemProposal"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{50033e95-3a4d-492d-98ba-f14f0e359418}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE029C"))
+		    quid       	"634B7BDE029C"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"63A7561C018D"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "messageID"
+			    quid       	"63A7561C01A1"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SuggestMenuItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c36bf954-e18c-4f82-aef4-ea94b18a4747}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE02C1"))
+		    quid       	"634B7BDE02C1"
+		    parameters 	(list Parameters
+			(object Parameter "messmate"
+			    quid       	"63A7561C01D9"
+			    type       	"DontWaitApp.Messmate")
+			(object Parameter "menuItemUri"
+			    quid       	"63A7561C01F7"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a5f046d9-c7fa-43f3-8c49-24c32be142f1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0332"))
+		    quid       	"634B7BDE0332"
+		    parameters 	(list Parameters
+			(object Parameter "clientSessionData"
+			    quid       	"634B7BDE0341"
+			    type       	"FlavourBusinessFacade.EndUsers.ClientSessionData")
+			(object Parameter "flavoursOrderServer"
+			    quid       	"634B7BDE034A"
+			    type       	"DontWaitApp.FlavoursOrderServer"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5d0dd24b-3767-4736-885b-eae90a53459e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE0386"))
+		    quid       	"634B7BDE0386"
+		    parameters 	(list Parameters
+			(object Parameter "menuData"
+			    quid       	"634B7BDE0393"
+			    type       	"DontWaitApp.MenuData")
+			(object Parameter "flavoursOrderServer"
+			    quid       	"634B7BDE039D"
+			    type       	"DontWaitApp.FlavoursOrderServer"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "FoodServicesClientSessionViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1d430442-9e08-4282-aab1-0a78cffa06f7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A753E60228"))
+		    quid       	"63A753E60228"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "IsActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{64cca5c3-be6b-43ce-a7dd-d3bc2486a79e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A753E70219"))
+		    quid       	"63A753E70219"
+		    result     	"System.Threading.Tasks.Task`1[[System.Nullable<System.Boolean>,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetBill"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{dfe09297-df83-49c4-8767-8c4627cccaf4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A753E702A9"))
+		    quid       	"63A753E702A9"
+		    result     	"System.Threading.Tasks.Task`1[[FlavourBusinessFacade.RoomService.IBill,{BC023782-2913-447E-90C1-AF934F8F2CE1}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Pay"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A753E702E1"))
+		    quid       	"63A753E702E1"
+		    parameters 	(list Parameters
+			(object Parameter "payment"
+			    quid       	"63A753E702F6"
+			    type       	"FinanceFacade.IPayment")
+			(object Parameter "tipAmount"
+			    quid       	"63A753E7030A"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ObjectActivation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ebc255f7-6774-4f15-b12a-d8a9cb85c1c3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7548A0323"))
+		    quid       	"63A7548A0323"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BeforeCommitObjectState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f7bf6e7f-882f-4e4c-8834-b69c52ad3abf}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7548A035C"))
+		    quid       	"63A7548A035C"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "ObjectActivation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4b9ec367-f5b9-4321-8199-c4133265bfc3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7561C0238"))
+		    quid       	"63A7561C0238"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BeforeCommitObjectState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4c3d8994-d157-4a4c-94ba-a3d6d645331b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7561C0276"))
+		    quid       	"63A7561C0276"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "MenuData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{73f366a8-2d78-456f-aacd-b70114704a4f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE03B2"))
+		    quid       	"634B7BDE03B2"
+		    type       	"DontWaitApp.MenuData"
+		    exportControl 	"Public")
+		(object ClassAttribute "FoodServicesClientSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDE03E6")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7BDE03E6"
+		    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServicePointState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f4b050ec-01e9-4aab-9067-55c68e958c75}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF0030"))
+		    quid       	"634B7BDF0030"
+		    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointState"
+		    exportControl 	"Public")
+		(object ClassAttribute "PreparationItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{63add039-3bee-4d8b-8d15-002e6e67aa63}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF0046"))
+		    quid       	"634B7BDF0046"
+		    type       	"System.Collections.Generic.IList`1[[FlavourBusinessManager.RoomService.ItemPreparation,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    exportControl 	"Public")
+		(object ClassAttribute "MainSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0575115b-ff76-471d-b365-a880011b0050}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF00DD"))
+		    quid       	"634B7BDF00DD"
+		    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"
+		    exportControl 	"Public")
+		(object ClassAttribute "MessagesLock"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9714f9b4-1950-4bd5-9a10-a482c42d355e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF014B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF014B"
+		    type       	"object")
+		(object ClassAttribute "ClientSessionLock"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b2483c93-a9f2-41f9-b223-ea85797d1490}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF0181")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF0181"
+		    type       	"object")
+		(object ClassAttribute "ClientSessionToken"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2cb552e5-2926-44aa-a051-93f9d81d4045}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF025B")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF025B"
+		    type       	"string"
+		    exportControl 	"Implementation")
+		(object ClassAttribute "CandidateMessmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9e5492a1-32f6-4fb9-929d-f0d7a65fd727}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF02B8")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF02B8"
+		    type       	"System.Collections.Generic.IList<DontWaitApp.Messmate>")
+		(object ClassAttribute "MessmatesLoaded"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{50126694-0421-469a-980e-029ead5df9e4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF030D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF030D"
+		    type       	"bool"
+		    exportControl 	"Implementation")
+		(object ClassAttribute "Messmates"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d1b44dee-1753-48a2-89ba-fa7df5d31ecc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF0348")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BDF0348"
+		    type       	"System.Collections.Generic.IList<DontWaitApp.Messmate>")
+		(object ClassAttribute "OrderItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{67a87990-9414-48bc-8d1d-bc20335eb6ea}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BDF03AB")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+13")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B7BDF03AB"
+		    type       	"List<FlavourBusinessManager.RoomService.ItemPreparation>"
+		    exportControl 	"Public")
+		(object ClassAttribute "SessionID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3e58cac8-fc04-4ff0-9ec9-68df0268646b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BE00029")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BE00029"
+		    type       	"string")
+		(object ClassAttribute "clientSessionData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{356d9786-15a7-41f6-a44c-19ff475abbe8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BE00054")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BE00054"
+		    type       	"FlavourBusinessFacade.EndUsers.ClientSessionData")
+		(object ClassAttribute "lastServicePoinMenuData"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{20bd8838-4798-4082-a3e4-c40299bce52d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BE00083")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BE00083"
+		    type       	"DontWaitApp.MenuData")
+		(object ClassAttribute "FlavoursOrderServer"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b57c2c39-f423-4c81-b4d4-e6459daed045}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7BE000AD")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634B7BE000AD"
+		    type       	"DontWaitApp.FlavoursOrderServer"
+		    exportControl 	"Implementation")
+		(object ClassAttribute "ServicePointIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{af736c3a-101a-4861-8d08-5c7aebc3240c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF00064")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF00064"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "MenuName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c2a37f04-cc75-4af0-8cff-e716cc7b733d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF00066")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF00066"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "MenuFile"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ae56ec83-fb03-4330-bb36-afd078191be7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF00067")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF00067"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "MenuRoot"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{54a19a1a-6f07-4e80-be81-352a12d88b9c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF0006A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF0006A"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ClientSessionID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9f1c50f4-2a52-4c89-a3d6-4c3acecf7a74}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF0006C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF0006C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServicesPointName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{489084e0-abfa-4bc7-970d-59cd80ca09e7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF00071")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF00071"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServicesContextLogo"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5406671a-d0c3-4f26-926c-1901a904bf65}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7EF00074")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"634B7EF00074"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "MainSessionID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d9f5d9ac-a2a5-4dbc-b592-b042d696a42b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA1D6026D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"634BA1D6026D"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "FoodServiceClientSessionUri"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{884da2a5-7653-4335-86a0-d68ba6f3e5b3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA1ED026D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+9"))
+		    quid       	"634BA1ED026D"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DefaultMealTypeUri"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3f2b9ae9-82ad-4b3e-90ed-a9c417051c22}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA1EF0120")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+10"))
+		    quid       	"634BA1EF0120"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServedMealTypesUrisStream"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4ea3afdd-49f4-4466-a7f0-f8af9c15732f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA219016D")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+11")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"634BA219016D"
+		    type       	"string")
+		(object ClassAttribute "SessionType"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{44cbee97-c7e1-40e1-bcd0-af06664d1732}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634BA21B0175")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+12"))
+		    quid       	"634BA21B0175"
+		    type       	"FlavourBusinessFacade.EndUsers.SessionType"
+		    exportControl 	"Public")
+		(object ClassAttribute "ServedMealTypesUris"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3141a8af-e238-4b7b-96a0-b9e4f102974d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A754930052")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"63A754930052"
+		    type       	"System.Collections.Generic.List<string>"
+		    exportControl 	"Public")
+		(object ClassAttribute "OrderItemsDictionary"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b44c1f47-af25-4dcf-b59f-f818941c6397}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A755180099")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"63A755180099"
+		    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessManager.RoomService.ItemPreparation>")
+		(object ClassAttribute "DeliveryPlace"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ec5a44a6-bb30-4a35-aa38-67b6ab70a130}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7551E0004"))
+		    quid       	"63A7551E0004"
+		    type       	"FlavourBusinessFacade.EndUsers.IPlace"
+		    exportControl 	"Public")
+		(object ClassAttribute "GetServicePointDataTasks"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1019ceeb-b902-4e3a-af00-af2b159e0a96}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7551E01D9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"63A7551E01D9"
+		    type       	"System.Collections.Generic.Dictionary<string, System.Threading.Tasks.Task<bool>>")
+		(object ClassAttribute "Bill"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4ad45d89-6e83-4805-8f54-19858baaf192}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7551F00B5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"63A7551F00B5"
+		    type       	"FlavourBusinessFacade.RoomService.IBill")
+		(object ClassAttribute "MenuItemProposalMessage"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7551F0149")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"63A7551F0149"
+		    type       	"FlavourBusinessFacade.EndUsers.Message")
+		(object ClassAttribute "DeliveryPlaceJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ccaeca74-9ca0-4cbe-aebc-f9d785696fdf}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A7569803E1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+14"))
+		    quid       	"63A7569803E1"
+		    type       	"string"))
+	    module     	"Component View::DontWaitApp::DontWaitApp"
+	    quidu      	"5EFCA653000D"
+	    language   	"C#"
+	    persistence 	"Persistent")
 	(object Association "ClientSesionOrderItems"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -745,7 +3103,220 @@
 			    value      	FALSE))
 		    quid       	"5F0183B803CD"
 		    supplier   	"Logical View::DontWaitApp::MenuData"
-		    quidu      	"5F01680702E2"))))
+		    quidu      	"5F01680702E2")))
+	(object Association "AppClientAsGuest"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"Persistent"
+		    name       	"Persistent"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"62CFC7A003AE")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"96589fb5-74e3-446b-a76c-5aa0742f5f32"))
+	    quid       	"62CFC7A003AE"
+	    roles      	(list role_list
+		(object Role "ClientAsGuest"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"62CFC7A103B7")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{76fddda3-8252-4547-9377-63f55bb475a5}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"62CFC7A103B7"
+		    label      	"ClientAsGuest"
+		    supplier   	"Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient"
+		    quidu      	"5C060F310072"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"62CFC7A103BE")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{af39d0ec-0ec0-4d22-b109-3bd49fe241ff}"))
+		    quid       	"62CFC7A103BE"
+		    supplier   	"Logical View::DontWaitApp::ApplicationSettings"
+		    quidu      	"5EFD67BC02AC")))
+	(object Association "ClientSesionOrderItems"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"634B78400105")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"d5c354c5-f20e-409b-b824-6f0d350186b3"))
+	    quid       	"634B78400105"
+	    roles      	(list role_list
+		(object Role "OrderItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B7841037E")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{682be03e-4981-4b75-9c89-605582538e6f}")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Cascade Delete"
+			    value      	TRUE))
+		    quid       	"634B7841037E"
+		    label      	"OrderItems"
+		    supplier   	"Logical View::FlavourBusinessManager::RoomService::ItemPreparation"
+		    quidu      	"5CDA68D10304"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B78410383")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2347def9-23ca-4b3a-a38d-695bdc183628}"))
+		    quid       	"634B78410383"
+		    supplier   	"Logical View::DontWaitApp::IFoodServicesClientSessionViewModel"
+		    quidu      	"634B7686016C")))
+	(object Association "AppFoodServicesClientSession"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"634B8EEE0048")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"263140f9-632e-43dc-a923-9e37a5d9a348"))
+	    quid       	"634B8EEE0048"
+	    roles      	(list role_list
+		(object Role "ActiveSessions"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B8EEF004C")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fbe5e5fa-47ac-4bd7-8ddd-3a4554cca33e}")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Referential Integrity"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Cascade Delete"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"634B8EEF004C"
+		    label      	"ActiveSessions"
+		    supplier   	"Logical View::DontWaitApp::FoodServicesClientSessionViewModel"
+		    quidu      	"634B7B940315"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$3"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"634B8EEF004F")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{20e3fac5-b213-40d2-b263-2c26ada2e22b}"))
+		    quid       	"634B8EEF004F"
+		    supplier   	"Logical View::DontWaitApp::ApplicationSettings"
+		    quidu      	"5EFD67BC02AC"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "FoofServiceSessionDeliverPlace"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"63A74CEC01EF")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"fe596f30-a4c4-44cb-91c6-4f0b7200fd8f"))
+	    quid       	"63A74CEC01EF"
+	    roles      	(list role_list
+		(object Role "DeliveryPlace"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A74CED01F3")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ee217062-b933-4be3-9848-7efb7ef4f440}"))
+		    quid       	"63A74CED01F3"
+		    label      	"DeliveryPlace"
+		    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IPlace"
+		    quidu      	"62CF8F5F0018"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$4"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63A74CED0209")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c67986fb-be61-45d6-a925-73aeeb8fd3f2}"))
+		    quid       	"63A74CED0209"
+		    supplier   	"Logical View::DontWaitApp::IFoodServicesClientSessionViewModel"
+		    quidu      	"634B7686016C"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"5EFD67AB031F"
@@ -756,11 +3327,9 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::DontWaitApp::ApplicationSettings" @1
+		(object ClassView "Class" "Logical View::DontWaitApp::IFlavoursOrderServer" @1
 		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    location   	(819, 640)
+		    location   	(337, 253)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -773,24 +3342,25 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(256, 312)
+			location   	(87, 241)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	1126
+			max_width  	501
 			justify    	0
-			label      	"ApplicationSettings")
+			label      	"IFlavoursOrderServer")
+		    icon       	"Interface"
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"5EFD67BC02AC"
-		    width      	1144
-		    height     	681
+		    quidu      	"634B76050333"
+		    width      	519
+		    height     	225
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ItemPreparation" @2
+		(object ClassView "Class" "Logical View::DontWaitApp::MenuData" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(3050, 1340)
+		    location   	(3958, 481)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -803,63 +3373,15 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(2687, 1221)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	726
-			justify    	0
-			label      	"ItemPreparation")
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"5CDA68D10304"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(2687, 1432)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	18
-			max_width  	2000)
-		    width      	744
-		    height     	262
-		    annotation 	8)
-		(object ClassView "Class" "Logical View::DontWaitApp::MenuData" @3
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    location   	(1322, 1375)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@3
-			location   	(940, 1206)
+			location   	(3576, 312)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	764
 			justify    	0
 			label      	"MenuData")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@3
-			location   	(940, 1156)
+			Parent_View 	@2
+			location   	(3576, 262)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -870,11 +3392,77 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F01680702E2"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(3576, 373)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	578)
 		    width      	782
 		    height     	462
 		    annotation 	8)
+		(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ItemPreparation" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2543, 450)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(2180, 331)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	726
+			justify    	0
+			label      	"ItemPreparation")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5CDA68D10304"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(2180, 436)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	50
+			max_width  	2000)
+		    width      	744
+		    height     	262
+		    annotation 	8)
 		(object AssociationViewNew "ClientSesionOrderItems" @4
-		    location   	(2195, 1353)
+		    location   	(3241, 491)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -887,7 +3475,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @5
 			Parent_View 	@4
-			location   	(2161, 1219)
+			location   	(3207, 357)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -913,7 +3501,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "OrderItems" @6
 			    Parent_View 	@4
-			    location   	(920, -19)
+			    location   	(1966, -881)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -926,7 +3514,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @7
 				Parent_View 	@6
-				location   	(2581, 1312)
+				location   	(3055, 548)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -943,20 +3531,20 @@
 				max_width  	230
 				justify    	0
 				label      	"+OrderItems"
-				pctDist    	0.800000
-				height     	42
+				pctDist    	0.570552
+				height     	57
 				orientation 	0)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5F0183B803C8"
 			    client     	@4
-			    supplier   	@2
+			    supplier   	@3
 			    line_style 	3
-			    origin_attachment 	(2195, 1353)
-			    terminal_attachment 	(2678, 1353)
+			    origin_attachment 	(3241, 491)
+			    terminal_attachment 	(2915, 491)
 			    label      	(object SegLabel @8
 				Parent_View 	@6
-				location   	(2629, 1407)
+				location   	(2948, 438)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -978,12 +3566,640 @@
 				orientation 	1))
 			(object RoleView "$UNNAMED$0" @9
 			    Parent_View 	@4
-			    location   	(920, -19)
+			    location   	(1966, -881)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5F0183B803CD"
 			    client     	@4
-			    supplier   	@3
+			    supplier   	@2
 			    line_style 	3
-			    origin_attachment 	(2195, 1353)
-			    terminal_attachment 	(1713, 1353))))))))
+			    origin_attachment 	(3241, 491)
+			    terminal_attachment 	(3567, 491))))
+		(object ClassView "Class" "Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(4033, 1397)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(3708, 1275)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	651
+			justify    	0
+			label      	"FoodServiceClient")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5C060F310072"
+		    width      	669
+		    height     	269
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::DontWaitApp::FoodServicesClientSessionViewModel" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1180, 878)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(777, 787)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	807
+			justify    	0
+			label      	"FoodServicesClientSessionViewModel")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"634B7B940315"
+		    width      	825
+		    height     	206
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::DontWaitApp::ApplicationSettings" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(2690, 1340)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(2343, 1171)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	695
+			justify    	0
+			label      	"ApplicationSettings")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"5EFD67BC02AC"
+		    width      	713
+		    height     	362
+		    annotation 	8)
+		(object AssociationViewNew "AppClientAsGuest" @13
+		    location   	(3372, 1447)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @14
+			Parent_View 	@13
+			location   	(3275, 1333)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"AppClientAsGuest"
+			pctDist    	-1.116667
+			height     	115
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"62CFC7A003AE"
+		    roleview_list 	(list RoleViews
+			(object RoleView "ClientAsGuest" @15
+			    Parent_View 	@13
+			    location   	(2553, 807)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @16
+				Parent_View 	@15
+				location   	(3515, 1393)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	292
+				justify    	0
+				label      	"+ClientAsGuest"
+				pctDist    	0.436806
+				height     	55
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"62CFC7A103B7"
+			    client     	@13
+			    supplier   	@10
+			    line_style 	3
+			    origin_attachment 	(3372, 1447)
+			    terminal_attachment 	(3699, 1444)
+			    label      	(object SegLabel @17
+				Parent_View 	@15
+				location   	(3633, 1504)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.801223
+				height     	57
+				orientation 	1))
+			(object RoleView "$UNNAMED$1" @18
+			    Parent_View 	@13
+			    location   	(2553, 807)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"62CFC7A103BE"
+			    client     	@13
+			    supplier   	@12
+			    line_style 	3
+			    origin_attachment 	(3372, 1447)
+			    terminal_attachment 	(3046, 1447))))
+		(object AssociationViewNew "AppFoodServicesClientSession" @19
+		    location   	(1927, 1105)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @20
+			Parent_View 	@19
+			location   	(2026, 1173)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	566
+			justify    	0
+			label      	"AppFoodServicesClientSession"
+			pctDist    	2.150000
+			height     	68
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"634B8EEE0048"
+		    roleview_list 	(list RoleViews
+			(object RoleView "ActiveSessions" @21
+			    Parent_View 	@19
+			    location   	(-763, -235)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @22
+				Parent_View 	@21
+				location   	(1591, 1046)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	309
+				justify    	0
+				label      	"+ActiveSessions"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"634B8EEF004C"
+			    client     	@19
+			    supplier   	@11
+			    line_style 	0
+			    label      	(object SegLabel @23
+				Parent_View 	@21
+				location   	(1579, 943)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "$UNNAMED$3" @24
+			    Parent_View 	@19
+			    location   	(-763, -235)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"634B8EEF004F"
+			    client     	@19
+			    supplier   	@12
+			    line_style 	0
+			    label      	(object SegLabel @25
+				Parent_View 	@24
+				location   	(2276, 1269)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::DontWaitApp::IFoodServicesClientSessionViewModel" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(1181, 318)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(806, 309)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	751
+			justify    	0
+			label      	"IFoodServicesClientSessionViewModel")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"634B7686016C"
+		    width      	769
+		    height     	218
+		    annotation 	8)
+		(object AssociationViewNew "ClientSesionOrderItems" @27
+		    location   	(1867, 384)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @28
+			Parent_View 	@27
+			location   	(1886, 296)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"ClientSesionOrderItems"
+			pctDist    	0.816667
+			height     	89
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"634B78400105"
+		    roleview_list 	(list RoleViews
+			(object RoleView "OrderItems" @29
+			    Parent_View 	@27
+			    location   	(611, -31)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @30
+				Parent_View 	@29
+				location   	(2308, 276)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	230
+				justify    	0
+				label      	"+OrderItems"
+				pctDist    	1.415785
+				height     	151
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"634B7841037E"
+			    client     	@27
+			    supplier   	@3
+			    line_style 	0
+			    label      	(object SegLabel @31
+				Parent_View 	@29
+				location   	(2145, 357)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "$UNNAMED$2" @32
+			    Parent_View 	@27
+			    location   	(611, -31)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"634B78410383"
+			    client     	@27
+			    supplier   	@26
+			    line_style 	0)))
+		(object RealizeView "" @33
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"634B7BDC0062"
+		    client     	@11
+		    supplier   	@26
+		    line_style 	3
+		    origin_attachment 	(1178, 775)
+		    terminal_attachment 	(1178, 426))
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IPlace" @34
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(297, 734)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@34
+			location   	(56, 712)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	482
+			justify    	0
+			label      	"IPlace")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"62CF8F5F0018"
+		    width      	500
+		    height     	244
+		    annotation 	8)
+		(object AssociationViewNew "FoofServiceSessionDeliverPlace" @35
+		    location   	(747, 521)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @36
+			Parent_View 	@35
+			location   	(747, 462)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	597
+			justify    	0
+			label      	"FoofServiceSessionDeliverPlace"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"63A74CEC01EF"
+		    roleview_list 	(list RoleViews
+			(object RoleView "DeliveryPlace" @37
+			    Parent_View 	@35
+			    location   	(-434, 203)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @38
+				Parent_View 	@37
+				location   	(570, 559)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	297
+				justify    	0
+				label      	"+DeliveryPlace"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"63A74CED01F3"
+			    client     	@35
+			    supplier   	@34
+			    line_style 	0
+			    label      	(object SegLabel @39
+				Parent_View 	@37
+				location   	(590, 655)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "$UNNAMED$4" @40
+			    Parent_View 	@35
+			    location   	(-434, 203)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"63A74CED0209"
+			    client     	@35
+			    supplier   	@26
+			    line_style 	0)))))))

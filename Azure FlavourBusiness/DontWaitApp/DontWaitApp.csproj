@@ -148,6 +148,9 @@
     <Compile Include="..\..\FlavourBusinessManager\Place.cs">
       <Link>Place.cs</Link>
     </Compile>
+    <Compile Include="..\..\FlavourBusinessManager\PlaceData.cs">
+      <Link>PlaceData.cs</Link>
+    </Compile>
     <Compile Include="..\FlavourBusinessFacade\OpeningHours.cs">
       <Link>OpeningHours.cs</Link>
     </Compile>

@@ -15,6 +15,7 @@ namespace FlavourBusinessFacade.RoomService
         [RoleAMultiplicityRange(1)]
         System.Collections.Generic.List<FinanceFacade.IPayment> Payments { get; }
 
+        /// <MetaDataID>{349fd810-c1ab-455c-b818-f3e09d36070f}</MetaDataID>
         FinanceFacade.IPayment OpenPayment { get; }
     }
 }
