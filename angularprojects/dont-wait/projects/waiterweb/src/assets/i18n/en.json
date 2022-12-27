@@ -92,6 +92,6 @@
 		"FreeShippingMinimumOrderTooltip": "You defines the minimum order value for free delivery.",
 		"HomeDeliveryHeader":"Home Delivery",
 		"BrandNameLabel":"Brand Name",
-		"DeliveryPlaceLabel":"Delivery address"
-	}
+		"DeliveryPlaceLabel":"Delivery address",
+        "OutOfServiceAreaMapMessage":"The address you selected is outside the range where we can deliver the order."
 }
