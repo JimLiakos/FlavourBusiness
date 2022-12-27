@@ -1677,10 +1677,13 @@ namespace DontWaitApp
 
                 if (_DeliveryPlace!=value)
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (value!=null&&CanChangeDeliveryPlace(value))
                     {
-                        _DeliveryPlace=value as Place;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _DeliveryPlace=value as Place;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 

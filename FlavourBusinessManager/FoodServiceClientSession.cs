@@ -42,7 +42,7 @@ namespace FlavourBusinessManager.EndUsers
     {
 
 
-      public  bool CanDeliveredAt(Coordinate location )
+        public bool CanDeliveredAt(Coordinate location)
         {
             if (ServicesContextRunTime.Current.DeliveryServicePoint==null)
                 return false;
@@ -2427,7 +2427,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
         public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-            PaymentProviders.VivaWallet.CreatePaymentOrder(payment,tipAmount);
+            PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
         }
 
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
@@ -2443,10 +2443,10 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-                #region sort by transaction date
+            #region sort by transaction date
             var tmpPayments = payments.Where(x => x.State==FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
             tmpPayments.AddRange(payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed));
-            payments=tmpPayments; 
+            payments=tmpPayments;
             #endregion
 
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
