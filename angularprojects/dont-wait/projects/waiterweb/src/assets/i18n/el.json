@@ -89,6 +89,7 @@
 		"FreeShippingMinimumOrderTooltip": "Ορίζεις την ελάχιστη αξία της παραγγελία για δωρεάν διανομή.",
 		"HomeDeliveryHeader":"Παραγγελίες Delivery",
 		"BrandNameLabel":"Brand Name",
-		"DeliveryPlaceLabel":"Διεύθυνση παράδοσης"
+		"DeliveryPlaceLabel":"Διεύθυνση παράδοσης",
+        "OutOfServiceAreaMapMessage":"Η διεύθυνση που επιλέξατε είναι εκτός της εμβέλιας που μπορούμε να παραδώσουμε παραγγελία."
 	}
 }
