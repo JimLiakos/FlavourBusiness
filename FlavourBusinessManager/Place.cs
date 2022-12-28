@@ -9,14 +9,36 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class Place : FlavourBusinessFacade.EndUsers.IPlace
     {
+        public static bool AreSame(IPlace a, IPlace b)
+        {
+            if (a == null && b == null) return true;
+            if (a != null && b == null) return false;
+            if (a == null && b != null) return false;
 
+            if(a.Location.Longitude != 0 && a.Location.Longitude == b.Location.Longitude && a.Location.Latitude == b.Location.Latitude)
+                return true;
+
+            if (a.Location.Longitude != 0 && (a.Location.Longitude != b.Location.Longitude || a.Location.Latitude != b.Location.Latitude))
+                return false;
+
+            if((a.PostalCode!=b.PostalCode)||
+                (a.PostalCode != b.PostalCode) ||
+                (a.Street != b.Street) ||
+                (a.StreetNumber != b.StreetNumber) ||
+                (a.Area != b.Area) ||
+                (a.CityTown != b.CityTown) )
+            {
+                return false;
+            }
+            return true;
+        }
         /// <MetaDataID>{1012419e-b619-497b-8a29-b6d2e6da2940}</MetaDataID>
         public Place() { }
 
         /// <MetaDataID>{08bc67e4-cd1e-484f-a046-68b9727d79df}</MetaDataID>
         static internal Place GetPlace(FlavourBusinessManager.EndUsers.PlaceData placeData)
         {
-            if (placeData.Street==null&&placeData.Area==null&&placeData.Location.Latitude==0&&placeData.Location.Longitude==0)
+            if (placeData.Street == null && placeData.Area == null && placeData.Location.Latitude == 0 && placeData.Location.Longitude == 0)
                 return null;
 
             Place place = new Place(placeData.PlaceID, placeData.Location, placeData.Country,
@@ -24,7 +46,7 @@ namespace FlavourBusinessManager.EndUsers
                                                placeData.Area, placeData.PostalCode, placeData.Street,
                                                placeData.StreetNumber, placeData.Description);
 
-          
+
             return place;
 
         }
@@ -257,16 +279,16 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{69840cba-a26b-43f7-ada5-18fc9bfce6ca}</MetaDataID>
         public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description)
         {
-            _PlaceID=placeID;
-            _Location=location;
-            _Country=country;
-            _StateProvinceRegion=stateProvinceRegion;
-            _CityTown=cityTown;
-            _Area=area;
-            _PostalCode=postalCode;
-            _Street=street;
-            _StreetNumber=streetNumber;
-            _Description=description;
+            _PlaceID = placeID;
+            _Location = location;
+            _Country = country;
+            _StateProvinceRegion = stateProvinceRegion;
+            _CityTown = cityTown;
+            _Area = area;
+            _PostalCode = postalCode;
+            _Street = street;
+            _StreetNumber = streetNumber;
+            _Description = description;
         }
 
         /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>

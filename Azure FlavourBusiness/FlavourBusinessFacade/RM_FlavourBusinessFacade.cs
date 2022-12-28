@@ -6548,6 +6548,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemsServing", args, argsTypes);
         }
         
+        public void SetSessionDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deliveryPlace;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "SetSessionDeliveryPlace", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

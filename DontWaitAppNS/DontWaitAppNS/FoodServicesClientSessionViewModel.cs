@@ -67,8 +67,8 @@ namespace DontWaitApp
             FlavoursOrderServer = flavoursOrderServer;
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
             ClientSessionToken = clientSessionData.Token;
-            if (FoodServicesClientSession.SessionType==SessionType.HomeDelivery)
-                _DeliveryPlace=ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces.OfType<Place>().Where(x => x.Default).FirstOrDefault();
+            if (FoodServicesClientSession.SessionType == SessionType.HomeDelivery)
+                _DeliveryPlace = ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces.OfType<Place>().Where(x => x.Default).FirstOrDefault();
 
         }
 
@@ -990,6 +990,16 @@ namespace DontWaitApp
                 }
 
                 _FoodServicesClientSession = value;
+                if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
+                {
+                    if (DeliveryPlace != null)
+                    {
+                        if (!Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
+                        {
+                            _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
+                        }
+                    }
+                }
 
                 if (_FoodServicesClientSession is ITransparentProxy)
                     (_FoodServicesClientSession as ITransparentProxy).Reconnected += FoodServicesClientSessionReconnected;
@@ -1675,13 +1685,15 @@ namespace DontWaitApp
             set
             {
 
-                if (_DeliveryPlace!=value)
+                if (_DeliveryPlace != value)
                 {
-                    if (value!=null&&CanChangeDeliveryPlace(value))
+                    if (value != null && CanChangeDeliveryPlace(value))
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace=value as Place;
+                            _DeliveryPlace = value as Place;
+                            if (this.FoodServicesClientSession!=null)
+                                this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
                             stateTransition.Consistent = true;
                         }
                     }
@@ -1693,8 +1705,14 @@ namespace DontWaitApp
 
         public bool CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
         {
-        
-           return _FoodServicesClientSession?.CanDeliveredAt(newDeliveryPlace.Location)==true;
+
+            if(_FoodServicesClientSession?.CanChangeDeliveryPlace(newDeliveryPlace.Location) == true)
+            {
+                _FoodServicesClientSession.ServicePoint.State
+                return true;
+            }
+            else
+                return false;
         }
         /// <MetaDataID>{ebc255f7-6774-4f15-b12a-d8a9cb85c1c3}</MetaDataID>
         [ObjectActivationCall]
@@ -1708,7 +1726,7 @@ namespace DontWaitApp
         [BeforeCommitObjectStateInStorageCall]
         void BeforeCommitObjectState()
         {
-            DeliveryPlaceJson=OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlace);
+            DeliveryPlaceJson = OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlace);
         }
 
         /// <MetaDataID>{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}</MetaDataID>
