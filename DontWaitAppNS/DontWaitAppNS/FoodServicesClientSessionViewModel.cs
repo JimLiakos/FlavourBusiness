@@ -68,7 +68,7 @@ namespace DontWaitApp
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
             ClientSessionToken = clientSessionData.Token;
             if (FoodServicesClientSession.SessionType == SessionType.HomeDelivery)
-                _DeliveryPlace = ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces.OfType<Place>().Where(x => x.Default).FirstOrDefault();
+                _DeliveryPlace = ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces.OfType<FlavourBusinessManager.EndUsers.Place>().Where(x => x.Default).FirstOrDefault();
 
         }
 
@@ -994,7 +994,7 @@ namespace DontWaitApp
                 {
                     if (DeliveryPlace != null)
                     {
-                        if (!Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
+                        if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
                         {
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
                         }
@@ -1687,11 +1687,11 @@ namespace DontWaitApp
 
                 if (_DeliveryPlace != value)
                 {
-                    if (value != null && CanChangeDeliveryPlace(value))
+                    if (value != null && CanChangeDeliveryPlace(value)== ChangeDeliveryPlaceResponse.OK)
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace = value as Place;
+                            _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
                             if (this.FoodServicesClientSession!=null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
                             stateTransition.Consistent = true;
@@ -1703,23 +1703,16 @@ namespace DontWaitApp
             }
         }
 
-        public bool CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
+        public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
         {
-
-            if(_FoodServicesClientSession?.CanChangeDeliveryPlace(newDeliveryPlace.Location) == true)
-            {
-                _FoodServicesClientSession.ServicePoint.State
-                return true;
-            }
-            else
-                return false;
+            return _FoodServicesClientSession.CanChangeDeliveryPlace(newDeliveryPlace.Location);
         }
         /// <MetaDataID>{ebc255f7-6774-4f15-b12a-d8a9cb85c1c3}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()
         {
             if (DeliveryPlaceJson != null)
-                _DeliveryPlace = OOAdvantech.Json.JsonConvert.DeserializeObject<Place>(DeliveryPlaceJson);
+                _DeliveryPlace = OOAdvantech.Json.JsonConvert.DeserializeObject<FlavourBusinessManager.EndUsers.Place>(DeliveryPlaceJson);
         }
 
         /// <MetaDataID>{4c3d8994-d157-4a4c-94ba-a3d6d645331b}</MetaDataID>

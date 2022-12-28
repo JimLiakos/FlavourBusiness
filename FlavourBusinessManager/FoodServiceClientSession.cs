@@ -2598,10 +2598,10 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (_MainSession.Value == null)
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                    if (CanChangeDeliveryPlace(deliveryPlace.Location))
+                    if (CanChangeDeliveryPlace(deliveryPlace.Location)==ChangeDeliveryPlaceResponse.OK)
                         this.MainSession.DeleiveryPlace = deliveryPlace;
                     else
-                        throw new Exception("The delivery place is outside the range where we can deliver the order");
+                        throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
                     stateTransition.Consistent = true;
                 }
             }

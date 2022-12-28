@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.ServicesContextResources;
+﻿using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace DontWaitApp
         [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
         FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
 
-        bool CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace);
+        ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace);
         [RoleAMultiplicityRange(0)]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         [Association("ClientSesionOrderItems", Roles.RoleA, "d5c354c5-f20e-409b-b824-6f0d350186b3")]

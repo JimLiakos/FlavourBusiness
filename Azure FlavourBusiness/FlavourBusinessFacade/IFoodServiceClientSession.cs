@@ -327,7 +327,7 @@ namespace FlavourBusinessFacade.EndUsers
         OK=0,
         OutOfServiceAreaMap=1,
         InvalidPlace=2,
-        OrderOnTheRoad=3
+        OrderOnTheWay=3
     }
 
 
