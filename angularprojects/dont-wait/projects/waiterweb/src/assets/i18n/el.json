@@ -90,6 +90,8 @@
 		"HomeDeliveryHeader":"Παραγγελίες Delivery",
 		"BrandNameLabel":"Brand Name",
 		"DeliveryPlaceLabel":"Διεύθυνση παράδοσης",
-        "OutOfServiceAreaMapMessage":"Η διεύθυνση που επιλέξατε είναι εκτός της εμβέλιας που μπορούμε να παραδώσουμε παραγγελία."
+        "OutOfServiceAreaMapMessage":"Η διεύθυνση που επιλέξατε είναι εκτός της εμβέλιας που μπορούμε να παραδώσουμε παραγγελία.",
+        "OrderOnTheWayErrorMessage":"Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδωσης. Η παραγελία είναι καθ'οδον.",
+        "DeliveryPlaceSwipePlace":"Swipe αριστερά για διαγραφή, swipe δεξιά για επιλογή."
 	}
 }
