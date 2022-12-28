@@ -93,5 +93,8 @@
 		"HomeDeliveryHeader":"Home Delivery",
 		"BrandNameLabel":"Brand Name",
 		"DeliveryPlaceLabel":"Delivery address",
-        "OutOfServiceAreaMapMessage":"The address you selected is outside the range where we can deliver the order."
+        "OutOfServiceAreaMapMessage":"The address you selected is outside the range where we can deliver the order.",
+        "OrderOnTheWayErrorMessage":"You cannot change the delivery address. The order is on the way.",
+        "DeliveryPlaceSwipePlace":"Swipe left to delete, swipe right to select."
+    }
 }

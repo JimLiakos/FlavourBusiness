@@ -6296,14 +6296,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public bool CanDeliveredAt(FlavourBusinessFacade.EndUsers.Coordinate location)
+        public FlavourBusinessFacade.EndUsers.ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.Coordinate location)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = location;
             argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CanDeliveredAt", args, argsTypes);
-            return this.Proxy.GetValue<bool>(retValue);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CanChangeDeliveryPlace", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.ChangeDeliveryPlaceResponse>(retValue);
         }
         
         public FlavourBusinessFacade.RoomService.IBill GetBill()
