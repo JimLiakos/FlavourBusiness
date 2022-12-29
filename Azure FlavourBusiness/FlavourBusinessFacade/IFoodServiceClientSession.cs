@@ -322,12 +322,13 @@ namespace FlavourBusinessFacade.EndUsers
     }
 
 
+    /// <MetaDataID>{bf4ffb5f-7561-4659-a602-cceb0d1837d3}</MetaDataID>
     public enum ChangeDeliveryPlaceResponse
     {
-        OK=0,
-        OutOfServiceAreaMap=1,
-        InvalidPlace=2,
-        OrderOnTheWay=3
+        OK = 0,
+        OutOfServiceAreaMap = 1,
+        InvalidPlace = 2,
+        OrderOnTheWay = 3
     }
 
 

@@ -1,6 +1,7 @@
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -9,24 +10,26 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class Place : FlavourBusinessFacade.EndUsers.IPlace
     {
+      
+        /// <MetaDataID>{3e6ca39a-d174-4656-85e5-19abdc70c408}</MetaDataID>
         public static bool AreSame(IPlace a, IPlace b)
         {
             if (a == null && b == null) return true;
             if (a != null && b == null) return false;
             if (a == null && b != null) return false;
 
-            if(a.Location.Longitude != 0 && a.Location.Longitude == b.Location.Longitude && a.Location.Latitude == b.Location.Latitude)
+            if (a.Location.Longitude != 0 && a.Location.Longitude == b.Location.Longitude && a.Location.Latitude == b.Location.Latitude)
                 return true;
 
             if (a.Location.Longitude != 0 && (a.Location.Longitude != b.Location.Longitude || a.Location.Latitude != b.Location.Latitude))
                 return false;
 
-            if((a.PostalCode!=b.PostalCode)||
+            if ((a.PostalCode != b.PostalCode) ||
                 (a.PostalCode != b.PostalCode) ||
                 (a.Street != b.Street) ||
                 (a.StreetNumber != b.StreetNumber) ||
                 (a.Area != b.Area) ||
-                (a.CityTown != b.CityTown) )
+                (a.CityTown != b.CityTown))
             {
                 return false;
             }
@@ -44,11 +47,53 @@ namespace FlavourBusinessManager.EndUsers
             Place place = new Place(placeData.PlaceID, placeData.Location, placeData.Country,
                                                placeData.StateProvinceRegion, placeData.CityTown,
                                                placeData.Area, placeData.PostalCode, placeData.Street,
-                                               placeData.StreetNumber, placeData.Description);
-
-
+                                               placeData.StreetNumber, placeData.Description,placeData.ExtensionProperties);
             return place;
+        }
 
+        /// <MetaDataID>{c0e14b79-a5f2-4e77-bc8d-9c641f0d0966}</MetaDataID>
+        internal Dictionary<string, string> ExtensionProperties = new Dictionary<string, string>();
+
+        /// <MetaDataID>{e4b41e8d-fb26-4eb4-bf23-ffd85847fbf1}</MetaDataID>
+        public string GetExtensionProperty(string name)
+        {
+            ExtensionProperties.TryGetValue(name, out var value);
+            return value;
+        }
+
+        /// <MetaDataID>{544a21d2-2f1c-45ed-9d84-ccba3e9a4084}</MetaDataID>
+        public void SetExtensionProperty(string name, string value)
+        {
+            if (value == null)
+                RemovetExtensionProperty(name);
+            else
+                ExtensionProperties[name] = value;
+        }
+
+        /// <MetaDataID>{b069a2b8-d20e-4f8f-b670-778298cc61c4}</MetaDataID>
+        public void RemovetExtensionProperty(string name)
+        {
+            ExtensionProperties.Remove(name);
+        }
+
+
+        /// <MetaDataID>{965e770a-aa83-44a5-939c-91fc0ef241c7}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+12")]
+        private string ExtensionPropertiesJson;
+
+
+        /// <MetaDataID>{a49f7465-3395-43a9-8b4e-2f3191fb004e}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            ExtensionProperties=OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+        }
+        /// <MetaDataID>{ba7a9880-bfc8-4f5f-85b9-ffbe7faa8d55}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        void BeforeCommitObjectState()
+        {
+            ExtensionPropertiesJson=OOAdvantech.Json.JsonConvert.SerializeObject(ExtensionProperties);
         }
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -277,7 +322,7 @@ namespace FlavourBusinessManager.EndUsers
         bool _Default;
 
         /// <MetaDataID>{69840cba-a26b-43f7-ada5-18fc9bfce6ca}</MetaDataID>
-        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description)
+        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description, Dictionary<string, string> extensionProperties)
         {
             _PlaceID = placeID;
             _Location = location;
@@ -289,6 +334,7 @@ namespace FlavourBusinessManager.EndUsers
             _Street = street;
             _StreetNumber = streetNumber;
             _Description = description;
+            ExtensionProperties= extensionProperties;
         }
 
         /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>

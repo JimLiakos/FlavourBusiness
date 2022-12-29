@@ -233,11 +233,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _PhotoUrl;
             set
             {
-                if (_PhotoUrl!=value)
+                if (_PhotoUrl != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PhotoUrl=value;
+                        _PhotoUrl = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -260,11 +260,11 @@ namespace FlavourBusinessManager.EndUsers
             }
             set
             {
-                if (_FullName!=value)
+                if (_FullName != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _FullName=value;
+                        _FullName = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -281,11 +281,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _UserName;
             set
             {
-                if (_UserName!=value)
+                if (_UserName != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _UserName=value;
+                        _UserName = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -320,11 +320,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _DeviceFirebaseToken;
             set
             {
-                if (_DeviceFirebaseToken!=value)
+                if (_DeviceFirebaseToken != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _DeviceFirebaseToken=value;
+                        _DeviceFirebaseToken = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -379,11 +379,13 @@ namespace FlavourBusinessManager.EndUsers
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            if (DeliveryPlacesJson != null)
-                _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
-            else
-                _DeliveryPlaces = new List<Place>();
-
+            lock (this)
+            {
+                if (DeliveryPlacesJson != null)
+                    _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+                else
+                    _DeliveryPlaces = new List<Place>();
+            }
         }
 
         /// <MetaDataID>{27e725df-0785-4f1d-bd67-59df24ba43ee}</MetaDataID>

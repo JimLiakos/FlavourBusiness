@@ -1,6 +1,7 @@
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -17,7 +18,7 @@ namespace FlavourBusinessManager.EndUsers
             PlaceData placeData = new PlaceData(place.PlaceID, place.Location, place.Country,
                                                 place.StateProvinceRegion, place.CityTown,
                                                 place.Area, place.PostalCode, place.Street,
-                                                place.StreetNumber, place.Description);
+                                                place.StreetNumber, place.Description,(place as Place)?.ExtensionProperties);
             return placeData;
         }
 
@@ -33,6 +34,20 @@ namespace FlavourBusinessManager.EndUsers
             return !(left==right);
         }
 
+        /// <MetaDataID>{2d93341e-83ad-4f4b-b8fd-c7b8c0e554f8}</MetaDataID>
+        public Dictionary<string, string> ExtensionProperties
+        {
+            get
+            {
+                if (ExtensionPropertiesJson==null)
+                    return new Dictionary<string, string>();
+                else
+                    return OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+            }
+        }
+        [PersistentMember()]
+        [BackwardCompatibilityID("+11")]
+        string ExtensionPropertiesJson;
         /// <exclude>Excluded</exclude>
         string _CityTown;
         /// <MetaDataID>{50c93377-b741-40bc-97b3-755cc1568cc2}</MetaDataID>
@@ -238,7 +253,7 @@ namespace FlavourBusinessManager.EndUsers
         string _PlaceID;
 
         /// <MetaDataID>{d1f20d85-c3a5-4c27-9750-f4ff9745bc7e}</MetaDataID>
-        public PlaceData(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description) : this()
+        public PlaceData(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description, Dictionary<string, string> extensionProperties) : this()
         {
             _PlaceID=placeID;
             _Location=location;
@@ -250,6 +265,8 @@ namespace FlavourBusinessManager.EndUsers
             _Street=street;
             _StreetNumber=streetNumber;
             _Description=description;
+            
+            ExtensionPropertiesJson=OOAdvantech.Json.JsonConvert.SerializeObject(extensionProperties);
         }
 
         /// <MetaDataID>{0120bade-d1d0-4ef9-8c0f-cbb12f53a1fe}</MetaDataID>

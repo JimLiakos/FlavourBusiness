@@ -31728,7 +31728,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	1
+			nlines     	2
 			max_width  	456
 			compartmentItems 	(list Compartment
 			    "+ Name : System.string"))
