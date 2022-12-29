@@ -96,9 +96,9 @@
         "OutOfServiceAreaMapMessage":"The address you selected is outside the range where we can deliver the order.",
         "OrderOnTheWayErrorMessage":"You cannot change the delivery address. The order is on the way.",
         "DeliveryPlaceSwipePlace":"Swipe left to delete, swipe right to select.",
-		"DeliveryPlaceFloorPlaceHolder": "Συμπληρώστε τον όροφο",
-		"DeliveryPlaceFloorInputLabel": "Όροφος",
-		"DeliveryPlaceBellPlaceHolder": "Συμπληρώστε το ονομα στο κουδόυνι",
-		"DeliveryPlaceBellInputLabel": "Κουδόυνι"
+		"DeliveryPlaceFloorPlaceHolder": "Enter the floor number",
+		"DeliveryPlaceFloorInputLabel": "Floor",
+		"DeliveryPlaceBellPlaceHolder": "Enter the name of bell",
+		"DeliveryPlaceBellInputLabel": "Bell"
     }
 }

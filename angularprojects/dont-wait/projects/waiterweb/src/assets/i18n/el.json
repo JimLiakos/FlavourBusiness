@@ -93,9 +93,9 @@
         "OutOfServiceAreaMapMessage":"Η διεύθυνση που επιλέξατε είναι εκτός της εμβέλιας που μπορούμε να παραδώσουμε παραγγελία.",
         "OrderOnTheWayErrorMessage":"Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδωσης. Η παραγελία είναι καθ'οδον.",
         "DeliveryPlaceSwipePlace":"Σύρετε προς τα αριστερά για διαγραφή. Σύρετε προς τα δεξιά για να επιλέξετε.",
-		"DeliveryPlaceFloorPlaceHolder": "Συμπληρώστε τον όροφο",
+		"DeliveryPlaceFloorPlaceHolder": "Eισάγετε τον όροφο",
 		"DeliveryPlaceFloorInputLabel": "Όροφος",
-		"DeliveryPlaceBellPlaceHolder": "Συμπληρώστε το ονομα στο κουδόυνι",
-		"DeliveryPlaceBellInputLabel": "Κουδόυνι"
+		"DeliveryPlaceBellPlaceHolder": "Eισάγετε το όνομα στο κουδούνι",
+		"DeliveryPlaceBellInputLabel": "Κουδούνι"
 	}
 }
