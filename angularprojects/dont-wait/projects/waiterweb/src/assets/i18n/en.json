@@ -26,7 +26,9 @@
         "PaidLabel":"Is Paid !",
         "OpenSessionCommandLabel":"Open",
         "CancelCommandLabel":"Cancel",
-        "PayCommandLabel":"Pay"
+        "PayCommandLabel":"Pay",
+		"CommentsLabel": "Comment",
+		"CommentsPlaceHolder": "Leave comment"
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "OK",
@@ -99,6 +101,9 @@
 		"DeliveryPlaceFloorPlaceHolder": "Enter the floor number",
 		"DeliveryPlaceFloorInputLabel": "Floor",
 		"DeliveryPlaceBellPlaceHolder": "Enter the name of bell",
-		"DeliveryPlaceBellInputLabel": "Bell"
+		"DeliveryPlaceBellInputLabel": "Bell",
+		"DeliveryManCommentsLabel": "Comments for the delivery man",
+		"DeliveryManCommentsPlaceHolder": "Write comments for the delivery man"
+
     }
 }

@@ -25,7 +25,10 @@
         "PaidLabel":"Πληρώθηκε !",
         "OpenSessionCommandLabel":"Open",
         "CancelCommandLabel":"Cancel",
-        "PayCommandLabel":"Πληρωμή"
+        "PayCommandLabel":"Πληρωμή",
+		"CommentsLabel": "Σχόλιo",
+		"CommentsPlaceHolder": "Γράψτε το σχόλιo"
+
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "Εντάξει",
@@ -96,6 +99,9 @@
 		"DeliveryPlaceFloorPlaceHolder": "Eισάγετε τον όροφο",
 		"DeliveryPlaceFloorInputLabel": "Όροφος",
 		"DeliveryPlaceBellPlaceHolder": "Eισάγετε το όνομα στο κουδούνι",
-		"DeliveryPlaceBellInputLabel": "Κουδούνι"
+		"DeliveryPlaceBellInputLabel": "Κουδούνι",
+		"DeliveryManCommentsLabel": "Σχόλια για τον διανομέα",
+		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα"
+
 	}
 }
