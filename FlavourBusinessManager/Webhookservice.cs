@@ -107,5 +107,4 @@ namespace DeviceMessageServer
         string SendCallBackEventMessage(string xmlMessage);
 
     }
-
 }
