@@ -14,7 +14,7 @@ namespace FlavourBusinessFacade.EndUsers
     {
 
 
-        bool CanDeliveredAt(Coordinate location);
+        ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(Coordinate location);
 
         /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
         FlavourBusinessFacade.RoomService.IBill GetBill();
@@ -217,7 +217,8 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
-        
+        void SetSessionDeliveryPlace(IPlace deliveryPlace);
+
 
         /// <MetaDataID>{dc05706a-50a3-44ad-9dbf-5a74cad9ce7a}</MetaDataID>
         [BackwardCompatibilityID("+13")]
@@ -318,6 +319,16 @@ namespace FlavourBusinessFacade.EndUsers
         public List<string> ServedMealTypesUris;
         /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
+    }
+
+
+    /// <MetaDataID>{bf4ffb5f-7561-4659-a602-cceb0d1837d3}</MetaDataID>
+    public enum ChangeDeliveryPlaceResponse
+    {
+        OK = 0,
+        OutOfServiceAreaMap = 1,
+        InvalidPlace = 2,
+        OrderOnTheWay = 3
     }
 
 

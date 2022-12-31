@@ -230,7 +230,7 @@ namespace FlavourBusinessManager.RoomService
         {
             if (referencClientSession.MainSession != null)
                 return;
-            FoodServiceSession foodServiceSession = referencClientSession.ServicePoint.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null && (x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
+            FoodServiceSession foodServiceSession = (referencClientSession.ServicePoint as HallServicePoint)?.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null && (x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
 
             if (foodServiceSession == null)
             {

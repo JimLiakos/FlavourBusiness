@@ -37,7 +37,15 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{a4cd01ce-e822-4255-b43b-cc14bd7a344e}</MetaDataID>
         bool Default { get; set; }
+
+        /// <MetaDataID>{a2975c8d-e456-41aa-b753-dd1432594866}</MetaDataID>
+        string GetExtensionProperty(string name);
+        /// <MetaDataID>{b2086dcb-57ec-46cd-8301-43a18b6c1567}</MetaDataID>
+        void SetExtensionProperty(string name, string value);
+
+        /// <MetaDataID>{32ca9a22-417a-423e-93d3-8c2d87c76a9b}</MetaDataID>
+        void RemovetExtensionProperty(string name);
     }
 
-  
+
 }
