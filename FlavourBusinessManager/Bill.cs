@@ -17,8 +17,6 @@ namespace FlavourBusinessManager.EndUsers
         [CachingDataOnClientSide]
         public List<IPayment> Payments { get; }
 
-   
-
         public FinanceFacade.IPayment OpenPayment
         {
             get

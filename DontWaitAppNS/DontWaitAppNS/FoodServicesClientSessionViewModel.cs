@@ -925,7 +925,7 @@ namespace DontWaitApp
             {
                 return _FoodServicesClientSession;
             }
-            set
+             set
             {
                 if (_FoodServicesClientSession != null)
                 {

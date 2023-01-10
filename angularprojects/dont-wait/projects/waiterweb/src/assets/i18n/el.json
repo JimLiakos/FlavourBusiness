@@ -104,5 +104,14 @@
 		"DeliveryManCommentsLabel": "Σχόλια για τον διανομέα",
 		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα"
 
+	},
+	"EndUserFoodServices":
+	{
+		"ServiceTimeScheduledOptionLabel":"Schedule for later",
+		"ServiceTimeRightNowOptionLabel":"As soon as possible",
+		"ServiceTimeScheduledCommentsLabel":"You'll receive your order on {0} at {1}",
+		"ServiceTimeRightNowCommentsLabel":"You'll get your order in {0} to {1} minutes",
+		"ServiceTimeRightNowLabel":"Schedule for later"
 	}
+
 }
