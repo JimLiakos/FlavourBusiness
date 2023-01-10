@@ -777,11 +777,11 @@ namespace FlavourBusinessManager
                                 string orgStorageIdentity = null;
                                 StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
                                 string blobUrl = "usersfolder/"+Identity + "/" + name + ".xml";
-
+ 
                                 string oldBlobUrl = fbstorage.Url;
 
                                 if (blobUrl.IndexOf(blobsContainerName+"/") == 0)
-                                    blobUrl = oldBlobUrl.Substring((blobsContainerName+"/").Length);
+                                    blobUrl = blobUrl.Substring((blobsContainerName+"/").Length);
 
                                 if (oldBlobUrl.IndexOf(blobsContainerName + "/") == 0)
                                     oldBlobUrl = oldBlobUrl.Substring((blobsContainerName + "/").Length);
@@ -994,9 +994,19 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{8029bfa7-eae6-42e5-9363-955d0c9cbab6}</MetaDataID>
         private void RenamePublishedGraphicMenu(string storageIdentity, string version, string oldName, string newName)
         {
-            string oldPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, oldName);
-            string newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
+            string oldPublishedGraphicMenuUri = null;//string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, oldName);
+            string newPublishedGraphicMenuUri = null;//string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
+            if(string.IsNullOrWhiteSpace(version))
+            {
+                oldPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{3}.json", Identity, storageIdentity, version, oldName);
+                newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{3}.json", Identity, storageIdentity, version, newName);
+            }
+            else
+            {
+                oldPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, oldName);
+                newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
 
+            }
             string blobsContainerName = "usersfolder";
             if (!string.IsNullOrWhiteSpace(FlavourBusinessManagerApp.RootContainer))
             {
@@ -1015,13 +1025,12 @@ namespace FlavourBusinessManager
             var newBlob = container.GetBlockBlobReference(newPublishedGraphicMenuUri);
             if (newBlob.Exists())
             {
-
+                //create a new blob
+                var task = newBlob.StartCopyAsync(existBlob);
+                task.Wait();
+                //delete the old
+                existBlob.Delete();
             }
-            //create a new blob
-            var task = newBlob.StartCopyAsync(existBlob);
-            task.Wait();
-            //delete the old
-            existBlob.Delete();
         }
 
         /// <MetaDataID>{e5a2b4e3-b326-4926-b805-aea57de36bf2}</MetaDataID>

@@ -49,6 +49,11 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(IPlace newDeliveryPlace)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <MetaDataID>{08cb638b-bf94-4be4-a8da-c9eec5d50469}</MetaDataID>
         public void EndOfMenuItemProposal(Messmate messmate, string messageID)
         {
