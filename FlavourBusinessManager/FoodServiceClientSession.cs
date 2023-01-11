@@ -467,6 +467,11 @@ namespace FlavourBusinessManager.EndUsers
                 messmateClientSesion.ImplicitMealParticipation = false;
                 ImplicitMealParticipation = false;
 
+                if (SessionType==SessionType.HomeDelivery)
+                {
+                    (messmateClientSesion as FoodServiceClientSession).SessionType= SessionType.HomeDeliveryGuest;
+                    (messmateClientSesion as FoodServiceClientSession).delive
+                }
 
                 stateTransition.Consistent = true;
             }

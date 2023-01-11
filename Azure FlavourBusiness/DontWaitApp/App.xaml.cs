@@ -19,7 +19,7 @@ namespace DontWaitApp
     /// Interaction logic for App.xaml
     /// </summary>
     /// <MetaDataID>{f9e00b1e-8725-4050-a603-1d5b2c472f33}</MetaDataID>
-    public partial class App : Application,IAppLifeTime
+    public partial class App : Application, IAppLifeTime
     {
 
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
@@ -77,7 +77,7 @@ namespace DontWaitApp
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo)] = "FlavourBusinessFacade.HomeDeliveryServicePointInfo";
 
-            
+
 
 
             //SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealType)] = "MenuModel.MealType";
@@ -157,7 +157,6 @@ namespace DontWaitApp
 
 
 
-
             if (e.Args.Length > 0)
                 foreach (var arg in e.Args)
                 {
@@ -170,13 +169,12 @@ namespace DontWaitApp
         }
 
 
-
         void ApplicationStart(object sender, StartupEventArgs e)
         {
 
             DeviceSelectorWindow selector = new DeviceSelectorWindow();
             selector.Show();
-          
+
 
         }
         protected override void OnActivated(EventArgs e)
