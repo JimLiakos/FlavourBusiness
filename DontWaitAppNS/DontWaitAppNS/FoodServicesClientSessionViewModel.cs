@@ -1000,14 +1000,11 @@ namespace DontWaitApp
                         }
                     }
                 }
-
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDeliveryGuest)
                 {
-                    DeliveryPlace=_FoodServicesClientSession.MainSession?.DeleiveryPlace;
+                    if (_FoodServicesClientSession.MainSession!=null)
+                        DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace;
                 }
-
-
-
                 if (_FoodServicesClientSession is ITransparentProxy)
                     (_FoodServicesClientSession as ITransparentProxy).Reconnected += FoodServicesClientSessionReconnected;
 
