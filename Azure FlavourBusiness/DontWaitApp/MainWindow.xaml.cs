@@ -84,13 +84,13 @@ namespace DontWaitApp
 
             FlavoursOrderServer_OnWebViewLoaded();
 
-           // TestImplicitMealInvitation();
+            //TestImplicitMealInvitation();
 
         }
 
         private void TestImplicitMealInvitation()
         {
-            Uri uri = new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=827a9ed57dac4786a923cd27d0b52444");
+            Uri uri = new Uri("http://10.0.0.13:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=769033a516ef4edaa71fa19705c9e20c");
             //Uri uri = new Uri("http://10.0.0.13:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=1bd0602855a141d78a52b7450e6310ef&cs=d8416aff0c384d33a17ec92143e6f50c");
             int queryStartPos = uri.OriginalString.IndexOf("?");
             if (queryStartPos != -1)

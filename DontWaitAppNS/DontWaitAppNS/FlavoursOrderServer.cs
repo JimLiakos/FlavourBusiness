@@ -546,7 +546,7 @@ namespace DontWaitApp
         public void WebViewLoaded()
         {
             OnWebViewLoaded?.Invoke();
-            this.FoodServicesClientSessionViewModel.GetMessages();
+            this.FoodServicesClientSessionViewModel?.GetMessages();
 
         }
 
