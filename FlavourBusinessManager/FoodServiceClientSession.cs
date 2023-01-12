@@ -472,7 +472,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (SessionType==SessionType.HomeDelivery)
                 {
                     (messmateClientSesion as FoodServiceClientSession).SessionType= SessionType.HomeDeliveryGuest;
-                    (messmateClientSesion as FoodServiceClientSession).delive
+                    
                 }
 
                 stateTransition.Consistent = true;
