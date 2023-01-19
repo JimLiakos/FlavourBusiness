@@ -149,7 +149,11 @@ namespace DontWaitApp
             bool isRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
             if (isRemoteReachable)
             {
-
+                System.Diagnostics.Debug.WriteLine("Yes");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Yes");
             }
             using (HttpClient wc = new HttpClient())
             {
