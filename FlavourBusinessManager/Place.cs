@@ -1,7 +1,9 @@
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -52,7 +54,8 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{c0e14b79-a5f2-4e77-bc8d-9c641f0d0966}</MetaDataID>
-        internal Dictionary<string, string> ExtensionProperties = new Dictionary<string, string>();
+        [OOAdvantech.Json.JsonProperty]
+        internal Dictionary<string, string> ExtensionProperties { get; set; } = new Dictionary<string, string>();
 
         /// <MetaDataID>{e4b41e8d-fb26-4eb4-bf23-ffd85847fbf1}</MetaDataID>
         public string GetExtensionProperty(string name)
@@ -95,6 +98,33 @@ namespace FlavourBusinessManager.EndUsers
         {
             ExtensionPropertiesJson=OOAdvantech.Json.JsonConvert.SerializeObject(ExtensionProperties);
         }
+
+        internal void Update(IPlace value)
+        {
+
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                if (_PlaceID == value.PlaceID)
+                {
+                    _Location = value.Location;
+                    _Country = value.Country;
+                    _StateProvinceRegion = value.StateProvinceRegion;
+                    _CityTown = value.CityTown;
+                    _Area = value.Area;
+                    _PostalCode = value.PostalCode;
+                    _Street = value.Street;
+                    _StreetNumber = value.StreetNumber;
+                    _Description = value.Description;
+                    ExtensionProperties= (value as Place).ExtensionProperties;
+                }
+
+                stateTransition.Consistent = true;
+            }
+
+
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
         /// <exclude>Excluded</exclude> 

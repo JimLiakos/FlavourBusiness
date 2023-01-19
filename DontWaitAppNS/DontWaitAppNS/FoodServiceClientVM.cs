@@ -44,6 +44,11 @@ namespace DontWaitApp
             SIMCards = device.LinesPhoneNumbers.ToList();
             _LinesPhoneNumbers = device.LinesPhoneNumbers.Select(x => x.SIMCardDescription).ToList();
 
+            if(ApplicationSettings.Current?.ClientAsGuest!=null)
+            {
+                _PhoneNumber=ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
+            }
+
         }
 
         string _PhoneNumber;
@@ -57,6 +62,10 @@ namespace DontWaitApp
             set
             {
                 _PhoneNumber = value;
+                if ((this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser!=null)
+                    (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser.PhoneNumber=_PhoneNumber;
+                if(ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser)
+                    ApplicationSettings.Current.ClientAsGuest.PhoneNumber=value;
             }
         }
 
@@ -120,7 +129,7 @@ namespace DontWaitApp
 
         }
 
-     
+
 
         //static string AzureServerUrl = "http://192.168.2.8:8090/api/";//org
         //static string AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
@@ -137,7 +146,7 @@ namespace DontWaitApp
             {
 
             }
-            if(authUser.Firebase_Sign_in_Provider.ToLower()=="google.com")
+            if (authUser.Firebase_Sign_in_Provider.ToLower()=="google.com")
                 UserName = authUser.Email;
 
             return await Task<bool>.Run(() =>
@@ -178,7 +187,7 @@ namespace DontWaitApp
                     return true;
                 }
 
-                
+
             });
 
             //pAuthFlavourBusines.SignUpOwner(new OrganizationData() { Email = "jim.liakos@gmail.com", Name = "jim", Trademark = "Liakos" });
@@ -332,7 +341,7 @@ namespace DontWaitApp
                                        }).FirstOrDefault();
 
 
-                pAuthFlavourBusines.UpdateEndUserProfile(new EndUserData() { Email = this.Email, Name = this.FullName,SIMCard=selectedSimCard });
+                pAuthFlavourBusines.UpdateEndUserProfile(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard=selectedSimCard });
 
             });
             //SwitchOnOffPopupView?.Invoke(this, EventArgs.Empty);
@@ -362,7 +371,7 @@ namespace DontWaitApp
                                    }).FirstOrDefault();
 
             IAuthFlavourBusiness pAuthFlavourBusines = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
-            var endUser = pAuthFlavourBusines.SignUpEndUser(new EndUserData() { Email = this.Email, Name = this.FullName,SIMCard= selectedSimCard });
+            var endUser = pAuthFlavourBusines.SignUpEndUser(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard= selectedSimCard });
             //Organization.CurrentOrganization = organization;
             return endUser != null;
 
@@ -478,10 +487,10 @@ namespace DontWaitApp
             }
             set
             {
-               var selectedSimCard= (from simCard in SIMCards
-                 where simCard.SIMCardDescription == value
-                 select simCard).FirstOrDefault();
-                
+                var selectedSimCard = (from simCard in SIMCards
+                                       where simCard.SIMCardDescription == value
+                                       select simCard).FirstOrDefault();
+
                 _LinePhoneNumber = value;
             }
         }
@@ -489,7 +498,7 @@ namespace DontWaitApp
         List<string> _LinesPhoneNumbers;
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
-        public List< string> LinesPhoneNumbers
+        public List<string> LinesPhoneNumbers
         {
             get
             {

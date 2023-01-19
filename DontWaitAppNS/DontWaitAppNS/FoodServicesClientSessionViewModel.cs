@@ -62,7 +62,11 @@ namespace DontWaitApp
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _ServiceTime=value;
+                        if (value != null)
+                            _ServiceTime=value.Value.ToUniversalTime();
+                        else
+                            _ServiceTime =value;
+
                         stateTransition.Consistent = true;
                     }
 
@@ -86,7 +90,7 @@ namespace DontWaitApp
 
                             try
                             {
-                                this._FoodServicesClientSession.SetSessionServiceTime(value);
+                                this._FoodServicesClientSession.SetSessionServiceTime(_ServiceTime);
                                 break;
                             }
                             catch (System.Net.WebException commError)
@@ -1790,6 +1794,10 @@ namespace DontWaitApp
                             _DeliveryPlace = value as Place;
                             if (this.FoodServicesClientSession!=null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
+
+                            Place existingPlace = this.FlavoursOrderServer.Places .Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as Place;
+                            existingPlace.Update(value);
+
                             stateTransition.Consistent = true;
                         }
                     }
