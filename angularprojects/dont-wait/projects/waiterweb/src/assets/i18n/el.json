@@ -28,7 +28,8 @@
         "PayCommandLabel":"Πληρωμή",
 		"CommentsLabel": "Σχόλιo",
 		"CommentsPlaceHolder": "Γράψτε το σχόλιo",
-        "TakeAwaySessionLabel":"Παραλαβή στο κατάστημα"
+        "TakeAwaySessionLabel":"Παραλαβή στο κατάστημα",
+        "OrderCheckoutCommandLabel":"Επιβεβαίωση παραγγελίας"
 
 	},
 	"ModalDialog": {
@@ -97,12 +98,16 @@
         "OutOfServiceAreaMapMessage":"Η διεύθυνση που επιλέξατε είναι εκτός της εμβέλιας που μπορούμε να παραδώσουμε παραγγελία.",
         "OrderOnTheWayErrorMessage":"Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδωσης. Η παραγελία είναι καθ'οδον.",
         "DeliveryPlaceSwipePlace":"Σύρετε προς τα αριστερά για διαγραφή. Σύρετε προς τα δεξιά για να επιλέξετε.",
+        "ClientPhonePlaceHolder":"Eισάγετε τον αριθμο τηλεφώνου σας",
+        "ClientPhoneInputLabel":"Aριθμο τηλεφώνου",
 		"DeliveryPlaceFloorPlaceHolder": "Eισάγετε τον όροφο",
 		"DeliveryPlaceFloorInputLabel": "Όροφος",
 		"DeliveryPlaceBellPlaceHolder": "Eισάγετε το όνομα στο κουδούνι",
 		"DeliveryPlaceBellInputLabel": "Κουδούνι",
 		"DeliveryManCommentsLabel": "Σχόλια για τον διανομέα",
-		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα"
+		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα",
+		"PayNowPrompt":"Πληρωμή τώρα",
+		"PayLaterPrompt":"Πληρωμή στην παράδoση"
 
 	},
 	"EndUserFoodServices":

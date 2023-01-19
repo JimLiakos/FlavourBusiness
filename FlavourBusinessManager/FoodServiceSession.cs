@@ -22,7 +22,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
     {
-     
+
 
         /// <exclude>Excluded</exclude>
         string _SessionID = Guid.NewGuid().ToString("N");
@@ -361,7 +361,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-     
+
         /// <MetaDataID>{0d5343f3-0c56-4e22-b66d-e4357dbd8a75}</MetaDataID>
         MenuModel.MealType MealType
         {
@@ -397,7 +397,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-     
+
 
 
         /// <MetaDataID>{115bab53-101d-444f-b364-e8f27d160e71}</MetaDataID>
@@ -691,16 +691,38 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{ba60826c-7385-4e09-a87e-7952c74f69e0}</MetaDataID>
         [BackwardCompatibilityID("+16")]
-        public FlavourBusinessFacade.EndUsers.IPlace DeleiveryPlace
+        public IPlace DeleiveryPlace
         {
             get => Place.GetPlace(DeleiveryPlaceData);
             set
             {
-                if (DeleiveryPlaceData!=PlaceData.GetPlaceData( value))
+                if (DeleiveryPlaceData!=PlaceData.GetPlaceData(value))
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         DeleiveryPlaceData=PlaceData.GetPlaceData(value);
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        DateTime? _ServiceTime;
+        /// <MetaDataID>{5e44e5a2-62c1-4943-affe-112fb2bc8063}</MetaDataID>
+        [PersistentMember(nameof(_ServiceTime))]
+        [BackwardCompatibilityID("+18")]
+        public DateTime? ServiceTime
+        {
+            get => _ServiceTime;
+            set
+            {
+                if (_ServiceTime!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServiceTime=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -778,7 +800,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _BillingPayments.Add(payment); 
+                _BillingPayments.Add(payment);
                 stateTransition.Consistent = true;
             }
 
@@ -789,8 +811,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _BillingPayments.Remove(payment); 
-                stateTransition .Consistent = true;
+                _BillingPayments.Remove(payment);
+                stateTransition.Consistent = true;
             }
         }
     }

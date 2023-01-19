@@ -46,6 +46,89 @@ namespace DontWaitApp
     [Persistent()]
     public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+
+        /// <exclude>Excluded</exclude>
+        DateTime? _ServiceTime;
+
+        /// <MetaDataID>{61c7b65a-a2b4-45ef-adb0-4b9fdcac8f1e}</MetaDataID>
+        [PersistentMember(nameof(_ServiceTime))]
+        [BackwardCompatibilityID("+15")]
+        public DateTime? ServiceTime
+        {
+            get => _ServiceTime;
+            set
+            {
+                if (_ServiceTime!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServiceTime=value;
+                        stateTransition.Consistent = true;
+                    }
+
+                }
+                //var menuData = MenuData;
+                //menuData.OrderItems = OrderItems.ToList();
+                //MenuData = menuData;
+
+                FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
+                {
+                    var datetime = DateTime.Now;
+                    string timestamp = DateTime.Now.ToLongTimeString() + ":" + datetime.Millisecond.ToString();
+
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        if (this._FoodServicesClientSession==null)
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(3));
+                        else
+                        {
+
+                            try
+                            {
+                                this._FoodServicesClientSession.SetSessionServiceTime(value);
+                                break;
+                            }
+                            catch (System.Net.WebException commError)
+                            {
+                                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                            }
+                            catch (Exception error)
+                            {
+                                var er = error;
+                                await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                            }
+                        }
+                    }
+                    return true;
+                });
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        PayOptions _PayOption = PayOptions.PayOnCheckout;
+
+
+        /// <MetaDataID>{fff2c173-978b-4738-ae9d-6d510622ebc7}</MetaDataID>
+        [PersistentMember(nameof(_PayOption))]
+        [BackwardCompatibilityID("+16")]
+        public PayOptions PayOption
+        {
+            get=> _PayOption;
+            set
+            {
+                if (_PayOption!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PayOption=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <MetaDataID>{ccaeca74-9ca0-4cbe-aebc-f9d785696fdf}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+14")]
@@ -1003,7 +1086,16 @@ namespace DontWaitApp
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDeliveryGuest)
                 {
                     if (_FoodServicesClientSession.MainSession!=null)
-                        DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace;
+                    {
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace  as Place;
+                            _ServiceTime=_FoodServicesClientSession.MainSession.ServiceTime;
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
                 }
                 if (_FoodServicesClientSession is ITransparentProxy)
                     (_FoodServicesClientSession as ITransparentProxy).Reconnected += FoodServicesClientSessionReconnected;
@@ -1695,18 +1787,23 @@ namespace DontWaitApp
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
+                            _DeliveryPlace = value as Place;
                             if (this.FoodServicesClientSession!=null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
                             stateTransition.Consistent = true;
                         }
                     }
                 }
-
-
             }
         }
 
+
+
+
+
+
+
+        /// <MetaDataID>{9302cac6-d078-4956-a5d6-b190b3a0700c}</MetaDataID>
         public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
         {
             return _FoodServicesClientSession.CanChangeDeliveryPlace(newDeliveryPlace.Location);

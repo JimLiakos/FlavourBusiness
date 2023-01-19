@@ -45,6 +45,7 @@ namespace FlavourBusinessManager.EndUsers
                     return OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
             }
         }
+        /// <MetaDataID>{a4f120c3-0357-43f3-b1a1-72fb360869f4}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+11")]
         string ExtensionPropertiesJson;

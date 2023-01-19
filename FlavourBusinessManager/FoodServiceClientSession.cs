@@ -2614,6 +2614,23 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public void SetSessionServiceTime(DateTime? value)
+        {
+            if (SessionType == SessionType.HomeDelivery)
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    if (_MainSession.Value == null)
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+
+                    MainSession.ServiceTime=value;
+
+                    stateTransition.Consistent = true;
+                }
+            }
+
+        }
+
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
 
     }

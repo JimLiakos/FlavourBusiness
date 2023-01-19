@@ -17,6 +17,10 @@ namespace DontWaitApp
         [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
         FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
 
+        /// <MetaDataID>{f2674898-5add-445e-800d-162ffb6a5087}</MetaDataID>
+        DateTime? ServiceTime { get; set; }
+
+        /// <MetaDataID>{29923a1e-c1ff-434e-b5c9-0c90778e9554}</MetaDataID>
         ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace);
         [RoleAMultiplicityRange(0)]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
@@ -98,5 +102,16 @@ namespace DontWaitApp
         /// <MetaDataID>{f7534611-0be9-4b2b-93f7-9cb0ff64d602}</MetaDataID>
         IList<FlavourBusinessManager.RoomService.ItemPreparation> PreparationItems { get; }
 
+
+        /// <MetaDataID>{5c8b7177-5047-4ba2-a21e-20644280f845}</MetaDataID>
+        PayOptions PayOption { get; set; }
+
+    }
+
+    /// <MetaDataID>{0cb06dce-d187-4c17-9caa-ad584c8854f1}</MetaDataID>
+    public enum PayOptions
+    {
+        PayOnCheckout = 1,
+        PayOnDelivery = 2
     }
 }

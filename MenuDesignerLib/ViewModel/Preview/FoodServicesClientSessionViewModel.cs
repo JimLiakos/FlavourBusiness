@@ -28,9 +28,13 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{f12b11f7-8597-4551-9f68-702e88cd1fd5}</MetaDataID>
         public IList<ItemPreparation> PreparationItems => OrderItems;
 
+        /// <MetaDataID>{90c42001-6830-415d-a9b9-a5166f8dd0af}</MetaDataID>
         public List<ItemPreparation> OrderItems => new List<ItemPreparation>();
 
+        /// <MetaDataID>{ebe5991a-53e9-4c15-93cb-a9323a65699f}</MetaDataID>
         public IPlace DeliveryPlace { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime? ServiceTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public PayOptions PayOption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -49,6 +53,7 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{1c9e34c1-e698-49c5-8e09-bb7ff540befb}</MetaDataID>
         public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(IPlace newDeliveryPlace)
         {
             throw new NotImplementedException();
@@ -60,6 +65,7 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{ca0380ef-f535-49f8-9186-b19449b6d6b1}</MetaDataID>
         public Task<IBill> GetBill()
         {
             throw new NotImplementedException();
@@ -77,6 +83,7 @@ namespace MenuDesigner.ViewModel.Preview
             return new List<Messmate>();
         }
 
+        /// <MetaDataID>{1faa0f90-08ee-422b-a65c-4a5699a34c63}</MetaDataID>
         public Task<IPayment> GetPayment()
         {
             throw new NotImplementedException();
@@ -88,11 +95,13 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{b756e7f4-a514-43fa-ba6c-68c7fddf9130}</MetaDataID>
         public IPayment Pay()
         {
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{e68e6b53-8dee-4137-bcc1-130ad008acba}</MetaDataID>
         public void Pay(IPayment payment, decimal tipAmount)
         {
             throw new NotImplementedException();

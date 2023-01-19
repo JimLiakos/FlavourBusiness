@@ -59,6 +59,8 @@
 			<string>Editor</string>
 		</dict>
 	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>xxx uses the local network to connect with devices around you.</string>	
 
 </dict>
 </plist>
