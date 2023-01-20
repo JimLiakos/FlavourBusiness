@@ -1094,7 +1094,7 @@ namespace DontWaitApp
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace  as Place;
+                            _DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace  as FlavourBusinessManager.EndUsers.Place;
                             _ServiceTime=_FoodServicesClientSession.MainSession.ServiceTime;
 
                             stateTransition.Consistent = true;
@@ -1791,11 +1791,11 @@ namespace DontWaitApp
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace = value as Place;
+                            _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
                             if (this.FoodServicesClientSession!=null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
 
-                            Place existingPlace = this.FlavoursOrderServer.Places .Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as Place;
+                            FlavourBusinessManager.EndUsers.Place existingPlace = this.FlavoursOrderServer.Places .Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
                             existingPlace.Update(value);
 
                             stateTransition.Consistent = true;
