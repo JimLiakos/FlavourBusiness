@@ -9,7 +9,10 @@ using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
+using OOAdvantech.Transactions;
+
 #if DeviceDotNet
+using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
@@ -19,7 +22,7 @@ namespace DontWaitApp
 {
     /// <MetaDataID>{ceaf19ab-2b52-45d6-a7f7-5dd4e251ed92}</MetaDataID>
     [OOAdvantech.MetaDataRepository.HttpVisible]
-    public class FoodServiceClientVM : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser
+    public class FoodServiceClientVM : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser, IGeocodingPlaces
     {
         [GenerateEventConsumerProxy]
         public event ObjectChangeStateHandle ObjectChangeState;
@@ -37,19 +40,44 @@ namespace DontWaitApp
 #if !DeviceDotNet
             var sd = typeof(OOAdvantech.Net.DeviceInstantiator).Assembly.GetCustomAttributes(true);
 #endif
-            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            //_LinePhoneNumber= device.GetLinePhoneNumber(0);
+            //var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            //OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            ////_LinePhoneNumber= device.GetLinePhoneNumber(0);
 
-            SIMCards = device.LinesPhoneNumbers.ToList();
-            _LinesPhoneNumbers = device.LinesPhoneNumbers.Select(x => x.SIMCardDescription).ToList();
+            //SIMCards = device.LinesPhoneNumbers.ToList();
+            //_LinesPhoneNumbers = device.LinesPhoneNumbers.Select(x => x.SIMCardDescription).ToList();
 
-            if(ApplicationSettings.Current?.ClientAsGuest!=null)
+            if (ApplicationSettings.Current?.ClientAsGuest!=null)
             {
+                _FoodServiceClient=ApplicationSettings.Current?.ClientAsGuest;
                 _PhoneNumber=ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
             }
 
+
+
         }
+        /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
+        object ClientSessionLock = new object();
+        /// <MetaDataID>{1737e27b-b763-48ce-b629-0f13e16c0fdd}</MetaDataID>
+        private void CreateClientAsGuest()
+        {
+            lock (ClientSessionLock)
+            {
+
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        ApplicationSettings.Current.ClientAsGuest = new FlavourBusinessManager.EndUsers.FoodServiceClient("Guest");
+                        ApplicationSettings.AppSettingsStorage.CommitTransientObjectState(ApplicationSettings.Current.ClientAsGuest);
+                        //if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.FriendlyName))
+                        //    ApplicationSettings.Current.ClientAsGuest.FriendlyName = ApplicationSettings.Current.FriendlyName;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
         string _PhoneNumber;
         [OOAdvantech.MetaDataRepository.HttpVisible]
@@ -62,10 +90,11 @@ namespace DontWaitApp
             set
             {
                 _PhoneNumber = value;
-                if ((this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser!=null)
-                    (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser.PhoneNumber=_PhoneNumber;
-                if(ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser)
-                    ApplicationSettings.Current.ClientAsGuest.PhoneNumber=value;
+                FoodServiceClient.PhoneNumber= value;
+                //if ((this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser!=null)
+                //    (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser.PhoneNumber=_PhoneNumber;
+                //if (ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser)
+                //    ApplicationSettings.Current.ClientAsGuest.PhoneNumber=value;
             }
         }
 
@@ -78,29 +107,204 @@ namespace DontWaitApp
         {
         }
 
-        [OOAdvantech.MetaDataRepository.HttpVisible]
-        public string AuthUserIdentity
+
+
+        /// <MetaDataID>{310c4d44-a0ae-4508-bb67-c3a7cd859178}</MetaDataID>
+        public List<IPlace> Places
         {
             get
             {
-                return ApplicationSettings.Current.SignInUserIdentity;
-            }
-            set
-            {
-                ApplicationSettings.Current.SignInUserIdentity = value;
+                if (FoodServiceClient != null)
+                {
+
+                    var places = FoodServiceClient.DeliveryPlaces;
+                    var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
+                    if (defaultPlace != null)
+                        this.FlavoursOrderServer.GetNeighborhoodFoodServers(defaultPlace.Location);
+                    return FoodServiceClient.DeliveryPlaces;
+                }
+                else
+                    return new List<IPlace>();
             }
         }
+
+        /// <MetaDataID>{93306e3b-021c-4cf9-86ba-d33ec81a80d3}</MetaDataID>
+        public void SavePlace(IPlace deliveryPlace)
+        {
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            FoodServiceClient.AddDeliveryPlace(deliveryPlace);
+        }
+
+        /// <MetaDataID>{14220482-c7b6-492b-ac98-3a289e32ea50}</MetaDataID>
+        public void RemovePlace(IPlace deliveryPlace)
+        {
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            FoodServiceClient.RemoveDeliveryPlace(deliveryPlace);
+
+        }
+
+
+
+        /// <MetaDataID>{d7f60501-e723-4279-8051-a3669a4f1448}</MetaDataID>
+        public void SetDefaultPlace(IPlace deliveryPlace)
+        {
+            lock (ClientSessionLock)
+            {
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+            }
+            FoodServiceClient.SetDefaultDelivaryPlace(deliveryPlace);
+
+        }
+
+        /// <MetaDataID>{4e4722c8-b953-4769-a184-75f7cdd6a5bc}</MetaDataID>
+        public async Task<Coordinate?> GetCurrentLocation()
+        {
+
+#if DeviceDotNet
+            if (!await CheckPermissionsToAccessCurrentLocation())
+            {
+                if (await RequestPermissionsToAccessCurrentLocation())
+                {
+                    var location = await GetCurrentLocationNative();
+                    if (location != null)
+                        return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
+                }
+            }
+            else
+            {
+                var location = await GetCurrentLocationNative();
+                if (location != null)
+                    return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
+            }
+#endif
+#if DEBUG
+            //return new Location()
+            //{
+            //    Latitude = 38.0002465,
+            //    Longitude = 23.74731
+            //};
+            string strCoordinatesBrax = "37.953746, 22.801600";
+            string strCoordinates = "38.000483, 23.745453";
+            var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(), System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
+            return new Coordinate()
+            {
+                Latitude = coordinates[0],
+                Longitude = coordinates[1]
+            };
+
+            //var debugLocation = new Location()
+            //{
+            //    Latitude = 37.953746,
+            //    Longitude = 22.801600
+            //};
+            //return debugLocation;
+
+#endif
+            return null;
+        }
+
+
+        /// <MetaDataID>{bccd130a-67c8-4f46-a550-cb9d10103eb1}</MetaDataID>
+        public async Task<bool> CheckPermissionsToAccessCurrentLocation()
+
+        {
+#if DeviceDotNet
+#if IOSEmulator
+                    return true;
+#else
+            var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+
+#endif
+#else
+            return await Task<bool>.FromResult(false);
+#endif
+        }
+
+
+
+        /// <MetaDataID>{9521189d-cb68-4f9b-90a6-b6e5fb33461d}</MetaDataID>
+        public async Task<bool> RequestPermissionsToAccessCurrentLocation()
+        {
+#if DeviceDotNet
+            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+#else
+            return await Task<bool>.FromResult(true);
+#endif
+        }
+
+#if DeviceDotNet
+
+
+        public static System.Threading.CancellationTokenSource cts;
+        async Task<Xamarin.Essentials.Location> GetCurrentLocationNative()
+        {
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium, System.TimeSpan.FromSeconds(10));
+                cts = new System.Threading.CancellationTokenSource();
+                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                if (location == null)
+                    location = await Geolocation.GetLastKnownLocationAsync();
+                return location;
+
+
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (System.Exception ex)
+            {
+                // Unable to get location
+            }
+            return null;
+        }
+
+#endif
+
+
+        //[OOAdvantech.MetaDataRepository.HttpVisible]
+        //public string AuthUserIdentity
+        //{
+        //    get
+        //    {
+        //        return ApplicationSettings.Current.SignInUserIdentity;
+        //    }
+        //    set
+        //    {
+        //        ApplicationSettings.Current.SignInUserIdentity = value;
+        //    }
+        //}
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public string SignInProvider
         {
             get
             {
-                return ApplicationSettings.Current.SignInProvider;
+                return _FoodServiceClient.SignInProvider;
             }
             set
             {
-                ApplicationSettings.Current.SignInProvider = value;
+                _FoodServiceClient.SignInProvider = value;
             }
         }
 
@@ -198,8 +402,35 @@ namespace DontWaitApp
         }
 
         EndUserData EndUserData;
+        /// <exclude>Excluded</exclude>
+        IFoodServiceClient _FoodServiceClient;
+        public IFoodServiceClient FoodServiceClient
+        {
+            get
+            {
+                if (_FoodServiceClient==null)
+                    _FoodServiceClient=ApplicationSettings.Current?.ClientAsGuest;
 
-        public IFoodServiceClient FoodServiceClient { get; private set; }
+                return _FoodServiceClient;
+
+            }
+
+            private set
+            {
+                if (_FoodServiceClient!=null)
+                {
+
+                    if (_FoodServiceClient!=value&&value!=null)
+                    {
+                        _FoodServiceClient= value;
+                        _PhoneNumber=_FoodServiceClient.PhoneNumber;
+                        ApplicationSettings.Current.ClientAsGuest.Synchronize(_FoodServiceClient);
+                    }
+                }
+                else
+                    _FoodServiceClient=value;
+            }
+        }
         public bool OnSignIn { get; private set; }
         public Task<bool> SignInTask { get; private set; }
 
@@ -216,8 +447,8 @@ namespace DontWaitApp
 
             if (authUser == null)
                 return false;
-            var ddd = FoodServiceClient?.Identity;
-            if (FoodServiceClient != null && FoodServiceClient.OAuthUserIdentity == authUser.User_ID)
+
+            if (OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(FoodServiceClient as MarshalByRefObject)&&FoodServiceClient != null && FoodServiceClient.OAuthUserIdentity == authUser.User_ID)
                 return true;
 
 
@@ -257,16 +488,17 @@ namespace DontWaitApp
                         }
                         authUser = DeviceAuthentication.AuthUser;
 
-                        FoodServiceClient = pAuthFlavourBusiness.SignInEndUser();
-                        if (FoodServiceClient != null)
+                        var foodServiceClient = pAuthFlavourBusiness.SignInEndUser();
+                        if (foodServiceClient != null)
                         {
+                            FoodServiceClient=foodServiceClient;
                             FullName = FoodServiceClient.FullName;
                             UserName = FoodServiceClient.UserName;
                             Email = FoodServiceClient.Email;
                             if (string.IsNullOrWhiteSpace(UserName))
                                 UserName=Email;
 
-                            ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
+                            //ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -283,7 +515,7 @@ namespace DontWaitApp
                         {
                             if (string.IsNullOrWhiteSpace(FullName))
                             {
-                                FullName = ApplicationSettings.Current.FriendlyName;
+                                //FullName = ApplicationSettings.Current.FriendlyName;
                                 if (string.IsNullOrWhiteSpace(UserName))
                                     UserName = authUser.Email;
                                 ObjectChangeState?.Invoke(this, null);
@@ -417,18 +649,19 @@ namespace DontWaitApp
                     {
 
                     }
-                    EndUserData = new EndUserData() { Email = authUser.Email, Name = ApplicationSettings.Current.FriendlyName, Identity = authUser.User_ID };
-                    FoodServiceClient = pAuthFlavourBusiness.SignUpEndUser(EndUserData);
+                    EndUserData = new EndUserData() { Email = authUser.Email, Name = this.FoodServiceClient.FriendlyName, Identity = authUser.User_ID, DeliveryPlaces= this.FoodServiceClient.DeliveryPlaces, FriendlyName=this.FoodServiceClient.FriendlyName };
+                    var foodServiceClient = pAuthFlavourBusiness.SignUpEndUser(EndUserData);
 
-                    if (FoodServiceClient != null)
+
+                    if (foodServiceClient != null)
                     {
                         FullName = FoodServiceClient.FullName;
                         UserName = FoodServiceClient.UserName;
                         Email = FoodServiceClient.Email;
                         if (string.IsNullOrWhiteSpace(UserName))
                             UserName=Email;
-
-                        ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
+                        FoodServiceClient=foodServiceClient;
+                        //ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 
 #if DeviceDotNet
                         IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -473,6 +706,26 @@ namespace DontWaitApp
             ObjectChangeState?.Invoke(this, null);
         }
 
+        internal void SetFriendlyName(string friendlyName)
+        {
+            lock (ClientSessionLock)
+            {
+                FoodServiceClient.FriendlyName= friendlyName;
+            }
+
+        }
+
+        internal string GetFriendlyName()
+        {
+            lock (ClientSessionLock)
+            {
+
+                if (ApplicationSettings.Current.ClientAsGuest == null)
+                    CreateClientAsGuest();
+                return FoodServiceClient.FriendlyName;
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         string _LinePhoneNumber;
 
@@ -494,17 +747,17 @@ namespace DontWaitApp
                 _LinePhoneNumber = value;
             }
         }
-        /// <exclude>Excluded</exclude>
-        List<string> _LinesPhoneNumbers;
+        ///// <exclude>Excluded</exclude>
+        //List<string> _LinesPhoneNumbers;
 
-        [OOAdvantech.MetaDataRepository.HttpVisible]
-        public List<string> LinesPhoneNumbers
-        {
-            get
-            {
-                return _LinesPhoneNumbers;
-            }
-        }
+        //[OOAdvantech.MetaDataRepository.HttpVisible]
+        //public List<string> LinesPhoneNumbers
+        //{
+        //    get
+        //    {
+        //        return _LinesPhoneNumbers;
+        //    }
+        //}
 
         string _ConfirmPassword;
 
@@ -546,13 +799,13 @@ namespace DontWaitApp
                     return _FullName;
 
 
-                return ApplicationSettings.Current.FriendlyName;
+                return FoodServiceClient.FriendlyName;
             }
             set
             {
                 _FullName = value;
                 if (!string.IsNullOrWhiteSpace(value))
-                    ApplicationSettings.Current.FriendlyName = value;
+                    FoodServiceClient.FriendlyName = value;
             }
         }
 

@@ -42,6 +42,7 @@ namespace FlavourBusinessManager.EndUsers
     {
 
 
+        /// <MetaDataID>{c04687dc-cdf1-4dfc-96c8-b56e9808f003}</MetaDataID>
         public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(Coordinate location)
         {
             if (ServicesContextRunTime.Current.DeliveryServicePoint == null)
@@ -472,7 +473,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (SessionType==SessionType.HomeDelivery)
                 {
                     (messmateClientSesion as FoodServiceClientSession).SessionType= SessionType.HomeDeliveryGuest;
-                    
+
                 }
 
                 stateTransition.Consistent = true;
@@ -1955,6 +1956,29 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _DeliveryComment;
+
+
+        /// <MetaDataID>{93888b74-6b9f-4250-80d1-0be33073184a}</MetaDataID>
+        [PersistentMember(nameof(_DeliveryComment))]
+        [BackwardCompatibilityID("+28")]
+        public string DeliveryComment
+        {
+            get => _DeliveryComment;
+            set
+            {
+                if (_DeliveryComment!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeliveryComment=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
 
         /// <MetaDataID>{407f40f2-a77e-4c4e-b445-3a5e1f155639}</MetaDataID>
@@ -2593,10 +2617,9 @@ namespace FlavourBusinessManager.EndUsers
             if (SessionState == ClientSessionState.Conversation)
                 SessionState = ClientSessionState.ItemsCommited;
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary></summary>
         /// <param name="deliveryPlace"></param>
+        /// <MetaDataID>{ab2d01da-b855-4cd6-b1c1-2fae7fb00906}</MetaDataID>
         public void SetSessionDeliveryPlace(IPlace deliveryPlace)
         {
             if (SessionType == SessionType.HomeDelivery)
@@ -2614,6 +2637,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{f88bff3e-2884-440d-8d4d-12209daca5e9}</MetaDataID>
         public void SetSessionServiceTime(DateTime? value)
         {
             if (SessionType == SessionType.HomeDelivery)

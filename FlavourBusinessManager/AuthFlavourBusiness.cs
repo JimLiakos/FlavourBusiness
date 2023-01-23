@@ -32,9 +32,11 @@ namespace FlavourBusinessManager
                 {
                     foodServiceClient = new FoodServiceClient(userId);
                     foodServiceClient.Name = endUser.Name;
-                    foodServiceClient.FriendlyName=endUser.Name;
+                    foodServiceClient.FriendlyName=endUser.FriendlyName;
                     foodServiceClient.SIMCardData = new SIMCardData() { SIMCardDescription = endUser.SIMCard.SIMCardDescription, SIMCardIdentity = endUser.SIMCard.SIMCardIdentity, SIMCardPhoneNumber = endUser.SIMCard.SIMCardPhoneNumber };
                     foodServiceClient.Email = authUser.Email;
+                    foreach (var deliveryPlace in endUser.DeliveryPlaces)
+                        foodServiceClient.AddDeliveryPlace(deliveryPlace);
 
                     objectStorage.CommitTransientObjectState(foodServiceClient);
                     if (string.IsNullOrWhiteSpace(foodServiceClient.Email))
@@ -104,7 +106,7 @@ namespace FlavourBusinessManager
 
             else
                 return SignUp(userData);
-            
+
         }
 
         private IUser SignUpMenuMaker(UserData userData)

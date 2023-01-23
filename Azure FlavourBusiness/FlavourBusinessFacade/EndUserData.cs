@@ -1,4 +1,7 @@
 
+using FlavourBusinessFacade.EndUsers;
+using System.Collections.Generic;
+
 namespace FlavourBusinessFacade
 {
     /// <MetaDataID>{582829b9-924b-4b2a-98db-473a8d02059d}</MetaDataID>
@@ -15,5 +18,7 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{260c4cc0-8487-40cb-8ab6-7f5de83aeaaf}</MetaDataID>
         public EndUsers.SIMCardData SIMCard { get; set; }
+        public List<IPlace> DeliveryPlaces { get; set; }
+        public string FriendlyName { get; set; }
     }
 }

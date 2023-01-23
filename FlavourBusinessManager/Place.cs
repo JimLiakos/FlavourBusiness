@@ -99,7 +99,7 @@ namespace FlavourBusinessManager.EndUsers
             ExtensionPropertiesJson=OOAdvantech.Json.JsonConvert.SerializeObject(ExtensionProperties);
         }
 
-        internal void Update(IPlace value)
+        public void Update(IPlace value)
         {
 
 

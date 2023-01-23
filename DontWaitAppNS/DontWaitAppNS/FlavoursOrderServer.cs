@@ -60,7 +60,7 @@ namespace DontWaitApp
 
 
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
-    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, IGeocodingPlaces, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
         /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
@@ -399,113 +399,8 @@ namespace DontWaitApp
 
         }
 
-        /// <MetaDataID>{4e4722c8-b953-4769-a184-75f7cdd6a5bc}</MetaDataID>
-        public async Task<Coordinate?> GetCurrentLocation()
-        {
-
-#if DeviceDotNet
-            if (!await CheckPermissionsToAccessCurrentLocation())
-            {
-                if (await RequestPermissionsToAccessCurrentLocation())
-                {
-                    var location = await GetCurrentLocationNative();
-                    if (location != null)
-                        return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
-                }
-            }
-            else
-            {
-                var location = await GetCurrentLocationNative();
-                if (location != null)
-                    return new Coordinate() { Latitude = location.Latitude, Longitude = location.Longitude };
-            }
-#endif
-#if DEBUG
-            //return new Location()
-            //{
-            //    Latitude = 38.0002465,
-            //    Longitude = 23.74731
-            //};
-            string strCoordinatesBrax = "37.953746, 22.801600";
-            string strCoordinates = "38.000483, 23.745453";
-            var coordinates = strCoordinates.Split(',').Select(x => double.Parse(x.Trim(), System.Globalization.CultureInfo.GetCultureInfo(1033))).ToArray();
-            return new Coordinate()
-            {
-                Latitude = coordinates[0],
-                Longitude = coordinates[1]
-            };
-
-            //var debugLocation = new Location()
-            //{
-            //    Latitude = 37.953746,
-            //    Longitude = 22.801600
-            //};
-            //return debugLocation;
 
 
-
-#endif
-            return null;
-        }
-
-        /// <MetaDataID>{310c4d44-a0ae-4508-bb67-c3a7cd859178}</MetaDataID>
-        public List<IPlace> Places
-        {
-            get
-            {
-                if (ApplicationSettings.Current.ClientAsGuest != null)
-                {
-
-                    var places = ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
-                    if (places.Count > 0 && places.Where(x => x.Default).FirstOrDefault() == null)
-                        ApplicationSettings.Current.ClientAsGuest.SetDefaultDelivaryPlace(places[0]);
-
-                    var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
-                    if (defaultPlace != null)
-                        GetNeighborhoodFoodServers(defaultPlace.Location);
-                    return ApplicationSettings.Current.ClientAsGuest.DeliveryPlaces;
-                }
-                else
-                    return new List<IPlace>();
-            }
-        }
-
-        /// <MetaDataID>{93306e3b-021c-4cf9-86ba-d33ec81a80d3}</MetaDataID>
-        public void SavePlace(IPlace deliveryPlace)
-        {
-            lock (ClientSessionLock)
-            {
-                if (ApplicationSettings.Current.ClientAsGuest == null)
-                    CreateClientAsGuest();
-            }
-            ApplicationSettings.Current.ClientAsGuest.AddDeliveryPlace(deliveryPlace);
-        }
-
-        /// <MetaDataID>{14220482-c7b6-492b-ac98-3a289e32ea50}</MetaDataID>
-        public void RemovePlace(IPlace deliveryPlace)
-        {
-            lock (ClientSessionLock)
-            {
-                if (ApplicationSettings.Current.ClientAsGuest == null)
-                    CreateClientAsGuest();
-            }
-            ApplicationSettings.Current.ClientAsGuest.RemoveDeliveryPlace(deliveryPlace);
-
-        }
-
-
-
-        /// <MetaDataID>{d7f60501-e723-4279-8051-a3669a4f1448}</MetaDataID>
-        public void SetDefaultPlace(IPlace deliveryPlace)
-        {
-            lock (ClientSessionLock)
-            {
-                if (ApplicationSettings.Current.ClientAsGuest == null)
-                    CreateClientAsGuest();
-            }
-            ApplicationSettings.Current.ClientAsGuest.SetDefaultDelivaryPlace(deliveryPlace);
-
-        }
 #if DeviceDotNet
         public static CancellationTokenSource cts;
         async Task<Xamarin.Essentials.Location> GetCurrentLocationNative()
@@ -581,38 +476,18 @@ namespace DontWaitApp
 
                 var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                if (!WaiterView)
+                    return (_EndUser as FoodServiceClientVM).GetFriendlyName();
+                else
+                    return _EndUser.FullName;
 
-                if (ApplicationSettings.Current.ClientAsGuest == null && !WaiterView)
-                {
-                    CreateClientAsGuest();
-                    return ApplicationSettings.Current.ClientAsGuest.FriendlyName;
-                }
-                string friendlyName = ApplicationSettings.Current.FriendlyName;
-                return friendlyName;
+                    
+              
             });
 
 
         }
 
-        /// <MetaDataID>{1737e27b-b763-48ce-b629-0f13e16c0fdd}</MetaDataID>
-        private void CreateClientAsGuest()
-        {
-            lock (ClientSessionLock)
-            {
-
-                if (ApplicationSettings.Current.ClientAsGuest == null)
-                {
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                    {
-                        ApplicationSettings.Current.ClientAsGuest = new FoodServiceClient("Guest");
-                        ApplicationSettings.AppSettingsStorage.CommitTransientObjectState(ApplicationSettings.Current.ClientAsGuest);
-                        if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.FriendlyName))
-                            ApplicationSettings.Current.ClientAsGuest.FriendlyName = ApplicationSettings.Current.FriendlyName;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
 
         /// <MetaDataID>{60462cb1-1349-470d-87c9-923b2e7fe825}</MetaDataID>
         public void SetFriendlyName(string friendlyName)
@@ -621,14 +496,10 @@ namespace DontWaitApp
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 if (!WaiterView)
-                {
-                    lock (ClientSessionLock)
-                    {
-                        if (ApplicationSettings.Current.ClientAsGuest == null)
-                            CreateClientAsGuest();
-                    }
-                }
-                ApplicationSettings.Current.FriendlyName = friendlyName;
+                    (_EndUser as FoodServiceClientVM).SetFriendlyName(friendlyName);
+                else
+                    _EndUser.FullName = friendlyName;
+
                 stateTransition.Consistent = true;
             }
 
@@ -771,7 +642,7 @@ namespace DontWaitApp
 
 
 
-                int? forceLoad = Places?.Count;
+                int? forceLoad = (_EndUser as IGeocodingPlaces)?.Places?.Count;
 
 
 #if DeviceDotNet
@@ -1524,8 +1395,7 @@ namespace DontWaitApp
 
 
 
-        /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
-        object ClientSessionLock = new object();
+
 
         /// <MetaDataID>{1507e7fe-4972-41be-a996-b8e3ccee29d3}</MetaDataID>
         Dictionary<string, Task<bool>> GetServicePointDataTasks = new Dictionary<string, Task<bool>>();
@@ -1945,7 +1815,7 @@ namespace DontWaitApp
                             stateTransition.Consistent = true;
                         }
                     }
-               
+
                     foodServicesClientSessionViewModel.FlavoursOrderServer = this;
                     return foodServicesClientSessionViewModel;
                 }

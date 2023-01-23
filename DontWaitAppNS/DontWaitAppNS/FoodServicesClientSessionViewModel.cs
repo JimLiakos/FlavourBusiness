@@ -19,6 +19,7 @@ using Xamarin.Essentials;
 using ZXing.Net.Mobile.Forms;
 using ZXing;
 using ZXing.QrCode;
+using FlavourBusinessFacade;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
@@ -28,6 +29,7 @@ using OOAdvantech.Pay;
 #else
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessFacade;
 
 
 
@@ -118,7 +120,7 @@ namespace DontWaitApp
         [BackwardCompatibilityID("+16")]
         public PayOptions PayOption
         {
-            get=> _PayOption;
+            get => _PayOption;
             set
             {
                 if (_PayOption!=value)
@@ -1086,6 +1088,7 @@ namespace DontWaitApp
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
                         }
                     }
+                    _DeliveryComment=_FoodServicesClientSession.DeliveryComment;
                 }
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDeliveryGuest)
                 {
@@ -1100,6 +1103,7 @@ namespace DontWaitApp
                             stateTransition.Consistent = true;
                         }
                     }
+                    _DeliveryComment=_FoodServicesClientSession.DeliveryComment;
                 }
                 if (_FoodServicesClientSession is ITransparentProxy)
                     (_FoodServicesClientSession as ITransparentProxy).Reconnected += FoodServicesClientSessionReconnected;
@@ -1795,9 +1799,9 @@ namespace DontWaitApp
                             if (this.FoodServicesClientSession!=null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
 
-                            FlavourBusinessManager.EndUsers.Place existingPlace = this.FlavoursOrderServer.Places .Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
+                            FlavourBusinessManager.EndUsers.Place existingPlace = (FlavoursOrderServer.EndUser as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
                             existingPlace.Update(value);
-
+                            (FlavoursOrderServer.EndUser as IGeocodingPlaces).SavePlace(existingPlace);
                             stateTransition.Consistent = true;
                         }
                     }
@@ -1805,9 +1809,26 @@ namespace DontWaitApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _DeliveryComment;
+        /// <MetaDataID>{a3dff6d9-b898-4414-8766-45fabf3c4aec}</MetaDataID>
+        [PersistentMember(nameof(_DeliveryComment))]
+        [BackwardCompatibilityID("+17")]
+        public string DeliveryComment
+        {
+            get => _DeliveryComment;
+            set
+            {
+                if (_DeliveryComment != value)
+                {
+                    if (this.FoodServicesClientSession!=null)
+                        this.FoodServicesClientSession.DeliveryComment=value;
 
+                    _DeliveryComment = value;
 
-
+                }
+            }
+        }
 
 
 

@@ -14,6 +14,7 @@ namespace FlavourBusinessFacade.EndUsers
     {
 
 
+        /// <MetaDataID>{9ca27920-120c-46c5-a5a2-3a949b957d2b}</MetaDataID>
         ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(Coordinate location);
 
         /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
@@ -217,7 +218,9 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{de90bcd9-5a18-4565-a4b3-0ee1efb03832}</MetaDataID>
         void ItemsServing(List<IItemPreparation> clientSessionItems);
+        /// <MetaDataID>{af43e9d0-b99f-4547-b1d7-33a0b998ee1c}</MetaDataID>
         void SetSessionDeliveryPlace(IPlace deliveryPlace);
+        /// <MetaDataID>{8ad09d41-4b56-4ad8-9cf2-6e90b48bf9bb}</MetaDataID>
         void SetSessionServiceTime(DateTime? value);
 
 
@@ -229,6 +232,8 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
         string MealInvitationUri { get; }
+        /// <MetaDataID>{224f6e65-5799-41e2-89f3-9e0b27816033}</MetaDataID>
+        string DeliveryComment { get; set; }
     }
 
     /// <MetaDataID>{14a34b2e-aae2-46af-87a6-bf43dd509479}</MetaDataID>

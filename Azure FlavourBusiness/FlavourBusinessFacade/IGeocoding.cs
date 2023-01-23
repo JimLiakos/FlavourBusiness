@@ -26,7 +26,5 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{1092e70e-b750-426b-8918-a6190f6c2424}</MetaDataID>
         Task<Coordinate?> GetCurrentLocation();
 
-
-
     }
 }

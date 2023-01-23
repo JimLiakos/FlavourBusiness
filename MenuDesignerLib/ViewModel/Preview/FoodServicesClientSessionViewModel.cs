@@ -35,6 +35,7 @@ namespace MenuDesigner.ViewModel.Preview
         public IPlace DeliveryPlace { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public DateTime? ServiceTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public PayOptions PayOption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string DeliveryComment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;

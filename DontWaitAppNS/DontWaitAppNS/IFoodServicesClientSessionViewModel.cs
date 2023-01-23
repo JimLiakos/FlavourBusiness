@@ -17,6 +17,11 @@ namespace DontWaitApp
         [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
         FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
 
+
+        /// <MetaDataID>{ad945fbe-f52f-4c07-9b70-bfa13139db91}</MetaDataID>
+        string DeliveryComment { get; set; }
+
+
         /// <MetaDataID>{f2674898-5add-445e-800d-162ffb6a5087}</MetaDataID>
         DateTime? ServiceTime { get; set; }
 

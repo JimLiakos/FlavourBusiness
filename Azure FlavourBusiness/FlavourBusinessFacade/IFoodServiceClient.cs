@@ -8,6 +8,10 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClient:IUser
     {
+        /// <MetaDataID>{7038376b-2b4c-49bc-abe3-8696fa562d4d}</MetaDataID>
+        [BackwardCompatibilityID("+11")]
+        string SignInProvider { get; set; }
+
         /// <MetaDataID>{fb847b67-e534-4395-a1b2-665a97ac6ce6}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]
@@ -46,7 +50,9 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+8")]
         string DeviceFirebaseToken { get; set; }
         /// <MetaDataID>{a12366be-3156-4489-881d-5ac188559fc7}</MetaDataID>
-       
+        void SetDefaultDelivaryPlace(IPlace place);
+
+
     }
 
     /// <MetaDataID>{d2445458-7d5d-4cc1-ae85-45143f5d2944}</MetaDataID>

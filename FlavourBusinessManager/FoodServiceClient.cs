@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
@@ -13,6 +14,29 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class FoodServiceClient : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceClient
     {
+
+        /// <exclude>Excluded</exclude>
+        string _SignInProvider;
+
+        /// <MetaDataID>{b8a292d1-1cee-444a-a015-98f9403e7ca3}</MetaDataID>
+        [PersistentMember(nameof(_SignInProvider))]
+        [BackwardCompatibilityID("+16")]
+        public string SignInProvider
+        {
+            get => _SignInProvider;
+            set
+            {
+                if (_SignInProvider!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _SignInProvider=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{e74570a3-f55a-4203-9ec7-d9ba5d25cb17}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+9")]
@@ -197,7 +221,14 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 lock (this)
+                {
+                    var places = _DeliveryPlaces;
+
+                    if (places.Count > 0 && places.Where(x => x.Default).FirstOrDefault() == null)
+                        SetDefaultDelivaryPlace(places[0]);
+
                     return _DeliveryPlaces.OfType<IPlace>().ToList();
+                }
             }
         }
 
@@ -381,10 +412,13 @@ namespace FlavourBusinessManager.EndUsers
         {
             lock (this)
             {
-                if (DeliveryPlacesJson != null)
-                    _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
-                else
-                    _DeliveryPlaces = new List<Place>();
+                if (OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(this))
+                {
+                    if (DeliveryPlacesJson != null)
+                        _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+                    else
+                        _DeliveryPlaces = new List<Place>();
+                }
             }
         }
 
@@ -399,17 +433,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    existingPlace.Area = place.Area;
-                    existingPlace.CityTown = place.CityTown;
-                    existingPlace.Country = place.Country;
-                    existingPlace.Description = place.Description;
-                    existingPlace.Location = place.Location;
-                    existingPlace.PlaceID = place.PlaceID;
-                    existingPlace.PostalCode = place.PostalCode;
-                    existingPlace.StateProvinceRegion = place.StateProvinceRegion;
-                    existingPlace.Street = place.Street;
-                    existingPlace.StreetNumber = place.StreetNumber;
-
+                    existingPlace.Update(place);
                     stateTransition.Consistent = true;
                 }
 
@@ -422,14 +446,37 @@ namespace FlavourBusinessManager.EndUsers
         public void SetDefaultDelivaryPlace(IPlace place)
         {
 
-            Place existingPlace = DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() as Place;
+            Place existingPlace = _DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() as Place;
             if (existingPlace != null)
             {
-                foreach (var thePlace in DeliveryPlaces)
+                foreach (var thePlace in _DeliveryPlaces)
                     thePlace.Default = false;
 
                 existingPlace.Default = true;
             }
+        }
+
+        public void Synchronize(IFoodServiceClient foodServiceClient)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                this._Identity=foodServiceClient.Identity;
+                this._Email=foodServiceClient.Email;
+                this._DeliveryPlaces=foodServiceClient.DeliveryPlaces.OfType<Place>().ToList();
+                this._FriendlyName=foodServiceClient.FriendlyName;
+                this._FullName=foodServiceClient.FullName;
+                this._Name=foodServiceClient.Name;
+                this._PhoneNumber=foodServiceClient.PhoneNumber;
+                this._Roles=foodServiceClient.Roles;
+                this._PhotoUrl=foodServiceClient.PhotoUrl;
+                this._SignInProvider=foodServiceClient.SignInProvider;
+                this._UserName=foodServiceClient.UserName;
+                stateTransition.Consistent = true;
+            }
+
+
+
         }
     }
 }

@@ -24,6 +24,8 @@ namespace FlavourBusinessFacade.ViewModel
         string Password { get; set; }
         /// <MetaDataID>{bb20cd5b-e7b6-48a2-9856-77aa454b8989}</MetaDataID>
         string ConfirmPassword { get; set; }
+
+        string PhoneNumber { get; set; }
     }
 
     /// <MetaDataID>{e6b6ed2b-c1a0-4c53-9d50-4136afc3faff}</MetaDataID>

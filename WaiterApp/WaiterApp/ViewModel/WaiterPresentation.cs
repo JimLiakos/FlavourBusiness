@@ -450,7 +450,7 @@ namespace WaiterApp.ViewModel
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
-                            ApplicationSettings.Current.FriendlyName = Waiter.FullName;
+                            //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             GetMessages();
 
 
@@ -568,7 +568,7 @@ namespace WaiterApp.ViewModel
 
 
                             (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
-                            ApplicationSettings.Current.FriendlyName = Waiter.FullName;
+                            //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
@@ -770,149 +770,7 @@ namespace WaiterApp.ViewModel
 
         }
 
-        /// <MetaDataID>{dedbf193-f9e7-4d31-899b-1119b925b50e}</MetaDataID>
-        async Task<bool> IOSPseudoSignIn()
-        {
-
-            //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
-            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-            {
-                authUser = DeviceAuthentication.AuthUser;
-            }
-            if (DeviceAuthentication.AuthUser == null)
-            {
-
-            }
-
-            if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
-                return true;
-
-            if (OnSignIn && SignInTask != null)
-                return await SignInTask;
-            else
-            {
-
-                SignInTask = Task<bool>.Run(async () =>
-                {
-
-                    OnSignIn = true;
-                    try
-                    {
-                        string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                        string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                        System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-                        string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                        serverUrl = "http://localhost:8090/api/";
-                        serverUrl = AzureServerUrl;
-                        IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-                        try
-                        {
-                            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-
-                        }
-                        catch (System.Net.WebException error)
-                        {
-                            throw;
-                        }
-                        catch (Exception error)
-                        {
-                            throw;
-                        }
-
-
-                        UserData = pAuthFlavourBusiness.SignInUser("aTUJ9abSzveGlWBmwLB4VbxBIw62");
-                        if (UserData != null)
-                        {
-                            var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter).FirstOrDefault();
-                            if (role.RoleType == UserData.RoleType.Waiter)
-                            {
-                                if (Waiter != null)
-                                    Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
-
-                                Waiter = RemotingServices.CastTransparentProxy<FlavourBusinessFacade.HumanResources.IWaiter>(role.User);
-                                Waiter.ObjectChangeState += Waiter_ObjectChangeState;
-                                Waiter.ServingBatchesChanged += ServingBatchesChanged;
-
-                                Waiter.MessageReceived += MessageReceived;
-                                if (Waiter is ITransparentProxy)
-                                    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
-
-
-                                ActiveShiftWork = Waiter.ActiveShiftWork;
-
-                                UpdateServingBatches(Waiter.GetServingBatches());
-
-
-                                (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
-                                ApplicationSettings.Current.FriendlyName = Waiter.FullName;
-
-                                if (this._Halls != null)
-                                {
-                                    foreach (var hall in this._Halls)
-                                        (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
-                                }
-
-
-                                this._Halls = Waiter.GetServiceHalls();
-                                foreach (var hall in this._Halls)
-                                {
-                                    hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
-                                    (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
-                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
-                                }
-
-                                GetMessages();
-                            }
-                            //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
-
-                            //role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                            //if (role.RoleType == UserData.RoleType.Organization)
-                            //{
-                            //    Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                            //    string administratorIdentity = "";
-
-
-                            //    if (ServiceContextSupervisor != null)
-                            //    {
-                            //        administratorIdentity = ServiceContextSupervisor.SupervisorIdentity;
-                            //        var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                            //        ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity != ServiceContextSupervisor.SignUpUserIdentity).ToList();
-                            //    }
-                            //    _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, administratorIdentity)).OfType<IServicesContextPresentation>().ToList();
-                            //}
-                            //else
-                            //    _ServicesContexts = new List<IServicesContextPresentation>();
-
-                            AuthUser = authUser;
-                            return true;
-                        }
-                        else
-                            return false;
-
-
-                    }
-                    catch (Exception error)
-                    {
-
-                        throw;
-                    }
-                    finally
-                    {
-                        OnSignIn = false;
-                    }
-                });
-
-                var result = await SignInTask;
-                SignInTask = null;
-                return result;
-
-            }
-
-        }
+     
         /// <MetaDataID>{527b5bdb-7653-40f3-8370-e619aa9d216a}</MetaDataID>
         private void MessageReceived(IMessageConsumer sender)
         {

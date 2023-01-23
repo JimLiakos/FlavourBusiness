@@ -229,29 +229,29 @@ namespace DontWaitApp
 
 
 
-        /// <exclude>Excluded</exclude>
-        string _SignInProvider;
-        /// <MetaDataID>{dda41587-5296-4cce-85d4-a0c9567fee7b}</MetaDataID>
-        [PersistentMember(nameof(_SignInProvider))]
-        [BackwardCompatibilityID("+13")]
-        public string SignInProvider
-        {
-            get
-            {
-                return _SignInProvider;
-            }
-            set
-            {
-                if (_LastClientSessionID != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _SignInProvider = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
+        ///// <exclude>Excluded</exclude>
+        //string _SignInProvider;
+        ///// <MetaDataID>{dda41587-5296-4cce-85d4-a0c9567fee7b}</MetaDataID>
+        //[PersistentMember(nameof(_SignInProvider))]
+        //[BackwardCompatibilityID("+13")]
+        //public string SignInProvider
+        //{
+        //    get
+        //    {
+        //        return _SignInProvider;
+        //    }
+        //    set
+        //    {
+        //        if (_LastClientSessionID != value)
+        //        {
+        //            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //            {
+        //                _SignInProvider = value;
+        //                stateTransition.Consistent = true;
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <exclude>Excluded</exclude>
         ObjectStateManagerLink StateManagerLink;
@@ -401,47 +401,47 @@ namespace DontWaitApp
         }
 
 
-        /// <exclude>Excluded</exclude>
-        string _SignInUserName;
-        /// <MetaDataID>{1aa6eeca-93e3-44f9-9f42-de763b037039}</MetaDataID>
-        [PersistentMember(nameof(_SignInUserName))]
-        [BackwardCompatibilityID("+10")]
-        public string SignInUserName
-        {
-            get
-            {
-                return _SignInUserName;
-            }
-            set
-            {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                {
-                    _SignInUserName = value;
-                    stateTransition.Consistent = true;
-                }
-            }
-        }
-        /// <exclude>Excluded</exclude>
-        string _SignInUserIdentity;
-        /// <MetaDataID>{4a51c48b-5fec-4309-9fbe-6b418094b292}</MetaDataID>
-        [PersistentMember(nameof(_SignInUserIdentity))]
-        [BackwardCompatibilityID("+11")]
-        public string SignInUserIdentity
-        {
-            get
-            {
-                return _SignInUserIdentity;
-            }
-            set
-            {
+        ///// <exclude>Excluded</exclude>
+        //string _SignInUserName;
+        ///// <MetaDataID>{1aa6eeca-93e3-44f9-9f42-de763b037039}</MetaDataID>
+        //[PersistentMember(nameof(_SignInUserName))]
+        //[BackwardCompatibilityID("+10")]
+        //public string SignInUserName
+        //{
+        //    get
+        //    {
+        //        return _SignInUserName;
+        //    }
+        //    set
+        //    {
+        //        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //        {
+        //            _SignInUserName = value;
+        //            stateTransition.Consistent = true;
+        //        }
+        //    }
+        //}
+        ///// <exclude>Excluded</exclude>
+        //string _SignInUserIdentity;
+        ///// <MetaDataID>{4a51c48b-5fec-4309-9fbe-6b418094b292}</MetaDataID>
+        //[PersistentMember(nameof(_SignInUserIdentity))]
+        //[BackwardCompatibilityID("+11")]
+        //public string SignInUserIdentity
+        //{
+        //    get
+        //    {
+        //        return _SignInUserIdentity;
+        //    }
+        //    set
+        //    {
 
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                {
-                    _SignInUserIdentity = value;
-                    stateTransition.Consistent = true;
-                }
-            }
-        }
+        //        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //        {
+        //            _SignInUserIdentity = value;
+        //            stateTransition.Consistent = true;
+        //        }
+        //    }
+        //}
 
 
 
@@ -457,7 +457,7 @@ namespace DontWaitApp
         /// <MetaDataID>{d527686e-187a-4e4f-9128-7cc0d2275d63}</MetaDataID>
         [PersistentMember(nameof(_FriendlyName))]
         [BackwardCompatibilityID("+12")]
-        public string FriendlyName
+         string FriendlyName
         {
             get
             {
