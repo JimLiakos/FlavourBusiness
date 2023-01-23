@@ -13,7 +13,7 @@ namespace FlavourBusinessFacade.RoomService.Proxies
     using System;
     
     
-    public sealed class Pr_IBill : FlavourBusinessFacade.RoomService.IBill, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IBill : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IBill, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
@@ -75,7 +75,7 @@ namespace FinanceFacade.Proxies
     using System;
     
     
-    public sealed class Pr_IPayment : FinanceFacade.IPayment, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    public sealed class Pr_IPayment : OOAdvantech.Remoting.MarshalByRefObject, FinanceFacade.IPayment, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
