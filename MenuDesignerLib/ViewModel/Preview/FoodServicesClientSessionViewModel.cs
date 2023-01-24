@@ -34,7 +34,7 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{ebe5991a-53e9-4c15-93cb-a9323a65699f}</MetaDataID>
         public IPlace DeliveryPlace { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public DateTime? ServiceTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public PayOptions PayOption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public PayOptions? PayOption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string DeliveryComment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event SharedItemChangedHandle SharedItemChanged;
