@@ -27,6 +27,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>Automatic</CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -158,6 +160,9 @@
     <ProjectReference Include="..\WaiterApp\WaiterApp.csproj">
       <Project>{07735a31-46db-4af9-b207-e011e4c736ba}</Project>
       <Name>WaiterApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj">
+      <Name>OOAdvantech.NetStandard.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
