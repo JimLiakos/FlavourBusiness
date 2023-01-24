@@ -246,6 +246,7 @@
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay\OOAdvantech.Pay.csproj" />
     <ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay\OOAdvantech.Pay.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MenuCanvas\" />
