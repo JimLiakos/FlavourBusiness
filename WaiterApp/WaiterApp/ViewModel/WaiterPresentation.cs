@@ -358,11 +358,11 @@ namespace WaiterApp.ViewModel
             {
 #if DeviceDotNet
 #if DEBUG
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    //iOS stuff
-                    return await IOSPseudoSignIn();
-                }
+               //if (Device.RuntimePlatform == Device.iOS)
+               //{
+               //     //iOS stuff
+               //     return await IOSPseudoSignIn();
+               //}
 #endif
 #endif
                 return false;
