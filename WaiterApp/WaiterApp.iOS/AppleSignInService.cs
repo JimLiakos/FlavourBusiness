@@ -11,6 +11,7 @@ using OOAdvantech.Authentication.iOS;
 [assembly: Dependency(typeof(AppleSignInService))]
 namespace WaiterApp.iOS.Dependency
 {
-   
+
+
     
 }
