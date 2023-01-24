@@ -361,7 +361,7 @@ namespace WaiterApp.ViewModel
                 if (Device.RuntimePlatform == Device.iOS)
                 {
                     //iOS stuff
-                    return await IOSPseudoSignIn();
+                    //return await IOSPseudoSignIn();
                 }
 #endif
 #endif
