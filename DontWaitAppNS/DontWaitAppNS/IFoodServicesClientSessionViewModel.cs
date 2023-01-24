@@ -109,7 +109,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{5c8b7177-5047-4ba2-a21e-20644280f845}</MetaDataID>
-        PayOptions PayOption { get; set; }
+        PayOptions? PayOption { get; set; }
 
     }
 

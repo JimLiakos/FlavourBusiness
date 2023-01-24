@@ -112,13 +112,13 @@ namespace DontWaitApp
         }
 
         /// <exclude>Excluded</exclude>
-        PayOptions _PayOption = PayOptions.PayOnCheckout;
+        PayOptions? _PayOption = PayOptions.PayOnCheckout;
 
 
         /// <MetaDataID>{fff2c173-978b-4738-ae9d-6d510622ebc7}</MetaDataID>
         [PersistentMember(nameof(_PayOption))]
         [BackwardCompatibilityID("+16")]
-        public PayOptions PayOption
+        public PayOptions? PayOption
         {
             get => _PayOption;
             set
@@ -1373,15 +1373,28 @@ namespace DontWaitApp
         public async System.Threading.Tasks.Task<bool> SendItemsForPreparation()
         {
 
-
-            var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
-
-            foreach (var itemNewState in itemsNewState)
+            if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
             {
-                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                item.State = item.State;
+                Bill = FoodServicesClientSession?.GetBill();
+                var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
+                if(payment != null)
+                {
+                    //Pay()
+                }
+                return false;
+
             }
-            return true;
+            else
+            {
+                var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+
+                foreach (var itemNewState in itemsNewState)
+                {
+                    var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
+                    item.State = item.State;
+                }
+                return true;
+            }
         }
 
 
