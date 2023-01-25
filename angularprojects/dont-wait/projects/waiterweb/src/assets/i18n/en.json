@@ -107,6 +107,7 @@
 		"DeliveryPlaceBellPlaceHolder": "Enter the name of bell",
 		"DeliveryPlaceBellInputLabel": "Bell",
 		"DeliveryManCommentsLabel": "Comments for the delivery man",
+		"DeliveryManTipLabel": "Tip the courier",
 		"DeliveryManCommentsPlaceHolder": "Write comments for the delivery man",
 		"PayNowPrompt":"Pay now",
 		"PayLaterPrompt":"Pay on delivery"

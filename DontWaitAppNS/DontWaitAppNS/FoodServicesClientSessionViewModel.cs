@@ -135,6 +135,25 @@ namespace DontWaitApp
             }
         }
 
+        public List<TipOption> TipOptions
+        {
+            get
+            {
+                var isoCurrencySymbol = OrderItems?.FirstOrDefault()?.ISOCurrencySymbol;
+                if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
+                    isoCurrencySymbol = FlavoursOrderServer.ISOCurrencySymbol;
+                return new List<TipOption>() {
+                new TipOption() { Amount=0, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=0.5M, ISOCurrencySymbol= isoCurrencySymbol},
+                new TipOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=1.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=2, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=2.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=3, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=3.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=4M, ISOCurrencySymbol= isoCurrencySymbol }};
+            }
+        }
 
         /// <MetaDataID>{ccaeca74-9ca0-4cbe-aebc-f9d785696fdf}</MetaDataID>
         [PersistentMember]
@@ -1378,7 +1397,7 @@ namespace DontWaitApp
             {
                 Bill = FoodServicesClientSession?.GetBill();
                 var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
-                if(payment != null)
+                if (payment != null)
                 {
                     //Pay()
                 }

@@ -105,6 +105,7 @@
 		"DeliveryPlaceBellPlaceHolder": "Eισάγετε το όνομα στο κουδούνι",
 		"DeliveryPlaceBellInputLabel": "Κουδούνι",
 		"DeliveryManCommentsLabel": "Σχόλια για τον διανομέα",
+		"DeliveryManTipLabel": "Φιλοδώρημα για τον διανομέα",
 		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα",
 		"PayNowPrompt":"Πληρωμή τώρα",
 		"PayLaterPrompt":"Πληρωμή στην παράδoση"

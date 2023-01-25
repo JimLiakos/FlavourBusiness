@@ -111,6 +111,8 @@ namespace DontWaitApp
         /// <MetaDataID>{5c8b7177-5047-4ba2-a21e-20644280f845}</MetaDataID>
         PayOptions? PayOption { get; set; }
 
+        List<TipOption> TipOptions { get; } 
+
     }
 
     /// <MetaDataID>{0cb06dce-d187-4c17-9caa-ad584c8854f1}</MetaDataID>
@@ -118,5 +120,12 @@ namespace DontWaitApp
     {
         PayOnCheckout = 1,
         PayOnDelivery = 2
+    }
+
+    public class TipOption
+    {
+        public string Name { get; set; }
+        public decimal Amount { get; set; }
+        public string ISOCurrencySymbol { get; set; }
     }
 }
