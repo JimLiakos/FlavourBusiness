@@ -145,10 +145,10 @@
       <Version>9.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.Auth">
-      <Version>8.10.0.3</Version>
+      <Version>8.10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.CloudMessaging">
-      <Version>8.10.0.3</Version>
+      <Version>8.10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="ZXing.Net.Mobile">
