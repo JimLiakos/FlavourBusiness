@@ -28,6 +28,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>VS: com.microneme.DontWaitAppIOS Development</CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -143,10 +145,10 @@
       <Version>9.0.1.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.Auth">
-      <Version>8.10.0</Version>
+      <Version>8.10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.CloudMessaging">
-      <Version>8.10.0</Version>
+      <Version>8.10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="ZXing.Net.Mobile">
