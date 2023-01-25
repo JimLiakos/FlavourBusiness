@@ -22,7 +22,7 @@ namespace DontWaitAppNS.iOS
 
         public void DidRefreshRegistrationToken(Messaging messaging, string fcmToken)
         {
-            System.Diagnostics.Debug.WriteLine($"FCM Token: {fcmToken}");
+            System.Diagnostics.Debug.WriteLine($"FCM Token: {fcmToken}"); 
         }
 
         //
