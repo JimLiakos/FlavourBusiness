@@ -23,16 +23,44 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>Don&apos;t wait </string>
+	<string>DontWaitAppNS</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera to take photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photos.</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.microneme.dontwaitapp.ios</string>
+	<string>com.microneme.DontWaitAppIOS</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>DontWaitAppNS</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>No</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.microneme.DontWaitAppIOS.urlscheme</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dontwaitapp</string>
+			</array>
+			<key>CFBundleURLIconFile</key>
+			<string>waiters</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>xxx uses the local network to connect with devices around you.</string>	
+
 </dict>
 </plist>
