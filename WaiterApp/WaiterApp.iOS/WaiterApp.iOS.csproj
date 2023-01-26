@@ -142,7 +142,7 @@
       <Version>8.10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.CloudMessaging">
-      <Version>8.10.0.1</Version>
+      <Version>8.10.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="ZXing.Net.Mobile">
@@ -152,7 +152,7 @@
       <Version>2.4.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.Core">
-      <Version>8.10.0.1</Version>
+      <Version>8.10.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -160,6 +160,9 @@
     <ProjectReference Include="..\WaiterApp\WaiterApp.csproj">
       <Project>{07735a31-46db-4af9-b207-e011e4c736ba}</Project>
       <Name>WaiterApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj">
+      <Name>OOAdvantech.NetStandard.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
