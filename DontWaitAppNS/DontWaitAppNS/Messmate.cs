@@ -14,6 +14,7 @@ namespace DontWaitApp
         public readonly FlavourBusinessFacade.EndUsers.IFoodServiceClientSession ClientSession;
         public Messmate(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession clientSession, List<ItemPreparation> sessionOrderItems)
         {
+            //
             ClientSession = clientSession;
             Name = ClientSession.ClientName;
             LastChangeTimestamp = DateTime.MinValue;//  ClientSession.DateTimeOfLastRequest;
