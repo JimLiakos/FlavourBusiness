@@ -31,6 +31,7 @@ namespace DontWaitApp
         {
             InitializeComponent();
 
+
             //using (HttpClient wc = new HttpClient())
             //{
             //    try

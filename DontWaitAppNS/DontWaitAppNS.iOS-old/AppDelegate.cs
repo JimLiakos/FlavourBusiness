@@ -97,7 +97,8 @@ namespace DontWaitAppNS.iOS
 
 
 
-            string webClientID = "881594421690-dj2nfdnrdhhmp2bhhkc4nuqapno43kbv.apps.googleusercontent.com";
+            string webClientID = "881594421690-5d71hln1mvtmirn68rdle07p8v45httq.apps.googleusercontent.com";
+
             //"apps.googleusercontent.com.241222885422-bquei744e1i8q3h0r82k7fm31fbuej7m"
 
             //
