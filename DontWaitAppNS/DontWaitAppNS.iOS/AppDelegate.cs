@@ -157,7 +157,6 @@ namespace DontWaitAppNS.iOS
         }
 
 
-
     }
 
     public class MyUNUserNotificationCenterDelegate : UNUserNotificationCenterDelegate
