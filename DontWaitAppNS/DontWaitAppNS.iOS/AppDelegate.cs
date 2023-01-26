@@ -15,10 +15,10 @@ namespace DontWaitAppNS.iOS
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
 
-        public void DidRefreshRegistrationToken(Messaging messaging, string fcmToken)
-        {
-            System.Diagnostics.Debug.WriteLine($"FCM Token: {fcmToken}"); 
-        }
+        //public void DidRefreshRegistrationToken(Messaging messaging, string fcmToken)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"FCM Token: {fcmToken}"); 
+        //}
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
