@@ -53,6 +53,7 @@
     <MtouchInterpreter>-all</MtouchInterpreter>
     <CodesignProvision>VS: com.microneme.dontwaitapp.ios Development</CodesignProvision>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>

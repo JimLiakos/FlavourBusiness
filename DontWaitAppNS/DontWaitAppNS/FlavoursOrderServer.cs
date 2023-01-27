@@ -481,8 +481,8 @@ namespace DontWaitApp
                 else
                     return _EndUser.FullName;
 
-                    
-              
+
+
             });
 
 
@@ -548,9 +548,9 @@ namespace DontWaitApp
         }
 
         /// <exclude>Excluded</exclude>
-        FlavourBusinessFacade.ViewModel.IUser _EndUser;
+        FlavourBusinessFacade.ViewModel.ISecureUser _EndUser;
         /// <MetaDataID>{ec560ede-ff68-4507-993e-b06ec3c912ed}</MetaDataID>
-        public FlavourBusinessFacade.ViewModel.IUser EndUser
+        public FlavourBusinessFacade.ViewModel.ISecureUser EndUser
         {
             get
             {
@@ -558,8 +558,21 @@ namespace DontWaitApp
             }
             set
             {
+                if (_EndUser!=null)
+                    _EndUser.ObjectChangeState-=EndUser_ObjectChangeState;
+
                 _EndUser = value;
+
+                if (_EndUser!=null)
+                    _EndUser.ObjectChangeState+=EndUser_ObjectChangeState;
+
+
             }
+        }
+
+        private void EndUser_ObjectChangeState(object _object, string member)
+        {
+            this._ObjectChangeState?.Invoke(this, member);
         }
         #endregion
 
@@ -621,6 +634,8 @@ namespace DontWaitApp
 #endif
 
             _EndUser = new FoodServiceClientVM(this);
+            _EndUser.ObjectChangeState+=EndUser_ObjectChangeState;
+
             var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
             OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             InitializationTask = Task.Run(async () =>

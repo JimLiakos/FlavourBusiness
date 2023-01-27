@@ -803,9 +803,11 @@ namespace DontWaitApp
             }
             set
             {
-                _FullName = value;
-                if (!string.IsNullOrWhiteSpace(value))
+
+                if (!string.IsNullOrWhiteSpace(value)||_FullName==FoodServiceClient.FriendlyName)
                     FoodServiceClient.FriendlyName = value;
+                _FullName = value;
+                ObjectChangeState?.Invoke(this, null);
             }
         }
 

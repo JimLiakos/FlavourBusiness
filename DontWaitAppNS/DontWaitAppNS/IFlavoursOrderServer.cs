@@ -234,7 +234,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{9c56bc8e-7682-4589-8e34-a76996e6b77a}</MetaDataID>
-        FlavourBusinessFacade.ViewModel.IUser EndUser { get; set; }
+        FlavourBusinessFacade.ViewModel.ISecureUser EndUser { get; set; }
 
 
 
