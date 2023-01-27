@@ -21,11 +21,34 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>9.0</string>
+	<string>10.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>DontWaitAppNS</string>
+	<string>Don&apos;t Wait</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.microneme.dontwaitapp.ios</string>
+	<key>GIDClientID</key>
+	<string>881594421690-5d71hln1mvtmirn68rdle07p8v45httq.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb264679681257442</string>
+				<string>com.googleusercontent.apps.881594421690-5d71hln1mvtmirn68rdle07p8v45httq</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>264679681257442</string>
+	<key>FacebookClientToken</key>
+	<string>c6de25ed101e56f5ddfd79d08d636841</string>
+	<key>FacebookDisplayName</key>
+	<string>Don&apos;t Wait</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -34,5 +57,7 @@
 	<string>DontWaitAppNS</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
 </dict>
 </plist>

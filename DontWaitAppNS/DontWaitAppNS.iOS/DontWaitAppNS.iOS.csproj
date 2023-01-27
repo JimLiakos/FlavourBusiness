@@ -71,7 +71,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
-    <EmbeddedResource Include="GoogleService-Info.plist" />
+    <BundleResource Include="GoogleService-Info.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,6 +149,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj">
+      <Project>{97999f66-2cd1-4b6e-bba2-41174367df1e}</Project>
+      <Name>OOAdvantech.NetStandard.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+      <Project>{98c53533-8117-40c2-b9a6-bbe3d5dee050}</Project>
+      <Name>OOAdvantech.NetStandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
       <Project>{61CCD2A5-5A9E-438D-9E69-464F1B692616}</Project>
       <Name>DontWaitAppNS</Name>

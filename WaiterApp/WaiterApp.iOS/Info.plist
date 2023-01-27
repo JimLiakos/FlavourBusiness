@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>10.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>WaiterApp</string>
 	<key>CFBundleIdentifier</key>
@@ -53,9 +53,8 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb264679681257442</string>
-				 <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.881594421690-b5gcn35u4be84jl0nsr1a9q9ndcm96tf</string>
-        <string>com.googleusercontent.apps.123-321</string>
+				<string>com.googleusercontent.apps.123-321</string>
 			</array>
 		</dict>
 	</array>
