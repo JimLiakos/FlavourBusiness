@@ -19554,24 +19554,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
-			    compartment 	(object Compartment
-				Parent_View 	@256
-				location   	(3661, 968)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	0)
 			    width      	624
 			    height     	526
 			    annotation 	8
@@ -19794,24 +19776,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@267
-				location   	(1489, 1046)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	52
-				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -20878,24 +20842,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@318
-				location   	(187, 407)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	52
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -22398,7 +22344,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"34")
+			    value      	"35")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -22546,7 +22492,7 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"6254E69803B1"
+				    quid       	"63D6646E01CA"
 				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
@@ -22663,6 +22609,69 @@
 				    quid       	"6254E698030A"
 				    type       	"FlavourBusinessFacade.RoomService.ItemPreparationState"))
 			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ObjectsLink"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a3dfa875-e9b1-4fae-9656-c09968bd587f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646E0035"))
+			    quid       	"63D6646E0035"
+			    parameters 	(list Parameters
+				(object Parameter "linkedObject"
+				    quid       	"63D6646E0051"
+				    type       	"object")
+				(object Parameter "associationEnd"
+				    quid       	"63D6646E0065"
+				    type       	"OOAdvantech.MetaDataRepository.AssociationEnd")
+				(object Parameter "added"
+				    quid       	"63D6646E0079"
+				    type       	"bool"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "AddPayment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cb983f29-dd38-491e-9e85-3431eb5c4c1a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646E021A"))
+			    quid       	"63D6646E021A"
+			    parameters 	(list Parameters
+				(object Parameter "payment"
+				    quid       	"63D6646E0229"
+				    type       	"FinanceFacade.IPayment"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemovePayment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{324aa334-173e-42fd-ae27-0cced1fa6fa0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646E0247"))
+			    quid       	"63D6646E0247"
+			    parameters 	(list Parameters
+				(object Parameter "payment"
+				    quid       	"63D6646E0256"
+				    type       	"FinanceFacade.IPayment"))
+			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -23656,6 +23665,65 @@
 				    value      	"{804344b6-8080-4796-8775-a1eff2cbbc11}"))
 			    quid       	"629904E000E1"
 			    type       	"int"
+			    exportControl 	"Public")
+			(object ClassAttribute "ModifiedItemPrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ac3d655d-d6f6-41c4-8b14-26e707ae5a76}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646F0152")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+34"))
+			    quid       	"63D6646F0152"
+			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "AppearanceOrder"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f6245894-8a95-4b52-a9ee-892602fb6ead}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646F0294"))
+			    quid       	"63D6646F0294"
+			    type       	"int"
+			    exportControl 	"Public")
+			(object ClassAttribute "Payments"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8aade568-ea01-4550-9906-4857220f756b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"63D6646F0330"))
+			    quid       	"63D6646F0330"
+			    type       	"System.Collections.Generic.List<FinanceFacade.IPayment>"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -31922,8 +31990,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
-		    origin_y   	191
+		    origin_x   	1243
+		    origin_y   	1000
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @467
 			    ShowCompartmentStereotypes 	TRUE
@@ -32012,7 +32080,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ItemPreparation" @470
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3223, 1625)
+			    location   	(3222, 1624)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -32025,7 +32093,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@470
-				location   	(2964, 1528)
+				location   	(2963, 1527)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	519
@@ -32472,8 +32540,8 @@
 			    client     	@470
 			    supplier   	@490
 			    line_style 	3
-			    origin_attachment 	(3191, 1516)
-			    terminal_attachment 	(3191, 487))
+			    origin_attachment 	(3189, 1515)
+			    terminal_attachment 	(3189, 488))
 			(object AssociationViewNew "PreparedItemsToServe" @492
 			    location   	(3493, 691)
 			    font       	(object Font

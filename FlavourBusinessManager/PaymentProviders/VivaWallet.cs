@@ -57,7 +57,7 @@ namespace FlavourBusinessManager.PaymentProviders
             {
                 
 
-                amount = (int)(payment.Amount * 100),
+                amount = (int)((payment.Amount+payment.TipsAmount) * 100),
                 customerTrns = "a Short description of purchased items/services to display to your customer",
                 //customer=new Customer()
                 //{

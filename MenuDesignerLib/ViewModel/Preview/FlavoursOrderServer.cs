@@ -83,6 +83,8 @@ namespace MenuDesigner.ViewModel.Preview
 
         Task<List<IFoodServicesClientSessionViewModel>> IFlavoursOrderServer.ActiveSessions => throw new NotImplementedException();
 
+        ISecureUser IFlavoursOrderServer.EndUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
         public event SharedItemChangedHandle SharedItemChanged;

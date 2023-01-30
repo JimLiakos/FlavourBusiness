@@ -29,6 +29,7 @@ using ZXing;
 using ZXing.QrCode;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.ViewModel;
 
 #else
 using System.IO;
@@ -37,6 +38,7 @@ using System;
 using MenuModel;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessFacade.ViewModel;
 
 #endif
 
@@ -397,6 +399,12 @@ namespace DontWaitApp
                 }
             }
         }
+
+        public IPlace DeliveryPlace { get; internal set; }
+        public ISecureUser EndUser { get; internal set; }
+        public DateTime? ServiceTime { get; internal set; }
+        public PayOptions? PayOption { get; internal set; }
+
         /// <MetaDataID>{94b21849-ddf7-4553-9b1b-76bf018e6f84}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+12")]

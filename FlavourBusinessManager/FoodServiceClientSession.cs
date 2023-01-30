@@ -2494,8 +2494,9 @@ namespace FlavourBusinessManager.EndUsers
                 FinanceFacade.Item item = null;
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
                 decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
-                decimal itemPrice = (decimal)flavourItem.Price / quantity;
-                quantity = ((decimal)flavourItem.Price - paidAmount) / itemPrice;
+                decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice / quantity;
+                if(itemPrice!=0)
+                    quantity = ((decimal)flavourItem.ModifiedItemPrice - paidAmount) / itemPrice;
 
                 if (((decimal)(int)quantity) == quantity)
                     quantity = (int)quantity;
@@ -2535,7 +2536,7 @@ namespace FlavourBusinessManager.EndUsers
 
             //if (paymentItems.Count > 0)
             {
-                var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New).FirstOrDefault();
+                var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New||x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
 
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))

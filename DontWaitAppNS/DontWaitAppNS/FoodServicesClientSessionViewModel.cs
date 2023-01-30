@@ -1017,7 +1017,12 @@ namespace DontWaitApp
                     DefaultMealTypeUri = DefaultMealTypeUri,
                     ServedMealTypesUris = ServedMealTypesUris,
                     SessionType = SessionType,
-                    OrderItems = OrderItems
+                    OrderItems = OrderItems,
+                    DeliveryPlace= DeliveryPlace,
+                    EndUser=FlavoursOrderServer.EndUser,
+                    ServiceTime=ServiceTime,
+                    PayOption=PayOption
+
                 };
                 return menuData;
 
@@ -1278,6 +1283,7 @@ namespace DontWaitApp
         /// <MetaDataID>{dfe09297-df83-49c4-8767-8c4627cccaf4}</MetaDataID>
         public async Task<IBill> GetBill()
         {
+            
             Bill = FoodServicesClientSession?.GetBill();
             var ss = Bill.Payments;
             return Bill;
@@ -1298,7 +1304,7 @@ namespace DontWaitApp
 
         }
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async void Pay(FinanceFacade.IPayment payment, decimal tipAmount)
+        public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
             FoodServicesClientSession.CreatePaymentOrder(payment,tipAmount);
@@ -1816,6 +1822,7 @@ namespace DontWaitApp
         /// <exclude>Excluded</exclude>
         FlavourBusinessManager.EndUsers.Place _DeliveryPlace;
         /// <MetaDataID>{ec5a44a6-bb30-4a35-aa38-67b6ab70a130}</MetaDataID>
+        [CachingDataOnClientSide]
         public IPlace DeliveryPlace
         {
             get => _DeliveryPlace;

@@ -318,7 +318,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 {
                                     string transactionUri = ObjectStorage.GetStorageOfObject(transaction)?.GetPersistentObjectUri(transaction);
                                     taxAuthority = (receiptItem.MenuItem as MenuModel.MenuItem).Menu.TaxAuthority;
-                                    var transactionItem = new Item() { Name = receiptItem.FullName, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.Price, uid = receiptItem.uid };
+                                    var transactionItem = new Item() { Name = receiptItem.FullName, Quantity = (decimal)receiptItem.Quantity, Price = (decimal)receiptItem.ModifiedItemPrice, uid = receiptItem.uid };
                                     decimal amount = transactionItem.Amount;
                                     if ((receiptItem.MenuItem as MenuModel.MenuItem).TaxableType != null)
                                     {

@@ -256,7 +256,7 @@ namespace FlavourBusinessManager.RoomService
 
                         if (_State == ItemPreparationState.IsRoasting)
                             _CookingStartsAt = DateTime.UtcNow;
-                        
+
                         if (_State.IsInPreviousState(ItemPreparationState.IsRoasting))
                             _CookingStartsAt = null;
 
@@ -354,7 +354,7 @@ namespace FlavourBusinessManager.RoomService
         [BeforeCommitObjectStateInStorageCall]
         void BeforeCommitObjectState()
         {
-            OOAdvantech.PersistenceLayer.ObjectStorage myStorage = null; 
+            OOAdvantech.PersistenceLayer.ObjectStorage myStorage = null;
             foreach (var optionChange in this._OptionsChanges)
             {
                 if (myStorage == null)
@@ -738,6 +738,29 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <exclude>Excluded</exclude>
+        double _ModifiedItemPrice;
+
+        /// <MetaDataID>{ac3d655d-d6f6-41c4-8b14-26e707ae5a76}</MetaDataID>
+        [PersistentMember(nameof(_ModifiedItemPrice))]
+        [BackwardCompatibilityID("+34")]
+        public double ModifiedItemPrice
+        {
+            get => _ModifiedItemPrice;
+            set
+            {
+                if (_ModifiedItemPrice!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ModifiedItemPrice=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
         [JsonIgnore]
         string _Name;
         /// <MetaDataID>{13715b98-1b1f-488c-aaa3-d333aae9d4f5}</MetaDataID>
@@ -843,12 +866,14 @@ namespace FlavourBusinessManager.RoomService
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 changed = (_Price != item.Price ||
+                        _ModifiedItemPrice != item.ModifiedItemPrice ||
                         _Quantity != item.Quantity ||
                         _IsShared != item.IsShared ||
                         _NumberOfShares != item.NumberOfShares ||
                         _SelectedMealCourseTypeUri != item.SelectedMealCourseTypeUri);
 
                 _Price = item.Price;
+                _ModifiedItemPrice = item.ModifiedItemPrice;
                 _Quantity = item.Quantity;
                 _IsShared = item.IsShared;
                 _NumberOfShares = item.NumberOfShares;
@@ -897,11 +922,13 @@ namespace FlavourBusinessManager.RoomService
             return changed;
         }
 
+        /// <MetaDataID>{cb983f29-dd38-491e-9e85-3431eb5c4c1a}</MetaDataID>
         public void AddPayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{324aa334-173e-42fd-ae27-0cced1fa6fa0}</MetaDataID>
         public void RemovePayment(FinanceFacade.IPayment payment)
         {
             throw new NotImplementedException();
@@ -1053,7 +1080,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        public List<FinanceFacade.IPayment> Payments =>  new List<FinanceFacade.IPayment>() ;
+        /// <MetaDataID>{8aade568-ea01-4550-9906-4857220f756b}</MetaDataID>
+        public List<FinanceFacade.IPayment> Payments => new List<FinanceFacade.IPayment>();
 
 
 
@@ -1063,6 +1091,6 @@ namespace FlavourBusinessManager.RoomService
     }
 
 
-  
+
 
 }

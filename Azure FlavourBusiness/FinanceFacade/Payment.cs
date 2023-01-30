@@ -26,6 +26,7 @@ namespace FinanceFacade
             get => _TipsAmount;
             set
             {
+                _TipsAmount=value;
             }
         }
 
