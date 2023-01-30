@@ -1310,7 +1310,12 @@ namespace DontWaitApp
             FoodServicesClientSession.CreatePaymentOrder(payment,tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
-
+                RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                var state = payment.State;
+                if(state==FinanceFacade.PaymentState.Completed)
+                {
+                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                }
             }
 #else
             payment.CashPaymentCompleted(tipAmount);

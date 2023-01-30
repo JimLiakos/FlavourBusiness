@@ -133,5 +133,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        Task IFoodServicesClientSessionViewModel.Pay(IPayment payment, decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
