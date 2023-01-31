@@ -110,6 +110,11 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        public Task<bool> PayAndCommit(IPayment payment, decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <MetaDataID>{d0cf9d3a-1ae0-4ed3-83c7-a754ff12bbec}</MetaDataID>
         public void RefreshMessmates()
         {

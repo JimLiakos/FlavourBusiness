@@ -86,6 +86,9 @@ namespace FinanceFacade
         [CachingDataOnClientSide]
         string Identity { get; set; }
 
+        [GenerateEventConsumerProxy]
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
     }
 
     /// <MetaDataID>{c29b8985-3d96-4fea-91b6-7b3040b4d715}</MetaDataID>

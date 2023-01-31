@@ -31,6 +31,17 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
         
         public Pr_IPayment(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
@@ -271,6 +282,31 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "PaymentRequestCanceled", args, argsTypes);
+        }
+    }
+    
+    public sealed class CNSPr_IPayment_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(object _object, string member)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = _object;
+            argsTypes[0] = typeof(object);
+            args[1] = member;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
     }
 }

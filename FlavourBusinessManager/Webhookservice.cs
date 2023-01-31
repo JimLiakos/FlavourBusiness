@@ -69,23 +69,31 @@ namespace WebhooksToLocalServer
         public string SendMessage(string xmlMessage)
         {
 
-            var messageDoc = XDocument.Parse(xmlMessage);
+            try
+            {
+                var messageDoc = XDocument.Parse(xmlMessage);
 
-            string method = messageDoc.Root.Attribute("Method").Value;
-            string headersjSON = messageDoc.Root.Attribute("Headers").Value;
-            string content = messageDoc.Root.Attribute("Content").Value;
-            string webHookName = messageDoc.Root.Attribute("WebHookName").Value;
-            var headers = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(headersjSON);
+                string method = messageDoc.Root.Attribute("Method").Value;
+                string headersjSON = messageDoc.Root.Attribute("Headers").Value;
+                string content = messageDoc.Root.Attribute("Content").Value;
+                string webHookName = messageDoc.Root.Attribute("WebHookName").Value;
+                var headers = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(headersjSON);
 
-            var response = FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.WebHook(method, webHookName, headers, content);
+                var response = FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.WebHook(method, webHookName, headers, content);
 
-            headersjSON = OOAdvantech.Json.JsonConvert.SerializeObject(response.Headers);
+                headersjSON = OOAdvantech.Json.JsonConvert.SerializeObject(response.Headers);
 
-            var responseDoc = XDocument.Parse("<Main/>");
-            responseDoc.Root.SetAttributeValue("StatusCode", ((int)response.StatusCode).ToString());
-            responseDoc.Root.SetAttributeValue("Headers", headersjSON);
-            responseDoc.Root.SetAttributeValue("Content", response.Content);
-            return responseDoc.ToString();
+                var responseDoc = XDocument.Parse("<Main/>");
+                responseDoc.Root.SetAttributeValue("StatusCode", ((int)response.StatusCode).ToString());
+                responseDoc.Root.SetAttributeValue("Headers", headersjSON);
+                responseDoc.Root.SetAttributeValue("Content", response.Content);
+                return responseDoc.ToString();
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
 
 
         }

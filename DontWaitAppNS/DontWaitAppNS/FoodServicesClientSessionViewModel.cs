@@ -1307,7 +1307,7 @@ namespace DontWaitApp
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentOrder(payment, tipAmount);
+            FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
@@ -1324,8 +1324,10 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async Task PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
+        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
         {
+
+            
 #if DeviceDotNet
             FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
@@ -1334,11 +1336,18 @@ namespace DontWaitApp
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
+
                     System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
+                    var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+
+                    return allCommited;
                 }
             }
+            return false;
 #else
             payment.CashPaymentCompleted(tipAmount);
+            return true;
 #endif
         }
 
