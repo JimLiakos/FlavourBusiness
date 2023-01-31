@@ -203,10 +203,6 @@ namespace FinanceFacade
 
                         stateTransition.Consistent = true;
                     }
-                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        ObjectChangeState?.Invoke(this, nameof(State));
-                    });
                 }
             }
         }
@@ -286,7 +282,26 @@ namespace FinanceFacade
             _Items = paymentItems.OfType<IItem>().ToList();
             _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
         }
-        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+        
+
+
+        [OOAdvantech.MetaDataRepository.HttpInVisible]
+        event OOAdvantech.ObjectChangeStateHandle _ObjectChangeState;
+
+        [OOAdvantech.MetaDataRepository.HttpInVisible]
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+        {
+            add
+            {
+                _ObjectChangeState += value;
+            }
+            remove
+            {
+                _ObjectChangeState -= value;
+            }
+        }
+
+
         /// <MetaDataID>{d31c99a2-c628-437e-ba87-5e2cb197a2c3}</MetaDataID>
         public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
         {
@@ -304,7 +319,7 @@ namespace FinanceFacade
                 State = PaymentState.Completed;
                 stateTransition.Consistent = true;
             }
-           
+            ObjectChangeState?.Invoke(this, nameof(State));
         }
 
         /// <MetaDataID>{185fe21f-7fb4-47aa-9ea1-31941c36d82a}</MetaDataID>

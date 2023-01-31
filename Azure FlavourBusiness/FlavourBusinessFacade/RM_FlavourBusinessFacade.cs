@@ -6428,7 +6428,7 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "AddItem", args, argsTypes);
         }
         
-        public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
@@ -6436,7 +6436,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             argsTypes[0] = typeof(FinanceFacade.IPayment);
             args[1] = tipAmount;
             argsTypes[1] = typeof(decimal);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentOrder", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentGatewayOrder", args, argsTypes);
+        }
+        
+        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = payment;
+            argsTypes[0] = typeof(FinanceFacade.IPayment);
+            args[1] = tipAmount;
+            argsTypes[1] = typeof(decimal);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentToCommitOrder", args, argsTypes);
         }
         
         public void DeviceResume()
