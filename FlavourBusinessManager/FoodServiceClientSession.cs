@@ -2460,9 +2460,26 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
-        public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
             PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+        }
+
+        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        {
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount); 
+                foreach(var paymentItem in payment.Items)
+                {
+                    var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
+                    if(flavourItem!=null)
+                        flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
+                }
+                stateTransition.Consistent = true;
+            }
+
         }
 
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
@@ -2583,7 +2600,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var item in flavourItems)
                 {
-                    if (item.State == ItemPreparationState.New)
+                    if (item.State == ItemPreparationState.New||item.State == ItemPreparationState.AwaitingPaymentToCommit)
                     {
                         item.State = ItemPreparationState.Committed;
                         itemsNewState[item.uid] = item.State;
@@ -2606,8 +2623,11 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var clientSession in MainSession.PartialClientSessions)
                     clientSession.RaiseItemsStateChanged(changeStateFlavourItems.ToDictionary(x => x.uid, x => x.State));
             }
-            foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
-                clientSession.RaiseItemsStateChanged(changeStateFlavourItems.ToDictionary(x => x.uid, x => x.State));
+            if (ServicePoint is HallServicePoint)
+            {
+                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
+                    clientSession.RaiseItemsStateChanged(changeStateFlavourItems.ToDictionary(x => x.uid, x => x.State));
+            }
 
             return itemsNewState;
         }

@@ -1,5 +1,8 @@
 ﻿using FinanceFacade;
 using FlavourBusinessFacade;
+using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicesContextResources;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -24,7 +27,7 @@ namespace FlavourBusinessManager.PaymentProviders
             PaymentOrder paymentOrderResponse = payment.GetPaymentOrder();
             if (paymentOrderResponse!=null)
             {
-                if(payment.TipsAmount!=tipAmount)
+                if (payment.TipsAmount!=tipAmount)
                     payment.SetPaymentOrder(null);
                 else if (paymentOrderResponse.expiring < DateTime.UtcNow.Ticks - TimeSpan.FromMinutes(1).Ticks)
                     payment.SetPaymentOrder(null);
@@ -35,7 +38,7 @@ namespace FlavourBusinessManager.PaymentProviders
                 }
             }
 
-            
+
 
 #if DEBUG
             string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
@@ -55,7 +58,7 @@ namespace FlavourBusinessManager.PaymentProviders
 
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
-                
+
 
                 amount = (int)((payment.Amount+payment.TipsAmount) * 100),
                 customerTrns = "a Short description of purchased items/services to display to your customer",
@@ -159,7 +162,7 @@ namespace FlavourBusinessManager.PaymentProviders
                         var InProgressPayments = (from openSession in ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions
                                                   from payment in openSession.BillingPayments
                                                   where payment.State == PaymentState.InProgress
-                                                  select new { payment, paymentOrder = payment.GetPaymentOrder() }).ToList();
+                                                  select new { payment, paymentOrder = payment.GetPaymentOrder(), foodServiceSession = openSession }).ToList();
 
                         var inProgressPayment = InProgressPayments.Where(x => x.paymentOrder != null && x.paymentOrder.orderCode == vivaEvent.EventData.OrderCode).FirstOrDefault();
 
@@ -187,7 +190,25 @@ namespace FlavourBusinessManager.PaymentProviders
 
                             inProgressPayment.payment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
 
+                            var sessionFlavourItems = (from foodServiceClientSession in inProgressPayment.foodServiceSession.PartialClientSessions
+                                                       from flavourItem in foodServiceClientSession.FlavourItems
+                                                       select flavourItem).ToList();
+                            Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>> itemsToCommit = new Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>>();
 
+                            foreach (var paymentItem in inProgressPayment.payment.Items)
+                            {
+                                var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
+                                List<FlavourBusinessFacade.RoomService.IItemPreparation> flavoursItem = null;
+
+                                if (!itemsToCommit.TryGetValue(flavourItem.ClientSession, out flavoursItem))
+                                {
+                                    flavoursItem=new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
+                                    itemsToCommit[flavourItem.ClientSession]=flavoursItem;
+                                }
+                                flavoursItem.Add(flavourItem);
+                            }
+                            foreach(var itemsToCommitEntry in itemsToCommit)
+                                itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value);
                         }
                         catch (Exception error)
                         {

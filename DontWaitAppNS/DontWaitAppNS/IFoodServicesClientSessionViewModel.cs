@@ -50,6 +50,8 @@ namespace DontWaitApp
 
         /// <MetaDataID>{ff44b605-d9c9-4796-9b41-5bd22ed8e965}</MetaDataID>
         Task Pay(FinanceFacade.IPayment payment, decimal tipAmount);
+        Task PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount);
+        
 
 
         /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>

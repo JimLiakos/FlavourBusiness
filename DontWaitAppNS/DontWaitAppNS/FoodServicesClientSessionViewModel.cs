@@ -1320,9 +1320,26 @@ namespace DontWaitApp
 #else
             payment.CashPaymentCompleted(tipAmount);
 #endif
+        }
 
 
-
+        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
+        public async Task PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
+        {
+#if DeviceDotNet
+            FoodServicesClientSession.CreatePaymentToCommitOrder(payment,tipAmount);
+            if (await this.FlavoursOrderServer.Pay(payment))
+            {
+                RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                var state = payment.State;
+                if(state==FinanceFacade.PaymentState.Completed)
+                {
+                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                }
+            }
+#else
+            payment.CashPaymentCompleted(tipAmount);
+#endif
         }
 
 

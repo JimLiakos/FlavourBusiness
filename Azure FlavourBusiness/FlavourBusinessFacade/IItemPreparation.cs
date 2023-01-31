@@ -138,56 +138,58 @@ namespace FlavourBusinessFacade.RoomService
         /// Client temporary select item for order
         /// </summary>
         New = 0,
+
+        AwaitingPaymentToCommit=10,
         /// <summary>
         /// Client committed to order this item
         /// </summary>
-        Committed = 1,
+        Committed = 20,
         /// <summary>
         /// this item is slow to prepare for meal synchronization.
         /// </summary>
-        PreparationDelay = 2,
+        PreparationDelay = 30,
         /// <summary>
         /// The item is ready to prepared.
         /// </summary>
-        PendingPreparation = 3,
+        PendingPreparation = 40,
         /// <summary>
         /// The item is under preparation
         /// </summary>
-        InPreparation = 4,
+        InPreparation = 50,
 
         /// <summary>
         /// The item is cooked
         /// </summary>
-        IsRoasting = 5,
+        IsRoasting = 60,
 
         /// <summary>
         /// The item is prepared
         /// </summary>
-        IsPrepared = 6,
+        IsPrepared = 70,
         /// <summary>
         /// The item is on serving state
         /// </summary>
-        Serving = 7,
+        Serving = 80,
 
         /// <summary>
         /// the item is on road to delivered 
         /// </summary>
-        OnRoad = 8,
+        OnRoad = 90,
         /// <summary>
         /// the item was served
         /// </summary>
-        Served = 9,
+        Served = 100,
 
         /// <summary>
         /// the item was billed
         /// </summary>
-        IsBilled = 10,
+        IsBilled = 110,
 
   
         /// <summary>
         /// the item is canceled
         /// </summary>
-        Canceled = 12,
+        Canceled = 120,
 
 
     }

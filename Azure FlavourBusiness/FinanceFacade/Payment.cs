@@ -203,6 +203,10 @@ namespace FinanceFacade
 
                         stateTransition.Consistent = true;
                     }
+                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        ObjectChangeState?.Invoke(this, nameof(State));
+                    });
                 }
             }
         }
@@ -300,7 +304,7 @@ namespace FinanceFacade
                 State = PaymentState.Completed;
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(State));
+           
         }
 
         /// <MetaDataID>{185fe21f-7fb4-47aa-9ea1-31941c36d82a}</MetaDataID>
