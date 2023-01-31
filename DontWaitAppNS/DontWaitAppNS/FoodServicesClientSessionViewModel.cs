@@ -1307,7 +1307,7 @@ namespace DontWaitApp
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentOrder(payment,tipAmount);
+            FoodServicesClientSession.CreatePaymentToCommitOrder(payment,tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
