@@ -274,7 +274,7 @@ namespace FlavourBusinessFacade.EndUsers
         Hall = 0,
         Takeaway = 1,
         HomeDelivery = 2,
-        HomeDeliveryGuest= 3
+        HomeDeliveryGuest = 3
     }
     /// <MetaDataID>{6162db9b-39b6-4d27-aea8-3f4070476c2d}</MetaDataID>
     public enum ClientMessages

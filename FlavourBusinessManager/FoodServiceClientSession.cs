@@ -2470,11 +2470,11 @@ namespace FlavourBusinessManager.EndUsers
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount); 
-                foreach(var paymentItem in payment.Items)
+                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+                foreach (var paymentItem in payment.Items)
                 {
                     var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
-                    if(flavourItem!=null)
+                    if (flavourItem!=null)
                         flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
                 }
                 stateTransition.Consistent = true;
@@ -2512,7 +2512,7 @@ namespace FlavourBusinessManager.EndUsers
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
                 decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
                 decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice / quantity;
-                if(itemPrice!=0)
+                if (itemPrice!=0)
                     quantity = ((decimal)flavourItem.ModifiedItemPrice - paidAmount) / itemPrice;
 
                 if (((decimal)(int)quantity) == quantity)

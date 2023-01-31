@@ -207,7 +207,7 @@ namespace FlavourBusinessManager.PaymentProviders
                                 }
                                 flavoursItem.Add(flavourItem);
                             }
-                            foreach(var itemsToCommitEntry in itemsToCommit)
+                            foreach (var itemsToCommitEntry in itemsToCommit)
                                 itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value);
                         }
                         catch (Exception error)

@@ -51,15 +51,15 @@ namespace DontWaitApp
         /// <MetaDataID>{ff44b605-d9c9-4796-9b41-5bd22ed8e965}</MetaDataID>
         Task Pay(FinanceFacade.IPayment payment, decimal tipAmount);
         Task PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount);
-        
+
 
 
         /// <MetaDataID>{1956fcb0-8a1a-4df8-ac01-057fac87a883}</MetaDataID>
         IList<Messmate> GetMessmates();
 
-        
 
-  
+
+
 
 
         /// <MetaDataID>{c3c9d4ab-41b4-41a5-a0cb-6d2d6cba58e5}</MetaDataID>
@@ -82,7 +82,7 @@ namespace DontWaitApp
         IList<Messmate> GetCandidateMessmates();
 
 
-   
+
         [GenerateEventConsumerProxy]
         event MenuItemProposalHandle MenuItemProposal;
 
@@ -113,7 +113,7 @@ namespace DontWaitApp
         /// <MetaDataID>{5c8b7177-5047-4ba2-a21e-20644280f845}</MetaDataID>
         PayOptions? PayOption { get; set; }
 
-        List<TipOption> TipOptions { get; } 
+        List<TipOption> TipOptions { get; }
 
     }
 

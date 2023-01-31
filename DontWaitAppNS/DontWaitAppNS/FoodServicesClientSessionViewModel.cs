@@ -1283,7 +1283,7 @@ namespace DontWaitApp
         /// <MetaDataID>{dfe09297-df83-49c4-8767-8c4627cccaf4}</MetaDataID>
         public async Task<IBill> GetBill()
         {
-            
+
             Bill = FoodServicesClientSession?.GetBill();
             var ss = Bill.Payments;
             return Bill;
@@ -1307,12 +1307,12 @@ namespace DontWaitApp
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentToCommitOrder(payment,tipAmount);
+            FoodServicesClientSession.CreatePaymentOrder(payment, tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
                 var state = payment.State;
-                if(state==FinanceFacade.PaymentState.Completed)
+                if (state==FinanceFacade.PaymentState.Completed)
                 {
                     System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                 }
@@ -1326,14 +1326,13 @@ namespace DontWaitApp
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async Task PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount);
 #if DeviceDotNet
-            
+            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
                 var state = payment.State;
-                if(state==FinanceFacade.PaymentState.Completed)
+                if (state==FinanceFacade.PaymentState.Completed)
                 {
                     System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                 }
