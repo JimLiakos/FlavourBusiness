@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Threading.Tasks;
 
 namespace FinanceFacade
 {
@@ -14,6 +15,50 @@ namespace FinanceFacade
     [Persistent()]
     public class Payment : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPayment
     {
+
+
+        static object PaymentProvidersLock = new object();
+
+        public static void SetPaymentProvider(string providerName, IPaymentProvider paymentProvider)
+        {
+            lock (PaymentProvidersLock)
+                PaymentProviders[providerName]=paymentProvider;
+        }
+
+        static Dictionary<string, IPaymentProvider> PaymentProviders = new Dictionary<string, IPaymentProvider>();
+
+        public static IPaymentProvider GetPaymentProvider(string providerName)
+        {
+            lock (PaymentProvidersLock)
+            {
+                if (PaymentProviders.ContainsKey(providerName))
+                    return PaymentProviders[providerName];
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _PaymentProvider;
+
+        /// <MetaDataID>{5fa3e801-b9aa-4782-990c-4f490dd4a464}</MetaDataID>
+        [PersistentMember(nameof(_PaymentProvider))]
+        [BackwardCompatibilityID("+11")]
+        public string PaymentProvider
+        {
+            get => _PaymentProvider;
+            set
+            {
+
+                if (_PaymentProvider!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PaymentProvider=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         decimal _TipsAmount;
@@ -69,6 +114,40 @@ namespace FinanceFacade
         public void PaymentInProgress()
         {
             State = PaymentState.InProgress;
+        }
+
+
+        public bool CheckForPaymentComplete()
+        {
+            var task = Task<bool>.Run(() =>
+            {
+                int count = 5;
+                do
+                {
+                    if (State==PaymentState.Completed)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if(!string.IsNullOrWhiteSpace(PaymentProvider))
+                        {
+                            var paymentProvide = GetPaymentProvider(PaymentProvider);
+                            if (paymentProvide!=null)
+                                paymentProvide.CheckPaymentProgress(payment);
+                        }
+                    }
+
+                    System.Threading.Thread.Sleep(1000);
+                    count--;
+                    if (count<0)
+                        return false;
+                } while (true);
+
+            });
+            task.Wait();
+
+            return task.Result;
         }
 
 
@@ -292,7 +371,7 @@ namespace FinanceFacade
             _Items = paymentItems.OfType<IItem>().ToList();
             _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
         }
-        
+
 
 
         [OOAdvantech.MetaDataRepository.HttpInVisible]

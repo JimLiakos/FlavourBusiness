@@ -39,16 +39,27 @@ namespace FlavoursServicesWorkerRole.Controllers
 
             StreamReader streamReader = new StreamReader(body);
             string Json = streamReader.ReadToEnd();
-
-
             IFlavoursServicesContextRuntime flavoursServicesContextRuntime = null;
             if (!FlavoursServicesContextRuntimes.TryGetValue(serviceContextIdentity, out flavoursServicesContextRuntime))
             {
                 flavoursServicesContextRuntime = FlavoursServicesContext.GetServicesContextRuntime(serviceContextIdentity);
                 FlavoursServicesContextRuntimes[serviceContextIdentity] = flavoursServicesContextRuntime;
             }
-            var hookRespnose = flavoursServicesContextRuntime.WebHook("POST", webHookName, headers, Json);
-            //var hookRespnose = ServiceBusWebHook(serviceContextIdentity, "POST", webHookName, headers, Json);  
+            HookRespnose hookRespnose = null;
+            int pId = System.Diagnostics.Process.GetCurrentProcess().Id;
+            do
+            {
+                try
+                {
+                    hookRespnose = flavoursServicesContextRuntime.WebHook("POST", webHookName, headers, Json);
+                    break;
+                }
+                catch (Exception error)
+                {
+
+                    System.Threading.Thread.Sleep(1000);
+                }
+            } while (true);
 
             var response = Request.CreateResponse(hookRespnose.StatusCode, hookRespnose.Content);
             foreach (var headerEntry in hookRespnose.Headers)

@@ -2462,22 +2462,26 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
         public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-            PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+            if (payment.State!=FinanceFacade.PaymentState.Completed)
+                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
         }
 
         public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            if (payment.State!=FinanceFacade.PaymentState.Completed)
             {
-                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
-                foreach (var paymentItem in payment.Items)
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
-                    if (flavourItem!=null)
-                        flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
+                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+                    foreach (var paymentItem in payment.Items)
+                    {
+                        var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
+                        if (flavourItem!=null)
+                            flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
+                    }
+                    stateTransition.Consistent = true;
                 }
-                stateTransition.Consistent = true;
             }
 
         }

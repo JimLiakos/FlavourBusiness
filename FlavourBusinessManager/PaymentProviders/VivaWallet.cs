@@ -13,12 +13,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using static FlavourBusinessManager.PaymentProviders.VivaWallet;
+
 
 namespace FlavourBusinessManager.PaymentProviders
 {
     /// <MetaDataID>{a98904ba-1e24-4771-93ce-73a3786988d7}</MetaDataID>
-    public class VivaWallet
+    public class VivaWallet: IPaymentProvider
     {
         static AccessToken AccessToken { get; set; }
 
@@ -105,13 +105,7 @@ namespace FlavourBusinessManager.PaymentProviders
                 stateTransition.Consistent = true;
             }
         }
-        public class PaymentOrder
-        {
-            public long orderCode { get; set; }
-            public long expiring { get; set; }
-            public string TransactionId { get; set; }
-        }
-
+    
         private static string GetAccessToken(string clientID, string clientSecret)
         {
             if (AccessToken != null && (DateTime.UtcNow - AccessToken.timestamp).TotalSeconds * 0.9 < AccessToken.expires_in)
@@ -170,18 +164,33 @@ namespace FlavourBusinessManager.PaymentProviders
             var hookRespnose = new HookRespnose();
             if (method == "GET")
             {
+                bool th = false;
+                if (th)
+                {
+                    hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                    hookRespnose.Content = @"eror";
+                    return hookRespnose;
+                }
 
                 string webHookKeyResponse = GetWebHookKeyJson(merchantID, apiKey);
-
-
                 hookRespnose.StatusCode = System.Net.HttpStatusCode.OK;
                 hookRespnose.Content =webHookKeyResponse;// @"{""key"":""1234335""}";
                 hookRespnose.Headers.Add("test-header", "value");
             }
             if (method == "POST")
             {
+
                 if (webHookName == "VivaPayment")
                 {
+                    bool th = false;
+                    if (th)
+                    {
+                        hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                        hookRespnose.Content = @"eror";
+                        return hookRespnose;
+                    }
+
+
                     var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK", DateTimeZoneHandling = OOAdvantech.Json.DateTimeZoneHandling.Utc };
                     VivaEvent vivaEvent = OOAdvantech.Json.JsonConvert.DeserializeObject<VivaEvent>(content, jSetttings);
 
@@ -213,12 +222,11 @@ namespace FlavourBusinessManager.PaymentProviders
                             var request = new RestRequest(Method.GET);
                             request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
                             IRestResponse response = client.Execute(request);
-                            TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-
-
-
-
-                            inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                            if (response.StatusCode==HttpStatusCode.OK)
+                            {
+                                TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
+                                inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                            }
 
                         }
                         catch (Exception error)
@@ -240,6 +248,40 @@ namespace FlavourBusinessManager.PaymentProviders
             }
 
             return hookRespnose;
+        }
+
+        public void CheckPaymentProgress(IPayment payment)
+        {
+            var paymentOrder = payment.GetPaymentOrder();
+            if(!string.IsNullOrWhiteSpace(paymentOrder.TransactionId))
+            {
+                string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
+                string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
+                string merchantID = "5a330629-00b7-49e7-9be9-9a317f71af50";
+                string apiKey = "COrMC5";
+                string vivaPaymentGateWayAccountUrl = "https://demo.vivapayments.com";
+                string vivaPaymentGateWayApiUrl = "https://demo-api.vivapayments.com";
+                
+                var InProgressPayments = (from openSession in ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions
+                                          from sessionPayment in openSession.BillingPayments
+                                          where sessionPayment==payment
+                                          select new { payment, paymentOrder = paymentOrder, foodServiceSession = openSession }).ToList();
+
+                var inProgressPayment = InProgressPayments.Where(x => x.paymentOrder != null && x.paymentOrder.orderCode == paymentOrder.orderCode).FirstOrDefault();
+
+
+
+                var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
+                client.Timeout = -1;
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
+                IRestResponse response = client.Execute(request);
+                if (response.StatusCode==HttpStatusCode.OK)
+                {
+                    TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
+                    inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                }
+            }
         }
     }
 
@@ -288,38 +330,119 @@ namespace FlavourBusinessManager.PaymentProviders
     }
 
 
-    /// <MetaDataID>{2d3f8aa4-5414-46e0-ae39-8d26255d69f9}</MetaDataID>
+    ///// <MetaDataID>{2d3f8aa4-5414-46e0-ae39-8d26255d69f9}</MetaDataID>
+    //public class EventData
+    //{
+    //    public bool Moto { get; set; }
+    //    public string Email { get; set; }
+    //    public string Phone { get; set; }
+    //    public string BankId { get; set; }
+    //    public bool Systemic { get; set; }
+    //    public bool Switching { get; set; }
+    //    public object ParentId { get; set; }
+    //    public int Amount { get; set; }
+    //    public string ChannelId { get; set; }
+    //    public int TerminalId { get; set; }
+    //    public string MerchantId { get; set; }
+    //    public long OrderCode { get; set; }
+    //    public string ProductId { get; set; }
+    //    public string StatusId { get; set; }
+    //    public string FullName { get; set; }
+    //    public string ResellerId { get; set; }
+    //    public DateTime InsDate { get; set; }
+    //    public int TotalFee { get; set; }
+    //    public string CardUniqueReference { get; set; }
+    //    public string CardToken { get; set; }
+    //    public string CardNumber { get; set; }
+    //    public int TipAmount { get; set; }
+    //    public string SourceCode { get; set; }
+    //    public string SourceName { get; set; }
+    //    public decimal Latitude { get; set; }
+    //    public decimal Longitude { get; set; }
+    //    public string CompanyName { get; set; }
+    //    public string TransactionId { get; set; }
+    //    public string CompanyTitle { get; set; }
+    //    public string PanEntryMode { get; set; }
+    //    public int ReferenceNumber { get; set; }
+    //    public string ResponseCode { get; set; }
+    //    public string CurrencyCode { get; set; }
+    //    public string OrderCulture { get; set; }
+    //    public string MerchantTrns { get; set; }
+    //    public string CustomerTrns { get; set; }
+    //    public bool IsManualRefund { get; set; }
+    //    public string TargetPersonId { get; set; }
+    //    public string TargetWalletId { get; set; }
+    //    public bool LoyaltyTriggered { get; set; }
+    //    public int TransactionTypeId { get; set; }
+    //    public int TotalInstallments { get; set; }
+    //    public string CardCountryCode { get; set; }
+    //    public string CardIssuingBank { get; set; }
+    //    public int RedeemedAmount { get; set; }
+    //    public object ClearanceDate { get; set; }
+    //    public int CurrentInstallment { get; set; }
+    //    public List<string> Tags { get; set; }
+    //    public string BillId { get; set; }
+    //    public string ResellerSourceCode { get; set; }
+    //    public string ResellerSourceName { get; set; }
+    //    public string ResellerCompanyName { get; set; }
+    //    public string ResellerSourceAddress { get; set; }
+    //    public DateTime CardExpirationDate { get; set; }
+    //    public string RetrievalReferenceNumber { get; set; }
+    //    public List<object> AssignedMerchantUsers { get; set; }
+    //    public List<object> AssignedResellerUsers { get; set; }
+    //    public int CardTypeId { get; set; }
+    //    public int DigitalWalletId { get; set; }
+    //    public string ResponseEventId { get; set; }
+    //    public string ElectronicCommerceIndicator { get; set; }
+    //}
+
+    ///// <MetaDataID>{0f4eb427-24c5-40b8-b849-5ff6405a51d2}</MetaDataID>
+    //public class VivaEvent
+    //{
+    //    public string Url { get; set; }
+    //    public EventData EventData { get; set; } = new EventData();
+    //    public DateTime Created { get; set; }
+    //    public string CorrelationId { get; set; }
+    //    public int EventTypeId { get; set; }
+    //    public string Delay { get; set; }
+    //    public string MessageId { get; set; }
+    //    public string RecipientId { get; set; }
+    //    public int MessageTypeId { get; set; }
+    //}
+
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class EventData
     {
         public bool Moto { get; set; }
+        public string Ucaf { get; set; }
         public string Email { get; set; }
-        public string Phone { get; set; }
+        public object Phone { get; set; }
         public string BankId { get; set; }
         public bool Systemic { get; set; }
         public bool Switching { get; set; }
         public object ParentId { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public string ChannelId { get; set; }
         public int TerminalId { get; set; }
         public string MerchantId { get; set; }
         public long OrderCode { get; set; }
-        public string ProductId { get; set; }
+        public object ProductId { get; set; }
         public string StatusId { get; set; }
         public string FullName { get; set; }
-        public string ResellerId { get; set; }
+        public object ResellerId { get; set; }
+        public bool DualMessage { get; set; }
         public DateTime InsDate { get; set; }
-        public int TotalFee { get; set; }
-        public string CardUniqueReference { get; set; }
+        public double TotalFee { get; set; }
         public string CardToken { get; set; }
         public string CardNumber { get; set; }
-        public int TipAmount { get; set; }
+        public double TipAmount { get; set; }
         public string SourceCode { get; set; }
         public string SourceName { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-        public string CompanyName { get; set; }
+        public object Latitude { get; set; }
+        public object Longitude { get; set; }
+        public object CompanyName { get; set; }
         public string TransactionId { get; set; }
-        public string CompanyTitle { get; set; }
+        public object CompanyTitle { get; set; }
         public string PanEntryMode { get; set; }
         public int ReferenceNumber { get; set; }
         public string ResponseCode { get; set; }
@@ -328,68 +451,51 @@ namespace FlavourBusinessManager.PaymentProviders
         public string MerchantTrns { get; set; }
         public string CustomerTrns { get; set; }
         public bool IsManualRefund { get; set; }
-        public string TargetPersonId { get; set; }
-        public string TargetWalletId { get; set; }
+        public object TargetPersonId { get; set; }
+        public object TargetWalletId { get; set; }
+        public bool AcquirerApproved { get; set; }
         public bool LoyaltyTriggered { get; set; }
         public int TransactionTypeId { get; set; }
+        public string AuthorizationId { get; set; }
         public int TotalInstallments { get; set; }
         public string CardCountryCode { get; set; }
         public string CardIssuingBank { get; set; }
-        public int RedeemedAmount { get; set; }
+        public double RedeemedAmount { get; set; }
         public object ClearanceDate { get; set; }
         public int CurrentInstallment { get; set; }
         public List<string> Tags { get; set; }
-        public string BillId { get; set; }
-        public string ResellerSourceCode { get; set; }
-        public string ResellerSourceName { get; set; }
-        public string ResellerCompanyName { get; set; }
-        public string ResellerSourceAddress { get; set; }
+        public object BillId { get; set; }
+        public object ResellerSourceCode { get; set; }
+        public object ResellerSourceName { get; set; }
+        public object ResellerCompanyName { get; set; }
+        public string CardUniqueReference { get; set; }
+        public object ResellerSourceAddress { get; set; }
         public DateTime CardExpirationDate { get; set; }
         public string RetrievalReferenceNumber { get; set; }
         public List<object> AssignedMerchantUsers { get; set; }
         public List<object> AssignedResellerUsers { get; set; }
         public int CardTypeId { get; set; }
-        public int DigitalWalletId { get; set; }
-        public string ResponseEventId { get; set; }
+        public object ResponseEventId { get; set; }
         public string ElectronicCommerceIndicator { get; set; }
+        public int OrderServiceId { get; set; }
+        public object DigitalWalletId { get; set; }
     }
 
-    /// <MetaDataID>{0f4eb427-24c5-40b8-b849-5ff6405a51d2}</MetaDataID>
     public class VivaEvent
     {
         public string Url { get; set; }
-        public EventData EventData { get; set; } = new EventData();
+        public EventData EventData { get; set; }
         public DateTime Created { get; set; }
         public string CorrelationId { get; set; }
         public int EventTypeId { get; set; }
-        public string Delay { get; set; }
+        public object Delay { get; set; }
         public string MessageId { get; set; }
         public string RecipientId { get; set; }
         public int MessageTypeId { get; set; }
     }
 
-    /// <MetaDataID>{9977de77-c743-4074-8e65-61eff156cdc7}</MetaDataID>
-    public static class VivaIPaymentExtMethods
-    {
-        public static PaymentOrder GetPaymentOrder(this IPayment payment)
-        {
-            if (string.IsNullOrEmpty(payment?.PaymentProviderJson))
-                return null;
 
-            var paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrder>(payment.PaymentProviderJson);
-            return paymentOrderResponse;
-        }
 
-        public static void SetPaymentOrder(this IPayment payment, PaymentOrder paymentOrder)
-        {
-            if (paymentOrder!=null)
-                payment.PaymentProviderJson = OOAdvantech.Json.JsonConvert.SerializeObject(paymentOrder);
-            else
-                payment.PaymentProviderJson= null;
-
-        }
-
-    }
 
 
     /// <MetaDataID>{b00a81fe-a55d-488c-80c3-ff61e5793da5}</MetaDataID>
@@ -414,6 +520,7 @@ namespace FlavourBusinessManager.PaymentProviders
         public int currentInstallment { get; set; }
         public int cardTypeId { get; set; }
     }
+
 
 
 }

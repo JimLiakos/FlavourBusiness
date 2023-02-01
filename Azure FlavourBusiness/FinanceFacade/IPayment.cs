@@ -89,6 +89,9 @@ namespace FinanceFacade
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
+
+        bool CheckForPaymentComplete();
+
     }
 
     /// <MetaDataID>{c29b8985-3d96-4fea-91b6-7b3040b4d715}</MetaDataID>
@@ -107,5 +110,12 @@ namespace FinanceFacade
         New,
         InProgress,
         Completed
+    }
+
+
+    
+    public interface IPaymentProvider
+    {
+        void CheckPaymentProgress(IPayment payment);
     }
 }

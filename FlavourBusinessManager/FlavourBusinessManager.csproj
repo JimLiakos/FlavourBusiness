@@ -317,6 +317,7 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
+    <Compile Include="PaymentProviders\VivaIPaymentExtMethods.cs" />
     <Compile Include="PaymentProviders\VivaWallet.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />

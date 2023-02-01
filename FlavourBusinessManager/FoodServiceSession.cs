@@ -266,6 +266,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{fbe827bb-85e5-4ac5-a527-028149b7e116}</MetaDataID>
         object StateMachineLock = new object();
 
+        object PaymentLock = new object();
+
         /// <MetaDataID>{dd202b7b-1e56-45fe-a4a9-f3f26dcc645a}</MetaDataID>
         private void StateMachineMonitoring()
         {
@@ -825,7 +827,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                payment.CardPaymentCompleted(bankId, cardNumber, isDebit, transactionId, tipAmount);
+                lock (PaymentLock)
+                {
+                    if (payment.State==FinanceFacade.PaymentState.Completed)
+                        return;
+                    payment.CardPaymentCompleted(bankId, cardNumber, isDebit, transactionId, tipAmount);
+                }
                 var sessionFlavourItems = (from foodServiceClientSession in PartialClientSessions
                                            from flavourItem in foodServiceClientSession.FlavourItems
                                            select flavourItem).ToList();
