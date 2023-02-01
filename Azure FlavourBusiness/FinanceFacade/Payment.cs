@@ -325,8 +325,9 @@ namespace FinanceFacade
                 PaymentInfoFields["AccountNumber"] = accountNumber;
                 PaymentInfoFields["TransactionID"] = transactionID;
                 _TipsAmount = tipAmount;
-
                 State = PaymentState.Completed;
+
+
                 stateTransition.Consistent = true;
             }
             ;

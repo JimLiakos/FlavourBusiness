@@ -633,7 +633,7 @@ namespace FlavourBusinessManager.EndUsers
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 {
                     var flavourItems = FlavourItems;
-                    bool allItemsCommitted = flavourItems.Count != 0 && flavourItems.Where(x => x.State == ItemPreparationState.New).Count() == 0;
+                    bool allItemsCommitted = flavourItems.Count != 0 && flavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).Count() == 0;
 
                     //state machine must be run out of transaction scoop
 
@@ -1801,7 +1801,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
-                        if (_FlavourItems.Where(x => x.State == ItemPreparationState.New).Count() > 0)
+                        if (_FlavourItems.Where(x => x.State.IsInPreviousState( ItemPreparationState.Committed)).Count() > 0)
                             CatchStateEvents();
 
                         //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
@@ -2600,7 +2600,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 foreach (var item in flavourItems)
                 {
-                    if (item.State == ItemPreparationState.New||item.State == ItemPreparationState.AwaitingPaymentToCommit)
+                    if (item.State.IsInPreviousState(ItemPreparationState.Committed))
                     {
                         item.State = ItemPreparationState.Committed;
                         itemsNewState[item.uid] = item.State;

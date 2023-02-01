@@ -3,6 +3,8 @@ using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicesContextResources;
+using Google.Apis.Auth.OAuth2;
+using OOAdvantech.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -132,16 +134,48 @@ namespace FlavourBusinessManager.PaymentProviders
             //eyJhbGciOiJSUzI1NiIsImtpZCI6IjBEOEZCOEQ2RURFQ0Y1Qzk3RUY1MjdDMDYxNkJCMjMzM0FCNjVGOUZSUzI1NiIsIng1dCI6IkRZLTQxdTNzOWNsLTlTZkFZV3V5TXpxMlg1OCIsInR5cCI6ImF0K2p3dCJ9.eyJpc3MiOiJodHRwczovL2RlbW8tYWNjb3VudHMudml2YXBheW1lbnRzLmNvbSIsIm5iZiI6MTY2OTkwMDUwNiwiaWF0IjoxNjY5OTAwNTA2LCJleHAiOjE2Njk5MDQxMDYsImF1ZCI6WyJjb3JlX2FwaSIsImh0dHBzOi8vZGVtby1hY2NvdW50cy52aXZhcGF5bWVudHMuY29tL3Jlc291cmNlcyJdLCJzY29wZSI6WyJ1cm46dml2YTpwYXltZW50czpjb3JlOmFwaTphY3F1aXJpbmciLCJ1cm46dml2YTpwYXltZW50czpjb3JlOmFwaTphY3F1aXJpbmc6Y2FyZHRva2VuaXphdGlvbiIsInVybjp2aXZhOnBheW1lbnRzOmNvcmU6YXBpOnJlZGlyZWN0Y2hlY2tvdXQiXSwiY2xpZW50X2lkIjoieTJrN2tsd29jdnpldDM4dTBjcTNtbm96Y3VqdWh1N2JwZGVoY3JteDdqMW05LmFwcHMudml2YXBheW1lbnRzLmNvbSIsInVybjp2aXZhOnBheW1lbnRzOmNsaWVudF9wZXJzb25faWQiOiI1QTMzMDYyOS0wMEI3LTQ5RTctOUJFOS05QTMxN0Y3MUFGNTAifQ.MAKb3UTs7OQMkI_bhqOiHnOqHXZATFL_R5S0U6mvIFLbjRnck_urpBHDRDlWPOI1EA-tfcJlqnj-vmo6w3Av6HetjdS0urrkC1pyjh0QEWm9Hftmi0t4_SvVhQS3veshO4N9dUTguba-u0GoSlLTHpQhtz3Y6cGrDhMqKiGEc5mOKbp7Epqwvh9oi4MkZdcwCoO0_ywhFRBpQbpoXSXRXBSexMCuCzLiUAZoD3fxx7bNdIBdTAsIylNj72c09afOSl6rIdAeRb-wFF9WT4_b-Vo3xJHTp6pOF0knoliKZgDSqO-QL-UAiyeR6grVfh2WicOPUqZ6ranMVu0EhCpAsg
         }
 
+        private static string GetWebHookKeyJson(string merchantID, string apiKey)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            var client = new RestClient("https://demo.vivapayments.com/api/messages/config/token");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Authorization", "Basic NWEzMzA2MjktMDBiNy00OWU3LTliZTktOWEzMTdmNzFhZjUwOkNPck1DNQ==");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Cookie", "_abck=0ED3FFBA7C810CF465BE0762C72C5813~-1~YAAQTkUVAiISuYOEAQAAbKb73AnMlPRPpe1EZ5nNfHvbfqJF4T5FKX3WKkyFop5jcVyxGb/TSwKraDvjz6NOspK9TACi8SzCfr3p9//L8zBqG83sRem1HaIt43d67u1G9xWTJR83Z/YK42WvPzsX/i2GYjQ1Nf+ATy2EbK6oJkibfm41jgwezwChjGV60ih/+Wpf+R8bqJVq946oXLeqNWYDyNC1Cyg4kx+82nVesGN3lafeTEWKVvTftRhzWBYbYKpXeRQmd3upxmF75xFUwDOkXAf5t6Z7asof7CE2wG5SgDZyT7WwQQO9SUt75IepZNXTsyxbWf06vWftytD6LA2guju3KkETknnH4rD4dKRYo6psPNkEt6Kmhsvp+cc=~-1~-1~-1; ak_bmsc=ECD3803817876A1A34051AF609EEEF70~000000000000000000000000000000~YAAQVHtlX1244M2FAQAABOIbDBKsPTQdWZ6cJwNn5LCOjfA5LUOQp6C86zumLu1E6nyNKcblPfmQ3nUvkk7PmFhopRSWv+4eXy1ZVUGycSjAO9RJG7Xr8RL3joLxWGZWxK+Z4bFfB3RqdZRPzT9A0zAdL/tw0bZK07W19/YZajjLpEFA7+uLyiGDbiv2vKjgGfIVxE9+ecsdZApviDaWQz+9yJ5H125h6KS4Y+xYiKKTGtuSdGDp2OHJXw6WCNWn6k0ZuM+tx1WZ0BKGNleI3TpHBxjooT8XvNOxiILkEaYjfoSgIOkCgDE1h3p1jUb5xXenJ1s2W+lwSSlKhC6Lauasoer+1XVWO2sDZ1X3n1QZ9DeZhEENVkvDjalIee/Io186");
+            request.AddParameter("grant_type", "client_credentials");
+            IRestResponse response = client.Execute(request);
+
+            return response.Content;
+        }
+
+
+
 
 
 
         internal static HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
         {
+#if DEBUG
+            string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
+            string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
+            string merchantID = "5a330629-00b7-49e7-9be9-9a317f71af50";
+            string apiKey = "COrMC5";
+            string vivaPaymentGateWayAccountUrl = "https://demo.vivapayments.com";
+            string vivaPaymentGateWayApiUrl = "https://demo-api.vivapayments.com";
+
+#endif
+
             var hookRespnose = new HookRespnose();
             if (method == "GET")
             {
+
+                string webHookKeyResponse = GetWebHookKeyJson(merchantID, apiKey);
+
+
                 hookRespnose.StatusCode = System.Net.HttpStatusCode.OK;
-                hookRespnose.Content = @"{""key"":""1234335""}";
+                hookRespnose.Content =webHookKeyResponse;// @"{""key"":""1234335""}";
                 hookRespnose.Headers.Add("test-header", "value");
             }
             if (method == "POST")
@@ -155,9 +189,6 @@ namespace FlavourBusinessManager.PaymentProviders
                     if (vivaEvent.EventTypeId == 1796)
                     {
 
-
-
-
                         #region Payment completed
                         var InProgressPayments = (from openSession in ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions
                                                   from payment in openSession.BillingPayments
@@ -170,17 +201,14 @@ namespace FlavourBusinessManager.PaymentProviders
                         paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
                         inProgressPayment.payment.SetPaymentOrder(paymentOrder);
 
-#if DEBUG
-                        string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
-                        string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
-#endif
+
 
                         //{"orderCode":7138070025172605,"expiring":638057368377003513}
 
                         try
                         {
 
-                            var client = new RestClient($"https://demo-api.vivapayments.com/checkout/v2/transactions/{paymentOrder.TransactionId}");
+                            var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
                             client.Timeout = -1;
                             var request = new RestRequest(Method.GET);
                             request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
@@ -188,27 +216,10 @@ namespace FlavourBusinessManager.PaymentProviders
                             TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
 
 
-                            inProgressPayment.payment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
 
-                            var sessionFlavourItems = (from foodServiceClientSession in inProgressPayment.foodServiceSession.PartialClientSessions
-                                                       from flavourItem in foodServiceClientSession.FlavourItems
-                                                       select flavourItem).ToList();
-                            Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>> itemsToCommit = new Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>>();
 
-                            foreach (var paymentItem in inProgressPayment.payment.Items)
-                            {
-                                var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
-                                List<FlavourBusinessFacade.RoomService.IItemPreparation> flavoursItem = null;
+                            inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
 
-                                if (!itemsToCommit.TryGetValue(flavourItem.ClientSession, out flavoursItem))
-                                {
-                                    flavoursItem=new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
-                                    itemsToCommit[flavourItem.ClientSession]=flavoursItem;
-                                }
-                                flavoursItem.Add(flavourItem);
-                            }
-                            foreach (var itemsToCommitEntry in itemsToCommit)
-                                itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value);
                         }
                         catch (Exception error)
                         {
