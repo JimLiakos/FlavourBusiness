@@ -33,6 +33,7 @@ namespace FinanceFacade
             {
                 if (PaymentProviders.ContainsKey(providerName))
                     return PaymentProviders[providerName];
+                return null;
             }
         }
 
@@ -134,7 +135,7 @@ namespace FinanceFacade
                         {
                             var paymentProvide = GetPaymentProvider(PaymentProvider);
                             if (paymentProvide!=null)
-                                paymentProvide.CheckPaymentProgress(payment);
+                                paymentProvide.CheckPaymentProgress(this);
                         }
                     }
 

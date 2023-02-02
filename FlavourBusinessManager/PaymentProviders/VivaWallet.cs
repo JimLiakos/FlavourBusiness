@@ -22,8 +22,9 @@ namespace FlavourBusinessManager.PaymentProviders
     {
         static AccessToken AccessToken { get; set; }
 
-        internal static void CreatePaymentOrder(IPayment payment, decimal tipAmount)
+        internal static void CreatePaymentOrder(Payment payment, decimal tipAmount)
         {
+           
             if (payment.State==PaymentState.Completed)
                 return;
             PaymentOrder paymentOrderResponse = payment.GetPaymentOrder();
@@ -99,7 +100,9 @@ namespace FlavourBusinessManager.PaymentProviders
 
             using (OOAdvantech.Transactions.SystemStateTransition stateTransition = new OOAdvantech.Transactions.SystemStateTransition(OOAdvantech.Transactions.TransactionOption.Required))
             {
+                
                 payment.SetPaymentOrder(paymentOrderResponse);
+                payment.PaymentProvider="Viva";
                 payment.State = PaymentState.InProgress;
 
                 stateTransition.Consistent = true;
@@ -151,6 +154,8 @@ namespace FlavourBusinessManager.PaymentProviders
 
         internal static HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
         {
+
+          //  System.Threading.Thread.Sleep(30000);
 #if DEBUG
             string clientID = "y2k7klwocvzet38u0cq3mnozcujuhu7bpdehcrmx7j1m9.apps.vivapayments.com";
             string clientSecret = "BD3oUWdc0tk3HMBA7G34dn22A9Cj5P";
@@ -193,7 +198,7 @@ namespace FlavourBusinessManager.PaymentProviders
 
                     var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK", DateTimeZoneHandling = OOAdvantech.Json.DateTimeZoneHandling.Utc };
                     VivaEvent vivaEvent = OOAdvantech.Json.JsonConvert.DeserializeObject<VivaEvent>(content, jSetttings);
-
+                    var InsDate = vivaEvent.EventData.InsDate;
 
                     if (vivaEvent.EventTypeId == 1796)
                     {
@@ -206,33 +211,38 @@ namespace FlavourBusinessManager.PaymentProviders
 
                         var inProgressPayment = InProgressPayments.Where(x => x.paymentOrder != null && x.paymentOrder.orderCode == vivaEvent.EventData.OrderCode).FirstOrDefault();
 
-                        var paymentOrder = inProgressPayment.payment.GetPaymentOrder();
-                        paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
-                        inProgressPayment.payment.SetPaymentOrder(paymentOrder);
-
-
-
-                        //{"orderCode":7138070025172605,"expiring":638057368377003513}
-
-                        try
+                        if (inProgressPayment != null)
                         {
 
-                            var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
-                            client.Timeout = -1;
-                            var request = new RestRequest(Method.GET);
-                            request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
-                            IRestResponse response = client.Execute(request);
-                            if (response.StatusCode==HttpStatusCode.OK)
+                            var paymentOrder = inProgressPayment.payment.GetPaymentOrder();
+                            paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
+                            inProgressPayment.payment.SetPaymentOrder(paymentOrder);
+
+                            try
                             {
-                                TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-                                inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+
+                                var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
+                                client.Timeout = -1;
+                                var request = new RestRequest(Method.GET);
+                                request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
+                                IRestResponse response = client.Execute(request);
+                                if (response.StatusCode==HttpStatusCode.OK)
+                                {
+                                    TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
+                                    inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                                }
+
                             }
+                            catch (Exception error)
+                            {
 
+                                throw;
+                            }
                         }
-                        catch (Exception error)
+                        else
                         {
-
-                            throw;
+                            //hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                            //hookRespnose.Content = @"";
                         }
 
                         #endregion
@@ -279,7 +289,9 @@ namespace FlavourBusinessManager.PaymentProviders
                 if (response.StatusCode==HttpStatusCode.OK)
                 {
                     TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-                    inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                    
+
+                    inProgressPayment.foodServiceSession.CardPaymentCompleted(inProgressPayment.payment, null, transactionData.cardNumber, false, paymentOrder.TransactionId, 0);
                 }
             }
         }
