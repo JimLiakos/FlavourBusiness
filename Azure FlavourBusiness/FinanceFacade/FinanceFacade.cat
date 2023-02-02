@@ -3625,7 +3625,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"11")
+		    value      	"12")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3900,30 +3900,6 @@
 		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "ItemsJson"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
-			    value      	"{4c7bdca1-0a7e-47cd-a10f-7e0306ba04fd}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"6360001C00D0")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"As Property"
-			    value      	FALSE)
-			(object Attribute
-			    tool       	"Persistent"
-			    name       	"Persistent"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"Identity"
-			    value      	"+7"))
-		    quid       	"6360001C00D0"
-		    type       	"string")
 		(object ClassAttribute "Amount"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -4272,7 +4248,40 @@
 			    value      	"+10"))
 		    quid       	"6392F08901AD"
 		    type       	"System.DateTime?"
-		    exportControl 	"Public"))
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentProvider"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+11")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63DA9D6C0301")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5fa3e801-b9aa-4782-990c-4f490dd4a464}"))
+		    quid       	"63DA9D6C0301"
+		    type       	"string"
+		    exportControl 	"Implementation"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#"
