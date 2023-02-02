@@ -25,7 +25,7 @@ using MenuModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using Microsoft.WindowsAzure.ServiceRuntime;
 //using WebhooksToLocalServer;
-using FlavourBusinessManager.PaymentProviders;
+
 using FlavourBusinessManager.HumanResources;
 
 namespace FlavourBusinessManager.ServicePointRunTime
@@ -371,7 +371,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         private void LoadPaymentProviders()
         {
             if (Payment.GetPaymentProvider("Viva")==null)
-                Payment.SetPaymentProvider("Viva", new VivaWallet());
+                Payment.SetPaymentProvider("Viva", new PaymentProviders.VivaWallet());
         }
 
 
@@ -2177,17 +2177,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
-        public HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
+        public OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
         {
-            var hookRespnose = new HookRespnose();
+            var hookRespnose = new OOAdvantech.Remoting.RestApi.HookRespnose();
 
-
+            
             if (webHookName.IndexOf("Viva")==0)
-                return VivaWallet.WebHook(method,webHookName,headers,content);
+                Payment.GetPaymentProvider("Viva").WebHook(method, webHookName, headers, content);
 
-
-
-         
+            //    return  PaymentProviders.VivaWallet.WebHook(method,webHookName,headers,content);
             return hookRespnose;
         }
     }

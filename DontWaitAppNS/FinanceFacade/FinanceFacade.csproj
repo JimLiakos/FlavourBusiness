@@ -3,6 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Finance</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;DeviceDotNet</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;DeviceDotNet</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IPayment.cs" Link="IPayment.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ITem.cs" Link="ITem.cs" />

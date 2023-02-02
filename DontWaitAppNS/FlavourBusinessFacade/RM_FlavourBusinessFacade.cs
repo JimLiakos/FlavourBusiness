@@ -1399,22 +1399,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetMealInvitationInviter", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
-        
-        public FlavourBusinessFacade.HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content)
-        {
-            object[] args = new object[4];
-            System.Type[] argsTypes = new System.Type[4];
-            args[0] = method;
-            argsTypes[0] = typeof(string);
-            args[1] = webHookName;
-            argsTypes[1] = typeof(string);
-            args[2] = headers;
-            argsTypes[2] = typeof(System.Collections.Generic.Dictionary<string, string>);
-            args[3] = content;
-            argsTypes[3] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "WebHook", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HookRespnose>(retValue);
-        }
     }
     
     public sealed class Pr_IOrganization : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IOrganization, OOAdvantech.Remoting.RestApi.ITransparentProxy

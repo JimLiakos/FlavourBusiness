@@ -139,6 +139,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlavoursServicesWorkerRole"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebhooksToLocalServer", "WebhooksToLocalServer\WebhooksToLocalServer.csproj", "{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentProviders", "PaymentProviders\PaymentProviders.csproj", "{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -965,6 +967,18 @@ Global
 		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x64.Build.0 = Release|Any CPU
 		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x86.ActiveCfg = Release|Any CPU
 		{E1FED31C-1DD0-4E32-9CD5-93B0F4BD91F6}.Release|x86.Build.0 = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|x64.Build.0 = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Debug|x86.Build.0 = Debug|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|x64.ActiveCfg = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|x64.Build.0 = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|x86.ActiveCfg = Release|Any CPU
+		{BCE015D4-8F98-4780-AEAE-FF932AD8DE75}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

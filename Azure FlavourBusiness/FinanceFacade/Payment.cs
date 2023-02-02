@@ -1,5 +1,6 @@
 
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Security;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,52 @@ namespace FinanceFacade
     public class Payment : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPayment
     {
 
+        /// <exclude>Excluded</exclude>
+        string _PaymentGetwayRequestID;
+        /// <MetaDataID>{c2e444aa-672e-4237-be55-27a58f5dad3a}</MetaDataID>
+        [PersistentMember(nameof(_PaymentGetwayRequestID))]
+        [BackwardCompatibilityID("+12")]
+        internal string PaymentGetwayRequestID
+        {
+            get => default;
+            set
+            {
+            }
+        }
 
+        /// <exclude>Excluded</exclude>
+        static IPaymentFinder _PaymentFinder;
+        /// <MetaDataID>{6ebc2d81-57f1-46a9-a663-e71620ab91ab}</MetaDataID>
+        static public IPaymentFinder PaymentFinder
+        {
+            get
+            {
+                lock (PaymentProvidersLock)
+                    return _PaymentFinder;
+            }
+            set
+            {
+                lock (PaymentProvidersLock)
+                    _PaymentFinder = value;
+            }
+        }
+
+
+
+        /// <MetaDataID>{66849d90-4ab5-4c1f-bc6b-23a1225e155c}</MetaDataID>
         static object PaymentProvidersLock = new object();
 
+        /// <MetaDataID>{11024fee-9f82-4b21-bce8-33a625687522}</MetaDataID>
         public static void SetPaymentProvider(string providerName, IPaymentProvider paymentProvider)
         {
             lock (PaymentProvidersLock)
                 PaymentProviders[providerName]=paymentProvider;
         }
 
+        /// <MetaDataID>{7ecca2f0-e76d-4d57-8a35-9332d750d53c}</MetaDataID>
         static Dictionary<string, IPaymentProvider> PaymentProviders = new Dictionary<string, IPaymentProvider>();
 
+        /// <MetaDataID>{4284efcf-ff9f-4949-b5e2-ebd47cc9f273}</MetaDataID>
         public static IPaymentProvider GetPaymentProvider(string providerName)
         {
             lock (PaymentProvidersLock)
@@ -38,22 +74,22 @@ namespace FinanceFacade
         }
 
         /// <exclude>Excluded</exclude>
-        string _PaymentProvider;
+        string _PaymentGetwayID;
 
         /// <MetaDataID>{5fa3e801-b9aa-4782-990c-4f490dd4a464}</MetaDataID>
-        [PersistentMember(nameof(_PaymentProvider))]
+        [PersistentMember(nameof(_PaymentGetwayID))]
         [BackwardCompatibilityID("+11")]
-        public string PaymentProvider
+        public string PaymentGetwayID
         {
-            get => _PaymentProvider;
+            get => _PaymentGetwayID;
             set
             {
 
-                if (_PaymentProvider!=value)
+                if (_PaymentGetwayID!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PaymentProvider=value;
+                        _PaymentGetwayID=value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -118,6 +154,7 @@ namespace FinanceFacade
         }
 
 
+        /// <MetaDataID>{12b56fcf-34ac-4b7d-b9dd-653a487afcec}</MetaDataID>
         public bool CheckForPaymentComplete()
         {
             var task = Task<bool>.Run(() =>
@@ -131,9 +168,9 @@ namespace FinanceFacade
                     }
                     else
                     {
-                        if(!string.IsNullOrWhiteSpace(PaymentProvider))
+                        if (!string.IsNullOrWhiteSpace(PaymentGetwayID))
                         {
-                            var paymentProvide = GetPaymentProvider(PaymentProvider);
+                            var paymentProvide = GetPaymentProvider(PaymentGetwayID);
                             if (paymentProvide!=null)
                                 paymentProvide.CheckPaymentProgress(this);
                         }
@@ -343,6 +380,47 @@ namespace FinanceFacade
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        IPaymentSubject _Subject;
+
+        /// <MetaDataID>{9d0d16c5-955d-4792-bccf-9bfafdf8f2f6}</MetaDataID>
+        public IPaymentSubject Subject
+        {
+            get
+            {
+                if (_Subject==null&&!string.IsNullOrWhiteSpace(SubjectUri))
+                {
+                    
+                    _Subject = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject<IPaymentSubject>(OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl, SubjectUri);
+                }
+                return _Subject;
+            }
+            set
+            {
+                if (_Subject != value)
+                {
+                    _Subject=value;
+                    if (_Subject==null)
+                        SubjectUri=null;
+                    else
+                    {
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            SubjectUri= OOAdvantech.Remoting.RestApi.RemotingServices.GetComputingContextPersistentUri(_Subject);
+                            stateTransition.Consistent = true;
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+        /// <MetaDataID>{461a9ea2-bc16-407b-bb03-076c301d9bf8}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+13")]
+        string SubjectUri;
 
 
 
@@ -407,6 +485,7 @@ namespace FinanceFacade
                 _TipsAmount = tipAmount;
                 State = PaymentState.Completed;
 
+                this.Subject.PaymentCompleted(this);
 
                 stateTransition.Consistent = true;
             }

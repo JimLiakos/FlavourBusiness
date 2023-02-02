@@ -1,4 +1,5 @@
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Remoting.RestApi;
 
 namespace FinanceFacade
 {
@@ -8,6 +9,11 @@ namespace FinanceFacade
     [GenerateFacadeProxy]
     public interface IPayment
     {
+#if !DeviceDotNet
+        [Association("SubjectOfPayment", Roles.RoleA, "1fb62be2-4d9b-4618-9c9f-7142f4031744")]
+        IPaymentSubject Subject { get; set; }
+#endif
+
         /// <MetaDataID>{2a5b9053-54e1-4a3c-825e-49199b184b3b}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         [CachingDataOnClientSide]
@@ -90,6 +96,7 @@ namespace FinanceFacade
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
+        /// <MetaDataID>{221a8131-7c53-40e0-9ef7-1e3d03c6f2b9}</MetaDataID>
         bool CheckForPaymentComplete();
 
     }
@@ -112,10 +119,15 @@ namespace FinanceFacade
         Completed
     }
 
-
-    
+#if !DeviceDotNet
+    /// <MetaDataID>{ad13180b-ad36-4b4e-a3ec-9d7b69a180ae}</MetaDataID>
     public interface IPaymentProvider
     {
         void CheckPaymentProgress(IPayment payment);
+        HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content);
+
     }
+#endif  
+
+
 }

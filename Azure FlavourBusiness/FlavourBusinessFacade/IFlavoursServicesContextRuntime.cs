@@ -171,18 +171,10 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{2eb4a008-d3a3-4fc9-ad3f-4c0e9031b71d}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
         IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID);
-        HookRespnose WebHook(string method, string webHookName, Dictionary<string,string> headers, string content);
+#if !FlavourBusinessDevice
+        OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string,string> headers, string content);
+#endif
     }
 
-    /// <MetaDataID>{74f3d8bd-a984-4071-8361-0ff3be4d2c7d}</MetaDataID>
-    public class HookRespnose
-    {
-        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 
-        public string Content { get; set; }
-
-        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
-
-
-    }
 }

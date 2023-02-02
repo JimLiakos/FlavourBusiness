@@ -13,8 +13,8 @@ using FlavourBusinessFacade;
 using OOAdvantech;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.PaymentProviders;
-using static FlavourBusinessManager.PaymentProviders.VivaWallet;
+
+
 
 
 namespace FlavourBusinessManager.ServicesContextResources

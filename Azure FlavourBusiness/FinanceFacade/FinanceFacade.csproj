@@ -45,6 +45,8 @@
     <Compile Include="ICashierDevice.cs" />
     <Compile Include="IFisicalParty.cs" />
     <Compile Include="IPayment.cs" />
+    <Compile Include="IPaymentFinder.cs" />
+    <Compile Include="IPaymentSubject.cs" />
     <Compile Include="ITax.cs" />
     <Compile Include="ITaxableType.cs" />
     <Compile Include="ITaxAuthority.cs" />

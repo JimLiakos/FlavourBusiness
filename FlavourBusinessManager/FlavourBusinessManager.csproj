@@ -317,8 +317,6 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
-    <Compile Include="PaymentProviders\VivaIPaymentExtMethods.cs" />
-    <Compile Include="PaymentProviders\VivaWallet.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
@@ -410,6 +408,10 @@
       <Project>{5c51fa19-e5e2-493d-84c8-2cd88567f908}</Project>
       <Name>MenuPresentationModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PaymentProviders\PaymentProviders.csproj">
+      <Project>{bce015d4-8f98-4780-aeae-ff932ad8de75}</Project>
+      <Name>PaymentProviders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestaurantHallLayoutModel\RestaurantHallLayoutModel.csproj">
       <Project>{0111e912-93a7-4e95-81c6-1f565684336a}</Project>
       <Name>RestaurantHallLayoutModel</Name>
@@ -424,7 +426,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PaymentProviders\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

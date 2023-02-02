@@ -111,6 +111,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public FinanceFacade.IPaymentSubject Subject
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_Subject", args, argsTypes);
+                return this.Proxy.GetValue<FinanceFacade.IPaymentSubject>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(FinanceFacade.IPaymentSubject);
+                this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Subject", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public decimal TipsAmount
         {
             get
