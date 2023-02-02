@@ -19,7 +19,9 @@ namespace FlavourBusinessManager.PaymentProviders
 
             var paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrder>(payment.PaymentProviderJson);
 
-            (payment as Payment).PaymentProvider="Viva";
+//#if !DeviceDotNet
+//            (payment as Payment).PaymentProvider="Viva";
+//#endif
             return paymentOrderResponse;
         }
 

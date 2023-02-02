@@ -20,7 +20,6 @@ using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.Azure.Documents.Spatial;
 
-
 namespace FlavourBusinessManager.EndUsers
 {
 
@@ -2463,7 +2462,7 @@ namespace FlavourBusinessManager.EndUsers
         public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
         {
             if (payment.State!=FinanceFacade.PaymentState.Completed)
-                PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+                PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount);
         }
 
         public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
@@ -2473,7 +2472,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment, tipAmount);
+                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount);
                     foreach (var paymentItem in payment.Items)
                     {
                         var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();

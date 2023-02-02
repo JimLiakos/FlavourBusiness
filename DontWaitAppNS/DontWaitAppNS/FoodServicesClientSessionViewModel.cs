@@ -1332,7 +1332,7 @@ namespace DontWaitApp
             FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
-                RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                //RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
@@ -1342,6 +1342,10 @@ namespace DontWaitApp
                     var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
 
                     return allCommited;
+                }
+                else
+                {
+                    return false;
                 }
             }
             return false;

@@ -329,6 +329,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             SessionsMonitoringTimer.Elapsed += SessionsMonitoringTimer_Elapsed;
             SessionsMonitoringTimer.AutoReset = false;
 
+            LoadPaymentProviders();
+
             Task.Run(() =>
             {
 
@@ -364,6 +366,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             //});
 
+        }
+
+        private void LoadPaymentProviders()
+        {
+            if (Payment.GetPaymentProvider("Viva")==null)
+                Payment.SetPaymentProvider("Viva", new VivaWallet());
         }
 
 
