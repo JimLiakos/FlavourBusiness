@@ -370,8 +370,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         private void LoadPaymentProviders()
         {
-            if (Payment.GetPaymentProvider("Viva")==null)
-                Payment.SetPaymentProvider("Viva", new PaymentProviders.VivaWallet());
+            var vivaProvider = new PaymentProviders.VivaWallet();
+            if (Payment.GetPaymentProvider("Viva") == null)
+                Payment.SetPaymentProvider("Viva", vivaProvider);
+            if (Payment.GetPaymentProvider("VivaPayment") == null)
+                Payment.SetPaymentProvider("VivaPayment", vivaProvider);
+
+
+            
         }
 
 
@@ -2066,7 +2072,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         unassignedSupervisor.SupervisorAssignKey = null;
-                        (unassignedSupervisor as  ServiceContextSupervisor).OAuthUserIdentity = signUpUserIdentity;
+                        (unassignedSupervisor as ServiceContextSupervisor).OAuthUserIdentity = signUpUserIdentity;
                         unassignedSupervisor.Name = userName;
                         stateTransition.Consistent = true;
                     }
@@ -2181,9 +2187,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var hookRespnose = new OOAdvantech.Remoting.RestApi.HookRespnose();
 
-            
-            if (webHookName.IndexOf("Viva")==0)
-                Payment.GetPaymentProvider("Viva").WebHook(method, webHookName, headers, content);
+
+
+            hookRespnose = Payment.GetPaymentProvider(webHookName).WebHook(method, webHookName, headers, content);
 
             //    return  PaymentProviders.VivaWallet.WebHook(method,webHookName,headers,content);
             return hookRespnose;

@@ -33,10 +33,10 @@ namespace DontWaitApp
 
 
 
-        
 
 
-    
+
+
 
 
 
@@ -110,6 +110,7 @@ namespace DontWaitApp
 
         protected override async void OnStart()
         {
+
 
 
             //try
@@ -286,7 +287,7 @@ namespace DontWaitApp
                                     {
                                         try
                                         {
-                                            if ((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage)?.BindingContext as FlavoursOrderServer) != null&&
+                                            if ((((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage)?.BindingContext as FlavoursOrderServer) != null &&
                                             (((MainPage as NavigationPage)?.CurrentPage as HybridWebViewPage)?.BindingContext as FlavoursOrderServer).HasPartOfMealRequestSubscribers)
                                             {
                                                 invitationDelevered = true;

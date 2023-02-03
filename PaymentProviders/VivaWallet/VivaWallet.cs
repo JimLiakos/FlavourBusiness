@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace PaymentProviders
 {
     /// <MetaDataID>{a98904ba-1e24-4771-93ce-73a3786988d7}</MetaDataID>
-    public class VivaWallet: IPaymentProvider
+    public class VivaWallet : IPaymentProvider
     {
         /// <MetaDataID>{6fabfadb-1527-4ba8-92d2-e555de55f5d8}</MetaDataID>
         static AccessToken AccessToken { get; set; }
@@ -22,12 +22,12 @@ namespace PaymentProviders
         public static void CreatePaymentOrder(Payment payment, decimal tipAmount)
         {
 
-            if (payment.State==PaymentState.Completed)
+            if (payment.State == PaymentState.Completed)
                 return;
             PaymentOrder paymentOrderResponse = payment.GetPaymentOrder();
-            if (paymentOrderResponse!=null)
+            if (paymentOrderResponse != null)
             {
-                if (payment.TipsAmount!=tipAmount)
+                if (payment.TipsAmount != tipAmount)
                     payment.SetPaymentOrder(null);
                 else if (paymentOrderResponse.expiring < DateTime.UtcNow.Ticks - TimeSpan.FromMinutes(1).Ticks)
                     payment.SetPaymentOrder(null);
@@ -54,13 +54,13 @@ namespace PaymentProviders
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Cookie", "ak_bmsc=CA754BFFAC46566A3861BDCF0EECE27B~000000000000000000000000000000~YAAQTkUVAixpd4OEAQAA1+nmzRHNStaVAzCoktrpJOEhos8yoQJWDW0eGWBxgt9FhPCUVo2jyFdpqIeDJz0Oh3oNRlB9cdliBgsrNoABb3RJ1OGTi4QsuzQPZF/I40/hCrX89gxi1VZ5bWwep/o+bWqL898ihLLP3HCJ8cupTYndVK1ni8bnjUNVcujhVij52hzHc/YKVH8ZA+FbgiCw9L2xna7jP0SZ287FnPTcKTZ1LMJpwNgOu/PBIv5QQpqoIke5REAoghpPSkYJvO568Tr57Z9oW0pnWgqDViaInl+rW0Sg0yz8Q5JghbNPFka9kxYrHLQGHwCz3zEuj8z9uzSYu6pHmxlw6ShVJO/PPs04G3aesvsszWf3s64IrxgJwq4=");
 
-            (payment as Payment).TipsAmount=tipAmount;
+            (payment as Payment).TipsAmount = tipAmount;
 
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
 
 
-                amount = (int)((payment.Amount+payment.TipsAmount) * 100),
+                amount = (int)((payment.Amount + payment.TipsAmount) * 100),
                 customerTrns = "a Short description of purchased items/services to display to your customer",
                 //customer=new Customer()
                 //{
@@ -99,7 +99,7 @@ namespace PaymentProviders
             {
 
                 payment.SetPaymentOrder(paymentOrderResponse);
-                payment.PaymentGetwayID="Viva";
+                payment.PaymentGetwayID = "Viva";
                 payment.State = PaymentState.InProgress;
 
                 stateTransition.Consistent = true;
@@ -152,7 +152,7 @@ namespace PaymentProviders
 
 
         /// <MetaDataID>{abf594e0-bcdf-45b1-ab07-962a4aec5289}</MetaDataID>
-        public  HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
+        public HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
         {
 
             //  System.Threading.Thread.Sleep(30000);
@@ -179,76 +179,74 @@ namespace PaymentProviders
 
                 string webHookKeyResponse = GetWebHookKeyJson(merchantID, apiKey);
                 hookRespnose.StatusCode = System.Net.HttpStatusCode.OK;
-                hookRespnose.Content =webHookKeyResponse;// @"{""key"":""1234335""}";
+                hookRespnose.Content = webHookKeyResponse;// @"{""key"":""1234335""}";
                 hookRespnose.Headers.Add("test-header", "value");
             }
             if (method == "POST")
             {
 
-                if (webHookName == "VivaPayment")
+
+
+                bool th = false;
+                if (th)
                 {
-                    bool th = false;
-                    if (th)
-                    {
-                        hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
-                        hookRespnose.Content = @"eror";
-                        return hookRespnose;
-                    }
-
-
-                    var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK", DateTimeZoneHandling = OOAdvantech.Json.DateTimeZoneHandling.Utc };
-                    VivaEvent vivaEvent = OOAdvantech.Json.JsonConvert.DeserializeObject<VivaEvent>(content, jSetttings);
-                    var InsDate = vivaEvent.EventData.InsDate;
-
-                    if (vivaEvent.EventTypeId == 1796)
-                    {
-
-                        #region Payment completed
-                        var inProgressPayment = Payment.PaymentFinder.FindPayment("Viva", vivaEvent.EventData.OrderCode.ToString());
-                   
-                        if (inProgressPayment != null)
-                        {
-                            var paymentOrder = inProgressPayment.GetPaymentOrder();
-                            paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
-                            inProgressPayment.SetPaymentOrder(paymentOrder);
-
-
-
-                            try
-                            {
-
-                                var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
-                                client.Timeout = -1;
-                                var request = new RestRequest(Method.GET);
-                                request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
-                                IRestResponse response = client.Execute(request);
-                                if (response.StatusCode==HttpStatusCode.OK)
-                                {
-                                    TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-                                    //inProgressPayment.Subject.PaymentCompleted()
-                                    inProgressPayment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
-                                }
-
-                            }
-                            catch (Exception error)
-                            {
-
-                                throw;
-                            }
-                        }
-                        else
-                        {
-                            //hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
-                            //hookRespnose.Content = @"";
-                        }
-
-                        #endregion
-                    }
-
-
-
-
+                    hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                    hookRespnose.Content = @"eror";
+                    return hookRespnose;
                 }
+
+
+                var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK", DateTimeZoneHandling = OOAdvantech.Json.DateTimeZoneHandling.Utc };
+                VivaEvent vivaEvent = OOAdvantech.Json.JsonConvert.DeserializeObject<VivaEvent>(content, jSetttings);
+                var InsDate = vivaEvent.EventData.InsDate;
+
+                if (vivaEvent.EventTypeId == 1796)
+                {
+
+                    #region Payment completed
+                    var inProgressPayment = Payment.PaymentFinder.FindPayment("Viva", vivaEvent.EventData.OrderCode.ToString());
+
+                    if (inProgressPayment != null)
+                    {
+                        var paymentOrder = inProgressPayment.GetPaymentOrder();
+                        paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
+                        inProgressPayment.SetPaymentOrder(paymentOrder);
+
+
+
+                        try
+                        {
+
+                            var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
+                            client.Timeout = -1;
+                            var request = new RestRequest(Method.GET);
+                            request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
+                            IRestResponse response = client.Execute(request);
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
+                                //inProgressPayment.Subject.PaymentCompleted()
+                                inProgressPayment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                            }
+
+                        }
+                        catch (Exception error)
+                        {
+
+                            throw;
+                        }
+                    }
+                    else
+                    {
+                        //hookRespnose.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                        //hookRespnose.Content = @"";
+                    }
+
+                    #endregion
+                }
+
+
+
 
                 hookRespnose.StatusCode = System.Net.HttpStatusCode.OK;
                 hookRespnose.Content = @"{""message"":""ok""}";
@@ -272,7 +270,7 @@ namespace PaymentProviders
 
 
                 //var inProgressPayment = InProgressPayments.Where(x => x.paymentOrder != null && x.paymentOrder.orderCode == paymentOrder.orderCode).FirstOrDefault();
-               // var inProgressPayment = Payment.PaymentFinder.FindPayment("Viva", vivaEvent.EventData.OrderCode.ToString());
+                // var inProgressPayment = Payment.PaymentFinder.FindPayment("Viva", vivaEvent.EventData.OrderCode.ToString());
 
 
 
@@ -282,7 +280,7 @@ namespace PaymentProviders
                 var request = new RestRequest(Method.GET);
                 request.AddHeader("Authorization", $"Bearer {GetAccessToken(clientID, clientSecret)}");
                 IRestResponse response = client.Execute(request);
-                if (response.StatusCode==HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
                     payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, 0);
@@ -293,7 +291,7 @@ namespace PaymentProviders
 
 
     /// <MetaDataID>{cf2173b3-2255-46c8-ac80-4722f83fa9f5}</MetaDataID>
-    public class AccessToken
+    class AccessToken
     {
         /// <MetaDataID>{6e4721de-cb7c-488c-b634-e6a2e26f360f}</MetaDataID>
         public string access_token { get; set; }
@@ -311,7 +309,7 @@ namespace PaymentProviders
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     /// <MetaDataID>{b57a74a6-b0f3-46f3-81d2-a1db71aefffe}</MetaDataID>
-    public class Customer
+    class Customer
     {
         /// <MetaDataID>{1519f400-eecf-46f4-b99e-5d75606144c7}</MetaDataID>
         public string email { get; set; }
@@ -326,7 +324,7 @@ namespace PaymentProviders
     }
 
     /// <MetaDataID>{a776e12d-0694-4049-bf39-e658fe42556e}</MetaDataID>
-    public class VivaPaymentOrder
+    class VivaPaymentOrder
     {
         /// <MetaDataID>{ee43afe0-05c2-4f5c-8c3a-ac43c63160ae}</MetaDataID>
         public int amount { get; set; }
@@ -443,7 +441,7 @@ namespace PaymentProviders
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     /// <MetaDataID>{25aaf5fe-7d39-43d7-943f-66472a998bac}</MetaDataID>
-    public class EventData
+    class EventData
     {
         /// <MetaDataID>{41959cd0-cfb9-49a1-9a2d-d0afca442cb3}</MetaDataID>
         public bool Moto { get; set; }
@@ -580,7 +578,7 @@ namespace PaymentProviders
     }
 
     /// <MetaDataID>{55d05b0f-5355-4370-b493-f4cbbb7d9425}</MetaDataID>
-    public class VivaEvent
+    class VivaEvent
     {
         /// <MetaDataID>{b9f760c2-3fe8-4e96-acd5-130a402b85f9}</MetaDataID>
         public string Url { get; set; }
@@ -607,7 +605,7 @@ namespace PaymentProviders
 
 
     /// <MetaDataID>{b00a81fe-a55d-488c-80c3-ff61e5793da5}</MetaDataID>
-    public class TransactionData
+    class TransactionData
     {
         /// <MetaDataID>{02b84baa-8cd0-42a3-a367-57590c9b5436}</MetaDataID>
         public string email { get; set; }
