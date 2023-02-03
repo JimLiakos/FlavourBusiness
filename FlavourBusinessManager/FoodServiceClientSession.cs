@@ -20,6 +20,7 @@ using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.Azure.Documents.Spatial;
 
+
 namespace FlavourBusinessManager.EndUsers
 {
 
@@ -2578,6 +2579,10 @@ namespace FlavourBusinessManager.EndUsers
 
                     stateTransition.Consistent = true;
                 }
+                payment.Subject=this.MainSession as FinanceFacade.IPaymentSubject;
+
+
+
             }
 
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());

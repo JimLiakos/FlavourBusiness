@@ -375,9 +375,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 Payment.SetPaymentProvider("Viva", vivaProvider);
             if (Payment.GetPaymentProvider("VivaPayment") == null)
                 Payment.SetPaymentProvider("VivaPayment", vivaProvider);
+            Payment.PaymentFinder=new ServiceContextPaymentFinder();
 
 
-            
+
+
+
         }
 
 

@@ -15,14 +15,12 @@ using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessFacade.HumanResources;
 
 
-
-
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{a44c2bf7-1fd4-4e5a-b831-f9f7a1c381ac}</MetaDataID>
     [BackwardCompatibilityID("{a44c2bf7-1fd4-4e5a-b831-f9f7a1c381ac}")]
     [Persistent()]
-    public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession
+    public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession, FinanceFacade.IPaymentSubject
     {
 
 
@@ -857,6 +855,39 @@ namespace FlavourBusinessManager.ServicesContextResources
                     itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value); 
                 stateTransition.Consistent = true;
             }
+
+        }
+
+        public void PaymentCompleted(FinanceFacade.IPayment payment)
+        {
+            var sessionFlavourItems = (from foodServiceClientSession in PartialClientSessions
+                                       from flavourItem in foodServiceClientSession.FlavourItems
+                                       select flavourItem).ToList();
+            Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>> itemsToCommit = new Dictionary<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession, List<FlavourBusinessFacade.RoomService.IItemPreparation>>();
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+
+                foreach (var paymentItem in payment.Items)
+                {
+                    var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
+                    if (flavourItem!=null)
+                    {
+                        List<FlavourBusinessFacade.RoomService.IItemPreparation> flavoursItem = null;
+
+                        if (!itemsToCommit.TryGetValue(flavourItem.ClientSession, out flavoursItem))
+                        {
+                            flavoursItem=new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
+                            itemsToCommit[flavourItem.ClientSession]=flavoursItem;
+                        }
+                        flavoursItem.Add(flavourItem);
+                    }
+                }
+                foreach (var itemsToCommitEntry in itemsToCommit)
+                    itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value); 
+                stateTransition.Consistent = true;
+            }
+
 
         }
     }

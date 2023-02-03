@@ -100,6 +100,7 @@ namespace PaymentProviders
 
                 payment.SetPaymentOrder(paymentOrderResponse);
                 payment.PaymentGetwayID = "Viva";
+                payment.PaymentGetwayRequestID=paymentOrderResponse.orderCode.ToString();
                 payment.State = PaymentState.InProgress;
 
                 stateTransition.Consistent = true;
@@ -153,7 +154,7 @@ namespace PaymentProviders
 
         /// <MetaDataID>{abf594e0-bcdf-45b1-ab07-962a4aec5289}</MetaDataID>
         public HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
-        {
+        { 
 
             //  System.Threading.Thread.Sleep(30000);
 #if DEBUG

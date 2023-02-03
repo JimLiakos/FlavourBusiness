@@ -97,7 +97,7 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{221a8131-7c53-40e0-9ef7-1e3d03c6f2b9}</MetaDataID>
-        bool CheckForPaymentComplete();
+        bool IsCompleted();
 
     }
 

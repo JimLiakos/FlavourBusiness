@@ -22,11 +22,19 @@ namespace FinanceFacade
         /// <MetaDataID>{c2e444aa-672e-4237-be55-27a58f5dad3a}</MetaDataID>
         [PersistentMember(nameof(_PaymentGetwayRequestID))]
         [BackwardCompatibilityID("+12")]
-        internal string PaymentGetwayRequestID
+        public string PaymentGetwayRequestID
         {
-            get => default;
+            get => _PaymentGetwayRequestID;
             set
             {
+                if (_PaymentGetwayRequestID!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PaymentGetwayRequestID=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 
@@ -155,7 +163,7 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{12b56fcf-34ac-4b7d-b9dd-653a487afcec}</MetaDataID>
-        public bool CheckForPaymentComplete()
+        public bool IsCompleted()
         {
             var task = Task<bool>.Run(() =>
             {
@@ -390,7 +398,7 @@ namespace FinanceFacade
             {
                 if (_Subject==null&&!string.IsNullOrWhiteSpace(SubjectUri))
                 {
-                    
+
                     _Subject = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject<IPaymentSubject>(OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl, SubjectUri);
                 }
                 return _Subject;
@@ -474,7 +482,7 @@ namespace FinanceFacade
         public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
         {
             if (State == PaymentState.Completed)
-                throw new Exception("Payment already completed");
+                return;
 
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -489,7 +497,7 @@ namespace FinanceFacade
 
                 stateTransition.Consistent = true;
             }
-            ;
+            
         }
 
         /// <MetaDataID>{185fe21f-7fb4-47aa-9ea1-31941c36d82a}</MetaDataID>

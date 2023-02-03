@@ -284,11 +284,11 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "PaymentRequestCanceled", args, argsTypes);
         }
         
-        public bool CheckForPaymentComplete()
+        public bool IsCompleted()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
-            object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "CheckForPaymentComplete", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "IsCompleted", args, argsTypes);
             return this.Proxy.GetValue<bool>(retValue);
         }
     }

@@ -320,6 +320,7 @@
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
+    <Compile Include="ServiceContextPaymentFinder.cs" />
     <Compile Include="ServingBatch.cs" />
     <Compile Include="ServingShiftWork.cs" />
     <Compile Include="Settings.cs" />
