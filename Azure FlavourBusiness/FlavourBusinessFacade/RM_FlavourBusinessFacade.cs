@@ -1646,7 +1646,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
         
-        public FlavourBusinessFacade.HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content)
+        public OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content)
         {
             object[] args = new object[4];
             System.Type[] argsTypes = new System.Type[4];
@@ -1659,7 +1659,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[3] = content;
             argsTypes[3] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "WebHook", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HookRespnose>(retValue);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.RestApi.HookRespnose>(retValue);
         }
     }
     
@@ -6428,25 +6428,29 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "AddItem", args, argsTypes);
         }
         
-        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
             args[0] = payment;
             argsTypes[0] = typeof(FinanceFacade.IPayment);
             args[1] = tipAmount;
             argsTypes[1] = typeof(decimal);
+            args[2] = paramsJson;
+            argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentGatewayOrder", args, argsTypes);
         }
         
-        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
             args[0] = payment;
             argsTypes[0] = typeof(FinanceFacade.IPayment);
             args[1] = tipAmount;
             argsTypes[1] = typeof(decimal);
+            args[2] = paramsJson;
+            argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentToCommitOrder", args, argsTypes);
         }
         

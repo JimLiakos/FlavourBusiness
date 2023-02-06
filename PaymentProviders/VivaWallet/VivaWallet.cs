@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace PaymentProviders
         static AccessToken AccessToken { get; set; }
 
         /// <MetaDataID>{fd4a9530-d7ce-47d2-8181-1eee214705e9}</MetaDataID>
-        public static void CreatePaymentOrder(Payment payment, decimal tipAmount)
+        public static void CreatePaymentOrder(Payment payment, decimal tipAmount, string paramsJson)
         {
 
             if (payment.State == PaymentState.Completed)
@@ -93,7 +94,9 @@ namespace PaymentProviders
 
             paymentOrderResponse = OOAdvantech.Json.JsonConvert.DeserializeObject<PaymentOrder>(response.Content);
             paymentOrderResponse.expiring = (DateTime.UtcNow + TimeSpan.FromSeconds(vivaPaymentOrder.paymentTimeout)).Ticks;
-
+            var _params = new { color = "" };
+            _params=OOAdvantech.Json.JsonConvert.DeserializeAnonymousType(paramsJson, _params);
+            paymentOrderResponse.PaymentOrderUrl=$"https://demo.vivapayments.com/web2?ref={paymentOrderResponse.orderCode}&color={_params.color}";
 
             using (OOAdvantech.Transactions.SystemStateTransition stateTransition = new OOAdvantech.Transactions.SystemStateTransition(OOAdvantech.Transactions.TransactionOption.Required))
             {
@@ -154,7 +157,7 @@ namespace PaymentProviders
 
         /// <MetaDataID>{abf594e0-bcdf-45b1-ab07-962a4aec5289}</MetaDataID>
         public HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
-        { 
+        {
 
             //  System.Threading.Thread.Sleep(30000);
 #if DEBUG
@@ -287,6 +290,41 @@ namespace PaymentProviders
                     payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, 0);
                 }
             }
+        }
+
+        public PaymentActionState ParseResponse(Payment payment, string response)
+        {
+
+            //https://demo.vivapayments.com/web2/success
+            int queryStartPos = response.IndexOf("?");
+            if (queryStartPos != -1)
+            {
+                string query = response.Substring(queryStartPos + 1);
+                if (!string.IsNullOrWhiteSpace(query))
+                {
+                    var parameters = System.Web.HttpUtility.ParseQueryString(query);
+                    if (parameters.Get("t") != null)
+                    {
+                        string transactionId = parameters.Get("t");
+                        PaymentOrder paymentOrder = payment.GetPaymentOrder();
+                        if (string.IsNullOrWhiteSpace(paymentOrder.TransactionId)&&!string.IsNullOrWhiteSpace(transactionId))
+                        {
+                            paymentOrder.TransactionId=transactionId;
+                            payment.SetPaymentOrder(paymentOrder);
+                            CheckPaymentProgress(payment);
+                            if (payment.State==PaymentState.Completed)
+                                return PaymentActionState.Succeeded;
+
+                            else
+                                return PaymentActionState.Continue;
+                        }
+                        else
+                        {
+                        }
+                    }
+                }
+            }
+            return PaymentActionState.Continue;
         }
     }
 

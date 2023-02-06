@@ -146,9 +146,9 @@ namespace DontWaitAppNS.Droid
                     // Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
                 }
             }
-            
-            FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this,this);
-        
+
+            FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
+
 
             // string token = FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
             // //InitForgroundService(savedInstanceState);
@@ -176,7 +176,7 @@ namespace DontWaitAppNS.Droid
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, null, webClientID);
             //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
 
-            
+
             //var appLink = GetAppLink();
             //Xamarin.Forms.Application.Current.AppLinks.RegisterLink(appLink);
 
@@ -238,10 +238,10 @@ namespace DontWaitAppNS.Droid
         }
         public override void OnBackPressed()
         {
-            OOAdvantech.Droid.DeviceOOAdvantechCore.BackPressed();
-            
-            base.OnBackPressed();
+            BackPressedArgs eventArgs = new BackPressedArgs();
+            OOAdvantech.Droid.DeviceOOAdvantechCore.BackPressed(eventArgs);
 
+            base.OnBackPressed();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

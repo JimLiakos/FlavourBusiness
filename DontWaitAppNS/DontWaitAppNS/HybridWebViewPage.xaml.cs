@@ -154,26 +154,26 @@ namespace DontWaitApp
             FlavoursOrderServer.Initialize();
 
 
-            
 
-            //if (!device.IsBackgroundServiceStarted)
-            //{
-            //    BackgroundServiceState serviceState = new BackgroundServiceState();
-            //    device.RunInBackground(new Action(async () =>
-            //    {
-            //        //var message = Waiter.PeekMessage();
-            //        //Waiter.MessageReceived += Waiter_MessageReceived;
 
-            //        do
-            //        {
-            //            System.Threading.Thread.Sleep(3000);
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+                    //var message = Waiter.PeekMessage();
+                    //Waiter.MessageReceived += Waiter_MessageReceived;
 
-            //        } while (!serviceState.Terminate);
+                    do
+                    {
+                        System.Threading.Thread.Sleep(3000);
 
-            //        //Waiter.MessageReceived -= Waiter_MessageReceived;
+                    } while (!serviceState.Terminate);
 
-            //    }), serviceState);
-            //}
+                    //Waiter.MessageReceived -= Waiter_MessageReceived;
+
+                }), serviceState);
+            }
 
         }
 

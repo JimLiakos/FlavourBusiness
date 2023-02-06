@@ -47,5 +47,7 @@ namespace PaymentProviders
         public long expiring { get; set; }
         /// <MetaDataID>{90d5e6af-e124-498a-9497-c94ef52edb91}</MetaDataID>
         public string TransactionId { get; set; }
+
+        public string PaymentOrderUrl { get; set; }
     }
 }

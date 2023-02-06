@@ -291,6 +291,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "IsCompleted", args, argsTypes);
             return this.Proxy.GetValue<bool>(retValue);
         }
+        
+        public FinanceFacade.PaymentActionState ParseResponse(string response)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = response;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "ParseResponse", args, argsTypes);
+            return this.Proxy.GetValue<FinanceFacade.PaymentActionState>(retValue);
+        }
     }
     
     public sealed class CNSPr_IPayment_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler

@@ -2460,26 +2460,36 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
-        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount)
-        {
-            if (payment.State!=FinanceFacade.PaymentState.Completed)
-                PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount);
-        }
-
-        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount)
+        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
             if (payment.State!=FinanceFacade.PaymentState.Completed)
             {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount);
+                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount; 
+                    stateTransition.Consistent = true;
+                }
+
+            }
+        }
+
+        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+        {
+            if (payment.State!=FinanceFacade.PaymentState.Completed)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
                     foreach (var paymentItem in payment.Items)
                     {
                         var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
                         if (flavourItem!=null)
                             flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
                     }
+                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount;
                     stateTransition.Consistent = true;
                 }
             }

@@ -116,12 +116,23 @@ namespace FinanceFacade
             get => _TipsAmount;
             set
             {
-                _TipsAmount=value;
+                if (_TipsAmount!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TipsAmount=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
 
 
-
+        public PaymentActionState ParseResponse(string response)
+        {
+            var paymentProvide = GetPaymentProvider(PaymentGetwayID);
+            return paymentProvide.ParseResponse(this, response);
+        }
 
         /// <MetaDataID>{5d873702-9a79-4fe1-ae82-02ad6c7d4652}</MetaDataID>
         [OOAdvantech.Json.JsonProperty]

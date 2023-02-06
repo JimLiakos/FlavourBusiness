@@ -1968,8 +1968,8 @@ namespace DontWaitApp
 #if DeviceDotNet
 
 
-
-            return await PaymentService.Pay(payment, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
+            var paymentService = new PaymentService();
+            return await paymentService.Pay(payment, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
 #else
             return true;
 #endif

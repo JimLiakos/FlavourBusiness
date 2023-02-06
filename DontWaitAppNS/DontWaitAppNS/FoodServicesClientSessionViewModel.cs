@@ -1307,7 +1307,7 @@ namespace DontWaitApp
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount);
+            FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
@@ -1329,7 +1329,7 @@ namespace DontWaitApp
 
             
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount);
+            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 //RemotingServices.RefreshCacheData(payment as MarshalByRefObject);

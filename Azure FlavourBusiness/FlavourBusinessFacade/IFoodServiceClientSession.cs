@@ -99,7 +99,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// Defines the tip amount for  the service person 
         /// </param>
         /// <MetaDataID>{1d25a168-7cbe-49e4-9823-639d78a27ee5}</MetaDataID>
-        void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount);
+        void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount,string paramsJson);
 
         /// <summary>
         /// Creates a payment order for the items o payment parameter
@@ -111,7 +111,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <param name="tipAmount">
         /// Defines the tip amount for  the service person 
         /// </param>
-        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount);
+        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount,string paramsJson);
 
 
 

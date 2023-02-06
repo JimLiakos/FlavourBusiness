@@ -62,7 +62,7 @@ namespace FinanceFacade
 
         /// <MetaDataID>{ff361440-c40d-42a2-a5d5-9946ced65f08}</MetaDataID>
         void PaymentRequestCanceled();
-        
+
 
 
 
@@ -99,6 +99,9 @@ namespace FinanceFacade
         /// <MetaDataID>{221a8131-7c53-40e0-9ef7-1e3d03c6f2b9}</MetaDataID>
         bool IsCompleted();
 
+        PaymentActionState ParseResponse(string response);
+
+
     }
 
     /// <MetaDataID>{c29b8985-3d96-4fea-91b6-7b3040b4d715}</MetaDataID>
@@ -109,6 +112,13 @@ namespace FinanceFacade
         DebitCard,
         CreditCard,
         Check
+    }
+
+    public enum PaymentActionState
+    {
+        Continue = 1,
+        Succeeded = 2,
+        Canceled = 3
     }
 
     /// <MetaDataID>{f3fd7c47-599e-4736-9f69-1d823cfbf1da}</MetaDataID>
@@ -124,6 +134,7 @@ namespace FinanceFacade
     public interface IPaymentProvider
     {
         void CheckPaymentProgress(IPayment payment);
+        PaymentActionState ParseResponse(Payment payment, string response);
         HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content);
 
     }
