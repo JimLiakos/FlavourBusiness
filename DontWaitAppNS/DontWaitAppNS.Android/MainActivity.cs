@@ -338,6 +338,19 @@ namespace DontWaitAppNS.Droid
         protected override void OnStart()
         {
             base.OnStart();
+            const int requestLocationId = 0;
+
+            string[] notiPermission =
+            {
+                Android.Manifest.Permission.PostNotifications
+            };
+
+            if ((int)Build.VERSION.SdkInt < 33) return;
+
+            if (this.CheckSelfPermission(Android.Manifest.Permission.PostNotifications) != Permission.Granted)
+            {
+                this.RequestPermissions(notiPermission, requestLocationId);
+            }
         }
         //protected override void OnRestart()
         //{
