@@ -1303,6 +1303,15 @@ namespace DontWaitApp
 
 
         }
+
+        public bool? AllItemsArePaid
+        {
+            get
+            {
+                return FoodServicesClientSession?.AllItemsArePaid;
+            }
+        }
+        
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
@@ -1351,6 +1360,7 @@ namespace DontWaitApp
             return false;
 #else
             payment.CashPaymentCompleted(tipAmount);
+            this.SendItemsForPreparation();
 
             return true;
 #endif

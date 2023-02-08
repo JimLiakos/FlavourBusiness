@@ -550,11 +550,14 @@ namespace FinanceFacade
         {
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            if (Amount>0)
             {
-                _TipsAmount = tipAmount;
-                State = PaymentState.Completed;
-                stateTransition.Consistent = true;
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _TipsAmount = tipAmount;
+                    State = PaymentState.Completed;
+                    stateTransition.Consistent = true;
+                }
             }
         }
         /// <summary></summary>

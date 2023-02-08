@@ -12,6 +12,8 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+        /// <MetaDataID>{951fa5da-519f-4faa-90cd-621ff2274725}</MetaDataID>
+        bool AllItemsArePaid { get; }
 
 
         /// <MetaDataID>{9ca27920-120c-46c5-a5a2-3a949b957d2b}</MetaDataID>
@@ -111,7 +113,8 @@ namespace FlavourBusinessFacade.EndUsers
         /// <param name="tipAmount">
         /// Defines the tip amount for  the service person 
         /// </param>
-        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount,string paramsJson);
+        /// <MetaDataID>{5ba36666-0762-4942-8c91-baea92cf52d4}</MetaDataID>
+        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson);
 
 
 
