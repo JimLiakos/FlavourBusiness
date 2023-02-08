@@ -300,7 +300,7 @@ namespace DontWaitApp
         {
             get
             {
-                return _FoodServiceClient.SignInProvider;
+                return _FoodServiceClient?.SignInProvider;
             }
             set
             {
