@@ -3604,6 +3604,27 @@
 			    value      	"+7"))
 		    quid       	"6392EFB70167"
 		    type       	"System.DateTime?"
+		    exportControl 	"Public")
+		(object ClassAttribute "PaymentOrderUrl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63E337E00177")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d6eb7ce8-cc7c-4b94-bb55-abf72e5e3c30}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"63E337E00177"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -3625,7 +3646,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"14")
+		    value      	"15")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3669,13 +3690,13 @@
 		    quid       	"6360B40F02E5"
 		    parameters 	(list Parameters
 			(object Parameter "paymentIdentity"
-			    quid       	"63DBDAC903B4"
+			    quid       	"63E33CD4025A"
 			    type       	"string")
 			(object Parameter "paymentItems"
-			    quid       	"63DBDAC903DF"
+			    quid       	"63E33CD40277"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>")
 			(object Parameter "currency"
-			    quid       	"63DBDACA0012"
+			    quid       	"63E33CD40286"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3740,7 +3761,7 @@
 		    quid       	"6360B40F039F"
 		    parameters 	(list Parameters
 			(object Parameter "paymentItems"
-			    quid       	"63DBDACA0096"
+			    quid       	"63E33CD40346"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3759,19 +3780,19 @@
 		    quid       	"636361E801A9"
 		    parameters 	(list Parameters
 			(object Parameter "cardType"
-			    quid       	"63DBDACA00C4"
+			    quid       	"63E33CD40363"
 			    type       	"string")
 			(object Parameter "accountNumber"
-			    quid       	"63DBDACA00DF"
+			    quid       	"63E33CD40372"
 			    type       	"string")
 			(object Parameter "isDebit"
-			    quid       	"63DBDACA00F7"
+			    quid       	"63E33CD4037E"
 			    type       	"bool")
 			(object Parameter "transactionID"
-			    quid       	"63DBDACA0117"
+			    quid       	"63E33CD4038B"
 			    type       	"string")
 			(object Parameter "tipAmount"
-			    quid       	"63DBDACA0131"
+			    quid       	"63E33CD40396"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3790,7 +3811,7 @@
 		    quid       	"636361E80259"
 		    parameters 	(list Parameters
 			(object Parameter "tipAmount"
-			    quid       	"63DBDACA0154"
+			    quid       	"63E33CD403AD"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3809,31 +3830,31 @@
 		    quid       	"636361E8028A"
 		    parameters 	(list Parameters
 			(object Parameter "bankDescription"
-			    quid       	"63DBDACA0188"
+			    quid       	"63E33CD403CF"
 			    type       	"string")
 			(object Parameter "bic"
-			    quid       	"63DBDACA01A5"
+			    quid       	"63E33CD403DF"
 			    type       	"string")
 			(object Parameter "iban"
-			    quid       	"63DBDACA01BE"
+			    quid       	"63E33CD50002"
 			    type       	"string")
 			(object Parameter "checkID"
-			    quid       	"63DBDACA01D6"
+			    quid       	"63E33CD5000D"
 			    type       	"string")
 			(object Parameter "issuer"
-			    quid       	"63DBDACA01EC"
+			    quid       	"63E33CD50019"
 			    type       	"string")
 			(object Parameter "issueDate"
-			    quid       	"63DBDACA0203"
+			    quid       	"63E33CD50024"
 			    type       	"System.DateTime")
 			(object Parameter "checkNotes"
-			    quid       	"63DBDACA0217"
+			    quid       	"63E33CD5002F"
 			    type       	"string")
 			(object Parameter "totalAmount"
-			    quid       	"63DBDACA022D"
+			    quid       	"63E33CD5003B"
 			    type       	"decimal")
 			(object Parameter "tipAmount"
-			    quid       	"63DBDACA0243"
+			    quid       	"63E33CD50047"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3952,6 +3973,25 @@
 			    value      	"63DBDA1303D3"))
 		    quid       	"63DBDA1303D3"
 		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ParseResponse"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{fb7abb8e-43d0-40a3-9f4a-4c13bc0be5e0}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63E33CD401F6"))
+		    quid       	"63E33CD401F6"
+		    parameters 	(list Parameters
+			(object Parameter "response"
+			    quid       	"63E33CD40206"
+			    type       	"string"))
+		    result     	"FinanceFacade.PaymentActionState"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -4370,7 +4410,7 @@
 			    value      	"+12"))
 		    quid       	"63DBAE0B0304"
 		    type       	"string"
-		    exportControl 	"Implementation")
+		    exportControl 	"Public")
 		(object ClassAttribute "PaymentProvidersLock"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -4428,22 +4468,6 @@
 		    quid       	"63DBDA160030"
 		    type       	"FinanceFacade.IPaymentFinder"
 		    exportControl 	"Public")
-		(object ClassAttribute "_PaymentFinder"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
-			    value      	"{c656e61e-3df7-4fba-a97c-1066d6d46e55}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"63DBDACB02B2")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"As Property"
-			    value      	FALSE))
-		    quid       	"63DBDACB02B2"
-		    type       	"FinanceFacade.IPaymentFinder")
 		(object ClassAttribute "Subject"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -4492,7 +4516,40 @@
 			    name       	"Identity"
 			    value      	"+13"))
 		    quid       	"63DBDACC015F"
-		    type       	"string"))
+		    type       	"string")
+		(object ClassAttribute "PaymentOrderUrl"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{36947fd2-48db-49a0-abd9-a3023f7c3f1f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"63E33CD50222")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+14"))
+		    quid       	"63E33CD50222"
+		    type       	"string"
+		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#"
@@ -6929,65 +6986,7 @@
 		    width      	593
 		    height     	275
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @90
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3165, 1026)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@90
-			location   	(2956, 999)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	418
-			justify    	0
-			label      	"IItem")
-		    icon       	"Interface"
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	4227327
-		    quidu      	"5C6BBDA2021E"
-		    width      	436
-		    height     	254
-		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @91
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(481, 575)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@91
-			location   	(175, 534)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	613
-			justify    	0
-			label      	"IBill")
-		    icon       	"Interface"
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"638E432C02F9"
-		    width      	631
-		    height     	282
-		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::IPaymentFinder" @92
+		(object ClassView "Class" "Logical View::FinanceFacade::IPaymentFinder" @90
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(4303, 987)
 		    font       	(object Font
@@ -7001,7 +7000,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@92
+			Parent_View 	@90
 			location   	(4065, 978)
 			fill_color 	13434879
 			nlines     	1
@@ -7016,16 +7015,103 @@
 		    width      	494
 		    height     	219
 		    annotation 	8)
-		(object RealizeView "" @93
+		(object ClassView "Class" "Logical View::FinanceFacade::IItem" @91
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3165, 1026)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@91
+			location   	(2956, 999)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	418
+			justify    	0
+			label      	"IItem")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	4227327
+		    quidu      	"5C6BBDA2021E"
+		    width      	436
+		    height     	254
+		    annotation 	8)
+		(object RealizeView "" @92
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"5C6CEA98014C"
 		    client     	@88
-		    supplier   	@90
+		    supplier   	@91
 		    line_style 	3
 		    origin_attachment 	(3163, 1620)
 		    terminal_attachment 	(3163, 1153))
-		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @94
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IBill" @93
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(481, 575)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@93
+			location   	(175, 534)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	613
+			justify    	0
+			label      	"IBill")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"638E432C02F9"
+		    width      	631
+		    height     	282
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IPaymentSubject" @94
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3731, 592)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@94
+			location   	(3538, 581)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	386
+			justify    	0
+			label      	"IPaymentSubject")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"63DBCFC300D4"
+		    width      	404
+		    height     	222
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @95
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(1962, 594)
 		    font       	(object Font
@@ -7039,7 +7125,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@94
+			Parent_View 	@95
 			location   	(1628, 519)
 			fill_color 	13434879
 			nlines     	1
@@ -7054,7 +7140,7 @@
 		    width      	687
 		    height     	350
 		    annotation 	8)
-		(object AssociationViewNew "PaymentItem" @95
+		(object AssociationViewNew "PaymentItem" @96
 		    location   	(2625, 832)
 		    font       	(object Font
 			size       	10
@@ -7066,8 +7152,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @96
-			Parent_View 	@95
+		    label      	(object SegLabel @97
+			Parent_View 	@96
 			location   	(2625, 773)
 			font       	(object Font
 			    size       	10
@@ -7092,8 +7178,8 @@
 		    line_color 	3342489
 		    quidu      	"635EB36E02E8"
 		    roleview_list 	(list RoleViews
-			(object RoleView "Items" @97
-			    Parent_View 	@95
+			(object RoleView "Items" @98
+			    Parent_View 	@96
 			    location   	(1303, -784)
 			    font       	(object Font
 				size       	10
@@ -7105,8 +7191,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @98
-				Parent_View 	@97
+			    label      	(object SegLabel @99
+				Parent_View 	@98
 				location   	(2916, 856)
 				font       	(object Font
 				    size       	10
@@ -7130,11 +7216,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"635EB36F03A4"
-			    client     	@95
-			    supplier   	@90
+			    client     	@96
+			    supplier   	@91
 			    line_style 	0
-			    label      	(object SegLabel @99
-				Parent_View 	@97
+			    label      	(object SegLabel @100
+				Parent_View 	@98
 				location   	(2896, 986)
 				font       	(object Font
 				    size       	10
@@ -7155,8 +7241,8 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "" @100
-			    Parent_View 	@95
+			(object RoleView "" @101
+			    Parent_View 	@96
 			    location   	(1303, -784)
 			    font       	(object Font
 				size       	10
@@ -7171,11 +7257,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"635EB36F03BC"
-			    client     	@95
-			    supplier   	@94
+			    client     	@96
+			    supplier   	@95
 			    line_style 	0
-			    label      	(object SegLabel @101
-				Parent_View 	@100
+			    label      	(object SegLabel @102
+				Parent_View 	@101
 				location   	(2321, 780)
 				font       	(object Font
 				    size       	10
@@ -7196,16 +7282,16 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object RealizeView "" @102
+		(object RealizeView "" @103
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"635FFD72017C"
 		    client     	@89
-		    supplier   	@94
+		    supplier   	@95
 		    line_style 	3
 		    origin_attachment 	(1947, 1115)
 		    terminal_attachment 	(1947, 768))
-		(object AssociationViewNew "BillPayments" @103
+		(object AssociationViewNew "BillPayments" @104
 		    location   	(1207, 569)
 		    font       	(object Font
 			size       	10
@@ -7217,8 +7303,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @104
-			Parent_View 	@103
+		    label      	(object SegLabel @105
+			Parent_View 	@104
 			location   	(1207, 510)
 			font       	(object Font
 			    size       	10
@@ -7243,8 +7329,8 @@
 		    line_color 	3342489
 		    quidu      	"638E45030016"
 		    roleview_list 	(list RoleViews
-			(object RoleView "" @105
-			    Parent_View 	@103
+			(object RoleView "" @106
+			    Parent_View 	@104
 			    location   	(-312, -38)
 			    font       	(object Font
 				size       	10
@@ -7256,8 +7342,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @106
-				Parent_View 	@105
+			    label      	(object SegLabel @107
+				Parent_View 	@106
 				location   	(878, 528)
 				font       	(object Font
 				    size       	10
@@ -7282,13 +7368,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"638E450402E0"
-			    client     	@103
-			    supplier   	@91
+			    client     	@104
+			    supplier   	@93
 			    line_style 	3
 			    origin_attachment 	(1207, 569)
 			    terminal_attachment 	(796, 569))
-			(object RoleView "Payments" @107
-			    Parent_View 	@103
+			(object RoleView "Payments" @108
+			    Parent_View 	@104
 			    location   	(-312, -38)
 			    font       	(object Font
 				size       	10
@@ -7300,8 +7386,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @108
-				Parent_View 	@107
+			    label      	(object SegLabel @109
+				Parent_View 	@108
 				location   	(1536, 528)
 				font       	(object Font
 				    size       	10
@@ -7325,13 +7411,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"638E450402DA"
-			    client     	@103
-			    supplier   	@94
+			    client     	@104
+			    supplier   	@95
 			    line_style 	3
 			    origin_attachment 	(1207, 569)
 			    terminal_attachment 	(1619, 569)
-			    label      	(object SegLabel @109
-				Parent_View 	@107
+			    label      	(object SegLabel @110
+				Parent_View 	@108
 				location   	(1578, 623)
 				font       	(object Font
 				    size       	10
@@ -7352,35 +7438,6 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))))
-		(object ClassView "Class" "Logical View::FinanceFacade::IPaymentSubject" @110
-		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3731, 592)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			charSet    	161
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@110
-			location   	(3538, 581)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	386
-			justify    	0
-			label      	"IPaymentSubject")
-		    icon       	"Interface"
-		    icon_style 	"Decoration"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"63DBCFC300D4"
-		    width      	404
-		    height     	222
-		    annotation 	8)
 		(object AssociationViewNew "SubjectOfPayment" @111
 		    location   	(2917, 591)
 		    font       	(object Font
@@ -7458,7 +7515,7 @@
 			    line_color 	3342489
 			    quidu      	"63DBCFF6031C"
 			    client     	@111
-			    supplier   	@110
+			    supplier   	@94
 			    line_style 	3
 			    origin_attachment 	(2917, 591)
 			    terminal_attachment 	(3529, 591)
@@ -7491,7 +7548,7 @@
 			    line_color 	3342489
 			    quidu      	"63DBCFF60321"
 			    client     	@111
-			    supplier   	@94
+			    supplier   	@95
 			    line_style 	3
 			    origin_attachment 	(2917, 591)
 			    terminal_attachment 	(2305, 591))))))))

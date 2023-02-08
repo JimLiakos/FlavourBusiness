@@ -102,6 +102,7 @@ namespace PaymentProviders
             {
 
                 payment.SetPaymentOrder(paymentOrderResponse);
+                payment.PaymentOrderUrl=paymentOrderResponse.PaymentOrderUrl;
                 payment.PaymentGetwayID = "Viva";
                 payment.PaymentGetwayRequestID=paymentOrderResponse.orderCode.ToString();
                 payment.State = PaymentState.InProgress;

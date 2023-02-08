@@ -128,6 +128,7 @@ namespace FinanceFacade
         }
 
 
+        /// <MetaDataID>{fb7abb8e-43d0-40a3-9f4a-4c13bc0be5e0}</MetaDataID>
         public PaymentActionState ParseResponse(string response)
         {
             var paymentProvide = GetPaymentProvider(PaymentGetwayID);
@@ -436,6 +437,29 @@ namespace FinanceFacade
         }
 
 
+        /// <exclude>Excluded</exclude>
+        string _PaymentOrderUrl;
+
+        /// <MetaDataID>{36947fd2-48db-49a0-abd9-a3023f7c3f1f}</MetaDataID>
+        [PersistentMember(nameof(_PaymentOrderUrl))]
+        [BackwardCompatibilityID("+14")]
+        public string PaymentOrderUrl
+        {
+            get => _PaymentOrderUrl;
+            set
+            {
+                if (_PaymentOrderUrl!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PaymentOrderUrl=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <MetaDataID>{461a9ea2-bc16-407b-bb03-076c301d9bf8}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+13")]
@@ -508,7 +532,7 @@ namespace FinanceFacade
 
                 stateTransition.Consistent = true;
             }
-            
+
         }
 
         /// <MetaDataID>{185fe21f-7fb4-47aa-9ea1-31941c36d82a}</MetaDataID>

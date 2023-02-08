@@ -1351,6 +1351,7 @@ namespace DontWaitApp
             return false;
 #else
             payment.CashPaymentCompleted(tipAmount);
+
             return true;
 #endif
         }
@@ -1434,28 +1435,27 @@ namespace DontWaitApp
         public async System.Threading.Tasks.Task<bool> SendItemsForPreparation()
         {
 
-            if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
-            {
-                Bill = FoodServicesClientSession?.GetBill();
-                var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
-                if (payment != null)
-                {
-                    //Pay()
-                }
-                return false;
+            //if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
+            //{
+            //    Bill = FoodServicesClientSession?.GetBill();
+            //    var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
+            //    if (payment != null)
+            //    {
+            //        //Pay()
+            //    }
+            //    return false;
 
-            }
-            else
-            {
-                var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            //}
+            //else
 
-                foreach (var itemNewState in itemsNewState)
-                {
-                    var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                    item.State = item.State;
-                }
-                return true;
+            var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            foreach (var itemNewState in itemsNewState)
+            {
+                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
+                item.State = item.State;
             }
+            return true;
+
         }
 
 
