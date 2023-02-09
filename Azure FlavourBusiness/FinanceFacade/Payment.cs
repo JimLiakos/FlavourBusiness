@@ -550,7 +550,22 @@ namespace FinanceFacade
         {
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
-            if (Amount>0)
+
+            if(this.Items.Where(x=>x.Quantity<0).Count()>0&&Amount<=0)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _TipsAmount = tipAmount;
+                    //Normalize
+                    NormalizeNettingItems();
+                    
+                    State = PaymentState.Completed;
+                    stateTransition.Consistent = true;
+                }
+
+
+            }
+            else if (Amount>0)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
@@ -560,6 +575,32 @@ namespace FinanceFacade
                 }
             }
         }
+
+        private void NormalizeNettingItems()
+        {
+            var itemsToPayAmount = Items.OfType<Item>().Where(x => x.Amount-x.PaidAmount>0).Sum(x => x.Amount-x.PaidAmount)+TipsAmount;
+
+            var nettingItems = Items.OfType<Item>().Where(x => x.Amount<0).ToList();
+            foreach (var nettingItem in nettingItems.ToList())
+            {
+                
+                if ((-nettingItem.Amount)<=itemsToPayAmount)
+                {
+                    nettingItems.Remove(nettingItem);
+                    itemsToPayAmount+=nettingItem.Amount;
+                }else
+                {
+                    nettingItem.Quantity=-itemsToPayAmount/nettingItem.Price;
+                    itemsToPayAmount=0;
+                    nettingItems.Remove(nettingItem);
+                }
+            }
+            _Amount = Items.Sum(x => x.Quantity * x.Price);
+
+
+
+        }
+
         /// <summary></summary>
         /// <param name="bankDescription"></param>
         /// <param name="bic"></param>
