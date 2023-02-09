@@ -79,20 +79,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        [CachingDataOnClientSide]
-        public bool AllItemsArePaid
-        {
-            get
-            {
-                string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
-                List<FinanceFacade.Payment> payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
-                if (payments == null)
-                    payments = new List<FinanceFacade.Payment>();
-                List<FinanceFacade.Item> paymentItems = GetUnpaidItems(paymentIdentity, payments);
-
-                return paymentItems.Count==0;
-            }
-        }
+     
 
         /// <MetaDataID>{93fe70c7-0ac7-4265-b46a-6b889127b1a2}</MetaDataID>
         public ClientSessionData ClientSessionData
