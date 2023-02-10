@@ -249,7 +249,7 @@ namespace FinanceFacade
             Identity = paymentIdentity;
             _Items = paymentItems.OfType<IItem>().ToList();
             _Currency = currency;
-            _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
+            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
 
 
         }
@@ -491,7 +491,7 @@ namespace FinanceFacade
         public void Update(List<Item> paymentItems)
         {
             _Items = paymentItems.OfType<IItem>().ToList();
-            _Amount = paymentItems.Sum(x => x.Quantity * x.Price);
+            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
         }
 
 
@@ -595,7 +595,7 @@ namespace FinanceFacade
                     nettingItems.Remove(nettingItem);
                 }
             }
-            _Amount = Items.Sum(x => x.Quantity * x.Price);
+            _Amount = Items.OfType<Item>().Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
 
 
 

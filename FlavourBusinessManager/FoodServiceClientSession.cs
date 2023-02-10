@@ -2564,8 +2564,8 @@ namespace FlavourBusinessManager.EndUsers
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
             {
 
-                var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid).ToList();
-                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Amount);
+                var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
+                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Amount-paidItem.PaidAmount);
                 //decimal paidQuantity = itemPayments.Sum(paidItem => paidItem.Quantity);
                 FinanceFacade.Item item = null;
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
@@ -2617,7 +2617,15 @@ namespace FlavourBusinessManager.EndUsers
             }
             foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice * x.Key.Quantity)) < x.Value))
             {
-                var nettingQuantity=
+                
+                decimal refundAmount = paidItem.Value -(decimal)(paidItem.Key.ModifiedItemPrice* paidItem.Key.Quantity);
+                var nettingQuantity = refundAmount/(decimal)paidItem.Key.ModifiedItemPrice;
+                string quantityDescription = nettingQuantity.ToString();// + "/" + flavourItem.NumberOfShares.ToString();
+                var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price =(decimal) paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = 0 };
+                paymentItems.Add(nettingItem);
+
+                //paidItem.ModifiedItemPrice* paidItem.Key.Quantity
+                //var nettingQuantity=
             }
 
             return paymentItems;
