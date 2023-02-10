@@ -1571,9 +1571,10 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{0f73c1f0-60e8-4045-b512-6f80f7a71888}</MetaDataID>
-        public void ItemChanged(FlavourBusinessManager.RoomService.ItemPreparation item)
+        public void ItemChanged(ItemPreparation item)
         {
             bool hasChanges = OrderItemsDictionary[item.uid].Update(item);
+            item = OrderItemsDictionary[item.uid];
             if (hasChanges)
             {
                 //var menuData = MenuData;
