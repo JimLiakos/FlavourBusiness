@@ -30,7 +30,11 @@
 		"CommentsLabel": "Comment",
 		"CommentsPlaceHolder": "Leave comment",
         "TakeAwaySessionLabel":"Take Away",
-        "OrderCheckoutCommandLabel":"Confirm Order"
+        "OrderCheckoutCommandLabel":"Confirm Order",
+		"ContinueOrdering":"Continue Ordering",
+		"BillOKButtonLabel":"OK",
+		"TippingButtonLabel":"Tipping"
+		
 	},
 	"ModalDialog": {
 		"OKButtonLabel": "OK",

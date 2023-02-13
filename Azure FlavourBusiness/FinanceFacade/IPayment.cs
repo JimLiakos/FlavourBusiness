@@ -39,7 +39,7 @@ namespace FinanceFacade
         System.DateTime? TransactionDate { get; }
 
         /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
-        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount);
+        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal? tipAmount);
 
         /// <MetaDataID>{28e03d9b-bf11-400b-add0-e052213aaf05}</MetaDataID>
         void CashPaymentCompleted(decimal tipAmount);

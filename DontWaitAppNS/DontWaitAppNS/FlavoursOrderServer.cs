@@ -1965,6 +1965,8 @@ namespace DontWaitApp
         /// <MetaDataID>{a34440a6-11d3-4378-8cdc-58bc87f87269}</MetaDataID>
         internal async Task<bool> Pay(IPayment payment)
         {
+            if (payment.State==PaymentState.Completed)
+                return true;
 #if DeviceDotNet
 
 

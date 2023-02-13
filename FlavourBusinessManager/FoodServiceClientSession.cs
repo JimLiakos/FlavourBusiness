@@ -2462,7 +2462,19 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
-
+        /// <summary>
+        /// Creates a pay order with assigned payment gateway 
+        /// In case where payment can be completed from refunds amount, the payment completed without pay order.  
+        /// </summary>
+        /// <param name="payment">
+        /// Payment has all data that needed for the creation of pay order   
+        /// </param>
+        /// <param name="tipAmount">
+        /// Defines the extra amount for tipping
+        /// </param>
+        /// <param name="paramsJson">
+        /// Defines some extra parameters which are necessary for payment gateway
+        /// </param>
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
         public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
@@ -2471,8 +2483,12 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
-                    (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
+                    {
+                        PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                        (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    }
+
                     stateTransition.Consistent = true;
                 }
 
@@ -2486,15 +2502,20 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                   
                     foreach (var paymentItem in payment.Items)
                     {
                         var flavourItem = _FlavourItems.Where(x => x.uid == paymentItem.uid && x.State == ItemPreparationState.New).FirstOrDefault();
                         if (flavourItem != null)
                             flavourItem.State = ItemPreparationState.AwaitingPaymentToCommit;
                     }
-                    (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
-                    stateTransition.Consistent = true;
+                    
+                    if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
+                    {
+                        PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                        (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    }
+                   stateTransition.Consistent = true;
                 }
             }
 
@@ -2510,6 +2531,7 @@ namespace FlavourBusinessManager.EndUsers
             List<FinanceFacade.Item> paymentItems = GetUnpaidItems(paymentIdentity, payments);
 
 
+            payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
             //if (paymentItems.Count > 0)
             {
@@ -2531,7 +2553,12 @@ namespace FlavourBusinessManager.EndUsers
 
                     }
                     else
+                    {
                         payment.Update(paymentItems);
+                        //move to end of list;
+                        payments.Remove(payment);
+                        payments.Add(payment);
+                    }
 
                     stateTransition.Consistent = true;
                 }
@@ -2540,6 +2567,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
             }
+            //payments sorted by TransactionDate
 
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
         }
@@ -2565,7 +2593,7 @@ namespace FlavourBusinessManager.EndUsers
             {
 
                 var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
-                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Amount-paidItem.PaidAmount);
+                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Amount - paidItem.PaidAmount);
                 //decimal paidQuantity = itemPayments.Sum(paidItem => paidItem.Quantity);
                 FinanceFacade.Item item = null;
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
@@ -2617,12 +2645,15 @@ namespace FlavourBusinessManager.EndUsers
             }
             foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice * x.Key.Quantity)) < x.Value))
             {
-                
-                decimal refundAmount = paidItem.Value -(decimal)(paidItem.Key.ModifiedItemPrice* paidItem.Key.Quantity);
-                var nettingQuantity = refundAmount/(decimal)paidItem.Key.ModifiedItemPrice;
+
+                decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity);
+                var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
                 string quantityDescription = nettingQuantity.ToString();// + "/" + flavourItem.NumberOfShares.ToString();
-                var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price =(decimal) paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = 0 };
+                var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = 0 };
                 paymentItems.Add(nettingItem);
+                var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
+                paymentItems.Add(item);
+
 
                 //paidItem.ModifiedItemPrice* paidItem.Key.Quantity
                 //var nettingQuantity=

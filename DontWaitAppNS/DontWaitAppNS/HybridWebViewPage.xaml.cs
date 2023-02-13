@@ -156,24 +156,24 @@ namespace DontWaitApp
 
 
 
-            if (!device.IsBackgroundServiceStarted)
-            {
-                BackgroundServiceState serviceState = new BackgroundServiceState();
-                device.RunInBackground(new Action(async () =>
-                {
-                    //var message = Waiter.PeekMessage();
-                    //Waiter.MessageReceived += Waiter_MessageReceived;
+            //if (!device.IsBackgroundServiceStarted)
+            //{
+            //    BackgroundServiceState serviceState = new BackgroundServiceState();
+            //    device.RunInBackground(new Action(async () =>
+            //    {
+            //        //var message = Waiter.PeekMessage();
+            //        //Waiter.MessageReceived += Waiter_MessageReceived;
 
-                    do
-                    {
-                        System.Threading.Thread.Sleep(3000);
+            //        do
+            //        {
+            //            System.Threading.Thread.Sleep(3000);
 
-                    } while (!serviceState.Terminate);
+            //        } while (!serviceState.Terminate);
 
-                    //Waiter.MessageReceived -= Waiter_MessageReceived;
+            //        //Waiter.MessageReceived -= Waiter_MessageReceived;
 
-                }), serviceState);
-            }
+            //    }), serviceState);
+            //}
 
         }
 

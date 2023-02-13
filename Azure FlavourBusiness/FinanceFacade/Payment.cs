@@ -4,6 +4,7 @@ using OOAdvantech.Security;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.AccessControl;
@@ -261,11 +262,15 @@ namespace FinanceFacade
 
         /// <MetaDataID>{e68605e1-f9d0-4000-a4eb-3e2e55176818}</MetaDataID>
         [OOAdvantech.Json.JsonConstructor]
-        public Payment(decimal amount, string currency, string Identity, string itemsJson, string paymentInfoFieldsJson)
+        public Payment(decimal amount, string currency, string Identity, string paymentGetwayID, string paymentGetwayRequestID, string paymentOrderUrl, DateTime transactionDate, string itemsJson, string paymentInfoFieldsJson)
         {
             _Amount = amount;
             _Currency = currency;
             _Identity = Identity;
+            _TransactionDate=transactionDate;
+            _PaymentGetwayID=paymentGetwayID;
+            _PaymentGetwayRequestID=paymentGetwayRequestID;
+            _PaymentOrderUrl=paymentOrderUrl;
             ItemsJson = itemsJson;
             PaymentInfoFieldsJson = paymentInfoFieldsJson;
 
@@ -504,6 +509,7 @@ namespace FinanceFacade
         {
             add
             {
+
                 _ObjectChangeState += value;
             }
             remove
@@ -514,7 +520,7 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{d31c99a2-c628-437e-ba87-5e2cb197a2c3}</MetaDataID>
-        public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
+        public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal? tipAmount)
         {
             if (State == PaymentState.Completed)
                 return;
@@ -525,8 +531,11 @@ namespace FinanceFacade
                 PaymentInfoFields["CardType"] = cardType;
                 PaymentInfoFields["AccountNumber"] = accountNumber;
                 PaymentInfoFields["TransactionID"] = transactionID;
-                _TipsAmount = tipAmount;
+                if (tipAmount!=null)
+                    _TipsAmount = tipAmount.Value;
                 State = PaymentState.Completed;
+                //Normalize
+                NormalizeNettingItems();
 
                 this.Subject.PaymentCompleted(this);
 
@@ -545,21 +554,51 @@ namespace FinanceFacade
         string PaymentInfoFieldsJson;
 
 
+        public bool TryToCompletePaymentWithRefundAmount(decimal tipAmount)
+        {
+            if (State == PaymentState.Completed)
+                throw new Exception("Payment already completed");
+            if (Amount+tipAmount<=0)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _TipsAmount = tipAmount;
+
+                    if (!ItemsOrTipToPay)
+                        throw new InvalidConstraintException("There isn't amount to pay.");
+
+                    //Normalize
+                    NormalizeNettingItems();
+
+                    State = PaymentState.Completed;
+                    this.Subject.PaymentCompleted(this);
+                    stateTransition.Consistent = true;
+                }
+                return true;
+            }
+            return false;
+        }
         /// <MetaDataID>{da962a27-c80c-40a0-91e7-7ec87c017179}</MetaDataID>
         public void CashPaymentCompleted(decimal tipAmount)
         {
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
 
-            if(this.Items.Where(x=>x.Quantity<0).Count()>0&&Amount<=0)
+            if (this.Items.Where(x => x.Quantity<0).Count()>0&&Amount<=0)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     _TipsAmount = tipAmount;
+
+                    if (!ItemsOrTipToPay)
+                        throw new InvalidConstraintException("There isn't amount to pay.");
+
+
                     //Normalize
                     NormalizeNettingItems();
-                    
+
                     State = PaymentState.Completed;
+                    this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
                 }
 
@@ -571,8 +610,17 @@ namespace FinanceFacade
                 {
                     _TipsAmount = tipAmount;
                     State = PaymentState.Completed;
+                    this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
                 }
+            }
+        }
+        bool ItemsOrTipToPay
+        {
+            get
+            {
+                var amount = Items.OfType<Item>().Where(x => x.Amount-x.PaidAmount>0).Sum(x => x.Amount-x.PaidAmount)+_TipsAmount;
+                return amount > 0;
             }
         }
 
@@ -583,12 +631,13 @@ namespace FinanceFacade
             var nettingItems = Items.OfType<Item>().Where(x => x.Amount<0).ToList();
             foreach (var nettingItem in nettingItems.ToList())
             {
-                
+
                 if ((-nettingItem.Amount)<=itemsToPayAmount)
                 {
                     nettingItems.Remove(nettingItem);
                     itemsToPayAmount+=nettingItem.Amount;
-                }else
+                }
+                else
                 {
                     nettingItem.Quantity=-itemsToPayAmount/nettingItem.Price;
                     itemsToPayAmount=0;
@@ -617,6 +666,7 @@ namespace FinanceFacade
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
 
+
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 PaymentInfoFields["BankDescription"] = bankDescription;
@@ -628,7 +678,16 @@ namespace FinanceFacade
                 PaymentInfoFields["CheckNotes"] = checkNotes;
 
                 _TipsAmount = tipAmount;
+
+                if (ItemsOrTipToPay)
+                    throw new InvalidConstraintException("There isn't amount to pay.");
+
+                //Normalize
+                NormalizeNettingItems();
+
+
                 State = PaymentState.Completed;
+                this.Subject.PaymentCompleted(this);
                 stateTransition.Consistent = true;
             }
 

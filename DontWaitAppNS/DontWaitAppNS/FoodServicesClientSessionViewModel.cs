@@ -1310,6 +1310,7 @@ namespace DontWaitApp
         {
 #if DeviceDotNet
             FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
                 RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
@@ -1331,10 +1332,13 @@ namespace DontWaitApp
 
             
 #if DeviceDotNet
+
+            
             FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
-                //RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
@@ -1353,6 +1357,7 @@ namespace DontWaitApp
             return false;
 #else
             payment.CashPaymentCompleted(tipAmount);
+            var paymenta = payment.State;
             this.SendItemsForPreparation();
 
             return true;

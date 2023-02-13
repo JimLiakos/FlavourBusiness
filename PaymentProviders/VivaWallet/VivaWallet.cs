@@ -25,6 +25,9 @@ namespace PaymentProviders
 
             if (payment.State == PaymentState.Completed)
                 return;
+            if (payment.Amount + tipAmount <= 0)
+                return;
+
             PaymentOrder paymentOrderResponse = payment.GetPaymentOrder();
             if (paymentOrderResponse != null)
             {
@@ -56,12 +59,17 @@ namespace PaymentProviders
             request.AddHeader("Cookie", "ak_bmsc=CA754BFFAC46566A3861BDCF0EECE27B~000000000000000000000000000000~YAAQTkUVAixpd4OEAQAA1+nmzRHNStaVAzCoktrpJOEhos8yoQJWDW0eGWBxgt9FhPCUVo2jyFdpqIeDJz0Oh3oNRlB9cdliBgsrNoABb3RJ1OGTi4QsuzQPZF/I40/hCrX89gxi1VZ5bWwep/o+bWqL898ihLLP3HCJ8cupTYndVK1ni8bnjUNVcujhVij52hzHc/YKVH8ZA+FbgiCw9L2xna7jP0SZ287FnPTcKTZ1LMJpwNgOu/PBIv5QQpqoIke5REAoghpPSkYJvO568Tr57Z9oW0pnWgqDViaInl+rW0Sg0yz8Q5JghbNPFka9kxYrHLQGHwCz3zEuj8z9uzSYu6pHmxlw6ShVJO/PPs04G3aesvsszWf3s64IrxgJwq4=");
 
             (payment as Payment).TipsAmount = tipAmount;
+            var tipsAmount = payment.TipsAmount;
+            if (tipsAmount<0)
+                tipsAmount=0;
+
+            var payAmount = payment.Amount + payment.TipsAmount;
+            if (payAmount<tipsAmount)
+                tipsAmount=payAmount;
 
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
-
-
-                amount = (int)((payment.Amount + payment.TipsAmount) * 100),
+                amount = (int)(payAmount * 100),
                 customerTrns = "a Short description of purchased items/services to display to your customer",
                 //customer=new Customer()
                 //{
@@ -76,7 +84,7 @@ namespace PaymentProviders
                 allowRecurring = false,
                 maxInstallments = 12,
                 paymentNotification = true,
-                tipAmount = (int)(payment.TipsAmount * 100),
+                tipAmount = (int)(tipsAmount * 100),
                 disableCash = true,
                 disableWallet = false,
                 merchantTrns = "b Short description of items/services purchased by customer",
