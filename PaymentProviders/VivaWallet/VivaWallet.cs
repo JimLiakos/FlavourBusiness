@@ -239,7 +239,7 @@ namespace PaymentProviders
                             {
                                 TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
                                 //inProgressPayment.Subject.PaymentCompleted()
-                                inProgressPayment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, 0);
+                                inProgressPayment.CardPaymentCompleted(vivaEvent.EventData.BankId, vivaEvent.EventData.CardNumber, false, paymentOrder.TransactionId, inProgressPayment.TipsAmount);
                             }
 
                         }
@@ -296,7 +296,7 @@ namespace PaymentProviders
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-                    payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, 0);
+                    payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, payment.TipsAmount);
                 }
             }
         }
