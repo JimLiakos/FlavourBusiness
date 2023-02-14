@@ -296,7 +296,8 @@ namespace PaymentProviders
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     TransactionData transactionData = OOAdvantech.Json.JsonConvert.DeserializeObject<TransactionData>(response.Content);
-                    payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, payment.TipsAmount);
+                    if(transactionData.statusId=="F")
+                        payment.CardPaymentCompleted(null, transactionData.cardNumber, false, paymentOrder.TransactionId, payment.TipsAmount);
                 }
             }
         }

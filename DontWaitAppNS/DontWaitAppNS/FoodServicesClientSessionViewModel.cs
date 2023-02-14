@@ -1309,6 +1309,7 @@ namespace DontWaitApp
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
+
             FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
             RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
