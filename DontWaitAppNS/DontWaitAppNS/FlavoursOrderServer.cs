@@ -36,7 +36,9 @@ using FinanceFacade;
 
 
 
+
 #if DeviceDotNet
+using Plugin.Media.Abstractions;
 using ZXing.QrCode.Internal;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -868,9 +870,6 @@ namespace DontWaitApp
             {
                 FoodServicesClientSessionViewModel = null;
                 ApplicationSettings.Current.DisplayedFoodServicesClientSession = null;
-
-                //DontWaitApp.ApplicationSettings.Current.LastServicePoinMenuData = null;
-                //OrderItems.Clear();
             }
 
 #if IOSEmulator
@@ -918,8 +917,12 @@ namespace DontWaitApp
                 //    servicePointIdentity = result.Text;
                 //}
 #endif
-
-                FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity);
+                HomeDeliveryServicePointInfo homeDeliveryServicePointInfo;
+                lock (NeighborhoodFoodServers)
+                {
+                    homeDeliveryServicePointInfo=NeighborhoodFoodServers.SelectMany(x => x.Value).Where(x => x.ServicePointIdentity== servicePointIdentity).FirstOrDefault();
+                }
+                FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity, homeDeliveryServicePointInfo.FlavoursServices);
 
                 if (FoodServicesClientSessionViewModel != null)
                     ApplicationSettings.Current.DisplayedFoodServicesClientSession = FoodServicesClientSessionViewModel;
@@ -1774,29 +1777,33 @@ namespace DontWaitApp
         public IUser CurrentUser;
 
         /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
-        Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointID, bool create = true)
+        Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices=null, bool create = true)
         {
             return Task<IFoodServiceClientSession>.Run(async () =>
             {
                 try
                 {
-                    string servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
-                    servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;50886542db964edf8dec5734e3f89395";
-                    if (servicePointID != null && servicePointID.Split(';').Length > 1)
-                        servicePoint = servicePointID;
+                    string defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
+                    defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;50886542db964edf8dec5734e3f89395";
+                    if (servicePointIdentity != null && servicePointIdentity.Split(';').Length > 1)
+                        servicePointIdentity = defaultServicePoint;
 
                     //string servicePoint = "ca33b38f5c634fd49c50af60b042f910;8dedb45522ad479480e113c59d4bbdd0";
                     //servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;8dedb45522ad479480e113c59d4bbdd0";
                     //// servicePoint = "6746e4178dd041f09a7b4130af0edacf;6171631179bf4c26aeb99546fdce6a7a";
                     //servicePoint = "b5ec4ed264c142adb26b73c95b185544;9967813ee9d943db823ca97779eb9fd7";
-
+                    
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                     ClientSessionData? clientSessionData = null;
                     do
                     {
                         try
                         {
-                            clientSessionData = ServicesContextManagment.GetClientSession(servicePoint, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
+                            if(flavoursServices!=null)
+                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity,null,await GetFriendlyName(), device.DeviceID, device.FirebaseToken,null,null, create);
+                            else
+                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
+
                         }
                         catch (System.Net.WebException connectionError)
                         {

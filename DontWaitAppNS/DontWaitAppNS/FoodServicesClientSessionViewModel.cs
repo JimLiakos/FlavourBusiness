@@ -25,6 +25,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Web;
 using OOAdvantech.Pay;
+using FinanceFacade;
 
 
 #else
@@ -606,7 +607,7 @@ namespace DontWaitApp
 
         #region Food services client session events consumers
         /// <MetaDataID>{2784806b-281e-44df-af8d-dd847bb7c8a9}</MetaDataID>
-        private void  FoodServicesClientSessionItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
+        private void FoodServicesClientSessionItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
         {
 
             foreach (var entry in newItemsState)
@@ -1304,7 +1305,7 @@ namespace DontWaitApp
 
         }
 
-  
+
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
@@ -1331,10 +1332,10 @@ namespace DontWaitApp
         public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 
-            
+
 #if DeviceDotNet
 
-            
+
             FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
             RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
@@ -1343,6 +1344,14 @@ namespace DontWaitApp
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
+
+                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+                    foreach (var item in OrderItems)
+                    {
+                        ItemPreparationState itemState;
+                        if (itemsState.TryGetValue(item.uid, out itemState))
+                            item.State = itemState;
+                    }
 
                     System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                     var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();

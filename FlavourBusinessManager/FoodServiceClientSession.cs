@@ -2502,20 +2502,20 @@ namespace FlavourBusinessManager.EndUsers
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                   
+
                     foreach (var paymentItem in payment.Items)
                     {
                         var flavourItem = _FlavourItems.Where(x => x.uid == paymentItem.uid && x.State == ItemPreparationState.New).FirstOrDefault();
                         if (flavourItem != null)
                             flavourItem.State = ItemPreparationState.AwaitingPaymentToCommit;
                     }
-                    
+
                     if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
                     {
                         PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
                         (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
                     }
-                   stateTransition.Consistent = true;
+                    stateTransition.Consistent = true;
                 }
             }
 
@@ -2626,7 +2626,7 @@ namespace FlavourBusinessManager.EndUsers
             }
 
 
-            var flavourItemsUids = FlavourItems.Select(x => x.uid).ToList();
+            var flavourItemsUids = FlavourItems.Where(x=>x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
 
 
 
@@ -2662,6 +2662,16 @@ namespace FlavourBusinessManager.EndUsers
             return paymentItems;
         }
 
+        public Dictionary<string, ItemPreparationState> FlavourItemsPreparationState
+        {
+            get
+            {
+                var itemsState = new Dictionary<string, ItemPreparationState>();
+                foreach (var item in FlavourItems)
+                    itemsState[item.uid] = item.State;
+                return itemsState;
+            }
+        }
 
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)

@@ -1719,6 +1719,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
             var servicesContextIdentity = ServicesContextIdentity;
+            servicePointIdentity=servicePointIdentity.Replace(servicesContextIdentity+";", "");
             var servicePoint = (from serviceArea in ServiceAreas
                                 from aServicePoint in serviceArea.ServicePoints
                                 where aServicePoint.ServicesPointIdentity == servicePointIdentity
@@ -1733,7 +1734,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return new ClientSessionData();
 
             string token = null;
-            var graphicMenu = graphicMenus.FirstOrDefault();
+            //var graphicMenu = graphicMenus.FirstOrDefault();
 
             //if ((clientSession.Menu == null || clientSession.Menu.Version != graphicMenu.Version))
             //{

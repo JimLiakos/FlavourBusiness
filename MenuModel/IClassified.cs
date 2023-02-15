@@ -9,4 +9,4 @@ namespace MenuModel
         [RoleBMultiplicityRange(1, 1)]
         IClass Class { get; set; }
     }
-}
+} 

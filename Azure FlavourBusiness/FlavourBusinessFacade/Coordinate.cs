@@ -17,6 +17,7 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+1")]
         public double Latitude;
 
+
         /// <MetaDataID>{d5c6bdbd-b97b-4cf0-86ea-22b8deb159fb}</MetaDataID>
         public static bool operator ==(Coordinate left, Coordinate right)
         {

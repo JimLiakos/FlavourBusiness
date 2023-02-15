@@ -2,6 +2,7 @@
 using FlavourBusinessFacade.ServicesContextResources;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace FlavourBusinessFacade
@@ -12,17 +13,18 @@ namespace FlavourBusinessFacade
         public string BrandName;
         public string LogoBackgroundImageUrl;
         public string LogoImageUrl;
+        public IFlavoursServicesContextRuntime FlavoursServices;
         public Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule;
 
         public string ServicePointIdentity;
-        public HomeDeliveryServicePointInfo(IHomeDeliveryServicePoint homeDeliveryServicePoint)
+        public HomeDeliveryServicePointInfo(IHomeDeliveryServicePoint homeDeliveryServicePoint, IFlavoursServicesContextRuntime flavoursServicesContextRuntime)
         {
             ServicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + ";" + homeDeliveryServicePoint.ServicesPointIdentity;
             LogoBackgroundImageUrl = homeDeliveryServicePoint.LogoBackgroundImageUrl;
             LogoImageUrl = homeDeliveryServicePoint.LogoImageUrl;
             BrandName = homeDeliveryServicePoint.BrandName;
-
             WeeklyDeliverySchedule = homeDeliveryServicePoint.WeeklyDeliverySchedule;
+            FlavoursServices=flavoursServicesContextRuntime;
 
         }
         public HomeDeliveryServicePointInfo()
