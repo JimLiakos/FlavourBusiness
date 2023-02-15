@@ -64,9 +64,10 @@ namespace PaymentProviders
                 tipsAmount=0;
 
             var payAmount = payment.Amount + payment.TipsAmount;
+            payAmount=decimal.Round(payAmount, 5);
             if (payAmount<tipsAmount)
                 tipsAmount=payAmount;
-
+            tipsAmount=decimal.Round(tipsAmount, 5);
             VivaPaymentOrder vivaPaymentOrder = new VivaPaymentOrder()
             {
                 amount = (int)(payAmount * 100),

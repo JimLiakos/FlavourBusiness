@@ -1336,7 +1336,29 @@ namespace DontWaitApp
 #if DeviceDotNet
 
 
-            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            try
+            {
+                FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            }
+            catch (Exception error)
+            {
+
+                if(error.HResult==5001)
+                {
+
+                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+                    foreach (var item in OrderItems)
+                    {
+                        ItemPreparationState itemState;
+                        if (itemsState.TryGetValue(item.uid, out itemState))
+                            item.State = itemState;
+                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+                        if (allCommited)
+                            return true;
+                    }
+                }
+                throw;
+            }
             RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
             {

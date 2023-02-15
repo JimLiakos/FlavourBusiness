@@ -251,6 +251,7 @@ namespace FinanceFacade
             _Items = paymentItems.OfType<IItem>().ToList();
             _Currency = currency;
             _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
+            _Amount=decimal.Round(_Amount, 5);
 
 
         }
@@ -497,6 +498,7 @@ namespace FinanceFacade
         {
             _Items = paymentItems.OfType<IItem>().ToList();
             _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
+            _Amount=decimal.Round(_Amount, 5);
         }
 
 
@@ -565,7 +567,7 @@ namespace FinanceFacade
                     _TipsAmount = tipAmount;
 
                     if (!ItemsOrTipToPay)
-                        throw new InvalidConstraintException("There isn't amount to pay.");
+                        throw new PaymentException("There isn't amount to pay.", PaymentFailure.ZeroAmount, 5001);
 
                     //Normalize
                     NormalizeNettingItems();
@@ -645,6 +647,7 @@ namespace FinanceFacade
                 }
             }
             _Amount = Items.OfType<Item>().Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
+            _Amount=decimal.Round(_Amount, 5);
 
 
 
@@ -709,4 +712,6 @@ namespace FinanceFacade
 
 
     }
+
+   
 }
