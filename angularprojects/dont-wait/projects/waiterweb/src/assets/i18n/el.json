@@ -32,7 +32,8 @@
         "OrderCheckoutCommandLabel":"Επιβεβαίωση παραγγελίας",
 		"ContinueOrdering":"Συνέχεια στην παραγγελία",
 		"BillOKButtonLabel":"OK",
-		"TippingButtonLabel":"Φιλοδώρημα"
+			"TippingButtonLabel":"Φιλοδώρημα",
+        "TippingInputLabel":"Φιλοδώρημα"
 
 	},
 	"ModalDialog": {

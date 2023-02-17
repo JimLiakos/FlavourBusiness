@@ -33,7 +33,8 @@
         "OrderCheckoutCommandLabel":"Confirm Order",
 		"ContinueOrdering":"Continue Ordering",
 		"BillOKButtonLabel":"OK",
-		"TippingButtonLabel":"Tipping"
+		"TippingButtonLabel":"Tipping",
+        "TippingInputLabel":"Tipping"
 		
 	},
 	"ModalDialog": {

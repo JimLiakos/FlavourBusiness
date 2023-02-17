@@ -108,11 +108,12 @@ namespace FinanceFacade
 
     }
 
+    /// <MetaDataID>{566e5205-215a-4e34-9ba5-1ce305fe583d}</MetaDataID>
     public class PaymentException : System.Exception
     {
         public readonly PaymentFailure PaymentFailure;
 
-        public PaymentException(string message, PaymentFailure zeroAmount,int hresult ) : base(message)
+        public PaymentException(string message, PaymentFailure zeroAmount, int hresult) : base(message)
         {
             this.PaymentFailure=zeroAmount;
             this.HResult=hresult;
@@ -120,6 +121,7 @@ namespace FinanceFacade
 
     }
 
+    /// <MetaDataID>{7b504776-3740-4bbd-b223-3b752b8a7abc}</MetaDataID>
     public enum PaymentFailure
     {
         Failed,
