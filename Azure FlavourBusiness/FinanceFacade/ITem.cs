@@ -118,7 +118,7 @@ namespace FinanceFacade
             }
         }
 
-        
+
 
 
         /// <MetaDataID>{4d913c21-f612-428e-8d2b-de79963c6329}</MetaDataID>
@@ -362,7 +362,7 @@ namespace FinanceFacade
         }
 
         /// <MetaDataID>{55f5b0bc-8d8f-42af-b1b6-5b1c60383ef0}</MetaDataID>
-        public decimal Amount { get => Quantity * Price; }
+        public decimal Amount { get => decimal.Round(Quantity * Price, 5); }
 
         /// <MetaDataID>{38cd5338-a098-41bd-a30a-80ad5a068e6e}</MetaDataID>
         public string uid { get; set; }

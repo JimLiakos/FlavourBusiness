@@ -467,12 +467,12 @@ namespace FlavourBusinessManager.EndUsers
 
                 messmateClientSesion.ImplicitMealParticipation = false;
                 ImplicitMealParticipation = false;
-                if (SessionType==SessionType.HomeDelivery)
-                    (messmateClientSesion as FoodServiceClientSession).SessionType=SessionType.HomeDeliveryGuest;
+                if (SessionType == SessionType.HomeDelivery)
+                    (messmateClientSesion as FoodServiceClientSession).SessionType = SessionType.HomeDeliveryGuest;
 
-                if (SessionType==SessionType.HomeDelivery)
+                if (SessionType == SessionType.HomeDelivery)
                 {
-                    (messmateClientSesion as FoodServiceClientSession).SessionType= SessionType.HomeDeliveryGuest;
+                    (messmateClientSesion as FoodServiceClientSession).SessionType = SessionType.HomeDeliveryGuest;
 
                 }
 
@@ -1787,11 +1787,13 @@ namespace FlavourBusinessManager.EndUsers
         {
             try
             {
-                ItemPreparation existingItem;
-                if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
-                    existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
-                else
-                    existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+
+                ItemPreparation existingItem = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()).Where(x => x.uid == item.uid).FirstOrDefault();
+
+                //if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
+                //    existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+                //else
+                //    existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
 
                 if (existingItem == null)
                     return;
@@ -1968,11 +1970,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _DeliveryComment;
             set
             {
-                if (_DeliveryComment!=value)
+                if (_DeliveryComment != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _DeliveryComment=value;
+                        _DeliveryComment = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -2106,11 +2108,13 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{1bd18663-e4f7-45a1-9233-6edf3a462ed1}</MetaDataID>
         private ItemPreparation GetSessionItem(IItemPreparation item)
         {
-            ItemPreparation existingItem;
-            if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
-                existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
-            else
-                existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+            ItemPreparation existingItem = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()).Where(x => x.uid == item.uid).FirstOrDefault();
+
+            //ItemPreparation existingItem;
+            //if ((item as RoomService.ItemPreparation).SessionID == this.SessionID)
+            //    existingItem = (from flavourItem in _FlavourItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
+            //else
+            //    existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
             return existingItem;
         }
 
@@ -2458,17 +2462,33 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
-
+        /// <summary>
+        /// Creates a pay order with assigned payment gateway 
+        /// In case where payment can be completed from refunds amount, the payment completed without pay order.  
+        /// </summary>
+        /// <param name="payment">
+        /// Payment has all data that needed for the creation of pay order   
+        /// </param>
+        /// <param name="tipAmount">
+        /// Defines the extra amount for tipping
+        /// </param>
+        /// <param name="paramsJson">
+        /// Defines some extra parameters which are necessary for payment gateway
+        /// </param>
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
         public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
-            if (payment.State!=FinanceFacade.PaymentState.Completed)
+            if (payment.State != FinanceFacade.PaymentState.Completed)
             {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
-                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount;
+                    if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
+                    {
+                        PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                        (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    }
+
                     stateTransition.Consistent = true;
                 }
 
@@ -2477,19 +2497,24 @@ namespace FlavourBusinessManager.EndUsers
 
         public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
-            if (payment.State!=FinanceFacade.PaymentState.Completed)
+            if (payment.State != FinanceFacade.PaymentState.Completed)
             {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+
                     foreach (var paymentItem in payment.Items)
                     {
-                        var flavourItem = _FlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==ItemPreparationState.New).FirstOrDefault();
-                        if (flavourItem!=null)
-                            flavourItem.State= ItemPreparationState.AwaitingPaymentToCommit;
+                        var flavourItem = _FlavourItems.Where(x => x.uid == paymentItem.uid && x.State == ItemPreparationState.New).FirstOrDefault();
+                        if (flavourItem != null)
+                            flavourItem.State = ItemPreparationState.AwaitingPaymentToCommit;
                     }
-                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount;
+
+                    if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
+                    {
+                        PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                        (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    }
                     stateTransition.Consistent = true;
                 }
             }
@@ -2499,14 +2524,60 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
         public IBill GetBill()
         {
-            string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+
+            return Bill.GetBillFor(this);
+            //var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()).ToList();
+
+            //string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+            //List<FinanceFacade.Payment> payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
+            //if (payments == null)
+            //    payments = new List<FinanceFacade.Payment>();
+            //List<FinanceFacade.Item> paymentItems =Bill. GetUnpaidItems(paymentIdentity, payments, flavourItems);
+
+            //payments = payments.OrderBy(x => x.TransactionDate).ToList();
+
+            ////if (paymentItems.Count > 0)
+            //{
+            //    var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
+
+
+            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //    {
+            //        if (payment == null)
+            //        {
+            //            payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+
+            //            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
+            //            if (_MainSession.Value == null)
+            //                (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+
+            //            this.MainSession.AddPayment(payment);
+            //            payments.Add(payment);
+
+            //        }
+            //        else
+            //        {
+            //            payment.Update(paymentItems);
+            //            //move to end of list;
+            //            payments.Remove(payment);
+            //            payments.Add(payment);
+            //        }
+
+            //        stateTransition.Consistent = true;
+            //    }
+            //    payment.Subject = this.MainSession as FinanceFacade.IPaymentSubject;
+            //}
+            ////payments sorted by TransactionDate
+
+            //return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+        }
+
+        private List<FinanceFacade.Item> GetUnpaidItems(string paymentIdentity, List<FinanceFacade.Payment> payments)
+        {
 
             //FinanceFacade.Payment payment = null;
-            var payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
 
-            if (payments == null)
-                payments = new List<FinanceFacade.Payment>();
-
+            Dictionary<ItemPreparation, decimal> paidItemsAmounts = new Dictionary<ItemPreparation, decimal>();
 
 
             #region sort by transaction date
@@ -2520,88 +2591,89 @@ namespace FlavourBusinessManager.EndUsers
 
             foreach (var flavourItem in this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()))
             {
-                var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid);
-                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Price * paidItem.Quantity);
+
+                var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
+                decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Amount - paidItem.PaidAmount);
+                //decimal paidQuantity = itemPayments.Sum(paidItem => paidItem.Quantity);
                 FinanceFacade.Item item = null;
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
-                decimal quantity = (decimal)flavourItem.Quantity;
-                quantity/=flavourItem.NumberOfShares;
-                decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice/flavourItem.NumberOfShares;
+                decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
+                decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice / quantity;
                 if (itemPrice!=0)
-                {
-                    quantity = (((decimal)itemPrice- paidAmount) / itemPrice);
-                    quantity/=flavourItem.NumberOfShares;
-                }
+                    quantity = ((decimal)flavourItem.ModifiedItemPrice - paidAmount) / itemPrice;
 
+                #region remove  useless decimals
                 if (((decimal)(int)quantity) == quantity)
                     quantity = (int)quantity;
-
-                if (quantity > 0)
+                #endregion
+                paidItemsAmounts[flavourItem] = paidAmount;
+                if (amount - paidAmount > 0)
                 {
                     if (flavourItem.NumberOfShares > 1)
-                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
                     else
-                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
-
+                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.uid, QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
                     paymentItems.Add(item);
                 }
+                if (amount - paidAmount < 0)
+                {
+                    //if (flavourItem.NumberOfShares > 1)
+                    //    item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                    //else
+                    //    item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = itemPrice, uid = flavourItem.uid, QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+                    //paymentItems.Add(item);
+                }
+
 
             }
 
 
+            var flavourItemsUids = FlavourItems.Where(x=>x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
 
 
 
-            //paymentItems= this._FlavourItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList();
-
-            //paymentItems.AddRange(this._SharedItems.OfType<ItemPreparation>().Select(flavourItem => new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares, Price = (decimal)flavourItem.Price, uid = flavourItem.uid }).ToList());
-            var flavourItemsUids = FlavourItems.Select(x => x.uid).ToList();
-            var canceledItems = payments.SelectMany(x => x.Items).Where(x => x.Quantity > 0/*ignore netting items*/ && !flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
+            List<FinanceFacade.IItem> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).ToList();
+            var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
 
             foreach (var canceledItem in canceledItems)
             {
 
-                if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.uid && x.Quantity < 0 /*netting item*/).FirstOrDefault() == null)
+                if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.uid && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
                 {
-                    var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -canceledItem.Quantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription = canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
+                    var nettingQuantity = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.uid && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity;
+                    var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -nettingQuantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription = canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
                     paymentItems.Add(nettingItem);
                 }
             }
-
-
-            //if (paymentItems.Count > 0)
+            foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice * x.Key.Quantity)) < x.Value))
             {
-                var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New||x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
+
+                decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity);
+                var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
+                string quantityDescription = nettingQuantity.ToString();// + "/" + flavourItem.NumberOfShares.ToString();
+                var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = 0 };
+                paymentItems.Add(nettingItem);
+                var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
+                paymentItems.Add(item);
 
 
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    if (payment == null)
-                    {
-                        payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
-
-                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
-                        if (_MainSession.Value == null)
-                            (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-
-                        this.MainSession.AddPayment(payment);
-                        payments.Add(payment);
-
-                    }
-                    else
-                        payment.Update(paymentItems);
-
-                    stateTransition.Consistent = true;
-                }
-                payment.Subject=this.MainSession as FinanceFacade.IPaymentSubject;
-
-
-
+                //paidItem.ModifiedItemPrice* paidItem.Key.Quantity
+                //var nettingQuantity=
             }
 
-            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+            return paymentItems;
         }
 
+        public Dictionary<string, ItemPreparationState> FlavourItemsPreparationState
+        {
+            get
+            {
+                var itemsState = new Dictionary<string, ItemPreparationState>();
+                foreach (var item in FlavourItems)
+                    itemsState[item.uid] = item.State;
+                return itemsState;
+            }
+        }
 
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
@@ -2671,7 +2743,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (_MainSession.Value == null)
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                    if (CanChangeDeliveryPlace(deliveryPlace.Location)==ChangeDeliveryPlaceResponse.OK)
+                    if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
                         this.MainSession.DeleiveryPlace = deliveryPlace;
                     else
                         throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
@@ -2690,7 +2762,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (_MainSession.Value == null)
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
 
-                    MainSession.ServiceTime=value;
+                    MainSession.ServiceTime = value;
 
                     stateTransition.Consistent = true;
                 }

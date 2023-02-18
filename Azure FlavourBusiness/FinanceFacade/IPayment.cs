@@ -9,6 +9,9 @@ namespace FinanceFacade
     [GenerateFacadeProxy]
     public interface IPayment
     {
+        /// <MetaDataID>{d6eb7ce8-cc7c-4b94-bb55-abf72e5e3c30}</MetaDataID>
+        string PaymentOrderUrl { get;  }
+
 #if !DeviceDotNet
         [Association("SubjectOfPayment", Roles.RoleA, "1fb62be2-4d9b-4618-9c9f-7142f4031744")]
         IPaymentSubject Subject { get; set; }
@@ -36,7 +39,7 @@ namespace FinanceFacade
         System.DateTime? TransactionDate { get; }
 
         /// <MetaDataID>{23bd0625-6451-4298-b1b2-ecc990469eb7}</MetaDataID>
-        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount);
+        void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal? tipAmount);
 
         /// <MetaDataID>{28e03d9b-bf11-400b-add0-e052213aaf05}</MetaDataID>
         void CashPaymentCompleted(decimal tipAmount);
@@ -99,11 +102,31 @@ namespace FinanceFacade
         /// <MetaDataID>{221a8131-7c53-40e0-9ef7-1e3d03c6f2b9}</MetaDataID>
         bool IsCompleted();
 
+        /// <MetaDataID>{6bd54dfb-5044-4c07-83d4-ebfeb2390358}</MetaDataID>
         PaymentActionState ParseResponse(string response);
 
 
     }
 
+    /// <MetaDataID>{566e5205-215a-4e34-9ba5-1ce305fe583d}</MetaDataID>
+    public class PaymentException : System.Exception
+    {
+        public readonly PaymentFailure PaymentFailure;
+
+        public PaymentException(string message, PaymentFailure zeroAmount, int hresult) : base(message)
+        {
+            this.PaymentFailure=zeroAmount;
+            this.HResult=hresult;
+        }
+
+    }
+
+    /// <MetaDataID>{7b504776-3740-4bbd-b223-3b752b8a7abc}</MetaDataID>
+    public enum PaymentFailure
+    {
+        Failed,
+        ZeroAmount
+    }
     /// <MetaDataID>{c29b8985-3d96-4fea-91b6-7b3040b4d715}</MetaDataID>
     public enum PaymentType
     {
@@ -114,6 +137,7 @@ namespace FinanceFacade
         Check
     }
 
+    /// <MetaDataID>{4f5e2e3e-64be-40b0-b120-46c8371bf532}</MetaDataID>
     public enum PaymentActionState
     {
         Continue = 1,
@@ -133,8 +157,11 @@ namespace FinanceFacade
     /// <MetaDataID>{ad13180b-ad36-4b4e-a3ec-9d7b69a180ae}</MetaDataID>
     public interface IPaymentProvider
     {
+        /// <MetaDataID>{3445fdf2-6747-462d-b219-c50b65776fec}</MetaDataID>
         void CheckPaymentProgress(IPayment payment);
+        /// <MetaDataID>{b9bed520-85ef-4952-938a-c94cf2243c27}</MetaDataID>
         PaymentActionState ParseResponse(Payment payment, string response);
+        /// <MetaDataID>{c8d1c483-1045-481c-88aa-3ba8b506d651}</MetaDataID>
         HookRespnose WebHook(string method, string webHookName, System.Collections.Generic.Dictionary<string, string> headers, string content);
 
     }

@@ -15,7 +15,7 @@ using Firebase.Messaging;
 
 namespace DontWaitAppNS.Droid
 {
-    [Service]
+    [Service(Exported =true)]
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class MyFirebaseMessagingService : FirebaseMessagingService
     {

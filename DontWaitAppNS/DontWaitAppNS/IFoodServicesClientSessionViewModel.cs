@@ -18,6 +18,8 @@ namespace DontWaitApp
         FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
 
 
+
+
         /// <MetaDataID>{ad945fbe-f52f-4c07-9b70-bfa13139db91}</MetaDataID>
         string DeliveryComment { get; set; }
 

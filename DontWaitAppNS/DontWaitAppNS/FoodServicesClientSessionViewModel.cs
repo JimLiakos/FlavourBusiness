@@ -25,6 +25,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Web;
 using OOAdvantech.Pay;
+using FinanceFacade;
 
 
 #else
@@ -606,7 +607,7 @@ namespace DontWaitApp
 
         #region Food services client session events consumers
         /// <MetaDataID>{2784806b-281e-44df-af8d-dd847bb7c8a9}</MetaDataID>
-        private void  FoodServicesClientSessionItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
+        private void FoodServicesClientSessionItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
         {
 
             foreach (var entry in newItemsState)
@@ -1303,14 +1304,18 @@ namespace DontWaitApp
 
 
         }
+
+
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 #if DeviceDotNet
+
             FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
-                RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
@@ -1327,15 +1332,48 @@ namespace DontWaitApp
         public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
         {
 
-            
+
 #if DeviceDotNet
-            FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+
+
+            try
+            {
+                FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+            }
+            catch (Exception error)
+            {
+
+                if(error.HResult==5001)
+                {
+
+                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+                    foreach (var item in OrderItems)
+                    {
+                        ItemPreparationState itemState;
+                        if (itemsState.TryGetValue(item.uid, out itemState))
+                            item.State = itemState;
+                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+                        if (allCommited)
+                            return true;
+                    }
+                }
+                throw;
+            }
+            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
             if (await this.FlavoursOrderServer.Pay(payment))
             {
-                //RemotingServices.RefreshCacheData(payment as MarshalByRefObject);
+                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                 var state = payment.State;
                 if (state==FinanceFacade.PaymentState.Completed)
                 {
+
+                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+                    foreach (var item in OrderItems)
+                    {
+                        ItemPreparationState itemState;
+                        if (itemsState.TryGetValue(item.uid, out itemState))
+                            item.State = itemState;
+                    }
 
                     System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                     var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
@@ -1351,6 +1389,9 @@ namespace DontWaitApp
             return false;
 #else
             payment.CashPaymentCompleted(tipAmount);
+            var paymenta = payment.State;
+            this.SendItemsForPreparation();
+
             return true;
 #endif
         }
@@ -1434,28 +1475,27 @@ namespace DontWaitApp
         public async System.Threading.Tasks.Task<bool> SendItemsForPreparation()
         {
 
-            if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
-            {
-                Bill = FoodServicesClientSession?.GetBill();
-                var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
-                if (payment != null)
-                {
-                    //Pay()
-                }
-                return false;
+            //if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
+            //{
+            //    Bill = FoodServicesClientSession?.GetBill();
+            //    var payment = Bill.Payments.Where(x => x.State!=FinanceFacade.PaymentState.Completed).FirstOrDefault();
+            //    if (payment != null)
+            //    {
+            //        //Pay()
+            //    }
+            //    return false;
 
-            }
-            else
-            {
-                var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            //}
+            //else
 
-                foreach (var itemNewState in itemsNewState)
-                {
-                    var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                    item.State = item.State;
-                }
-                return true;
+            var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            foreach (var itemNewState in itemsNewState)
+            {
+                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
+                item.State = item.State;
             }
+            return true;
+
         }
 
 
@@ -1568,9 +1608,10 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{0f73c1f0-60e8-4045-b512-6f80f7a71888}</MetaDataID>
-        public void ItemChanged(FlavourBusinessManager.RoomService.ItemPreparation item)
+        public void ItemChanged(ItemPreparation item)
         {
             bool hasChanges = OrderItemsDictionary[item.uid].Update(item);
+            item = OrderItemsDictionary[item.uid];
             if (hasChanges)
             {
                 //var menuData = MenuData;

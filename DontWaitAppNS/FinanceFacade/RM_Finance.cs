@@ -49,6 +49,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public string PaymentOrderUrl
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_PaymentOrderUrl", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public decimal TipsAmount
         {
             get
@@ -212,7 +224,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, decimal tipAmount)
+        public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, System.Nullable<decimal> tipAmount)
         {
             object[] args = new object[5];
             System.Type[] argsTypes = new System.Type[5];
@@ -225,7 +237,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[3] = transactionID;
             argsTypes[3] = typeof(string);
             args[4] = tipAmount;
-            argsTypes[4] = typeof(decimal);
+            argsTypes[4] = typeof(System.Nullable<decimal>);
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "CardPaymentCompleted", args, argsTypes);
         }
         

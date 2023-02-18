@@ -613,7 +613,7 @@ namespace FlavourBusinessManager
         public List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location)
         {
 
-            List<IHomeDeliveryServicePoint> deliveryServicePoints = new List<IHomeDeliveryServicePoint>();
+            List<HomeDeliveryServicePointInfo> deliveryServicePoints = new List<HomeDeliveryServicePointInfo>();
 
             foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
             {
@@ -627,13 +627,13 @@ namespace FlavourBusinessManager
                     var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 
                     if (polyGon.FindPoint(location.Latitude, location.Longitude))
-                        deliveryServicePoints.Add(deliveryServicePoint);
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointInfo(deliveryServicePoint, flavoursServicesContext.GetRunTime()));
                 }
             }
 
-            var servers = deliveryServicePoints.Select(x => new HomeDeliveryServicePointInfo(x)).ToList();
+            //var servers = deliveryServicePoints.Select(x => new HomeDeliveryServicePointInfo(x)).ToList();
 
-            return servers;
+            return deliveryServicePoints;
 
         }
 

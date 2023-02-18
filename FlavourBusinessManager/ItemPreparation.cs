@@ -10,6 +10,7 @@ using System;
 using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
+using FlavourBusinessManager.EndUsers;
 
 #if !FlavourBusinessDevice
 
@@ -67,6 +68,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+        
 
         /// <MetaDataID>{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}</MetaDataID>
         [BackwardCompatibilityID("+30")]
@@ -759,6 +762,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        //PaidAmount
+
 
         /// <exclude>Excluded</exclude>
         [JsonIgnore]
@@ -922,17 +927,17 @@ namespace FlavourBusinessManager.RoomService
             return changed;
         }
 
-        /// <MetaDataID>{cb983f29-dd38-491e-9e85-3431eb5c4c1a}</MetaDataID>
-        public void AddPayment(FinanceFacade.IPayment payment)
-        {
-            throw new NotImplementedException();
-        }
+        ///// <MetaDataID>{cb983f29-dd38-491e-9e85-3431eb5c4c1a}</MetaDataID>
+        //public void AddPayment(FinanceFacade.IPayment payment)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        /// <MetaDataID>{324aa334-173e-42fd-ae27-0cced1fa6fa0}</MetaDataID>
-        public void RemovePayment(FinanceFacade.IPayment payment)
-        {
-            throw new NotImplementedException();
-        }
+        ///// <MetaDataID>{324aa334-173e-42fd-ae27-0cced1fa6fa0}</MetaDataID>
+        //public void RemovePayment(FinanceFacade.IPayment payment)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <MetaDataID>{74e7c1c6-6831-4122-89fe-dc4336cee82f}</MetaDataID>
         public List<string> SharedInSessions
@@ -1080,8 +1085,37 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        /// <MetaDataID>{8aade568-ea01-4550-9906-4857220f756b}</MetaDataID>
-        public List<FinanceFacade.IPayment> Payments => new List<FinanceFacade.IPayment>();
+        /// <exclude>Excluded</exclude>
+        Dictionary<string, decimal> _PaidAmounts;
+        public Dictionary<string, decimal> PaidAmounts
+        {
+            get
+            {
+#if !FlavourBusinessDevice
+                if (ClientSession!=null)
+                {
+                    _PaidAmounts=new Dictionary<string, decimal>();
+                    List<IFoodServiceClientSession> foodServiceClientSessions = SharedWithClients.ToList();
+                    foodServiceClientSessions.Add(ClientSession);
+                    var foodServiceClientSessionss = foodServiceClientSessions.Distinct().ToList();
+
+                    foreach (var foodServiceClientSession in foodServiceClientSessions.OfType<FoodServiceClientSession>())
+                    {
+                        decimal paidAmount = Bill.GetPaidAmount(foodServiceClientSession, this);
+                        _PaidAmounts[foodServiceClientSession.SessionID]=paidAmount;
+                    }
+                }
+#endif
+                return _PaidAmounts;
+            }
+            set
+            {
+                _PaidAmounts=value;
+            }
+        }
+
+        ///// <MetaDataID>{8aade568-ea01-4550-9906-4857220f756b}</MetaDataID>
+        //public List<FinanceFacade.IPayment> Payments => new List<FinanceFacade.IPayment>();
 
 
 

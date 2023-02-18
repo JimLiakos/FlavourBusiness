@@ -10,17 +10,15 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
-    
+        /// <MetaDataID>{367ad7d1-1314-403f-a3bf-970c7adbb813}</MetaDataID>
+       Dictionary<string, decimal> PaidAmounts { get; }
 
-        /// <MetaDataID>{c73cd53f-286f-4a56-8c08-39a810ca40bf}</MetaDataID>
-        void AddPayment(IPayment payment);
 
-        /// <MetaDataID>{82eb49f8-cd72-4b99-b7ed-286cecab6725}</MetaDataID>
-        void RemovePayment(IPayment payment);
+  
 
-        [Association("ItemPayment", Roles.RoleA, "52506146-9fd6-4dde-a9fd-a7acf7871e88")]
-        [RoleAMultiplicityRange(1)]
-        List<IPayment> Payments { get; }
+        //[Association("ItemPayment", Roles.RoleA, "52506146-9fd6-4dde-a9fd-a7acf7871e88")]
+        //[RoleAMultiplicityRange(1)]
+        //List<IPayment> Payments { get; }
 
         /// <MetaDataID>{c2c236bd-77c2-4557-97fd-8c8d8e96f67a}</MetaDataID>
         [BackwardCompatibilityID("+19")]
