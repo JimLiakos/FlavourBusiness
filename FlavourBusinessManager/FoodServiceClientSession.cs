@@ -1801,7 +1801,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
-                        if (_FlavourItems.Where(x => x.State.IsInPreviousState( ItemPreparationState.Committed)).Count() > 0)
+                        if (_FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).Count() > 0)
                             CatchStateEvents();
 
                         //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
@@ -2468,7 +2468,7 @@ namespace FlavourBusinessManager.EndUsers
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
-                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount; 
+                    (payment as FinanceFacade.Payment).TipsAmount=tipAmount;
                     stateTransition.Consistent = true;
                 }
 
@@ -2524,10 +2524,14 @@ namespace FlavourBusinessManager.EndUsers
                 decimal paidAmount = itemPayments.Sum(paidItem => paidItem.Price * paidItem.Quantity);
                 FinanceFacade.Item item = null;
                 string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
-                decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
-                decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice / quantity;
+                decimal quantity = (decimal)flavourItem.Quantity;
+                quantity/=flavourItem.NumberOfShares;
+                decimal itemPrice = (decimal)flavourItem.ModifiedItemPrice/flavourItem.NumberOfShares;
                 if (itemPrice!=0)
-                    quantity = ((decimal)flavourItem.ModifiedItemPrice - paidAmount) / itemPrice;
+                {
+                    quantity = (((decimal)itemPrice- paidAmount) / itemPrice);
+                    quantity/=flavourItem.NumberOfShares;
+                }
 
                 if (((decimal)(int)quantity) == quantity)
                     quantity = (int)quantity;

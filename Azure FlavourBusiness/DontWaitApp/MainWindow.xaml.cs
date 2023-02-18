@@ -85,6 +85,10 @@ namespace DontWaitApp
             FlavoursOrderServer_OnWebViewLoaded();
 
  
+            if(OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID =="93000000296")
+            {
+                TestImplicitMealInvitation();
+            }
 
             // TestImplicitMealInvitation();
 
@@ -93,7 +97,7 @@ namespace DontWaitApp
         private void TestImplicitMealInvitation()
         {
             
-            Uri uri = new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=ce4168c28d794cb9b893436775ab9697");
+            Uri uri = new Uri("http://192.168.2.4:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6fdb8092de854ec4a277c5733c82cc54");
 
             int queryStartPos = uri.OriginalString.IndexOf("?");
             if (queryStartPos != -1)

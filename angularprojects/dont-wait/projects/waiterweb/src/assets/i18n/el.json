@@ -29,7 +29,11 @@
 		"CommentsLabel": "Σχόλιo",
 		"CommentsPlaceHolder": "Γράψτε το σχόλιo",
         "TakeAwaySessionLabel":"Παραλαβή στο κατάστημα",
-        "OrderCheckoutCommandLabel":"Επιβεβαίωση παραγγελίας"
+        "OrderCheckoutCommandLabel":"Επιβεβαίωση παραγγελίας",
+		"ContinueOrdering":"Συνέχεια στην παραγγελία",
+		"BillOKButtonLabel":"OK",
+			"TippingButtonLabel":"Φιλοδώρημα",
+        "TippingInputLabel":"Φιλοδώρημα"
 
 	},
 	"ModalDialog": {
