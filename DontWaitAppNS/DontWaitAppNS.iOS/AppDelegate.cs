@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using DontWaitApp;
 using Firebase.CloudMessaging;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 using UserNotifications;
+using Xamarin.Essentials;
 
 namespace DontWaitAppNS.iOS
 {
@@ -105,6 +107,75 @@ namespace DontWaitAppNS.iOS
             // TODO: If necessary send token to application server.
             // Note: This callback is fired at each app startup and whenever a new token is generated.
         }
+
+
+
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            base.OnActivated(uiApplication);
+        }
+        public override void DidEnterBackground(UIApplication uiApplication)
+        {
+            base.DidEnterBackground(uiApplication);
+        }
+        [Export("application:didReceiveRemoteNotification:fetchCompletionHandler:")]
+        public void DidReceiveRemoteNotification(UIKit.UIApplication application, NSDictionary userInfo, Action<UIKit.UIBackgroundFetchResult> completionHandler)
+        {
+            try
+            {
+                OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DidReceiveRemoteNotification DidReceiveRemoteNotification" });
+
+                try
+                {
+                    // Use default vibration length
+                    //Vibration.Vibrate();
+
+                    // Or use specified time
+                    var duration = TimeSpan.FromSeconds(7);
+                    Vibration.Vibrate(duration);
+                }
+                catch (FeatureNotSupportedException ex)
+                {
+                    // Feature not supported on device
+                }
+                catch (Exception ex)
+                {
+                    // Other error has occurred.
+                }
+
+
+            }
+            catch (Exception error)
+            {
+
+
+            }
+        }
+
+        //[Export("application:didRegisterForRemoteNotificationsWithDeviceToken:")]
+        //public void RegisteredForRemoteNotifications(UIKit.UIApplication application, NSData deviceToken)
+        //{
+        //}
+
+        //[Export("application:didFailToRegisterForRemoteNotificationsWithError:")]
+        //public void FailedToRegisterForRemoteNotifications(UIKit.UIApplication application, NSError error)
+        //{
+        //}
+
+        //public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo,  Action<UIBackgroundFetchResult> completionHandler)
+        //{
+
+        //    try
+        //    {
+        //        OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DidReceiveRemoteNotification DidReceiveRemoteNotification" });
+        //        base.DidReceiveRemoteNotification(application, userInfo, completionHandler);
+        //    }
+        //    catch (Exception error)
+        //    {
+
+
+        //    }
+        //}
 
 
     }
