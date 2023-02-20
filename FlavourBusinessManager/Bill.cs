@@ -18,7 +18,7 @@ namespace FlavourBusinessManager.EndUsers
         public Bill(List<IPayment> payments)
         {
             Payments=payments;
-            
+
         }
         [CachingDataOnClientSide]
         public List<IPayment> Payments { get; }
@@ -32,7 +32,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-        internal  static List<FinanceFacade.Item> GetUnpaidItems( List<FinanceFacade.Payment> payments, List<ItemPreparation> flavourItems)
+        internal static List<FinanceFacade.Item> GetUnpaidItems(List<FinanceFacade.Payment> payments, List<ItemPreparation> flavourItems)
         {
 
             //FinanceFacade.Payment payment = null;
@@ -47,7 +47,7 @@ namespace FlavourBusinessManager.EndUsers
             #endregion
 
             List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
-            
+
 
             foreach (var flavourItem in flavourItems)
             {
@@ -55,10 +55,12 @@ namespace FlavourBusinessManager.EndUsers
                 paidAmount=GetPaidAmount(payments, flavourItem);
                 //decimal paidQuantity = itemPayments.Sum(paidItem => paidItem.Quantity);
                 FinanceFacade.Item item = null;
-                string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
                 decimal quantity = (decimal)flavourItem.Quantity / flavourItem.NumberOfShares;
                 decimal amount = (decimal)flavourItem.ModifiedItemPrice * quantity;
 
+                string quantityDescription = flavourItem.Quantity.ToString() + "/" + flavourItem.NumberOfShares.ToString();
+                if (quantity==(int)quantity)
+                    quantityDescription=((int)quantity).ToString();
                 #region remove  useless decimals
                 if (((decimal)(int)quantity) == quantity)
                     quantity = (int)quantity;
@@ -102,10 +104,10 @@ namespace FlavourBusinessManager.EndUsers
                     paymentItems.Add(nettingItem);
                 }
             }
-            foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice * x.Key.Quantity)) < x.Value))
+            foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice *(x.Key.Quantity/x.Key.NumberOfShares))) < x.Value))
             {
 
-                decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity);
+                decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity/paidItem.Key.NumberOfShares);
                 var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
                 string quantityDescription = nettingQuantity.ToString();// + "/" + flavourItem.NumberOfShares.ToString();
                 var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = 0 };
@@ -137,7 +139,7 @@ namespace FlavourBusinessManager.EndUsers
             List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
             if (payments == null)
                 payments = new List<FinanceFacade.Payment>();
-            List<FinanceFacade.Item> paymentItems = Bill.GetUnpaidItems( payments, flavourItems);
+            List<FinanceFacade.Item> paymentItems = Bill.GetUnpaidItems(payments, flavourItems);
 
             payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
