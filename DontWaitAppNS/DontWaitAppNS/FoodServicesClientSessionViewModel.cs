@@ -1287,6 +1287,8 @@ namespace DontWaitApp
 
             Bill = FoodServicesClientSession?.GetBill();
             var ss = Bill.Payments;
+
+            var items = ss.FirstOrDefault()?.Items;
             return Bill;
 
             //var state = Payment.State;

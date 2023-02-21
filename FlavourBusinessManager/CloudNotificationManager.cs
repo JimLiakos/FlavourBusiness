@@ -60,7 +60,10 @@ namespace FlavourBusinessManager
                 Data = new Dictionary<string, string>()
                 {
 
-                    {"MessageID",message.MessageID }
+                    {"MessageID",message.MessageID },
+                    {"MessageTimestamp",message.MessageTimestamp.ToString("u") },
+                    {"ServicesContextIdentity",ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity }
+
                 },
                 Notification = new Notification() { Body = message.Notification.Body, Title = message.Notification.Title },
                 Token = deviceFirebaseToken,

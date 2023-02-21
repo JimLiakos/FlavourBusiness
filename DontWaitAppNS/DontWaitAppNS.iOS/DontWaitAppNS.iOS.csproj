@@ -152,6 +152,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Json.NetStandard\OOAdvantech.Json.NetStandard.csproj">
+      <Project>{3ef27717-75b9-45e2-99a0-16b54aa8e953}</Project>
+      <Name>OOAdvantech.Json.NetStandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.iOS\OOAdvantech.NetStandard.iOS.csproj">
       <Project>{97999f66-2cd1-4b6e-bba2-41174367df1e}</Project>
       <Name>OOAdvantech.NetStandard.iOS</Name>
