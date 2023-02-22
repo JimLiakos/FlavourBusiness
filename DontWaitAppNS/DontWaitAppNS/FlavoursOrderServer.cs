@@ -922,7 +922,7 @@ namespace DontWaitApp
                 {
                     homeDeliveryServicePointInfo=NeighborhoodFoodServers.SelectMany(x => x.Value).Where(x => x.ServicePointIdentity== servicePointIdentity).FirstOrDefault();
                 }
-                FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity, homeDeliveryServicePointInfo.FlavoursServices);
+                FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity, homeDeliveryServicePointInfo?.FlavoursServices);
 
                 if (FoodServicesClientSessionViewModel != null)
                     ApplicationSettings.Current.DisplayedFoodServicesClientSession = FoodServicesClientSessionViewModel;

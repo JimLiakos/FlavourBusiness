@@ -29,7 +29,7 @@ namespace DontWaitAppNS.iOS
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
-
+            UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
 
             global::Xamarin.Forms.Forms.Init();
 
@@ -150,6 +150,46 @@ namespace DontWaitAppNS.iOS
 
 
             }
+        }
+
+
+        public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            try
+            {
+                OOAdvantech.DeviceApplication.Current.Log(new List<string> { "PerformFetch " });
+
+                //try
+                //{
+                //    // Use default vibration length
+                //    //Vibration.Vibrate();
+
+                //    // Or use specified time
+                //    var duration = TimeSpan.FromSeconds(7);
+                //    Vibration.Vibrate(duration);
+                //}
+                //catch (FeatureNotSupportedException ex)
+                //{
+                //    // Feature not supported on device
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Other error has occurred.
+                //}
+
+
+            }
+            catch (Exception error)
+            {
+
+
+            }
+
+            // Check for new data, and display it
+
+
+            // Inform system of fetch results
+            //completionHandler(UIBackgroundFetchResult.NewData);
         }
 
         //[Export("application:didRegisterForRemoteNotificationsWithDeviceToken:")]
