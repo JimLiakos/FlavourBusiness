@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
+using AudioToolbox;
 using DontWaitApp;
 using Firebase.CloudMessaging;
 using Foundation;
@@ -112,11 +114,39 @@ namespace DontWaitAppNS.iOS
 
         public override void OnActivated(UIApplication uiApplication)
         {
+           
             base.OnActivated(uiApplication);
         }
         public override void DidEnterBackground(UIApplication uiApplication)
         {
+            
             base.DidEnterBackground(uiApplication);
+        }
+
+        public override void WillTerminate(UIApplication uiApplication)
+        {
+            var notification = new UILocalNotification();
+
+            // set the fire date (the date time in which it will fire)
+            notification.FireDate = NSDate.FromTimeIntervalSinceNow(5);
+
+            // configure the alert
+            notification.AlertAction = "View Alert";
+            notification.AlertBody = "Your one minute alert has fired!";
+
+            // modify the badge
+            notification.ApplicationIconBadgeNumber = 1;
+
+            // set the sound to be the default sound
+            notification.SoundName = UILocalNotification.DefaultSoundName;
+
+            // schedule it
+            UIApplication.SharedApplication.ScheduleLocalNotification(notification);
+
+
+
+
+            base.WillTerminate(uiApplication);
         }
         [Export("application:didReceiveRemoteNotification:fetchCompletionHandler:")]
         public void DidReceiveRemoteNotification(UIKit.UIApplication application, NSDictionary userInfo, Action<UIKit.UIBackgroundFetchResult> completionHandler)
@@ -127,12 +157,35 @@ namespace DontWaitAppNS.iOS
 
                 try
                 {
+                    //https://iphonedevwiki.net/index.php/AudioServices
                     // Use default vibration length
                     //Vibration.Vibrate();
 
                     // Or use specified time
                     var duration = TimeSpan.FromSeconds(7);
                     Vibration.Vibrate(duration);
+                    var sound = new SystemSound(1003);
+                    sound.PlaySystemSound();
+                    Dictionary<string, string> messageProperties = userInfo.ToDictionary<KeyValuePair<NSObject, NSObject>, string, string>(item => item.Key as NSString, item => item.Value.ToString());
+                    string messgeJson = OOAdvantech.Json.JsonConvert.SerializeObject(messageProperties);
+                    //DateTime.Parse(t, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                    System.Diagnostics.Debug.WriteLine(messgeJson);
+
+                    string messageID = messageProperties["MessageID"];
+                    string messageTimestamp = messageProperties["MessageTimestamp"];
+
+                    
+
+                    var remoteMessage = new OOAdvantech.iOS.RemoteMessage
+                    {
+                        MessageId = messageID,
+                        //MessageType = message.MessageType,
+                        //From = message.From,
+                        //To = message.To,
+                        Data = messageProperties,
+                        SentTime =DateTime.Parse(messageTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind) 
+                    };
+                    OOAdvantech.iOS.DeviceOOAdvantechCore.MessageReceived(remoteMessage);
                 }
                 catch (FeatureNotSupportedException ex)
                 {
