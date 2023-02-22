@@ -376,6 +376,7 @@ namespace WaiterApp.ViewModel
                 });
 
                 ObjectChangeState?.Invoke(this, null);
+                OAuthUserIdentity = Waiter.OAuthUserIdentity;
                 return true;
             }
 
@@ -454,7 +455,7 @@ namespace WaiterApp.ViewModel
                             GetMessages();
 
 
-
+                            OAuthUserIdentity = Waiter.OAuthUserIdentity;
 
                             return true;
 
@@ -502,30 +503,31 @@ namespace WaiterApp.ViewModel
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
                         _OAuthUserIdentity = UserData.OAuthUserIdentity;
-                        var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter).FirstOrDefault();
-                        if (role.RoleType == UserData.RoleType.Waiter)
+                        foreach (var role in UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter))
                         {
-                            if (Waiter != null)
+                            if (role.RoleType == UserData.RoleType.Waiter)
                             {
-                                Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
-                                Waiter.MessageReceived -= MessageReceived;
-                                Waiter.ServingBatchesChanged -= ServingBatchesChanged;
+                                if (Waiter != null)
+                                {
+                                    Waiter.ObjectChangeState -= Waiter_ObjectChangeState;
+                                    Waiter.MessageReceived -= MessageReceived;
+                                    Waiter.ServingBatchesChanged -= ServingBatchesChanged;
+                                    if (Waiter is ITransparentProxy)
+                                        (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+
+                                }
+                                Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
+                                if (Waiter==null)
+                                    continue;
+                                string objectRef = RemotingServices.SerializeObjectRef(Waiter);
+                                DontWaitApp.ApplicationSettings.Current.WaiterObjectRef = objectRef;
+                                Waiter.ObjectChangeState += Waiter_ObjectChangeState;
+                                Waiter.MessageReceived += MessageReceived;
+                                Waiter.ServingBatchesChanged += ServingBatchesChanged;
                                 if (Waiter is ITransparentProxy)
-                                    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+                                    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
-                            }
-                            Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
-
-                            string objectRef = RemotingServices.SerializeObjectRef(Waiter);
-                            DontWaitApp.ApplicationSettings.Current.WaiterObjectRef = objectRef;
-
-                            Waiter.ObjectChangeState += Waiter_ObjectChangeState;
-                            Waiter.MessageReceived += MessageReceived;
-                            Waiter.ServingBatchesChanged += ServingBatchesChanged;
-                            if (Waiter is ITransparentProxy)
-                                (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
-
-                            HallsServicePointsState = Waiter.HallsServicePointsState;
+                                HallsServicePointsState = Waiter.HallsServicePointsState;
 
 
 
@@ -559,33 +561,34 @@ namespace WaiterApp.ViewModel
 
 
 
-                            ActiveShiftWork = Waiter.ActiveShiftWork;
+                                ActiveShiftWork = Waiter.ActiveShiftWork;
 
-                            UpdateServingBatches(Waiter.GetServingBatches());
-
-
+                                UpdateServingBatches(Waiter.GetServingBatches());
 
 
 
-                            (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
-                            //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
-                            if (this._Halls != null)
-                            {
+
+
+                                (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
+                                //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
+                                if (this._Halls != null)
+                                {
+                                    foreach (var hall in this._Halls)
+                                        (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
+                                }
+
+
+                                this._Halls = Waiter.GetServiceHalls();
                                 foreach (var hall in this._Halls)
-                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
+                                {
+                                    hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
+                                    (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
+                                    (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
+
+                                }
+                                this.FlavoursOrderServer.Halls = _Halls;
+                                GetMessages();
                             }
-
-
-                            this._Halls = Waiter.GetServiceHalls();
-                            foreach (var hall in this._Halls)
-                            {
-                                hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
-                                (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
-                                (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;
-
-                            }
-                            this.FlavoursOrderServer.Halls = _Halls;
-                            GetMessages();
                         }
                         //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
 
@@ -608,6 +611,7 @@ namespace WaiterApp.ViewModel
                         //    _ServicesContexts = new List<IServicesContextPresentation>();
 
                         AuthUser = authUser;
+                        OAuthUserIdentity = Waiter.OAuthUserIdentity;
                         ObjectChangeState?.Invoke(this, null);
                         return true;
                     }
@@ -770,7 +774,7 @@ namespace WaiterApp.ViewModel
 
         }
 
-     
+
         /// <MetaDataID>{527b5bdb-7653-40f3-8370-e619aa9d216a}</MetaDataID>
         private void MessageReceived(IMessageConsumer sender)
         {

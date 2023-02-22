@@ -117,10 +117,27 @@ namespace DontWaitAppNS.iOS
            
             base.OnActivated(uiApplication);
         }
+
+        bool DoWorkFlag = true;
         public override void DidEnterBackground(UIApplication uiApplication)
         {
-            
-            base.DidEnterBackground(uiApplication);
+
+            //base.DidEnterBackground(uiApplication);
+
+            nint taskID = UIApplication.SharedApplication.BeginBackgroundTask(() => { });
+            new Task(() => {
+                DoWork();
+                UIApplication.SharedApplication.EndBackgroundTask(taskID);
+            }).Start();
+        }
+
+        private void DoWork()
+        {
+            while (DoWorkFlag)
+            {
+                System.Threading.Thread.Sleep(7000);
+                OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DoWork "+DateTime.UtcNow.ToString("u") });
+            }
         }
 
         public override void WillTerminate(UIApplication uiApplication)
@@ -204,6 +221,8 @@ namespace DontWaitAppNS.iOS
 
             }
         }
+
+
 
 
         public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
