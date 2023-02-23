@@ -114,30 +114,49 @@ namespace DontWaitAppNS.iOS
 
         public override void OnActivated(UIApplication uiApplication)
         {
-           
+
             base.OnActivated(uiApplication);
         }
 
-        bool DoWorkFlag = true;
+        bool myFlag = true;
         public override void DidEnterBackground(UIApplication uiApplication)
         {
 
-            //base.DidEnterBackground(uiApplication);
+            ////base.DidEnterBackground(uiApplication);
+            //Task.Factory.StartNew(() =>
+            //{
+            //    nint taskId = 0;
+            //    //expirationHandler only called if background time allowed exceeded
+            //    nint taskId = UIApplication.SharedApplication.BeginBackgroundTask(() =>
+            //    {
+            //        Console.WriteLine("Exhausted time");
+            //        DoWork();
+            //        UIApplication.SharedApplication.EndBackgroundTask(taskId);
+            //    });
+            //    while (myFlag == true)
+            //    {
+            //        Console.WriteLine(UIApplication.SharedApplication.BackgroundTimeRemaining);
+            //        myFlag = SomeCalculationNeedsMoreTime();
+            //    }
+            //    //Only called if loop terminated due to myFlag and not expiration of time
+            //    UIApplication.SharedApplication.EndBackgroundTask(taskId);
+            //});
+        }
 
-            nint taskID = UIApplication.SharedApplication.BeginBackgroundTask(() => { });
-            new Task(() => {
-                DoWork();
-                UIApplication.SharedApplication.EndBackgroundTask(taskID);
-            }).Start();
+        private bool SomeCalculationNeedsMoreTime()
+        {
+            return true;
         }
 
         private void DoWork()
         {
-            while (DoWorkFlag)
-            {
+
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DoWork "+DateTime.UtcNow.ToString("u")+" remaining time "+UIApplication.SharedApplication.BackgroundTimeRemaining });
+
+            if (UIApplication.SharedApplication.BackgroundTimeRemaining>8)
                 System.Threading.Thread.Sleep(7000);
-                OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DoWork "+DateTime.UtcNow.ToString("u") });
-            }
+
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "End DoWork "+DateTime.UtcNow.ToString("u") });
         }
 
         public override void WillTerminate(UIApplication uiApplication)
@@ -191,7 +210,7 @@ namespace DontWaitAppNS.iOS
                     string messageID = messageProperties["MessageID"];
                     string messageTimestamp = messageProperties["MessageTimestamp"];
 
-                    
+
 
                     var remoteMessage = new OOAdvantech.iOS.RemoteMessage
                     {
@@ -200,7 +219,7 @@ namespace DontWaitAppNS.iOS
                         //From = message.From,
                         //To = message.To,
                         Data = messageProperties,
-                        SentTime =DateTime.Parse(messageTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind) 
+                        SentTime =DateTime.Parse(messageTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind)
                     };
                     OOAdvantech.iOS.DeviceOOAdvantechCore.MessageReceived(remoteMessage);
                 }

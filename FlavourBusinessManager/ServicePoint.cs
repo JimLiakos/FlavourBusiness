@@ -852,6 +852,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
                 var sessionItemsForTransfer = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().Where(sessionItem => itemPreparations.Any(x => x.uid == sessionItem.uid)).ToList();
+                
 
                 var itemsSharings = (from sessionItem in sessionItemsForTransfer
                                      from sessionID in sessionItem.SharedInSessions
@@ -867,10 +868,20 @@ namespace FlavourBusinessManager.ServicesContextResources
                             sessionItemsForTransfer.Remove(sessionItem);
                     }
                 }
-                foreach (var sessionItem in sessionItemsForTransfer)
+
+                
+                foreach (var sessionItem in sessionItemsForTransfer.ToList())
                 {
-                    if (!partialSessionsForTransfer.Contains(sessionItem.ClientSession))
-                        itemsForTransfer.Add(sessionItem);
+                    if (sessionItem.PaidAmounts.Count>0)
+                    {
+                        constrainErrors.Add(string.Format("Partial transfer of the paid item {0} is not possible", sessionItem.Name));
+                        sessionItemsForTransfer.Remove(sessionItem);
+                    }
+                    else
+                    {
+                        if (!partialSessionsForTransfer.Contains(sessionItem.ClientSession))
+                            itemsForTransfer.Add(sessionItem);
+                    }
                 }
             }
             if (constrainErrors.Count > 0)
