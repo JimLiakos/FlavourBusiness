@@ -634,12 +634,14 @@ namespace DontWaitApp
 #if DeviceDotNet
             ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
+            if (_EndUser == null)
+            {
+                _EndUser = new FoodServiceClientVM(this);
+                _EndUser.ObjectChangeState += EndUser_ObjectChangeState;
+            }
 
-            _EndUser = new FoodServiceClientVM(this);
-            _EndUser.ObjectChangeState+=EndUser_ObjectChangeState;
-
-            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            //var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            //OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             InitializationTask = Task.Run(async () =>
             {
 
