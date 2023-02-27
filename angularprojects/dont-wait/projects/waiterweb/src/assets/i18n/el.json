@@ -32,8 +32,10 @@
         "OrderCheckoutCommandLabel":"Επιβεβαίωση παραγγελίας",
 		"ContinueOrdering":"Συνέχεια στην παραγγελία",
 		"BillOKButtonLabel":"OK",
-			"TippingButtonLabel":"Φιλοδώρημα",
-        "TippingInputLabel":"Φιλοδώρημα"
+		"TippingButtonLabel":"Φιλοδώρημα",
+        "TippingInputLabel":"Φιλοδώρημα",
+		 "HallTipLabel": "Φιλοδώρημα",
+        "TipOtherOptionLabel":"Άλλο"
 
 	},
 	"ModalDialog": {
@@ -84,7 +86,7 @@
 		"SelectFoodTypeTagTooltip": "Κάντε κλικ για να επιλέξετε είδος φαγητού",
 		"RemoveFoodTypeTagTooltip": "Κάντε κλικ για να διαγράψετε αυτό το είδος φαγητού",
 		"FoodTypeFilterPlaceholder": "Γράψτε την λέξη φίλτρο είδος φαγητού",
-		"FoodTypeFilterLabel": "Φίλτρο είδος φαγητού"
+		"FoodTypeFilterLabel": "Φίλτρο είδος φαγητού",
 	},
 	"HomeDelivery": {
 		"FreeShippingMinimumOrderLabel": "Ελάχιστη Παραγγελία για Δωρεάν Αποστολή",
@@ -110,6 +112,7 @@
 		"DeliveryPlaceBellInputLabel": "Κουδούνι",
 		"DeliveryManCommentsLabel": "Σχόλια για τον διανομέα",
 		"DeliveryManTipLabel": "Φιλοδώρημα για τον διανομέα",
+		
 		"DeliveryManCommentsPlaceHolder": "Γράψτε σχόλια για τον διανομέα",
 		"PayNowPrompt":"Πληρωμή τώρα",
 		"PayLaterPrompt":"Πληρωμή στην παράδoση"

@@ -167,6 +167,7 @@ namespace FlavourBusinessManager.EndUsers
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
+
                 if (payment == null)
                 {
                     payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);

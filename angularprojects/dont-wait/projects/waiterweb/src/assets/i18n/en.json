@@ -87,7 +87,9 @@
 		"SelectFoodTypeTagTooltip": "Click to select food type",
 		"RemoveFoodTypeTagTooltip": "Click to delete this food type",
 		"FoodTypeFilterPlaceholder": "Write the food type filter",
-		"FoodTypeFilterLabel": "Food Type Filter"
+		"FoodTypeFilterLabel": "Food Type Filter",
+		"HallTipLabel": "Tipping",
+		"TipOtherOptionLabel":"Other"
 	},
 	"HomeDelivery": {
 		"FreeShippingMinimumOrderLabel": "Free Shipping Minimum Order",
