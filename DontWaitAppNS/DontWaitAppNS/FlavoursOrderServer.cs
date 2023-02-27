@@ -1831,6 +1831,8 @@ namespace DontWaitApp
                     }
                     else
                     {
+
+
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
                             foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel(clientSessionData.Value, this);
