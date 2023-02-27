@@ -348,6 +348,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (endUser)
                 waiter=null;
 
+
             FoodServiceClientSession fsClientSession = null;
             FoodServiceClientSession messmateClientSesion = null;
 
