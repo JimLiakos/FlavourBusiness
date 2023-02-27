@@ -82,7 +82,7 @@ namespace FlavourBusinessFacade
         event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{e63eeb30-6665-4aaa-9c93-9eb6797c7b44}</MetaDataID>
-        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken,  string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool create);
+        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken,  string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool endUser,  bool create);
 
 
 

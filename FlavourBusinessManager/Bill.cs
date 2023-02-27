@@ -92,7 +92,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-            List<IItem> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items.OfType<Item>().Where(x=>x.GetItemPreparationUid()).ToList();
+            List<IItem> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).ToList();
             var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
 
             foreach (var canceledItem in canceledItems)

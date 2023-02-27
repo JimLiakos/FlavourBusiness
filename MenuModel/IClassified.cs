@@ -8,5 +8,6 @@ namespace MenuModel
         [Association("ClassifiedItem", Roles.RoleB, "08c2a04a-ed64-4ffb-b460-ba544fbeda1b")]
         [RoleBMultiplicityRange(1, 1)]
         IClass Class { get; set; }
+
     }
 } 

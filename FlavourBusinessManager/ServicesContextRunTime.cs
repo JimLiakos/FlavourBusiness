@@ -1712,7 +1712,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         //clientName="clientName"
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser,bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -1728,7 +1728,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             if (servicePoint == null && DeliveryServicePoint?.ServicesPointIdentity == servicePointIdentity)
                 servicePoint = DeliveryServicePoint as IServicePoint;
 
-            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, create);
+            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, endUser, create);
 
             if (clientSession == null)
                 return new ClientSessionData();

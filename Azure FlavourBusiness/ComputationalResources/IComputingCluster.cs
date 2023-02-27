@@ -11,6 +11,7 @@ namespace ComputationalResources
         System.Collections.Generic.IList<IComputingResource> Resources { get; }
 
          
+
          
         /// <MetaDataID>{1d363fbf-bc8b-4c88-961b-ae3021466790}</MetaDataID>
         System.Collections.Generic.List<RoleInstanceInternalEndPoint> GetRoleInstancesInternalEndPoints(string endPointName);

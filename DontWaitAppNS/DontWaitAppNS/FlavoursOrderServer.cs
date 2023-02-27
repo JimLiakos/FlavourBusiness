@@ -1799,9 +1799,9 @@ namespace DontWaitApp
                         try
                         {
                             if(flavoursServices!=null)
-                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity,null,await GetFriendlyName(), device.DeviceID, device.FirebaseToken,null,null, create);
+                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity,null,await GetFriendlyName(), device.DeviceID, device.FirebaseToken,null,null,!WaiterView, create);
                             else
-                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, create);
+                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, !WaiterView, create);
 
                         }
                         catch (System.Net.WebException connectionError)
