@@ -338,6 +338,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;
+
             Waiter waiter = null;
             if (authUserRef != null)
                 user = waiter = authUserRef.GetContextRoleObject<Waiter>();
