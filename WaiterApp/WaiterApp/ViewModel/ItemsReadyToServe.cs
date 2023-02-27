@@ -49,6 +49,7 @@ namespace WaiterApp.ViewModel
         public ServingBatchPresentation(IServingBatch servingBatch, WaiterPresentation waiterPresentation)
         {
             WaiterPresentation = waiterPresentation;
+            string servicesContextIdentity = waiterPresentation.Waiter.ServicesContextIdentity;
             ServingBatch = servingBatch;
             ServingBatch.ObjectChangeState += ServingBatchChangeState;
             ServingBatch.ItemsStateChanged += ServingBatch_ItemsStateChanged;
@@ -79,7 +80,8 @@ namespace WaiterApp.ViewModel
                 MenuName = storeRef.Name,
                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
-                DefaultMealTypeUri = sessionData.DefaultMealTypeUri
+                DefaultMealTypeUri = sessionData.DefaultMealTypeUri,
+                ServicePointIdentity= servicesContextIdentity+";"+sessionData.ServicePointIdentity,
             };
         }
 

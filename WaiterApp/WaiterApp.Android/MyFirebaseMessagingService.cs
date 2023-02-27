@@ -15,23 +15,27 @@ using Firebase.Messaging;
 
 namespace WaiterApp.Droid
 {
-    [Service]
+    [Service(Exported = true)]
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class MyFirebaseMessagingService : FirebaseMessagingService
     {
+
+        public MyFirebaseMessagingService()
+        {
+        }
         const string TAG = "MyFirebaseMsgService";
 
         public override void OnMessageReceived(RemoteMessage message)
         {
             Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() =>
             {
-               //App.Current.MainPage.DisplayAlert(message.GetNotification().Title, message.GetNotification().Body,"OK");
+                //App.Current.MainPage.DisplayAlert(message.GetNotification().Title, message.GetNotification().Body,"OK");
                 // Code to run on the main thread
             });
 
-            
 
-            
+
+
 
 
 
@@ -79,8 +83,15 @@ namespace WaiterApp.Droid
             //  notificationManager.Notify(MainActivity.NOTIFICATION_ID, notificationBuilder.Build());
         }
 
+        public override void OnNewToken(string p0)
+        {
+            base.OnNewToken(p0);
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(p0);
+        }
 
-   
+
+
 
     }
+
 }

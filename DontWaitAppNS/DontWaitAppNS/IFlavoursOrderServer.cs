@@ -508,7 +508,7 @@ namespace DontWaitApp
         //void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
 
         bool TransferPartialSession(string partialSessionID, string targetSessionID);
-
+        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
     }
 
 

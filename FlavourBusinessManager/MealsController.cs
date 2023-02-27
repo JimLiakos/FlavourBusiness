@@ -277,8 +277,8 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-        /// <MetaDataID>{cd97524c-d96b-4469-8ad1-dbc709729bb4}</MetaDataID>
-        Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
+        ///// <MetaDataID>{cd97524c-d96b-4469-8ad1-dbc709729bb4}</MetaDataID>
+        //Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
 
         /// <MetaDataID>{e7cf8250-6b70-4095-bf94-bf087a79d362}</MetaDataID>
         internal IList<ServingBatch> GetServingBatches(HumanResources.Waiter waiter)
@@ -319,30 +319,29 @@ namespace FlavourBusinessManager.RoomService
 
                     var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
-                    var serviceBatch = (from itemsPreparationContext in preparedItems
+                    var servingBatch = (from itemsPreparationContext in preparedItems
                                         from itemPreparation in itemsPreparationContext.PreparationItems
                                         where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
-                    if (serviceBatch != null)
+                    if (servingBatch == null)
                     {
+                        servingBatch=mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                        if (servingBatch == null)
+                        {
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                            {
+                                servingBatch=new ServingBatch(mealCourse, preparedItems, underPreparationItems);
+                                ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(servingBatch);
 
-                        if (serviceBatch.ShiftWork?.Worker == waiter)
-                        {
-                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
-                            servingBatches.Add(serviceBatch);
+                                servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+
+                                stateTransition.Consistent = true;
+                            }
                         }
                     }
-                    else
-                    {
-                        UnassignedMealCourses.TryGetValue(mealCourse, out serviceBatch);
-                        if (serviceBatch == null)
-                            servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
-                        else
-                        {
-                            serviceBatch.Update(mealCourse, preparedItems, underPreparationItems);
-                            servingBatches.Add(serviceBatch);
-                        }
-                    }
+                    servingBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                    servingBatches.Add(servingBatch);
+
                 }
             }
 

@@ -38,7 +38,6 @@ using FinanceFacade;
 
 
 #if DeviceDotNet
-using Plugin.Media.Abstractions;
 using ZXing.QrCode.Internal;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -562,13 +561,9 @@ namespace DontWaitApp
             {
                 if (_EndUser!=null)
                     _EndUser.ObjectChangeState-=EndUser_ObjectChangeState;
-
                 _EndUser = value;
-
                 if (_EndUser!=null)
                     _EndUser.ObjectChangeState+=EndUser_ObjectChangeState;
-
-
             }
         }
 
@@ -640,8 +635,10 @@ namespace DontWaitApp
                 _EndUser.ObjectChangeState += EndUser_ObjectChangeState;
             }
 
-            //var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            //OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#if DeviceDotNet
+            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+            OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#endif
             InitializationTask = Task.Run(async () =>
             {
 
@@ -1828,7 +1825,10 @@ namespace DontWaitApp
                     var foodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(clientSessionData.Value.FoodServiceClientSession);
                     var foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.FoodServiceClientSessionUri == foodServiceClientSessionUri).FirstOrDefault();
                     if (foodServicesClientSessionViewModel != null)
+                    {
+                        foodServicesClientSessionViewModel.FlavoursOrderServer=this;
                         foodServicesClientSessionViewModel.FoodServicesClientSession = clientSessionData.Value.FoodServiceClientSession;
+                    }
                     else
                     {
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))

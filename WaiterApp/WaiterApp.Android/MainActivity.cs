@@ -15,17 +15,19 @@ using Android.Content;
 using System.Threading.Tasks;
 using Android.Content.PM;
 using Android.Media;
+using Android.Gms.Tasks;
+using Firebase.Messaging;
 
 namespace WaiterApp.Droid
 {
     [Activity(Label = "WaiterApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IOnSuccessListener
     {
 
         internal static readonly string CHANNEL_ID = "my_notification_channel";
         internal static readonly int NOTIFICATION_ID = 100;
 
-         string msgText;
+        string msgText;
         public bool IsPlayServicesAvailable()
         {
             int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
@@ -69,13 +71,13 @@ namespace WaiterApp.Droid
             var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
             notificationManager.CreateNotificationChannel(channel);
         }
-        protected  override async void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-       
+
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -83,6 +85,8 @@ namespace WaiterApp.Droid
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
+
+            await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
 
 
             IsPlayServicesAvailable();
@@ -137,7 +141,7 @@ namespace WaiterApp.Droid
             //Android.Net.Uri uri = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone);
             //Ringtone rt = RingtoneManager.GetRingtone(this.ApplicationContext, uri);
             //rt.Play();
-            
+
 
             LoadApplication(new App());
 
@@ -160,6 +164,11 @@ namespace WaiterApp.Droid
         {
             OOAdvantech.Droid.DeviceOOAdvantechCore.OnDestroy();
             base.OnDestroy();
+        }
+        public void OnSuccess(Java.Lang.Object result)
+        {
+            string token = result.ToString();
+            OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
         }
 
         public override void OnBackPressed()

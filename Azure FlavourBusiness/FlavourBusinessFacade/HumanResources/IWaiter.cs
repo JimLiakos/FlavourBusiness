@@ -91,6 +91,7 @@ namespace FlavourBusinessFacade.HumanResources
         void WillTakeCareMealConversationTimeout(string servicePointIdentity,string sessionID);
         void TransferPartialSession(string partialSessionID, string targetSessionID);
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
+        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
     }
 
 

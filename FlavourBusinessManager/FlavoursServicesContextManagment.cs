@@ -94,7 +94,7 @@ namespace FlavourBusinessManager
             var graphicMenus = (flavoursServicesContext.Owner as Organization).UnSafeGraphicMenus;
 
 
-            
+
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
             var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceFirebaseToken, orgIdentity, graphicMenus, create);
@@ -622,12 +622,15 @@ namespace FlavourBusinessManager
                 if (deliveryServicePoint != null)
                 {
                     var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
-                    double distance = CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
+                    if (placeOfDistribution!=null)
+                    {
+                        double distance = CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
 
-                    var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
+                        var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 
-                    if (polyGon.FindPoint(location.Latitude, location.Longitude))
-                        deliveryServicePoints.Add(new HomeDeliveryServicePointInfo(deliveryServicePoint, flavoursServicesContext.GetRunTime()));
+                        if (polyGon.FindPoint(location.Latitude, location.Longitude))
+                            deliveryServicePoints.Add(new HomeDeliveryServicePointInfo(deliveryServicePoint, flavoursServicesContext.GetRunTime()));
+                    }
                 }
             }
 
@@ -700,7 +703,7 @@ namespace FlavourBusinessManager
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
-            IFoodServiceClientSession clientSession = flavoursServicesContextRunTime.GetMealInvitationInviter( mealInvitationSessionID);
+            IFoodServiceClientSession clientSession = flavoursServicesContextRunTime.GetMealInvitationInviter(mealInvitationSessionID);
 
             return clientSession;
 

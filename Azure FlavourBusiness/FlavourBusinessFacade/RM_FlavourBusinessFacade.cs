@@ -4738,6 +4738,16 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "TransferItems", args, argsTypes);
         }
         
+        public FlavourBusinessFacade.RoomService.IBill GetBill(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation> itemPreparations)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = itemPreparations;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetBill", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

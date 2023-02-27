@@ -1,4 +1,5 @@
 using FinanceFacade;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
@@ -32,13 +33,13 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-        internal static List<FinanceFacade.Item> GetUnpaidItems(List<FinanceFacade.Payment> payments, List<ItemPreparation> flavourItems)
+        internal static List<FinanceFacade.Item> GetUnpaidItems(FoodServiceClientSession foodServiceClientSession, List<Payment> payments, List<ItemPreparation> flavourItems)
         {
 
             //FinanceFacade.Payment payment = null;
 
             Dictionary<ItemPreparation, decimal> paidItemsAmounts = new Dictionary<ItemPreparation, decimal>();
-
+            //List<Payment> payments = sessionsPayments[foodServiceClientSession];
 
             #region sort by transaction date
             var tmpPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
@@ -69,9 +70,9 @@ namespace FlavourBusinessManager.EndUsers
                 if (amount - paidAmount > 0)
                 {
                     if (flavourItem.NumberOfShares > 1)
-                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.uid, QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                        item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = GetItemUid(flavourItem, foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = paidAmount };
                     else
-                        item = new FinanceFacade.Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.uid, QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+                        item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = GetItemUid(flavourItem), QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
                     paymentItems.Add(item);
                 }
                 if (amount - paidAmount < 0)
@@ -91,15 +92,14 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-            List<FinanceFacade.IItem> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).ToList();
+            List<IItem> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items.OfType<Item>().Where(x=>x.GetItemPreparationUid()).ToList();
             var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !flavourItemsUids.Contains(x.uid)).OfType<FinanceFacade.Item>().ToList();
 
             foreach (var canceledItem in canceledItems)
             {
-
-                if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.uid && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
+                if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
                 {
-                    var nettingQuantity = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.uid && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity;
+                    var nettingQuantity = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid ==canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity;
                     var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -nettingQuantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription = canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
                     paymentItems.Add(nettingItem);
                 }
@@ -123,10 +123,23 @@ namespace FlavourBusinessManager.EndUsers
             return paymentItems;
         }
 
+
+        private static string GetItemUid(ItemPreparation flavourItem, FoodServiceClientSession foodServiceClientSession = null)
+        {
+            if (foodServiceClientSession != null&&!foodServiceClientSession.IsWaiterSession)
+                return flavourItem.uid+"?"+foodServiceClientSession.SessionID;
+            else
+            {
+                string sessionsIDS = null;
+                flavourItem.SharedInSessions.Select(x => sessionsIDS==null ? sessionsIDS="?"+x : sessionsIDS+=",&"+x).ToList();
+                return flavourItem.uid+sessionsIDS;
+            }
+        }
+
         private static decimal GetPaidAmount(List<Payment> payments, ItemPreparation flavourItem)
         {
             decimal paidAmount;
-            var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
+            var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.GetItemPreparationUid() == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
             paidAmount = itemPayments.Sum(paidItem => paidItem.Amount - paidItem.PaidAmount);
             return paidAmount;
         }
@@ -135,48 +148,55 @@ namespace FlavourBusinessManager.EndUsers
         {
             var flavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).ToList();
 
-            string paymentIdentity = foodServiceClientSession.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodServiceClientSession).GetPersistentObjectUri(foodServiceClientSession);
-            List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
+            string paymentIdentity = GetPaymentIdentity(foodServiceClientSession);
+
+            List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
             if (payments == null)
                 payments = new List<FinanceFacade.Payment>();
-            List<FinanceFacade.Item> paymentItems = Bill.GetUnpaidItems(payments, flavourItems);
+
+          //  Dictionary<FoodServiceClientSession, List<Payment>> sessionsPayments = payments.GroupBy(x => foodServiceClientSession.MainSession.PartialClientSessions.OfType<FoodServiceClientSession>().Where(y => GetPaymentIdentity(y)== x.Identity).First()).ToDictionary(g => g.Key, g => g.ToList());
+
+
+
+            List<FinanceFacade.Item> paymentItems = Bill.GetUnpaidItems(foodServiceClientSession, payments, flavourItems);
 
             payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
-            //if (paymentItems.Count > 0)
+            var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
-
-
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                if (payment == null)
                 {
-                    if (payment == null)
-                    {
-                        payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
 
-                        ObjectStorage.GetStorageOfObject(foodServiceClientSession).CommitTransientObjectState(payment);
-                        if (foodServiceClientSession.MainSession== null)
-                            (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(foodServiceClientSession);
+                    ObjectStorage.GetStorageOfObject(foodServiceClientSession).CommitTransientObjectState(payment);
+                    if (foodServiceClientSession.MainSession== null)
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(foodServiceClientSession);
 
-                        foodServiceClientSession.MainSession.AddPayment(payment);
-                        payments.Add(payment);
+                    foodServiceClientSession.MainSession.AddPayment(payment);
+                    payments.Add(payment);
 
-                    }
-                    else
-                    {
-                        payment.Update(paymentItems);
-                        //move to end of list;
-                        payments.Remove(payment);
-                        payments.Add(payment);
-                    }
-
-                    stateTransition.Consistent = true;
                 }
-                payment.Subject = foodServiceClientSession.MainSession as FinanceFacade.IPaymentSubject;
+                else
+                {
+                    payment.Update(paymentItems);
+                    //move to end of list;
+                    payments.Remove(payment);
+                    payments.Add(payment);
+                }
+
+                stateTransition.Consistent = true;
             }
-            //payments sorted by TransactionDate
+            payment.Subject = foodServiceClientSession.MainSession as FinanceFacade.IPaymentSubject;
 
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+        }
+
+        private static string GetPaymentIdentity(FoodServiceClientSession foodServiceClientSession)
+        {
+            return foodServiceClientSession.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodServiceClientSession).GetPersistentObjectUri(foodServiceClientSession);
         }
 
         internal static decimal GetPaidAmount(FoodServiceClientSession foodServiceClientSession, ItemPreparation flavourItem)
@@ -187,6 +207,45 @@ namespace FlavourBusinessManager.EndUsers
                 foodServiceClientSessionPayments = new List<FinanceFacade.Payment>();
             return GetPaidAmount(foodServiceClientSessionPayments, flavourItem);
         }
+
+        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations)
+        {
+
+            List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
+
+
+            foreach (var sessionitemsEntry in (from itemPreparation in itemPreparations
+                                               group itemPreparation by itemPreparation.SessionID into SessionItems
+                                               select SessionItems))
+            {
+                var itemsUids = sessionitemsEntry.Select(x => x.uid).ToList();
+                var foodServiceClientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
+                var flavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => itemsUids.Contains(x.uid)).ToList();
+
+
+                var uids = flavourItems.Select(x => new { x.Name, uid = GetItemUid(x) }).ToArray();
+
+
+            }
+            return null;
+
+        }
     }
+
+    static class PaymentExtension
+    {
+        public static string GetItemPreparationUid(this Item item)
+        {
+            return item.uid.Split('?')[0];
+        }
+        public static bool HasPayAmountFor(this Item item)
+        {
+            return true;
+            //return item.uid.Split('?')[0];
+        }
+
+
+    }
+
 
 }

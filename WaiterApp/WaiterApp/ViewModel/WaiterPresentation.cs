@@ -298,7 +298,7 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{f55963f0-34db-4fb9-b9ef-14d064de47ec}</MetaDataID>
         string _PhoneNumber;
         /// <MetaDataID>{809b179f-f0b6-4679-8896-53c71591a182}</MetaDataID>
-        private IWaiter Waiter;
+        internal IWaiter Waiter;
 
 
         /// <MetaDataID>{75146911-f7c0-4e07-8ebb-da97efb23cb4}</MetaDataID>
@@ -1684,6 +1684,10 @@ namespace WaiterApp.ViewModel
             this.Waiter.TransferItems(itemPreparations, targetServicePointIdentity);
         }
 
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
+        {
+            return this.Waiter.GetBill(itemPreparations);
+        }
 
     }
 }
