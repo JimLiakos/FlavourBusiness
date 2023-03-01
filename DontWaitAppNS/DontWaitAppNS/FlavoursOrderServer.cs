@@ -732,8 +732,13 @@ namespace DontWaitApp
             if (messmate == null)
             {
                 var theInviter = ServicesContextManagment.GetMealInvitationInviter(invitationUri);
-                messmate = new Messmate(theInviter, new List<ItemPreparation>());
-                CandidateMessmates.Add(messmate);
+                if (theInviter != null)
+                {
+                    messmate = new Messmate(theInviter, new List<ItemPreparation>());
+                    CandidateMessmates.Add(messmate);
+                }
+                else
+                    return;
             }
 
             var message = new Message();
