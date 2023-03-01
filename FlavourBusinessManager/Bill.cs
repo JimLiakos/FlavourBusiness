@@ -4,6 +4,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -147,7 +148,7 @@ namespace FlavourBusinessManager.EndUsers
 
             payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
-            var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
+            var payment = payments.Where(x => (x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress)&&x.Identity==paymentIdentity).FirstOrDefault();
 
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -195,11 +196,11 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations)
+        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
         {
 
             List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
-
+            List<ItemPreparation> flavourItems = new List<ItemPreparation>();
 
             foreach (var sessionitemsEntry in (from itemPreparation in itemPreparations
                                                group itemPreparation by itemPreparation.SessionID into SessionItems
@@ -207,13 +208,24 @@ namespace FlavourBusinessManager.EndUsers
             {
                 var itemsUids = sessionitemsEntry.Select(x => x.uid).ToList();
                 var foodServiceClientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
-                var flavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => itemsUids.Contains(x.uid)).ToList();
+                var sessionFlavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => itemsUids.Contains(x.uid)).ToList();
+                flavourItems.Union(sessionFlavourItems);
 
 
                 var uids = flavourItems.Select(x => new { x.Name, uid = x.GetItemUid() }).ToArray();
-
-
             }
+
+
+            List<FinanceFacade.Item> paymentItems = Bill.GetUnpaidItems(foodServiceClientSession, payments, flavourItems);
+
+            payments = payments.OrderBy(x => x.TransactionDate).ToList();
+
+            var payment = payments.Where(x => (x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress)).FirstOrDefault();
+
+
+
+
+
             return null;
 
         }

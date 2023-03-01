@@ -27,5 +27,7 @@ namespace FlavourBusinessFacade
 
         public bool IsShared;
 
+        public double? Quantity;
+
     }
 }

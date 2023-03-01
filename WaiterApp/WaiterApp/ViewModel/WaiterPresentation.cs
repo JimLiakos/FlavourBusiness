@@ -1684,9 +1684,9 @@ namespace WaiterApp.ViewModel
             this.Waiter.TransferItems(itemPreparations, targetServicePointIdentity);
         }
 
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation)
         {
-            return this.Waiter.GetBill(itemPreparations);
+            return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
 
     }

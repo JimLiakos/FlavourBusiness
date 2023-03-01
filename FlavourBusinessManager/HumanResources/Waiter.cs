@@ -1100,9 +1100,9 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
         {
-            return Bill.GetBillFor(itemPreparations);
+            return Bill.GetBillFor(itemPreparations, foodServicesClientSession);
         }
         ///// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
         //public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
