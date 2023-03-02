@@ -202,41 +202,39 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations, FoodServiceClientSession foodServicesClientSession)
+        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations, FoodServiceClientSession waiterFoodServicesClientSession)
         {
 
             List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
             List<ItemPreparation> flavourItems = new List<ItemPreparation>();
-            string paymentIdentity = GetPaymentIdentity(foodServicesClientSession);
+            string paymentIdentity = GetPaymentIdentity(waiterFoodServicesClientSession);
+
+            List<FinanceFacade.Payment> payments = waiterFoodServicesClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
+            if (payments == null)
+                payments = new List<FinanceFacade.Payment>();
+
+            List<FinanceFacade.Item> paymentItems = new List<Item>();
 
             foreach (var sessionitemsEntry in (from itemPreparation in itemPreparations
                                                group itemPreparation by itemPreparation.SessionID into SessionItems
                                                select SessionItems))
             {
                 var itemsUids = sessionitemsEntry.Select(x => x.uid).ToList();
-                var foodServiceClientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
-                var sessionFlavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => itemsUids.Contains(x.uid)).ToList();
+                var foodServicesClientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.SessionID == sessionitemsEntry.Key).First();
+                var sessionFlavourItems = foodServicesClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServicesClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => itemsUids.Contains(x.uid)).ToList();
                 flavourItems=flavourItems.Union(sessionFlavourItems).ToList();
-
-
-                var uids = flavourItems.Select(x => new { x.Name, uid = x.GetItemUid() }).ToArray();
+                foreach (var item in Bill.GetUnpaidItems(foodServicesClientSession, payments, sessionFlavourItems))
+                {
+                    item.uid+="&"+waiterFoodServicesClientSession.SessionID;
+                    paymentItems.Add(item);
+                }
+                
             }
-            List<FinanceFacade.Payment> payments = foodServicesClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
-            if (payments == null)
-                payments = new List<FinanceFacade.Payment>();
-
-
-            List<FinanceFacade.Item> paymentItems = new List<Item>();
-            if (foodServicesClientSession.IsWaiterSession)
-                paymentItems= Bill.GetUnpaidItems(null, payments, flavourItems);
-            else
-                paymentItems= Bill.GetUnpaidItems(foodServicesClientSession, payments, flavourItems);
 
             payments=payments.Where(x => x.State==PaymentState.Completed||x.Identity==paymentIdentity).ToList();
-
             payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
-            
+
 
 
             var payment = payments.Where(x => (x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress)&&x.Identity==paymentIdentity).FirstOrDefault();
@@ -249,11 +247,11 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
 
-                    ObjectStorage.GetStorageOfObject(foodServicesClientSession).CommitTransientObjectState(payment);
-                    if (foodServicesClientSession.MainSession== null)
-                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(foodServicesClientSession);
+                    ObjectStorage.GetStorageOfObject(waiterFoodServicesClientSession).CommitTransientObjectState(payment);
+                    if (waiterFoodServicesClientSession.MainSession== null)
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(waiterFoodServicesClientSession);
 
-                    foodServicesClientSession.MainSession.AddPayment(payment);
+                    waiterFoodServicesClientSession.MainSession.AddPayment(payment);
                     payments.Add(payment);
 
                 }
@@ -267,12 +265,12 @@ namespace FlavourBusinessManager.EndUsers
 
                 stateTransition.Consistent = true;
             }
-            payment.Subject = foodServicesClientSession.MainSession as FinanceFacade.IPaymentSubject;
+            payment.Subject = waiterFoodServicesClientSession.MainSession as FinanceFacade.IPaymentSubject;
 
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
 
 
-            
+
 
         }
     }
@@ -308,14 +306,14 @@ namespace FlavourBusinessManager.EndUsers
 
             //return item.uid.Split('?')[0];
         }
-        public static string GetItemUid(this ItemPreparation flavourItem, FoodServiceClientSession foodServiceClientSession = null)
+        public static string GetItemUid(this ItemPreparation flavourItem, FoodServiceClientSession foodServiceClientSession)
         {
             if (foodServiceClientSession != null&&!foodServiceClientSession.IsWaiterSession)
                 return flavourItem.uid+"?"+foodServiceClientSession.SessionID;
             else
             {
                 string sessionsIDS = null;
-                flavourItem.SharedInSessions.Select(x => sessionsIDS==null ? sessionsIDS="?"+x : sessionsIDS+="&"+x).ToList();
+                flavourItem.SharedInSessions.Select(x => sessionsIDS==null ? sessionsIDS="?"+foodServiceClientSession.SessionID+"&"+x : sessionsIDS+="&"+x).ToList();
                 return flavourItem.uid+sessionsIDS;
             }
         }
