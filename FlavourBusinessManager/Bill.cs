@@ -225,8 +225,18 @@ namespace FlavourBusinessManager.EndUsers
                 flavourItems=flavourItems.Union(sessionFlavourItems).ToList();
                 foreach (var item in Bill.GetUnpaidItems(foodServicesClientSession, payments, sessionFlavourItems))
                 {
-                    item.uid+="&"+waiterFoodServicesClientSession.SessionID;
-                    paymentItems.Add(item);
+                    var itemPreparation = sessionitemsEntry.Where(x => x.uid==item.GetItemPreparationUid()).FirstOrDefault();
+                    if (itemPreparation.Quantity!=null)
+                    {
+                        
+                        var  newItem = new Item() { Name = item.Name, Quantity =(decimal)itemPreparation.Quantity.Value, Price = item.Price, uid = item.uid+="&"+waiterFoodServicesClientSession.SessionID, QuantityDescription = FlavourBusinessToolKit.Fraction.RealToFraction(itemPreparation.Quantity.Value, 0.1).ToString(), PaidAmount = item.PaidAmount };
+                        paymentItems.Add(newItem);
+                    }
+                    else
+                    {
+                        item.uid+="&"+waiterFoodServicesClientSession.SessionID;
+                        paymentItems.Add(item);
+                    }
                 }
                 
             }
