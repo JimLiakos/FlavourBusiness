@@ -78,10 +78,32 @@ namespace FlavourBusinessManager.EndUsers
                 if (amount - paidAmount > 0)
                 {
                     if (numberOfShares > 1)
+                    {
                         item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                        paymentItems.Add(item);
+                    }
                     else
-                        item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
-                    paymentItems.Add(item);
+                    {
+                        int paidQuantity = 0;
+                        if (paidAmount/(decimal)flavourItem.ModifiedItemPrice==Math.Abs(paidAmount/(decimal)flavourItem.ModifiedItemPrice))
+                            paidQuantity=(int)(paidAmount/(decimal)flavourItem.ModifiedItemPrice);
+                        if (paidQuantity>0&&paidQuantity<quantity&&Math.Abs(quantity)==quantity)
+                        {
+                            quantity-=paidQuantity;
+                            item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = quantity.ToString(), PaidAmount = 0 };
+                            paymentItems.Add(item);
+
+                            item = new Item() { Name = flavourItem.FullName, Quantity = paidQuantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = paidQuantity.ToString(), PaidAmount = paidAmount };
+                            paymentItems.Add(item);
+                        }
+                        else
+                        {
+                            item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+                            paymentItems.Add(item);
+
+                        }
+                    }
+                    
                 }
                 if (amount - paidAmount < 0)
                 {
@@ -94,14 +116,14 @@ namespace FlavourBusinessManager.EndUsers
 
 
             }
+            
 
-
-            var flavourItemsUids = flavourItems.Where(x => x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
+            var sessionAllFlavourItemsUids = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
 
 
 
             List<Item> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.HasPayAmountFor(foodServiceClientSession)).ToList();
-            var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !flavourItemsUids.Contains(x.GetItemPreparationUid())).OfType<FinanceFacade.Item>().ToList();
+            var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !sessionAllFlavourItemsUids.Contains(x.GetItemPreparationUid())).OfType<FinanceFacade.Item>().ToList();
 
             foreach (var canceledItem in canceledItems)
             {
@@ -228,8 +250,12 @@ namespace FlavourBusinessManager.EndUsers
                     var itemPreparation = sessionitemsEntry.Where(x => x.uid==item.GetItemPreparationUid()).FirstOrDefault();
                     if (itemPreparation.Quantity!=null)
                     {
-                        
-                        var  newItem = new Item() { Name = item.Name, Quantity =(decimal)itemPreparation.Quantity.Value, Price = item.Price, uid = item.uid+="&"+waiterFoodServicesClientSession.SessionID, QuantityDescription = FlavourBusinessToolKit.Fraction.RealToFraction(itemPreparation.Quantity.Value, 0.1).ToString(), PaidAmount = item.PaidAmount };
+                        decimal unpaidAmount = item.Amount-item.PaidAmount;
+                        decimal billItemAmount = ((decimal)itemPreparation.Quantity.Value*item.Price);
+                        decimal billItemPaidAmount = 0;
+                        if (billItemAmount>unpaidAmount)
+                            billItemPaidAmount=billItemAmount-unpaidAmount;
+                        var  newItem = new Item() { Name = item.Name, Quantity =(decimal)itemPreparation.Quantity.Value, Price = item.Price, uid = item.uid+="&"+waiterFoodServicesClientSession.SessionID, QuantityDescription = FlavourBusinessToolKit.Fraction.RealToFraction(itemPreparation.Quantity.Value, 0.1).ToString(), PaidAmount = billItemPaidAmount };
                         paymentItems.Add(newItem);
                     }
                     else
