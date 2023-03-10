@@ -1840,8 +1840,9 @@ namespace DontWaitApp
 
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel(clientSessionData.Value, this);
+                            foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
                             OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current).CommitTransientObjectState(foodServicesClientSessionViewModel);
+                            foodServicesClientSessionViewModel.Init(clientSessionData.Value, this);
                             ApplicationSettings.Current.AddClientSession(foodServicesClientSessionViewModel);
                             stateTransition.Consistent = true;
                         }

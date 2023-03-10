@@ -172,7 +172,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{a5f046d9-c7fa-43f3-8c49-24c32be142f1}</MetaDataID>
-        internal FoodServicesClientSessionViewModel(FlavourBusinessFacade.EndUsers.ClientSessionData clientSessionData, DontWaitApp.FlavoursOrderServer flavoursOrderServer)
+        internal void Init(FlavourBusinessFacade.EndUsers.ClientSessionData clientSessionData, DontWaitApp.FlavoursOrderServer flavoursOrderServer)
         {
             FlavoursOrderServer = flavoursOrderServer;
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
