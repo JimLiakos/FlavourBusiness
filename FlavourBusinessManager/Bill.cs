@@ -75,7 +75,7 @@ namespace FlavourBusinessManager.EndUsers
                     quantity = (int)quantity;
                 #endregion
                 paidItemsAmounts[flavourItem] = paidAmount;
-                if (amount - paidAmount > 0)
+                if (amount - paidAmount >= 0)
                 {
                     if (numberOfShares > 1)
                     {
@@ -125,6 +125,7 @@ namespace FlavourBusinessManager.EndUsers
             List<Item> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.HasPayAmountFor(foodServiceClientSession)).ToList();
             var canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !sessionAllFlavourItemsUids.Contains(x.GetItemPreparationUid())).OfType<FinanceFacade.Item>().ToList();
 
+            //The items where canceled
             foreach (var canceledItem in canceledItems)
             {
                 if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
@@ -134,15 +135,20 @@ namespace FlavourBusinessManager.EndUsers
                     paymentItems.Add(nettingItem);
                 }
             }
-            foreach (var paidItem in paidItemsAmounts.Where(x => ((decimal)(x.Key.ModifiedItemPrice *(x.Key.Quantity/x.Key.NumberOfShares))) < x.Value))
+
+            //The items with price less than price where paid
+            foreach (var paidItem in paidItemsAmounts.Where(paidItemEntry => ((decimal)(paidItemEntry.Key.ModifiedItemPrice *(paidItemEntry.Key.Quantity/paidItemEntry.Key.NumberOfShares))) < paidItemEntry.Value))
             {
 
                 decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity/paidItem.Key.NumberOfShares);
                 var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
                 string quantityDescription = nettingQuantity.ToString();// + "/" + numberOfShares.ToString();
                 var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = 0 };
-                paymentItems.Add(nettingItem);
-                var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.uid, QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
+                paymentItems.Add(nettingItem); // entry with  refund amount "netting item" 
+
+                //Adds the paid item 
+                quantityDescription=FlavourBusinessToolKit.Fraction.RealToFraction(paidItem.Key.Quantity, 0.1).ToString();
+                var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
                 paymentItems.Add(item);
 
 
@@ -206,7 +212,7 @@ namespace FlavourBusinessManager.EndUsers
             }
             payment.Subject = foodServiceClientSession.MainSession as FinanceFacade.IPaymentSubject;
 
-            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+            return new Bill(payments.OfType<FinanceFacade.IPayment>().Where(x => x.State==PaymentState.Completed||x.Identity==paymentIdentity).ToList());
         }
 
         private static string GetPaymentIdentity(FoodServiceClientSession foodServiceClientSession)
@@ -304,9 +310,6 @@ namespace FlavourBusinessManager.EndUsers
             payment.Subject = waiterFoodServicesClientSession.MainSession as FinanceFacade.IPaymentSubject;
 
             return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
-
-
-
 
         }
     }
