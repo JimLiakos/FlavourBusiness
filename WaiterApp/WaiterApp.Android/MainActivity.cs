@@ -87,7 +87,7 @@ namespace WaiterApp.Droid
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
 
             await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
-
+            VivaWalletPos.Android.Pos.callback = "deliveriescallbackscheme://result";
 
             IsPlayServicesAvailable();
             CreateNotificationChannel();

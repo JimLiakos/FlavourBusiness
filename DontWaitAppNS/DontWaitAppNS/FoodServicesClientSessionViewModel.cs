@@ -1309,21 +1309,36 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async Task Pay(FinanceFacade.IPayment payment, decimal tipAmount)
+        public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
+
+
 #if DeviceDotNet
 
-            FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
-            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-            if (await this.FlavoursOrderServer.Pay(payment))
+            if (paymentMethod==PaymentMethod.PaymentGateway)
             {
+
+                FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
                 RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-                var state = payment.State;
-                if (state==FinanceFacade.PaymentState.Completed)
+                if (await this.FlavoursOrderServer.Pay(payment))
                 {
-                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+                    var state = payment.State;
+                    if (state==FinanceFacade.PaymentState.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    }
                 }
             }
+            if (paymentMethod==PaymentMethod.Card)
+            {
+                var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+
+                var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
+               
+
+            }
+
 #else
             payment.CashPaymentCompleted(tipAmount);
 #endif
@@ -1331,7 +1346,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, decimal tipAmount)
+        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
 
 

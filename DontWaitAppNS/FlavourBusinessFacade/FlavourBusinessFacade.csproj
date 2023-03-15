@@ -95,7 +95,6 @@
     <Compile Include="..\..\MicronemeCommon\Quantity.cs" Link="Quantity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
     <ProjectReference Include="..\FinanceFacade\FinanceFacade.csproj" />
   </ItemGroup>
   <ItemGroup>
