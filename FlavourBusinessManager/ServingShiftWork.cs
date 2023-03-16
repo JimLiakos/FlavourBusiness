@@ -12,6 +12,40 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class ServingShiftWork : ShiftWork, IDebtCollection
     {
+        /// <MetaDataID>{d3dd1bff-a913-47fa-a3bc-ed0952ef0efd}</MetaDataID>
+        public IWaiter Waiter => Worker as IWaiter;
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession> _WaiterFoodServiceClientSessions = new OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession>();
+
+        [RoleAMultiplicityRange(0)]
+        [Association("FoodServiceClientSessionInTheShiftWork", Roles.RoleA, "2076b2c6-2c5e-415a-93ab-187654f7c04a")]
+        [RoleBMultiplicityRange(0, 1)]
+        [PersistentMember(nameof(_WaiterFoodServiceClientSessions))]
+        public List<EndUsers.FoodServiceClientSession> WaiterFoodServiceClientSessions => _WaiterFoodServiceClientSessions.ToThreadSafeList();
+
+        /// <MetaDataID>{ddc56525-f246-48c0-b41d-71f82b87f8cb}</MetaDataID>
+        public void RemoveClientSession(EndUsers.FoodServiceClientSession clientSession)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _WaiterFoodServiceClientSessions.Add(clientSession); 
+                stateTransition.Consistent = true;
+            }
+
+        }
+
+        /// <MetaDataID>{688b3974-5e1e-437c-8788-03d19c9092f2}</MetaDataID>
+        public void AddClientSession(EndUsers.FoodServiceClientSession clientSession)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _WaiterFoodServiceClientSessions.Remove(clientSession);
+                stateTransition.Consistent = true;
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch>();
 
@@ -21,12 +55,13 @@ namespace FlavourBusinessManager.HumanResources
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public System.Collections.Generic.List<RoomService.ServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
+        /// <MetaDataID>{20eac476-b8fa-4d08-9cac-b2465d9762fe}</MetaDataID>
         public List<IPayment> BillingPayments
         {
             get
             {
-                this.AddTableServiceClient
-            } 
+                return null;
+            }
         }
 
 

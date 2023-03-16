@@ -413,7 +413,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         if (waiter != null)
                         {
                             fsClientSession.IsWaiterSession = true;
-                            (user as HumanResources.Waiter).AddClientSession(fsClientSession);
+                            ((user as HumanResources.Waiter).ActiveShiftWork as ServingShiftWork).AddClientSession(fsClientSession);
                         }
 
 
@@ -466,7 +466,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         if (waiter != null && fsClientSession.Waiter == null)
                         {
                             fsClientSession.IsWaiterSession = true;
-                            (user as HumanResources.Waiter).AddClientSession(fsClientSession);
+
+                            ((user as HumanResources.Waiter).ActiveShiftWork as ServingShiftWork).AddClientSession(fsClientSession);
 
                         }
                         if (user != null && user.Identity != fsClientSession.UserIdentity)
