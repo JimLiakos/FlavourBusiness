@@ -1,12 +1,16 @@
+using FinanceFacade;
+using FlavourBusinessFacade.HumanResources;
+using Microsoft.Extensions.Azure;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager.HumanResources
 {
     /// <MetaDataID>{62fc8b78-7e94-4a57-b27c-c9d188b6d637}</MetaDataID>
     [BackwardCompatibilityID("{62fc8b78-7e94-4a57-b27c-c9d188b6d637}")]
     [Persistent()]
-    public class ServingShiftWork : ShiftWork
+    public class ServingShiftWork : ShiftWork, IDebtCollection
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch>();
@@ -16,6 +20,14 @@ namespace FlavourBusinessManager.HumanResources
         [Association("ServingBatchInShiftWork", Roles.RoleA, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public System.Collections.Generic.List<RoomService.ServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
+
+        public List<IPayment> BillingPayments
+        {
+            get
+            {
+                this.AddTableServiceClient
+            } 
+        }
 
 
 

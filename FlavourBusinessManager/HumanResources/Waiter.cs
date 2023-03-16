@@ -260,28 +260,28 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
-        /// <MetaDataID>{ee04afcf-db5b-40db-ba95-b5a0b416e255}</MetaDataID>
-        public void AddClientSession(IFoodServiceClientSession clientSession)
-        {
+        ///// <MetaDataID>{ee04afcf-db5b-40db-ba95-b5a0b416e255}</MetaDataID>
+        //public void AddClientSession(IFoodServiceClientSession clientSession)
+        //{
 
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-            {
-                _ClientSessions.Add(clientSession);
-                stateTransition.Consistent = true;
-            }
+        //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //    {
+        //        _ClientSessions.Add(clientSession);
+        //        stateTransition.Consistent = true;
+        //    }
 
 
-        }
+        //}
 
-        /// <MetaDataID>{88a3084c-5da2-4d5d-bf50-5a4d3604d60c}</MetaDataID>
-        public void RemoveClientSession(IFoodServiceClientSession clientSession)
-        {
-            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-            {
-                _ClientSessions.Remove(clientSession);
-                stateTransition.Consistent = true;
-            }
-        }
+        ///// <MetaDataID>{88a3084c-5da2-4d5d-bf50-5a4d3604d60c}</MetaDataID>
+        //public void RemoveClientSession(IFoodServiceClientSession clientSession)
+        //{
+        //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //    {
+        //        _ClientSessions.Remove(clientSession);
+        //        stateTransition.Consistent = true;
+        //    }
+        //}
 
 
         /// <exclude>Excluded</exclude>
@@ -531,18 +531,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
-        /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<IFoodServiceClientSession> _ClientSessions = new OOAdvantech.Collections.Generic.Set<IFoodServiceClientSession>();
-
-        /// <MetaDataID>{a9a4b5ac-788b-41c0-90ba-de4ede06f133}</MetaDataID>
-        [BackwardCompatibilityID("+13")]
-        public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession> ClientSessions
-        {
-            get
-            {
-                return _ClientSessions.ToThreadSafeList();
-            }
-        }
+      
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();

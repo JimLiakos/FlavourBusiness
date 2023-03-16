@@ -286,6 +286,7 @@ namespace FlavourBusinessManager.EndUsers
         }
     }
 
+    /// <MetaDataID>{cc28b19f-f926-4a56-8dd4-50e94d5419f2}</MetaDataID>
     static class PaymentExtension
     {
         public static string GetItemPreparationUid(this Item item)

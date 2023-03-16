@@ -29,20 +29,17 @@ namespace FlavourBusinessFacade.HumanResources
         Dictionary<string, ServicePointState> HallsServicePointsState { get; }
 
 
-        /// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
-        void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
+        ///// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
+        //void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
 
-        /// <MetaDataID>{278fd92b-7ae7-4817-9f43-d22ab6aefbad}</MetaDataID>
-        [RoleAMultiplicityRange(0)]
-        [Association("WaterServiceSession", OOAdvantech.MetaDataRepository.Roles.RoleA, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
-        List<EndUsers.IFoodServiceClientSession> ClientSessions { get; }
+     
 
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;
 
-        /// <MetaDataID>{a2b1a0a3-2229-426c-a66d-5ba110f0605a}</MetaDataID>
-        void RemoveClientSession(EndUsers.IFoodServiceClientSession clientSession);
+        ///// <MetaDataID>{a2b1a0a3-2229-426c-a66d-5ba110f0605a}</MetaDataID>
+        //void RemoveClientSession(EndUsers.IFoodServiceClientSession clientSession);
 
 
         /// <MetaDataID>{21cb6307-65d2-4394-b1d9-bb1cc076eea4}</MetaDataID>
