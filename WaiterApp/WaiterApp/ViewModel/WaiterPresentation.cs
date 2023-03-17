@@ -1215,6 +1215,8 @@ namespace WaiterApp.ViewModel
                     var startedAt = ActiveShiftWork.StartsAt;
                     var workingHours = ActiveShiftWork.PeriodInHours;
 
+                    var billingPayments = (ActiveShiftWork as IDebtCollection)?.BillingPayments;
+
                     var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
                     hour = Math.Round((hour * 2)) / 2;
                     var utcNow = DateTime.UtcNow.Date + TimeSpan.FromHours(hour);

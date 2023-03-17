@@ -1,9 +1,11 @@
 using FinanceFacade;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.EndUsers;
 using Microsoft.Extensions.Azure;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -30,7 +32,7 @@ namespace FlavourBusinessManager.HumanResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _WaiterFoodServiceClientSessions.Add(clientSession); 
+                _WaiterFoodServiceClientSessions.Remove(clientSession);
                 stateTransition.Consistent = true;
             }
 
@@ -41,7 +43,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _WaiterFoodServiceClientSessions.Remove(clientSession);
+                _WaiterFoodServiceClientSessions.Add(clientSession);
                 stateTransition.Consistent = true;
             }
         }
@@ -60,7 +62,13 @@ namespace FlavourBusinessManager.HumanResources
         {
             get
             {
-                return null;
+                //WaiterFoodServiceClientSessions[0].
+                var billingPayments =(from foodServiceClientSession in WaiterFoodServiceClientSessions
+                 from payment in foodServiceClientSession.GetPayments()
+                 where payment.State==PaymentState.Completed
+                 select payment).OfType<IPayment>().ToList();
+
+                return billingPayments;
             }
         }
 
@@ -94,7 +102,7 @@ namespace FlavourBusinessManager.HumanResources
             {
                 OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
                 _ServingBatches.Remove(servingBatch as RoomService.ServingBatch);
-                
+
                 stateTransition.Consistent = true;
             }
         }
