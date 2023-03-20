@@ -475,8 +475,14 @@ namespace FlavourBusinessManager
                     PhoneNumber = authUserRef.PhoneNumber,
                     PhotoUrl = authUserRef.PhotoUrl,
                     Address = authUserRef.Address,
+                    //OAuthUserIdentity=authUserRef.GetIdentity(),
                     Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                 };
+
+                foreach( var role in userData.Roles)
+                {
+                    var thuser = role.User;
+                }
 
                 return userData;
             }

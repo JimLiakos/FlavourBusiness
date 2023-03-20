@@ -503,6 +503,7 @@ namespace WaiterApp.ViewModel
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
                         _OAuthUserIdentity = UserData.OAuthUserIdentity;
+
                         foreach (var role in UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter))
                         {
                             if (role.RoleType == UserData.RoleType.Waiter)
@@ -936,29 +937,6 @@ namespace WaiterApp.ViewModel
 
 
 
-
-                        //var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
-                        //if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
-                        //    ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-
-                        //role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                        //if (role.RoleType == UserData.RoleType.Organization)
-                        //{
-                        //    string administratorIdentity = "";
-                        //    if (ServiceContextSupervisor != null)
-                        //        administratorIdentity = ServiceContextSupervisor.SupervisorIdentity;
-
-                        //    Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                        //    _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, administratorIdentity)).OfType<IServicesContextPresentation>().ToList();
-                        //}
-                        //else
-                        //    _ServicesContexts = new List<IServicesContextPresentation>();
-
-                        //if(Organization!=null&& ServiceContextSupervisor!=null)
-                        //{
-                        //    var serviceContex= Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                        //    serviceContex.ObjectChangeState
-                        //}
                         return true;
                     }
                     else
