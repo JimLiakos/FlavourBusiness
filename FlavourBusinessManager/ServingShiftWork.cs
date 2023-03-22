@@ -14,6 +14,8 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class ServingShiftWork : ShiftWork, IDebtCollection
     {
+
+
         /// <MetaDataID>{d3dd1bff-a913-47fa-a3bc-ed0952ef0efd}</MetaDataID>
         public IWaiter Waiter => Worker as IWaiter;
 
@@ -48,9 +50,17 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+
+
+        int Paylow;
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch>();
 
+
+
+
+        [RoleBMultiplicityRange(0, 1)]
         [PersistentMember(nameof(_ServingBatches))]
         [RoleAMultiplicityRange(0)]
         [Association("ServingBatchInShiftWork", Roles.RoleA, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
