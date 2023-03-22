@@ -52,50 +52,77 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
-        int Paylow;
+
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<RoomService.ServingBatch>();
+        OOAdvantech.Collections.Generic.Set<FlavourBusinessFacade.RoomService.IServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<FlavourBusinessFacade.RoomService.IServingBatch>();
 
 
 
 
-        [RoleBMultiplicityRange(0, 1)]
+        
         [PersistentMember(nameof(_ServingBatches))]
-        [RoleAMultiplicityRange(0)]
-        [Association("ServingBatchInShiftWork", Roles.RoleA, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
-        public System.Collections.Generic.List<RoomService.ServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
+        public List<FlavourBusinessFacade.RoomService.IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <MetaDataID>{20eac476-b8fa-4d08-9cac-b2465d9762fe}</MetaDataID>
-        public List<IPayment> BillingPayments
+        public System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments
         {
             get
             {
                 //WaiterFoodServiceClientSessions[0].
-                var billingPayments =(from foodServiceClientSession in WaiterFoodServiceClientSessions
-                 from payment in foodServiceClientSession.GetPayments()
-                 where payment.State==PaymentState.Completed
-                 select payment).OfType<IPayment>().ToList();
+                var billingPayments = (from foodServiceClientSession in WaiterFoodServiceClientSessions
+                                       from payment in foodServiceClientSession.GetPayments()
+                                       where payment.State==PaymentState.Completed
+                                       select payment).OfType<IPayment>().ToList();
 
                 return billingPayments;
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        decimal _OpeningBalanceFloatCash;
+
         /// <MetaDataID>{a4c50e38-83fc-4884-bddf-bf08aeae753f}</MetaDataID>
+        [PersistentMember(nameof(_OpeningBalanceFloatCash))]
+        [BackwardCompatibilityID("+1")]
         public decimal OpeningBalanceFloatCash { get; set; }
 
+        /// <exclude>Excluded</exclude>
+        decimal _Cash;
+
         /// <MetaDataID>{83b2b8fe-dd1b-4d70-b981-0dc636695f3f}</MetaDataID>
-        public decimal Cash => throw new System.NotImplementedException();
+        [PersistentMember(nameof(_Cash))]
+        [BackwardCompatibilityID("+2")]
+        public decimal Cash => _Cash;
+
+        /// <exclude>Excluded</exclude>
+        decimal _Cards;
 
         /// <MetaDataID>{a4fc26c7-9de3-49e0-8838-21326ef9b414}</MetaDataID>
-        public decimal Cards => throw new System.NotImplementedException();
+        [PersistentMember(nameof(_Cards))]
+        [BackwardCompatibilityID("+3")]
+        public decimal Cards => _Cards;
+
+
+
+        /// <exclude>Excluded</exclude>
+        decimal _CardsTips;
 
         /// <MetaDataID>{008bf01f-bc11-43c8-aa1f-d68eae6fc488}</MetaDataID>
-        public decimal CardsTips => throw new System.NotImplementedException();
+        [PersistentMember(nameof(_CardsTips))]
+        [BackwardCompatibilityID("+4")]
+        public decimal CardsTips => _CardsTips;
+
+
+
+        /// <exclude>Excluded</exclude>
+        decimal _CashTips;
 
         /// <MetaDataID>{58f4084f-7005-480e-a8f9-ba13a615381b}</MetaDataID>
-        public decimal CashTips => throw new System.NotImplementedException();
+        [PersistentMember(nameof(_CashTips))]
+        [BackwardCompatibilityID("+5")]
+        public decimal CashTips => _CashTips;
 
 
 

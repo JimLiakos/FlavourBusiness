@@ -4621,6 +4621,20 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public FlavourBusinessFacade.HumanResources.IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = startedAt;
+            argsTypes[0] = typeof(System.DateTime);
+            args[1] = timespanInHours;
+            argsTypes[1] = typeof(double);
+            args[2] = openingBalanceFloatCash;
+            argsTypes[2] = typeof(decimal);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "NewShiftWork", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
+        }
+        
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls()
         {
             object[] args = new object[0];

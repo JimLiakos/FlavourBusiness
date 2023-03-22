@@ -102,5 +102,9 @@ namespace WaiterApp.ViewModel
         void TableIsLay(string servicesPointIdentity);
 
 
+         GetSifts(DateTime startDate, double days);
+
+
+
     }
 }

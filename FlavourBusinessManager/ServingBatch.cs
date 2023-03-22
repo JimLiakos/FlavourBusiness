@@ -84,11 +84,10 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Member<HumanResources.ServingShiftWork> _ShiftWork = new OOAdvantech.Member<HumanResources.ServingShiftWork>();
+        OOAdvantech.Member<FlavourBusinessFacade.HumanResources.IServingShiftWork> _ShiftWork = new Member<FlavourBusinessFacade.HumanResources.IServingShiftWork>();
 
         [PersistentMember(nameof(_ShiftWork))]
-        [Association("ServingBatchInShiftWork", Roles.RoleB, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
-        public HumanResources.ServingShiftWork ShiftWork => _ShiftWork.Value;
+        public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork => _ShiftWork.Value;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

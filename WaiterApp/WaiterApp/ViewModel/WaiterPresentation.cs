@@ -1401,6 +1401,11 @@ namespace WaiterApp.ViewModel
             Waiter.RemoveMessage(messageID);
         }
 
+        public GetSifts(DateTime startDate, double days)
+        {
+
+        }
+
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
         private void ApplicationResuming(object sender, EventArgs e)
         {

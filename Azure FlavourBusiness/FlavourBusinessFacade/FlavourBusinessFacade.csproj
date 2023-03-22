@@ -77,6 +77,7 @@
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
     <Compile Include="IServingBatch.cs" />
+    <Compile Include="IServingShiftWork.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />
