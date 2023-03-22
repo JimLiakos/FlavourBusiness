@@ -243,6 +243,7 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
+        /// <MetaDataID>{847f53b5-59fb-4d9f-9d5a-5fed074d5d41}</MetaDataID>
         public Dictionary<string, ServicePointState> HallsServicePointsState
         {
             get
@@ -643,7 +644,7 @@ namespace FlavourBusinessManager.HumanResources
             using (SystemStateTransition stateTransition = new SystemStateTransition())
             {
                 shiftWork = new ServingShiftWork(Name);
-                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
+                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
                 shiftWork.StartsAt = startedAt;
                 shiftWork.PeriodInHours = timespanInHours;
                 AddShiftWork(shiftWork);
@@ -656,6 +657,30 @@ namespace FlavourBusinessManager.HumanResources
 
             return shiftWork;
             //return this.ServicesContextRunTime.NewShifWork(this, startedAt, timespanInHours);
+        }
+
+        /// <MetaDataID>{6ad32383-6c21-4bda-93bd-bd30e93c93fb}</MetaDataID>
+        public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
+        {
+            ServingShiftWork shiftWork = null;
+            using (SystemStateTransition stateTransition = new SystemStateTransition())
+            {
+                shiftWork = new ServingShiftWork(Name);
+                ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
+                shiftWork.StartsAt = startedAt;
+                shiftWork.PeriodInHours = timespanInHours;
+                shiftWork.OpeningBalanceFloatCash=openingBalanceFloatCash;
+                AddShiftWork(shiftWork);
+                stateTransition.Consistent = true;
+            }
+            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+
+
+            ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
+
+            return shiftWork;
+
+
         }
 
         /// <MetaDataID>{968412d0-8e06-4695-bd7d-3b1b29168195}</MetaDataID>
@@ -795,6 +820,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
+        /// <MetaDataID>{d5073dce-87d2-41f7-86c1-5a666725ebac}</MetaDataID>
         public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionID)
         {
             var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
@@ -815,12 +841,13 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{3816ae46-e0c8-46a7-9432-47b12d00e340}</MetaDataID>
         public void TransferPartialSession(string partialSessionID, string targetSessionID)
         {
             if (string.IsNullOrWhiteSpace(targetSessionID))
             {
                 var partialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == partialSessionID).First();
-                var waiterPartialSession= ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.UserIdentity == this.Identity).First();
+                var waiterPartialSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.UserIdentity == this.Identity).First();
                 partialSession.MakePartOfMeal(waiterPartialSession);
             }
             else
@@ -859,6 +886,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
+        /// <MetaDataID>{66529699-6834-4a83-8c4c-f10188a6dbac}</MetaDataID>
         public void TableIsLay(string servicesPointIdentity)
         {
             var servicePoint = (from serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas
@@ -877,6 +905,7 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        /// <MetaDataID>{a4f4190c-e005-4654-9184-781407223d57}</MetaDataID>
         public void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity)
         {
             if (itemPreparations.Count == 0)
@@ -1089,10 +1118,13 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
+        /// <MetaDataID>{fe724308-3775-4504-a08d-f860f1249863}</MetaDataID>
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
         {
             return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
         }
+
+
         ///// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
         //public void TransferSession(IFoodServiceSession foodServiceSession, string targetServicePointIdentity)
         //{

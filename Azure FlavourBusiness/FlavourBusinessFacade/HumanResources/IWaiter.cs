@@ -16,8 +16,9 @@ namespace FlavourBusinessFacade.HumanResources
 
         ///// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
         //void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
+        /// <MetaDataID>{91e3898f-1fb5-4292-8fd6-a8205b016900}</MetaDataID>
+        IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash);
 
-   
         /// <MetaDataID>{aa6ffdd8-59a3-4253-940f-ce7c4e0d1135}</MetaDataID>
         /// <summary>This token is the identity of device for push notification mechanism</summary>
         [BackwardCompatibilityID("+10")]
@@ -86,8 +87,11 @@ namespace FlavourBusinessFacade.HumanResources
         void CommitServingBatches();
         /// <MetaDataID>{83e301d6-ada6-4731-b494-5729b217b500}</MetaDataID>
         void WillTakeCareMealConversationTimeout(string servicePointIdentity,string sessionID);
+        /// <MetaDataID>{28dc371b-df3d-44b0-b7b8-7a6e4e724cef}</MetaDataID>
         void TransferPartialSession(string partialSessionID, string targetSessionID);
+        /// <MetaDataID>{781bd75e-a110-48ad-950c-90838b2e70fd}</MetaDataID>
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
+        /// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
     }
 

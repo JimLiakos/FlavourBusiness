@@ -72,6 +72,21 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{a4c50e38-83fc-4884-bddf-bf08aeae753f}</MetaDataID>
+        public decimal OpeningBalanceFloatCash { get; set; }
+
+        /// <MetaDataID>{83b2b8fe-dd1b-4d70-b981-0dc636695f3f}</MetaDataID>
+        public decimal Cash => throw new System.NotImplementedException();
+
+        /// <MetaDataID>{a4fc26c7-9de3-49e0-8838-21326ef9b414}</MetaDataID>
+        public decimal Cards => throw new System.NotImplementedException();
+
+        /// <MetaDataID>{008bf01f-bc11-43c8-aa1f-d68eae6fc488}</MetaDataID>
+        public decimal CardsTips => throw new System.NotImplementedException();
+
+        /// <MetaDataID>{58f4084f-7005-480e-a8f9-ba13a615381b}</MetaDataID>
+        public decimal CashTips => throw new System.NotImplementedException();
+
 
 
         /// <MetaDataID>{0fcf5c16-341d-4a23-9693-c2141a8f9ebe}</MetaDataID>
@@ -95,6 +110,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+
         /// <MetaDataID>{80e72316-2082-4d79-bbd3-7a36d6d8b272}</MetaDataID>
         public void RemoveServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
         {
@@ -105,6 +121,12 @@ namespace FlavourBusinessManager.HumanResources
 
                 stateTransition.Consistent = true;
             }
+        }
+
+        /// <MetaDataID>{8f53aa8b-c8e3-438d-9dc1-8faffeb597b0}</MetaDataID>
+        public void CashierClose()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

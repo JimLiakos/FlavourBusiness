@@ -23332,7 +23332,7 @@
 			    quid       	"61960362022E"
 			    parameters 	(list Parameters
 				(object Parameter "servingItemsOnDevice"
-				    quid       	"620CE6C500F6"
+				    quid       	"641AA74D03DF"
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>"))
 			    result     	"FlavourBusinessFacade.RoomService.ServingBatchUpdates"
 			    concurrency 	"Sequential"
@@ -23499,9 +23499,103 @@
 			    quid       	"620CE6C5025D"
 			    parameters 	(list Parameters
 				(object Parameter "servicePointIdentity"
-				    quid       	"620CE6C50287"
+				    quid       	"641AA74E00A5"
+				    type       	"string")
+				(object Parameter "sessionID"
+				    quid       	"641AA74E00C4"
 				    type       	"string"))
 			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "NewShiftWork"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{91e3898f-1fb5-4292-8fd6-a8205b016900}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA74D0206"))
+			    quid       	"641AA74D0206"
+			    parameters 	(list Parameters
+				(object Parameter "startedAt"
+				    quid       	"641AA74D021E"
+				    type       	"System.DateTime")
+				(object Parameter "timespanInHours"
+				    quid       	"641AA74D0249"
+				    type       	"double")
+				(object Parameter "openingBalanceFloatCash"
+				    quid       	"641AA74D0269"
+				    type       	"decimal"))
+			    result     	"FlavourBusinessFacade.HumanResources.IShiftWork"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "TransferPartialSession"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{28dc371b-df3d-44b0-b7b8-7a6e4e724cef}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA74E010F"))
+			    quid       	"641AA74E010F"
+			    parameters 	(list Parameters
+				(object Parameter "partialSessionID"
+				    quid       	"641AA74E012E"
+				    type       	"string")
+				(object Parameter "targetSessionID"
+				    quid       	"641AA74E014D"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "TransferItems"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{781bd75e-a110-48ad-950c-90838b2e70fd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA74E01D9"))
+			    quid       	"641AA74E01D9"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparations"
+				    quid       	"641AA74E01F7"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>")
+				(object Parameter "targetServicePointIdentity"
+				    quid       	"641AA74E0213"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetBill"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA74E02AC"))
+			    quid       	"641AA74E02AC"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparations"
+				    quid       	"641AA74E02C7"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>")
+				(object Parameter "foodServicesClientSession"
+				    quid       	"641AA74E02E5"
+				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
+			    result     	"FlavourBusinessFacade.RoomService.IBill"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -24630,6 +24724,128 @@
 			    value      	"{a3245ab8-ec18-4e83-9893-4b8bb26b5ce7}"))
 		    quid       	"6412B1930269"
 		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "CashierClose"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8e903988-21d6-4902-b654-9328d7669169}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA709032F"))
+			    quid       	"641AA709032F"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "OpeningBalanceFloatCash"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{30aa32e1-97e9-4efa-af8e-8b0d9d273445}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA70903D9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"641AA70903D9"
+			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "Cash"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{66cf46f7-8b9c-48b5-b214-629aa2dd8d1a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA70A004A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"641AA70A004A"
+			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "Cards"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{984756f2-5f5c-464c-9971-5da905705605}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA70A008F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"641AA70A008F"
+			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "CardsTips"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{afb59f33-8b3c-45f1-9ed6-bc76fed2dbf5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA70A00EC")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"641AA70A00EC"
+			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "CashTips"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{994117a3-e348-47bb-a131-f2c261db870b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"641AA70A0138")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"641AA70A0138"
+			    type       	"decimal"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
