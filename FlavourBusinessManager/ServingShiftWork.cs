@@ -12,7 +12,7 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{62fc8b78-7e94-4a57-b27c-c9d188b6d637}</MetaDataID>
     [BackwardCompatibilityID("{62fc8b78-7e94-4a57-b27c-c9d188b6d637}")]
     [Persistent()]
-    public class ServingShiftWork : ShiftWork, IDebtCollection
+    public class ServingShiftWork : ShiftWork, IDebtCollection, IServingShiftWork
     {
 
 
@@ -58,9 +58,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<FlavourBusinessFacade.RoomService.IServingBatch> _ServingBatches = new OOAdvantech.Collections.Generic.Set<FlavourBusinessFacade.RoomService.IServingBatch>();
 
 
-
-
-        
+        /// <MetaDataID>{f9b53695-3a22-43a9-a1eb-d434314dc1a6}</MetaDataID>
         [PersistentMember(nameof(_ServingBatches))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public List<FlavourBusinessFacade.RoomService.IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();

@@ -3,6 +3,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
+using System;
 using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.HumanResources
@@ -93,6 +94,7 @@ namespace FlavourBusinessFacade.HumanResources
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
         /// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
+        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
     }
 
 

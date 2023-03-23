@@ -2591,6 +2591,18 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ShiftWork", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IServingShiftWork>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType
         {
             get
@@ -4738,6 +4750,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             argsTypes[1] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetBill", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServingShiftWork> GetSifts(System.DateTime startDate, System.DateTime endDate)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = startDate;
+            argsTypes[0] = typeof(System.DateTime);
+            args[1] = endDate;
+            argsTypes[1] = typeof(System.DateTime);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetSifts", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServingShiftWork>>(retValue);
         }
         
         public void RemoveMessage(string messageId)

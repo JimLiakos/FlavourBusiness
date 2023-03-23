@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.ServicesContextResources;
+﻿using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace WaiterApp.ViewModel
         void TableIsLay(string servicesPointIdentity);
 
 
-         GetSifts(DateTime startDate, double days);
+        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
 
 
 

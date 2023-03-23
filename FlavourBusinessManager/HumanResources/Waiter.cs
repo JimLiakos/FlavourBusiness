@@ -1123,6 +1123,26 @@ namespace FlavourBusinessManager.HumanResources
         {
             return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
         }
+        public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
+        {
+            var periodStartDate = startDate;
+            var periodEndDate = endDate;
+
+            var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+            if (objectStorage != null)
+            {
+                if (RecentlyShiftWorks == null)
+                {
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                    RecentlyShiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                          where shiftWork.StartsAt > periodStartDate && shiftWork.StartsAt > periodEndDate && shiftWork.Worker == this
+                                          select shiftWork).ToList();
+                }
+                return RecentlyShiftWorks.OrderBy(x => x.StartsAt).OfType<IServingShiftWork>().ToList();
+            }
+            else
+                return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
+        }
 
 
         ///// <MetaDataID>{7adedeba-6042-4f69-99c9-bf6718e17f60}</MetaDataID>
