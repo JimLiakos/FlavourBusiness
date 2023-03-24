@@ -1,7 +1,8 @@
 {
 	"ShiftWork": {
 		"ActiveShiftWorkTitle": "Σε βάρδια ..*",
-		"OffShiftTitle": "Εκτός βάρδιας ..*"
+		     "OffShiftTitle": "Εκτός βάρδιας ..*",
+        "LastShiftsViewLabel":"Βλέπετε τις τρεις τελευταίες βάρδιες"
 	},
 	"RoomService": {
 		"BillCommandLabel": "Λογαριασμός",
