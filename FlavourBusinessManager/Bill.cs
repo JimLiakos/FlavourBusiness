@@ -140,13 +140,13 @@ namespace FlavourBusinessManager.EndUsers
         {
             var flavourItems = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).ToList();
 
-            string paymentIdentity = GetPaymentIdentity(foodServiceClientSession);
+            string paymentIdentity = foodServiceClientSession.GetPaymentIdentity();
 
             List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
             if (payments == null)
                 payments = new List<FinanceFacade.Payment>();
 
-            //  Dictionary<FoodServiceClientSession, List<Payment>> sessionsPayments = payments.GroupBy(x => foodServiceClientSession.MainSession.PartialClientSessions.OfType<FoodServiceClientSession>().Where(y => GetPaymentIdentity(y)== x.Identity).First()).ToDictionary(g => g.Key, g => g.ToList());
+            //  Dictionary<FoodServiceClientSession, List<Payment>> sessionsPayments = payments.GroupBy(x => foodServiceClientSession.MainSession.PartialClientSessions.OfType<FoodServiceClientSession>().Where(y => y.GetPaymentIdentity()== x.Identity).First()).ToDictionary(g => g.Key, g => g.ToList());
 
 
 
@@ -187,10 +187,7 @@ namespace FlavourBusinessManager.EndUsers
             return new Bill(payments.OfType<FinanceFacade.IPayment>().Where(x => x.State==PaymentState.Completed||x.Identity==paymentIdentity).ToList());
         }
 
-        private static string GetPaymentIdentity(FoodServiceClientSession foodServiceClientSession)
-        {
-            return foodServiceClientSession.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodServiceClientSession).GetPersistentObjectUri(foodServiceClientSession);
-        }
+
 
         internal static decimal GetPaidAmount(FoodServiceClientSession foodServiceClientSession, ItemPreparation flavourItem)
         {
@@ -207,7 +204,7 @@ namespace FlavourBusinessManager.EndUsers
 
             List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
             List<ItemPreparation> flavourItems = new List<ItemPreparation>();
-            string paymentIdentity = GetPaymentIdentity(waiterFoodServicesClientSession);
+            string paymentIdentity = waiterFoodServicesClientSession.GetPaymentIdentity();
 
             List<FinanceFacade.Payment> payments = waiterFoodServicesClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
             if (payments == null)
@@ -286,6 +283,7 @@ namespace FlavourBusinessManager.EndUsers
         }
     }
 
+    /// <MetaDataID>{cc28b19f-f926-4a56-8dd4-50e94d5419f2}</MetaDataID>
     static class PaymentExtension
     {
         public static string GetItemPreparationUid(this Item item)
@@ -329,7 +327,20 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public static List<Payment> GetPayments(this FoodServiceClientSession foodServiceClientSession)
+        {
+            List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
+            if (payments == null)
+                payments = new List<FinanceFacade.Payment>();
+            string paymentIdentity = foodServiceClientSession.GetPaymentIdentity();
+            return payments.Where(x => x.Identity==paymentIdentity).ToList();
+
+        }
+        public static string GetPaymentIdentity(this FoodServiceClientSession foodServiceClientSession)
+        {
+            return foodServiceClientSession.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodServiceClientSession).GetPersistentObjectUri(foodServiceClientSession);
+        }
+
+
     }
-
-
 }

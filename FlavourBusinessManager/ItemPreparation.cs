@@ -10,10 +10,10 @@ using System;
 using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
-using FlavourBusinessManager.EndUsers;
+
 
 #if !FlavourBusinessDevice
-
+using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
 #endif
 

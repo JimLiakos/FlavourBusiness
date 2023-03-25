@@ -2591,6 +2591,18 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ShiftWork", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IServingShiftWork>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType
         {
             get
@@ -4326,18 +4338,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession> ClientSessions
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "get_ClientSessions", args, argsTypes);
-                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>>(retValue);
-            }
-        }
-        
-        // The Width property for the object.
         public bool Suspended
         {
             get
@@ -4633,30 +4633,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public FlavourBusinessFacade.HumanResources.IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = startedAt;
+            argsTypes[0] = typeof(System.DateTime);
+            args[1] = timespanInHours;
+            argsTypes[1] = typeof(double);
+            args[2] = openingBalanceFloatCash;
+            argsTypes[2] = typeof(decimal);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "NewShiftWork", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
+        }
+        
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout> GetServiceHalls()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetServiceHalls", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout>>(retValue);
-        }
-        
-        public void AddClientSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession clientSession)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = clientSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "AddClientSession", args, argsTypes);
-        }
-        
-        public void RemoveClientSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession clientSession)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = clientSession;
-            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "RemoveClientSession", args, argsTypes);
         }
         
         public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch> GetServingBatches()
@@ -4754,6 +4750,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             argsTypes[1] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetBill", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServingShiftWork> GetSifts(System.DateTime startDate, System.DateTime endDate)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = startDate;
+            argsTypes[0] = typeof(System.DateTime);
+            args[1] = endDate;
+            argsTypes[1] = typeof(System.DateTime);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "GetSifts", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServingShiftWork>>(retValue);
         }
         
         public void RemoveMessage(string messageId)

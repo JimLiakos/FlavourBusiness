@@ -13,6 +13,9 @@ namespace FlavourBusinessFacade.RoomService
     [GenerateFacadeProxy]
     public interface IServingBatch
     {
+        [Association("ServingBatchInShiftWork", Roles.RoleB, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
+        HumanResources.IServingShiftWork ShiftWork { get; }
+
         /// <MetaDataID>{7a3cacaf-eaba-4fcd-a84b-e8bc312e54f5}</MetaDataID>
         ServicePointType ServicePointType { get; set; }
 

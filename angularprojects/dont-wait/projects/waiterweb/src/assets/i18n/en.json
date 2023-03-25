@@ -1,7 +1,9 @@
 {
 	"ShiftWork": {
 		"ActiveShiftWorkTitle": "Shift Work Active",
-		"OffShiftTitle": "Off - Shift "
+		"OffShiftTitle": "Off - Shift ",
+        "LastShiftsViewLabel":"You are viewing the last three shifts"
+
 	},
 	"RoomService": {
 		"BillCommandLabel": "Bill",

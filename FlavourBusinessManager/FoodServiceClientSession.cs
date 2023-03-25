@@ -24,14 +24,7 @@ using Microsoft.Azure.Documents.Spatial;
 namespace FlavourBusinessManager.EndUsers
 {
 
-    /// <MetaDataID>{b870fcd0-671e-4ef8-abd5-d8bb26cef2fd}</MetaDataID>
-    public enum DeviceAppLifecycle
-    {
-        InUse,
-        Sleep,
-        Shutdown
 
-    }
 
 
 
@@ -40,6 +33,14 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Member<HumanResources.ServingShiftWork> _SessionCreator=new OOAdvantech.Member<HumanResources.ServingShiftWork>();
+
+        [Association("FoodServiceClientSessionInTheShiftWork", Roles.RoleB, "2076b2c6-2c5e-415a-93ab-187654f7c04a")]
+        [PersistentMember(nameof(_SessionCreator))]
+        public HumanResources.ServingShiftWork SessionCreator => _SessionCreator.Value;
+
 
 
         /// <MetaDataID>{c04687dc-cdf1-4dfc-96c8-b56e9808f003}</MetaDataID>
@@ -1393,16 +1394,16 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <exclude>Excluded</exclude>;
-        OOAdvantech.Member<FlavourBusinessFacade.HumanResources.IWaiter> _Waiter = new OOAdvantech.Member<IWaiter>();
+        
 
         /// <MetaDataID>{efecab6b-0f79-4b59-8137-e18550333365}</MetaDataID>
-        [PersistentMember(nameof(_Waiter))]
+        
         [BackwardCompatibilityID("+21")]
         public FlavourBusinessFacade.HumanResources.IWaiter Waiter
         {
             get
             {
-                return _Waiter.Value;
+                return SessionCreator?.Waiter;
             }
         }
 
@@ -2495,6 +2496,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{f50229d0-2dfa-46c4-9173-09e98ec19a6d}</MetaDataID>
         public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
             if (payment.State != FinanceFacade.PaymentState.Completed)
@@ -2572,7 +2574,8 @@ namespace FlavourBusinessManager.EndUsers
             //return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
         }
 
-  
+
+        /// <MetaDataID>{391fee95-b5be-4c9a-9118-67949d13b1fd}</MetaDataID>
         public Dictionary<string, ItemPreparationState> FlavourItemsPreparationState
         {
             get
@@ -2720,6 +2723,14 @@ namespace FlavourBusinessManager.EndUsers
             ConversationCheck,
             MealConsulting
         }
+    }
+    /// <MetaDataID>{b870fcd0-671e-4ef8-abd5-d8bb26cef2fd}</MetaDataID>
+    public enum DeviceAppLifecycle
+    {
+        InUse,
+        Sleep,
+        Shutdown
+
     }
 
 }

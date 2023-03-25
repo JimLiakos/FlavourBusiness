@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace FlavourBusinessManager
 {
+    /// <MetaDataID>{07be4b14-a4ef-4b42-af30-082ed4d01a35}</MetaDataID>
     internal class ServiceContextPaymentFinder : IPaymentFinder
     {
         public IPayment FindPayment(string paymentGetwayID, string paymentGetwayRequestID)

@@ -69,6 +69,7 @@ namespace FlavourBusinessFacade.EndUsers
         [Association("ClientFlavourItems", Roles.RoleA, true, "913f7a7e-cd2a-4833-a0dc-dde7987eefff")]
         [RoleBMultiplicityRange(1, 1)]
         IList<IItemPreparation> FlavourItems { get; }
+        /// <MetaDataID>{20a74bd7-ade7-4280-8e1e-d37cb5c9df23}</MetaDataID>
         Dictionary<string, ItemPreparationState> FlavourItemsPreparationState { get; }
 
         /// <MetaDataID>{0c36ad38-061e-4225-96cb-09a9d5bcb738}</MetaDataID>

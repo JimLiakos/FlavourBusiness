@@ -74,6 +74,7 @@ namespace FlavourBusinessToolKit
 
 
 
+    /// <MetaDataID>{cf6d8d9e-6df1-4ae3-b40c-515173ec1ddf}</MetaDataID>
     public struct Fraction
     {
         public Fraction(int n, int d)

@@ -35,7 +35,9 @@ namespace FlavourBusinessFacade
 
         public string Address { get; set; }
 
-        public string OAuthUserIdentity { get; set; }
+        public string OAuthUserIdentity => Identity;
+
+        //public string OAuthUserIdentity { get; set; }
 
         object rolesLock = new object();
 

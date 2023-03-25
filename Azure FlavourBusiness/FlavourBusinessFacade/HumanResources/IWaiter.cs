@@ -3,6 +3,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
+using System;
 using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.HumanResources
@@ -16,8 +17,9 @@ namespace FlavourBusinessFacade.HumanResources
 
         ///// <MetaDataID>{9c2ff85f-2c0a-41c7-b73b-c27dbf792966}</MetaDataID>
         //void TransferSession(IFoodServiceSession foodServiceSession,  string targetServicePointIdentity);
+        /// <MetaDataID>{91e3898f-1fb5-4292-8fd6-a8205b016900}</MetaDataID>
+        IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash);
 
-   
         /// <MetaDataID>{aa6ffdd8-59a3-4253-940f-ce7c4e0d1135}</MetaDataID>
         /// <summary>This token is the identity of device for push notification mechanism</summary>
         [BackwardCompatibilityID("+10")]
@@ -29,20 +31,17 @@ namespace FlavourBusinessFacade.HumanResources
         Dictionary<string, ServicePointState> HallsServicePointsState { get; }
 
 
-        /// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
-        void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
+        ///// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
+        //void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
 
-        /// <MetaDataID>{278fd92b-7ae7-4817-9f43-d22ab6aefbad}</MetaDataID>
-        [RoleAMultiplicityRange(0)]
-        [Association("WaterServiceSession", OOAdvantech.MetaDataRepository.Roles.RoleA, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
-        List<EndUsers.IFoodServiceClientSession> ClientSessions { get; }
+     
 
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;
 
-        /// <MetaDataID>{a2b1a0a3-2229-426c-a66d-5ba110f0605a}</MetaDataID>
-        void RemoveClientSession(EndUsers.IFoodServiceClientSession clientSession);
+        ///// <MetaDataID>{a2b1a0a3-2229-426c-a66d-5ba110f0605a}</MetaDataID>
+        //void RemoveClientSession(EndUsers.IFoodServiceClientSession clientSession);
 
 
         /// <MetaDataID>{21cb6307-65d2-4394-b1d9-bb1cc076eea4}</MetaDataID>
@@ -89,9 +88,13 @@ namespace FlavourBusinessFacade.HumanResources
         void CommitServingBatches();
         /// <MetaDataID>{83e301d6-ada6-4731-b494-5729b217b500}</MetaDataID>
         void WillTakeCareMealConversationTimeout(string servicePointIdentity,string sessionID);
+        /// <MetaDataID>{28dc371b-df3d-44b0-b7b8-7a6e4e724cef}</MetaDataID>
         void TransferPartialSession(string partialSessionID, string targetSessionID);
+        /// <MetaDataID>{781bd75e-a110-48ad-950c-90838b2e70fd}</MetaDataID>
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
+        /// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
+        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
     }
 
 

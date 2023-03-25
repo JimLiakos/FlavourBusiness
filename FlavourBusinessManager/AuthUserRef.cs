@@ -31,19 +31,27 @@ namespace FlavourBusinessManager
             {
                 get
                 {
-                    if (!string.IsNullOrWhiteSpace(this.ComputingContextID) && this.ComputingContextID != ComputationalResources.IsolatedComputingContext.CurrentContextID)
+                    try
                     {
-                        if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
+                        if (!string.IsNullOrWhiteSpace(this.ComputingContextID) && this.ComputingContextID != ComputationalResources.IsolatedComputingContext.CurrentContextID)
                         {
-                            string channelUri = string.Format("{0}({1})", RemotingServices.ServerPublicUrl, this.ComputingContextID);
-                            _RoleObject = RemotingServices.GetPersistentObject(channelUri, ObjectUri);
+                            if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
+                            {
+                                string channelUri = string.Format("{0}({1})", RemotingServices.ServerPublicUrl, this.ComputingContextID);
+                                _RoleObject = RemotingServices.GetPersistentObject(channelUri, ObjectUri);
+                            }
+
                         }
+                        else if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
+                            _RoleObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ObjectUri);
 
+                        return _RoleObject;
                     }
-                    else if (_RoleObject == null && !string.IsNullOrWhiteSpace(ObjectUri))
-                        _RoleObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ObjectUri);
+                    catch (Exception error)
+                    {
 
-                    return _RoleObject;
+                        throw;
+                    }
                 }
                 set
                 {

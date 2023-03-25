@@ -61,6 +61,7 @@
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
     <Compile Include="ICashierStationRuntime.cs" />
+    <Compile Include="IDebtCollection.cs" />
     <Compile Include="IFoodTypeTag.cs" />
     <Compile Include="IGeocoding.cs" />
     <Compile Include="IHomeDeliveryServicePoint.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
     <Compile Include="IServingBatch.cs" />
+    <Compile Include="IServingShiftWork.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />
