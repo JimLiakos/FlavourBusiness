@@ -2520,7 +2520,7 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
-
+          
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
         public IBill GetBill()
         {
