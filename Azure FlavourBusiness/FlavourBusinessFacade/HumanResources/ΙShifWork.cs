@@ -4,7 +4,9 @@ namespace FlavourBusinessFacade.HumanResources
 {
     /// <MetaDataID>{313cecf4-7009-411b-8a13-75ec51498f82}</MetaDataID>
     [BackwardCompatibilityID("{313cecf4-7009-411b-8a13-75ec51498f82}")]
-    [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
+    [GenerateFacadeProxy]
+    [HttpVisible]
+  
     public interface IShiftWork : IActivity
     {
         /// <MetaDataID>{359d4451-92ac-44d8-a4a6-5345dcd8084e}</MetaDataID>

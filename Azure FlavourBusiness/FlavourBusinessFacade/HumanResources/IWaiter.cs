@@ -94,7 +94,10 @@ namespace FlavourBusinessFacade.HumanResources
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
         /// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
+        /// <MetaDataID>{8208e84b-28c4-47f7-bab8-3ee583b64ad7}</MetaDataID>
         List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
+
+        List<IServingShiftWork> GetLastThreeSifts();
     }
 
 

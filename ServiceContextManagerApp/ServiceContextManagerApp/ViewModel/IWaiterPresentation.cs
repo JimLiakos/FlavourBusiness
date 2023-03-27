@@ -1,4 +1,5 @@
-﻿using OOAdvantech.MetaDataRepository;
+﻿using FlavourBusinessFacade.HumanResources;
+using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +31,11 @@ namespace ServiceContextManagerApp
         void ChangeSiftWork(DateTime startedAt, double timespanInHours);
 
         System.DateTime ActiveShiftWorkEndsAt { get; }
+
+        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
+
+        List<IServingShiftWork> GetLastThreeSifts();
+
 
     }
 }

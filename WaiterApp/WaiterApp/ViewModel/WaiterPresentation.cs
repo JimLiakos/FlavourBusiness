@@ -1401,12 +1401,7 @@ namespace WaiterApp.ViewModel
             Waiter.RemoveMessage(messageID);
         }
 
-        public List<IServingShiftWork>  GetSifts(DateTime startDate, DateTime endDate)
-        {
-            
-            return Waiter.GetSifts(startDate, endDate);
-        }
-
+    
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
         private void ApplicationResuming(object sender, EventArgs e)
         {

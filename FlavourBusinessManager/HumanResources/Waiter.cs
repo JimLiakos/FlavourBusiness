@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
@@ -22,7 +23,7 @@ namespace FlavourBusinessManager.HumanResources
     public class Waiter : MarshalByRefObject, IWaiter, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
-        
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
@@ -532,7 +533,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
-      
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
@@ -658,6 +659,7 @@ namespace FlavourBusinessManager.HumanResources
             return shiftWork;
             //return this.ServicesContextRunTime.NewShifWork(this, startedAt, timespanInHours);
         }
+
 
         /// <MetaDataID>{6ad32383-6c21-4bda-93bd-bd30e93c93fb}</MetaDataID>
         public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
@@ -788,7 +790,7 @@ namespace FlavourBusinessManager.HumanResources
             add
             {
                 _ServingBatchesChanged+=value;
-            } 
+            }
             remove
             {
                 _ServingBatchesChanged-=value;
@@ -1123,6 +1125,55 @@ namespace FlavourBusinessManager.HumanResources
         {
             return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
         }
+
+
+        /// <MetaDataID>{15f3a0ae-db69-401a-bcff-9b0659f4dab5}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+22")]
+        DateTime? LastThreeShiftsPeriodStart;
+
+        public List<IServingShiftWork> GetLastThreeSifts()
+        {
+            if (LastThreeShiftsPeriodStart!=null)
+            {
+                List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.Now);
+                lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt; 
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                return lastThreeSifts;
+            }
+            else
+            {
+                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                List<IServingShiftWork> lastThreeSifts = (from shiftWork in storage.GetObjectCollection<IServingShiftWork>()
+                                      where shiftWork.Worker == this
+                                      select shiftWork).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                return lastThreeSifts;
+            }
+
+        }
+
+
+        /// <MetaDataID>{6ea57a74-4029-4bd4-b7cc-fabd7b93b307}</MetaDataID>
         public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
         {
             var periodStartDate = startDate;

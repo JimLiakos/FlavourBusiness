@@ -103,8 +103,7 @@ namespace WaiterApp.ViewModel
         void TableIsLay(string servicesPointIdentity);
 
 
-        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
-
+      
 
 
     }

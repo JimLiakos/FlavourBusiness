@@ -20,6 +20,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{b33da6ed-51a9-414b-b491-b18519f56b7c}</MetaDataID>
         [PersistentMember(nameof(_PeriodInHours))]
         [BackwardCompatibilityID("+4")]
+        [CachingDataOnClientSide]
         public double PeriodInHours
         {
             get => _PeriodInHours;
@@ -82,7 +83,8 @@ namespace FlavourBusinessManager.HumanResources
         {
 
         }
-        /// <MetaDataID>{90918721-ebd7-41f4-9142-939bd7c0be42}</MetaDataID>
+        /// <MetaDataID>{90918721-ebd7-41f4-9142-939bd7c0be42}</MetaDataID
+        [CachingDataOnClientSide]
         public System.DateTime EndsAt
         {
             get
@@ -95,6 +97,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{ff65d889-1672-4a24-91e0-85898d4cb98e}</MetaDataID>
         [PersistentMember(nameof(_StartsAt))]
         [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
         public DateTime StartsAt
         {
             get

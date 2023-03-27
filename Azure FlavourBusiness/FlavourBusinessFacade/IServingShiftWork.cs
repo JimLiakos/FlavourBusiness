@@ -3,6 +3,8 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.HumanResources
 {
     /// <MetaDataID>{195083e4-bb86-4ad2-8ec2-b388389d3cde}</MetaDataID>
+    [GenerateFacadeProxy]
+    [HttpVisible]
     public interface IServingShiftWork : IShiftWork
     {
         [RoleAMultiplicityRange(0)]

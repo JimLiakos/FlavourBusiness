@@ -144,5 +144,16 @@ namespace ServiceContextManagerApp
         {
             ServicesContextRuntime.ChangeSiftWork(this.Waiter.ActiveShiftWork, startedAt, timespanInHours);
         }
+        public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
+        {
+
+            return Waiter.GetSifts(startDate, endDate);
+        }
+
+        public List<IServingShiftWork> GetLastThreeSifts()
+        {
+            return Waiter.GetLastThreeSifts();
+        }
+
     }
 }
