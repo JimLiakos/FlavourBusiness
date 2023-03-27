@@ -161,7 +161,40 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{8f53aa8b-c8e3-438d-9dc1-8faffeb597b0}</MetaDataID>
         public void CashierClose()
         {
-            throw new System.NotImplementedException();
+            
+        }
+
+        public void RecalculateDeptData()
+        {
+            //if()
+
+            
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _Cash=0;
+                _CashTips=0;
+                _Cards=0;
+                _CardsTips=0;
+                
+                foreach (var payment in BillingPayments)
+                {
+                    if (payment.PaymentType==PaymentType.Cash)
+                    {
+                        _Cash+=payment.Amount;
+                        _CashTips=payment.TipsAmount;
+                    }
+
+                    if (payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
+                    {
+                        _Cards+=payment.Amount;
+                        _CardsTips=payment.TipsAmount;
+                    }
+
+                }
+                stateTransition.Consistent = true;
+            }
+
+
         }
     }
 }

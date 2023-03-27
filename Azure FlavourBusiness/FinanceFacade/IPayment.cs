@@ -10,7 +10,7 @@ namespace FinanceFacade
     public interface IPayment
     {
         /// <MetaDataID>{d6eb7ce8-cc7c-4b94-bb55-abf72e5e3c30}</MetaDataID>
-        string PaymentOrderUrl { get;  }
+        string PaymentOrderUrl { get; }
 
 #if !DeviceDotNet
         [Association("SubjectOfPayment", Roles.RoleA, "1fb62be2-4d9b-4618-9c9f-7142f4031744")]
@@ -130,11 +130,11 @@ namespace FinanceFacade
     /// <MetaDataID>{c29b8985-3d96-4fea-91b6-7b3040b4d715}</MetaDataID>
     public enum PaymentType
     {
-        None,
-        Cash,
-        DebitCard,
-        CreditCard,
-        Check
+        None = 0,
+        Cash = 1,
+        DebitCard = 2,
+        CreditCard = 3,
+        Check = 4
     }
 
     /// <MetaDataID>{4f5e2e3e-64be-40b0-b120-46c8371bf532}</MetaDataID>

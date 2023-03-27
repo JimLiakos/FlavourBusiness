@@ -537,6 +537,12 @@ namespace FinanceFacade
                 if (tipAmount!=null)
                     _TipsAmount = tipAmount.Value;
                 State = PaymentState.Completed;
+                if (isDebit)
+                    _PaymentType=PaymentType.DebitCard;
+                else
+                    _PaymentType=PaymentType.CreditCard;
+
+
                 //Normalize
                 NormalizeNettingItems();
 
@@ -601,6 +607,7 @@ namespace FinanceFacade
                     NormalizeNettingItems();
 
                     State = PaymentState.Completed;
+                    _PaymentType= PaymentType.Cash;
                     this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
                 }
@@ -682,6 +689,7 @@ namespace FinanceFacade
                 PaymentInfoFields["CheckNotes"] = checkNotes;
 
                 _TipsAmount = tipAmount;
+                _PaymentType=PaymentType.Check;
 
                 if (ItemsOrTipToPay)
                     throw new InvalidConstraintException("There isn't amount to pay.");

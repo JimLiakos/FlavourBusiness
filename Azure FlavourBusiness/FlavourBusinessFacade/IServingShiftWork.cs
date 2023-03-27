@@ -10,5 +10,7 @@ namespace FlavourBusinessFacade.HumanResources
         [RoleAMultiplicityRange(0)]
         [Association("ServingBatchInShiftWork", Roles.RoleA, "5b49aba4-a3de-46da-9a52-6436a3823d6f")]
         System.Collections.Generic.List<RoomService.IServingBatch> ServingBatches { get; }
+
+        void RecalculateDeptData();
     }
 }
