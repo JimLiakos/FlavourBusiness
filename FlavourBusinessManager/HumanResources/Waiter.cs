@@ -567,7 +567,6 @@ namespace FlavourBusinessManager.HumanResources
 
                     if (RecentlyShiftWorks.Count > 0)
                     {
-
                     }
 
 
@@ -1135,7 +1134,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             if (LastThreeShiftsPeriodStart!=null)
             {
-                List<IServingShiftWork> lastThreeSifts = GetSifts(  LastThreeShiftsPeriodStart.Value, DateTime.Now);
+                List<IServingShiftWork> lastThreeSifts = GetSifts(  LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
                 lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
                 if (lastThreeSifts.Count>3)
                 {
