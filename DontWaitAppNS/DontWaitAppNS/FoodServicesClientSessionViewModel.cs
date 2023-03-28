@@ -1340,7 +1340,7 @@ namespace DontWaitApp
             }
 
 #else
-            payment.CashPaymentCompleted(tipAmount);
+            payment.CardPaymentCompleted("unknown","xxxx",true,"xxxx",tipAmount);
 #endif
         }
 

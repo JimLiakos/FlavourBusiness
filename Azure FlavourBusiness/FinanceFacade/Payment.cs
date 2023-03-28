@@ -620,6 +620,7 @@ namespace FinanceFacade
                 {
                     _TipsAmount = tipAmount;
                     State = PaymentState.Completed;
+                    _PaymentType= PaymentType.Cash;
                     this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
                 }

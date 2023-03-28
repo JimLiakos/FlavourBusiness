@@ -1119,7 +1119,6 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
-
         /// <MetaDataID>{fe724308-3775-4504-a08d-f860f1249863}</MetaDataID>
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
         {

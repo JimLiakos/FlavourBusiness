@@ -124,12 +124,12 @@
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
       <Link>ApplicationSettings.cs</Link>
     </Compile>
-    <EmbeddedResource Include="..\..\angularprojects\dont-wait\projects\waiterweb\src\assets\i18n\el.json">
+    <None Include="..\..\AngularProjects\dwait\projects\dontwait-library\src\assets\i18n\el.json">
       <Link>i18n\el.json</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\angularprojects\dont-wait\projects\waiterweb\src\assets\i18n\en.json">
+    </None>
+    <None Include="..\..\AngularProjects\dwait\projects\dontwait-library\src\assets\i18n\en.json">
       <Link>i18n\en.json</Link>
-    </EmbeddedResource>
+    </None>
     <None Include="..\..\MenuModel\JsonViewModel\Tag.cs">
       <Link>MenuModel\Tag.cs</Link>
     </None>
