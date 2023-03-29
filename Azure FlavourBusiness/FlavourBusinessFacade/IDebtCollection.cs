@@ -6,10 +6,10 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     [HttpVisible]
     public interface IDebtCollection
-    {
+    { 
         [Association("CollectedPayments", Roles.RoleA, "2f6452a6-19f9-415b-ad28-b50d26dd24d6")]
         System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments { get; }
-
+         
 
         /// <MetaDataID>{30aa32e1-97e9-4efa-af8e-8b0d9d273445}</MetaDataID>
         decimal OpeningBalanceFloatCash { get; }
