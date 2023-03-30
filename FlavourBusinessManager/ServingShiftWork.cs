@@ -3,6 +3,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessManager.EndUsers;
 using Microsoft.Extensions.Azure;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,19 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class ServingShiftWork : ShiftWork, IDebtCollection, IServingShiftWork
     {
+
+
+        /// <exclude>Excluded</exclude>
+        bool _AccountIsClosed;
+
+        /// <MetaDataID>{c33f6105-9c68-44fc-8ffe-faeacfe44294}</MetaDataID>
+        [PersistentMember(nameof(_AccountIsClosed))]
+        [BackwardCompatibilityID("+7")]
+        public bool AccountIsClosed
+        {
+            get => true;
+
+        }
 
 
         /// <MetaDataID>{d3dd1bff-a913-47fa-a3bc-ed0952ef0efd}</MetaDataID>
@@ -161,21 +175,27 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{8f53aa8b-c8e3-438d-9dc1-8faffeb597b0}</MetaDataID>
         public void CashierClose()
         {
-            
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _AccountIsClosed=true;
+                stateTransition.Consistent = true;
+            }
         }
 
+        /// <MetaDataID>{fff63019-df73-4af4-ae72-05ba83333c37}</MetaDataID>
         public void RecalculateDeptData()
         {
             //if()
 
-            
+
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _Cash=0;
                 _CashTips=0;
                 _Cards=0;
                 _CardsTips=0;
-                
+
                 foreach (var payment in BillingPayments)
                 {
                     if (payment.PaymentType==PaymentType.Cash)

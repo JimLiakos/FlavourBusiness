@@ -24845,6 +24845,27 @@
 				    value      	TRUE))
 			    quid       	"641AA70A0138"
 			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "AccountIsClosed"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c26fdb45-3cb0-4c27-9378-c63700b11d2f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6425BE4102EB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"6425BE4102EB"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"

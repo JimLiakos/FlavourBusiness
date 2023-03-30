@@ -4900,6 +4900,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public bool AccountIsClosed
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IDebtCollection), "get_AccountIsClosed", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public decimal Cash
         {
             get
