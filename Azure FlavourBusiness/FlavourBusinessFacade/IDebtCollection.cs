@@ -17,6 +17,8 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{8e903988-21d6-4902-b654-9328d7669169}</MetaDataID>
         void CashierClose();
 
+        /// <MetaDataID>{c26fdb45-3cb0-4c27-9378-c63700b11d2f}</MetaDataID>
+        bool AccountIsClosed { get; }
         /// <MetaDataID>{66cf46f7-8b9c-48b5-b214-629aa2dd8d1a}</MetaDataID>
         decimal Cash { get; }
 
