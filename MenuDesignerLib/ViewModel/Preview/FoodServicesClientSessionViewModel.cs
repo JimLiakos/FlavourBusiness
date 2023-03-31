@@ -110,7 +110,17 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        public Task Pay(IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> PayAndCommit(IPayment payment, decimal tipAmount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> PayAndCommit(IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
             throw new NotImplementedException();
         }
@@ -139,9 +149,5 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
-        Task IFoodServicesClientSessionViewModel.Pay(IPayment payment, decimal tipAmount)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -5,6 +5,7 @@ using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using QRCoder;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -37,6 +38,8 @@ namespace FLBManager
             var foodCategoriesNames = foodCategory.Split(';').Select(x => x.Split('(')[0]).ToList();
 
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
+
+           
 
             var location = watcher.Position.Location;
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el");
@@ -165,7 +168,7 @@ namespace FLBManager
             base.OnStartup(e);
         }
 
-
+        
         void CreateQRCodeCards()
         {
 

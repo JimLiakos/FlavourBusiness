@@ -39,6 +39,11 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+        protected void OnObjectChangeState(object _object, string member)
+        {
+            ObjectChangeState?.Invoke(_object, member);
+        }
         /// <exclude>Excluded</exclude>
         string _Name;
 

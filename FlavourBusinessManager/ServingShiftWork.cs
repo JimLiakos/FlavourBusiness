@@ -7,6 +7,7 @@ using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Windows.Forms.AxHost;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -23,9 +24,10 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{c33f6105-9c68-44fc-8ffe-faeacfe44294}</MetaDataID>
         [PersistentMember(nameof(_AccountIsClosed))]
         [BackwardCompatibilityID("+7")]
+        [CachingDataOnClientSide]
         public bool AccountIsClosed
         {
-            get => true;
+            get => _AccountIsClosed;
 
         }
 
@@ -179,6 +181,10 @@ namespace FlavourBusinessManager.HumanResources
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _AccountIsClosed=true;
+                OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                {
+                    OnObjectChangeState(this, null);
+                });
                 stateTransition.Consistent = true;
             }
         }

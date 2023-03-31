@@ -13,5 +13,7 @@ namespace FlavourBusinessFacade.HumanResources
 
         /// <MetaDataID>{8ab9c0cc-74c8-424d-a22a-bc942c7709af}</MetaDataID>
         void RecalculateDeptData();
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }
 }

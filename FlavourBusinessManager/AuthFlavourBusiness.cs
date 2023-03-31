@@ -9,6 +9,7 @@ using OOAdvantech.Remoting;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager
 {
@@ -444,10 +445,72 @@ namespace FlavourBusinessManager
 
         }
 #endif
+        bool tested= false;
+        void ObjectStorageMTTest()
+        {
+            lock(this)
+            {
+                if(tested) return;
+
+                tested = true;
+            }
+            var task1 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+            var task2 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+
+            var task3 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+
+            var task4 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+
+            var task5 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+
+            var task6 = Task.Run(() =>
+            {
+                FlavourBusinessManager.AuthUserRef.ObjectStorageMTTest();
+            });
+
+            task1.Wait();
+            task2.Wait();
+            task3.Wait();
+            task4.Wait();
+            task5.Wait();
+            task6.Wait();
+
+
+        }
+
 
         /// <MetaDataID>{943535ac-2335-4f04-94cd-94ce17a0d256}</MetaDataID>
         public UserData SignIn()
         {
+            try
+            {
+
+
+
+                ObjectStorageMTTest();
+
+            }
+            catch (Exception error)
+            {
+
+
+            }
+
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
 
 

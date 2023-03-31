@@ -1,4 +1,5 @@
 
+
 using System.Data.HashFunction.CRC;
 
 using OOAdvantech.Remoting.RestApi;
@@ -8,6 +9,8 @@ using System;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
 using Azure;
+
+//using OOAdvantech.Authentication;
 
 namespace FlavourBusinessManager
 {
@@ -117,12 +120,51 @@ namespace FlavourBusinessManager
         //        return _AuthUserRefCloudTable;
         //    }
         //}
+        static object omtl = new object();
+
+        static bool inited;
+        public static void ObjectStorageMTTest()
+        {
+            //lock (omtl)
+            //{
+            //    if (!inited)
+            //    {
+            //        FlavourBusinessManagerApp.Init(Microsoft.Azure.Storage.CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName, "", "", null);
+            //        inited = true;
+            //    }
+            //}
+
+            string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
+            AuthUserRef authUserRef = (from authUserRefEntry in FlavourBusinessManager.AuthUserRef.AuthUserRefCloudTable_a.Query<AuthUserRef>()
+                                       where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == "J8JODyCzmjb0Nqp6guxSizWlDwv2"
+                                       select authUserRefEntry).FirstOrDefault();
+
+
+            UserData userData = new UserData()
+            {
+                Identity = authUserRef.GetIdentity(),
+                Email = authUserRef.Email,
+                FullName = authUserRef.FullName,
+                PhoneNumber = authUserRef.PhoneNumber,
+                PhotoUrl = authUserRef.PhotoUrl,
+                Address = authUserRef.Address,
+                //OAuthUserIdentity=authUserRef.GetIdentity(),
+                Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
+            };
+
+            foreach (var role in userData.Roles)
+            {
+                var thuser = role.User;
+            }
+
+
+        }
 
 
         /// <exclude>Excluded</exclude>
         static Azure.Data.Tables.TableClient _AuthUserRefCloudTable_a;
 
-        static Azure.Data.Tables.TableClient AuthUserRefCloudTable_a
+        public static Azure.Data.Tables.TableClient AuthUserRefCloudTable_a
         {
             get
             {
@@ -180,6 +222,13 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{1c062a9d-74b0-491b-b1af-0f8b6dec0376}</MetaDataID>
         public string FullName { get; set; }
 
+
+        public static string GetPartitionKey(string identity)
+        {
+            string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(identity)).AsHexString();
+            return partitionKey;
+        }
+
         /// <MetaDataID>{ef69c2e7-b418-46bd-8be6-400cea6a46d4}</MetaDataID>
         static object AuthUserRefsLock = new object();
         /// <MetaDataID>{559cb54f-0a36-4108-99f3-b6dcc83e430d}</MetaDataID>
@@ -190,7 +239,9 @@ namespace FlavourBusinessManager
                 if (authUser == null)
                     return null;
 
-                string partitionKey = CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
+                string partitionKey = GetPartitionKey(authUser.User_ID);
+                
+                //CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
 
                 //AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
                 //                           where authUserRefEntry.PartitionKey == partitionKey && authUserRefEntry.RowKey == authUser.User_ID
