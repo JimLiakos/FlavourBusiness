@@ -502,7 +502,7 @@ namespace FlavourBusinessManager
 
 
 
-                ObjectStorageMTTest();
+                //ObjectStorageMTTest();
 
             }
             catch (Exception error)

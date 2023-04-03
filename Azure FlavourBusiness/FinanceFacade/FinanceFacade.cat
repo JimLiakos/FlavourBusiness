@@ -3205,7 +3205,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8"))
+		    value      	"10"))
 	    quid       	"635CB39B0177"
 	    stereotype 	"Interface"
 	    operations 	(list Operations
@@ -3222,20 +3222,20 @@
 		    quid       	"6363407A013A"
 		    parameters 	(list Parameters
 			(object Parameter "cardType"
-			    quid       	"6363615803AE"
+			    quid       	"6429A09102F0"
 			    type       	"string")
 			(object Parameter "accountNumber"
-			    quid       	"6363615803C0"
+			    quid       	"6429A0910319"
 			    type       	"string")
 			(object Parameter "isDebit"
-			    quid       	"6363615803D0"
+			    quid       	"6429A0910341"
 			    type       	"bool")
 			(object Parameter "transactionID"
-			    quid       	"6363615803E3"
+			    quid       	"6429A0910369"
 			    type       	"string")
 			(object Parameter "tipAmount"
-			    quid       	"63636159000B"
-			    type       	"decimal"))
+			    quid       	"6429A09103A1"
+			    type       	"System.Nullable<decimal>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -3344,6 +3344,40 @@
 			    value      	"636361590205"))
 		    quid       	"636361590205"
 		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsCompleted"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{221a8131-7c53-40e0-9ef7-1e3d03c6f2b9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A092004B"))
+		    quid       	"6429A092004B"
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ParseResponse"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6bd54dfb-5044-4c07-83d4-ebfeb2390358}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A0920083"))
+		    quid       	"6429A0920083"
+		    parameters 	(list Parameters
+			(object Parameter "response"
+			    quid       	"6429A09200A7"
+			    type       	"string"))
+		    result     	"FinanceFacade.PaymentActionState"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -3603,7 +3637,7 @@
 			    name       	"Identity"
 			    value      	"+7"))
 		    quid       	"6392EFB70167"
-		    type       	"System.DateTime?"
+		    type       	"System.Nullable<System.DateTime>"
 		    exportControl 	"Public")
 		(object ClassAttribute "PaymentOrderUrl"
 		    attributes 	(list Attribute_Set
@@ -3624,6 +3658,98 @@
 			    name       	"GenerateGetOperation"
 			    value      	TRUE))
 		    quid       	"63E337E00177"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "UserDeclared"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64290E450205")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{df3c3075-eb65-4f9d-9051-c837a1da86c2}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"64290E450205"
+		    documentation 	
+|In case where UserDeclared property is false
+|the payment completed Automatically from, Google pay, Apple pay or other payment gateway .
+|When the UserDeclared property is true the complete  payment is user driven action.
+		    
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{92a0ecad-6420-4db2-8d83-0398bd13262e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A0930016")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"6429A0930016"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Comments"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6f4bacd3-dcb9-4c7e-b020-96262eb2902c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A093007C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+9"))
+		    quid       	"6429A093007C"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
@@ -3646,7 +3772,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"15")
+		    value      	"18")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -3690,13 +3816,13 @@
 		    quid       	"6360B40F02E5"
 		    parameters 	(list Parameters
 			(object Parameter "paymentIdentity"
-			    quid       	"63E33CD4025A"
+			    quid       	"6429A14E03D4"
 			    type       	"string")
 			(object Parameter "paymentItems"
-			    quid       	"63E33CD40277"
+			    quid       	"6429A14F0008"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>")
 			(object Parameter "currency"
-			    quid       	"63E33CD40286"
+			    quid       	"6429A14F001E"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3715,19 +3841,31 @@
 		    quid       	"6360B40F033C"
 		    parameters 	(list Parameters
 			(object Parameter "amount"
-			    quid       	"6363C9E30108"
+			    quid       	"64290F7203D3"
 			    type       	"decimal")
 			(object Parameter "currency"
-			    quid       	"6363C9E30116"
+			    quid       	"64290F7203E2"
 			    type       	"string")
 			(object Parameter "Identity"
-			    quid       	"6363C9E30122"
+			    quid       	"64290F73000B"
 			    type       	"string")
+			(object Parameter "paymentGetwayID"
+			    quid       	"64290F73001E"
+			    type       	"string")
+			(object Parameter "paymentGetwayRequestID"
+			    quid       	"64290F73002F"
+			    type       	"string")
+			(object Parameter "paymentOrderUrl"
+			    quid       	"64290F730040"
+			    type       	"string")
+			(object Parameter "transactionDate"
+			    quid       	"64290F73004F"
+			    type       	"System.DateTime")
 			(object Parameter "itemsJson"
-			    quid       	"6363C9E3012D"
+			    quid       	"64290F730060"
 			    type       	"string")
 			(object Parameter "paymentInfoFieldsJson"
-			    quid       	"6363C9E30138"
+			    quid       	"64290F730073"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3761,7 +3899,7 @@
 		    quid       	"6360B40F039F"
 		    parameters 	(list Parameters
 			(object Parameter "paymentItems"
-			    quid       	"63E33CD40346"
+			    quid       	"6429A14F00A6"
 			    type       	"System.Collections.Generic.List<FinanceFacade.Item>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3811,7 +3949,7 @@
 		    quid       	"636361E80259"
 		    parameters 	(list Parameters
 			(object Parameter "tipAmount"
-			    quid       	"63E33CD403AD"
+			    quid       	"6429A14F00D7"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3830,31 +3968,31 @@
 		    quid       	"636361E8028A"
 		    parameters 	(list Parameters
 			(object Parameter "bankDescription"
-			    quid       	"63E33CD403CF"
+			    quid       	"6429A14F0117"
 			    type       	"string")
 			(object Parameter "bic"
-			    quid       	"63E33CD403DF"
+			    quid       	"6429A14F0129"
 			    type       	"string")
 			(object Parameter "iban"
-			    quid       	"63E33CD50002"
+			    quid       	"6429A14F013B"
 			    type       	"string")
 			(object Parameter "checkID"
-			    quid       	"63E33CD5000D"
+			    quid       	"6429A14F0150"
 			    type       	"string")
 			(object Parameter "issuer"
-			    quid       	"63E33CD50019"
+			    quid       	"6429A14F0164"
 			    type       	"string")
 			(object Parameter "issueDate"
-			    quid       	"63E33CD50024"
+			    quid       	"6429A14F0177"
 			    type       	"System.DateTime")
 			(object Parameter "checkNotes"
-			    quid       	"63E33CD5002F"
+			    quid       	"6429A14F0189"
 			    type       	"string")
 			(object Parameter "totalAmount"
-			    quid       	"63E33CD5003B"
+			    quid       	"6429A14F019C"
 			    type       	"decimal")
 			(object Parameter "tipAmount"
-			    quid       	"63E33CD50047"
+			    quid       	"6429A14F01B3"
 			    type       	"decimal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -3989,11 +4127,45 @@
 		    quid       	"63E33CD401F6"
 		    parameters 	(list Parameters
 			(object Parameter "response"
-			    quid       	"63E33CD40206"
+			    quid       	"6429A14E0394"
 			    type       	"string"))
 		    result     	"FinanceFacade.PaymentActionState"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "TryToCompletePaymentWithRefundAmount"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{595498f7-1e01-48c9-884f-c8ce33984f00}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64290F7302C8"))
+		    quid       	"64290F7302C8"
+		    parameters 	(list Parameters
+			(object Parameter "tipAmount"
+			    quid       	"64290F7302DA"
+			    type       	"decimal"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NormalizeNettingItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3ca1eb89-c1ed-4c8d-9901-80e259cd9e15}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64290F730311"))
+		    quid       	"64290F730311"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Amount"
@@ -4343,7 +4515,7 @@
 			    name       	"Identity"
 			    value      	"+10"))
 		    quid       	"6392F08901AD"
-		    type       	"System.Nullable<System.DateTime>"
+		    type       	"System.DateTime?"
 		    exportControl 	"Public")
 		(object ClassAttribute "PaymentGetwayID"
 		    attributes 	(list Attribute_Set
@@ -4548,6 +4720,130 @@
 			    name       	"Identity"
 			    value      	"+14"))
 		    quid       	"63E33CD50222"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "UserDeclared"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{df3c3075-eb65-4f9d-9051-c837a1da86c2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64290F740096")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+15"))
+		    quid       	"64290F740096"
+		    documentation 	
+|In case where UserDeclared property is false
+|the payment completed Automatically from, Google pay, Apple pay or other payment gateway .
+|When the UserDeclared property is true the complete  payment is user driven action.
+		    
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemsOrTipToPay"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1166a590-89cd-490d-b76c-e156092630fb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64290F740110")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"64290F740110"
+		    type       	"bool")
+		(object ClassAttribute "Description"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9e17f38d-ee32-488a-8e06-7c6df82b4305}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A14F03E4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+16"))
+		    quid       	"6429A14F03E4"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Comments"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{91728164-772e-4f6f-8c2b-61f9e7d8b96b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6429A1500022")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+17"))
+		    quid       	"6429A1500022"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
@@ -5010,7 +5306,11 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateSetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"63DBCFF6031C"
 		    label      	"Subject"
 		    supplier   	"Logical View::FinanceFacade::IPaymentSubject"
@@ -5026,7 +5326,15 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{1fcb2e69-a6a0-44a3-ab55-dbd3805e0b43}"))
+			    value      	"{1fcb2e69-a6a0-44a3-ab55-dbd3805e0b43}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"63DBCFF60321"
 		    supplier   	"Logical View::FinanceFacade::IPayment"
 		    quidu      	"635CB39B0177"))))

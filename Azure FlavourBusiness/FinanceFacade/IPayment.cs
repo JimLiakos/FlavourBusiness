@@ -9,6 +9,12 @@ namespace FinanceFacade
     [GenerateFacadeProxy]
     public interface IPayment
     {
+        /// <MetaDataID>{df3c3075-eb65-4f9d-9051-c837a1da86c2}</MetaDataID>
+        /// <summary>In case where UserDeclared property is false
+        /// the payment completed Automatically from, Google pay, Apple pay or other payment gateway .
+        /// When the UserDeclared property is true the complete  payment is user driven action.</summary>
+        bool UserDeclared { get; }
+
         /// <MetaDataID>{d6eb7ce8-cc7c-4b94-bb55-abf72e5e3c30}</MetaDataID>
         string PaymentOrderUrl { get; }
 
@@ -105,14 +111,24 @@ namespace FinanceFacade
         /// <MetaDataID>{6bd54dfb-5044-4c07-83d4-ebfeb2390358}</MetaDataID>
         PaymentActionState ParseResponse(string response);
 
+        /// <MetaDataID>{92a0ecad-6420-4db2-8d83-0398bd13262e}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
+        string Description { get; set; }
+
+        /// <MetaDataID>{6f4bacd3-dcb9-4c7e-b020-96262eb2902c}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
+        string Comments { get; set; }
+
 
     }
 
     /// <MetaDataID>{566e5205-215a-4e34-9ba5-1ce305fe583d}</MetaDataID>
     public class PaymentException : System.Exception
     {
+        /// <MetaDataID>{db6bf090-9001-4bf4-aa19-bb6a42d07267}</MetaDataID>
         public readonly PaymentFailure PaymentFailure;
 
+        /// <MetaDataID>{8dab9b54-164e-4d10-b79e-4f9377ce0a4a}</MetaDataID>
         public PaymentException(string message, PaymentFailure zeroAmount, int hresult) : base(message)
         {
             this.PaymentFailure=zeroAmount;

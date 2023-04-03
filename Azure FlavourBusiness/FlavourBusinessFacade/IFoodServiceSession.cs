@@ -18,6 +18,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// Defines the service time.
         /// In case where is null the service time is a soon as possible
         /// </summary>
+        /// <MetaDataID>{a4b9aa8f-1486-42f8-8fef-264014dc159e}</MetaDataID>
         DateTime? ServiceTime { get; set; }
 
 

@@ -35,6 +35,35 @@ namespace FlavourBusinessManager.EndUsers
     {
 
         /// <exclude>Excluded</exclude>
+        string _UserLanguageCode;
+        /// <MetaDataID>{91d4ad32-e902-4f40-94d8-25b67f2611d2}</MetaDataID>
+        [PersistentMember(nameof(_UserLanguageCode))]
+        [BackwardCompatibilityID("+29")]
+        public string UserLanguageCode
+        {
+            get => _UserLanguageCode;
+            set
+            {
+                if (_UserLanguageCode!=value)
+                {
+
+                    string neutralLang = OOAdvantech.CultureContext.GetNeutralCultureInfo(value)?.Name;
+                    if (neutralLang!=null)
+                    {
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _UserLanguageCode=neutralLang;
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.Member<HumanResources.ServingShiftWork> _SessionCreator=new OOAdvantech.Member<HumanResources.ServingShiftWork>();
 
         [Association("FoodServiceClientSessionInTheShiftWork", Roles.RoleB, "2076b2c6-2c5e-415a-93ab-187654f7c04a")]
@@ -2587,6 +2616,8 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        
+
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
         {
@@ -2690,12 +2721,15 @@ namespace FlavourBusinessManager.EndUsers
     public class Caregiver
     {
 
+        /// <MetaDataID>{68f09a1a-3a1b-4ec8-915c-49679b0496de}</MetaDataID>
         [OOAdvantech.Json.JsonIgnore]
         IServicesContextWorker _Worker;
 
+        /// <MetaDataID>{ca467d17-af5d-4e42-b3c1-71cdd8c98921}</MetaDataID>
         [OOAdvantech.Json.JsonProperty]
         string WorkerUri;
 
+        /// <MetaDataID>{369c5b18-c3bd-4c61-bb9d-14be5b87caaa}</MetaDataID>
         [OOAdvantech.Json.JsonIgnore]
         public IServicesContextWorker Worker
         {

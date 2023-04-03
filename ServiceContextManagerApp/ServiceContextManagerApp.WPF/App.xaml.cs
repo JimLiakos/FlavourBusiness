@@ -30,8 +30,11 @@ namespace ServiceContextManagerApp.WPF
 
             FlavourBusinessApps.ServiceContextManagerApp.WPF.ServiceContextManagerApp.Startup();
 
-            ServiceContextManagerApp.WPF.MainWindow mainWindow = new MainWindow();
+            DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
+
+            //ServiceContextManagerApp.WPF.MainWindow mainWindow = new MainWindow();
+            //mainWindow.Show();
 
 
             base.OnStartup(e);

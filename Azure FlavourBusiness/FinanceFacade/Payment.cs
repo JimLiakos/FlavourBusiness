@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.AccessControl;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FinanceFacade
 {
@@ -467,6 +468,36 @@ namespace FinanceFacade
         }
 
 
+
+
+        /// <exclude>Excluded</exclude>
+        bool _UserDeclared;
+
+        /// <MetaDataID>{df3c3075-eb65-4f9d-9051-c837a1da86c2}</MetaDataID>
+        /// <summary>In case where UserDeclared property is false
+        /// the payment completed Automatically from, Google pay, Apple pay or other payment gateway .
+        /// When the UserDeclared property is true the complete  payment is user driven action.</summary>
+        [PersistentMember(nameof(_UserDeclared))]
+        [BackwardCompatibilityID("+15")]
+        public bool UserDeclared
+        {
+            get => _UserDeclared;
+            protected set
+            {
+
+                if (_UserDeclared!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserDeclared=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
         /// <MetaDataID>{461a9ea2-bc16-407b-bb03-076c301d9bf8}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+13")]
@@ -531,9 +562,12 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                PaymentInfoFields["CardType"] = cardType;
-                PaymentInfoFields["AccountNumber"] = accountNumber;
-                PaymentInfoFields["TransactionID"] = transactionID;
+                if (cardType!=null)
+                    PaymentInfoFields["CardType"] = cardType;
+                if (accountNumber!=null)
+                    PaymentInfoFields["AccountNumber"] = accountNumber;
+                if (transactionID!=null)
+                    PaymentInfoFields["TransactionID"] = transactionID;
                 if (tipAmount!=null)
                     _TipsAmount = tipAmount.Value;
                 State = PaymentState.Completed;
@@ -541,6 +575,10 @@ namespace FinanceFacade
                     _PaymentType=PaymentType.DebitCard;
                 else
                     _PaymentType=PaymentType.CreditCard;
+                if (transactionID!=null)
+                    UserDeclared=false;
+                else
+                    UserDeclared=true;
 
 
                 //Normalize
@@ -563,6 +601,8 @@ namespace FinanceFacade
         string PaymentInfoFieldsJson;
 
 
+
+        /// <MetaDataID>{595498f7-1e01-48c9-884f-c8ce33984f00}</MetaDataID>
         public bool TryToCompletePaymentWithRefundAmount(decimal tipAmount)
         {
             if (State == PaymentState.Completed)
@@ -597,6 +637,7 @@ namespace FinanceFacade
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
+                    UserDeclared=true;
                     _TipsAmount = tipAmount;
 
                     if (!ItemsOrTipToPay)
@@ -626,6 +667,7 @@ namespace FinanceFacade
                 }
             }
         }
+        /// <MetaDataID>{1166a590-89cd-490d-b76c-e156092630fb}</MetaDataID>
         bool ItemsOrTipToPay
         {
             get
@@ -635,6 +677,52 @@ namespace FinanceFacade
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        private string _Description;
+
+        /// <MetaDataID>{9e17f38d-ee32-488a-8e06-7c6df82b4305}</MetaDataID>
+        [PersistentMember(nameof(_Description))]
+        [BackwardCompatibilityID("+16")]
+        public string Description
+        {
+            get => _Description;
+
+            set
+            {
+                if (_Description!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Description=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        private string _Comments;
+
+        /// <MetaDataID>{91728164-772e-4f6f-8c2b-61f9e7d8b96b}</MetaDataID>
+        [PersistentMember(nameof(_Comments))]
+        [BackwardCompatibilityID("+17")]
+        public string Comments
+        {
+            get => _Comments; set
+            {
+                if (_Comments!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Comments=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{3ca1eb89-c1ed-4c8d-9901-80e259cd9e15}</MetaDataID>
         private void NormalizeNettingItems()
         {
             var itemsToPayAmount = Items.OfType<Item>().Where(x => x.Amount-x.PaidAmount>0).Sum(x => x.Amount-x.PaidAmount)+TipsAmount;
@@ -681,6 +769,7 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                UserDeclared=true;
                 PaymentInfoFields["BankDescription"] = bankDescription;
                 PaymentInfoFields["BIC"] = bic;
                 PaymentInfoFields["IBAN"] = iban;
@@ -723,5 +812,5 @@ namespace FinanceFacade
 
     }
 
-   
+
 }

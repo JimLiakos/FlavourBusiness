@@ -130,15 +130,15 @@
     <comment>Specifies the name of the 'GraphicMenu when it is created.</comment>
   </data>
   <data name="DefaultPreparationStationDescription" xml:space="preserve">
-    <value>Preparation Station</value>
+    <value>Παρασκευαστήριο</value>
     <comment>Specifies the description of the 'preparation station' when it is created.</comment>
   </data>
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
-    <value>Main Hall</value>
+    <value>Κύρια αίθουσα</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
   </data>
   <data name="DefaultServicePointDescription" xml:space="preserve">
-    <value>Table</value>
+    <value>Τραπέζι</value>
     <comment>Specifies the description of the 'service point' when it is created.</comment>
   </data>
   <data name="DefaultSubPreparationStationDescription" xml:space="preserve">
@@ -160,7 +160,7 @@
     <value>Restaurant</value>
   </data>
   <data name="TablePaymentDescription" xml:space="preserve">
-    <value>Table {0}</value>
+    <value>Τραπέζι {0}</value>
     <comment>Specifies the description of the payment for the table.</comment>
   </data>
 </root>

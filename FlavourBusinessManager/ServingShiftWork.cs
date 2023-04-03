@@ -139,6 +139,24 @@ namespace FlavourBusinessManager.HumanResources
         public decimal CashTips => _CashTips;
 
 
+        /// <exclude>Excluded</exclude>
+        decimal _CardsUserDeclared;
+
+        /// <MetaDataID>{4b478cef-f771-48c5-bc76-294d24a0cff9}</MetaDataID>
+        [PersistentMember(nameof(_CardsUserDeclared))]
+        [BackwardCompatibilityID("+8")]
+        public decimal CardsUserDeclared => _CardsUserDeclared;
+
+
+        /// <exclude>Excluded</exclude>
+        decimal _CardsTipsUserDeclared;
+
+        /// <MetaDataID>{1441daf1-6731-4cc5-be78-af3424938e90}</MetaDataID>
+        [PersistentMember(nameof(_CardsTipsUserDeclared))]
+        [BackwardCompatibilityID("+9")]
+        public decimal CardsTipsUserDeclared => _CardsTipsUserDeclared;
+
+
 
         /// <MetaDataID>{0fcf5c16-341d-4a23-9693-c2141a8f9ebe}</MetaDataID>
         public ServingShiftWork(string name) : base(name)
@@ -201,20 +219,29 @@ namespace FlavourBusinessManager.HumanResources
                 _CashTips=0;
                 _Cards=0;
                 _CardsTips=0;
+                _CardsUserDeclared=0;
+                _CardsTipsUserDeclared=0;
 
                 foreach (var payment in BillingPayments)
                 {
                     if (payment.PaymentType==PaymentType.Cash)
                     {
                         _Cash+=payment.Amount;
-                        _CashTips=payment.TipsAmount;
+                        _CashTips+=payment.TipsAmount;
                     }
 
-                    if (payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
+                    if (!payment.UserDeclared &&payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
                     {
                         _Cards+=payment.Amount;
-                        _CardsTips=payment.TipsAmount;
+                        _CardsTips+=payment.TipsAmount;
                     }
+
+                    if (payment.UserDeclared &&payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
+                    {
+                        _CardsUserDeclared +=payment.Amount;
+                        _CardsTipsUserDeclared+=payment.TipsAmount;
+                    }
+
 
                 }
                 stateTransition.Consistent = true;

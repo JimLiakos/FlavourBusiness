@@ -1105,6 +1105,8 @@ namespace DontWaitApp
                 }
 
                 _FoodServicesClientSession = value;
+                if (_FoodServicesClientSession!=null&&FlavoursOrderServer!=null)
+                    _FoodServicesClientSession.UserLanguageCode=FlavoursOrderServer.Language;
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
                 {
                     if (DeliveryPlace != null)
@@ -1340,7 +1342,7 @@ namespace DontWaitApp
             }
 
 #else
-            payment.CardPaymentCompleted("unknown","xxxx",true,"xxxx",tipAmount);
+            payment.CardPaymentCompleted(null,null,true,null,tipAmount);
 #endif
         }
 

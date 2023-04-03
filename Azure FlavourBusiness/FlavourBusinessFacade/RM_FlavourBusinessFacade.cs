@@ -4876,6 +4876,30 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public decimal CardsUserDeclared
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IDebtCollection), "get_CardsUserDeclared", args, argsTypes);
+                return this.Proxy.GetValue<decimal>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public decimal CardsTipsUserDeclared
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IDebtCollection), "get_CardsTipsUserDeclared", args, argsTypes);
+                return this.Proxy.GetValue<decimal>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments
         {
             get
@@ -6244,6 +6268,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         public Pr_IFoodServiceClientSession(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_UserLanguageCode", args, argsTypes);
+            }
         }
         
         // The Width property for the object.

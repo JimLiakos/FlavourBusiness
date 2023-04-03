@@ -19776,6 +19776,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@267
+				location   	(1489, 1046)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	54
+				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -20811,7 +20829,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	550
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndUsers::IFoodServiceClientSession" @318
@@ -20842,6 +20860,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@318
+				location   	(187, 305)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	54
+				max_width  	1400)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -26134,7 +26170,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"29")
+			    value      	"30")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -28578,6 +28614,43 @@
 				    name       	"Identity"
 				    value      	"+28"))
 			    quid       	"63CD917200DF"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "UserLanguageCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642A444401EE")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{91d4ad32-e902-4f40-94d8-25b67f2611d2}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+29"))
+			    quid       	"642A444401EE"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
@@ -32118,8 +32191,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	619
-		    origin_y   	747
+		    origin_x   	0
+		    origin_y   	1235
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @467
 			    ShowCompartmentStereotypes 	TRUE
@@ -32264,7 +32337,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FinanceFacade::IPayment" @472
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1851, 2253)
+			    location   	(1847, 2253)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -32277,7 +32350,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@472
-				location   	(1626, 2210)
+				location   	(1622, 2210)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	450
@@ -32321,7 +32394,7 @@
 			    height     	222
 			    annotation 	8)
 			(object AssociationViewNew "CollectedPayments" @474
-			    location   	(2439, 2105)
+			    location   	(2437, 2105)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -32334,7 +32407,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @475
 				Parent_View 	@474
-				location   	(2439, 2046)
+				location   	(2437, 2046)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -32360,7 +32433,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "BillingPayments" @476
 				    Parent_View 	@474
-				    location   	(-631, -114)
+				    location   	(-633, -114)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -32373,7 +32446,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @477
 					Parent_View 	@476
-					location   	(2166, 2216)
+					location   	(2162, 2217)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -32401,7 +32474,7 @@
 				    line_style 	0)
 				(object RoleView "$UNNAMED$14" @478
 				    Parent_View 	@474
-				    location   	(-631, -114)
+				    location   	(-633, -114)
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"64129F1E011D"
@@ -37907,7 +37980,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8"))
+			    value      	"10"))
 		    quid       	"6195EE3D0029"
 		    superclasses 	(list inheritance_relationship_list
 			(object Inheritance_Relationship
@@ -38045,6 +38118,21 @@
 				    name       	"UniqueID"
 				    value      	"641AA8DD03DB"))
 			    quid       	"641AA8DD03DB"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RecalculateDeptData"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fff63019-df73-4af4-ae72-05ba83333c37}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642921A3019C"))
+			    quid       	"642921A3019C"
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -38290,6 +38378,48 @@
 				    value      	"+7"))
 			    quid       	"6425BE660169"
 			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "CardsUserDeclared"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4b478cef-f771-48c5-bc76-294d24a0cff9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642921A30224")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"642921A30224"
+			    type       	"decimal"
+			    exportControl 	"Public")
+			(object ClassAttribute "CardsTipsUserDeclared"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1441daf1-6731-4cc5-be78-af3424938e90}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642921A30244")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"642921A30244"
+			    type       	"decimal"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"

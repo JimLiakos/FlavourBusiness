@@ -4,7 +4,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
-
+using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -178,6 +178,14 @@ namespace FlavourBusinessManager.EndUsers
                     //move to end of list;
                     payments.Remove(payment);
                     payments.Add(payment);
+                }
+
+                if (foodServiceClientSession.MainSession.ServicePoint is HallServicePoint)
+                {
+                    if (!string.IsNullOrWhiteSpace(foodServiceClientSession.UserLanguageCode))
+                        payment.Description=string.Format(Properties.Resources.TablePaymentDescription, Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(foodServiceClientSession.UserLanguageCode)), foodServiceClientSession.MainSession.ServicePoint.Description);
+                    else
+                        payment.Description=string.Format(Properties.Resources.TablePaymentDescription, foodServiceClientSession.MainSession.ServicePoint.Description);
                 }
 
                 stateTransition.Consistent = true;
