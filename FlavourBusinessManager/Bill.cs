@@ -183,7 +183,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (foodServiceClientSession.MainSession.ServicePoint is HallServicePoint)
                 {
                     if (!string.IsNullOrWhiteSpace(foodServiceClientSession.UserLanguageCode))
-                        payment.Description=string.Format(Properties.Resources.TablePaymentDescription, Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(foodServiceClientSession.UserLanguageCode)), foodServiceClientSession.MainSession.ServicePoint.Description);
+                        payment.Description=string.Format(Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(foodServiceClientSession.UserLanguageCode)), foodServiceClientSession.MainSession.ServicePoint.Description);
                     else
                         payment.Description=string.Format(Properties.Resources.TablePaymentDescription, foodServiceClientSession.MainSession.ServicePoint.Description);
                 }
@@ -281,6 +281,15 @@ namespace FlavourBusinessManager.EndUsers
                     payments.Remove(payment);
                     payments.Add(payment);
                 }
+
+                if (waiterFoodServicesClientSession.MainSession.ServicePoint is HallServicePoint)
+                {
+                    if (!string.IsNullOrWhiteSpace(waiterFoodServicesClientSession.UserLanguageCode))
+                        payment.Description=string.Format(Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(waiterFoodServicesClientSession.UserLanguageCode)), waiterFoodServicesClientSession.MainSession.ServicePoint.Description);
+                    else
+                        payment.Description=string.Format(Properties.Resources.TablePaymentDescription, waiterFoodServicesClientSession.MainSession.ServicePoint.Description);
+                }
+
 
                 stateTransition.Consistent = true;
             }

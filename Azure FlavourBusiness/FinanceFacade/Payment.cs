@@ -688,7 +688,7 @@ namespace FinanceFacade
             get => _Description;
 
             set
-            {
+            {  
                 if (_Description!=value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
