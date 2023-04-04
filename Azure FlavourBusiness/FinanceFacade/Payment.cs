@@ -683,6 +683,7 @@ namespace FinanceFacade
         /// <MetaDataID>{9e17f38d-ee32-488a-8e06-7c6df82b4305}</MetaDataID>
         [PersistentMember(nameof(_Description))]
         [BackwardCompatibilityID("+16")]
+        [CachingDataOnClientSide]
         public string Description
         {
             get => _Description;

@@ -353,7 +353,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
     }
-
+     
 
     /// <MetaDataID>{bf4ffb5f-7561-4659-a602-cceb0d1837d3}</MetaDataID>
     public enum ChangeDeliveryPlaceResponse
