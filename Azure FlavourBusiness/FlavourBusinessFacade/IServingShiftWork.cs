@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.RoomService;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.HumanResources
@@ -16,5 +17,8 @@ namespace FlavourBusinessFacade.HumanResources
 
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+
+        System.Collections.Generic.List<IItemPreparation> GetPaymentItemPreparations(FinanceFacade.IPayment payment);
     }
 }

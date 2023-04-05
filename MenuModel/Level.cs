@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MenuModel.JsonViewModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -12,6 +13,14 @@ namespace MenuModel
     public class Level : ILevel
     {
 
+
+        public string Uri
+        {
+            get
+            {
+                return OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>

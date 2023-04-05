@@ -9,6 +9,7 @@ namespace MenuModel
     {
         /// <MetaDataID>{6e119471-363f-4e9e-aed1-de0506416ee7}</MetaDataID>
         void RemovePreparationTag(ITag tag);
+        /// <MetaDataID>{23739421-571c-415b-8a0c-ca7702eb0975}</MetaDataID>
         MenuModel.ITag NewPreparationTag();
 
         [Association("OtionTag", Roles.RoleA, "c46ab72d-2868-4607-b1b1-96d7bc916509")]
@@ -101,6 +102,7 @@ namespace MenuModel
         void SetHiddenFor(IMenuItem menuItem, bool value);
 
 
+        /// <MetaDataID>{c5297bf5-7093-4e9a-8c52-7b6119f6124f}</MetaDataID>
         string Uri { get; }
 
     }

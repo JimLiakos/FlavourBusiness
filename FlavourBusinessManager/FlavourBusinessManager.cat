@@ -23746,7 +23746,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"10")
+			    value      	"11")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -24104,6 +24104,43 @@
 				    value      	"+9"))
 			    quid       	"60F82A450089"
 			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D0C520196")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{657121f1-dcde-405e-aa99-a83798d7e0d0}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+10")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
+			    quid       	"642D0C520196"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -30689,8 +30726,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
-		    origin_y   	0
+		    origin_x   	1840
+		    origin_y   	491
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @397
 			    ShowCompartmentStereotypes 	TRUE
@@ -30989,7 +31026,7 @@
 			    height     	268
 			    annotation 	8)
 			(object AssociationViewNew "ItemPreparationOptionsChange" @410
-			    location   	(3680, 378)
+			    location   	(3680, 379)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -31002,7 +31039,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @411
 				Parent_View 	@410
-				location   	(3737, 201)
+				location   	(3737, 203)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -31028,7 +31065,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "OptionsChanges" @412
 				    Parent_View 	@410
-				    location   	(2018, -106)
+				    location   	(2018, -105)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31041,7 +31078,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @413
 					Parent_View 	@412
-					location   	(3868, 337)
+					location   	(3868, 338)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31067,11 +31104,11 @@
 				    client     	@410
 				    supplier   	@407
 				    line_style 	3
-				    origin_attachment 	(3680, 378)
-				    terminal_attachment 	(3915, 378)
+				    origin_attachment 	(3680, 379)
+				    terminal_attachment 	(3915, 379)
 				    label      	(object SegLabel @414
 					Parent_View 	@412
-					location   	(3890, 432)
+					location   	(3890, 433)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31093,7 +31130,7 @@
 					orientation 	1))
 				(object RoleView "ItemPreparation" @415
 				    Parent_View 	@410
-				    location   	(2018, -106)
+				    location   	(2018, -105)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31106,7 +31143,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @416
 					Parent_View 	@415
-					location   	(3536, 320)
+					location   	(3536, 321)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31132,11 +31169,11 @@
 				    client     	@410
 				    supplier   	@409
 				    line_style 	3
-				    origin_attachment 	(3680, 378)
-				    terminal_attachment 	(3445, 378)
+				    origin_attachment 	(3680, 379)
+				    terminal_attachment 	(3445, 379)
 				    label      	(object SegLabel @417
 					Parent_View 	@415
-					location   	(3470, 432)
+					location   	(3470, 433)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -38608,24 +38645,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F550D3B0057"
-			    compartment 	(object Compartment
-				Parent_View 	@565
-				location   	(1387, 1067)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	2659)
 			    width      	769
 			    height     	544
 			    annotation 	8)
@@ -38655,24 +38674,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B9180030"
-			    compartment 	(object Compartment
-				Parent_View 	@566
-				location   	(98, 1695)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	387)
 			    width      	596
 			    height     	336
 			    annotation 	8
@@ -38705,24 +38706,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B55A023E"
-			    compartment 	(object Compartment
-				Parent_View 	@567
-				location   	(9, 1135)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	1596)
 			    width      	806
 			    height     	481
 			    annotation 	8)
@@ -38754,24 +38737,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0BBC80230"
-			    compartment 	(object Compartment
-				Parent_View 	@568
-				location   	(821, 264)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	1350)
 			    width      	582
 			    height     	400
 			    annotation 	8)
@@ -38831,24 +38796,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0B8490118"
-			    compartment 	(object Compartment
-				Parent_View 	@572
-				location   	(3442, 285)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	571)
 			    width      	736
 			    height     	326
 			    annotation 	8)
@@ -39047,24 +38994,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0C9240018"
-			    compartment 	(object Compartment
-				Parent_View 	@581
-				location   	(3475, 1546)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	1353)
 			    width      	712
 			    height     	431
 			    annotation 	8)

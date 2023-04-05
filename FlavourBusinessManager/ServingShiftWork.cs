@@ -1,6 +1,9 @@
 using FinanceFacade;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicesContextResources;
 using Microsoft.Extensions.Azure;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
@@ -249,5 +252,20 @@ namespace FlavourBusinessManager.HumanResources
 
 
         }
+
+        public List<IItemPreparation> GetPaymentItemPreparations(IPayment payment)
+        {
+            var items = (from partialSession in (payment.Subject as FoodServiceSession).PartialClientSessions
+                         from itemPreparation in partialSession.FlavourItems.Union(partialSession.SharedItems)
+                         select itemPreparation).ToList();
+
+            foreach(var item in items.OfType<ItemPreparation>())
+            {
+                item.LoadMenuItem();
+            }
+
+            return items;
+
+       }
     }
 }

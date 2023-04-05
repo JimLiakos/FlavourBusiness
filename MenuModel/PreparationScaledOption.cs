@@ -153,7 +153,7 @@ namespace MenuModel
         public Multilingual MultilingualName => new Multilingual(_Name);
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.MultilingualMember<string> _Name = new OOAdvantech.MultilingualMember<string>();
+        MultilingualMember<string> _Name = new MultilingualMember<string>();
         /// <MetaDataID>{531e20cb-27d8-4415-82ff-67414a33d736}</MetaDataID>
         [PersistentMember("_Name")]
         public string Name

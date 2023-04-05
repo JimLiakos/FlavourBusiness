@@ -5510,6 +5510,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServingShiftWork), "RecalculateDeptData", args, argsTypes);
         }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> GetPaymentItemPreparations(FinanceFacade.IPayment payment)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = payment;
+            argsTypes[0] = typeof(FinanceFacade.IPayment);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServingShiftWork), "GetPaymentItemPreparations", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+        }
     }
     
     public sealed class Pr_IServicesContextWorker : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IServicesContextWorker, OOAdvantech.Remoting.RestApi.ITransparentProxy

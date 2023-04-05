@@ -17,6 +17,30 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class OptionChange : IOptionChange
     {
+
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.MultilingualMember<string> _Description = new OOAdvantech.MultilingualMember<string>();
+
+        /// <MetaDataID>{657121f1-dcde-405e-aa99-a83798d7e0d0}</MetaDataID>
+        [PersistentMember(nameof(_Description))]
+        [BackwardCompatibilityID("+10")]
+        public string Description
+        {
+            get => _Description;
+            set
+            {
+                if (_Description!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Description.Value=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         bool _Without;
 
@@ -28,7 +52,7 @@ namespace FlavourBusinessManager.RoomService
             get => _Without;
             set
             {
-                
+
                 if (_Without != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -84,7 +108,7 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
-              return   _ItemPreparation;
+                return _ItemPreparation;
             }
             set
             {
@@ -136,7 +160,12 @@ namespace FlavourBusinessManager.RoomService
             get
             {
                 if (itemSpecificOption != null)
-                    return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.JsonViewModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                {
+                    if (itemSpecificOption.Option is MenuModel.JsonViewModel.Option)
+                        return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.JsonViewModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                    else
+                        return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                }
                 else
                     return null;
             }
@@ -166,7 +195,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        
+
 
 
 
@@ -251,8 +280,11 @@ namespace FlavourBusinessManager.RoomService
         public IOptionMenuItemSpecific itemSpecificOption { get; internal set; }
 
 
+        /// <MetaDataID>{64baddd7-f1ba-461f-bbf8-7d1c58206edb}</MetaDataID>
         [JsonIgnore]
         public IPreparationScaledOption Option { get; internal set; }
+
+
 
 
 
@@ -272,7 +304,7 @@ namespace FlavourBusinessManager.RoomService
                 _OptionName = optionChange.OptionName;
                 _OptionPrice = optionChange.OptionPrice;
                 _PriceDif = optionChange.PriceDif;
-                _Without = optionChange.Without; 
+                _Without = optionChange.Without;
                 stateTransition.Consistent = true;
             }
 

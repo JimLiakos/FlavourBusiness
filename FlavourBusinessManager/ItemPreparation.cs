@@ -494,6 +494,7 @@ namespace FlavourBusinessManager.RoomService
                     {
                         optionChange.Option = option;
                         optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
+                        optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
                     }
                 }
                 //_MenuItem.OptionsMenuItemSpecifics
