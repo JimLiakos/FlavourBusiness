@@ -1630,6 +1630,7 @@ namespace DontWaitApp
         public void ItemChanged(ItemPreparation item)
         {
             bool hasChanges = OrderItemsDictionary[item.uid].Update(item);
+            
             item = OrderItemsDictionary[item.uid];
             if (hasChanges)
             {

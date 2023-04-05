@@ -261,7 +261,7 @@ namespace FlavourBusinessManager.HumanResources
 
             foreach(var item in items.OfType<ItemPreparation>())
             {
-                item.LoadMenuItem();
+                item.UpdateMultiligaulFields();
             }
 
             return items;

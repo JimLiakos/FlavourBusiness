@@ -22344,7 +22344,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"35")
+			    value      	"37")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -22492,8 +22492,8 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"63D6646E01CA"
-				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
+				    quid       	"642D93260307"
+				    type       	"System.Collections.Generic.Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -22674,6 +22674,21 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "UpdateMultiligaulFields"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bb55947a-360a-4242-a5e8-3bf3264f8059}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D932602BB"))
+			    quid       	"642D932602BB"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "MenuItemUri"
@@ -23306,7 +23321,7 @@
 			    quid       	"60E0297D02D2"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "PreparedAt"
+			(object ClassAttribute "PreparationStartsAt"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -23341,7 +23356,7 @@
 				    name       	"Identity"
 				    value      	"+20"))
 			    quid       	"60E2896701DA"
-			    type       	"DateTime"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "PreparedAtForecast"
 			    attributes 	(list Attribute_Set
@@ -23378,7 +23393,7 @@
 				    name       	"Identity"
 				    value      	"+21"))
 			    quid       	"60E2896701E0"
-			    type       	"DateTime"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "CodeCard"
 			    attributes 	(list Attribute_Set
@@ -23631,7 +23646,7 @@
 				    name       	"Identity"
 				    value      	"+29"))
 			    quid       	"6254E69A00FC"
-			    type       	"System.Nullable<System.DateTime>"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "PreparatioOrder"
 			    attributes 	(list Attribute_Set
@@ -23724,6 +23739,126 @@
 				    value      	"63D6646F0330"))
 			    quid       	"63D6646F0330"
 			    type       	"System.Collections.Generic.List<FinanceFacade.IPayment>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D844B0312")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ce02a853-1dbd-4d99-8d86-5a4330a06e0c}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+35"))
+			    quid       	"642D844B0312"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PaidAmounts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ca57372d-75b2-4b8a-9533-7baf1a7bf209}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D932900AD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"642D932900AD"
+			    type       	"System.Collections.Generic.Dictionary<string, decimal>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ecb56228-c2d9-4637-a146-4bbad4bd4ad6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D9368008F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"642D9368008F"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MultilingualDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e235da04-dc4e-4b53-bf79-4fa86fa72d5a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D93C5019B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+36"))
+			    quid       	"642D93C5019B"
+			    type       	"OOAdvantech.Multilingual"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -23746,7 +23881,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"11")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -23989,7 +24124,19 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
-				    value      	"5D0314D0016A"))
+				    value      	"5D0314D0016A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
 			    quid       	"5D0314D0016A"
 			    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    exportControl 	"Public")
@@ -24141,6 +24288,60 @@
 				    value      	TRUE))
 			    quid       	"642D0C520196"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MultilingualDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7b25d9e2-cbbd-4764-89fc-61dc676cb7f3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D91BD028D")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
+			    quid       	"642D91BD028D"
+			    type       	"OOAdvantech.Multilingual"
+			    exportControl 	"Public")
+			(object ClassAttribute "Option"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{64baddd7-f1ba-461f-bbf8-7d1c58206edb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D91BF004A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"642D91BF004A"
+			    type       	"MenuModel.IPreparationScaledOption"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -30726,12 +30927,12 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1840
-		    origin_y   	491
+		    origin_x   	797
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @397
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(4261, 1507)
+			    location   	(4262, 1506)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -30744,7 +30945,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@397
-				location   	(3983, 1422)
+				location   	(3984, 1421)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	557
@@ -30759,7 +30960,7 @@
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ItemPreparation" @398
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3426, 1638)
+			    location   	(3426, 1637)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -30772,7 +30973,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@398
-				location   	(3167, 1541)
+				location   	(3167, 1540)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	519
@@ -30960,7 +31161,7 @@
 			    line_style 	0)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IOptionChange" @407
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(4193, 370)
+			    location   	(4196, 370)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -30973,7 +31174,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@407
-				location   	(3924, 339)
+				location   	(3927, 339)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	538
@@ -30994,8 +31195,8 @@
 			    client     	@397
 			    supplier   	@407
 			    line_style 	3
-			    origin_attachment 	(4212, 1409)
-			    terminal_attachment 	(4212, 501))
+			    origin_attachment 	(4217, 1408)
+			    terminal_attachment 	(4217, 501))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IItemPreparation" @409
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3174, 353)
@@ -31026,7 +31227,7 @@
 			    height     	268
 			    annotation 	8)
 			(object AssociationViewNew "ItemPreparationOptionsChange" @410
-			    location   	(3680, 379)
+			    location   	(3681, 378)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -31039,7 +31240,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @411
 				Parent_View 	@410
-				location   	(3737, 203)
+				location   	(3738, 202)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -31063,9 +31264,9 @@
 			    line_color 	3342489
 			    quidu      	"5D00AF450337"
 			    roleview_list 	(list RoleViews
-				(object RoleView "OptionsChanges" @412
+				(object RoleView "" @412
 				    Parent_View 	@410
-				    location   	(2018, -105)
+				    location   	(2019, -106)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31078,7 +31279,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @413
 					Parent_View 	@412
-					location   	(3868, 338)
+					location   	(3871, 337)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31089,12 +31290,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	322
 					justify    	0
-					label      	"+OptionsChanges"
+					label      	""
 					pctDist    	0.800000
 					height     	42
 					orientation 	0)
@@ -31104,11 +31306,11 @@
 				    client     	@410
 				    supplier   	@407
 				    line_style 	3
-				    origin_attachment 	(3680, 379)
-				    terminal_attachment 	(3915, 379)
+				    origin_attachment 	(3681, 378)
+				    terminal_attachment 	(3918, 378)
 				    label      	(object SegLabel @414
 					Parent_View 	@412
-					location   	(3890, 433)
+					location   	(3893, 432)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31128,9 +31330,9 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "ItemPreparation" @415
+				(object RoleView "" @415
 				    Parent_View 	@410
-				    location   	(2018, -105)
+				    location   	(2019, -106)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31143,7 +31345,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @416
 					Parent_View 	@415
-					location   	(3536, 321)
+					location   	(3536, 320)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31154,12 +31356,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	309
 					justify    	0
-					label      	"+ItemPreparation"
+					label      	""
 					pctDist    	0.617073
 					height     	59
 					orientation 	1)
@@ -31169,11 +31372,11 @@
 				    client     	@410
 				    supplier   	@409
 				    line_style 	3
-				    origin_attachment 	(3680, 379)
-				    terminal_attachment 	(3445, 379)
+				    origin_attachment 	(3681, 378)
+				    terminal_attachment 	(3445, 378)
 				    label      	(object SegLabel @417
 					Parent_View 	@415
-					location   	(3470, 433)
+					location   	(3470, 432)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31325,7 +31528,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "FlavourItems" @424
+				(object RoleView "" @424
 				    Parent_View 	@419
 				    location   	(624, 50)
 				    font       	(object Font
@@ -31351,12 +31554,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	250
 					justify    	0
-					label      	"+FlavourItems"
+					label      	""
 					pctDist    	0.800000
 					height     	42
 					orientation 	0)
@@ -31466,7 +31670,7 @@
 			    line_color 	3342489
 			    quidu      	"5CDA6C650089"
 			    roleview_list 	(list RoleViews
-				(object RoleView "FoodItems" @431
+				(object RoleView "" @431
 				    Parent_View 	@429
 				    location   	(2433, 232)
 				    font       	(object Font
@@ -31492,12 +31696,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	331
 					justify    	0
-					label      	"+FoodItems"
+					label      	""
 					pctDist    	0.264605
 					height     	140
 					orientation 	0)
@@ -32171,21 +32376,21 @@
 			(object RealizeView "" @465
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    quidu      	"5D024E80031B"
-			    client     	@398
-			    supplier   	@409
-			    line_style 	3
-			    origin_attachment 	(3321, 1528)
-			    terminal_attachment 	(3321, 487))
-			(object RealizeView "" @466
-			    stereotype 	TRUE
-			    line_color 	3342489
 			    quidu      	"6073C9A5000C"
 			    client     	@399
 			    supplier   	@428
 			    line_style 	3
 			    origin_attachment 	(2787, 1521)
-			    terminal_attachment 	(2787, 1109))))
+			    terminal_attachment 	(2787, 1109))
+			(object RealizeView "" @466
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5D024E80031B"
+			    client     	@398
+			    supplier   	@409
+			    line_style 	3
+			    origin_attachment 	(3317, 1528)
+			    terminal_attachment 	(3317, 486))))
 		(object ClassDiagram "Meal Preparation"
 		    quid       	"60A91C57001F"
 		    title      	"Meal Preparation"
@@ -33715,7 +33920,7 @@
 			    line_color 	3342489
 			    quidu      	"5CDA6C650089"
 			    roleview_list 	(list RoleViews
-				(object RoleView "FoodItems" @538
+				(object RoleView "" @538
 				    Parent_View 	@536
 				    location   	(2310, 228)
 				    font       	(object Font
@@ -33741,12 +33946,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	331
 					justify    	0
-					label      	"+FoodItems"
+					label      	""
 					pctDist    	0.264605
 					height     	140
 					orientation 	0)
@@ -33971,7 +34177,7 @@
 					pctDist    	0.803842
 					height     	74
 					orientation 	0))
-				(object RoleView "PreparedItems" @550
+				(object RoleView "" @550
 				    Parent_View 	@545
 				    location   	(627, 151)
 				    font       	(object Font
@@ -33997,12 +34203,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	291
 					justify    	0
-					label      	"+PreparedItems"
+					label      	""
 					pctDist    	0.082237
 					height     	98
 					orientation 	1)

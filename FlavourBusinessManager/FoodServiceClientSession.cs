@@ -1832,6 +1832,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
+                        existingItem.UpdateMultiligaulFields();
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                         if (_FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).Count() > 0)
                             CatchStateEvents();
@@ -2206,6 +2207,8 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
                     (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+
+                flavourItem.UpdateMultiligaulFields();
             }
 
 

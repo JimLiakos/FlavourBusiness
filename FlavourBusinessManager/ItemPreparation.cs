@@ -10,6 +10,7 @@ using System;
 using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
+using OOAdvantech;
 
 
 #if !FlavourBusinessDevice
@@ -24,6 +25,44 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+
+
+        /// <MetaDataID>{e235da04-dc4e-4b53-bf79-4fa86fa72d5a}</MetaDataID>
+        [BackwardCompatibilityID("+36")]
+        public Multilingual MultilingualDescription
+        {
+            get => new Multilingual(_Description); 
+            set
+            {
+                _Description=new MultilingualMember<string>(value);
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        MultilingualMember<string> _Description = new MultilingualMember<string>();
+
+        /// <MetaDataID>{ce02a853-1dbd-4d99-8d86-5a4330a06e0c}</MetaDataID>
+        [PersistentMember(nameof(_Description))]
+        [BackwardCompatibilityID("+35")]
+        [JsonIgnore]
+        public string Description
+        {
+            get => _Description.Value;
+            set
+            {
+                if (_Description!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Description.Value=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
         /// <exclude>Excluded</exclude>
         int _PreparatioOrder;
 
@@ -69,7 +108,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        
+
 
         /// <MetaDataID>{4b0c7c73-d9b6-408c-b50a-3dc74bff17f9}</MetaDataID>
         [BackwardCompatibilityID("+30")]
@@ -494,17 +533,55 @@ namespace FlavourBusinessManager.RoomService
                     {
                         optionChange.Option = option;
                         optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
-                        optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
                     }
                 }
-                //_MenuItem.OptionsMenuItemSpecifics
-
-
             }
-
             return _MenuItem;
         }
+
+        /// <MetaDataID>{bb55947a-360a-4242-a5e8-3bf3264f8059}</MetaDataID>
+        internal void UpdateMultiligaulFields()
+        {
+            if (_MenuItem == null)
+                LoadMenuItem();
+
+            if (_MenuItem != null)
+            {
+                var optionsDictionary = (from itemType in _MenuItem.Types.OfType<MenuItemType>()
+                                         from option in itemType.GetAllScaledOptions()
+                                         select option).ToDictionary(x => x.Uri);
+
+                Description=FullName;
+
+                foreach (var optionChange in this.OptionsChanges.OfType<OptionChange>())
+                {
+                    if (optionChange.Option==null)
+                    {
+                        PreparationScaledOption option = null;
+                        if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
+                        {
+                            optionChange.Option = option;
+                            optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
+                        }
+                    }
+                    if (optionChange.Option!=null)
+                    {
+                        bool checkUncheck = (optionChange.Option.LevelType is FixedScaleType)&&(optionChange.Option.LevelType as FixedScaleType).UniqueIdentifier==FixedScaleTypes.CheckUncheck;
+
+                        int levelIndex = optionChange.Option.LevelType.Levels.IndexOf(optionChange.NewLevel);
+                        if (levelIndex<2)
+                            optionChange.Description=optionChange.Option.FullName;
+                        else
+                            optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
+
+                    }
+                }
+            }
+            //_MenuItem.OptionsMenuItemSpecifics
+        }
 #endif
+
+
 
         /// <MetaDataID>{08cd685b-2f14-4812-ab5f-af170874b642}</MetaDataID>
         public IMenuItem LoadMenuItem(Dictionary<string, MenuFoodItem> menuItems)
@@ -1088,6 +1165,7 @@ namespace FlavourBusinessManager.RoomService
 
         /// <exclude>Excluded</exclude>
         Dictionary<string, decimal> _PaidAmounts;
+        /// <MetaDataID>{ca57372d-75b2-4b8a-9533-7baf1a7bf209}</MetaDataID>
         public Dictionary<string, decimal> PaidAmounts
         {
             get

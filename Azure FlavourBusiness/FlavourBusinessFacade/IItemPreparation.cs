@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FinanceFacade;
 using FlavourBusinessFacade.EndUsers;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.RoomService
@@ -10,8 +11,16 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{a7796efb-811f-469d-a5d2-dd27024950ac}</MetaDataID>
+        [BackwardCompatibilityID("+21")]
+        Multilingual MultilingualDescription { get; }
+
+        /// <MetaDataID>{ecb56228-c2d9-4637-a146-4bbad4bd4ad6}</MetaDataID>
+        [BackwardCompatibilityID("+20")]
+        string Description { get; set; }
+
         /// <MetaDataID>{367ad7d1-1314-403f-a3bf-970c7adbb813}</MetaDataID>
-       Dictionary<string, decimal> PaidAmounts { get; }
+        Dictionary<string, decimal> PaidAmounts { get; }
 
 
   
@@ -226,8 +235,11 @@ namespace FlavourBusinessFacade.RoomService
     /// <MetaDataID>{035494c0-f39d-441e-b659-5dd7213ea78e}</MetaDataID>
     public class ItemPreparationPlan
     {
+        /// <MetaDataID>{f4d54607-d019-4b55-981e-837a35ce2c4e}</MetaDataID>
         public DateTime PreparationStart { get; set; }
+        /// <MetaDataID>{07e84bac-aea2-41be-8798-9ed89c148a9a}</MetaDataID>
         public double Duration { get; set; }
+        /// <MetaDataID>{d179010b-e9bb-4b84-807f-47626b11f367}</MetaDataID>
         public double CookingDuration { get; set; }
     }
 

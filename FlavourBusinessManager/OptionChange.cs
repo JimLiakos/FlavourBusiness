@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FlavourBusinessFacade.RoomService;
 using MenuModel;
 using MenuModel.JsonViewModel;
+using OOAdvantech;
 using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -20,11 +21,12 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.MultilingualMember<string> _Description = new OOAdvantech.MultilingualMember<string>();
+        MultilingualMember<string> _Description = new MultilingualMember<string>();
 
         /// <MetaDataID>{657121f1-dcde-405e-aa99-a83798d7e0d0}</MetaDataID>
         [PersistentMember(nameof(_Description))]
         [BackwardCompatibilityID("+10")]
+        [JsonIgnore]
         public string Description
         {
             get => _Description;
@@ -38,6 +40,16 @@ namespace FlavourBusinessManager.RoomService
                         stateTransition.Consistent = true;
                     }
                 }
+            }
+        }
+        /// <MetaDataID>{7b25d9e2-cbbd-4764-89fc-61dc676cb7f3}</MetaDataID>
+        [BackwardCompatibilityID("+11")]
+        public Multilingual MultilingualDescription
+        {
+            get => new Multilingual(_Description);
+            set
+            {
+                _Description=new MultilingualMember<string>(value);
             }
         }
 

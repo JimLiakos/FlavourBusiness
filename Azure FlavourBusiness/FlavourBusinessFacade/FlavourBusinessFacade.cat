@@ -12647,12 +12647,12 @@
 			    value      	"913f7a7e-cd2a-4833-a0dc-dde7987eefff"))
 		    quid       	"5D3C848700E1"
 		    roles      	(list role_list
-			(object Role "FlavourItems"
+			(object Role "$UNNAMED$18"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -12672,13 +12672,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
-				    value      	TRUE))
+				    value      	FALSE))
 			    quid       	"5D3C8488001B"
-			    label      	"FlavourItems"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "0..*")
-			    is_navigable 	TRUE)
+			    client_cardinality 	(value cardinality "0..*"))
 			(object Role "ClientSession"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -12751,7 +12749,7 @@
 			    quidu      	"62CF8F5F0018"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$18"
+			(object Role "$UNNAMED$19"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12793,15 +12791,15 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$19"
+			(object Object "$UNNAMED$20"
 			    quid       	"5CFF278800A6"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D0074BE029A"
-				    supplier   	"$UNNAMED$20"
+				    supplier   	"$UNNAMED$21"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(        )"
+					(object Message "GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12820,10 +12818,10 @@
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5CFF280E0110"
-				    supplier   	"$UNNAMED$19"
+				    supplier   	"$UNNAMED$20"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12837,15 +12835,15 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$20"
+			(object Object "$UNNAMED$21"
 			    quid       	"5D0074A9012A"
 			    collaborators 	(list link_list
 				(object Link
 				    quid       	"5D00868D03A6"
-				    supplier   	"$UNNAMED$21"
+				    supplier   	"$UNNAMED$22"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12859,7 +12857,7 @@
 			    persistence 	"Transient"
 			    creationObj 	FALSE
 			    multi      	FALSE)
-			(object Object "$UNNAMED$21"
+			(object Object "$UNNAMED$22"
 			    quid       	"5D0085810266"
 			    class      	"Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint"
 			    quidu      	"5B8BB60401E2"
@@ -12876,7 +12874,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -14098,7 +14096,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$18" @138
+				(object RoleView "$UNNAMED$19" @138
 				    Parent_View 	@133
 				    location   	(482, 46)
 				    stereotype 	TRUE
@@ -14291,7 +14289,7 @@
 			    line_color 	3342489
 			    quidu      	"5D3C848700E1"
 			    roleview_list 	(list RoleViews
-				(object RoleView "FlavourItems" @145
+				(object RoleView "$UNNAMED$18" @145
 				    Parent_View 	@143
 				    location   	(682, -481)
 				    font       	(object Font
@@ -14317,12 +14315,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	280
 					justify    	0
-					label      	"+FlavourItems"
+					label      	""
 					pctDist    	0.633588
 					height     	47
 					orientation 	0)
@@ -14459,7 +14458,7 @@
 			    line_color 	3342489
 			    quidu      	"5D4696C80399"
 			    roleview_list 	(list RoleViews
-				(object RoleView "SharedItems" @153
+				(object RoleView "" @153
 				    Parent_View 	@151
 				    location   	(682, -303)
 				    font       	(object Font
@@ -14485,12 +14484,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	262
 					justify    	0
-					label      	"+SharedItems"
+					label      	""
 					pctDist    	0.550761
 					height     	53
 					orientation 	0)
@@ -15358,7 +15358,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$19" @194
+			(object ObjectView "$UNNAMED$20" @194
 			    location   	(1088, 1278)
 			    font       	(object Font
 				size       	10
@@ -15420,7 +15420,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$20" @196
+			(object ObjectView "$UNNAMED$21" @196
 			    location   	(2409, 1284)
 			    font       	(object Font
 				size       	10
@@ -15451,7 +15451,7 @@
 			    subobjects 	0
 			    x_offset   	0.000000
 			    y_offset   	0.000000)
-			(object ObjectView "$UNNAMED$21" @197
+			(object ObjectView "$UNNAMED$22" @197
 			    location   	(3545, 1306)
 			    font       	(object Font
 				size       	10
@@ -15531,7 +15531,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(        )"
+				label      	"GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -15618,7 +15618,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -15705,7 +15705,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -16000,7 +16000,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -16222,7 +16222,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"20")
+			    value      	"22")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Generate Backward ID"
@@ -16522,7 +16522,7 @@
 				    name       	"Identity"
 				    value      	"+12"))
 			    quid       	"60E2864A017F"
-			    type       	"System.Nullable<System.DateTime>"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "PreparedAtForecast"
 			    attributes 	(list Attribute_Set
@@ -16551,7 +16551,7 @@
 				    name       	"Identity"
 				    value      	"+13"))
 			    quid       	"60E286720066"
-			    type       	"System.Nullable<System.DateTime>"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "CustomItemEnabled"
 			    attributes 	(list Attribute_Set
@@ -16757,7 +16757,7 @@
 				    name       	"Identity"
 				    value      	"+18"))
 			    quid       	"6254E4800106"
-			    type       	"System.Nullable<System.DateTime>"
+			    type       	"System.DateTime?"
 			    exportControl 	"Public")
 			(object ClassAttribute "PreparatioOrder"
 			    attributes 	(list Attribute_Set
@@ -16811,7 +16811,94 @@
 				    name       	"MetaObjectID"
 				    value      	"{367ad7d1-1314-403f-a3bf-970c7adbb813}"))
 			    quid       	"63EF096F027D"
-			    type       	"Dictionary<string,decimal>"
+			    type       	"System.Collections.Generic.Dictionary<string, decimal>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D84240042")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ecb56228-c2d9-4637-a146-4bbad4bd4ad6}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+20"))
+			    quid       	"642D84240042"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "AppearanceOrder"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{45efae09-2879-4a32-8d4d-e290d076b0d5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D921D02FA")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"642D921D02FA"
+			    type       	"int"
+			    exportControl 	"Public")
+			(object ClassAttribute "MultilingualDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a7796efb-811f-469d-a5d2-dd27024950ac}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D921F0106")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+21"))
+			    quid       	"642D921F0106"
+			    type       	"Multilingual"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -16833,7 +16920,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"4"))
+			    value      	"5"))
 		    quid       	"5D024E2F0326"
 		    stereotype 	"Interface"
 		    class_attributes 	(list class_attribute_list
@@ -16927,6 +17014,60 @@
 				    value      	"+3"))
 			    quid       	"642D0ACF0012"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9c88e934-f93d-4e85-ac88-a786c5231269}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D918E0381")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"642D918E0381"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MultilingualDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{783d5688-e77b-4b50-bca0-9f4d14e247cc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642D918E03D7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
+			    quid       	"642D918E03D7"
+			    type       	"OOAdvantech.Multilingual"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -18114,12 +18255,12 @@
 			    value      	"170a4e1d-1241-4efd-a037-01a2c2a3456b"))
 		    quid       	"5CDA6C650089"
 		    roles      	(list role_list
-			(object Role "FoodItems"
+			(object Role "$UNNAMED$23"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -18139,13 +18280,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
-				    value      	TRUE))
+				    value      	FALSE))
 			    quid       	"5CDA6C6600C2"
-			    label      	"FoodItems"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "1..*")
-			    is_navigable 	TRUE)
+			    client_cardinality 	(value cardinality "1..*"))
 			(object Role "MealCourse"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -18194,7 +18333,7 @@
 			    value      	TRUE))
 		    quid       	"5D00AF450337"
 		    roles      	(list role_list
-			(object Role "OptionsChanges"
+			(object Role "$UNNAMED$24"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -18215,7 +18354,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"Persistent"
 				    name       	"Loading Type"
@@ -18225,12 +18364,10 @@
 				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"5D00AF4602D3"
-			    label      	"OptionsChanges"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IOptionChange"
 			    quidu      	"5D024E2F0326"
-			    client_cardinality 	(value cardinality "0..*")
-			    is_navigable 	TRUE)
-			(object Role "ItemPreparation"
+			    client_cardinality 	(value cardinality "0..*"))
+			(object Role "$UNNAMED$25"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18243,7 +18380,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -18257,11 +18394,9 @@
 				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"5D00AF4602D5"
-			    label      	"ItemPreparation"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "1")
-			    is_navigable 	TRUE)))
+			    client_cardinality 	(value cardinality "1"))))
 		(object Association "ClientsSharedItems"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -18274,7 +18409,7 @@
 			    value      	"d3f8b87e-0f43-4373-939e-950dd9db19b2"))
 		    quid       	"5D4696C80399"
 		    roles      	(list role_list
-			(object Role "SharedItems"
+			(object Role "$UNNAMED$26"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18291,7 +18426,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -18301,11 +18436,9 @@
 				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"5D4696CA0241"
-			    label      	"SharedItems"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "0..*")
-			    is_navigable 	TRUE)
+			    client_cardinality 	(value cardinality "0..*"))
 			(object Role "SharedWithClients"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -18378,7 +18511,7 @@
 			    quidu      	"5D024DF603A6"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$22"
+			(object Role "$UNNAMED$27"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18484,7 +18617,7 @@
 			    value      	"e7e482f4-cfba-45a5-8270-8346af757d7a"))
 		    quid       	"60E0180B00F8"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$23"
+			(object Role "$UNNAMED$28"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -18578,7 +18711,7 @@
 			    quidu      	"6073C95302E6"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$24"
+			(object Role "$UNNAMED$29"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18604,7 +18737,7 @@
 			    value      	"2b36e0e0-e305-45c5-9b91-4f13b7048c84"))
 		    quid       	"618927920357"
 		    roles      	(list role_list
-			(object Role "PreparedItems"
+			(object Role "$UNNAMED$30"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18617,7 +18750,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"ContainerClass"
@@ -18625,17 +18758,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
-				    value      	TRUE)
+				    value      	FALSE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
 				    value      	TRUE))
 			    quid       	"618927930274"
-			    label      	"PreparedItems"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "1..*")
-			    is_navigable 	TRUE)
+			    client_cardinality 	(value cardinality "1..*"))
 			(object Role "ServedInTheBatch"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -18700,7 +18831,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$25"
+			(object Role "$UNNAMED$31"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18838,7 +18969,7 @@
 			    quidu      	"616950830001"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$26"
+			(object Role "$UNNAMED$32"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18903,7 +19034,7 @@
 			    quidu      	"635CB39B0177"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$27"
+			(object Role "$UNNAMED$33"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -18969,7 +19100,7 @@
 			    quidu      	"5C6BBDA2021E"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$28"
+			(object Role "$UNNAMED$34"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -19027,7 +19158,7 @@
 			    quidu      	"635CB39B0177"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$29"
+			(object Role "$UNNAMED$35"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -19549,7 +19680,7 @@
 			    line_color 	3342489
 			    quidu      	"5D00AF450337"
 			    roleview_list 	(list RoleViews
-				(object RoleView "ItemPreparation" @253
+				(object RoleView "$UNNAMED$25" @253
 				    Parent_View 	@251
 				    location   	(-146, -413)
 				    font       	(object Font
@@ -19575,12 +19706,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	309
 					justify    	0
-					label      	"+ItemPreparation"
+					label      	""
 					pctDist    	0.501063
 					height     	40
 					orientation 	1)
@@ -19614,7 +19746,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "OptionsChanges" @256
+				(object RoleView "$UNNAMED$24" @256
 				    Parent_View 	@251
 				    location   	(-146, -413)
 				    font       	(object Font
@@ -19640,12 +19772,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	322
 					justify    	0
-					label      	"+OptionsChanges"
+					label      	""
 					pctDist    	0.593604
 					height     	41
 					orientation 	0)
@@ -19717,7 +19850,7 @@
 			    line_color 	3342489
 			    quidu      	"5D3C848700E1"
 			    roleview_list 	(list RoleViews
-				(object RoleView "FlavourItems" @261
+				(object RoleView "$UNNAMED$18" @261
 				    Parent_View 	@259
 				    location   	(376, -66)
 				    font       	(object Font
@@ -19743,12 +19876,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	280
 					justify    	0
-					label      	"+FlavourItems"
+					label      	""
 					pctDist    	0.800000
 					height     	42
 					orientation 	0)
@@ -19885,7 +20019,7 @@
 			    line_color 	3342489
 			    quidu      	"618927920357"
 			    roleview_list 	(list RoleViews
-				(object RoleView "PreparedItems" @269
+				(object RoleView "$UNNAMED$30" @269
 				    Parent_View 	@267
 				    location   	(396, -420)
 				    font       	(object Font
@@ -19911,12 +20045,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	291
 					justify    	0
-					label      	"+PreparedItems"
+					label      	""
 					pctDist    	0.592443
 					height     	27
 					orientation 	1)
@@ -20149,7 +20284,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$22" @282
+				(object RoleView "$UNNAMED$27" @282
 				    Parent_View 	@277
 				    location   	(322, -809)
 				    font       	(object Font
@@ -21047,7 +21182,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$24" @322
+				(object RoleView "$UNNAMED$29" @322
 				    Parent_View 	@317
 				    location   	(760, -298)
 				    font       	(object Font
@@ -21429,7 +21564,7 @@
 					pctDist    	0.718232
 					height     	56
 					orientation 	0))
-				(object RoleView "FoodItems" @341
+				(object RoleView "$UNNAMED$23" @341
 				    Parent_View 	@336
 				    location   	(-416, 196)
 				    font       	(object Font
@@ -21455,12 +21590,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	228
 					justify    	0
-					label      	"+FoodItems"
+					label      	""
 					pctDist    	0.702929
 					height     	156
 					orientation 	0)
@@ -21730,7 +21866,7 @@
 			    line_color 	3342489
 			    quidu      	"60E0180B00F8"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$23" @355
+				(object RoleView "$UNNAMED$28" @355
 				    Parent_View 	@353
 				    location   	(1690, 104)
 				    font       	(object Font
@@ -22187,7 +22323,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$26" @376
+				(object RoleView "$UNNAMED$32" @376
 				    Parent_View 	@371
 				    location   	(587, 4)
 				    stereotype 	TRUE
@@ -22533,7 +22669,7 @@
 			    line_color 	3342489
 			    quidu      	"5D3C848700E1"
 			    roleview_list 	(list RoleViews
-				(object RoleView "FlavourItems" @391
+				(object RoleView "$UNNAMED$18" @391
 				    Parent_View 	@389
 				    location   	(649, -69)
 				    font       	(object Font
@@ -22559,12 +22695,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	280
 					justify    	0
-					label      	"+FlavourItems"
+					label      	""
 					pctDist    	0.633588
 					height     	47
 					orientation 	0)
@@ -22701,7 +22838,7 @@
 			    line_color 	3342489
 			    quidu      	"5D4696C80399"
 			    roleview_list 	(list RoleViews
-				(object RoleView "SharedItems" @399
+				(object RoleView "$UNNAMED$26" @399
 				    Parent_View 	@397
 				    location   	(649, 113)
 				    font       	(object Font
@@ -22727,12 +22864,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	262
 					justify    	0
-					label      	"+SharedItems"
+					label      	""
 					pctDist    	0.550761
 					height     	53
 					orientation 	0)
@@ -22934,7 +23072,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "FoodItems" @410
+				(object RoleView "$UNNAMED$23" @410
 				    Parent_View 	@405
 				    location   	(495, -19)
 				    font       	(object Font
@@ -22960,12 +23098,13 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
+					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	228
 					justify    	0
-					label      	"+FoodItems"
+					label      	""
 					pctDist    	0.611573
 					height     	42
 					orientation 	0)
