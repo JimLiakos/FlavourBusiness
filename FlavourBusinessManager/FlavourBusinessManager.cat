@@ -23802,31 +23802,6 @@
 			    quid       	"642D932900AD"
 			    type       	"System.Collections.Generic.Dictionary<string, decimal>"
 			    exportControl 	"Public")
-			(object ClassAttribute "Description"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{ecb56228-c2d9-4637-a146-4bbad4bd4ad6}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"642D9368008F")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE))
-			    quid       	"642D9368008F"
-			    type       	"string"
-			    exportControl 	"Public")
 			(object ClassAttribute "MultilingualDescription"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -23881,7 +23856,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"12")
+			    value      	"14")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -24342,6 +24317,76 @@
 				    value      	TRUE))
 			    quid       	"642D91BF004A"
 			    type       	"MenuModel.IPreparationScaledOption"
+			    exportControl 	"Public")
+			(object ClassAttribute "CheckedOption"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6838d0ca-7065-4d97-8b8b-50acd427eb9f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642DBED80038")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+12"))
+			    quid       	"642DBED80038"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "NotifiedUnCheckedOption"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a2bffb9d-ffb0-4231-b3d3-81e427837dbb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642DCD0D02A5")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+13"))
+			    quid       	"642DCD0D02A5"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -30927,7 +30972,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	797
+		    origin_x   	1775
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @397
@@ -31195,8 +31240,8 @@
 			    client     	@397
 			    supplier   	@407
 			    line_style 	3
-			    origin_attachment 	(4217, 1408)
-			    terminal_attachment 	(4217, 501))
+			    origin_attachment 	(4216, 1409)
+			    terminal_attachment 	(4216, 501))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IItemPreparation" @409
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3174, 353)
@@ -31264,7 +31309,7 @@
 			    line_color 	3342489
 			    quidu      	"5D00AF450337"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @412
+				(object RoleView "OptionsChanges" @412
 				    Parent_View 	@410
 				    location   	(2019, -106)
 				    font       	(object Font
@@ -31290,13 +31335,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	322
 					justify    	0
-					label      	""
+					label      	"+OptionsChanges"
 					pctDist    	0.800000
 					height     	42
 					orientation 	0)
@@ -31330,7 +31374,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "" @415
+				(object RoleView "ItemPreparation" @415
 				    Parent_View 	@410
 				    location   	(2019, -106)
 				    font       	(object Font
@@ -31356,13 +31400,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	309
 					justify    	0
-					label      	""
+					label      	"+ItemPreparation"
 					pctDist    	0.617073
 					height     	59
 					orientation 	1)

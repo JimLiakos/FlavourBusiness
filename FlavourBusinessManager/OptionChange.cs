@@ -18,6 +18,50 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class OptionChange : IOptionChange
     {
+        /// <exclude>Excluded</exclude>
+        bool _NotifiedUnCheckedOption;
+        /// <MetaDataID>{a2bffb9d-ffb0-4231-b3d3-81e427837dbb}</MetaDataID>
+        [PersistentMember(nameof(_NotifiedUnCheckedOption))]
+        [BackwardCompatibilityID("+13")]
+        public bool NotifiedUnCheckedOption
+        {
+            get => _NotifiedUnCheckedOption;
+            set
+            {
+                if (_NotifiedUnCheckedOption!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _NotifiedUnCheckedOption=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _CheckedOption;
+
+        /// <MetaDataID>{6838d0ca-7065-4d97-8b8b-50acd427eb9f}</MetaDataID>
+        [PersistentMember(nameof(_CheckedOption))]
+        [BackwardCompatibilityID("+12")]
+        public bool CheckedOption
+        {
+            get => _CheckedOption;
+            set
+            {
+
+                if (_CheckedOption!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CheckedOption=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -307,6 +351,7 @@ namespace FlavourBusinessManager.RoomService
             bool changed = (_NewLevelUri != optionChange.NewLevelUri ||
                 _OptionName != optionChange.OptionName ||
                 _OptionPrice != optionChange.OptionPrice ||
+                _CheckedOption != optionChange.CheckedOption ||
                 _PriceDif != optionChange.PriceDif);
 
 
@@ -316,6 +361,7 @@ namespace FlavourBusinessManager.RoomService
                 _OptionName = optionChange.OptionName;
                 _OptionPrice = optionChange.OptionPrice;
                 _PriceDif = optionChange.PriceDif;
+                _CheckedOption=optionChange.CheckedOption;
                 _Without = optionChange.Without;
                 stateTransition.Consistent = true;
             }

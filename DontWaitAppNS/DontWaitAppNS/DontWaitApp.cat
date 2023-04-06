@@ -4036,7 +4036,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	61
+			nlines     	60
 			max_width  	0)
 		    width      	744
 		    height     	262

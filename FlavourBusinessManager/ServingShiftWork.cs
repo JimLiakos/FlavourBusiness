@@ -91,6 +91,7 @@ namespace FlavourBusinessManager.HumanResources
                 var billingPayments = (from foodServiceClientSession in WaiterFoodServiceClientSessions
                                        from payment in foodServiceClientSession.GetPayments()
                                        where payment.State==PaymentState.Completed
+                                       orderby payment.TransactionDate
                                        select payment).OfType<IPayment>().ToList();
 
                 return billingPayments;

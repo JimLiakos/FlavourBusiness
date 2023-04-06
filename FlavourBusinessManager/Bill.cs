@@ -54,8 +54,8 @@ namespace FlavourBusinessManager.EndUsers
 
             foreach (var flavourItem in flavourItems)
             {
-                decimal paidAmount = 0;
-                paidAmount=flavourItem.GetPaidAmount(foodServiceClientSession, payments);
+                
+                decimal paidAmount = flavourItem.GetPaidAmount(foodServiceClientSession, payments);
                 paidItemsAmounts[flavourItem] = paidAmount;
                 FinanceFacade.Item item = null;
 
