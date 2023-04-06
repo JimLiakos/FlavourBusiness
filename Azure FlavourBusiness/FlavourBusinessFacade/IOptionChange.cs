@@ -7,9 +7,10 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{e829df38-0b19-40d1-9211-9f95fb470174}")]
     public interface IOptionChange
     {
-        /// <MetaDataID>{dde5aaa3-d498-4db2-a4a2-85349c97dc98}</MetaDataID>
-        [BackwardCompatibilityID("+6")]
-        bool NotifiedUnCheckedOption { get; set; }
+        /// <MetaDataID>{d35caf89-d706-43db-8958-51fc398de380}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        OptionChangeType OptionChangeType { get; set; }
+
 
         /// <MetaDataID>{9c88e934-f93d-4e85-ac88-a786c5231269}</MetaDataID>
         [BackwardCompatibilityID("+3")]
@@ -36,10 +37,14 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+2")]
         bool Without { get; }
 
-        /// <MetaDataID>{1f1fec9c-c64b-4a19-9e34-db619db8db66}</MetaDataID>
-        [BackwardCompatibilityID("+5")]
-        bool CheckedOption { get; set; }
+    }
 
-
+    /// <MetaDataID>{18cbc6aa-6498-4d87-a07f-730961b17c13}</MetaDataID>
+    public enum OptionChangeType
+    {
+        CheckedOption = 1,
+        NotifiedUnCheckedOption = 2,
+        Extra = 3,
+        Without = 4
     }
 }

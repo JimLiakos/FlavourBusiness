@@ -23856,7 +23856,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"14")
+			    value      	"15")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -24318,75 +24318,38 @@
 			    quid       	"642D91BF004A"
 			    type       	"MenuModel.IPreparationScaledOption"
 			    exportControl 	"Public")
-			(object ClassAttribute "CheckedOption"
+			(object ClassAttribute "OptionChangeType"
 			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{6838d0ca-7065-4d97-8b8b-50acd427eb9f}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"642DBED80038")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+12"))
-			    quid       	"642DBED80038"
-			    type       	"bool"
-			    exportControl 	"Public")
-			(object ClassAttribute "NotifiedUnCheckedOption"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{a2bffb9d-ffb0-4231-b3d3-81e427837dbb}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"642DCD0D02A5")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Generate Backward ID"
 				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"642ECB3502F3")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fed42e02-a5f5-444d-95db-3e27321bf77c}")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
 				    name       	"Identity"
-				    value      	"+13"))
-			    quid       	"642DCD0D02A5"
-			    type       	"bool"
+				    value      	"+14"))
+			    quid       	"642ECB3502F3"
+			    type       	"OptionChangeType"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -30972,7 +30935,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1775
+		    origin_x   	1819
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::OptionChange" @397
@@ -31206,7 +31169,7 @@
 			    line_style 	0)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IOptionChange" @407
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(4196, 370)
+			    location   	(4199, 370)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -31219,7 +31182,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@407
-				location   	(3927, 339)
+				location   	(3930, 339)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	538
@@ -31240,8 +31203,8 @@
 			    client     	@397
 			    supplier   	@407
 			    line_style 	3
-			    origin_attachment 	(4216, 1409)
-			    terminal_attachment 	(4216, 501))
+			    origin_attachment 	(4220, 1409)
+			    terminal_attachment 	(4220, 501))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IItemPreparation" @409
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3174, 353)
@@ -31272,7 +31235,7 @@
 			    height     	268
 			    annotation 	8)
 			(object AssociationViewNew "ItemPreparationOptionsChange" @410
-			    location   	(3681, 378)
+			    location   	(3683, 378)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -31285,7 +31248,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @411
 				Parent_View 	@410
-				location   	(3738, 202)
+				location   	(3740, 202)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -31311,7 +31274,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "OptionsChanges" @412
 				    Parent_View 	@410
-				    location   	(2019, -106)
+				    location   	(2021, -106)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31324,7 +31287,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @413
 					Parent_View 	@412
-					location   	(3871, 337)
+					location   	(3873, 337)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31350,11 +31313,11 @@
 				    client     	@410
 				    supplier   	@407
 				    line_style 	3
-				    origin_attachment 	(3681, 378)
-				    terminal_attachment 	(3918, 378)
+				    origin_attachment 	(3683, 378)
+				    terminal_attachment 	(3921, 378)
 				    label      	(object SegLabel @414
 					Parent_View 	@412
-					location   	(3893, 432)
+					location   	(3897, 432)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31376,7 +31339,7 @@
 					orientation 	1))
 				(object RoleView "ItemPreparation" @415
 				    Parent_View 	@410
-				    location   	(2019, -106)
+				    location   	(2021, -106)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -31389,7 +31352,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @416
 					Parent_View 	@415
-					location   	(3536, 320)
+					location   	(3537, 320)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -31415,11 +31378,11 @@
 				    client     	@410
 				    supplier   	@409
 				    line_style 	3
-				    origin_attachment 	(3681, 378)
+				    origin_attachment 	(3683, 378)
 				    terminal_attachment 	(3445, 378)
 				    label      	(object SegLabel @417
 					Parent_View 	@415
-					location   	(3470, 432)
+					location   	(3469, 432)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"

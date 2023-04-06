@@ -12799,7 +12799,7 @@
 				    supplier   	"$UNNAMED$21"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(        )"
+					(object Message "GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12821,7 +12821,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12843,7 +12843,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -12874,7 +12874,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15531,7 +15531,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(        )"
+				label      	"GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -15618,7 +15618,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -15705,7 +15705,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -16000,7 +16000,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -16920,7 +16920,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"7"))
+			    value      	"8"))
 		    quid       	"5D024E2F0326"
 		    stereotype 	"Interface"
 		    class_attributes 	(list class_attribute_list
@@ -17044,19 +17044,11 @@
 			    quid       	"642D918E03D7"
 			    type       	"OOAdvantech.Multilingual"
 			    exportControl 	"Public")
-			(object ClassAttribute "CheckedOption"
+			(object ClassAttribute "OptionChangeType"
 			    attributes 	(list Attribute_Set
 				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{1f1fec9c-c64b-4a19-9e34-db619db8db66}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"642DBC1D01F0")
-				(object Attribute
 				    tool       	"C#"
-				    name       	"As Property"
+				    name       	"Generate Backward ID"
 				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
@@ -17068,47 +17060,18 @@
 				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
 				    name       	"Identity"
-				    value      	"+5"))
-			    quid       	"642DBC1D01F0"
-			    type       	"bool"
-			    exportControl 	"Public")
-			(object ClassAttribute "NotifiedUnCheckedOption"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{dde5aaa3-d498-4db2-a4a2-85349c97dc98}")
+				    value      	"+7")
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
-				    value      	"642DCC90011E")
+				    value      	"642ECAB402B8")
 				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+6"))
-			    quid       	"642DCC90011E"
-			    type       	"bool"
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d35caf89-d706-43db-8958-51fc398de380}"))
+			    quid       	"642ECAB402B8"
+			    type       	"OptionChangeType"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
