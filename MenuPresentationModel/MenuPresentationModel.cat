@@ -21560,7 +21560,7 @@
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::OOAdvantech::WindowsBaseEx::WindowsBaseEx"
-		    quidu      	"642FA8A10121"
+		    quidu      	"642FF02A03C4"
 		    language   	"C#"
 		    persistence 	"Persistent")
 		(object Class "HeadingStyle"
@@ -29422,14 +29422,14 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1181
-		    origin_y   	184
+		    origin_x   	1225
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::MenuPresentationModel::MenuStyles::FontData" @292
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(3603, 1200)
+			    location   	(3606, 1197)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -29442,7 +29442,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@292
-				location   	(3334, 1009)
+				location   	(3337, 1006)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	539
@@ -29450,7 +29450,7 @@
 				label      	"FontData")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@292
-				location   	(3334, 959)
+				location   	(3337, 956)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -29463,7 +29463,7 @@
 			    quidu      	"590EB6FE022A"
 			    compartment 	(object Compartment
 				Parent_View 	@292
-				location   	(3334, 1070)
+				location   	(3337, 1067)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -29754,6 +29754,10 @@
 				    quidu      	"5910BED701A4"
 				    client     	@297
 				    supplier   	@295
+				    vertices   	(list Points
+					(1161, 1141)
+					(1161, 1140)
+					(1794, 1140))
 				    line_style 	3
 				    origin_attachment 	(1161, 1141)
 				    terminal_attachment 	(1794, 1140)

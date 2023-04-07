@@ -7,6 +7,7 @@ using MenuPresentationModel.MenuCanvas;
 using System.Xml.Linq;
 using System.IO;
 using UIBaseEx;
+using System.Net.Http;
 
 
 #if MenuPresentationModel
@@ -94,9 +95,30 @@ namespace MenuPresentationModel.JsonMenuPresentation
         public List<FontData> MenuFonts { get; set; } = new List<FontData>();
         internal int GetFontID(FontData font)
         {
-            if (!MenuFonts.Contains(font))
+            var existingFont = MenuFonts.Where(x => x==font).FirstOrDefault();
+            if (MenuFonts.Where(x => x==font).Count()==0)
+            {
+                 
+                var client = new HttpClient();
+                string menuModelFontUrl= string.Format("http://{0}:8090/api/MenuModel/Font", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+                var request = new HttpRequestMessage(HttpMethod.Post, menuModelFontUrl);
+                
+                var content = new StringContent(OOAdvantech.Json.JsonConvert.SerializeObject(font), null, "application/json");
+                request.Content = content;
+                var responseTask =client.SendAsync(request);
+                responseTask.Wait();
+                var response = responseTask.Result;
+                response.EnsureSuccessStatusCode();
+                var contentTask= response.Content.ReadAsStringAsync();
+                contentTask.Wait();
+
+                font.Uri=contentTask.Result;
+                if (font.Uri[0]=='"'&&font.Uri[font.Uri.Length-1]=='"')
+                    font.Uri =font.Uri.Substring(1,font.Uri.Length-2);
+
                 MenuFonts.Add(font);
-            int fontID = MenuFonts.IndexOf(font) + 1;
+            }
+            int fontID = MenuFonts.IndexOf(existingFont) + 1;
             return fontID;
         }
 

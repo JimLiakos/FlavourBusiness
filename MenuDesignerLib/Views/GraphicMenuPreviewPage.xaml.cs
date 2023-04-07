@@ -62,6 +62,8 @@ namespace MenuDesigner.Views
                     //MenuModel.FixedMealType
                 }
 
+
+
                 BookViewModel.CreateMenuPreview(FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuRoot, FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuName, GraphickMenuResources);
 
             }));
@@ -70,7 +72,7 @@ namespace MenuDesigner.Views
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.ProcessRequest += this.Browser_ProcessRequest;
 
-            Browser.Navigate(new Uri(url + "/#/room-service;orderServerPath=.%2FEndUser"));
+            Browser.Navigate(new Uri(url + "#/room-service;orderServerPath=.%2FEndUser"));
             FlavoursOrderServer.Initialize();
         }
 

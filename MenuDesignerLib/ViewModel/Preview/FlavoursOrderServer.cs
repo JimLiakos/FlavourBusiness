@@ -20,6 +20,7 @@ namespace MenuDesigner.ViewModel.Preview
     public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.Remoting.RestApi.IBoundObject
     {
 
+  
 
         /// <MetaDataID>{77e8f92c-1f58-488b-98fb-9e4cbc081a42}</MetaDataID>
         public MarshalByRefObject GetObjectFromUri(string uri)
@@ -83,7 +84,7 @@ namespace MenuDesigner.ViewModel.Preview
 
         Task<List<IFoodServicesClientSessionViewModel>> IFlavoursOrderServer.ActiveSessions => throw new NotImplementedException();
 
-        ISecureUser IFlavoursOrderServer.EndUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        ISecureUser IFlavoursOrderServer.EndUser{ get => null; set { } }
 
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
