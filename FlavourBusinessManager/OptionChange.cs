@@ -198,10 +198,12 @@ namespace FlavourBusinessManager.RoomService
             {
                 if (itemSpecificOption != null)
                 {
-                    if (itemSpecificOption.Option is MenuModel.JsonViewModel.Option)
-                        return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.JsonViewModel.Level>().Where(x => x.Uri == NewLevelUri).First();
-                    else
-                        return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                    //if (itemSpecificOption.Option is MenuModel.JsonViewModel.Option)
+                    //    return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.JsonViewModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+                    //else
+                    //    return itemSpecificOption.Option.LevelType.Levels.OfType<MenuModel.Level>().Where(x => x.Uri == NewLevelUri).First();
+
+                    return itemSpecificOption.Option.LevelType.Levels.Where(x => x.Uri == NewLevelUri).First();
                 }
                 else
                     return null;

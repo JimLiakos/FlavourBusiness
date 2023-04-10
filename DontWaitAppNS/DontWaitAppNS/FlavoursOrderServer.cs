@@ -360,7 +360,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
-        public string Language { get { return lan; } }
+        public string Language { get { return deflan; } }
 
         /// <MetaDataID>{a265f74d-25a6-4304-aef3-7653e47bb721}</MetaDataID>
         string deflan = "en";

@@ -49,6 +49,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public bool UserDeclared
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_UserDeclared", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string PaymentOrderUrl
         {
             get
@@ -213,6 +225,46 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Identity", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Description
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_Description", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Description", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Comments
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_Comments", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Comments", args, argsTypes);
             }
         }
         

@@ -36,6 +36,7 @@ namespace MenuModel
             get;
             set;
         }
-   
+
+        string Uri { get;  }
     }
 }

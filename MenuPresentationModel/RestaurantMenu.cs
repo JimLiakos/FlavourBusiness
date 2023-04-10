@@ -12,6 +12,7 @@ using OOAdvantech.Json;
 using OOAdvantech.Json;
 using MenuPresentationModel.JsonMenuPresentation;
 using SvgAccentModifier;
+using System.Globalization;
 
 namespace MenuPresentationModel
 {
@@ -92,26 +93,30 @@ namespace MenuPresentationModel
 
 
                 Dictionary<string, string> pageImages = new Dictionary<string, string>();
-
-                foreach (var page in (from pages in jsonRestaurantMenu.MultilingualPages.Values.Values.OfType<List<IMenuPageCanvas>>() from page in pages.OfType<JsonMenuPresentation.MenuPageCanvas>() select page))
+                foreach (var entry in jsonRestaurantMenu.MultilingualPages.Values.Keys)
                 {
-                    if (page.Background != null)
+                    
+
+                        foreach (var page in (from pages in jsonRestaurantMenu.MultilingualPages.Values.Values.OfType<List<IMenuPageCanvas>>() from page in pages.OfType<JsonMenuPresentation.MenuPageCanvas>() select page))
                     {
-                        if (page.Background.LandscapeImage != null && !string.IsNullOrWhiteSpace(page.Background.LandscapeImage.Uri))
-                            pageImages[page.Background.LandscapeImage.Uri] = page.Background.LandscapeImage.Uri;
+                        if (page.Background != null)
+                        {
+                            if (page.Background.LandscapeImage != null && !string.IsNullOrWhiteSpace(page.Background.LandscapeImage.Uri))
+                                pageImages[page.Background.LandscapeImage.Uri] = page.Background.LandscapeImage.Uri;
 
-                        if (page.Background.PortraitImage != null && !string.IsNullOrWhiteSpace(page.Background.PortraitImage.Uri))
-                            pageImages[page.Background.PortraitImage.Uri] = page.Background.PortraitImage.Uri;
-                    }
+                            if (page.Background.PortraitImage != null && !string.IsNullOrWhiteSpace(page.Background.PortraitImage.Uri))
+                                pageImages[page.Background.PortraitImage.Uri] = page.Background.PortraitImage.Uri;
+                        }
 
-                    if (page.Border != null)
-                    {
+                        if (page.Border != null)
+                        {
 
-                        if (page.Border.LandscapeImage != null && !string.IsNullOrWhiteSpace(page.Border.LandscapeImage.Uri))
-                            pageImages[page.Border.LandscapeImage.Uri] = page.Border.LandscapeImage.Uri;
+                            if (page.Border.LandscapeImage != null && !string.IsNullOrWhiteSpace(page.Border.LandscapeImage.Uri))
+                                pageImages[page.Border.LandscapeImage.Uri] = page.Border.LandscapeImage.Uri;
 
-                        if (page.Border.PortraitImage != null && !string.IsNullOrWhiteSpace(page.Border.PortraitImage.Uri))
-                            pageImages[page.Border.PortraitImage.Uri] = page.Border.PortraitImage.Uri;
+                            if (page.Border.PortraitImage != null && !string.IsNullOrWhiteSpace(page.Border.PortraitImage.Uri))
+                                pageImages[page.Border.PortraitImage.Uri] = page.Border.PortraitImage.Uri;
+                        }
                     }
                 }
 

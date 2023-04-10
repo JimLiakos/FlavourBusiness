@@ -3,6 +3,7 @@ using MenuDesigner.ViewModel.Preview;
 using StyleableWindow;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -81,6 +82,10 @@ namespace MenuDesigner.Views
         private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
         {
             response.Stream = GraphickMenuResources[requestUri.ToString().ToLower()];
+        }
+        public void SetLanguage(CultureInfo culture)
+        {
+            FlavoursOrderServer.Language=culture.Name;
         }
 
 

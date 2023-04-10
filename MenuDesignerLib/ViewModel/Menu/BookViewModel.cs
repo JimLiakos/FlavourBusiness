@@ -416,6 +416,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 menuDesignerPage = WPFUIElementObjectBind.ObjectContext.FindParent<StyleableWindow.PageDialogViewEmulator>(PreviewCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
 
             var graphicMenuPreviewPage = new Views.GraphicMenuPreviewPage();
+            graphicMenuPreviewPage.SetLanguage(OOAdvantech.CultureContext.CurrentNeutralCultureInfo);
             graphicMenuPreviewPage.GetObjectContext().SetContextInstance(this);
             menuDesignerPage.NavigationWindow.Navigate(graphicMenuPreviewPage);
         }

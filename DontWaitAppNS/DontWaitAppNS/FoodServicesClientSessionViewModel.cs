@@ -1332,17 +1332,25 @@ namespace DontWaitApp
                     }
                 }
             }
-            if (paymentMethod==PaymentMethod.Card)
+            else  if (paymentMethod==PaymentMethod.Card)
             {
+#if WaiterApp
                 var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
 
                 var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
+#endif
                
 
             }
+            else if (paymentMethod==PaymentMethod.Cash)
+                payment.CashPaymentCompleted(tipAmount);
 
 #else
-            payment.CardPaymentCompleted(null,null,true,null,tipAmount);
+
+                if (paymentMethod==PaymentMethod.Card)
+                payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+            if (paymentMethod==PaymentMethod.Cash)
+                payment.CashPaymentCompleted(tipAmount);
 #endif
         }
 
@@ -1630,7 +1638,7 @@ namespace DontWaitApp
         public void ItemChanged(ItemPreparation item)
         {
             bool hasChanges = OrderItemsDictionary[item.uid].Update(item);
-            
+
             item = OrderItemsDictionary[item.uid];
             if (hasChanges)
             {

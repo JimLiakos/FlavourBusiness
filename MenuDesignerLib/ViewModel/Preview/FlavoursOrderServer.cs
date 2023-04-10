@@ -44,7 +44,7 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{0758702b-6834-4306-ad59-4d1af57872d7}</MetaDataID>
         string lan = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
         /// <MetaDataID>{3bdb7c96-29f2-4077-ae59-b7bc98f810e8}</MetaDataID>
-        public string Language { get { return lan; } }
+        public string Language { get { return lan; } set { lan=value; } }
         /// <MetaDataID>{11884fe9-3ee9-49bf-9578-563dded8c8bd}</MetaDataID>
         public string DefaultLanguage { get { return "en"; } }
         /// <MetaDataID>{97b412c4-ff9d-4e02-8ef5-1e0ffdb38742}</MetaDataID>

@@ -61,6 +61,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
             YPos = menuCanvasFoodItemPrice.YPos;
             Height = menuCanvasFoodItemPrice.Height;
             Visisble = menuCanvasFoodItemPrice.Visisble;
+            
             Font = menuCanvasFoodItemPrice.Font;
             FontID = (menu as RestaurantMenu).GetFontID(menuCanvasFoodItemPrice.Font);
             BaseLine = menuCanvasFoodItemPrice.BaseLine;// Font.GetTextBaseLine(menuCanvasFoodItemPrice.Description);
