@@ -287,7 +287,7 @@ namespace MenuPresentationModel
 
 
 
-            string json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
+            
 
             try
             {
@@ -304,6 +304,11 @@ namespace MenuPresentationModel
             catch (Exception error)
             {
             }
+
+            string json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
+
+           //
+
             MemoryStream jsonRestaurantMenuStream = new MemoryStream();
 
             byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(json);
@@ -314,6 +319,18 @@ namespace MenuPresentationModel
                 fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
 
 
+            json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings);
+
+            //OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings
+
+            jsonRestaurantMenuStream = new MemoryStream();
+
+            jsonBuffer = System.Text.Encoding.UTF8.GetBytes(json);
+            jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
+            jsonRestaurantMenuStream.Position = 0;
+            jsonFileName = serverStorageFolder + menuName + "_t.json";
+            if (fileManager != null)
+                fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
 
 
 
@@ -423,6 +440,7 @@ namespace MenuPresentationModel
             }
         }
 
+        /// <MetaDataID>{89d139e3-b25f-43ad-b3ae-1e0ddccade64}</MetaDataID>
         public void CheckMenuCanvasItemsIndexes()
         {
             _MenuCanvasItems.CheckIndexes();
@@ -516,6 +534,7 @@ namespace MenuPresentationModel
             }
         }
 
+        /// <MetaDataID>{677a98ed-2d48-4c2b-bd57-9bb3808c9e08}</MetaDataID>
         public Multilingual MultilingualPages
         {
             get
@@ -648,6 +667,10 @@ namespace MenuPresentationModel
 
         }
 
-
+        /// <MetaDataID>{4aa8d191-d05e-4835-a59a-bd56b25f7b55}</MetaDataID>
+        public IMenuCanvasFoodItem GetMenuCanvasFoodItem(string menuItemUri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

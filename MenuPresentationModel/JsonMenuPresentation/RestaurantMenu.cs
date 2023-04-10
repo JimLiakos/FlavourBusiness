@@ -8,6 +8,9 @@ using System.Xml.Linq;
 using System.IO;
 using UIBaseEx;
 using System.Net.Http;
+using MenuModel.JsonViewModel;
+using System.Security.Cryptography;
+
 
 
 #if MenuPresentationModel
@@ -19,7 +22,7 @@ using OOAdvantech.Json;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{5a627b98-f614-431d-8b68-0176bdc88aac}</MetaDataID>
-    public class RestaurantMenu : MenuCanvas.IRestaurantMenu
+    public class RestaurantMenu : IRestaurantMenu
     {
 
 
@@ -43,7 +46,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
             {
                 using (OOAdvantech.CultureContext cultureContext = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menu).StorageMetaData.Culture), false))
                 {
-                    _Pages.Def = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name; 
+                    _Pages.Def = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
                 }
             }
 
@@ -61,7 +64,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
 
                         foreach (var menuCanvasItem in jsonPage.MenuCanvasItems)
                         {
-                            if(!_MenuCanvasItems.Contains(menuCanvasItem))
+                            if (!_MenuCanvasItems.Contains(menuCanvasItem))
                                 _MenuCanvasItems.Add(menuCanvasItem);
                         }
                     }
@@ -77,8 +80,8 @@ namespace MenuPresentationModel.JsonMenuPresentation
             if (menuItem!=null)
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem));
-                foreach(var mealType in (from a_mealType in storage.GetObjectCollection<MenuModel.IMealType>()
-                 select a_mealType))
+                foreach (var mealType in (from a_mealType in storage.GetObjectCollection<MenuModel.IMealType>()
+                                          select a_mealType))
                 {
                     MenuModel.IMealType jsonMealType = null;
                     if (mappedObject.ContainsKey(mealType))
@@ -98,28 +101,32 @@ namespace MenuPresentationModel.JsonMenuPresentation
             var existingFont = MenuFonts.Where(x => x==font).FirstOrDefault();
             if (MenuFonts.Where(x => x==font).Count()==0)
             {
-                 
+
                 var client = new HttpClient();
-                string menuModelFontUrl= string.Format("http://{0}:8090/api/MenuModel/Font", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+                string menuModelFontUrl = string.Format("http://{0}:8090/api/MenuModel/Font", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
                 var request = new HttpRequestMessage(HttpMethod.Post, menuModelFontUrl);
-                
+
                 var content = new StringContent(OOAdvantech.Json.JsonConvert.SerializeObject(font), null, "application/json");
                 request.Content = content;
-                var responseTask =client.SendAsync(request);
+                var responseTask = client.SendAsync(request);
                 responseTask.Wait();
                 var response = responseTask.Result;
                 response.EnsureSuccessStatusCode();
-                var contentTask= response.Content.ReadAsStringAsync();
+                var contentTask = response.Content.ReadAsStringAsync();
                 contentTask.Wait();
 
                 font.Uri=contentTask.Result;
                 if (font.Uri[0]=='"'&&font.Uri[font.Uri.Length-1]=='"')
-                    font.Uri =font.Uri.Substring(1,font.Uri.Length-2);
+                    font.Uri =font.Uri.Substring(1, font.Uri.Length-2);
 
                 MenuFonts.Add(font);
             }
             int fontID = MenuFonts.IndexOf(existingFont) + 1;
             return fontID;
+        }
+        internal FontData GetFont(int fontID)
+        {
+            return MenuFonts[fontID-1];
         }
 
 #endif
@@ -215,9 +222,22 @@ namespace MenuPresentationModel.JsonMenuPresentation
         {
             get
             {
-                if (_Pages.GetValue<IList<IMenuPageCanvas>>() == null)
-                    return new List<IMenuPageCanvas>();
-                return _Pages.GetValue<List<IMenuPageCanvas>>().AsReadOnly();
+                if (_Pages.GetValue<List<MenuPageCanvas>>() == null)
+                {
+                    var typedCollection = new List<IMenuPageCanvas>();
+                    var collection = _Pages.GetValue<object>() as System.Collections.IEnumerable;
+                    if (collection!=null)
+                    {
+                        foreach (IMenuPageCanvas page in collection)
+                            typedCollection.Add(page);
+                        _Pages.SetValue<List<IMenuPageCanvas>>(typedCollection);
+
+                        return typedCollection;
+                    }
+                    else
+                        return new List<IMenuPageCanvas>();
+                }
+                return _Pages.GetValue<List<MenuPageCanvas>>().AsReadOnly().OfType<IMenuPageCanvas>().ToList();
             }
             set
             {
@@ -244,6 +264,15 @@ namespace MenuPresentationModel.JsonMenuPresentation
         public void RemovePage(IMenuPageCanvas page)
         {
             throw new NotImplementedException();
+        }
+
+        public IMenuCanvasFoodItem GetMenuCanvasFoodItem(string menuItemUri)
+        {
+            var init = (from page in Pages
+                        from menuCanvasItem in page.MenuCanvasItems
+                        select menuCanvasItem).ToList();
+
+            return this.MenuCanvasItems.OfType<IMenuCanvasFoodItem>().Where(x => (x.MenuItem as MenuFoodItem)?.Uri== menuItemUri).FirstOrDefault();
         }
     }
 }

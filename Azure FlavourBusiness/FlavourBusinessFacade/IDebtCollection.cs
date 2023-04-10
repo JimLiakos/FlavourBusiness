@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.HumanResources
@@ -18,6 +19,8 @@ namespace FlavourBusinessFacade.HumanResources
         [Association("CollectedPayments", Roles.RoleA, "2f6452a6-19f9-415b-ad28-b50d26dd24d6")]
         System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments { get; }
 
+
+        System.Collections.Generic.List<SessionBillingPayments> SessionsBillingPayments { get; }
 
         /// <MetaDataID>{30aa32e1-97e9-4efa-af8e-8b0d9d273445}</MetaDataID>
         [BackwardCompatibilityID("+1")]
@@ -46,6 +49,17 @@ namespace FlavourBusinessFacade.HumanResources
         decimal CashTips { get; }
 
 
+    }
+
+    /// <MetaDataID>{bba821b4-75ca-480f-aa02-74946e275c09}</MetaDataID>
+    public class SessionBillingPayments
+    {
+        public string Description { get; set; }
+        public System.DateTime SessionStarts { get; set; }
+        public System.DateTime SessionEnds { get; set; }
+
+        public System.Collections.Generic.List<FinanceFacade.IPayment> BillingPayments { get; set; }
+        public SessionType SessionType { get; set; }
     }
 }
 //https://docs.oracle.com/cd/E53547_01/opera_5_04_03_core_help/close_cashier.htm

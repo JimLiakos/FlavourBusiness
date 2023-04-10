@@ -11,6 +11,10 @@ namespace FlavourBusinessFacade.RoomService
     [BackwardCompatibilityID("{794bbf34-5df9-4ab0-9572-5773309ecc4c}")]
     public interface IItemPreparation
     {
+        /// <MetaDataID>{6a2bb8b1-33a9-4150-b6e5-4656916e32cf}</MetaDataID>
+        [BackwardCompatibilityID("+22")]
+        string FontUri { get; set; }
+
         /// <MetaDataID>{a7796efb-811f-469d-a5d2-dd27024950ac}</MetaDataID>
         [BackwardCompatibilityID("+21")]
         Multilingual MultilingualDescription { get; }

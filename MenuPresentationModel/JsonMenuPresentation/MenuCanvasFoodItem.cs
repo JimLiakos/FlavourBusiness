@@ -15,7 +15,7 @@ using UIBaseEx;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{d8ad80d8-a03c-4c75-8ce8-b12707564957}</MetaDataID>
-    public class MenuCanvasFoodItem : MenuCanvas.IMenuCanvasFoodItem
+    public class MenuCanvasFoodItem : IMenuCanvasItemEx, MenuCanvas.IMenuCanvasFoodItem
     {
         /// <MetaDataID>{65544137-1404-45ce-a428-f0e70c62bdef}</MetaDataID>
         public void ResetSize()
@@ -81,7 +81,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
 
             _Page.SetValue<IMenuPageCanvas>(page);
-            
+
             if (menuCanvasFoodItem.Description != null)
                 Description = menuCanvasFoodItem.Description;
 
@@ -184,7 +184,19 @@ namespace MenuPresentationModel.JsonMenuPresentation
         public Multilingual MultilingualFont = new Multilingual();
         /// <MetaDataID>{cf2b8de3-cb39-48f9-b9b0-b5788dc047d7}</MetaDataID>
         [JsonIgnore]
-        public FontData Font { get => MultilingualFont.GetValue<FontData>(); set => MultilingualFont.SetValue<FontData>(value); }
+        public FontData Font
+        {
+            get
+            {
+                if(!MultilingualFont.HasValue)
+                {
+                    Font= (Page.Menu as RestaurantMenu).GetFont(FontID);
+                }
+                return MultilingualFont.GetValue<FontData>();
+            }
+
+            set => MultilingualFont.SetValue<FontData>(value);
+        }
         /// <MetaDataID>{47255e97-ef95-4fd3-9cd0-37066e521327}</MetaDataID>
         public Multilingual MultilingualFontID = new Multilingual();
         /// <MetaDataID>{c6f1d381-8e2c-474a-b2e4-a11520efe66d}</MetaDataID>
@@ -266,6 +278,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
             get
             {
                 return _Page.GetValue<IMenuPageCanvas>();
+            }
+            set
+            {
+                _Page.SetValue<IMenuPageCanvas>(value);
             }
         }
 

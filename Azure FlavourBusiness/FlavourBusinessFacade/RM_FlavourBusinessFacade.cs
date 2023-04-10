@@ -4912,6 +4912,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.SessionBillingPayments> SessionsBillingPayments
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IDebtCollection), "get_SessionsBillingPayments", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.SessionBillingPayments>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public decimal OpeningBalanceFloatCash
         {
             get

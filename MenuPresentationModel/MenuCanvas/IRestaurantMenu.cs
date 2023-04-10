@@ -1,4 +1,5 @@
 using OOAdvantech.MetaDataRepository;
+using System.Globalization;
 
 namespace MenuPresentationModel.MenuCanvas
 {
@@ -18,6 +19,7 @@ namespace MenuPresentationModel.MenuCanvas
         System.Collections.Generic.IList<IMenuPageCanvas> Pages { get; }
 
 
+        /// <MetaDataID>{713feaf3-7061-4219-8bd9-d06722ae872f}</MetaDataID>
         OOAdvantech.Multilingual MultilingualPages { get; }
 
         /// <MetaDataID>{3d3859ae-6583-40aa-935a-e01cddc31432}</MetaDataID>
@@ -28,5 +30,10 @@ namespace MenuPresentationModel.MenuCanvas
 
         /// <MetaDataID>{1ca5966c-a5ef-4f66-b8ae-e04d2dc8c34d}</MetaDataID>
         void AddPage(IMenuPageCanvas page);
+
+        /// <MetaDataID>{470ea473-dc65-4fdc-b476-301078c94a8d}</MetaDataID>
+        IMenuCanvasFoodItem GetMenuCanvasFoodItem(string menuItemUri);
+
+
     }
 }

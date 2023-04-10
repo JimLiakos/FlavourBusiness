@@ -13,7 +13,7 @@ using OOAdvantech.MetaDataRepository;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{55dcbb36-ee5f-4b2d-a335-5c21aafe9ac7}</MetaDataID>
-    public class MenuCanvasHeading : MenuCanvas.IMenuCanvasHeading
+    public class MenuCanvasHeading : IMenuCanvasItemEx,  MenuCanvas.IMenuCanvasHeading
     {
 
 
@@ -205,6 +205,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
             get
             {
                 return _Page.GetValue<IMenuPageCanvas>();
+            }
+            set
+            {
+                _Page.SetValue<IMenuPageCanvas>(value);
             }
         }
 

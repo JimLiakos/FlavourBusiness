@@ -18,7 +18,7 @@ using OOAdvantech.Json;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{a9babdd8-8599-46f1-99f9-0a58b2121f18}</MetaDataID>
-    public class MenuCanvasHeadingAccent : MenuCanvas.IMenuCanvasAccent
+    public class MenuCanvasHeadingAccent : IMenuCanvasItemEx, MenuCanvas.IMenuCanvasAccent
     {
 
 
@@ -185,6 +185,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
                     return _Heading.Page;
                 else
                     return null;
+            }
+            set
+            {
+             
             }
         }
 

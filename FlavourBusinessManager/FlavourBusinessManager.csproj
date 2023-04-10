@@ -381,6 +381,10 @@
       <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
       <Name>RestApiRemoting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\WindowsBaseEx.csproj">
+      <Project>{D83EAE0A-82CD-4496-8524-C734C6236B78}</Project>
+      <Name>WindowsBaseEx</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Azure FlavourBusiness\ComputationalResources\ComputationalResources.csproj">
       <Project>{e58d9f23-6236-4587-913c-f5fadcf11c9c}</Project>
       <Name>ComputationalResources</Name>

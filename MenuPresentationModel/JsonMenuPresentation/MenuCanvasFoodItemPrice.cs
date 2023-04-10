@@ -18,7 +18,7 @@ using OOAdvantech;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{d5222b52-1264-423d-b472-9463426428ab}</MetaDataID>
-    public class MenuCanvasFoodItemPrice : MenuCanvas.IMenuCanvasFoodItemPrice
+    public class MenuCanvasFoodItemPrice : IMenuCanvasItemEx, MenuCanvas.IMenuCanvasFoodItemPrice
     {
 
         /// <exclude>Excluded</exclude>
@@ -110,6 +110,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
             get
             {
                 return _FoodItem.Page;
+            }
+            set
+            {
+             
             }
         }
 

@@ -28,6 +28,9 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 
 using FlavourBusinessManager.HumanResources;
 
+using System.Net.Http;
+using OOAdvantech.Remoting.RestApi.Serialization;
+
 namespace FlavourBusinessManager.ServicePointRunTime
 {
     /// <MetaDataID>{f44b4b10-677e-461a-bbc7-bb8b1b62716a}</MetaDataID>
@@ -1712,7 +1715,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         //clientName="clientName"
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser,bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -2197,6 +2200,32 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             //    return  PaymentProviders.VivaWallet.WebHook(method,webHookName,headers,content);
             return hookRespnose;
+        }
+        Dictionary<string, MenuPresentationModel.MenuCanvas.IRestaurantMenu> VersioningGraphicMenus = new Dictionary<string, MenuPresentationModel.MenuCanvas.IRestaurantMenu>();
+        internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GetGraphicMenuVersion(string storageUrl)
+        {
+            lock (VersioningGraphicMenus)
+            {
+                if (VersioningGraphicMenus.ContainsKey(storageUrl))
+                    return VersioningGraphicMenus[storageUrl];
+                else
+                {
+                    using (System.Net.WebClient wc = new System.Net.WebClient())
+                    {
+
+                        var json = wc.DownloadString(storageUrl);
+                        var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                        //new OOAdvantech.Json.JsonSerializerSettings { ReferenceLoopHandling = OOAdvantech.Json.ReferenceLoopHandling.Serialize, PreserveReferencesHandling = OOAdvantech.Json.PreserveReferencesHandling.All };
+
+
+                        var restaurantMenu = OOAdvantech.Json.JsonConvert.DeserializeObject<MenuPresentationModel.JsonMenuPresentation.RestaurantMenu>(json, jSetttings);
+                        VersioningGraphicMenus[storageUrl]=restaurantMenu;
+                        return restaurantMenu;
+                    }
+                }
+
+            }
+
         }
     }
 

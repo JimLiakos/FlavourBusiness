@@ -11,6 +11,8 @@ using FlavourBusinessFacade.HumanResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
+using MenuPresentationModel.MenuCanvas;
+using UIBaseEx;
 
 
 #if DeviceDotNet
@@ -29,7 +31,7 @@ namespace ServiceContextManagerApp
 
 
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
-    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
 
@@ -430,7 +432,7 @@ namespace ServiceContextManagerApp
                         _UserName = UserData.UserName;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
-                        
+
                         AuthUser=authUser;
                         _ObjectChangeState?.Invoke(this, null);
 
@@ -647,7 +649,7 @@ namespace ServiceContextManagerApp
                             _UserName = UserData.UserName;
                             _PhoneNumber = UserData.PhoneNumber;
                             _Address = UserData.Address;
-                            
+
                             AuthUser=authUser;
 
                             var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
@@ -679,7 +681,7 @@ namespace ServiceContextManagerApp
                             else
                                 _ServicesContexts = new List<IServicesContextPresentation>();
 
-                            
+
                             _ObjectChangeState?.Invoke(this, null);
                             return true;
                         }
@@ -734,6 +736,27 @@ namespace ServiceContextManagerApp
         public async Task<bool> AssignSupervisor()
         {
             return await Assign();
+        }
+
+        Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
+
+        public FontData GetFont(string fontUri)
+        {
+            FontData fontData;
+            if (string.IsNullOrEmpty(fontUri))
+                return default(FontData);
+
+            if (!Fonts.TryGetValue(fontUri, out fontData))
+            {
+                string fontUrl = string.Format("http://{0}:8090/api/MenuModel/Font/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, fontUri);
+                using (System.Net.WebClient wc = new System.Net.WebClient())
+                {
+                    var json = wc.DownloadString(fontUrl);
+                    fontData= OOAdvantech.Json.JsonConvert.DeserializeObject<FontData>(json);
+                    Fonts[fontUri] = fontData;
+                }
+            }
+            return fontData;
         }
 
         IServiceContextSupervisor ServiceContextSupervisor;

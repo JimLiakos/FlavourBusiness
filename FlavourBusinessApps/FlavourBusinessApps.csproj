@@ -121,6 +121,7 @@
       <Link>ViewModel\ItemsReadyToServe.cs</Link>
     </Compile>
     <Compile Include="Apps.cs" />
+    <Compile Include="MenuCanvas\IFontsResolver.cs" />
     <Compile Include="PreparationStationDevice.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

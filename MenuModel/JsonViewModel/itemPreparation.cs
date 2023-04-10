@@ -17,7 +17,7 @@ namespace MenuModel.JsonViewModel
         public MenuFoodItem()
         {
         }
-
+        
 
 
         /// <MetaDataID>{7d896d84-3ce1-4ee7-ab0c-c19232d93533}</MetaDataID>

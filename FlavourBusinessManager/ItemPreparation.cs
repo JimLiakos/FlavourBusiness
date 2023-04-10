@@ -11,6 +11,7 @@ using OOAdvantech.Json;
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
 using OOAdvantech;
+using System.Globalization;
 
 
 #if !FlavourBusinessDevice
@@ -25,6 +26,27 @@ namespace FlavourBusinessManager.RoomService
     [BackwardCompatibilityID("{4f7dfec6-51d2-4207-a807-b8451a94f289}")]
     public class ItemPreparation : IItemPreparation
     {
+        /// <exclude>Excluded</exclude>
+        MultilingualMember<string> _FontUri=new MultilingualMember<string>();
+
+        /// <MetaDataID>{531f7d0d-3d0d-4b9b-a200-8aebbd742268}</MetaDataID>
+        [PersistentMember(nameof(_FontUri))]
+        [BackwardCompatibilityID("+37")]
+        public string FontUri
+        {
+            get => _FontUri;
+            set
+            {
+                if (_FontUri!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _FontUri.Value=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <MetaDataID>{e235da04-dc4e-4b53-bf79-4fa86fa72d5a}</MetaDataID>
@@ -540,45 +562,47 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{bb55947a-360a-4242-a5e8-3bf3264f8059}</MetaDataID>
-        internal void UpdateMultiligaulFields()
-        {
-            if (_MenuItem == null)
-                LoadMenuItem();
+//        internal void UpdateMultiligaulFields()
+//        {
+//            if (_MenuItem == null)
+//                LoadMenuItem();
 
-            if (_MenuItem != null)
-            {
-                var optionsDictionary = (from itemType in _MenuItem.Types.OfType<MenuItemType>()
-                                         from option in itemType.GetAllScaledOptions()
-                                         select option).ToDictionary(x => x.Uri);
+//            if (_MenuItem != null)
+//            {
+//                var optionsDictionary = (from itemType in _MenuItem.Types.OfType<MenuItemType>()
+//                                         from option in itemType.GetAllScaledOptions()
+//                                         select option).ToDictionary(x => x.Uri);
 
-                Description=FullName;
+//                Description=FullName;
 
-                foreach (var optionChange in this.OptionsChanges.OfType<OptionChange>())
-                {
-                    if (optionChange.Option==null)
-                    {
-                        PreparationScaledOption option = null;
-                        if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
-                        {
-                            optionChange.Option = option;
-                            optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
-                        }
-                    }
-                    if (optionChange.Option!=null)
-                    {
-                        bool checkUncheck = (optionChange.Option.LevelType is FixedScaleType)&&(optionChange.Option.LevelType as FixedScaleType).UniqueIdentifier==FixedScaleTypes.CheckUncheck;
+//                foreach (var optionChange in this.OptionsChanges.OfType<OptionChange>())
+//                {
+//                    if (optionChange.Option==null)
+//                    {
+//                        PreparationScaledOption option = null;
+//                        if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
+//                        {
+//                            optionChange.Option = option;
+//                            optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
+//                        }
+//                    }
+//                    if (optionChange.Option!=null)
+//                    {
+//                        bool checkUncheck = (optionChange.Option.LevelType is FixedScaleType)&&(optionChange.Option.LevelType as FixedScaleType).UniqueIdentifier==FixedScaleTypes.CheckUncheck;
 
-                        int levelIndex = optionChange.Option.LevelType.Levels.IndexOf(optionChange.NewLevel);
-                        if (levelIndex<2)
-                            optionChange.Description=optionChange.Option.FullName;
-                        else
-                            optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
+//                        int levelIndex = optionChange.Option.LevelType.Levels.IndexOf(optionChange.NewLevel);
+//                        if (levelIndex<2)
+//                            optionChange.Description=optionChange.Option.FullName;
+//                        else
+//                            optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
 
-                    }
-                }
-            }
-            //_MenuItem.OptionsMenuItemSpecifics
-        }
+//                    }
+//                }
+//            }
+//            //_MenuItem.OptionsMenuItemSpecifics
+//        }
+
+
 #endif
 
 
@@ -667,6 +691,61 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+#if !FlavourBusinessDevice
+        /// <MetaDataID>{a12bbfc9-246b-43ba-8f61-d61f589d0806}</MetaDataID>
+        public void EnsurePresentationFor(CultureInfo culture)
+        {
+            if (this.ClientSession!=null)
+            {
+               
+
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(culture, true))
+                {
+                    MenuPresentationModel.MenuCanvas.IMenuCanvasFoodItem menuCanvasFoodItem = (this.ClientSession as FoodServiceClientSession).GraphicMenu.GetMenuCanvasFoodItem(MenuItemUri);
+                    string fontUri = menuCanvasFoodItem.Font.Uri;
+
+                    this.FontUri= fontUri;
+
+                    if (_MenuItem == null)
+                        LoadMenuItem();
+
+                    if (_MenuItem != null)
+                    {
+                        var optionsDictionary = (from itemType in _MenuItem.Types.OfType<MenuItemType>()
+                                                 from option in itemType.GetAllScaledOptions()
+                                                 select option).ToDictionary(x => x.Uri);
+
+                        Description=FullName;
+
+                        foreach (var optionChange in this.OptionsChanges.OfType<OptionChange>())
+                        {
+                            if (optionChange.Option==null)
+                            {
+                                PreparationScaledOption option = null;
+                                if (optionsDictionary.TryGetValue(optionChange.OptionUri, out option))
+                                {
+                                    optionChange.Option = option;
+                                    optionChange.itemSpecificOption = _MenuItem.OptionsMenuItemSpecifics.Where(x => x.Option == option).FirstOrDefault();
+                                }
+                            }
+                            if (optionChange.Option!=null)
+                            {
+                                bool checkUncheck = (optionChange.Option.LevelType is FixedScaleType)&&(optionChange.Option.LevelType as FixedScaleType).UniqueIdentifier==FixedScaleTypes.CheckUncheck;
+
+                                int levelIndex = optionChange.Option.LevelType.Levels.IndexOf(optionChange.NewLevel);
+                                if (levelIndex<2)
+                                    optionChange.Description=optionChange.Option.FullName;
+                                else
+                                    optionChange.Description=optionChange.NewLevel.Name+" "+optionChange.Option.FullName;
+
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+#endif
 
         /// <exclude>Excluded</exclude>
         string _MenuItemUri;

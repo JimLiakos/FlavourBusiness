@@ -1,4 +1,5 @@
 using FinanceFacade;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
@@ -9,6 +10,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using static System.Windows.Forms.AxHost;
 
@@ -97,6 +99,45 @@ namespace FlavourBusinessManager.HumanResources
                 return billingPayments;
             }
         }
+        public List<SessionBillingPayments> SessionsBillingPayments
+        {
+            get
+            {
+                var sessionsBillingPayments = (from foodServiceClientSession in WaiterFoodServiceClientSessions
+                                       select new SessionBillingPayments()
+                                       {
+                                           Description=GetSessionBillingDescription(foodServiceClientSession),
+                                           SessionStarts=foodServiceClientSession.SessionStarts,
+                                           SessionEnds=foodServiceClientSession.SessionEnds,
+                                           SessionType=foodServiceClientSession.SessionType,
+                                           BillingPayments= (from payment in foodServiceClientSession.GetPayments()
+                                                             where payment.State==PaymentState.Completed
+                                                             orderby payment.TransactionDate
+                                                             select payment).OfType<IPayment>().ToList()
+
+                                       }).Where(x => x.BillingPayments.Count>0).ToList();
+
+
+                return sessionsBillingPayments;
+
+            }
+
+        }
+        string GetSessionBillingDescription(FoodServiceClientSession foodServiceClientSession)
+        {
+
+            if (foodServiceClientSession.MainSession.ServicePoint is HallServicePoint)
+            {
+
+                return foodServiceClientSession.MainSession.ServicePoint.Description;
+                //if (!string.IsNullOrWhiteSpace(foodServiceClientSession.UserLanguageCode))
+                //    return string.Format(Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(foodServiceClientSession.UserLanguageCode)), foodServiceClientSession.MainSession.ServicePoint.Description);
+                //else
+                //    return string.Format(Properties.Resources.TablePaymentDescription, foodServiceClientSession.MainSession.ServicePoint.Description);
+            }
+            return "";
+        }
+
 
         /// <exclude>Excluded</exclude>
         decimal _OpeningBalanceFloatCash;
@@ -260,13 +301,15 @@ namespace FlavourBusinessManager.HumanResources
                          from itemPreparation in partialSession.FlavourItems.Union(partialSession.SharedItems)
                          select itemPreparation).ToList();
 
-            foreach(var item in items.OfType<ItemPreparation>())
+            foreach (var item in items.OfType<ItemPreparation>())
             {
-                item.UpdateMultiligaulFields();
+                //if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                //    existingItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
+
             }
 
             return items;
 
-       }
+        }
     }
 }

@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.Azure.Documents.Spatial;
+using MenuPresentationModel;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -1376,6 +1377,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (_Menu == null)
                 {
                     var graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
+                    
                     string versionSuffix = "";
                     if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
                         versionSuffix = "/" + graphicMenu.Version;
@@ -1386,7 +1388,14 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 return _Menu;
             }
-
+        }
+        internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GraphicMenu
+        {
+            get
+            {
+                string typedJsonurl = Menu.StorageUrl.Replace(".json", "_t.json");
+                return ServicesContextRunTime.Current.GetGraphicMenuVersion(typedJsonurl);
+            }
         }
 
 
@@ -1830,16 +1839,20 @@ namespace FlavourBusinessManager.EndUsers
                 var itemSharingChanged = existingItem.IsShared != item.IsShared;
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
+
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
-                        existingItem.UpdateMultiligaulFields();
+
+                        if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                            existingItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
+
+
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                         if (_FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).Count() > 0)
                             CatchStateEvents();
-
-                        //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                        //    preparationStation.OnPreparationItemChangeState(existingItem);
                     }
+
+
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }
@@ -2180,6 +2193,9 @@ namespace FlavourBusinessManager.EndUsers
                     (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                     ModificationTime = DateTime.UtcNow;
                     MealCourse.AssignMealCourseToItem(flavourItem);
+                    if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                        flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
+
                     stateTransition.Consistent = true;
                 }
 
@@ -2208,7 +2224,9 @@ namespace FlavourBusinessManager.EndUsers
                 if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
                     (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
 
-                flavourItem.UpdateMultiligaulFields();
+                if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                    flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
+
             }
 
 
@@ -2293,8 +2311,8 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
 
-
-
+                if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                    flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
             }
 
             //using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

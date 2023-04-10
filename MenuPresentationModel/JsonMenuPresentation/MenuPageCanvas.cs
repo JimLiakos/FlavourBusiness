@@ -11,7 +11,7 @@ using UIBaseEx;
 namespace MenuPresentationModel.JsonMenuPresentation
 {
     /// <MetaDataID>{74c2aa5f-a48f-4845-98d8-06d0400de962}</MetaDataID>
-    public class MenuPageCanvas : MenuCanvas.IMenuPageCanvas
+    public class MenuPageCanvas : IMenuPageCanvas
     {
         public MenuPageCanvas()
         {
@@ -149,6 +149,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
         {
             get
             {
+                foreach (var item in _MenuCanvasItems.OfType<IMenuCanvasItemEx>())
+                {
+                    item.Page=this;
+                }
                 return _MenuCanvasItems.AsReadOnly();
             }
             set
