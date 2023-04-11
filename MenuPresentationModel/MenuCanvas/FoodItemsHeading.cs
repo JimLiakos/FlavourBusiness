@@ -472,6 +472,9 @@ namespace MenuPresentationModel.MenuCanvas
             _ObjectChangeState?.Invoke(this, nameof(Page));
         }
 
+
+        public MultilingualMember<string> MultilingualDescription { get => _Description; }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
