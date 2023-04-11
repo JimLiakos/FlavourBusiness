@@ -118,7 +118,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
                 font.Uri=contentTask.Result;
                 if (font.Uri[0]=='"'&&font.Uri[font.Uri.Length-1]=='"')
                     font.Uri =font.Uri.Substring(1, font.Uri.Length-2);
-
+                existingFont=font;
                 MenuFonts.Add(font);
             }
             int fontID = MenuFonts.IndexOf(existingFont) + 1;

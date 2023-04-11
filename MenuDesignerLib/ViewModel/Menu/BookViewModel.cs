@@ -1884,7 +1884,33 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 return _FontsMenu;
             }
         }
+        public double PreviewHeight
+        {
+            get
+            {
+                var pageStyle = EditStyleSheet.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle;
+                if (pageStyle != null)
+                {
+                    if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
+                        return 395;
+                }
+                return 700;
+            }
+        } 
+        public double PreviewWidth
+        {
+            get
+            {
+                var pageStyle = EditStyleSheet.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle;
+                if (pageStyle != null)
+                {
+                    if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
+                        return 700;
+                }
 
+                return 323;
+            }
+        }
 
         public List<MenuCommand> MenuItems
         {
