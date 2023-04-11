@@ -11,6 +11,8 @@ using System.Windows.Media.Imaging;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
+using MenuPresentationModel.MenuCanvas;
+using OOAdvantech;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -97,7 +99,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 RestaurantMenu.AddAvailableHeading(foodItemsHeading);
                 var headingPresentation = new ListMenuHeadingPresentation(RestaurantMenu, foodItemsHeading);
                 headingPresentation.EditMode();
-                _Headings.Insert(0,headingPresentation);
+                _Headings.Insert(0, headingPresentation);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
             });
 
@@ -106,6 +108,50 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 SelectedHeading.EditMode();
                 //Delete();
             }, (object sender) => CanRename(sender));
+
+
+            CopyHeadingCommand = new RelayCommand((object sender) =>
+            {
+
+                MenuHeadingsPresentation.HeadingDescripionCopies= Headings.Where(x=>x.IsSelected).Select(x=>x.Heading).OfType<FoodItemsHeading>().Select(x=>x.MultilingualDescription).ToList();
+                //System.Windows.Window win = System.Windows.Window.GetWindow(EditHeadingCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+                //{
+                //    var menuItemWindow = new Views.HeadingWindow();
+                //    menuItemWindow.Owner = win;
+                //    MenuHeadingViewModel menuHeadingViewModel = new MenuHeadingViewModel(SelectedHeading.Heading, RestaurantMenu);
+                //    menuItemWindow.GetObjectContext().SetContextInstance(menuHeadingViewModel);
+                //    if (menuItemWindow.ShowDialog().Value)
+                //    {
+                //        stateTransition.Consistent = true;
+                //    }
+                //}
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
+
+            }, (object sender) => CanCopy());
+
+            PasteHeadingCommand = new RelayCommand((object sender) =>
+            {
+                //System.Windows.Window win = System.Windows.Window.GetWindow(EditHeadingCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+                //{
+                //    var menuItemWindow = new Views.HeadingWindow();
+                //    menuItemWindow.Owner = win;
+                //    MenuHeadingViewModel menuHeadingViewModel = new MenuHeadingViewModel(SelectedHeading.Heading, RestaurantMenu);
+                //    menuItemWindow.GetObjectContext().SetContextInstance(menuHeadingViewModel);
+                //    if (menuItemWindow.ShowDialog().Value)
+                //    {
+                //        stateTransition.Consistent = true;
+                //    }
+                //}
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
+
+            }, (object sender) => MenuHeadingsPresentation.HeadingDescripionCopies!=null&&MenuHeadingsPresentation.HeadingDescripionCopies.Count>0);
+        }
+
+        private bool CanCopy()
+        {
+            return Headings!=null&&Headings.Where(x => x.IsSelected).Count()>0;
         }
 
         private bool CanEdit(object sender)
@@ -133,6 +179,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         public WPFUIElementObjectBind.RelayCommand RenameCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand DeleteMenuCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand NewHeadingCommand { get; protected set; }
+        public WPFUIElementObjectBind.RelayCommand CopyHeadingCommand { get; protected set; }
+        public WPFUIElementObjectBind.RelayCommand PasteHeadingCommand { get; protected set; }
 
         public WPFUIElementObjectBind.RelayCommand EditHeadingCommand { get; protected set; }
 
@@ -194,19 +242,39 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
 
 
-                    menuItem = new WPFUIElementObjectBind.MenuCommand(); ;
+                    menuItem = new WPFUIElementObjectBind.MenuCommand();
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/DocumentHeaderAdd.png"));
                     menuItem.Header = Properties.Resources.NewMenuIHeadingHeader;
                     menuItem.Icon = new Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = NewHeadingCommand;
-
                     _ContextMenuItems.Add(menuItem);
+
+
+                    menuItem = new WPFUIElementObjectBind.MenuCommand(); ;
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/Copy.png"));
+                    menuItem.Header = Properties.Resources.CopyMenuItemHeader;
+                    menuItem.Icon = new Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = CopyHeadingCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+                    menuItem = new WPFUIElementObjectBind.MenuCommand(); ;
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/Paste.png"));
+                    menuItem.Header = Properties.Resources.PasteMenuItemHeader;
+                    menuItem.Icon = new Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = PasteHeadingCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+
+
 
 
                 }
                 return _ContextMenuItems;
             }
         }
+
+      
+
 
         /// <exclude>Excluded</exclude>
         List<ListMenuHeadingPresentation> _Headings;
@@ -217,5 +285,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 return _Headings;
             }
         }
+
+        public static List<MultilingualMember<string>> HeadingDescripionCopies { get; private set; }
     }
 }

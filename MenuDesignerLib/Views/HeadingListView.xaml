@@ -91,6 +91,13 @@
             </Grid>
 
             <ListView  BorderThickness="0"  MouseLeftButtonDown="Headings_MouseLeftButtonDown" Grid.Row="1" x:Name="Headings"  ItemsSource="{Binding Headings}" SelectedItem="{Binding SelectedHeading ,Mode=TwoWay}" Margin="0,2,0,-2" >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -104,17 +111,13 @@
                                 <ControlsEX:EditableTextBlock DragObject="DragHeading" UnTranslated="{Binding UnTranslated}" Translator="{Binding Translator}" Watermark="{x:Static resx:Resources.MenuHeadingTextPrompt}"  Grid.Column="1" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Description,Mode=TwoWay}" />
 
                             </Grid>
-                            
+
                         </Grid>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
+
             </ListView>
 
         </Grid>

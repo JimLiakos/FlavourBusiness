@@ -36,8 +36,19 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             }
 
         }
-
-
+        /// <exclude>Excluded</exclude>
+        bool _IsSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return _IsSelected;
+            }
+            set
+            {
+                _IsSelected = value;
+            }
+        }
 
         public string Description
         {

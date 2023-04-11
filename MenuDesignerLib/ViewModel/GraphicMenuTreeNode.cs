@@ -21,7 +21,7 @@ using WPFUIElementObjectBind;
 namespace MenuDesigner.ViewModel
 {
     /// <MetaDataID>{053cbc90-bd7f-4bd7-af0e-104817d2b971}</MetaDataID>
-    public class GraphicMenuTreeNode : FBResourceTreeNode, INotifyPropertyChanged
+    public class GraphicMenuTreeNode : FBResourceTreeNode, INotifyPropertyChanged 
     {
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
@@ -339,5 +339,7 @@ namespace MenuDesigner.ViewModel
         public override void SelectionChange()
         {
         }
+
+
     }
 }

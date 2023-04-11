@@ -171,7 +171,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <!-- Toolbox -->
-                <TabControl Margin="0,10,5,0" TabStripPlacement="Bottom">
+                <TabControl Margin="0,10,5,0" TabStripPlacement="Bottom" Height="771" VerticalAlignment="Top">
                     <TabItem Header="Lota Tools "/>
                     <TabItem Header="Tools ">
                         <ScrollViewer >
