@@ -661,8 +661,16 @@ namespace MenuPresentationModel.MenuCanvas
                         lineSentence = word.Substring(word.IndexOf("\r\n") + 2) + " ";
                         if (lineText.Length > 0)
                             wrappedText.Add(lineText);
-                    }
-                    else
+                    } else if (word.IndexOf("\n") != -1)
+                    {
+                        if (word.IndexOf("\n") != 0)
+                            lineSentence += word.Substring(0, word.IndexOf("\n"));
+
+                        string lineText = lineSentence.Substring(0, lineSentence.Length);
+                        lineSentence = word.Substring(word.IndexOf("\n") + 2) + " ";
+                        if (lineText.Length > 0)
+                            wrappedText.Add(lineText);
+                    } else
                     {
                         if (i + 1 != words.Length)
                             lineSentence += word + " ";

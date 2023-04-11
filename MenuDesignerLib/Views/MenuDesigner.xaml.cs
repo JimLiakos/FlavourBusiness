@@ -141,6 +141,9 @@ namespace MenuDesigner.Views
                     if (_SelectedCulturePresentation == null)
                         _SelectedCulturePresentation = StyleableWindow.CulturePresentation.Cultures.Where(x => x.CultureInfo.Name == CultureInfo.CurrentCulture.Parent.Name).FirstOrDefault();
 
+                    if (_SelectedCulturePresentation == null)
+                        _SelectedCulturePresentation = StyleableWindow.CulturePresentation.Cultures.Where(x => x.CultureInfo.Parent!=null&& x.CultureInfo.Parent.Name == CultureInfo.CurrentCulture.Name).FirstOrDefault();
+
                     if (_SelectedCulturePresentation != null)
                     {
                         var selectedCulture = _SelectedCulturePresentation.CultureInfo;

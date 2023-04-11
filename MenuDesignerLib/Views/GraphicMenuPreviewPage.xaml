@@ -16,8 +16,8 @@
         
         
     </sw:PageDialogViewEmulator.Resources>
-    <Grid x:Name="PreviewGrid"   DataContext="{Binding Value}">
-        <sw:DialogContentControl HorizontalAlignment="Stretch" PagePadding="6" InitialHeight="700" InitialWidth="323" VerticalAlignment="Stretch" Buttons="OnlyBack"  >
+    <Grid x:Name="PreviewGrid"   DataContext="{Binding Value}"  d:DataContext="{d:DesignInstance ViewModel:BookViewModel, IsDesignTimeCreatable=True}">
+        <sw:DialogContentControl HorizontalAlignment="Stretch" PagePadding="6" InitialHeight="{Binding PreviewHeight}" InitialWidth="{Binding PreviewWidth}" VerticalAlignment="Stretch" Buttons="OnlyBack"  >
             <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    x:Name="WebBrowserHost">
                 <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
             </Border>
