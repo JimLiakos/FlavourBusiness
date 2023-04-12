@@ -28,6 +28,8 @@ namespace MenuItemsEditor
             get;
         }
 
+        void CollapseAll();
+
 
         /// <MetaDataID>{70879150-6d69-4d7f-a3ef-34a680e8f81c}</MetaDataID>
         bool IsNodeExpanded

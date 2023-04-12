@@ -21,6 +21,17 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         public MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem MenuCanvasFoodItem;
 
 
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
+
         MenuPresentationModel.RestaurantMenu _GraphicMenu;
         internal MenuPresentationModel.RestaurantMenu GraphicMenu
         {

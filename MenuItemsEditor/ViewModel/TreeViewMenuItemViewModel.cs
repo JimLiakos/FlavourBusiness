@@ -16,6 +16,18 @@ namespace MenuItemsEditor.ViewModel
     public class TreeViewMenuItemViewModel : MarshalByRefObject, IMenusTreeNode, INotifyPropertyChanged
     {
 
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
+
         public readonly MenuModel.IMenuItem MenuItem;
         public TreeViewMenuItemViewModel(MenuModel.IMenuItem menuItem, IMenusTreeNode parent)
         {

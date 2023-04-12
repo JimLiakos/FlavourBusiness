@@ -21,6 +21,18 @@ namespace MenuItemsEditor.ViewModel
             get; set;
         }
 
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
+
         /// <MetaDataID>{70719d75-41b7-4f44-ab09-dc4bb6e3cf30}</MetaDataID>
         public List<MenuCommand> SelectedItemContextMenuItems
         {

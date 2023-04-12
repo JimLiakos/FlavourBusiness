@@ -18,6 +18,17 @@ namespace MenuItemsEditor.ViewModel
     public class ItemsCategoryViewModel : MarshalByRefObject,IMenusTreeNode,INotifyPropertyChanged
     {
 
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
 
         public List<MenuCommand> SelectedItemContextMenuItems
         {

@@ -18,6 +18,18 @@ namespace MenuItemsEditor
     /// <MetaDataID>{e6e69af5-3b96-447d-8804-6edb238c65f2}</MetaDataID>
     public class RestaurantMenus : MarshalByRefObject, IMenusTreeNode,INotifyPropertyChanged
     {
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
+
         public List<MenuCommand> SelectedItemContextMenuItems
         {
             get

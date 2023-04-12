@@ -95,36 +95,42 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 NewMenuItem(win);
             });
 
-          
+            CollapseAllMenuCommand=new RelayCommand((object sender) =>
+            {
 
-             EditOptionsTypesCommand = new RelayCommand((object sender) =>
-           {
+                foreach (var subNode in Members)
+                    subNode.CollapseAll();
 
-               using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
-               {
+            });
 
-                   //System.Windows.Window owner = System.Windows.Window.GetWindow(EditOptionsTypesCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                   //var menuItemWindow = new MenuItemsEditor.Views.CategoryMenuItemTypesWindow();
-                   //menuItemWindow.Owner = owner;
+            EditOptionsTypesCommand = new RelayCommand((object sender) =>
+          {
 
-                   //MenuItemsEditor.ViewModel.OptionsTypesViewModel optionsTypesViewModel = new MenuItemsEditor.ViewModel.OptionsTypesViewModel(ItemsCategory);
-                   //menuItemWindow.GetObjectContext().SetContextInstance(optionsTypesViewModel);
-                   //menuItemWindow.ShowDialog();
+              using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+              {
 
-                   System.Windows.Window win = System.Windows.Window.GetWindow(EditOptionsTypesCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                   var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
-                   MenuItemsEditor.ViewModel.OptionsTypesViewModel optionsTypesViewModel = new MenuItemsEditor.ViewModel.OptionsTypesViewModel(ItemsCategory);
-                   var menuItemTypesPage = new MenuItemsEditor.Views.MenuItemTypesPage();
-                   menuItemTypesPage.GetObjectContext().SetContextInstance(optionsTypesViewModel);
-                   frame.ShowDialogPage(menuItemTypesPage);
-                   stateTransition.Consistent = true;
-               }
-           });
+                  //System.Windows.Window owner = System.Windows.Window.GetWindow(EditOptionsTypesCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                  //var menuItemWindow = new MenuItemsEditor.Views.CategoryMenuItemTypesWindow();
+                  //menuItemWindow.Owner = owner;
+
+                  //MenuItemsEditor.ViewModel.OptionsTypesViewModel optionsTypesViewModel = new MenuItemsEditor.ViewModel.OptionsTypesViewModel(ItemsCategory);
+                  //menuItemWindow.GetObjectContext().SetContextInstance(optionsTypesViewModel);
+                  //menuItemWindow.ShowDialog();
+
+                  System.Windows.Window win = System.Windows.Window.GetWindow(EditOptionsTypesCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                  var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
+                  MenuItemsEditor.ViewModel.OptionsTypesViewModel optionsTypesViewModel = new MenuItemsEditor.ViewModel.OptionsTypesViewModel(ItemsCategory);
+                  var menuItemTypesPage = new MenuItemsEditor.Views.MenuItemTypesPage();
+                  menuItemTypesPage.GetObjectContext().SetContextInstance(optionsTypesViewModel);
+                  frame.ShowDialogPage(menuItemTypesPage);
+                  stateTransition.Consistent = true;
+              }
+          });
 
 
         }
 
-   
+
         internal void RemoveMenuItem(TreeFoodItemViewModel treeViewMenuItemViewModel)
         {
             using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
@@ -214,17 +220,17 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         }
 
 
-        public WPFUIElementObjectBind.RelayCommand RenameCommand { get; protected set; }
-        public WPFUIElementObjectBind.RelayCommand DeleteMenuCommand { get; protected set; }
+        public RelayCommand RenameCommand { get; protected set; }
+        public RelayCommand DeleteMenuCommand { get; protected set; }
 
-        public WPFUIElementObjectBind.RelayCommand CollapseAllMenuCommand { get; protected set; }
-        public WPFUIElementObjectBind.RelayCommand NewCategoryCommand { get; protected set; }
+        public RelayCommand CollapseAllMenuCommand { get; protected set; }
+        public RelayCommand NewCategoryCommand { get; protected set; }
 
-        public WPFUIElementObjectBind.RelayCommand NewMenuItemCommand { get; protected set; }
+        public RelayCommand NewMenuItemCommand { get; protected set; }
 
 
 
-        public WPFUIElementObjectBind.RelayCommand EditOptionsTypesCommand { get; protected set; }
+        public RelayCommand EditOptionsTypesCommand { get; protected set; }
 
         void Delete()
         {
@@ -350,7 +356,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
                     _ContextMenuItems.Add(menuItem);
 
-                  
+
 
                 }
                 return _ContextMenuItems;
@@ -515,7 +521,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     (targetTreeFoodItemViewModel.Parent as ItemsCategoryViewModel).InsertBefore(targetTreeFoodItemViewModel, movingMenuCanvasItem);
 
                     stateTransition.Consistent = true;
-                } 
+                }
                 SuppressStateTransition.Consistent = true;
             }
 
@@ -544,5 +550,17 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             return movingMenuCanvasItem;
         }
 
+        public void CollapseAll()
+        {
+            if (this.IsNodeExpanded)
+            {
+                this.IsNodeExpanded= false;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            }
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            foreach (var subNode in Members)
+                subNode.CollapseAll();
+        }
     }
 }
