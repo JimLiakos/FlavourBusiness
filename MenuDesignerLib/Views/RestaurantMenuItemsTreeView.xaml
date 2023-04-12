@@ -104,6 +104,7 @@
                                 <ToggleButton Style="{StaticResource ListViewBarToggleButtonStyle}"  Command="{Binding ActionsCommand}"   Height="24"  Margin="1,1,1,1" VerticalAlignment="Top" >
 
                                     <StackPanel Style="{x:Null}" Orientation="Horizontal">
+                                        
                                         <Image Style="{x:Null}" Margin="2,0,0,0" Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/dropdownmenu.png"></Image>
                                         <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="{x:Static resx:Resources.MenuItemsListActionsLabel}"></TextBlock>
                                     </StackPanel>

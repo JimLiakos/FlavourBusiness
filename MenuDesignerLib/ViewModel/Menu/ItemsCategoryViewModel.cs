@@ -216,6 +216,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         public WPFUIElementObjectBind.RelayCommand RenameCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand DeleteMenuCommand { get; protected set; }
+
+        public WPFUIElementObjectBind.RelayCommand CollapseAllMenuCommand { get; protected set; }
         public WPFUIElementObjectBind.RelayCommand NewCategoryCommand { get; protected set; }
 
         public WPFUIElementObjectBind.RelayCommand NewMenuItemCommand { get; protected set; }
@@ -287,8 +289,17 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Empty.png"));
                     var emptyImage = new Image() { Source = imageSource, Width = 16, Height = 16 };
 
-                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"));
+
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/collapseall16.png"));
                     MenuCommand menuItem = new MenuCommand();
+                    menuItem.Header ="Collaps all"; //Properties.Resources.DeleteMenuItemHeader;
+                    menuItem.Icon = new Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = CollapseAllMenuCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"));
+                    menuItem = new MenuCommand();
                     menuItem.Header = Properties.Resources.DeleteMenuItemHeader;
                     menuItem.Icon = new Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = DeleteMenuCommand;

@@ -113,7 +113,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             CopyHeadingCommand = new RelayCommand((object sender) =>
             {
 
-                MenuHeadingsPresentation.HeadingDescripionCopies= Headings.Where(x=>x.IsSelected).Select(x=>x.Heading).OfType<FoodItemsHeading>().Select(x=>x.MultilingualDescription).ToList();
+                MenuHeadingsPresentation.HeadingDescripionCopies= Headings.Where(x => x.IsSelected).ToList();
+                //.Select(x => x.Heading).OfType<FoodItemsHeading>().Select(x => x.MultilingualDescription).ToList();
+
+                
+                PasteHeadingCommand.Refresh();
                 //System.Windows.Window win = System.Windows.Window.GetWindow(EditHeadingCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
                 //{
@@ -132,6 +136,25 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
             PasteHeadingCommand = new RelayCommand((object sender) =>
             {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foreach (var heading in MenuHeadingsPresentation.HeadingDescripionCopies)
+                    {
+                        if (heading.RestaurantMenu!=RestaurantMenu)
+                        {
+                            FoodItemsHeading foodItemsHeading = new FoodItemsHeading((heading.Heading as FoodItemsHeading).MultilingualDescription);
+                            ObjectStorage.GetStorageOfObject(RestaurantMenu).CommitTransientObjectState(foodItemsHeading);
+                            RestaurantMenu.AddAvailableHeading(foodItemsHeading);
+                            var headingPresentation = new ListMenuHeadingPresentation(RestaurantMenu, foodItemsHeading);
+                            
+                            _Headings.Insert(0, headingPresentation);
+                        }
+                    }
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
+                    stateTransition.Consistent = true;
+                }
+
+
                 //System.Windows.Window win = System.Windows.Window.GetWindow(EditHeadingCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
                 //{
@@ -146,7 +169,12 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 //}
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Headings)));
 
-            }, (object sender) => MenuHeadingsPresentation.HeadingDescripionCopies!=null&&MenuHeadingsPresentation.HeadingDescripionCopies.Count>0);
+            }, (object sender) =>CanPaste());
+        }
+
+        private bool CanPaste()
+        {
+            return MenuHeadingsPresentation.HeadingDescripionCopies!=null&&MenuHeadingsPresentation.HeadingDescripionCopies.Count>0&&MenuHeadingsPresentation.HeadingDescripionCopies[0].RestaurantMenu!=RestaurantMenu;
         }
 
         private bool CanCopy()
@@ -198,6 +226,13 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 //    _SelectedHeading.IsEditing = false;
 
                 _SelectedHeading = value;
+
+                RenameCommand.Refresh();
+                DeleteMenuCommand.Refresh();
+                CopyHeadingCommand.Refresh();
+                PasteHeadingCommand.Refresh();
+                EditHeadingCommand.Refresh();
+
             }
         }
 
@@ -273,7 +308,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             }
         }
 
-      
+
 
 
         /// <exclude>Excluded</exclude>
@@ -286,6 +321,6 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             }
         }
 
-        public static List<MultilingualMember<string>> HeadingDescripionCopies { get; private set; }
+        public static List<ListMenuHeadingPresentation> HeadingDescripionCopies { get; private set; }
     }
 }

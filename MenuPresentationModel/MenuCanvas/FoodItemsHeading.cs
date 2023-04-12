@@ -7,6 +7,7 @@ using OOAdvantech.Linq;
 using System.Linq;
 using OOAdvantech;
 using UIBaseEx;
+using System.Globalization;
 
 namespace MenuPresentationModel.MenuCanvas
 {
@@ -20,6 +21,19 @@ namespace MenuPresentationModel.MenuCanvas
         {
 
         }
+
+        public FoodItemsHeading(MultilingualMember<string> multilingualDescription)
+        {
+            foreach(CultureInfo culture in multilingualDescription.Values.Keys)
+            {
+                using (var cultureContext = new OOAdvantech.CultureContext(culture, false))
+                {
+                    _Description.Value=multilingualDescription.Value;
+                }
+            }
+
+        }
+
         /// <exclude>Excluded</exclude>
         MultilingualMember<IMenuCanvasColumn> _Column = new OOAdvantech.MultilingualMember<IMenuCanvasColumn>();
 
