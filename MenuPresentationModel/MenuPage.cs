@@ -84,6 +84,7 @@ namespace MenuPresentationModel
                     }
                 }
             }
+
         }
 
         /// <exclude>Excluded</exclude>
@@ -655,25 +656,35 @@ namespace MenuPresentationModel
         /// <MetaDataID>{1db34772-1be8-4864-9954-b2f69cd1da33}</MetaDataID>
         public void InsertCanvasItemTo(IMenuCanvasItem movingMenuCanvasItem, System.Windows.Point point)
         {
-          
-            foreach (var pageItem in MenuCanvasItems)
+            IList<IMenuCanvasItem> menuCanvasItems = MenuCanvasItems;
+            var itemsGroupColumn = GetItemsGroupColumn(point);
+            if (itemsGroupColumn!=null)
+                menuCanvasItems=itemsGroupColumn.MenuCanvasItems;
+            IMenuCanvasItem positionMenuCanvasItem = null;
+            foreach (var pageItem in menuCanvasItems)
             {
                 ItemRelativePos relPos = pageItem.GetRelativePos(point);
                 if ((relPos == ItemRelativePos.OnPosUp || relPos == ItemRelativePos.Before))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        int newpos = _MenuCanvasItems.IndexOf(pageItem);
-                        _MenuCanvasItems.Insert(newpos, movingMenuCanvasItem);
-                        movingMenuCanvasItem.ObjectChangeState += ManuCanvasitem_ObjectChangeState;
-
-     
-                        stateTransition.Consistent = true;
-                    }
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(movingMenuCanvasItem); 
-                    
-                    return;
+                    if(positionMenuCanvasItem==null)
+                        positionMenuCanvasItem=pageItem;
+                    if (relPos == ItemRelativePos.OnPosUp)
+                        break;
                 }
+                else
+                    positionMenuCanvasItem=null;
+            }
+            if (positionMenuCanvasItem!=null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    int newpos = _MenuCanvasItems.IndexOf(positionMenuCanvasItem);
+                    _MenuCanvasItems.Insert(newpos, movingMenuCanvasItem);
+                    movingMenuCanvasItem.ObjectChangeState += ManuCanvasitem_ObjectChangeState;
+                    stateTransition.Consistent = true;
+                }
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(movingMenuCanvasItem);
+                return;
             }
             AddMenuItem(movingMenuCanvasItem);
 
@@ -953,7 +964,7 @@ namespace MenuPresentationModel
                 OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(column);
             }
         }
-
+        
         /// <MetaDataID>{126dbf66-8a5b-4de9-b6b3-5fe8a02905d5}</MetaDataID>
         public void LinkedObjectAdded(object linkedObject, AssociationEnd associationEnd)
         {
@@ -961,8 +972,40 @@ namespace MenuPresentationModel
                 (linkedObject as RestaurantMenu).MenuStyleChanged += MenuPage_MenuStyleChanged;
         }
 
-        /// <MetaDataID>{ef691387-ce55-46c1-bc80-b5b4a29e21af}</MetaDataID>
-        public MenuCanvas.Rect GetDropRectangle(Point point)
+
+        public IMenuCanvasColumn GetItemsGroupColumn(Point point)
+        {
+            foreach (var pageItem in MenuCanvasItems.Reverse())
+            {
+                if (pageItem.Column is MenuCanvas.FoodItemsGroupColumn)
+                {
+                    var column = pageItem.Column;
+                    if (point.X >= column.XPos && point.X < column.XPos + column.Width &&
+                        point.Y >= column.YPos && point.Y < column.YPos + column.MaxHeight)
+                    {
+
+                        return column;
+                    }
+                }
+            }
+            foreach (var pageItem in MenuCanvasItems.Reverse())
+            {
+                if (pageItem.Column!=null)
+                {
+                    var column = pageItem.Column;
+                    if (point.X >= column.XPos && point.X < column.XPos + column.Width &&
+                        point.Y >= column.YPos && point.Y < column.YPos + column.MaxHeight)
+                    {
+
+                        return column;
+                    }
+                }
+            }
+            return null;
+        }
+
+            /// <MetaDataID>{ef691387-ce55-46c1-bc80-b5b4a29e21af}</MetaDataID>
+            public MenuCanvas.Rect GetDropRectangle(Point point)
         {
             foreach (var pageItem in MenuCanvasItems.Reverse())
             {

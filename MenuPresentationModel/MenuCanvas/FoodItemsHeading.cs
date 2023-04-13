@@ -951,6 +951,7 @@ namespace MenuPresentationModel.MenuCanvas
                     MenuPresentationModel.MenuStyles.PageStyle pageStyle = Page.Style.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle;
                     width = pageStyle.PageWidth - (pageStyle.Margin.MarginLeft + pageStyle.Margin.MarginRight);
                 }
+                width=FullRowWidth+20;
                 return new Rect(x, y, width, height);
 
             }
