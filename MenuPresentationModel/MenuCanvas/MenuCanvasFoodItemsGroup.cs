@@ -350,11 +350,26 @@ namespace MenuPresentationModel.MenuCanvas
 
             Height = 0;
             int i = 0;
+            bool skipNextColumns = false;
             foreach (var column in Columns)
             {
-                column.RenderMenuCanvasItems(columnsItems[i], allItemMultiPriceHeadings);
-                if (column.Height > Height)
-                    Height = column.Height;
+                if (skipNextColumns)
+                {
+                    column.RenderMenuCanvasItems(new List<IMenuCanvasItem>(), allItemMultiPriceHeadings);
+                }
+                else
+                {
+                    int itemsToRender = columnsItems[i].Count;
+
+                    column.RenderMenuCanvasItems(columnsItems[i], allItemMultiPriceHeadings);
+                    if (itemsToRender==columnsItems[i].Count)
+                    {
+                        skipNextColumns=true;
+                    }
+
+                    if (column.Height > Height)
+                        Height = column.Height;
+                }
                 i++;
 
             }

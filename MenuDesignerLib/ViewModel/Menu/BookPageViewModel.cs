@@ -563,78 +563,84 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         {
 
 
-            List<IMenuCanvasItem> menuCanvasTextItems = (from menuCanvasItem in MenuPage.MenuCanvasItems
-                                                         where menuCanvasItem is IMenuCanvasHeading
-                                                         select menuCanvasItem).OfType<IMenuCanvasItem>().ToList();
 
-
-            List<IMenuCanvasFoodItem> menuCanvasFoodItems = (from menuCanvasItem in MenuPage.MenuCanvasItems
-                                                             where menuCanvasItem is IMenuCanvasFoodItem
-                                                             select menuCanvasItem).OfType<IMenuCanvasFoodItem>().ToList();
-
-            menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
-                                          from menuCanvasFoodItemText in menuCanvasItem.SubTexts
-                                          select menuCanvasFoodItemText).OfType<IMenuCanvasItem>().ToList());
-
-            menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
-                                          from priceText in menuCanvasItem.Prices
-                                          where priceText.Visisble
-                                          select priceText).OfType<IMenuCanvasItem>().ToList());
-
-            menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
-                                          select menuCanvasItem.PriceLeader).OfType<IMenuCanvasItem>().ToList());
-
-
-
-
-            //menuCanvasTextItems.AddRange(tmppriceHeadings);
-
-
-            Dictionary<IMenuCanvasItem, MenuCanvasItemTextViewModel> textCanvasItems = (from menuCanvasItem in TextCanvasItemsSlots
-                                                                                        where menuCanvasTextItems.Contains(menuCanvasItem.MenuCanvasItem)
-                                                                                        select menuCanvasItem).ToDictionary(x => x.MenuCanvasItem);
-
-            List<MenuCanvasItemTextViewModel> freeTextCanvasItems = (from menuCanvasItem in TextCanvasItemsSlots
-                                                                     where !menuCanvasTextItems.Contains(menuCanvasItem.MenuCanvasItem)
-                                                                     select menuCanvasItem).ToList();
-
-
-            foreach (var menuCanvasFoodItemText in menuCanvasTextItems)
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                if (menuCanvasFoodItemText.Page == null)
-                {
+                List<IMenuCanvasItem> menuCanvasTextItems = (from menuCanvasItem in MenuPage.MenuCanvasItems
+                                                             where menuCanvasItem is IMenuCanvasHeading
+                                                             select menuCanvasItem).OfType<IMenuCanvasItem>().ToList();
 
-                }
-                if (textCanvasItems.ContainsKey(menuCanvasFoodItemText))
+
+                List<IMenuCanvasFoodItem> menuCanvasFoodItems = (from menuCanvasItem in MenuPage.MenuCanvasItems
+                                                                 where menuCanvasItem is IMenuCanvasFoodItem
+                                                                 select menuCanvasItem).OfType<IMenuCanvasFoodItem>().ToList();
+
+                menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
+                                              from menuCanvasFoodItemText in menuCanvasItem.SubTexts
+                                              select menuCanvasFoodItemText).OfType<IMenuCanvasItem>().ToList());
+
+                menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
+                                              from priceText in menuCanvasItem.Prices
+                                              where priceText.Visisble
+                                              select priceText).OfType<IMenuCanvasItem>().ToList());
+
+                menuCanvasTextItems.AddRange((from menuCanvasItem in MenuPage.MenuCanvasItems.OfType<IMenuCanvasFoodItem>()
+                                              select menuCanvasItem.PriceLeader).OfType<IMenuCanvasItem>().ToList());
+
+
+
+
+                //menuCanvasTextItems.AddRange(tmppriceHeadings);
+
+
+                Dictionary<IMenuCanvasItem, MenuCanvasItemTextViewModel> textCanvasItems = (from menuCanvasItem in TextCanvasItemsSlots
+                                                                                            where menuCanvasTextItems.Contains(menuCanvasItem.MenuCanvasItem)
+                                                                                            select menuCanvasItem).ToDictionary(x => x.MenuCanvasItem);
+
+                List<MenuCanvasItemTextViewModel> freeTextCanvasItems = (from menuCanvasItem in TextCanvasItemsSlots
+                                                                         where !menuCanvasTextItems.Contains(menuCanvasItem.MenuCanvasItem)
+                                                                         select menuCanvasItem).ToList();
+
+
+                foreach (var menuCanvasFoodItemText in menuCanvasTextItems)
                 {
-                    MenuCanvasItemTextViewModel textCanvasItem = textCanvasItems[menuCanvasFoodItemText];
-                    textCanvasItem.Visibility = Visibility.Visible;
-                    textCanvasItem.Refresh();
-                }
-                else if (freeTextCanvasItems.Count > 0)
-                {
-                    MenuCanvasItemTextViewModel textCanvasItem = freeTextCanvasItems[0];
-                    freeTextCanvasItems.RemoveAt(0);
-                    textCanvasItem.Visibility = Visibility.Visible;
-                    textCanvasItem.ChangeCanvasItem(menuCanvasFoodItemText);
-                }
-                else
-                {
-                    if ((from menuCanvasItem in TextCanvasItemsSlots
-                         where menuCanvasItem.MenuCanvasItem == menuCanvasFoodItemText
-                         select menuCanvasItem).ToList().Count > 0)
+                    if (menuCanvasFoodItemText.Page == null)
                     {
 
                     }
+                    if (textCanvasItems.ContainsKey(menuCanvasFoodItemText))
+                    {
+                        MenuCanvasItemTextViewModel textCanvasItem = textCanvasItems[menuCanvasFoodItemText];
+                        textCanvasItem.Visibility = Visibility.Visible;
+                        textCanvasItem.Refresh();
+                    }
+                    else if (freeTextCanvasItems.Count > 0)
+                    {
+                        MenuCanvasItemTextViewModel textCanvasItem = freeTextCanvasItems[0];
+                        freeTextCanvasItems.RemoveAt(0);
+                        textCanvasItem.Visibility = Visibility.Visible;
+                        textCanvasItem.ChangeCanvasItem(menuCanvasFoodItemText);
+                    }
+                    else
+                    {
+                        if ((from menuCanvasItem in TextCanvasItemsSlots
+                             where menuCanvasItem.MenuCanvasItem == menuCanvasFoodItemText
+                             select menuCanvasItem).ToList().Count > 0)
+                        {
 
-                    MenuCanvasItemTextViewModel textCanvasItem = new MenuCanvasItemTextViewModel(menuCanvasFoodItemText);
+                        }
+
+                        MenuCanvasItemTextViewModel textCanvasItem = new MenuCanvasItemTextViewModel(menuCanvasFoodItemText);
 
 
-                    TextCanvasItemsSlots.Add(textCanvasItem);
+                        TextCanvasItemsSlots.Add(textCanvasItem);
+                    }
                 }
+                foreach (var textCanvasItem in freeTextCanvasItems)
+                    textCanvasItem.Visibility = Visibility.Collapsed; 
+                stateTransition.Consistent = true;
             }
-            foreach (var textCanvasItem in freeTextCanvasItems)
-                textCanvasItem.Visibility = Visibility.Collapsed;
+
 
 
         }
