@@ -1893,7 +1893,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 if (pageStyle != null)
                 {
                     if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
-                        return 395;
+                        return 600;
                 }
                 return 700;
             }
@@ -1906,7 +1906,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 if (pageStyle != null)
                 {
                     if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
-                        return 700;
+                        return 1080;
                 }
 
                 return 323;

@@ -661,7 +661,8 @@ namespace MenuPresentationModel.MenuCanvas
                         lineSentence = word.Substring(word.IndexOf("\r\n") + 2) + " ";
                         if (lineText.Length > 0)
                             wrappedText.Add(lineText);
-                    } else if (word.IndexOf("\n") != -1)
+                    }
+                    else if (word.IndexOf("\n") != -1)
                     {
                         if (word.IndexOf("\n") != 0)
                             lineSentence += word.Substring(0, word.IndexOf("\n"));
@@ -670,7 +671,8 @@ namespace MenuPresentationModel.MenuCanvas
                         lineSentence = word.Substring(word.IndexOf("\n") + 2) + " ";
                         if (lineText.Length > 0)
                             wrappedText.Add(lineText);
-                    } else
+                    }
+                    else
                     {
                         if (i + 1 != words.Length)
                             lineSentence += word + " ";
@@ -2053,16 +2055,37 @@ namespace MenuPresentationModel.MenuCanvas
                 }
                 return ItemRelativePos.After;
             }
-            if (point.X < CanvasFrameArea.X)
-                return ItemRelativePos.Before;
-            else
-            {
-                if (point.Y > CanvasFrameArea.Y)
-                    return ItemRelativePos.After;
-                else
-                    return ItemRelativePos.Before;
 
+            //if (point.Y > CanvasFrameArea.Y)
+            //    return ItemRelativePos.After;
+            //else
+            //    return ItemRelativePos.Before;
+
+            if (point.Y > CanvasFrameArea.Y)
+                return ItemRelativePos.After;
+            else
+                if (Column!=null)
+            {
+                if (point.X >= Column.XPos && point.X <= Column.XPos + Column.Width)
+                    return ItemRelativePos.Before;
+                else
+                    return ItemRelativePos.After;
             }
+            else
+                return ItemRelativePos.Before;
+
+
+
+            //if (point.X < CanvasFrameArea.X)
+            //    return ItemRelativePos.Before;
+            //else
+            //{
+            //    if (point.Y > CanvasFrameArea.Y)
+            //        return ItemRelativePos.After;
+            //    else
+            //        return ItemRelativePos.Before;
+
+            //}
         }
 
         /// <MetaDataID>{515744a8-3c3d-4d9f-8b13-697c7e7a52bd}</MetaDataID>

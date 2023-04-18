@@ -31,13 +31,14 @@ namespace MenuPresentationModel.MenuCanvas
         }
 
         /// <exclude>Excluded</exclude>
-       OOAdvantech.MultilingualMember< IMenuCanvasHeading> _ItemsGroupHeading=new OOAdvantech.MultilingualMember<IMenuCanvasHeading>();
+        OOAdvantech.MultilingualMember<IMenuCanvasHeading> _ItemsGroupHeading = new OOAdvantech.MultilingualMember<IMenuCanvasHeading>();
 
         /// <MetaDataID>{68cde684-beab-4b44-a9f7-5f2a79864863}</MetaDataID>
         [PersistentMember(nameof(_ItemsGroupHeading))]
         [BackwardCompatibilityID("+2")]
-        public IMenuCanvasHeading ItemsGroupHeading { 
-            get => _ItemsGroupHeading.Value; 
+        public IMenuCanvasHeading ItemsGroupHeading
+        {
+            get => _ItemsGroupHeading.Value;
             internal set
             {
 
@@ -55,7 +56,7 @@ namespace MenuPresentationModel.MenuCanvas
 
 
 
-  
+
 
 
 
@@ -74,7 +75,7 @@ namespace MenuPresentationModel.MenuCanvas
                 {
                     while ((ItemsGroupHeading == null && _Columns.Count > 1) || (_Columns.Count > 0 && ItemsGroupHeading != null && _Columns.Count > ItemsGroupHeading.NumberOfFoodColumns))
                     {
-                        var column= _Columns[_Columns.Count - 1];
+                        var column = _Columns[_Columns.Count - 1];
                         OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(column);
                         _Columns.RemoveAt(_Columns.Count - 1);
                     }
@@ -116,7 +117,7 @@ namespace MenuPresentationModel.MenuCanvas
         }
 
 
- 
+
         /// <exclude>Excluded</exclude>
         double _Height;
 
@@ -139,14 +140,14 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
-        
-        
+
+
         [DeleteObjectCall]
         void OnObjectDeleting()
         {
             foreach (var foodItemsGroupColumn in _Columns.ToList())
             {
-       
+
                 OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodItemsGroupColumn);
             }
         }
@@ -155,7 +156,7 @@ namespace MenuPresentationModel.MenuCanvas
         /// <MetaDataID>{8362c7c4-5ab3-4ea3-87bf-669bbc719e42}</MetaDataID>
         public MenuCanvasFoodItemsGroup(MenuCanvasColumn menuCanvasColumn)
         {
-            
+
             _PageColumn.Value = menuCanvasColumn;
         }
         /// <MetaDataID>{b347de53-4f50-44d1-b16e-4c9c73fe7a43}</MetaDataID>
@@ -163,13 +164,13 @@ namespace MenuPresentationModel.MenuCanvas
         {
 
         }
-  
 
 
-   
-   
 
-     
+
+
+
+
 
         /// <exclude>Excluded</exclude>
         double _MaxHeight;
@@ -294,7 +295,7 @@ namespace MenuPresentationModel.MenuCanvas
         public IMenuCanvasPageColumn PageColumn => _PageColumn.Value;
 
 
-    
+
         /// <MetaDataID>{d390e137-8a73-4b74-b4fc-5c490d84d030}</MetaDataID>
         public void AddGroupedItem(IGroupedItem item)
         {
@@ -321,7 +322,7 @@ namespace MenuPresentationModel.MenuCanvas
         }
 
         /// <MetaDataID>{2405d6b8-4d8c-4cfb-8600-89896b26778d}</MetaDataID>
-        internal void RenderMenuCanvasItems(List<IMenuCanvasItem>  menuCanvasItems)
+        internal void RenderMenuCanvasItems(List<IMenuCanvasItem> menuCanvasItems)
         {
 
             //List<IMenuCanvasItem> menuCanvasItems = _GroupedItems.OfType<IMenuCanvasItem>().ToList();
@@ -335,21 +336,21 @@ namespace MenuPresentationModel.MenuCanvas
             List<List<IMenuCanvasItem>> columnsItems = new List<List<IMenuCanvasItem>>();
             foreach (var column in Columns)
                 columnsItems.Add(new List<IMenuCanvasItem>());
+            var menuCanvasItemsCanFit = menuCanvasItems.ToList();
 
-            IList<IMenuCanvasItem> columnsMenuCanvasItems = menuCanvasItems.ToList();
+            IList<IMenuCanvasItem> columnsMenuCanvasItems = menuCanvasItemsCanFit.ToList();
+            int i = 0;
             while (columnsMenuCanvasItems.Count > 0)
             {
-                foreach (var columnItems in columnsItems)
-                {
-                    columnItems.Add(columnsMenuCanvasItems[0]);
-                    columnsMenuCanvasItems.RemoveAt(0);
-                    if (columnsMenuCanvasItems.Count == 0)
-                        break;
-                }
+                int numOfItems = (int)Math.Ceiling((decimal)columnsMenuCanvasItems.Count/(columnsItems.Count-i));
+                columnsItems[i].AddRange(columnsMenuCanvasItems.Take(numOfItems).ToList());
+                i++;
+                foreach (var menuItem in columnsMenuCanvasItems.Take(numOfItems).ToList())
+                    columnsMenuCanvasItems.Remove(menuItem);
             }
 
             Height = 0;
-            int i = 0;
+            i = 0;
             bool skipNextColumns = false;
             foreach (var column in Columns)
             {
@@ -362,18 +363,30 @@ namespace MenuPresentationModel.MenuCanvas
                     int itemsToRender = columnsItems[i].Count;
 
                     column.RenderMenuCanvasItems(columnsItems[i], allItemMultiPriceHeadings);
-                    if (itemsToRender==columnsItems[i].Count)
-                    {
-                        skipNextColumns=true;
-                    }
+                    //if (itemsToRender==columnsItems[i].Count)
+                    //{
+                    //    skipNextColumns=true;
+                    //}
 
                     if (column.Height > Height)
                         Height = column.Height;
                 }
+                if (columnsItems[i].Count>0&&i<Columns.Count-1)
+                {
+                    foreach (var menuItem in columnsItems[i].ToArray().Reverse().ToList())
+                    {
+                        columnsItems[i].Remove(menuItem);
+                        columnsItems[i+1].Insert(0,menuItem);
+                    }
+
+                }
                 i++;
 
             }
+
+
             List<IMenuCanvasItem> remainingItems = new List<IMenuCanvasItem>();
+
             foreach (var columnItems in columnsItems)
                 remainingItems.AddRange(columnItems);
             foreach (var menuCanvasItem in menuCanvasItems.ToList())
@@ -454,7 +467,7 @@ namespace MenuPresentationModel.MenuCanvas
                         double strockThickness = layoutStyle.SeparationLineThickness;
                         line.StrokeThickness = separationline.StrokeThickness;
                         line.LineType = layoutStyle.SeparationLineType;
-                        
+
                     }
                     else
                     {

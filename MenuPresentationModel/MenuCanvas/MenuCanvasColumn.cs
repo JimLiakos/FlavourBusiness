@@ -15,6 +15,8 @@ namespace MenuPresentationModel.MenuCanvas
     [Persistent()]
     public class MenuCanvasColumn : MarshalByRefObject, IMenuCanvasPageColumn
     {
+    
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IMenuCanvasFoodItemsGroup> _FoodItemsGroup = new OOAdvantech.Collections.Generic.Set<IMenuCanvasFoodItemsGroup>();
 
@@ -30,6 +32,7 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
+        /// <MetaDataID>{ad4de51e-9d4b-4155-b82b-bc2123257ffa}</MetaDataID>
         [DeleteObjectCall]
         void OnObjectDeleting()
         {
@@ -42,7 +45,8 @@ namespace MenuPresentationModel.MenuCanvas
         OOAdvantech.Collections.Generic.Set<IMenuCanvasItem> _MenuCanvasItems = new OOAdvantech.Collections.Generic.Set<IMenuCanvasItem>();
 
         /// <MetaDataID>{a5d46ea5-e12f-4d59-8fcc-ff0abd97e5de}</MetaDataID>
-        [ImplementationMember(nameof(_MenuCanvasItems))]
+        [PersistentMember(nameof(_MenuCanvasItems))]
+        [BackwardCompatibilityID("+8")]
         public System.Collections.Generic.IList<IMenuCanvasItem> MenuCanvasItems
         {
             get
@@ -789,6 +793,7 @@ namespace MenuPresentationModel.MenuCanvas
                                       from column in foodItemsGroup.Columns
                                       from menuCanvasItem in column.MenuCanvasItems
                                       select menuCanvasItem));
+
             return menuCanvasItems;
         }
 

@@ -24,7 +24,7 @@ namespace MenuPresentationModel.MenuCanvas
 
         public FoodItemsHeading(MultilingualMember<string> multilingualDescription)
         {
-            foreach(CultureInfo culture in multilingualDescription.Values.Keys)
+            foreach (CultureInfo culture in multilingualDescription.Values.Keys)
             {
                 using (var cultureContext = new OOAdvantech.CultureContext(culture, false))
                 {
@@ -937,11 +937,17 @@ namespace MenuPresentationModel.MenuCanvas
                 double height = 0;
                 double width = 0;
 
-                if (HostingAreas.Count > 0)
-                    x = HostingAreas[0].PageColumn.XPos - 10;
+                if (Column!=null)
+                {
+                    x=Column.XPos - 10;
+                }
                 else
-                    x = (Page.Style.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle).Margin.MarginLeft;
-
+                {
+                    if (HostingAreas.Count > 0)
+                        x = HostingAreas[0].PageColumn.XPos - 10;
+                    else
+                        x = (Page.Style.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle).Margin.MarginLeft;
+                }
                 y = YPos - 10;
                 height = Height + 20;
                 if (HostingAreas.Count > 0)

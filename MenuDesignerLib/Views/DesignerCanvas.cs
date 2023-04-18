@@ -289,8 +289,9 @@ namespace MenuDesigner.Views.MenuCanvas
                                     bookPageViewModel.BookViewModel.RestaurantMenu.InsertMenuItemAfter(null, dropedMenuCanvasItem);
 
 
-                                bookPageViewModel.BookViewModel.MenuItemDropOnPage(this.GetDataContextObject<BookPageViewModel>().MenuPage);
+                              
                             }
+                            bookPageViewModel.BookViewModel.MenuItemDropOnPage(this.GetDataContextObject<BookPageViewModel>().MenuPage);
 
                             // this.GetDataContextObject<BookPageViewModel>().Refresh();
                         }

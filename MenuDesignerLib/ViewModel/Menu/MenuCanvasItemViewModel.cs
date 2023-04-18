@@ -472,18 +472,18 @@ using UIBaseEx;
                 fontSize = 0;
 
 
-            if(Font!=null&& MenuCanvasItem.Width != Font.Value.MeasureText(_Text).Width)
-            {
-                //var font = Font.Value;
-                //fontSize = fontSize * (MenuCanvasItem.Width / Font.Value.MeasureText(_Text).Width);
-                //font.FontSize = fontSize;
-                //var wi = font.MeasureText(_Text).Width;
+            //if(Font!=null&& MenuCanvasItem.Width != Font.Value.MeasureText(_Text).Width)
+            //{
+            //    //var font = Font.Value;
+            //    //fontSize = fontSize * (MenuCanvasItem.Width / Font.Value.MeasureText(_Text).Width);
+            //    //font.FontSize = fontSize;
+            //    //var wi = font.MeasureText(_Text).Width;
 
-                //var baseLineDif = MenuCanvasItem.BaseLine-font.GetsTextBaseLine(_Text)  ;
+            //    //var baseLineDif = MenuCanvasItem.BaseLine-font.GetsTextBaseLine(_Text)  ;
 
-                //_Top += baseLineDif;
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Top)));
-            }
+            //    //_Top += baseLineDif;
+            //    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Top)));
+            //}
 
             if (fontSize!=_FontSize)
             {
