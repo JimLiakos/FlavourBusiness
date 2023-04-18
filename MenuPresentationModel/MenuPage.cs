@@ -694,8 +694,9 @@ namespace MenuPresentationModel
                 {
                     menuCanvasItems=column.GetDeepMenuCanvasItems();
                     menuCanvasItems= MenuCanvasItems.Where(x => menuCanvasItems.Contains(x)).ToList();
-
-                    int newpos = _MenuCanvasItems.IndexOf(menuCanvasItems.Last())+1;
+                    int newpos = _MenuCanvasItems.Count;
+                    if (menuCanvasItems.Count>0)
+                        newpos = _MenuCanvasItems.IndexOf(menuCanvasItems.Last())+1;
                     _MenuCanvasItems.Insert(newpos, movingMenuCanvasItem);
                     movingMenuCanvasItem.ObjectChangeState += ManuCanvasitem_ObjectChangeState;
                     stateTransition.Consistent = true;
