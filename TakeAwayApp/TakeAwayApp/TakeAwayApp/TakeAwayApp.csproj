@@ -11,7 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.4" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Json.NetStandard\OOAdvantech.Json.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
 </Project>
