@@ -433,5 +433,8 @@
   <ItemGroup>
     <None Include="Resources\NotificationSound.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TakeAwayApp.Wpf\ViewModel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
