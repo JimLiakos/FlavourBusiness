@@ -50,7 +50,7 @@ namespace ServiceContextManagerApp.WPF
 
             GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
 
-            FlavourBusinessApps.WaiterApp.WPF.WaiterApp.Startup(DevicesIDS[SelectedIndex]);
+            FlavourBusinessApps.WaiterApp.WPF.TakeAwayApp.Startup(DevicesIDS[SelectedIndex]);
             
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();

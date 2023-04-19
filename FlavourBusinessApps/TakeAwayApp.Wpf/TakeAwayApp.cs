@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessApps.TakeAwayApp.WPF
+namespace FlavourBusinessApps.WaiterApp.WPF
 {
     /// <MetaDataID>{8f191801-4c6c-4a70-b7e9-818f84ea701c}</MetaDataID>
     public class TakeAwayApp
@@ -47,6 +47,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealType)] = "MenuModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.FixedMealType)] = "MenuModel.FixedMealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
+            SerializationBinder.TypesNamesDictionary[typeof(global::WaiterApp.ViewModel.ServingBatchPresentation)] = "WaiterApp.ViewModel.ServingBatchPresentation";
 
             
 

@@ -46,11 +46,11 @@ namespace TakeAwayApp.Wpf
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            //OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
+            OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
 
-            //GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
+            GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
 
-            //FlavourBusinessApps.WaiterApp.WPF.WaiterApp.Startup(DevicesIDS[SelectedIndex]);
+            FlavourBusinessApps.TakeAwayApp.WPF.TakeAwayApp.Startup(DevicesIDS[SelectedIndex]);
             
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();

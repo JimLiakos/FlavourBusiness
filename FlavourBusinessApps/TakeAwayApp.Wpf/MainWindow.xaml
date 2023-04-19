@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeAwayApp.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="510" Width="960">
+    <Grid  >
+        <Border  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="WebBrowserHost">
+            <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
+        </Border>
     </Grid>
 </Window>

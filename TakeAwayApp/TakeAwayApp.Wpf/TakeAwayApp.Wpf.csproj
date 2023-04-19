@@ -98,5 +98,27 @@
       <Version>108.4.130</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Net\OOAdvantech.Net.csproj">
+      <Project>{ceb65441-0a94-444a-af99-5e4850ae623c}</Project>
+      <Name>OOAdvantech.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
+      <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>
+      <Name>OOAdvantech - VS10</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\RestApiRemoting\RestApiRemoting.csproj">
+      <Project>{a2db1df7-3b99-4251-891d-0d7f40848c6c}</Project>
+      <Name>RestApiRemoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
+      <Project>{0a6dbbc9-d8d3-4466-9a4e-80ae0582eb0a}</Project>
+      <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FlavourBusinessApps\FlavourBusinessApps.csproj">
+      <Project>{d58ad795-d497-4b69-a950-b0a8e107f291}</Project>
+      <Name>FlavourBusinessApps</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
