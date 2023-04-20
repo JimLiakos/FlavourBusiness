@@ -43,6 +43,7 @@ namespace WaiterApp.ViewModel
     public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
+
         /// <MetaDataID>{0b94610a-c3b2-4e2f-b06b-02b4a261bd32}</MetaDataID>
         protected WaiterPresentation()
         {

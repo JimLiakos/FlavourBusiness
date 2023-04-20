@@ -671,9 +671,6 @@ namespace PreparationStationDevice
 #else
                 return false;
 #endif
-
-
-
             });
         }
 

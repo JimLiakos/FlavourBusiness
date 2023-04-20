@@ -184,6 +184,8 @@
     <Compile Include="ViewModel\Infrastructure\CallerIDLineTreeNode.cs" />
     <Compile Include="ViewModel\Infrastructure\CallerIDServerTreeNode.cs" />
     <Compile Include="ViewModel\MenuDesignerHost.cs" />
+    <Compile Include="ViewModel\TakeAway\TakeAwayStationsTreeNode.cs" />
+    <Compile Include="ViewModel\TakeAway\TakeAwayStationTreeNode.cs" />
     <Compile Include="ViewModel\Taxes\MenuItemTaxInfo.cs" />
     <Compile Include="ViewModel\Preparation\ItemsPreparationInfoPresentation.cs" />
     <Compile Include="ViewModel\Preparation\PreparationSattionsTreeNode.cs" />

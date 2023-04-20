@@ -134,6 +134,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TakeAwayApp.Wpf\TakeAwayApp.cs" />
+    <Compile Include="TakeAwayApp.Wpf\ViewModel\TakeAwayStation.cs" />
     <Compile Include="WaiterApp.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -433,8 +434,6 @@
   <ItemGroup>
     <None Include="Resources\NotificationSound.wav" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TakeAwayApp.Wpf\ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

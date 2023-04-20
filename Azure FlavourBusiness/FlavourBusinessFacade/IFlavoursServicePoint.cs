@@ -12,6 +12,9 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        [Association("ServiceContexTakeAwayStation", Roles.RoleA, "a8709498-f1bc-42f9-a61b-d2f47e5656f3")]
+        ITakeAwayStation TakeAwayStations { get; }
+
         /// <MetaDataID>{770ae1ae-dc20-4fdb-83e1-8e4b6806f409}</MetaDataID>
         void RemoveFoodTypes(List<IFoodTypeTag> foodTypeTags);
 
