@@ -1842,6 +1842,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        public ITakeAwayStation NewTakeAwayStation()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+            TakeAwayStation takeAwayStation = new TakeAwayStation(this);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                takeAwayStation.Description = Properties.Resources.DefaultTakeAwayStationDescription;
+                takeAwayStation.ServicesContextIdentity = this.ServicesContextIdentity;
+                objectStorage.CommitTransientObjectState(takeAwayStation);
+                stateTransition.Consistent = true;
+            }
+            var count = PreparationStationRuntimes.Count;
+            return takeAwayStation;
+        }
+
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)
@@ -2226,6 +2241,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
 
+        }
+
+        public void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation)
+        {
+            try
+            {
+                ObjectStorage.DeleteObject(takeAwayStationStation);
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
         }
     }
 

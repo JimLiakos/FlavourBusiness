@@ -48,13 +48,13 @@ namespace FLBManager.ViewModel.TakeAway
         }
         Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
-        Dictionary<IPreparationStation, TakeAwayStationTreeNode> PreparationStations = new Dictionary<IPreparationStation, TakeAwayStationTreeNode>();
+        Dictionary<ITakeAwayStation, TakeAwayStationTreeNode> PreparationStations = new Dictionary<ITakeAwayStation, TakeAwayStationTreeNode>();
 
         /// <MetaDataID>{9e7b6800-d297-4665-93f3-169c7e95ca65}</MetaDataID>
         internal void RemovePreparationStation(TakeAwayStationTreeNode preparationStationPresentation)
         {
-            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemovePreparationStation(preparationStationPresentation.PreparationStation);
-            PreparationStations.Remove(preparationStationPresentation.PreparationStation);
+            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveTakeAwayStation(preparationStationPresentation.TakeAwayStation);
+            PreparationStations.Remove(preparationStationPresentation.TakeAwayStation);
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
@@ -63,7 +63,7 @@ namespace FLBManager.ViewModel.TakeAway
         {
             var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
-            var preparationStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewPreparationStation();
+            var preparationStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewTakeAwayStation();
             var preparationStationPresentation = new PreparationStationPresentation(this, preparationStation, menuViewModel);
             preparationStationPresentation.Edit = true;
             PreparationStations.Add(preparationStation, preparationStationPresentation);

@@ -5576,24 +5576,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(2318, 367)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	51
-				max_width  	2384)
 			    width      	807
 			    height     	538
 			    annotation 	8)
@@ -5627,7 +5609,7 @@
 			    quidu      	"5B16B1600111"
 			    compartment 	(object Compartment
 				Parent_View 	@2
-				location   	(50, 205)
+				location   	(50, 507)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5641,8 +5623,8 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	23
-				max_width  	2062)
+				nlines     	28
+				max_width  	0)
 			    width      	825
 			    height     	831
 			    annotation 	8)
@@ -5823,7 +5805,7 @@
 					nlines     	1
 					max_width  	15
 					justify    	0
-					label      	"0..*"
+					label      	"0..1"
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
@@ -6029,24 +6011,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@20
-				location   	(3676, 1072)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1284)
 			    width      	943
 			    height     	375
 			    annotation 	8)
@@ -6112,24 +6076,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B2074026F"
-			    compartment 	(object Compartment
-				Parent_View 	@23
-				location   	(2215, 1004)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	92
-				max_width  	3275)
 			    width      	925
 			    height     	394
 			    annotation 	8)
@@ -6433,24 +6379,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F4A2662014F"
-			    compartment 	(object Compartment
-				Parent_View 	@38
-				location   	(953, 2393)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	375)
 			    width      	600
 			    height     	238
 			    annotation 	8)))))
@@ -12433,16 +12361,129 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"1"))
+			    value      	"4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"{99f0adb9-6986-412c-9f26-aa956ec96f18}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Synchronize"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"History Class"
+			    value      	FALSE))
 		    quid       	"6440F34400B7"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
 			    quid       	"6440F3A80157"
 			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::ITakeAwayStation"
 			    quidu      	"6440E71C0193"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "TakeAwayStationIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bb90f771-ef43-4bfa-94a5-6bb976474110}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6441488101AD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+1"))
+			    quid       	"6441488101AD"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContextIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f5ed2bd1-4318-494e-b105-be918048d738}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6441488101AF")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
+			    quid       	"6441488101AF"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ddd8d4f1-14bf-4a64-935d-0d097b9cf192}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6441488101B2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+3"))
+			    quid       	"6441488101B2"
+			    type       	"string"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
-		    language   	"C#")
+		    language   	"C#"
+		    persistence 	"Persistent")
 		(object Association "PreparationStationItemsInfo"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -12934,7 +12975,11 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{7d75c5ee-5a03-4891-85e1-a893d2554f2f}"))
+				    value      	"{7d75c5ee-5a03-4891-85e1-a893d2554f2f}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"62D77F88019C"
 			    label      	"DeliveryServicePoint"
 			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryServicePoint"
@@ -12950,7 +12995,15 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{0021138d-ae29-417f-94ae-53056734f3b3}"))
+				    value      	"{0021138d-ae29-417f-94ae-53056734f3b3}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"62D77F8801A3"
 			    supplier   	"Logical View::FlavourBusinessFacade::IFlavoursServicesContext"
 			    quidu      	"5B16B1600111")))
@@ -13057,24 +13110,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(1656, 1797)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	17
-				max_width  	2887)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -13161,24 +13196,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(2859, 2336)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1284)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -13337,24 +13354,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@49
-				location   	(5120, 598)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	15
-				max_width  	1587)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -13395,24 +13394,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@51
-				location   	(3412, 471)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -13806,24 +13787,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@71
-				location   	(1003, 1692)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1225)
 			    width      	619
 			    height     	531
 			    annotation 	8)
@@ -13864,24 +13827,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@73
-				location   	(1614, 755)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -14202,7 +14147,7 @@
 			    quidu      	"5B16B1600111"
 			    compartment 	(object Compartment
 				Parent_View 	@89
-				location   	(65, 916)
+				location   	(65, 1116)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14216,8 +14161,8 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	23
-				max_width  	2062)
+				nlines     	28
+				max_width  	0)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -14538,7 +14483,7 @@
 					nlines     	1
 					max_width  	15
 					justify    	0
-					label      	"0..*"
+					label      	"0..1"
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
@@ -15569,24 +15514,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66B8670182"
-			    compartment 	(object Compartment
-				Parent_View 	@151
-				location   	(2122, 1301)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	28
-				max_width  	2759)
 			    width      	744
 			    height     	337
 			    annotation 	8)
@@ -15946,24 +15873,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
-			    compartment 	(object Compartment
-				Parent_View 	@169
-				location   	(2112, 457)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	787)
 			    width      	788
 			    height     	426
 			    annotation 	8)
@@ -16448,7 +16357,7 @@
 			    quidu      	"5B2CE9870228"
 			    compartment 	(object Compartment
 				Parent_View 	@192
-				location   	(50, 1051)
+				location   	(50, 1232)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -16592,24 +16501,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D58199403CF"
-			    compartment 	(object Compartment
-				Parent_View 	@197
-				location   	(3316, 494)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	1946)
 			    width      	756
 			    height     	369
 			    annotation 	8)
@@ -16670,24 +16561,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
-			    compartment 	(object Compartment
-				Parent_View 	@199
-				location   	(1278, 452)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	16
-				max_width  	715)
 			    width      	750
 			    height     	437
 			    annotation 	8)
@@ -16834,7 +16707,7 @@
 					nlines     	1
 					max_width  	15
 					justify    	0
-					label      	"0..*"
+					label      	"0..1"
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
@@ -45075,6 +44948,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B2CE9870228"
+		    compartment 	(object Compartment
+			Parent_View 	@683
+			location   	(2385, 925)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	46
+			max_width  	0)
 		    width      	644
 		    height     	300
 		    annotation 	8)
@@ -45628,7 +45519,7 @@
 		    quidu      	"5B16B1600111"
 		    compartment 	(object Compartment
 			Parent_View 	@706
-			location   	(2570, 526)
+			location   	(2366, 575)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -45642,7 +45533,7 @@
 			icon_style 	"Decoration"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	23
+			nlines     	28
 			max_width  	0)
 		    width      	588
 		    height     	318
@@ -45750,7 +45641,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))
-			(object RoleView "ServicesContexts" @712
+			(object RoleView "" @712
 			    Parent_View 	@707
 			    location   	(-671, 156)
 			    font       	(object Font
@@ -45776,12 +45667,13 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
+				hidden     	TRUE
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
 				max_width  	338
 				justify    	0
-				label      	"+ServicesContexts"
+				label      	""
 				pctDist    	0.800000
 				height     	42
 				orientation 	0)

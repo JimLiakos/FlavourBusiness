@@ -67,7 +67,15 @@ namespace FlavourBusinessManager
         {
             return GetRunTime().NewPreparationStation();
         }
+        public ITakeAwayStation NewTakeAwayStation()
+        {
+            return GetRunTime().NewTakeAwayStation();
+        }
 
+        public void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation)
+        {
+            GetRunTime().RemoveTakeAwayStation(takeAwayStationStation);
+        }
         /// <MetaDataID>{f45b81fa-f1b3-41b0-89a1-25ac56e590ea}</MetaDataID>
         public FlavoursServicesContext()
         {
@@ -752,6 +760,8 @@ namespace FlavourBusinessManager
             }
         }
 
+     
+
         /// <MetaDataID>{1900ac60-fd30-4922-b07b-a93d61875010}</MetaDataID>
         public IUploadService UploadService { get => GetRunTime() as IUploadService; }
 
@@ -767,6 +777,6 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{97b2ae66-b89d-4e66-883b-e03bb1d3817a}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
 
-
+        public List<ITakeAwayStation> TakeAwayStations => throw new NotImplementedException();
     }
 }

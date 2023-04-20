@@ -50,7 +50,7 @@ namespace FlavourBusinessFacade
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+3")]
         string OrganizationIdentity { get; set; }
 
-     
+
         /// <MetaDataID>{8f88ba0b-cdb8-4b42-beca-499bca462511}</MetaDataID>
         void LaunchCallerIDServer();
         /// <MetaDataID>{54ccbe05-9a3e-452d-98d4-cf6dfdbdb8da}</MetaDataID>
@@ -70,6 +70,10 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{7c1a1795-b412-44a6-92c9-bab75d3eb2dd}</MetaDataID>
         IPreparationStation NewPreparationStation();
 
+        /// <MetaDataID>{936c5091-f18b-46eb-b1b8-320302d8d4dc}</MetaDataID>
+        ITakeAwayStation NewTakeAwayStation();
+        /// <MetaDataID>{b1100dc0-5804-4cbb-b5c7-d7b3422f4028}</MetaDataID>
+        void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation);
 
         /// <MetaDataID>{d11922ee-a931-4230-a131-023440ea52f7}</MetaDataID>
         IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity);
@@ -82,7 +86,7 @@ namespace FlavourBusinessFacade
         event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{e63eeb30-6665-4aaa-9c93-9eb6797c7b44}</MetaDataID>
-        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken,  string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool endUser,  bool create);
+        ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> unSafeGraphicMenus, bool endUser, bool create);
 
 
 
@@ -170,9 +174,13 @@ namespace FlavourBusinessFacade
         void UpdateFisicalParty(IFisicalParty fisicalParty);
         /// <MetaDataID>{2eb4a008-d3a3-4fc9-ad3f-4c0e9031b71d}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
+        /// <MetaDataID>{e6d7e9c7-e513-4791-adb7-e9fd2d34ea27}</MetaDataID>
         IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID);
 #if !FlavourBusinessDevice
-        OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string,string> headers, string content);
+        /// <MetaDataID>{6465189b-ee0a-4f51-b8ef-857de79ae040}</MetaDataID>
+        OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content);
+
+
 #endif
     }
 

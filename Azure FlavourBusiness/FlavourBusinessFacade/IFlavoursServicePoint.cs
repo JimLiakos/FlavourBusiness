@@ -13,7 +13,13 @@ namespace FlavourBusinessFacade
     public interface IFlavoursServicesContext
     {
         [Association("ServiceContexTakeAwayStation", Roles.RoleA, "a8709498-f1bc-42f9-a61b-d2f47e5656f3")]
-        ITakeAwayStation TakeAwayStations { get; }
+        List<ITakeAwayStation> TakeAwayStations { get; }
+
+        /// <MetaDataID>{39007561-7984-4eed-8a83-c9b2fa902321}</MetaDataID>
+        void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation);
+
+
+        
 
         /// <MetaDataID>{770ae1ae-dc20-4fdb-83e1-8e4b6806f409}</MetaDataID>
         void RemoveFoodTypes(List<IFoodTypeTag> foodTypeTags);
@@ -53,6 +59,11 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{3a9a0eba-b39d-41be-9c4a-24fa5c2951c2}</MetaDataID>
         IPreparationStation NewPreparationStation();
+
+        ITakeAwayStation NewTakeAwayStation();
+
+
+
 
         [RoleAMultiplicityRange(0)]
         [Association("ServiceContextCashierStation", Roles.RoleA, "8d78094d-bc63-4495-9756-5e965b5eece1")]

@@ -149,6 +149,10 @@
     <value>Supervisor</value>
     <comment>Specifies the name of the 'supervisor' when it is created.</comment>
   </data>
+  <data name="DefaultTakeAwayStationDescription" xml:space="preserve">
+    <value>TakeAway POS</value>
+    <comment>Specifies the description of the takeaway station' when it is created.</comment>
+  </data>
   <data name="DefaultWaiterName" xml:space="preserve">
     <value>Waiter</value>
     <comment>Specifies the name of the 'waiter' when it is created.</comment>
