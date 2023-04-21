@@ -8,7 +8,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     {
         /// <MetaDataID>{74e2edf9-6a85-478e-8fba-4baaf85141dd}</MetaDataID>
         [BackwardCompatibilityID("+4")]
-        string GraphicMenuUri { get; set; }
+        string GraphicMenuStorageIdentity { get; set; }
 
         /// <MetaDataID>{a007d657-c566-4605-bdcc-e204a71b166f}</MetaDataID>
         [BackwardCompatibilityID("+1")]

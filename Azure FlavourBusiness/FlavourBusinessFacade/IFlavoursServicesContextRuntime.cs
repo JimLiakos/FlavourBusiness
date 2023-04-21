@@ -75,6 +75,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{b1100dc0-5804-4cbb-b5c7-d7b3422f4028}</MetaDataID>
         void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation);
 
+        /// <MetaDataID>{d0c2a384-0a71-4dd1-b788-afd8055ee9bb}</MetaDataID>
         IList<ITakeAwayStation> TakeAwayStations { get; }
 
         /// <MetaDataID>{d11922ee-a931-4230-a131-023440ea52f7}</MetaDataID>

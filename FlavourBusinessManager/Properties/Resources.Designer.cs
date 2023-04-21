@@ -221,7 +221,7 @@ namespace FlavourBusinessManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Table {0}.
         /// </summary>
-        /// <MetaDataID>{851b5155-139e-4e04-ad69-1f975afb994f}</MetaDataID>
+        /// <MetaDataID>{070e23ad-4da5-4aaf-857e-43caee06b551}</MetaDataID>
         internal static string TablePaymentDescription
         {
             get

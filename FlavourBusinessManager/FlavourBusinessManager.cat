@@ -12491,7 +12491,7 @@
 			    quid       	"6441488101B2"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "GraphicMenuUri"
+			(object ClassAttribute "GraphicMenuStorageIdentity"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"

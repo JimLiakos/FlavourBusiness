@@ -11,10 +11,11 @@ using System.Windows.Media;
 using WPFUIElementObjectBind;
 using MenuItemsEditor.ViewModel;
 using System.Windows;
+using MenuDesigner.ViewModel;
 
 namespace FLBManager.ViewModel.TakeAway
 {
-    public class TakeAwayStationTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
+    public class TakeAwayStationTreeNode : FBResourceTreeNode, IGraphicMenusOwner, INotifyPropertyChanged, IDragDropTarget
     {
 
         public ITakeAwayStation TakeAwayStation;
@@ -28,8 +29,14 @@ namespace FLBManager.ViewModel.TakeAway
         internal TakeAwayStationsTreeNode TakeAwayStationsTreeNode;
         public TakeAwayStationTreeNode(TakeAwayStationsTreeNode parent, ITakeAwayStation takeAwayStation) : base(parent)
         {
+
+
+
+
             TakeAwayStationsTreeNode = parent;
             this.TakeAwayStation = takeAwayStation;
+
+
 
             RenameCommand = new RelayCommand((object sender) =>
             {
@@ -39,6 +46,13 @@ namespace FLBManager.ViewModel.TakeAway
             {
                 Delete();
             });
+
+            string graphicMenuStorageIdentity = takeAwayStation?.GraphicMenuStorageIdentity;
+            if (!string.IsNullOrWhiteSpace(graphicMenuStorageIdentity))
+            {
+                var graphicMenuTreeNode = parent.ServiceContextInfrastructure.ServicesContextPresentation.Company.GraphicMenus.Where(x => x.GraphicMenuStorageRef.StorageIdentity==takeAwayStation.GraphicMenuStorageIdentity).FirstOrDefault();
+                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
+            }
         }
 
         public void EditMode()
@@ -131,7 +145,10 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                return _Members;
+                var member = _Members.ToList();
+                if (GraphicMenuTreeNode!=null)
+                    member.Add(GraphicMenuTreeNode);
+                return member;
             }
         }
 
@@ -190,6 +207,12 @@ namespace FLBManager.ViewModel.TakeAway
             }
         }
 
+        public List<GraphicMenuTreeNode> GraphicMenus => throw new NotImplementedException();
+
+        public bool NewGraphicMenuAllowed => throw new NotImplementedException();
+
+        public GraphicMenuTreeNode GraphicMenuTreeNode { get; private set; }
+
         public override void SelectionChange()
         {
         }
@@ -243,12 +266,34 @@ namespace FLBManager.ViewModel.TakeAway
             MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenu = e.Data.GetData(typeof(MenuDesigner.ViewModel.GraphicMenuTreeNode)) as MenuDesigner.ViewModel.GraphicMenuTreeNode;
             if (graphicMenu != null)
             {
-                string graphicMenuUri = MenuPresentationModel.RestaurantMenu.GetGraphicMenuUri(graphicMenu.GraphicMenuStorageRef);
+                this.TakeAwayStation.GraphicMenuStorageIdentity=graphicMenu.GraphicMenuStorageRef.StorageIdentity;
+                //string graphicMenuUri = MenuPresentationModel.RestaurantMenu.GetGraphicMenuUri(graphicMenu.GraphicMenuStorageRef);
                 //graphicMenu.string GraphicMenuUri
             }
         }
 
+        public void AssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
+        {
+            //throw new NotImplementedException();
+        }
 
+        public bool CanAssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
+        {
+            return false;
+        }
+
+        public bool RemoveGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
+        {
+            this.TakeAwayStation.GraphicMenuStorageIdentity=null;
+            GraphicMenuTreeNode=null;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            return true;
+        }
+
+        public void NewGraphicMenu()
+        {
+
+        }
     }
 
 }

@@ -46,7 +46,7 @@ namespace FLBManager.ViewModel.TakeAway
 
 
         }
-        Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
+      public readonly  Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
         Dictionary<ITakeAwayStation, TakeAwayStationTreeNode> TakeAwayStations = new Dictionary<ITakeAwayStation, TakeAwayStationTreeNode>();
 
