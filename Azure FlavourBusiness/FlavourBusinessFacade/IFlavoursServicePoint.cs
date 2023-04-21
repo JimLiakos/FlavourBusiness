@@ -12,8 +12,9 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        [RoleAMultiplicityRange(0)]
         [Association("ServiceContexTakeAwayStation", Roles.RoleA, "a8709498-f1bc-42f9-a61b-d2f47e5656f3")]
-        List<ITakeAwayStation> TakeAwayStations { get; }
+        IList<ITakeAwayStation> TakeAwayStations { get; }
 
         /// <MetaDataID>{39007561-7984-4eed-8a83-c9b2fa902321}</MetaDataID>
         void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation);
@@ -60,6 +61,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{3a9a0eba-b39d-41be-9c4a-24fa5c2951c2}</MetaDataID>
         IPreparationStation NewPreparationStation();
 
+        /// <MetaDataID>{e5d5e080-cf9f-4a3e-9c1e-ec4d415b9866}</MetaDataID>
         ITakeAwayStation NewTakeAwayStation();
 
 

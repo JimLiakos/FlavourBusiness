@@ -6,6 +6,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [BackwardCompatibilityID("{bbc7f3b3-01c7-452c-b755-d80f2c6278eb}")]
     public interface ITakeAwayStation
     {
+        /// <MetaDataID>{74e2edf9-6a85-478e-8fba-4baaf85141dd}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        string GraphicMenuUri { get; set; }
+
         /// <MetaDataID>{a007d657-c566-4605-bdcc-e204a71b166f}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         string TakeAwayStationIdentity { get; set; }

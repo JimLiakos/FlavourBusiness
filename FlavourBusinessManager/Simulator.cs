@@ -34,14 +34,19 @@ namespace FlavourBusinessManager.RoomService
     {
 
 
+        /// <MetaDataID>{5639f6bd-def5-49c5-ba3d-8990fb6a4d47}</MetaDataID>
         internal static double Velocity = 0.33;
 
+        /// <MetaDataID>{319a4f32-3817-4f74-8619-939616b7f9bb}</MetaDataID>
         static Random _R = new Random();
 
+        /// <MetaDataID>{514b3cf9-13f4-4dad-9300-0b08c70a65df}</MetaDataID>
         Task SimulationTask;
 
+        /// <MetaDataID>{90970a4a-6f80-4c2f-92ea-71f2cafab3eb}</MetaDataID>
         bool EndOfSimulation = false;
 
+        /// <MetaDataID>{888ee274-4101-4e5d-b91b-7602d7e07844}</MetaDataID>
         static List<List<PSItemsPattern>> PreparationStationSimulatorItems = new List<List<PSItemsPattern>>() {
             new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(1) , new PSItemsPattern(2) , new PSItemsPattern(0)},
             new List<PSItemsPattern> { new PSItemsPattern(0), new PSItemsPattern(0) , new PSItemsPattern(0) , new PSItemsPattern(2)  },
@@ -145,6 +150,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{f035b325-b1ac-464b-bd62-f8010d4c36a8}</MetaDataID>
         IList<IPreparationStation> SimulatorPreparationStations
         {
             get
@@ -153,6 +159,7 @@ namespace FlavourBusinessManager.RoomService
                 return simulatorPreparationStations;
             }
         }
+        /// <MetaDataID>{836c7b95-b4d8-4c87-ac3b-466eb54bf6b1}</MetaDataID>
         private List<List<PSItemsPattern>> GetNextPreparationPatern(int step)
         {
             List<List<PSItemsPattern>> preparationPaterns = new List<List<PSItemsPattern>>();
@@ -218,6 +225,7 @@ namespace FlavourBusinessManager.RoomService
             return PreparationStationSimulatorItems;
         }
 
+        /// <MetaDataID>{04391a35-b2a6-4cea-ad53-6d18922a9380}</MetaDataID>
         internal void DeleteSimulationData()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(ServicesContextRunTime.Current);
@@ -257,6 +265,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{5addbfd2-b4b6-4392-a8ba-27638786d741}</MetaDataID>
         private IFoodServiceClientSession simulateClientSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<List<PSItemsPattern>> preparationStationSimulatorItems, string servicesPointIdentity, string clientDeviceID, string clientName)
         {
 
@@ -336,7 +345,7 @@ namespace FlavourBusinessManager.RoomService
             IFoodServiceClientSession clientSession = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                clientSession = ServicesContextRunTime.Current.GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, ServicesContextRunTime.Current.OrganizationIdentity, ServicesContextRunTime.Current.GraphicMenus,true, true).FoodServiceClientSession;
+                clientSession = ServicesContextRunTime.Current.GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, ServicesContextRunTime.Current.OrganizationIdentity, ServicesContextRunTime.Current.GraphicMenus, true, true).FoodServiceClientSession;
                 foreach (var itemToPrepare in itemsToPrepare)
                     clientSession.AddItem(itemToPrepare);
 
@@ -350,6 +359,7 @@ namespace FlavourBusinessManager.RoomService
             //   clientSession.FoodServiceClientSession.Commit(itemsToPrepare);
         }
 
+        /// <MetaDataID>{538da042-5afb-4e85-bf8c-e467b434fbfc}</MetaDataID>
         private List<IMenuItem> GetMenuItems(IItemsCategory rootCategory)
         {
             var menuItems = rootCategory.MenuItems.ToList();

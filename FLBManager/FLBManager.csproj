@@ -706,6 +706,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\Settings24.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\take-away16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\pos-terminal16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

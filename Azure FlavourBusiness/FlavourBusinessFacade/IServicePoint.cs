@@ -57,6 +57,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string ServicesPointIdentity { get; set; }
 
 
+        /// <MetaDataID>{dc907bcc-35cf-4189-8c77-88c1c855be71}</MetaDataID>
         string ServicePointUrl { get; }
 
         /// <MetaDataID>{52bd3eff-ab52-4b34-8a78-7a5e5020d5a4}</MetaDataID>

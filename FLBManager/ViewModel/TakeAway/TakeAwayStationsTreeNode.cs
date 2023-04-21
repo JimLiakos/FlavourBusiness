@@ -14,7 +14,7 @@ using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.TakeAway
 {
-    internal class TakeAwayStationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
+    public class TakeAwayStationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
@@ -25,19 +25,19 @@ namespace FLBManager.ViewModel.TakeAway
         {
             ServiceContextInfrastructure = parent;
 
-            NewPreparationSationCommand = new RelayCommand((object sender) =>
+            NewTakeAwaySationCommand = new RelayCommand((object sender) =>
             {
-                NewPreparationSation();
+                NewTakeAwaySation();
             });
 
 
 
             try
             {
-                var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
+                //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
-                foreach (var preparationStation in ServiceContextInfrastructure.ServiceContextResources.PreparationStations)
-                    PreparationStations.Add(preparationStation, new PreparationStationPresentation(this, preparationStation, menuViewModel));
+                foreach (var preparationStation in ServiceContextInfrastructure.ServiceContextResources.TakeAwayStations)
+                    TakeAwayStations.Add(preparationStation, new TakeAwayStationTreeNode(this, preparationStation));
 
             }
             catch (System.Exception error)
@@ -48,25 +48,25 @@ namespace FLBManager.ViewModel.TakeAway
         }
         Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
-        Dictionary<ITakeAwayStation, TakeAwayStationTreeNode> PreparationStations = new Dictionary<ITakeAwayStation, TakeAwayStationTreeNode>();
+        Dictionary<ITakeAwayStation, TakeAwayStationTreeNode> TakeAwayStations = new Dictionary<ITakeAwayStation, TakeAwayStationTreeNode>();
 
         /// <MetaDataID>{9e7b6800-d297-4665-93f3-169c7e95ca65}</MetaDataID>
-        internal void RemovePreparationStation(TakeAwayStationTreeNode preparationStationPresentation)
+        internal void RemoveTakeAwayStation(TakeAwayStationTreeNode takeAwayStationTreeNode)
         {
-            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveTakeAwayStation(preparationStationPresentation.TakeAwayStation);
-            PreparationStations.Remove(preparationStationPresentation.TakeAwayStation);
+            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveTakeAwayStation(takeAwayStationTreeNode.TakeAwayStation);
+            TakeAwayStations.Remove(takeAwayStationTreeNode.TakeAwayStation);
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
         /// <MetaDataID>{bd1d6ad9-e654-4595-90ba-d9e6c11b60f0}</MetaDataID>
-        private void NewPreparationSation()
+        private void NewTakeAwaySation()
         {
-            var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
+            //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
-            var preparationStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewTakeAwayStation();
-            var preparationStationPresentation = new PreparationStationPresentation(this, preparationStation, menuViewModel);
+            var takeAwayStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewTakeAwayStation();
+            var preparationStationPresentation = new TakeAwayStationTreeNode(this, takeAwayStation);
             preparationStationPresentation.Edit = true;
-            PreparationStations.Add(preparationStation, preparationStationPresentation);
+            TakeAwayStations.Add(takeAwayStation, preparationStationPresentation);
 
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
@@ -80,7 +80,7 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                return Properties.Resources.PreparationSattionsTitle;
+                return Properties.Resources.TakeAwayStationsTitle;
             }
 
             set
@@ -93,7 +93,7 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/kitchen16.png"));
+                return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/take-away16.png"));
             }
         }
         /// <MetaDataID>{3e506a85-51f2-4874-8bdf-0019863e1e67}</MetaDataID>
@@ -101,13 +101,13 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                var members = this.PreparationStations.Values.OfType<FBResourceTreeNode>().ToList();
+                var members = this.TakeAwayStations.Values.OfType<FBResourceTreeNode>().ToList();
 
                 return members;
             }
         }
         /// <MetaDataID>{45476233-5c6c-4fe9-ac7a-51598ed22856}</MetaDataID>
-        public RelayCommand NewPreparationSationCommand { get; protected set; }
+        public RelayCommand NewTakeAwaySationCommand { get; protected set; }
 
         /// <MetaDataID>{87bcd558-ccdc-4ba6-8577-b17d80936925}</MetaDataID>
         public override bool HasContextMenu
@@ -134,10 +134,10 @@ namespace FLBManager.ViewModel.TakeAway
 
 
                     MenuCommand menuItem = new MenuCommand(); ;
-                    var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/chef16.png"));
-                    menuItem.Header = Properties.Resources.NewPreparationStationPrompt;
+                    var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/pos-terminal16.png"));
+                    menuItem.Header = Properties.Resources.NewTakeAwayStationPrompt;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                    menuItem.Command = NewPreparationSationCommand;
+                    menuItem.Command = NewTakeAwaySationCommand;
                     _ContextMenuItems.Add(menuItem);
 
                 }
@@ -218,5 +218,7 @@ namespace FLBManager.ViewModel.TakeAway
         public void Drop(object sender, DragEventArgs e)
         {
         }
+
+       
     }
 }

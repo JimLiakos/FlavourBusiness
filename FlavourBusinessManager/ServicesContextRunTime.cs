@@ -303,6 +303,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{41576ebd-3865-4161-988d-071e26c5b296}</MetaDataID>
         Simulator Simulator = new Simulator();
 
         /// <MetaDataID>{269a82d7-69e7-4e6c-9832-c50e7a1fa8b2}</MetaDataID>
@@ -371,6 +372,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        /// <MetaDataID>{cc75d0bf-1dda-498a-b80c-fa68b7245b42}</MetaDataID>
         private void LoadPaymentProviders()
         {
             var vivaProvider = new PaymentProviders.VivaWallet();
@@ -656,6 +658,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{1f046455-d3b7-4545-a1ea-1aebda104e94}</MetaDataID>
         object PreparationStationRuntimesLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, IPreparationStationRuntime> _PreparationStationRuntimes;
@@ -1327,6 +1330,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return null;
         }
 
+        /// <MetaDataID>{b7b84334-cdad-4344-969d-28e1ff9de176}</MetaDataID>
         internal MenuModel.FixedMealType GetOneCoursesMealType()
         {
             if (OperativeRestaurantMenu != null)
@@ -1425,7 +1429,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations };
+                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations,TakeAwayStations=TakeAwayStations };
             }
         }
 
@@ -1495,6 +1499,25 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{11e22a8c-34e2-4673-a526-2248b7e891de}</MetaDataID>
+        public IList<ITakeAwayStation> TakeAwayStations
+        {
+            get
+            {
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                var servicesContextIdentity = ServicesContextIdentity;
+                return (from takeAwayStation in servicesContextStorage.GetObjectCollection<ITakeAwayStation>()
+                        where takeAwayStation.ServicesContextIdentity == servicesContextIdentity
+                        select takeAwayStation).ToList();
+
+
+
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         int _AllMessmetesCommitedTimeSpan = 120;//3min
@@ -1594,6 +1617,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{a5152b8e-310e-4172-b646-8f6325557e8c}</MetaDataID>
         object DeliveryServicePointLock = new object();
 
         /// <exclude>Excluded</exclude>
@@ -1602,6 +1626,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         HomeDeliveryServicePoint _DeliveryServicePoint;
 
+        /// <MetaDataID>{d0ccc8ee-e69b-455b-9ec1-40395c967522}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint
         {
             get
@@ -1709,6 +1734,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{1513e163-7a1b-4747-97cf-161a9fc8e55a}</MetaDataID>
         static internal Dictionary<IFoodServiceClientSession, string> FoodServiceClientSessionsTokens = new Dictionary<IFoodServiceClientSession, string>();
+        /// <MetaDataID>{478c7c00-001c-4ef8-b167-e5613de66c68}</MetaDataID>
         private WebhooksToLocalServer.Webhookservice Webhookservice;
 
         //clientDeviceID="81000000296"
@@ -1773,6 +1799,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
+        /// <MetaDataID>{783ca332-c628-47c9-8646-43841e92b78f}</MetaDataID>
         public IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID)
         {
             return OpenClientSessions.Where(x => x.SessionID == mealInvitationSessionID).FirstOrDefault();
@@ -1842,6 +1869,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{3a6537d5-5bc1-420d-9d43-cfccceb943f1}</MetaDataID>
         public ITakeAwayStation NewTakeAwayStation()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -2179,12 +2207,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             ObjectStorage.GetObjectFromUri<FisicalParty>((fisicalParty as FisicalParty).FisicalPartyUri).Update(fisicalParty as FisicalParty);
         }
 
+        /// <MetaDataID>{2eace06e-0e0c-4799-aa8b-7c5b931c9bfc}</MetaDataID>
         public void RemoveHomeDeliveryService()
         {
             if (_DeliveryServicePoint != null)
                 _DeliveryServicePoint.IsActive = false;
         }
 
+        /// <MetaDataID>{ac27cd5a-22b3-4080-937c-b7db324656f0}</MetaDataID>
         public void LaunchHomeDeliveryService()
         {
             if (_DeliveryServicePoint != null)
@@ -2205,6 +2235,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        /// <MetaDataID>{573c4b04-625c-4470-8299-4213e41ca1cc}</MetaDataID>
         public OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content)
         {
             var hookRespnose = new OOAdvantech.Remoting.RestApi.HookRespnose();
@@ -2216,7 +2247,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //    return  PaymentProviders.VivaWallet.WebHook(method,webHookName,headers,content);
             return hookRespnose;
         }
+        /// <MetaDataID>{4d421429-58e5-49df-b236-a056c6cf33d1}</MetaDataID>
         Dictionary<string, MenuPresentationModel.MenuCanvas.IRestaurantMenu> VersioningGraphicMenus = new Dictionary<string, MenuPresentationModel.MenuCanvas.IRestaurantMenu>();
+        /// <MetaDataID>{7d77c670-4ebc-4f29-84d7-5ea530bb5b32}</MetaDataID>
         internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GetGraphicMenuVersion(string storageUrl)
         {
             lock (VersioningGraphicMenus)
@@ -2243,6 +2276,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        /// <MetaDataID>{727137b8-540e-499e-91eb-afbdf0147e46}</MetaDataID>
         public void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation)
         {
             try

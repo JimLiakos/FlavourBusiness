@@ -777,6 +777,6 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{97b2ae66-b89d-4e66-883b-e03bb1d3817a}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
 
-        public List<ITakeAwayStation> TakeAwayStations => throw new NotImplementedException();
+        public IList<ITakeAwayStation> TakeAwayStations =>  GetRunTime().TakeAwayStations;
     }
 }

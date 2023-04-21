@@ -82,7 +82,7 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                return Properties.Resources.PreparationSattionsTitle;
+                return Properties.Resources.PreparationStationsTitle;
             }
 
             set

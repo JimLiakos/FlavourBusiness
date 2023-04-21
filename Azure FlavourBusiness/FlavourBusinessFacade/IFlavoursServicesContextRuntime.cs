@@ -75,6 +75,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{b1100dc0-5804-4cbb-b5c7-d7b3422f4028}</MetaDataID>
         void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation);
 
+        IList<ITakeAwayStation> TakeAwayStations { get; }
+
         /// <MetaDataID>{d11922ee-a931-4230-a131-023440ea52f7}</MetaDataID>
         IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity);
 
@@ -140,6 +142,8 @@ namespace FlavourBusinessFacade
         IList<ICashierStation> CashierStations { get; }
         /// <MetaDataID>{b3d76316-188d-4b3f-bdbf-6f034c76bfac}</MetaDataID>
         IList<IPreparationStation> PreparationStations { get; }
+
+
         /// <MetaDataID>{477c4e32-2f53-4366-8cac-8d666f34f983}</MetaDataID>
         ServiceContextHumanResources ServiceContextHumanResources { get; }
 

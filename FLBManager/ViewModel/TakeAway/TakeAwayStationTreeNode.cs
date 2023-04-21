@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using WPFUIElementObjectBind;
+using MenuItemsEditor.ViewModel;
+using System.Windows;
 
 namespace FLBManager.ViewModel.TakeAway
 {
-    public class TakeAwayStationTreeNode: FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
+    public class TakeAwayStationTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
 
         public ITakeAwayStation TakeAwayStation;
@@ -22,12 +24,12 @@ namespace FLBManager.ViewModel.TakeAway
         {
             throw new NotImplementedException();
         }
-        internal ICallerIDLine CallerIDLine;
-        internal CallerIDServerTreeNode CallerIDServerTreeNode;
-        public CallerIDLineTreeNode(CallerIDServerTreeNode parent, ICallerIDLine callerIDLine) : base(parent)
+
+        internal TakeAwayStationsTreeNode TakeAwayStationsTreeNode;
+        public TakeAwayStationTreeNode(TakeAwayStationsTreeNode parent, ITakeAwayStation takeAwayStation) : base(parent)
         {
-            CallerIDServerTreeNode = parent;
-            this.CallerIDLine = callerIDLine;
+            TakeAwayStationsTreeNode = parent;
+            this.TakeAwayStation = takeAwayStation;
 
             RenameCommand = new RelayCommand((object sender) =>
             {
@@ -52,7 +54,7 @@ namespace FLBManager.ViewModel.TakeAway
 
         private void Delete()
         {
-            CallerIDServerTreeNode.RemoveCallerIDLine(this);
+            TakeAwayStationsTreeNode.RemoveTakeAwayStation(this);
 
             // (Company as CompanyPresentation).RemoveServicesContext(this);
         }
@@ -123,6 +125,8 @@ namespace FLBManager.ViewModel.TakeAway
         }
 
         List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
+        private DateTime DragEnterStartTime;
+
         public override List<FBResourceTreeNode> Members
         {
             get
@@ -136,12 +140,12 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                return CallerIDLine.LineDescription;
+                return TakeAwayStation.Description;
             }
 
             set
             {
-                CallerIDLine.LineDescription = value;
+                TakeAwayStation.Description = value;
             }
         }
         public override bool HasContextMenu
@@ -182,13 +186,69 @@ namespace FLBManager.ViewModel.TakeAway
         {
             get
             {
-                return new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/CallerIDLine16.png"));
+                return new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/pos-terminal16.png"));
             }
         }
 
         public override void SelectionChange()
         {
         }
+
+        public void DragEnter(object sender, DragEventArgs e)
+        {
+            DragEnterStartTime = DateTime.Now;
+
+            MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenu = e.Data.GetData(typeof(MenuDesigner.ViewModel.GraphicMenuTreeNode)) as MenuDesigner.ViewModel.GraphicMenuTreeNode;
+            if (graphicMenu != null)
+            {
+                e.Effects = DragDropEffects.Copy;
+                DragEnterStartTime = DateTime.Now;
+            }
+            else
+                e.Effects = DragDropEffects.None;
+        }
+
+        /// <MetaDataID>{7685fc3f-422b-4f0f-bbc2-ce73147fc26b}</MetaDataID>
+        public void DragLeave(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+        }
+
+        /// <MetaDataID>{50554c50-c0c4-4324-bc16-4e2494ee9e78}</MetaDataID>
+        public void DragOver(object sender, DragEventArgs e)
+        {
+
+            MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenu = e.Data.GetData(typeof(MenuDesigner.ViewModel.GraphicMenuTreeNode)) as MenuDesigner.ViewModel.GraphicMenuTreeNode;
+            if (graphicMenu != null)
+            {
+                if ((DateTime.Now - DragEnterStartTime).TotalSeconds > 2)
+                {
+                    IsNodeExpanded = true;
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+                }
+            }
+            else
+                e.Effects = DragDropEffects.None;
+
+
+
+
+
+            System.Diagnostics.Debug.WriteLine("DragOver InfrastructureTreeNode");
+        }
+
+        /// <MetaDataID>{6d4862ac-5434-4fc0-8e58-f8ec7710fec4}</MetaDataID>
+        public void Drop(object sender, DragEventArgs e)
+        {
+            MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenu = e.Data.GetData(typeof(MenuDesigner.ViewModel.GraphicMenuTreeNode)) as MenuDesigner.ViewModel.GraphicMenuTreeNode;
+            if (graphicMenu != null)
+            {
+                string graphicMenuUri = MenuPresentationModel.RestaurantMenu.GetGraphicMenuUri(graphicMenu.GraphicMenuStorageRef);
+                //graphicMenu.string GraphicMenuUri
+            }
+        }
+
+
     }
-}
+
 }

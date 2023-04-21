@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel.TakeAway;
 using MenuItemsEditor.ViewModel;
 using WPFUIElementObjectBind;
 
@@ -26,6 +27,9 @@ namespace FLBManager.ViewModel.Infrastructure
 
         TreasuryTreeNode TreasuryTreeNode;
         Preparation.PreparationSationsTreeNode PreparationSattionsTreeNode;
+
+        TakeAwayStationsTreeNode TakeAwayStationsTreeNode; 
+
         public InfrastructureTreeNode(FlavoursServicesContextPresentation servicesContextPresentation) : base(servicesContextPresentation)
         {
             ServicesContextPresentation = servicesContextPresentation;
@@ -45,7 +49,7 @@ namespace FLBManager.ViewModel.Infrastructure
          
             TreasuryTreeNode = new TreasuryTreeNode(this);
             PreparationSattionsTreeNode = new Preparation.PreparationSationsTreeNode(this);
-
+            TakeAwayStationsTreeNode=new TakeAway.TakeAwayStationsTreeNode(this);
         }
 
 
@@ -125,6 +129,7 @@ namespace FLBManager.ViewModel.Infrastructure
             {
                 List<FBResourceTreeNode> members = new List<FBResourceTreeNode>();
                 members.Add(PreparationSattionsTreeNode);
+                members.Add(TakeAwayStationsTreeNode);
                 members.Add(TreasuryTreeNode);
                 if (CallerIDServerTreeNode != null)
                     members.Add(CallerIDServerTreeNode);

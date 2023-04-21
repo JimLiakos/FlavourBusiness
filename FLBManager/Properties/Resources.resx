@@ -250,6 +250,9 @@
     <value>Add equipment</value>
     <comment>Defines the ContextMenu MenuItem Header to add  preparation station equipment tree node</comment>
   </data>
+  <data name="NewTakeAwayStationPrompt" xml:space="preserve">
+    <value>New TakeAway POS</value>
+  </data>
   <data name="NewTranslatorMenuPrompt" xml:space="preserve">
     <value>Add Translator</value>
   </data>
@@ -274,15 +277,15 @@
     <value>On preparation</value>
     <comment>Defines the description for PendingPreparation item state  </comment>
   </data>
-  <data name="PreparationSattionsTitle" xml:space="preserve">
-    <value>Food Preparation</value>
-    <comment>Tree view node Name for preparation stations</comment>
-  </data>
   <data name="PreparationStationDescriptionLabel" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="PreparationStationIdentityLabel" xml:space="preserve">
     <value>Credential key</value>
+  </data>
+  <data name="PreparationStationsTitle" xml:space="preserve">
+    <value>Food Preparation</value>
+    <comment>Tree view node Name for preparation stations</comment>
   </data>
   <data name="PreparationStationWindowTitle" xml:space="preserve">
     <value>Preparation Station</value>
@@ -316,6 +319,10 @@
   <data name="TakeawayServicePointDescription" xml:space="preserve">
     <value>Takeaway</value>
     <comment>Defines the description for Service point type takeaway</comment>
+  </data>
+  <data name="TakeAwayStationsTitle" xml:space="preserve">
+    <value>Take Away</value>
+    <comment>Tree view node Name for preparation stations</comment>
   </data>
   <data name="TaxAuthoritySelectionLabel" xml:space="preserve">
     <value>Tax Authority :</value>

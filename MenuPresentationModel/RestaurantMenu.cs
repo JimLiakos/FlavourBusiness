@@ -13,6 +13,8 @@ using OOAdvantech.Json;
 using MenuPresentationModel.JsonMenuPresentation;
 using SvgAccentModifier;
 using System.Globalization;
+using FlavourBusinessFacade;
+using System.Net.Http;
 
 namespace MenuPresentationModel
 {
@@ -676,6 +678,19 @@ namespace MenuPresentationModel
         public IMenuCanvasFoodItem GetMenuCanvasFoodItem(string menuItemUri)
         {
             throw new NotImplementedException();
+        }
+
+        public static async System.Threading.Tasks.Task<string> GetGraphicMenuUri(OrganizationStorageRef graphicMenuStorageRef, IUploadService uploadService)
+        {
+            HttpClient httpClient = new HttpClient();
+            var dataStream = await httpClient.GetStreamAsync(graphicMenuStorageRef.StorageUrl);
+            RawStorageData graphicMenuStorageData = graphicMenuItemsStorageData = new RawStorageData(graphicMenuItemsStorageRef, graphicMenuItemsStorageRef.UploadService);
+
+            new RawStorageData(XDocument.Load(dataStream), temporaryStorageLocation, graphicMenuStorageRef, graphicMenuStorageRef.UploadService);
+
+            RawStorageData graphicMenuItemsStorageData = null;
+            if (graphicMenuItemsStorageRef != null)
+
         }
     }
 }

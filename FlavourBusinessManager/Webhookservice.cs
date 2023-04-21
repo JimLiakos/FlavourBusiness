@@ -14,8 +14,10 @@ namespace WebhooksToLocalServer
     /// <MetaDataID>{951718dd-4fa5-49b3-946a-ae1e25913e1b}</MetaDataID>
     public class Webhookservice
     {
+        /// <MetaDataID>{77e395ff-cfb1-4556-9137-ed7639cd52c4}</MetaDataID>
         public ServiceHost DeviceMessageServerServiceBusProxy { get; private set; }
 
+        /// <MetaDataID>{6fb3be6a-97d7-4317-b134-f7d6ea3b0ae8}</MetaDataID>
         public void Start(string serviceBusID)
         {
             //https://meridianmessagingservice.azurewebsites.net/api/WoltHook/NewOrder/CB848610-B5A5-4E21-8ED4-E6F470BA997A

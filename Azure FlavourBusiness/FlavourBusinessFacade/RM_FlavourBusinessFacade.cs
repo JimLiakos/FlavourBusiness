@@ -495,6 +495,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation> TakeAwayStations
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_TakeAwayStations", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.IFoodTypeTag> FoodTypes
         {
             get
@@ -718,6 +730,15 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public void RemoveTakeAwayStation(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation takeAwayStationStation)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = takeAwayStationStation;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemoveTakeAwayStation", args, argsTypes);
+        }
+        
         public void RemoveFoodTypes(System.Collections.Generic.List<FlavourBusinessFacade.IFoodTypeTag> foodTypeTags)
         {
             object[] args = new object[1];
@@ -765,6 +786,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "NewPreparationStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPreparationStation>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation NewTakeAwayStation()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "NewTakeAwayStation", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>(retValue);
         }
         
         public FlavourBusinessFacade.ServicesContextResources.ICashierStation NewCashierStation()
@@ -1165,6 +1194,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation> TakeAwayStations
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_TakeAwayStations", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.ServiceContextResources ServiceContextResources
         {
             get
@@ -1434,6 +1475,23 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewPreparationStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPreparationStation>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation NewTakeAwayStation()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewTakeAwayStation", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>(retValue);
+        }
+        
+        public void RemoveTakeAwayStation(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation takeAwayStationStation)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = takeAwayStationStation;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveTakeAwayStation", args, argsTypes);
         }
         
         public FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)

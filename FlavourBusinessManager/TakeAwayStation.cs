@@ -10,6 +10,27 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class TakeAwayStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation
     {
+        /// <exclude>Excluded</exclude>
+        string _GraphicMenuUri;
+
+        /// <MetaDataID>{0301f3d5-d132-499d-aef0-c04561c4dc80}</MetaDataID>
+        [PersistentMember(nameof(_GraphicMenuUri))]
+        [BackwardCompatibilityID("+4")]
+        public string GraphicMenuUri
+        {
+            get => _GraphicMenuUri;
+            set
+            {
+                if (_GraphicMenuUri!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _GraphicMenuUri=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -86,7 +107,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-    
+        public TakeAwayStation()
+        {
+
+        }
+
         /// <MetaDataID>{e010fb08-4247-46e9-a957-d9788f3bff6a}</MetaDataID>
         public TakeAwayStation(ServicesContextRunTime servicesContextRunTime)
         {
