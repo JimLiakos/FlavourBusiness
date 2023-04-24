@@ -46,6 +46,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{f1791b25-d9b2-423a-b4d2-b6a5b4012d70}</MetaDataID>
         System.Collections.Generic.List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location);
         IFoodServiceClientSession GetMealInvitationInviter(string invitationUri);
+        ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
     }
 
   

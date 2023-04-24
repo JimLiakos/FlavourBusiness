@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FlavourBusinessFacade;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
@@ -53,10 +54,10 @@ namespace TakeAwayApp
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
     {
 
-        public TakeAwayStation()
+        public TakeAwayStationPresentation()
         {
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
@@ -230,18 +231,33 @@ namespace TakeAwayApp
             return await Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
-                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", useFrontCameraIfAvailable);
+                try
+                {
+                    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", useFrontCameraIfAvailable);
 
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return false;
-                string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
-                //communicationCredentialKey =result.Text;
+                    if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                        return false;
 
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                string serverUrl = AzureServerUrl;
-                IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                return false;
+                    //string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
+                    string communicationCredentialKey = result.Text;
+
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                    TakeAwayStation = servicesContextManagment.GetTakeAwayStation(communicationCredentialKey);
+                    if (TakeAwayStation!=null)
+                        CommunicationCredentialKey = communicationCredentialKey;
+
+
+                    return TakeAwayStation!=null;
+                }
+                catch (System.Exception error)
+                {
+
+                    throw;
+                }
                 //PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
                 //if (PreparationStation != null)
                 //{
@@ -292,9 +308,14 @@ namespace TakeAwayApp
         public async Task<bool> RequestPermissionsForQRCodeScan()
         {
 #if DeviceDotNet
+         
 
-            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            var cameraPermissionRequest =await Permissions.RequestAsync<Permissions.Camera>();
+            
+            return await CheckPermissionsForQRCodeScan();
+
+            //var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
+            //return locationInUsePermisions == PermissionStatus.Granted;
 
 #else
             return await Task<bool>.FromResult(true);
@@ -335,5 +356,7 @@ namespace TakeAwayApp
                 ApplicationSettings.Current.CommunicationCredentialKey = value;
             }
         }
+
+        public ITakeAwayStation TakeAwayStation { get; private set; }
     }
 }

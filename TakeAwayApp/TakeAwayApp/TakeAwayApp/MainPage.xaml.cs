@@ -16,7 +16,7 @@ namespace TakeAwayApp
         {
             InitializeComponent();
 
-            BindingContext = new TakeAwayStation();
+            BindingContext = new TakeAwayStationPresentation();
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
             {

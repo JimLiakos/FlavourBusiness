@@ -184,10 +184,11 @@ namespace FlavourBusinessFacade
 #if !FlavourBusinessDevice
         /// <MetaDataID>{6465189b-ee0a-4f51-b8ef-857de79ae040}</MetaDataID>
         OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content);
+        ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
 
 
 #endif
-    }
+    } 
 
 
 }

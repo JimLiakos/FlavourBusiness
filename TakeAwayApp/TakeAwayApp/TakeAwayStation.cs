@@ -1,6 +1,7 @@
 ﻿
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.ViewModel;
+using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
 using OOAdvantech.MetaDataRepository;
@@ -55,10 +56,10 @@ namespace TakeAwayApp
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
     {
 
-        public TakeAwayStation()
+        public TakeAwayStationPresentation()
         {
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
@@ -215,6 +216,15 @@ namespace TakeAwayApp
             if (CommunicationCredentialKey != credentialKey)
                 CommunicationCredentialKey = credentialKey;
 
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+
+            TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
+
+
             return Task.FromResult(true);
 
         }
@@ -223,9 +233,10 @@ namespace TakeAwayApp
 #endif
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
+        FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation TakeAwayStation;
         public async Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
         {
-       
+
 
 
             //UserDialogs.Instance.Prompt(("Hello world", "Take away");
@@ -236,14 +247,20 @@ namespace TakeAwayApp
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
                     return false;
-                string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
-                //communicationCredentialKey =result.Text;
+                //string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
+                string communicationCredentialKey =result.Text;
 
                 string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                 string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                 string serverUrl = AzureServerUrl;
                 IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                return false;
+
+                TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
+                if(TakeAwayStation!=null)
+                    CommunicationCredentialKey = communicationCredentialKey;
+
+
+                return TakeAwayStation!=null;
                 //PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
                 //if (PreparationStation != null)
                 //{
@@ -289,7 +306,7 @@ namespace TakeAwayApp
             });
         }
 
-       
+
 
         public async Task<bool> RequestPermissionsForQRCodeScan()
         {

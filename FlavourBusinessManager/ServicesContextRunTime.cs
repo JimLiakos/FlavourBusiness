@@ -1831,9 +1831,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             try
             {
-
-                if (PreparationStationRuntimes.ContainsKey(prepartionStation.PreparationStationIdentity))
-                    PreparationStationRuntimes.Remove(prepartionStation.PreparationStationIdentity);
+                lock (PreparationStationRuntimesLock)
+                {
+                    if (_PreparationStationRuntimes.ContainsKey(prepartionStation.PreparationStationIdentity))
+                        _PreparationStationRuntimes.Remove(prepartionStation.PreparationStationIdentity);
+                }
 
 
 
@@ -1881,10 +1883,60 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 objectStorage.CommitTransientObjectState(takeAwayStation);
                 stateTransition.Consistent = true;
             }
-            var count = PreparationStationRuntimes.Count;
+            var count = TakeAwayStationsDictionary.Count;
+            lock (takeAwayStationsLock)
+            {
+                _TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] =  takeAwayStation;
+            }
+            //var count = PreparationStationRuntimes.Count;
             return takeAwayStation;
         }
 
+
+        /// <MetaDataID>{1f046455-d3b7-4545-a1ea-1aebda104e94}</MetaDataID>
+        object takeAwayStationsLock = new object();
+        /// <exclude>Excluded</exclude>
+        Dictionary<string, ITakeAwayStation> _TakeAwayStationsDictionary;
+        [Association("ContextPreparationStationRuntime", Roles.RoleA, "471493c1-dcec-41bb-a354-e0dc03ea7101")]
+        public Dictionary<string, ITakeAwayStation> TakeAwayStationsDictionary
+        {
+            get
+            {
+                lock (takeAwayStationsLock)
+                {
+                    if (_TakeAwayStationsDictionary == null)
+                    {
+                        _TakeAwayStationsDictionary = new Dictionary<string, ITakeAwayStation>();
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        foreach (var takeAwayStation in (from aTakeAwayStation in servicesContextStorage.GetObjectCollection<ITakeAwayStation>()
+                                                            where aTakeAwayStation.ServicesContextIdentity == servicesContextIdentity
+                                                            select aTakeAwayStation))
+                        {
+                            if (!string.IsNullOrWhiteSpace(takeAwayStation.TakeAwayStationIdentity))
+                                this._TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] = takeAwayStation;
+
+                        }
+                    }
+                    return new Dictionary<string, ITakeAwayStation>(_TakeAwayStationsDictionary);
+                }
+            }
+        }
+
+
+
+        public ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey)
+        {
+            lock (takeAwayStationsLock)
+            {
+                if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationCredentialKey))
+                    return TakeAwayStationsDictionary[takeAwayStationCredentialKey];
+                return null;
+            }
+
+        }
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity)
@@ -2282,6 +2334,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
             try
             {
                 ObjectStorage.DeleteObject(takeAwayStationStation);
+                lock (takeAwayStationsLock)
+                {
+                    
+                    if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationStation.TakeAwayStationIdentity))
+                        TakeAwayStationsDictionary.Remove(takeAwayStationStation.TakeAwayStationIdentity);
+                }
             }
             catch (Exception error)
             {
@@ -2289,6 +2347,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 throw;
             }
         }
+
+      
     }
 
 

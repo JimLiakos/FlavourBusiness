@@ -3,6 +3,7 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{bbc7f3b3-01c7-452c-b755-d80f2c6278eb}</MetaDataID>
+    [GenerateFacadeProxy]
     [BackwardCompatibilityID("{bbc7f3b3-01c7-452c-b755-d80f2c6278eb}")]
     public interface ITakeAwayStation : IServicePoint
     {
