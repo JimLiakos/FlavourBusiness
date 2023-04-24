@@ -299,7 +299,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint as ServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint)&&(mealCourse.Meal.Session.ServicePoint as HallServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -356,7 +356,7 @@ namespace FlavourBusinessManager.RoomService
         internal void ServingBatchDeassigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 
-            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
@@ -457,7 +457,7 @@ namespace FlavourBusinessManager.RoomService
             var mealCoursesServicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
             List<HumanResources.Waiter> activeWaitersFormealCoursesServing = new List<HumanResources.Waiter>();
 
-            foreach (var servicePoint in mealCoursesServicesPoints)
+            foreach (var servicePoint in mealCoursesServicesPoints.OfType<HallServicePoint>())
             {
                 activeWaitersFormealCoursesServing.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
                                                              where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
@@ -477,7 +477,7 @@ namespace FlavourBusinessManager.RoomService
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 
-            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter

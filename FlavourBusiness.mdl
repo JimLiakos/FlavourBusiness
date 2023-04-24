@@ -653,7 +653,233 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\CashierStationDTDevice\\CashierStationDevice.cat"
-		quid       	"61AD940B01C9"))
+		quid       	"61AD940B01C9")
+	    (object Class_Category "TakeAwayStationDevice"
+		attributes 	(list Attribute_Set
+		    (object Attribute
+			tool       	"MetaData"
+			name       	"MetaObjectID"
+			value      	"TakeAwayStationDevice")
+		    (object Attribute
+			tool       	"C#"
+			name       	"FullName"
+			value      	(value Text "TakeAwayApp")))
+		quid       	"6444AF3103A6"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "ApplicationSettings"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"MetaObjectID"
+				value      	"{D58FFE37-B0EF-4A84-B482-35D984D2B43E}")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityIDTransfered"
+				value      	"True")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityID"
+				value      	"")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"LastMemberID"
+				value      	"3")
+			    (object Attribute
+				tool       	"C#"
+				name       	"Identity"
+				value      	"{D58FFE37-B0EF-4A84-B482-35D984D2B43E}"))
+			quid       	"6444AF640085"
+			class_attributes 	(list class_attribute_list
+			    (object ClassAttribute "CommunicationCredentialKey"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6444B0A40044")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"Persistent"
+					name       	"Persistent"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"Identity"
+					value      	"+1"))
+				quid       	"6444B0A40044"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "TakeAwayStationTitle"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{4b583826-fc80-4c00-acc3-7e5cdd0f2c36}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6444B0A400B4")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"Persistent"
+					name       	"Persistent"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"Identity"
+					value      	"+2"))
+				quid       	"6444B0A400B4"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "ExtraStoragePath"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{ba4a2ec6-cafc-4042-8a38-cbec16bd17e5}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6444B0A40117")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE))
+				quid       	"6444B0A40117"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "AppSettingsStorage"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{f7626e2a-7093-42fa-bdb7-2f5aef189a1e}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6444B0A40176")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE))
+				quid       	"6444B0A40176"
+				type       	"OOAdvantech.PersistenceLayer.ObjectStorage"
+				exportControl 	"Public")
+			    (object ClassAttribute "Current"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{cf33574b-2964-47d3-9d1e-d9f5d778fa8d}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6444B0A401DA")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE))
+				quid       	"6444B0A401DA"
+				type       	"TakeAwayApp.ApplicationSettings"
+				exportControl 	"Public"))
+			module     	"Component View::TakeAwayStationDevice::TakeAwayStationDevice"
+			quidu      	"6444AFD80073"
+			language   	"C#"
+			persistence 	"Persistent"))
+		logical_presentations 	(list unit_reference_list
+		    (object ClassDiagram "Main"
+			quid       	"6444AF57025D"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ClassView "Class" "Logical View::TakeAwayStationDevice::ApplicationSettings" @1
+				ShowCompartmentStereotypes 	TRUE
+				location   	(959, 503)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(640, 396)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	638
+				    justify    	0
+				    label      	"ApplicationSettings")
+				icon_style 	"Decoration"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"6444AF640085"
+				width      	656
+				height     	238
+				annotation 	8)))))
+	    (object Class_Category "TakeAwayApp"
+		attributes 	(list Attribute_Set
+		    (object Attribute
+			tool       	"MetaData"
+			name       	"MetaObjectID"
+			value      	"TakeAwayApp")
+		    (object Attribute
+			tool       	"C#"
+			name       	"FullName"
+			value      	"TakeAwayApp"))
+		quid       	"6444B0A401CA"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list)
+		logical_presentations 	(list unit_reference_list)))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"5C4322C8002E"
@@ -664,7 +890,7 @@
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object CategoryView "Logical View::FlavourBusinessManager" @1
+		    (object CategoryView "Logical View::FlavourBusinessManager" @2
 			location   	(980, 1393)
 			font       	(object Font
 			    size       	10
@@ -677,7 +903,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@1
+			    Parent_View 	@2
 			    location   	(218, 1062)
 			    fill_color 	13434879
 			    nlines     	2
@@ -690,7 +916,7 @@
 			quidu      	"5A71E09901F8"
 			width      	1537
 			height     	675)
-		    (object CategoryView "Logical View::FlavourBusinessInfrastructure" @2
+		    (object CategoryView "Logical View::FlavourBusinessInfrastructure" @3
 			location   	(4149, 726)
 			font       	(object Font
 			    size       	10
@@ -703,7 +929,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@2
+			    Parent_View 	@3
 			    location   	(3824, 614)
 			    fill_color 	13434879
 			    nlines     	2
@@ -716,7 +942,7 @@
 			quidu      	"5C3C7C600056"
 			width      	662
 			height     	237)
-		    (object CategoryView "Logical View::Measurement" @3
+		    (object CategoryView "Logical View::Measurement" @4
 			location   	(4168, 1431)
 			font       	(object Font
 			    size       	10
@@ -729,7 +955,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@3
+			    Parent_View 	@4
 			    location   	(3843, 1309)
 			    fill_color 	13434879
 			    nlines     	2
@@ -742,7 +968,7 @@
 			quidu      	"14265FB9C00F"
 			width      	663
 			height     	256)
-		    (object CategoryView "Logical View::FlavourBusinessFacade" @4
+		    (object CategoryView "Logical View::FlavourBusinessFacade" @5
 			location   	(966, 525)
 			font       	(object Font
 			    size       	10
@@ -755,7 +981,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@4
+			    Parent_View 	@5
 			    location   	(225, 197)
 			    fill_color 	13434879
 			    nlines     	2
@@ -768,34 +994,8 @@
 			quidu      	"5AA7748702D3"
 			width      	1494
 			height     	668)
-		    (object CategoryView "Logical View::PreparationStationDevice" @5
-			location   	(2621, 1268)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@5
-			    location   	(2368, 1183)
-			    fill_color 	13434879
-			    nlines     	2
-			    max_width  	506
-			    justify    	0
-			    label      	"PreparationStationDevice")
-			icon_style 	"Decoration"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"5D8217EA0172"
-			width      	519
-			height     	182)
-		    (object CategoryView "Logical View::RestaurantHallLayoutModel" @6
-			location   	(4187, 1859)
+		    (object CategoryView "Logical View::PreparationStationDevice" @6
+			location   	(2621, 1128)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -808,20 +1008,20 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@6
-			    location   	(3859, 1775)
+			    location   	(2368, 1043)
 			    fill_color 	13434879
 			    nlines     	2
-			    max_width  	656
+			    max_width  	506
 			    justify    	0
-			    label      	"RestaurantHallLayoutModel")
-			icon_style 	"Icon"
+			    label      	"PreparationStationDevice")
+			icon_style 	"Decoration"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"5DEBF83602D1"
-			width      	669
-			height     	181)
-		    (object CategoryView "Logical View::OOAdvantech" @7
-			location   	(4176, 1041)
+			quidu      	"5D8217EA0172"
+			width      	519
+			height     	182)
+		    (object CategoryView "Logical View::RestaurantHallLayoutModel" @7
+			location   	(4187, 1859)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -834,20 +1034,20 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@7
-			    location   	(3848, 947)
+			    location   	(3859, 1775)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	656
 			    justify    	0
-			    label      	"OOAdvantech")
-			icon_style 	"Decoration"
+			    label      	"RestaurantHallLayoutModel")
+			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"35B6782302DA"
-			width      	668
-			height     	200)
-		    (object CategoryView "Logical View::FlavourBusinessFacade::EndUsers" @8
-			location   	(1315, 403)
+			quidu      	"5DEBF83602D1"
+			width      	669
+			height     	181)
+		    (object CategoryView "Logical View::OOAdvantech" @8
+			location   	(4176, 1041)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -860,20 +1060,20 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@8
-			    location   	(1050, 319)
+			    location   	(3848, 947)
 			    fill_color 	13434879
 			    nlines     	2
-			    max_width  	530
+			    max_width  	656
 			    justify    	0
-			    label      	"EndUsers")
-			icon_style 	"None"
+			    label      	"OOAdvantech")
+			icon_style 	"Decoration"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"5C060A3B039D"
-			width      	542
-			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessFacade::RoomService" @9
-			location   	(539, 400)
+			quidu      	"35B6782302DA"
+			width      	668
+			height     	200)
+		    (object CategoryView "Logical View::FlavourBusinessFacade::EndUsers" @9
+			location   	(1315, 403)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -886,20 +1086,20 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@9
-			    location   	(274, 316)
+			    location   	(1050, 319)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
 			    justify    	0
-			    label      	"RoomService")
-			icon_style 	"Decoration"
+			    label      	"EndUsers")
+			icon_style 	"None"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"5D024DCB0038"
+			quidu      	"5C060A3B039D"
 			width      	542
 			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @10
-			location   	(534, 662)
+		    (object CategoryView "Logical View::FlavourBusinessFacade::RoomService" @10
+			location   	(539, 400)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -912,20 +1112,20 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@10
-			    location   	(269, 578)
+			    location   	(274, 316)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
 			    justify    	0
-			    label      	"HumanResources")
+			    label      	"RoomService")
 			icon_style 	"Decoration"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"5F550CB102CC"
+			quidu      	"5D024DCB0038"
 			width      	542
 			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @11
-			location   	(1317, 668)
+		    (object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @11
+			location   	(534, 662)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -938,6 +1138,32 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@11
+			    location   	(269, 578)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	530
+			    justify    	0
+			    label      	"HumanResources")
+			icon_style 	"Decoration"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"5F550CB102CC"
+			width      	542
+			height     	180)
+		    (object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @12
+			location   	(1317, 668)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@12
 			    location   	(1052, 584)
 			    fill_color 	13434879
 			    nlines     	2
@@ -950,14 +1176,14 @@
 			quidu      	"5B8BB08D01B2"
 			width      	542
 			height     	180)
-		    (object ImportView "" @12
+		    (object ImportView "" @13
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"60A1DB4D00CD"
-			client     	@1
-			supplier   	@4
+			client     	@2
+			supplier   	@5
 			line_style 	0)
-		    (object CategoryView "Logical View::FlavourBusinessManager::RoomService" @13
+		    (object CategoryView "Logical View::FlavourBusinessManager::RoomService" @14
 			location   	(567, 1292)
 			font       	(object Font
 			    size       	10
@@ -970,7 +1196,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@13
+			    Parent_View 	@14
 			    location   	(291, 1208)
 			    fill_color 	13434879
 			    nlines     	2
@@ -983,7 +1209,7 @@
 			quidu      	"5CDA64B20127"
 			width      	564
 			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessManager::EndUsers" @14
+		    (object CategoryView "Logical View::FlavourBusinessManager::EndUsers" @15
 			location   	(1300, 1284)
 			font       	(object Font
 			    size       	10
@@ -996,7 +1222,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@14
+			    Parent_View 	@15
 			    location   	(1024, 1200)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1009,7 +1235,7 @@
 			quidu      	"5C0609E301E3"
 			width      	564
 			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessManager::HumanResources" @15
+		    (object CategoryView "Logical View::FlavourBusinessManager::HumanResources" @16
 			location   	(559, 1578)
 			font       	(object Font
 			    size       	10
@@ -1022,7 +1248,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@15
+			    Parent_View 	@16
 			    location   	(283, 1494)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1035,7 +1261,7 @@
 			quidu      	"5F54C406030F"
 			width      	564
 			height     	180)
-		    (object CategoryView "Logical View::FlavourBusinessManager::ServicesContextResources" @16
+		    (object CategoryView "Logical View::FlavourBusinessManager::ServicesContextResources" @17
 			location   	(1306, 1568)
 			font       	(object Font
 			    size       	10
@@ -1048,7 +1274,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@16
+			    Parent_View 	@17
 			    location   	(1030, 1484)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1061,7 +1287,7 @@
 			quidu      	"5B8BE59B002D"
 			width      	564
 			height     	180)
-		    (object CategoryView "Logical View::Menu" @17
+		    (object CategoryView "Logical View::Menu" @18
 			location   	(2607, 531)
 			font       	(object Font
 			    size       	10
@@ -1074,7 +1300,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@17
+			    Parent_View 	@18
 			    location   	(1857, 193)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1087,7 +1313,7 @@
 			quidu      	"60A214AF00F5"
 			width      	1512
 			height     	688)
-		    (object CategoryView "Logical View::MenuDesigner" @18
+		    (object CategoryView "Logical View::MenuDesigner" @19
 			location   	(2140, 521)
 			font       	(object Font
 			    size       	10
@@ -1100,7 +1326,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@18
+			    Parent_View 	@19
 			    location   	(1918, 437)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1113,7 +1339,7 @@
 			quidu      	"5720D20A01FB"
 			width      	456
 			height     	181)
-		    (object CategoryView "Logical View::MenuModel" @19
+		    (object CategoryView "Logical View::MenuModel" @20
 			location   	(3030, 390)
 			font       	(object Font
 			    size       	10
@@ -1126,7 +1352,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@19
+			    Parent_View 	@20
 			    location   	(2780, 306)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1139,14 +1365,14 @@
 			quidu      	"5721EBAD02D9"
 			width      	513
 			height     	181)
-		    (object ImportView "" @20
+		    (object ImportView "" @21
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"5CC91C0C0397"
-			client     	@18
-			supplier   	@19
+			client     	@19
+			supplier   	@20
 			line_style 	0)
-		    (object CategoryView "Logical View::MenuPresentationModel" @21
+		    (object CategoryView "Logical View::MenuPresentationModel" @22
 			location   	(3004, 737)
 			font       	(object Font
 			    size       	10
@@ -1159,7 +1385,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@21
+			    Parent_View 	@22
 			    location   	(2714, 652)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1172,22 +1398,22 @@
 			quidu      	"57ACBCA601F2"
 			width      	593
 			height     	182)
-		    (object ImportView "" @22
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"5CC91C100330"
-			client     	@18
-			supplier   	@21
-			line_style 	0)
 		    (object ImportView "" @23
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"5CC91C130367"
-			client     	@21
-			supplier   	@19
+			quidu      	"5CC91C100330"
+			client     	@19
+			supplier   	@22
 			line_style 	0)
-		    (object CategoryView "Logical View::CashierStationDevice" @24
-			location   	(2625, 1625)
+		    (object ImportView "" @24
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"5CC91C130367"
+			client     	@22
+			supplier   	@20
+			line_style 	0)
+		    (object CategoryView "Logical View::CashierStationDevice" @25
+			location   	(2625, 1403)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1199,8 +1425,8 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@24
-			    location   	(2375, 1541)
+			    Parent_View 	@25
+			    location   	(2375, 1319)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	500
@@ -1211,7 +1437,33 @@
 			fill_color 	13434879
 			quidu      	"61AD940B01C9"
 			width      	512
-			height     	181)))))
+			height     	181)
+		    (object CategoryView "Logical View::TakeAwayStationDevice" @26
+			location   	(2632, 1687)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@26
+			    location   	(2400, 1578)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	464
+			    justify    	0
+			    label      	"TakeAwayStationDevice")
+			icon_style 	"Decoration"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"6444AF3103A6"
+			width      	476
+			height     	231)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"5721F36F01F7"
 	physical_models 	(list unit_reference_list
@@ -1280,7 +1532,7 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object ModView "Component View::OOAdvantech.Net::OOAdvantech.Net" "NotAModuleType" "NotAModulePart" @25
+			    (object ModView "Component View::OOAdvantech.Net::OOAdvantech.Net" "NotAModuleType" "NotAModulePart" @27
 				location   	(613, 756)
 				font       	(object Font
 				    size       	10
@@ -1293,7 +1545,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@25
+				    Parent_View 	@27
 				    location   	(567, 731)
 				    fill_color 	13434879
 				    anchor_loc 	3
@@ -1372,7 +1624,7 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object ModView "Component View::PaymentProviders::PaymentProviders" "NotAModuleType" "NotAModulePart" @26
+			    (object ModView "Component View::PaymentProviders::PaymentProviders" "NotAModuleType" "NotAModulePart" @28
 				location   	(900, 381)
 				font       	(object Font
 				    size       	10
@@ -1385,7 +1637,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@26
+				    Parent_View 	@28
 				    location   	(814, 353)
 				    fill_color 	13434879
 				    anchor_loc 	3
@@ -1399,7 +1651,60 @@
 				width      	588
 				height     	187
 				width      	588
-				height     	187))))))
+				height     	187)))))
+	    (object SubSystem "TakeAwayStationDevice"
+		quid       	"6444AFBC0319"
+		physical_models 	(list unit_reference_list
+		    (object module "TakeAwayStationDevice" "NotAModuleType" "NotAModulePart"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"DotNet"
+				name       	"Solution"
+				value      	"$dot Net Projects Path\\FlavourBusiness\\TakeAwayApp\\TakeAwayApp.sln")
+			    (object Attribute
+				tool       	"DotNet"
+				name       	"Project"
+				value      	"$dot Net Projects Path\\FlavourBusiness\\TakeAwayApp\\TakeAwayApp\\TakeAwayApp\\TakeAwayApp.csproj"))
+			quid       	"6444AFD80073"
+			stereotype 	""
+			language   	"C#"))
+		physical_presentations 	(list unit_reference_list
+		    (object Module_Diagram "Main"
+			quid       	"6444AFD300CB"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ModView "Component View::TakeAwayStationDevice::TakeAwayStationDevice" "NotAModuleType" "NotAModulePart" @29
+				location   	(1278, 900)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@29
+				    location   	(1217, 875)
+				    fill_color 	13434879
+				    anchor_loc 	3
+				    nlines     	2
+				    max_width  	227
+				    label      	"TakeAwayStationDevice")
+				icon_style 	"Decoration"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"6444AFD80073"
+				width      	410
+				width      	410
+				height     	162))))))
 	physical_presentations 	(list unit_reference_list
 	    (object Module_Diagram "Main"
 		quid       	"5721F36F021F"
@@ -1410,7 +1715,7 @@
 		origin_x   	0
 		origin_y   	500
 		items      	(list diagram_item_list
-		    (object SubSysView "Component View::MenuDesigner" @27
+		    (object SubSysView "Component View::MenuDesigner" @30
 			location   	(1656, 387)
 			font       	(object Font
 			    size       	10
@@ -1423,7 +1728,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@27
+			    Parent_View 	@30
 			    location   	(1425, 274)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1436,7 +1741,7 @@
 			quidu      	"572068070298"
 			width      	475
 			height     	238)
-		    (object SubSysView "Component View::MenuModel" @28
+		    (object SubSysView "Component View::MenuModel" @31
 			location   	(1024, 365)
 			font       	(object Font
 			    size       	10
@@ -1449,7 +1754,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@28
+			    Parent_View 	@31
 			    location   	(743, 228)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1462,7 +1767,7 @@
 			quidu      	"5721E66E017C"
 			width      	575
 			height     	287)
-		    (object SubSysView "Component View::MenuPresentationModel" @29
+		    (object SubSysView "Component View::MenuPresentationModel" @32
 			location   	(334, 356)
 			font       	(object Font
 			    size       	10
@@ -1475,7 +1780,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@29
+			    Parent_View 	@32
 			    location   	(109, 246)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1488,7 +1793,7 @@
 			quidu      	"57ACBF880210"
 			width      	462
 			height     	232)
-		    (object SubSysView "Component View::FlavourBusinessManager" @30
+		    (object SubSysView "Component View::FlavourBusinessManager" @33
 			location   	(334, 1425)
 			font       	(object Font
 			    size       	10
@@ -1501,7 +1806,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@30
+			    Parent_View 	@33
 			    location   	(97, 1309)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1514,7 +1819,7 @@
 			quidu      	"5A71DF740060"
 			width      	487
 			height     	244)
-		    (object SubSysView "Component View::FlavourBusinessFacade" @31
+		    (object SubSysView "Component View::FlavourBusinessFacade" @34
 			location   	(1403, 1406)
 			font       	(object Font
 			    size       	10
@@ -1527,7 +1832,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@31
+			    Parent_View 	@34
 			    location   	(1112, 1265)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1540,7 +1845,7 @@
 			quidu      	"5AA773BE03DE"
 			width      	594
 			height     	294)
-		    (object SubSysView "Component View::OOAdvantech" @32
+		    (object SubSysView "Component View::OOAdvantech" @35
 			location   	(2238, 1378)
 			font       	(object Font
 			    size       	10
@@ -1553,7 +1858,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@32
+			    Parent_View 	@35
 			    location   	(1947, 1234)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1566,7 +1871,7 @@
 			quidu      	"41B2148C017D"
 			width      	594
 			height     	300)
-		    (object SubSysView "Component View::FlavourBusinessInfrastructure" @33
+		    (object SubSysView "Component View::FlavourBusinessInfrastructure" @36
 			location   	(1731, 1862)
 			font       	(object Font
 			    size       	10
@@ -1579,7 +1884,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@33
+			    Parent_View 	@36
 			    location   	(1450, 1724)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1592,7 +1897,7 @@
 			quidu      	"5C3C7BCE022C"
 			width      	575
 			height     	288)
-		    (object SubSysView "Component View::OOAdvantech.Net" @34
+		    (object SubSysView "Component View::OOAdvantech.Net" @37
 			location   	(334, 1812)
 			font       	(object Font
 			    size       	10
@@ -1605,7 +1910,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@34
+			    Parent_View 	@37
 			    location   	(78, 1687)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1618,7 +1923,7 @@
 			quidu      	"5C4ACAC00249"
 			width      	525
 			height     	263)
-		    (object SubSysView "Component View::ComputationalResources" @35
+		    (object SubSysView "Component View::ComputationalResources" @38
 			location   	(2975, 803)
 			font       	(object Font
 			    size       	10
@@ -1631,7 +1936,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@35
+			    Parent_View 	@38
 			    location   	(2713, 675)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1644,7 +1949,7 @@
 			quidu      	"5C57BD280042"
 			width      	537
 			height     	268)
-		    (object SubSysView "Component View:: FinanceFacade" @36
+		    (object SubSysView "Component View:: FinanceFacade" @39
 			location   	(244, 915)
 			font       	(object Font
 			    size       	10
@@ -1657,7 +1962,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@36
+			    Parent_View 	@39
 			    location   	(100, 846)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1670,7 +1975,7 @@
 			quidu      	"5C6A6F7C01BB"
 			width      	300
 			height     	150)
-		    (object SubSysView "Component View::MicronemeCommon" @37
+		    (object SubSysView "Component View::MicronemeCommon" @40
 			location   	(359, 2218)
 			font       	(object Font
 			    size       	10
@@ -1683,7 +1988,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@37
+			    Parent_View 	@40
 			    location   	(93, 2087)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1696,7 +2001,7 @@
 			quidu      	"5C6D0B7D0348"
 			width      	544
 			height     	275)
-		    (object SubSysView "Component View::PreparationStationDevice" @38
+		    (object SubSysView "Component View::PreparationStationDevice" @41
 			location   	(2723, 1866)
 			font       	(object Font
 			    size       	10
@@ -1709,7 +2014,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@38
+			    Parent_View 	@41
 			    location   	(2454, 1735)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1722,7 +2027,7 @@
 			quidu      	"5D8217F70064"
 			width      	551
 			height     	275)
-		    (object SubSysView "Component View::RestaurantHallLayoutModel" @39
+		    (object SubSysView "Component View::RestaurantHallLayoutModel" @42
 			location   	(822, 768)
 			font       	(object Font
 			    size       	10
@@ -1735,7 +2040,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@39
+			    Parent_View 	@42
 			    location   	(553, 637)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1748,7 +2053,7 @@
 			quidu      	"5DEBF53C00C4"
 			width      	550
 			height     	275)
-		    (object SubSysView "Component View::DontWaitApp" @40
+		    (object SubSysView "Component View::DontWaitApp" @43
 			location   	(1128, 2247)
 			font       	(object Font
 			    size       	10
@@ -1761,7 +2066,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@40
+			    Parent_View 	@43
 			    location   	(853, 2112)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1774,7 +2079,7 @@
 			quidu      	"5EFCA60C02B0"
 			width      	563
 			height     	282)
-		    (object SubSysView "Component View::CashierStationDevice" @41
+		    (object SubSysView "Component View::CashierStationDevice" @44
 			location   	(3448, 1519)
 			font       	(object Font
 			    size       	10
@@ -1787,7 +2092,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@41
+			    Parent_View 	@44
 			    location   	(3148, 1372)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1800,7 +2105,7 @@
 			quidu      	"61AD946702B9"
 			width      	613
 			height     	307)
-		    (object SubSysView "Component View::PaymentProviders" @42
+		    (object SubSysView "Component View::PaymentProviders" @45
 			location   	(1891, 2310)
 			font       	(object Font
 			    size       	10
@@ -1813,7 +2118,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@42
+			    Parent_View 	@45
 			    location   	(1616, 2175)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1825,7 +2130,33 @@
 			fill_color 	13434879
 			quidu      	"63DBA9F2037A"
 			width      	563
-			height     	282)))
+			height     	282)
+		    (object SubSysView "Component View::TakeAwayStationDevice" @46
+			location   	(2708, 2277)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@46
+			    location   	(2461, 2158)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	494
+			    justify    	0
+			    label      	"TakeAwayStationDevice")
+			icon_style 	"Decoration"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"6444AFBC0319"
+			width      	506
+			height     	250)))
 	    (object Module_Diagram "NewDiagram2"
 		quid       	"5C63CFF102DA"
 		title      	"NewDiagram2"

@@ -8,7 +8,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{99f0adb9-6986-412c-9f26-aa956ec96f18}</MetaDataID>
     [BackwardCompatibilityID("{99f0adb9-6986-412c-9f26-aa956ec96f18}")]
     [Persistent()]
-    public class TakeAwayStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation
+    public class TakeAwayStation : ServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation
     {
         /// <exclude>Excluded</exclude>
         string _GraphicMenuStorageIdentity;
@@ -31,60 +31,60 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-  
 
 
 
-        /// <exclude>Excluded</exclude>
-        OOAdvantech.ObjectStateManagerLink StateManagerLink;
-        /// <exclude>Excluded</exclude>
-        string _Description;
 
-        /// <MetaDataID>{ddd8d4f1-14bf-4a64-935d-0d097b9cf192}</MetaDataID>
-        [PersistentMember(nameof(_Description))]
-        [BackwardCompatibilityID("+3")]
-        public string Description
-        {
-            get => _Description;
-            set
-            {
-                if (_Description!=value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _Description=value;
-                        stateTransition.Consistent = true;
-                    }
-                }
+        ///// <exclude>Excluded</exclude>
+        //OOAdvantech.ObjectStateManagerLink StateManagerLink;
+        ///// <exclude>Excluded</exclude>
+        //string _Description;
 
-            }
-        }
+        ///// <MetaDataID>{ddd8d4f1-14bf-4a64-935d-0d097b9cf192}</MetaDataID>
+        //[PersistentMember(nameof(_Description))]
+        //[BackwardCompatibilityID("+3")]
+        //public string Description
+        //{
+        //    get => _Description;
+        //    set
+        //    {
+        //        if (_Description!=value)
+        //        {
+        //            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //            {
+        //                _Description=value;
+        //                stateTransition.Consistent = true;
+        //            }
+        //        }
 
-
-        /// <exclude>Excluded</exclude>
-        string _ServicesContextIdentity;
+        //    }
+        //}
 
 
-        /// <MetaDataID>{f5ed2bd1-4318-494e-b105-be918048d738}</MetaDataID>
-        [PersistentMember(nameof(_ServicesContextIdentity))]
-        [BackwardCompatibilityID("+2")]
-        public string ServicesContextIdentity
-        {
-            get => _ServicesContextIdentity;
-            set
-            {
+        ///// <exclude>Excluded</exclude>
+        //string _ServicesContextIdentity;
 
-                if (_ServicesContextIdentity!=value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _ServicesContextIdentity=value;
-                        stateTransition.Consistent = true;
-                    }
-                }
 
-            }
-        }
+        ///// <MetaDataID>{f5ed2bd1-4318-494e-b105-be918048d738}</MetaDataID>
+        //[PersistentMember(nameof(_ServicesContextIdentity))]
+        //[BackwardCompatibilityID("+2")]
+        //public string ServicesContextIdentity
+        //{
+        //    get => _ServicesContextIdentity;
+        //    set
+        //    {
+
+        //        if (_ServicesContextIdentity!=value)
+        //        {
+        //            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+        //            {
+        //                _ServicesContextIdentity=value;
+        //                stateTransition.Consistent = true;
+        //            }
+        //        }
+
+        //    }
+        //}
 
         /// <exclude>Excluded</exclude>
         string _TakeAwayStationIdentity;
@@ -110,6 +110,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{57170463-54e1-47ae-bec8-bf45b89aee41}</MetaDataID>
         public TakeAwayStation()
         {
 
@@ -119,7 +120,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public TakeAwayStation(ServicesContextRunTime servicesContextRunTime)
         {
             _TakeAwayStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
-            _ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
+            ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
     }
 }

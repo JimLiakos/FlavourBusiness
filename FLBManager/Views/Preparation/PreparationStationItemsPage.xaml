@@ -1,4 +1,5 @@
-﻿<sw:PageDialogViewEmulator  xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" x:Class="FLBManager.Views.Preparation.PreparationStationItemsPage"
+﻿<sw:PageDialogViewEmulator   x:Class="FLBManager.Views.Preparation.PreparationStationItemsPage"
+       xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +12,6 @@
       LanguageButton="True"  
       d:DesignHeight="550" 
       d:DesignWidth="850"
-
       Title="{x:Static resx:Resources.PreparationStationWindowTitle}" >
     <Page.DataContext>
         <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type ViewModel:PreparationStationPresentation}"    Name="Connection" TransactionOption="Required"  />

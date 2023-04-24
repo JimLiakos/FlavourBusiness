@@ -61,7 +61,7 @@ namespace DontWaitApp
 
 
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
-    class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
 
         /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
@@ -1781,7 +1781,7 @@ namespace DontWaitApp
         public IUser CurrentUser;
 
         /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
-        Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices=null, bool create = true)
+        Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
         {
             return Task<IFoodServiceClientSession>.Run(async () =>
             {
@@ -1789,22 +1789,22 @@ namespace DontWaitApp
                 {
                     string defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
                     defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;50886542db964edf8dec5734e3f89395";
-                    if (string.IsNullOrWhiteSpace( servicePointIdentity)||servicePointIdentity.Split(';').Length < 2)
+                    if (string.IsNullOrWhiteSpace(servicePointIdentity)||servicePointIdentity.Split(';').Length < 2)
                         servicePointIdentity = defaultServicePoint;
 
                     //string servicePoint = "ca33b38f5c634fd49c50af60b042f910;8dedb45522ad479480e113c59d4bbdd0";
                     //servicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;8dedb45522ad479480e113c59d4bbdd0";
                     //// servicePoint = "6746e4178dd041f09a7b4130af0edacf;6171631179bf4c26aeb99546fdce6a7a";
                     //servicePoint = "b5ec4ed264c142adb26b73c95b185544;9967813ee9d943db823ca97779eb9fd7";
-                    
+
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                     ClientSessionData? clientSessionData = null;
                     do
                     {
                         try
                         {
-                            if(flavoursServices!=null)
-                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity,null,await GetFriendlyName(), device.DeviceID, device.FirebaseToken,null,null,!WaiterView, create);
+                            if (flavoursServices!=null)
+                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, null, null, !WaiterView, create);
                             else
                                 clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, device.FirebaseToken, !WaiterView, create);
 

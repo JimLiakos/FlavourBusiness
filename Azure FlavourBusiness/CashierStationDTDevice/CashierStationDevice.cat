@@ -808,7 +808,7 @@
 				    ordinal    	1
 				    quidu      	"000000000000"
 				    creation   	FALSE)
-				(object Message "TransactionPrinted(string, string)"
+				(object Message "TransactionPrinted(  )"
 				    quid       	"61AE28F500E7"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -1297,7 +1297,7 @@
 			nlines     	1
 			max_width  	10
 			justify    	0
-			label      	"TransactionPrinted(string, string)"
+			label      	"TransactionPrinted(  )"
 			pctDist    	0.500000
 			height     	45
 			orientation 	1)

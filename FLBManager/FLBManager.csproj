@@ -238,6 +238,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\TakeAway\TakeAwayStationPage.xaml.cs">
+      <DependentUpon>TakeAwayStationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Taxes\TaxesWindow.xaml.cs">
       <DependentUpon>TaxesWindow.xaml</DependentUpon>
     </Compile>
@@ -422,6 +425,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TakeAway\TakeAwayStationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -126,16 +126,18 @@ namespace DontWaitApp
         PayOnDelivery = 2
     }
 
+    /// <MetaDataID>{20ba1c67-f576-49d2-ad1d-5913e5d893f7}</MetaDataID>
     public class TipOption
     {
         public string Name { get; set; }
         public decimal Amount { get; set; }
         public string ISOCurrencySymbol { get; set; }
     }
+    /// <MetaDataID>{88ab68cf-f4e1-4093-8c40-5e940f581637}</MetaDataID>
     public enum PaymentMethod
     {
         Cash = 1,
         Card = 2,
-        PaymentGateway =3
+        PaymentGateway = 3
     }
 }

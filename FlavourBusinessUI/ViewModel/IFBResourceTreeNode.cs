@@ -189,6 +189,7 @@ namespace FLBManager.ViewModel
             get;
         }
 
+        /// <MetaDataID>{1a0148a3-d0b6-4eb2-8389-c5f09b656127}</MetaDataID>
         public abstract void RemoveChild(FBResourceTreeNode treeNode);
 
     }

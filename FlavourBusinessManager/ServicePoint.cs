@@ -107,6 +107,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{6a624ba0-8a41-422c-bf35-d52185e0bbc6}</MetaDataID>
         public string ServicePointUrl
         {
             get
@@ -198,6 +199,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{b3a3c408-9ebf-4d2b-af0c-8cc7268f12ab}</MetaDataID>
         OOAdvantech.Collections.Generic.Set<IFoodServiceSession> _ServiceSessions = new OOAdvantech.Collections.Generic.Set<IFoodServiceSession>();
 
+        /// <MetaDataID>{e85c6108-a826-45f4-a2b9-bd7b288d9073}</MetaDataID>
         internal void RunObjectChangeState(HomeDeliveryServicePoint homeDeliveryServicePoint, object p)
         {
             _ObjectChangeState?.Invoke(this, null);
@@ -220,7 +222,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{7beae4f4-7e79-476d-9f83-8c169bd6a8dd}</MetaDataID>
-        public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession> ActiveFoodServiceClientSessions
+        public IList<IFoodServiceClientSession> ActiveFoodServiceClientSessions
         {
             get
             {
@@ -485,72 +487,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return fsClientSession;
         }
 
-        ///// <summary>
-        ///// Removes all inactive food client session.
-        ///// There is case where user open a session with service point but 
-        ///// </summary>
-        ///// <param name="user"></param>
-        ///// <param name="clientDeviceID"></param>
-        //private void CollectGarbageClientSessions(FlavourBusinessFacade.IUser user, string clientDeviceID)
-        //{
-        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-        //    {
-        //        List<FoodServiceClientSession> openClientSessions = new List<FoodServiceClientSession>();
-
-        //        if(user!=null)
-        //            OpenClientSessions.Where(x => x.UserIdentity == user.Identity).ToList();
-        //        if (openClientSessions.Count > 0)
-        //        {
-        //            foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
-        //            {
-        //                if (openClientSessions.Count > 1)
-        //                {
-        //                    //all sessions without items are garbage, except the last one 
-        //                    RemoveClientSession(foodServiceClientSession);
-        //                    openClientSessions.Remove(foodServiceClientSession);
-        //                }
-        //            }
-        //        }
-        //        //visitor client sessions
-        //        openClientSessions = OpenClientSessions.Where(x => x.ClientDeviceID == clientDeviceID).ToList();
-        //        if (openClientSessions.Count > 0)
-        //        {
-        //            foreach (var foodServiceClientSession in openClientSessions.ToList()/*.Where(x => x.Waiter == this)*/.Where(x => x.FlavourItems.Count == 0 && x.SharedItems.Count == 0))
-        //            {
-        //                if (openClientSessions.Count > 1)
-        //                {
-        //                    //all sessions without items are garbage except the last one 
-        //                    RemoveClientSession(foodServiceClientSession);
-        //                    openClientSessions.Remove(foodServiceClientSession);
-        //                }
-        //            }
-        //        }
-
-        //        stateTransition.Consistent = true;
-        //    }
-        //}
-
-        //private void RemoveClientSession(FoodServiceClientSession foodServiceClientSession)
-        //{
-        //    var mainSession = foodServiceClientSession.MainSession;
-        //    if (mainSession != null)
-        //        mainSession.RemovePartialSession(foodServiceClientSession);
-
-
-        //    OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(foodServiceClientSession);
-        //    ServicePointRunTime.ServicesContextRunTime.Current.RemoveClientSession(foodServiceClientSession);
-
-        //    if (mainSession != null && mainSession.PartialClientSessions.All(x => x.Forgotten))
-        //    {
-        //        using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
-        //        {
-        //            foreach (var partialClientSession in mainSession.PartialClientSessions)
-        //                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(partialClientSession);
-        //            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(mainSession);
-        //            innerStateTransition.Consistent = true;
-        //        }
-        //    }
-        //}
+    
 
         /// <exclude>Excluded</exclude>
         ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;
@@ -724,16 +661,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
         }
+        /// <MetaDataID>{8d123473-0138-4e66-8f19-5ba61d5029f8}</MetaDataID>
         public virtual IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
             return new List<IFoodServiceClientSession>();
         }
 
-        /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
-        internal bool IsAssignedTo(IWaiter waiter, IShiftWork shiftWork)
-        {
-            return true;
-        }
 
         /// <MetaDataID>{e1599e2d-a463-4e10-8634-8b7786b64b09}</MetaDataID>
         internal void TransferPartialSession(FoodServiceClientSession partialSessionToTransfer, string targetSessionID)
@@ -1080,6 +1013,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
+        internal bool IsAssignedTo(IWaiter waiter, IShiftWork shiftWork)
+        {
+            return true;
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -1091,6 +1029,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IServiceArea ServiceArea => _ServiceArea.Value;
 
 
+        /// <MetaDataID>{262fbc71-1863-4a2c-a440-c8fe77c00a13}</MetaDataID>
         public override IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
 

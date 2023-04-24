@@ -979,7 +979,7 @@ namespace WaiterApp.ViewModel
             return await Assign();
         }
 #if DeviceDotNet
-        public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
+        public ScanCode ScanCode = new ScanCode();
 #endif
         /// <MetaDataID>{9921c079-439e-4f42-8b4d-44130647d4b1}</MetaDataID>
         public async Task<bool> Assign()

@@ -117,6 +117,12 @@
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ΜealCourse.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\ΜealCourse.cs</Link>
     </Compile>
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\ApplicationSettings.cs">
+      <Link>TakeAwayApp.Wpf\ViewModel\ApplicationSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayStation.cs">
+      <Link>TakeAwayApp.Wpf\ViewModel\TakeAwayStation.cs</Link>
+    </Compile>
     <Compile Include="..\WaiterApp\WaiterApp\ViewModel\ItemsReadyToServe.cs">
       <Link>ViewModel\ItemsReadyToServe.cs</Link>
     </Compile>
@@ -134,7 +140,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TakeAwayApp.Wpf\TakeAwayApp.cs" />
-    <Compile Include="TakeAwayApp.Wpf\ViewModel\TakeAwayStation.cs" />
     <Compile Include="WaiterApp.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

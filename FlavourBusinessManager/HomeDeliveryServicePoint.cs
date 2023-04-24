@@ -1,5 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessToolKit;
 using MenuModel;
@@ -20,6 +21,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class HomeDeliveryServicePoint : ServicePoint, IHomeDeliveryServicePoint
     {
 
+        /// <MetaDataID>{ba185288-883f-492a-8106-98826b150320}</MetaDataID>
         public HomeDeliveryServicePoint()
         {
 
@@ -50,6 +52,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
+        internal bool IsAssignedTo(IWaiter waiter, IShiftWork shiftWork)
+        {
+            return true;
+        }
+
 
         /// <exclude>Excluded</exclude>
         bool _IsActive;
@@ -446,6 +455,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+        /// <MetaDataID>{625536ac-7eae-40cf-a660-dc392e37e604}</MetaDataID>
         public override IList<IFoodServiceClientSession> GetServicePointOtherPeople(IFoodServiceClientSession serviceClientSession)
         {
             return new List<IFoodServiceClientSession>();

@@ -190,13 +190,19 @@ namespace MenuDesigner.ViewModel
     /// <MetaDataID>{cfbb910e-8e6b-451b-a4a0-f713a33c9da1}</MetaDataID>
     public interface IGraphicMenusOwner
     {
+        /// <MetaDataID>{1447e203-3caf-44cf-87b3-1d7553be40d5}</MetaDataID>
         void AssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode);
+        /// <MetaDataID>{6145fb52-5ba7-4e5c-bf04-d69f377b76ee}</MetaDataID>
         bool CanAssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode);
+        /// <MetaDataID>{f03fbc94-4edf-44ab-8584-584eeacc6d84}</MetaDataID>
         bool RemoveGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode);
+        /// <MetaDataID>{a244212b-a172-4eca-9103-1ef4ffb76c5c}</MetaDataID>
         List<GraphicMenuTreeNode> GraphicMenus { get; }
 
+        /// <MetaDataID>{717680ce-943c-42f3-add9-e55557d3b2d8}</MetaDataID>
         bool NewGraphicMenuAllowed { get; }
 
+        /// <MetaDataID>{06e0e951-abc5-438c-8617-5971d7b7feba}</MetaDataID>
         void NewGraphicMenu();
 
     }

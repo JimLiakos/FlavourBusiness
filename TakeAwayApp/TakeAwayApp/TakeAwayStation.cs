@@ -1,7 +1,9 @@
-﻿using FlavourBusinessFacade;
+﻿
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.ViewModel;
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
+using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
 
 using System.Collections.Generic;
@@ -10,7 +12,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+
 #if DeviceDotNet
+using Acr.UserDialogs;
+using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
@@ -20,21 +25,44 @@ using MarshalByRefObject = System.MarshalByRefObject;
 namespace TakeAwayApp
 {
     /// <MetaDataID>{1dca0d48-ef5c-41ac-a964-127385b2e256}</MetaDataID>
+    [HttpVisible]
     public interface IFlavoursTakeAwayStation
     {
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
         string CommunicationCredentialKey { get; set; }
         Task<bool> AssignCommunicationCredentialKey(string credentialKey);
         Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable);
+
+        /// <summary>
+        /// Check if application is granted to access infrastructure for QR code scanning 
+        /// </summary>
+        /// <returns>
+        /// for granted  return true
+        /// else return false
+        /// </returns>
+        /// <MetaDataID>{f5ade777-4b64-49ed-8a59-248d2140ec49}</MetaDataID>
+        Task<bool> CheckPermissionsForQRCodeScan();
+
+        /// <summary>
+        /// Request Permission to access infrastructure for QR code scanning 
+        /// </summary>
+        /// <returns>
+        /// for granted  return true
+        /// else return false
+        /// </returns>
+        /// <MetaDataID>{ba8d35eb-61c2-4e41-9464-66a58f9e7e7b}</MetaDataID>
+        Task<bool> RequestPermissionsForQRCodeScan();
+
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization,ISecureUser
+    public class TakeAwayStation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
     {
-        
+
         public TakeAwayStation()
         {
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
+            var appSettings = ApplicationSettings.Current;
         }
 
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
@@ -184,14 +212,24 @@ namespace TakeAwayApp
 
         public Task<bool> AssignCommunicationCredentialKey(string credentialKey)
         {
-            throw new System.NotImplementedException();
-        }
+            if (CommunicationCredentialKey != credentialKey)
+                CommunicationCredentialKey = credentialKey;
 
+            return Task.FromResult(true);
+
+        }
+#if DeviceDotNet
+        public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
+#endif
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
-        public Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
+        public async Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
         {
-            return Task<bool>.Run(async () =>
+       
+
+
+            //UserDialogs.Instance.Prompt(("Hello world", "Take away");
+            return await Task<bool>.Run(async () =>
             {
 #if DeviceDotNet
                 var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", useFrontCameraIfAvailable);
@@ -205,60 +243,99 @@ namespace TakeAwayApp
                 string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                 string serverUrl = AzureServerUrl;
                 IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
-                if (PreparationStation != null)
-                {
-                    Title = PreparationStation.Description;
-                    ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
-                    CommunicationCredentialKey = communicationCredentialKey;
-                    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
-                    HttpClient httpClient = new HttpClient();
-                    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
-                    getJsonTask.Wait();
-                    var json = getJsonTask.Result;
-                    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
-                    GetMenuLanguages(MenuItems.Values.ToList());
-                    PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
-                    ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
-                    ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
-                    PreparationVelocity = PreparationStation.PreparationVelocity;
-                    ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
-                                                            select new ItemsPreparationContextPresentation()
-                                                            {
-                                                                Description = itemsPreparationContext.MealCourseDescription,
-                                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
-                                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
-                                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
-                                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
-                                                                Uri = itemsPreparationContext.Uri,
-                                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
-                                                            }).ToList();
+                return false;
+                //PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
+                //if (PreparationStation != null)
+                //{
+                //    Title = PreparationStation.Description;
+                //    ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+                //    CommunicationCredentialKey = communicationCredentialKey;
+                //    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                //    HttpClient httpClient = new HttpClient();
+                //    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                //    getJsonTask.Wait();
+                //    var json = getJsonTask.Result;
+                //    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                //    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+                //    GetMenuLanguages(MenuItems.Values.ToList());
+                //    PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                //    ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                //    ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+                //    PreparationVelocity = PreparationStation.PreparationVelocity;
+                //    ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
+                //                                            select new ItemsPreparationContextPresentation()
+                //                                            {
+                //                                                Description = itemsPreparationContext.MealCourseDescription,
+                //                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                //                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                //                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                //                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                //                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                //                                                Uri = itemsPreparationContext.Uri,
+                //                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                //                                            }).ToList();
 
 
-                    return true;
-                }
-                else
-                {
-                    Title = "";
-                    return false;
-                }
+                //    return true;
+                //}
+                //else
+                //{
+                //    Title = "";
+                //    return false;
+                //}
 #else
                 return false;
 #endif
             });
         }
 
+       
+
+        public async Task<bool> RequestPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+
+            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+
+#else
+            return await Task<bool>.FromResult(true);
+#endif
+        }
+
+        public async Task<bool> CheckPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+            var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            return locationInUsePermisions == PermissionStatus.Granted;
+#else
+            return await Task<bool>.FromResult(false);
+#endif
+        }
+
         public DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; private set; }
-        public string SignInProvider { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string OAuthUserIdentity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string FullName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string UserName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Email { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Password { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string ConfirmPassword { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string PhoneNumber { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string CommunicationCredentialKey { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string SignInProvider { get; set; }
+        public string OAuthUserIdentity { get; set; }
+        public string FullName { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string PhoneNumber { get; set; }
+        public string CommunicationCredentialKey
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                {
+
+                }
+                return ApplicationSettings.Current.CommunicationCredentialKey;
+            }
+            set
+            {
+                ApplicationSettings.Current.CommunicationCredentialKey = value;
+            }
+        }
     }
 }

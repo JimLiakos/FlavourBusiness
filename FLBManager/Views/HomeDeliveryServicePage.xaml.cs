@@ -21,17 +21,18 @@ namespace FLBManager.Views
     /// <summary>
     /// Interaction logic for HomeDeliveryServicePage.xaml
     /// </summary>
+    /// <MetaDataID>{1c48811b-23cc-4a1e-92e4-927675230f17}</MetaDataID>
     public partial class HomeDeliveryServicePage : PageDialogViewEmulator
     {
         public HomeDeliveryServicePage()
         {
             InitializeComponent();
 
-            
+
             Loaded += HomeDeliveryServicePage_Loaded;
             Unloaded += HomeDeliveryServicePage_Unloaded;
 
-        
+
         }
 
         private void HomeDeliveryServicePage_Unloaded(object sender, RoutedEventArgs e)
@@ -53,7 +54,7 @@ namespace FLBManager.Views
 
         private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
         {
-            
+
         }
 
         public WebBrowserOverlay Browser { get; private set; }

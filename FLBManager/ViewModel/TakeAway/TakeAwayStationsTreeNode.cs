@@ -14,13 +14,16 @@ using WPFUIElementObjectBind;
 
 namespace FLBManager.ViewModel.TakeAway
 {
+    /// <MetaDataID>{81be8dd2-bc0b-41e1-9383-12d9fc580626}</MetaDataID>
     public class TakeAwayStationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
 
+        /// <MetaDataID>{e89e824d-e9f6-47f8-8935-a5f8b8c0e046}</MetaDataID>
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
             throw new NotImplementedException();
         }
+        /// <MetaDataID>{1f2747fe-2ded-46e9-80bb-95a4dc34372a}</MetaDataID>
         public TakeAwayStationsTreeNode(Infrastructure.InfrastructureTreeNode parent) : base(parent)
         {
             ServiceContextInfrastructure = parent;
@@ -37,7 +40,7 @@ namespace FLBManager.ViewModel.TakeAway
                 //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
                 foreach (var preparationStation in ServiceContextInfrastructure.ServiceContextResources.TakeAwayStations)
-                    TakeAwayStations.Add(preparationStation, new TakeAwayStationTreeNode(this, preparationStation));
+                    TakeAwayStations.Add(preparationStation, new TakeAwayStationPresentation(this, preparationStation));
 
             }
             catch (System.Exception error)
@@ -46,12 +49,14 @@ namespace FLBManager.ViewModel.TakeAway
 
 
         }
-      public readonly  Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
+        /// <MetaDataID>{4247958b-c4a6-488a-8690-94ca7ecace15}</MetaDataID>
+        public readonly Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
-        Dictionary<ITakeAwayStation, TakeAwayStationTreeNode> TakeAwayStations = new Dictionary<ITakeAwayStation, TakeAwayStationTreeNode>();
+        /// <MetaDataID>{1dae1a90-d421-40bf-b460-fd515121a71f}</MetaDataID>
+        Dictionary<ITakeAwayStation, TakeAwayStationPresentation> TakeAwayStations = new Dictionary<ITakeAwayStation, TakeAwayStationPresentation>();
 
         /// <MetaDataID>{9e7b6800-d297-4665-93f3-169c7e95ca65}</MetaDataID>
-        internal void RemoveTakeAwayStation(TakeAwayStationTreeNode takeAwayStationTreeNode)
+        internal void RemoveTakeAwayStation(TakeAwayStationPresentation takeAwayStationTreeNode)
         {
             this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveTakeAwayStation(takeAwayStationTreeNode.TakeAwayStation);
             TakeAwayStations.Remove(takeAwayStationTreeNode.TakeAwayStation);
@@ -64,7 +69,7 @@ namespace FLBManager.ViewModel.TakeAway
             //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
             var takeAwayStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewTakeAwayStation();
-            var preparationStationPresentation = new TakeAwayStationTreeNode(this, takeAwayStation);
+            var preparationStationPresentation = new TakeAwayStationPresentation(this, takeAwayStation);
             preparationStationPresentation.Edit = true;
             TakeAwayStations.Add(takeAwayStation, preparationStationPresentation);
 
@@ -219,6 +224,6 @@ namespace FLBManager.ViewModel.TakeAway
         {
         }
 
-       
+
     }
 }
