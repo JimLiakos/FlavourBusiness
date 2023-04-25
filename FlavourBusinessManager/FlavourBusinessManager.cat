@@ -1585,7 +1585,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"7")
+		    value      	"8")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -1596,6 +1596,97 @@
 		    quid       	"5B0786520032"
 		    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
 		    quidu      	"416244F90271"))
+	    operations 	(list Operations
+		(object Operation "ObjectActivation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{170c2448-eef2-411a-a67e-c4d1e102b472}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96B0071"))
+		    quid       	"6447E96B0071"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BeforeCommitObjectState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a1551750-8abf-45bc-8c3f-ca6da68f7458}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96C031D"))
+		    quid       	"6447E96C031D"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetPropertyValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6564e7c2-a81c-47cb-a413-4d4ce9fab9ed}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96C034E"))
+		    quid       	"6447E96C034E"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"6447E96C0362"
+			    type       	"string"))
+		    result     	"string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SetPropertyValue"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{efa9bfb6-4b72-441f-a6e6-2440d9cd43cb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96C03A2"))
+		    quid       	"6447E96C03A2"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"6447E96C03B3"
+			    type       	"string")
+			(object Parameter "value"
+			    quid       	"6447E96C03CD"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveProperty"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a53fd071-66cc-48a5-bb48-6433e7f7e39d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96D0010"))
+		    quid       	"6447E96D0010"
+		    parameters 	(list Parameters
+			(object Parameter "name"
+			    quid       	"6447E96D0022"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "StorageIdentity"
 		    attributes 	(list Attribute_Set
@@ -1817,6 +1908,47 @@
 			    name       	"Identity"
 			    value      	"+6"))
 		    quid       	"5C967537035B"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "PropertiesValues"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{95e0e1b9-d359-47a7-ab7b-e70139c407ae}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96D00E2")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"6447E96D00E2"
+		    type       	"System.Collections.Generic.Dictionary<string,string>")
+		(object ClassAttribute "PropertiesValuesJson"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f0bdb2b7-ac88-4baa-a9ea-74a59843a52c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E9A50010")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"6447E9A50010"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
@@ -3191,7 +3323,7 @@
 		    value      	TRUE))
 	    quid       	"5B078F5800F9"
 	    roles      	(list role_list
-		(object Role "Storages"
+		(object Role "$UNNAMED$0"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"C#"
@@ -3212,7 +3344,7 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"As Property"
-			    value      	TRUE)
+			    value      	FALSE)
 			(object Attribute
 			    tool       	"C#"
 			    name       	"ContainerClass"
@@ -3222,11 +3354,9 @@
 			    name       	"Indexer"
 			    value      	FALSE))
 		    quid       	"5B078F590121"
-		    label      	"Storages"
 		    supplier   	"Logical View::FlavourBusinessManager::FlavourBusinessStorage"
 		    quidu      	"5B06E8630242"
-		    client_cardinality 	(value cardinality "0..*")
-		    is_navigable 	TRUE)
+		    client_cardinality 	(value cardinality "0..*"))
 		(object Role "Owner"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -3259,6 +3389,45 @@
 		    quidu      	"5A71E2E400A1"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$1"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"6447E96D0180")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"0b95cbd1-fad7-4352-bff4-9bf8cdff4cb9"))
+	    quid       	"6447E96D0180"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96D0181")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1b581ff7-b25f-4e4b-9344-d5d55ff7dbbb}"))
+		    quid       	"6447E96D0181"
+		    supplier   	"Logical View::FlavourBusinessManager::Organization"
+		    quidu      	"5A71E2E400A1"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$3"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6447E96D0183")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3ce4767f-7cce-4a86-a067-da8532e14a9f}"))
+		    quid       	"6447E96D0183"
+		    supplier   	"Logical View::FlavourBusinessManager::FlavourBusinessStorage"
+		    quidu      	"5B06E8630242")))
 	(object Class_Category "ServiceRunTime"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -5356,7 +5525,7 @@
 			    quidu      	"5B06E8630242"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$0"
+			(object Role "$UNNAMED$4"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -5417,7 +5586,7 @@
 			    quidu      	"5D56D11C002D"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$1"
+			(object Role "$UNNAMED$5"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -5483,7 +5652,7 @@
 			    quidu      	"5D845859031C"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$2"
+			(object Role "$UNNAMED$6"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -5923,7 +6092,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$1" @18
+				(object RoleView "$UNNAMED$5" @18
 				    Parent_View 	@13
 				    location   	(672, 4)
 				    font       	(object Font
@@ -5993,6 +6162,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B06E8630242"
+			    compartment 	(object Compartment
+				Parent_View 	@20
+				location   	(3676, 1234)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	14
+				max_width  	0)
 			    width      	943
 			    height     	375
 			    annotation 	8)
@@ -6164,7 +6351,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$0" @29
+				(object RoleView "$UNNAMED$4" @29
 				    Parent_View 	@24
 				    location   	(2648, 122)
 				    stereotype 	TRUE
@@ -6309,7 +6496,7 @@
 					pctDist    	0.900000
 					height     	12
 					orientation 	1))
-				(object RoleView "$UNNAMED$2" @37
+				(object RoleView "$UNNAMED$6" @37
 				    Parent_View 	@31
 				    location   	(-535, 1712)
 				    font       	(object Font
@@ -12572,7 +12759,7 @@
 			    quidu      	"5D58199403CF"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$3"
+			(object Role "$UNNAMED$7"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12638,7 +12825,7 @@
 			    quidu      	"6075762C025B"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$4"
+			(object Role "$UNNAMED$8"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12703,7 +12890,7 @@
 			    quidu      	"6075762C025B"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$5"
+			(object Role "$UNNAMED$9"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12768,7 +12955,7 @@
 			    quidu      	"60DC7AAC016A"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$6"
+			(object Role "$UNNAMED$10"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12833,7 +13020,7 @@
 			    quidu      	"5D56D11C002D"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$7"
+			(object Role "$UNNAMED$11"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -12899,7 +13086,7 @@
 			    quidu      	"5C6BBD69034C"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$8"
+			(object Role "$UNNAMED$12"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13030,7 +13217,7 @@
 			    quidu      	"62D639AF0057"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$9"
+			(object Role "$UNNAMED$13"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13095,7 +13282,7 @@
 			    quidu      	"62CF8F5F0018"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$10"
+			(object Role "$UNNAMED$14"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13154,24 +13341,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(1656, 1797)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	17
-				max_width  	2887)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -13260,7 +13429,7 @@
 			    quidu      	"5B06E8630242"
 			    compartment 	(object Compartment
 				Parent_View 	@42
-				location   	(2859, 2336)
+				location   	(2859, 2552)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13274,7 +13443,7 @@
 				icon_style 	"Decoration"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	7
+				nlines     	14
 				max_width  	1284)
 			    width      	964
 			    height     	482
@@ -13420,24 +13589,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@47
-				location   	(5436, 527)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	15
-				max_width  	1587)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -13469,24 +13620,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@48
-				location   	(3408, 471)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -13797,7 +13930,7 @@
 					pctDist    	0.812604
 					height     	58
 					orientation 	0))
-				(object RoleView "$UNNAMED$5" @64
+				(object RoleView "$UNNAMED$9" @64
 				    Parent_View 	@59
 				    location   	(-158, -99)
 				    stereotype 	TRUE
@@ -13880,24 +14013,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@68
-				location   	(924, 1692)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1225)
 			    width      	719
 			    height     	556
 			    annotation 	8)
@@ -13938,24 +14053,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@70
-				location   	(1614, 755)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -14060,7 +14157,7 @@
 					pctDist    	0.807121
 					height     	39
 					orientation 	0))
-				(object RoleView "$UNNAMED$4" @76
+				(object RoleView "$UNNAMED$8" @76
 				    Parent_View 	@71
 				    location   	(700, 58)
 				    stereotype 	TRUE
@@ -14274,24 +14371,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@86
-				location   	(65, 916)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	28
-				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -14793,7 +14872,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$9" @112
+				(object RoleView "$UNNAMED$13" @112
 				    Parent_View 	@107
 				    location   	(2082, 151)
 				    stereotype 	TRUE
@@ -14907,7 +14986,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$10" @118
+				(object RoleView "$UNNAMED$14" @118
 				    Parent_View 	@113
 				    location   	(780, -59)
 				    font       	(object Font
@@ -16442,7 +16521,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$8" @191
+				(object RoleView "$UNNAMED$12" @191
 				    Parent_View 	@186
 				    location   	(-675, 213)
 				    font       	(object Font
@@ -16976,7 +17055,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$3" @213
+				(object RoleView "$UNNAMED$7" @213
 				    Parent_View 	@208
 				    location   	(601, 87)
 				    font       	(object Font
@@ -17120,7 +17199,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$6" @220
+				(object RoleView "$UNNAMED$10" @220
 				    Parent_View 	@215
 				    location   	(528, 316)
 				    stereotype 	TRUE
@@ -17236,7 +17315,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$7" @226
+				(object RoleView "$UNNAMED$11" @226
 				    Parent_View 	@221
 				    location   	(438, -331)
 				    font       	(object Font
@@ -17624,24 +17703,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@243
-				location   	(1468, 330)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -19497,7 +19558,7 @@
 			    value      	"0c49af08-a143-4f46-8e69-6f3b0f44870b"))
 		    quid       	"5FB8A43F0073"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$11"
+			(object Role "$UNNAMED$15"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -19586,7 +19647,7 @@
 			    supplier   	"Logical View::FinanceFacade::IItem"
 			    quidu      	"5C6BBDA2021E"
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$12"
+			(object Role "$UNNAMED$16"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -19643,7 +19704,7 @@
 			    quidu      	"62CF8F5F0018"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$13"
+			(object Role "$UNNAMED$17"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -20520,7 +20581,7 @@
 			    line_color 	3342489
 			    quidu      	"5FB8A43F0073"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$11" @288
+				(object RoleView "$UNNAMED$15" @288
 				    Parent_View 	@286
 				    location   	(-730, 491)
 				    font       	(object Font
@@ -21317,7 +21378,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$13" @326
+				(object RoleView "$UNNAMED$17" @326
 				    Parent_View 	@321
 				    location   	(533, -379)
 				    stereotype 	TRUE
@@ -21970,7 +22031,7 @@
 				    line_style 	3
 				    origin_attachment 	(2844, 438)
 				    terminal_attachment 	(3916, 716))
-				(object RoleView "$UNNAMED$12" @357
+				(object RoleView "$UNNAMED$16" @357
 				    Parent_View 	@353
 				    location   	(1108, -399)
 				    stereotype 	TRUE
@@ -31381,7 +31442,7 @@
 			    supplier   	"Logical View::FinanceFacade::IPayment"
 			    quidu      	"635CB39B0177"
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$14"
+			(object Role "$UNNAMED$18"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -33238,7 +33299,7 @@
 				    client     	@483
 				    supplier   	@481
 				    line_style 	0)
-				(object RoleView "$UNNAMED$14" @487
+				(object RoleView "$UNNAMED$18" @487
 				    Parent_View 	@483
 				    location   	(-633, -114)
 				    stereotype 	TRUE
@@ -33703,7 +33764,7 @@
 					pctDist    	0.458688
 					height     	83
 					orientation 	1))
-				(object RoleView "$UNNAMED$11" @509
+				(object RoleView "$UNNAMED$15" @509
 				    Parent_View 	@504
 				    location   	(319, -756)
 				    font       	(object Font
@@ -45240,6 +45301,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B06E8630242"
+		    compartment 	(object Compartment
+			Parent_View 	@690
+			location   	(2356, 1449)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	14
+			max_width  	0)
 		    width      	838
 		    height     	356
 		    annotation 	8)
@@ -45309,7 +45388,7 @@
 		    line_color 	3342489
 		    quidu      	"5B078F5800F9"
 		    roleview_list 	(list RoleViews
-			(object RoleView "Storages" @694
+			(object RoleView "$UNNAMED$0" @694
 			    Parent_View 	@692
 			    location   	(423, 297)
 			    font       	(object Font
@@ -45335,12 +45414,13 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
+				hidden     	TRUE
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
 				max_width  	186
 				justify    	0
-				label      	"+Storages"
+				label      	""
 				pctDist    	0.800000
 				height     	42
 				orientation 	0)

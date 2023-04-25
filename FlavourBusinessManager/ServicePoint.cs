@@ -303,7 +303,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         //}
 
         /// <MetaDataID>{f9251525-75d8-4189-b246-e25d08c268ce}</MetaDataID>
-        public virtual IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, string deviceFirebaseToken)
+        public virtual IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID,DeviceType deviceType, string deviceFirebaseToken)
         {
             throw new NotImplementedException();
         }
@@ -336,7 +336,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// return the client session
         /// </returns>
         /// <MetaDataID>{d9fdfbcc-661f-4f13-a29d-2c7e42a886aa}</MetaDataID>
-        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, bool endUser, bool create = false)
+        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;
@@ -891,7 +891,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         EndUsers.FoodServiceClientSession targetServicePointExistingPartialSession = null;
                         if (partialSession.IsWaiterSession)
-                            targetServicePointExistingPartialSession = targetServicePoint.GetFoodServiceClientSession(partialSession.ClientName, null, partialSession.ClientDeviceID, partialSession.DeviceFirebaseToken, !partialSession.IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
+                            targetServicePointExistingPartialSession = targetServicePoint.GetFoodServiceClientSession(partialSession.ClientName, null, partialSession.ClientDeviceID, partialSession.ClientDeviceType, partialSession.DeviceFirebaseToken, !partialSession.IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
 
                         if (targetServicePointExistingPartialSession != null)
                         {
@@ -918,7 +918,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     foreach (var item in itemsForTransfer)
                     {
-                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken,!(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
+                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceType, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken,!(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
                         foodServiceClientSession.Merge(item);
                     }
 

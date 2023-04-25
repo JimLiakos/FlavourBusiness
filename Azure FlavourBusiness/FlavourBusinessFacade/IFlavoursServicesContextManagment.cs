@@ -33,7 +33,7 @@ namespace FlavourBusinessFacade
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
 
         /// <MetaDataID>{2f1dea32-0587-40be-8b27-148c1962fcab}</MetaDataID>
-        EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID,string deviceFirebaseToken, bool endUser,  bool create);
+        EndUsers.ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser,  bool create);
         /// <MetaDataID>{918bd192-2efb-4ff5-adbe-ea6bbe041465}</MetaDataID>
         IHallLayout GetHallLayout(string servicePoint);
 
@@ -48,6 +48,38 @@ namespace FlavourBusinessFacade
         IFoodServiceClientSession GetMealInvitationInviter(string invitationUri);
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
     }
+    //
+    // Summary:
+    //     Indicates the type of device Xamarin.Forms is working on.
+    /// <MetaDataID>{0de49c08-5f61-4e91-bae4-ba0990a63a32}</MetaDataID>
+    public enum DeviceType
+    {
+        //
+        // Summary:
+        //     (Unused) Indicates that Xamarin.Forms is running on an unsupported device.
+        Unknown,
+        //
+        // Summary:
+        //     Indicates that the width of the iPhone, iPod Touch, Windows Phone, or Android
+        //     device on which Xamarin.Forms is running is narrower than 600 dips.
+        Phone,
+        //
+        // Summary:
+        //     Indicates that the width of the iPad, Windows 8.1, or Android device on which
+        //     Xamarin.Forms is running is wider than 600 dips.
+        Tablet,
+        //
+        // Summary:
+        //     Indicates that Xamarin.Forms is running on a desktop.
+        Desktop,
+        //
+        // Summary:
+        //     Indicates that Xamarin.Forms is running on a Tizen app on Tizen TV.
+        TV,
+        //
+        // Summary:
+        //     Indicates that Xamarin.Forms is running on a Tizen watch.
+        Watch
+    }
 
-  
 }

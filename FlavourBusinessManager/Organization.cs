@@ -18,6 +18,7 @@ using Microsoft.Azure.Storage.Blob;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 //using FlavourBusinessToolKit;
 
@@ -777,7 +778,7 @@ namespace FlavourBusinessManager
                                 string orgStorageIdentity = null;
                                 StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
                                 string blobUrl = "usersfolder/"+Identity + "/" + name + ".xml";
- 
+
                                 string oldBlobUrl = fbstorage.Url;
 
                                 if (blobUrl.IndexOf(blobsContainerName+"/") == 0)
@@ -871,7 +872,7 @@ namespace FlavourBusinessManager
                                   where storage.FlavourStorageType == OrganizationStorages.GraphicMenu
                                   select storage).ToList();
 
-                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri ;
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri;
                 foreach (var fbStorage in fbstorages)
                 {
                     try
@@ -996,7 +997,7 @@ namespace FlavourBusinessManager
         {
             string oldPublishedGraphicMenuUri = null;//string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, oldName);
             string newPublishedGraphicMenuUri = null;//string.Format("{0}/Menus/{1}/{2}/{3}.json", Identity, storageIdentity, version, newName);
-            if(string.IsNullOrWhiteSpace(version))
+            if (string.IsNullOrWhiteSpace(version))
             {
                 oldPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{3}.json", Identity, storageIdentity, version, oldName);
                 newPublishedGraphicMenuUri = string.Format("{0}/Menus/{1}/{3}.json", Identity, storageIdentity, version, newName);
@@ -1197,6 +1198,20 @@ namespace FlavourBusinessManager
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
             {
+                double? pageHeight = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Height;
+                double? pageWidth = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Width;
+                if(pageHeight!=null)
+                {
+                    organizationStorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                    organizationStorage.SetPropertyValue("MenuPageWidth", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                }
+                else
+                {
+                    organizationStorage.RemoveProperty("MenuPageHeight");
+                    organizationStorage.RemoveProperty("MenuPageWidth");
+
+                }
+
                 organizationStorage.Version = version;
                 stateTransition.Consistent = true;
             }

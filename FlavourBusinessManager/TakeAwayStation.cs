@@ -1,3 +1,4 @@
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.HumanResources;
@@ -126,22 +127,24 @@ namespace FlavourBusinessManager.ServicesContextResources
             ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
 
-        public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, string deviceFirebaseToken)
+        public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID,DeviceType deviceType, string deviceFirebaseToken)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;
 
             if (authUserRef != null)
                 user = authUserRef.GetContextRoleObject<Waiter>();
+            var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
 
             try
             {
+                EndUsers.FoodServiceClientSession fsClientSession=null;
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepointid_Mega 
 
                     //fsClientSession = ServicesContextRunTime.NewFoodServiceClientSession(fsClientSession);
-                    var fsClientSession = new EndUsers.FoodServiceClientSession();
+                    fsClientSession = new EndUsers.FoodServiceClientSession();
                     
                     fsClientSession.ClientName = clientName;
                     fsClientSession.ClientDeviceID = clientDeviceID;
@@ -165,15 +168,13 @@ namespace FlavourBusinessManager.ServicesContextResources
                     objectStorage.CommitTransientObjectState(fsClientSession);
                     fsClientSession.ServicePoint = this;
 
-                    if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
-                        messmateClientSesion.MakePartOfMeal(fsClientSession);
-
 
 
                     stateTransition.Consistent = true;
                 }
 
-                ServicesContextRunTime.AddOpenServiceClientSession(fsClientSession);
+                ServicesContextRunTime.Current.AddOpenServiceClientSession(fsClientSession);
+                return fsClientSession;
             }
             catch (OOAdvantech.Transactions.TransactionException error)
             {
@@ -183,13 +184,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 throw;
             }
-            lock (ServicePointLock)
-            {
-
-                if (!fsClientSession.IsWaiterSession && State == ServicePointState.Free)
-                    ChangeServicePointState(ServicePointState.Laying);
-
-            }
+           
         }
     }
 }

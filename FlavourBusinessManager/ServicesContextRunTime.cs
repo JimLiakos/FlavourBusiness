@@ -30,6 +30,7 @@ using FlavourBusinessManager.HumanResources;
 
 using System.Net.Http;
 using OOAdvantech.Remoting.RestApi.Serialization;
+using System.Globalization;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -1221,8 +1222,31 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     fbstorage.Version = graphicMenuStorageRef.Version;
 
+                    var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = graphicMenuStorageRef.StorageUrl, TimeStamp = RestaurantMenuDataLastModified };
+                    FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(storageRef, null);
+                    OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+                    var restaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
+                                          select menu).FirstOrDefault();
+
+                    double? pageHeight = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Height;
+                    double? pageWidth = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Width;
+                    if (pageHeight!=null)
+                    {
+                        fbstorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                        fbstorage.SetPropertyValue("MenuPageWidth", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                    }
+                    else
+                    {
+                        fbstorage.RemoveProperty("MenuPageHeight");
+                        fbstorage.RemoveProperty("MenuPageWidth");
+
+                    }
+
                     stateTransition.Consistent = true;
                 }
+
+                 
+
             }
 
 
@@ -1741,7 +1765,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         //clientName="clientName"
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName,  string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -1757,7 +1781,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             if (servicePoint == null && DeliveryServicePoint?.ServicesPointIdentity == servicePointIdentity)
                 servicePoint = DeliveryServicePoint as IServicePoint;
 
-            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceFirebaseToken, endUser, create);
+            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceType, deviceFirebaseToken, endUser, create);
 
             if (clientSession == null)
                 return new ClientSessionData();
@@ -1897,7 +1921,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         object takeAwayStationsLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, ITakeAwayStation> _TakeAwayStationsDictionary;
-        [Association("ContextPreparationStationRuntime", Roles.RoleA, "471493c1-dcec-41bb-a354-e0dc03ea7101")]
+        
         public Dictionary<string, ITakeAwayStation> TakeAwayStationsDictionary
         {
             get

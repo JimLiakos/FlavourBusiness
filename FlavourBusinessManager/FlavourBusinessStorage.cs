@@ -1,4 +1,5 @@
 using FlavourBusinessFacade;
+using OOAdvantech.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -168,9 +169,24 @@ namespace FlavourBusinessManager
                     }
                 }
 
-                
+
             }
         }
+        /// <MetaDataID>{170c2448-eef2-411a-a67e-c4d1e102b472}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            if (!string.IsNullOrWhiteSpace(PropertiesValuesJson))
+                PropertiesValues = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(PropertiesValuesJson);
+
+        }
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            PropertiesValuesJson = OOAdvantech.Json.JsonConvert.SerializeObject(PropertiesValues);
+        }
+
+
         /// <exclude>Excluded</exclude>
         OrganizationStorages _FlavourStorageType;
         /// <MetaDataID>{d9a5ad1c-8e7d-4426-90d3-7064631604b5}</MetaDataID>
@@ -193,6 +209,31 @@ namespace FlavourBusinessManager
                     }
                 }
             }
+        }
+
+        /// <MetaDataID>{f0bdb2b7-ac88-4baa-a9ea-74a59843a52c}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+7")]
+        public string PropertiesValuesJson;
+
+        /// <MetaDataID>{95e0e1b9-d359-47a7-ab7b-e70139c407ae}</MetaDataID>
+        System.Collections.Generic.Dictionary<string, string> PropertiesValues = new Dictionary<string, string>();
+        /// <MetaDataID>{6564e7c2-a81c-47cb-a413-4d4ce9fab9ed}</MetaDataID>
+        public string GetPropertyValue(string name)
+        {
+            string value = null;
+            PropertiesValues.TryGetValue(name, out value);
+            return value;
+        }
+        /// <MetaDataID>{efa9bfb6-4b72-441f-a6e6-2440d9cd43cb}</MetaDataID>
+        public void SetPropertyValue(string name, string value)
+        {
+            PropertiesValues[name] = value;
+        }
+        /// <MetaDataID>{a53fd071-66cc-48a5-bb48-6433e7f7e39d}</MetaDataID>
+        public void RemoveProperty(string name)
+        {
+            PropertiesValues.Remove(name);
         }
     }
 }

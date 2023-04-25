@@ -69,6 +69,11 @@ namespace TakeAwayApp
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
             var appSettings = ApplicationSettings.Current;
+
+            //var dd = DeviceDisplay.MainDisplayInfo;
+
+            //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
+            //var ss = Xamarin.Forms.Device.Idiom;
         }
 
         /// <MetaDataID>{f39575a9-0c7a-4e09-80e8-415fffdee64f}</MetaDataID>

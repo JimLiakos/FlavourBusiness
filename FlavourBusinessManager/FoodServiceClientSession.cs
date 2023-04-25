@@ -64,6 +64,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<HumanResources.ServingShiftWork> _SessionCreator=new OOAdvantech.Member<HumanResources.ServingShiftWork>();
 
@@ -530,6 +531,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <exclude>Excluded</exclude>
         string _ClientDeviceID;
 
+        public DeviceType ClientDeviceType { get; set; }
 
         /// <MetaDataID>{de12b069-1aee-4452-a778-d278c7bea787}</MetaDataID>
         [PersistentMember(nameof(_ClientDeviceID))]
@@ -1080,7 +1082,9 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+9")]
         public IList<Message> Messages => _Messages.ToThreadSafeList();
 
-
+        public FoodServiceClientSession()
+        {
+        }
 
         /// <MetaDataID>{981f30bb-1479-4652-8ec2-ce0ca2b7ef76}</MetaDataID>
         public FoodServiceClientSession(OrganizationStorageRef menu=null)

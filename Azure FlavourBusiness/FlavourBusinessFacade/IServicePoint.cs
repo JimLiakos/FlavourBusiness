@@ -84,7 +84,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         /// <MetaDataID>{5faee0ed-1a08-41b3-8e4b-8339a588df90}</MetaDataID>
-        IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, string deviceFirebaseToken);
+        IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID,DeviceType deviceType, string deviceFirebaseToken);
 
 
         ///  <MetaDataID>{6329ebf0-633d-4759-887f-89dc0e157ddb}</MetaDataID>
@@ -114,7 +114,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <returns>
         /// return the client session
         /// </returns>
-        IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, string deviceFirebaseToken, bool create, bool create = false);
+        IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false);
 
 
         /// <MetaDataID>{56809dc3-ae5d-4abb-a1ec-14a9cabc6e44}</MetaDataID>
