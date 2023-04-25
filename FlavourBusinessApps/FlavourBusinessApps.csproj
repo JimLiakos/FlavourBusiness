@@ -120,7 +120,7 @@
     <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\ApplicationSettings.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\ApplicationSettings.cs</Link>
     </Compile>
-    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayStation.cs">
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\TakeAwayStation.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\TakeAwayStation.cs</Link>
     </Compile>
     <Compile Include="..\WaiterApp\WaiterApp\ViewModel\ItemsReadyToServe.cs">

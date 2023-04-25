@@ -11561,7 +11561,11 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
-				    value      	"62D65EDF02FC"))
+				    value      	"62D65EDF02FC")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"virtual"
+				    value      	TRUE))
 			    quid       	"62D65EDF02FC"
 			    parameters 	(list Parameters
 				(object Parameter "clientName"
@@ -11569,6 +11573,14 @@
 				    type       	"string")
 				(object Parameter "clientDeviceID"
 				    quid       	"62D6B2B3023B"
+				    type       	"string")
+				(object Parameter "deviceFirebaseToken"
+				    quid       	"6447754B01BE"
+				    documentation 	
+|
+|Defines the device firebase token for push notification facility 
+|
+				    
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"
 			    concurrency 	"Sequential"
@@ -13112,7 +13124,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	2735
+		    origin_x   	1338
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::ServiceArea" @39
@@ -15664,24 +15676,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66B8670182"
-			    compartment 	(object Compartment
-				Parent_View 	@152
-				location   	(2122, 1301)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	28
-				max_width  	2759)
 			    width      	744
 			    height     	337
 			    annotation 	8)
@@ -16041,24 +16035,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
-			    compartment 	(object Compartment
-				Parent_View 	@170
-				location   	(2112, 457)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	787)
 			    width      	788
 			    height     	426
 			    annotation 	8)
@@ -17650,7 +17626,7 @@
 			    quidu      	"5B8BB60401E2"
 			    compartment 	(object Compartment
 				Parent_View 	@243
-				location   	(1468, 253)
+				location   	(1468, 330)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"

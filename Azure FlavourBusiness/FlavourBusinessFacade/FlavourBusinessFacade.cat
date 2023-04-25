@@ -4497,6 +4497,14 @@
 				    type       	"string")
 				(object Parameter "clientDeviceID"
 				    quid       	"5D00871D0346"
+				    type       	"string")
+				(object Parameter "deviceFirebaseToken"
+				    quid       	"6447752D0087"
+				    documentation 	
+|
+|Defines the device firebase token for push notification facility 
+|
+				    
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"
 			    concurrency 	"Sequential"
@@ -8662,6 +8670,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@11
+				location   	(2497, 167)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	20
+				max_width  	0)
 			    width      	706
 			    height     	394
 			    annotation 	8)
@@ -13859,6 +13885,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@111
+				location   	(1550, 2121)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	20
+				max_width  	0)
 			    width      	825
 			    height     	438
 			    annotation 	8)

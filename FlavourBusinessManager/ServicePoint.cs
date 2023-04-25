@@ -303,7 +303,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         //}
 
         /// <MetaDataID>{f9251525-75d8-4189-b246-e25d08c268ce}</MetaDataID>
-        public IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID)
+        public virtual IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, string deviceFirebaseToken)
         {
             throw new NotImplementedException();
         }
@@ -487,7 +487,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             return fsClientSession;
         }
 
-    
+
 
         /// <exclude>Excluded</exclude>
         ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;

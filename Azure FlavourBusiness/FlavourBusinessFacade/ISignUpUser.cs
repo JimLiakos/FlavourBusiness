@@ -25,6 +25,7 @@ namespace FlavourBusinessFacade.ViewModel
         /// <MetaDataID>{bb20cd5b-e7b6-48a2-9856-77aa454b8989}</MetaDataID>
         string ConfirmPassword { get; set; }
 
+        /// <MetaDataID>{db24c0d2-6c10-41f0-b6d7-4c071027127b}</MetaDataID>
         string PhoneNumber { get; set; }
     }
 
@@ -68,15 +69,20 @@ namespace FlavourBusinessFacade.ViewModel
         string SignInProvider { get; set; }
 
 
+        /// <MetaDataID>{ea0d5857-2842-403e-8b46-3d285e2dd6f0}</MetaDataID>
         [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
         string OAuthUserIdentity { get; set; }
 
+        /// <MetaDataID>{701c9f86-e958-431c-abf2-4a66777d6255}</MetaDataID>
         void SignOut();
 
+        /// <MetaDataID>{44652dec-effd-48bb-aae7-da0fe78b0671}</MetaDataID>
         Task<bool> SignUp();
 
+        /// <MetaDataID>{7ba8e62a-0baa-4fe9-b58c-ed9d08381a1e}</MetaDataID>
         Task<bool> SignIn();
 
+        /// <MetaDataID>{ab6e6eb2-5155-49f9-b80e-68b00e96b730}</MetaDataID>
         void SaveUserProfile();
 
     }

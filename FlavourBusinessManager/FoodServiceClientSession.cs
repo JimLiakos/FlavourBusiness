@@ -1083,8 +1083,10 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{981f30bb-1479-4652-8ec2-ce0ca2b7ef76}</MetaDataID>
-        public FoodServiceClientSession()
+        public FoodServiceClientSession(OrganizationStorageRef menu=null)
         {
+
+            _Menu = menu;
             _SessionID = Guid.NewGuid().ToString("N");
         }
 
@@ -1388,6 +1390,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 return _Menu;
             }
+            
         }
         internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GraphicMenu
         {

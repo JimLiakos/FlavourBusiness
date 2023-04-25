@@ -1,3 +1,6 @@
+using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -121,6 +124,72 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             _TakeAwayStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
             ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
+        }
+
+        public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, string deviceFirebaseToken)
+        {
+            AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
+            FlavourBusinessFacade.IUser user = null;
+
+            if (authUserRef != null)
+                user = authUserRef.GetContextRoleObject<Waiter>();
+
+            try
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepointid_Mega 
+
+                    //fsClientSession = ServicesContextRunTime.NewFoodServiceClientSession(fsClientSession);
+                    var fsClientSession = new EndUsers.FoodServiceClientSession();
+                    
+                    fsClientSession.ClientName = clientName;
+                    fsClientSession.ClientDeviceID = clientDeviceID;
+                    fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
+                    fsClientSession.SessionStarts = DateTime.UtcNow;
+                    fsClientSession.ModificationTime = DateTime.UtcNow;
+                    fsClientSession.PreviousYouMustDecideMessageTime = DateTime.UtcNow;
+
+
+                    fsClientSession.SessionType = SessionType.Takeaway;
+
+
+
+                    if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
+                        fsClientSession.UserIdentity = user.Identity;
+
+
+
+
+                    fsClientSession.DateTimeOfLastRequest = DateTime.UtcNow;// DateTime.MinValue + TimeSpan.FromDays(28);
+                    objectStorage.CommitTransientObjectState(fsClientSession);
+                    fsClientSession.ServicePoint = this;
+
+                    if (messmateClientSesion != null && messmateClientSesion.ServicePoint == this)
+                        messmateClientSesion.MakePartOfMeal(fsClientSession);
+
+
+
+                    stateTransition.Consistent = true;
+                }
+
+                ServicesContextRunTime.AddOpenServiceClientSession(fsClientSession);
+            }
+            catch (OOAdvantech.Transactions.TransactionException error)
+            {
+                throw;
+            }
+            catch (System.Exception error)
+            {
+                throw;
+            }
+            lock (ServicePointLock)
+            {
+
+                if (!fsClientSession.IsWaiterSession && State == ServicePointState.Free)
+                    ChangeServicePointState(ServicePointState.Laying);
+
+            }
         }
     }
 }
