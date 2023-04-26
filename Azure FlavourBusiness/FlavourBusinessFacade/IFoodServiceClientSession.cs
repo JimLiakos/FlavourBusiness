@@ -12,6 +12,7 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+        /// <MetaDataID>{630e9a95-85cd-4be3-b8ec-7d7abd35ec47}</MetaDataID>
         [BackwardCompatibilityID("+15")]
         string UserLanguageCode { set; get; }
 

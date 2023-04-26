@@ -33,7 +33,7 @@ namespace FLBManager.ViewModel
         Dictionary<IServiceArea, ServiceAreaPresentation> ServiceAreas = new Dictionary<IServiceArea, ServiceAreaPresentation>();
 
         /// <MetaDataID>{a9bc3a17-19fb-46e4-b77f-ea6ceb25dabd}</MetaDataID>
-        IFlavoursServicesContextRuntime FlavoursServicesContextRuntime;
+       public  IFlavoursServicesContextRuntime FlavoursServicesContextRuntime;
 
 
         /// <MetaDataID>{06fd7155-b404-42fd-aa4d-32a7f752a640}</MetaDataID>
@@ -545,6 +545,9 @@ namespace FLBManager.ViewModel
 
         public void AssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
         {
+            if (_GraphicMenus.ContainsKey(graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity))
+                return;
+
             if (FlavoursServicesContextRuntime == null)
                 FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
             FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
@@ -553,8 +556,11 @@ namespace FLBManager.ViewModel
 
             if (MenusTreeNode == null)
                 MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
+            else
+                MenusTreeNode.Refresh();
 
-            
+
+
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
         }

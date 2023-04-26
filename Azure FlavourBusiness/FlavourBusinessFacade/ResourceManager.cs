@@ -75,11 +75,12 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{f76e1d7f-4129-4e42-beb5-d411e3fb8326}</MetaDataID>
         public FlavourBusinessFacade.IUploadService UploadService { get; set; }
+        public Dictionary<string, string> PropertiesValues { get; set; }
 
         /// <MetaDataID>{8c56a270-32bc-4192-917d-4c7340696988}</MetaDataID>
         public OrganizationStorageRef Clone()
         {
-            return new OrganizationStorageRef() { Description = this.Description, Name = this.Name, StorageIdentity = this.StorageIdentity, StorageUrl = this.StorageUrl, TimeStamp = this.TimeStamp, UploadService= this.UploadService };
+            return new OrganizationStorageRef() { Description = this.Description, Name = this.Name, StorageIdentity = this.StorageIdentity, StorageUrl = this.StorageUrl, TimeStamp = this.TimeStamp, UploadService= this.UploadService, PropertiesValues=this.PropertiesValues };
         }
     }
 }

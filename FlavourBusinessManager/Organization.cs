@@ -1203,13 +1203,12 @@ namespace FlavourBusinessManager
                 if(pageHeight!=null)
                 {
                     organizationStorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
-                    organizationStorage.SetPropertyValue("MenuPageWidth", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                    organizationStorage.SetPropertyValue("MenuPageWidth", pageWidth.Value.ToString(CultureInfo.GetCultureInfo(1033)));
                 }
                 else
                 {
                     organizationStorage.RemoveProperty("MenuPageHeight");
                     organizationStorage.RemoveProperty("MenuPageWidth");
-
                 }
 
                 organizationStorage.Version = version;

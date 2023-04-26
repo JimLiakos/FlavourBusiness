@@ -66,7 +66,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Member<HumanResources.ServingShiftWork> _SessionCreator=new OOAdvantech.Member<HumanResources.ServingShiftWork>();
+        OOAdvantech.Member<HumanResources.ServingShiftWork> _SessionCreator = new OOAdvantech.Member<HumanResources.ServingShiftWork>();
 
         [Association("FoodServiceClientSessionInTheShiftWork", Roles.RoleB, "2076b2c6-2c5e-415a-93ab-187654f7c04a")]
         [PersistentMember(nameof(_SessionCreator))]
@@ -531,7 +531,27 @@ namespace FlavourBusinessManager.EndUsers
         /// <exclude>Excluded</exclude>
         string _ClientDeviceID;
 
-        public DeviceType ClientDeviceType { get; set; }
+        /// <exclude>Excluded</exclude>
+        DeviceType _ClientDeviceType;
+
+        /// <MetaDataID>{1fb58963-f51c-43ed-a7b5-0b8ccb8c163a}</MetaDataID>
+        [PersistentMember(nameof(_ClientDeviceType))]
+        [BackwardCompatibilityID("+30")]
+        public DeviceType ClientDeviceType
+        {
+            get => _ClientDeviceType;
+            set
+            {
+                if (_ClientDeviceType!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ClientDeviceType=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <MetaDataID>{de12b069-1aee-4452-a778-d278c7bea787}</MetaDataID>
         [PersistentMember(nameof(_ClientDeviceID))]
@@ -1082,12 +1102,13 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+9")]
         public IList<Message> Messages => _Messages.ToThreadSafeList();
 
+        /// <MetaDataID>{43da29bd-ea42-4020-9278-9e27db289e48}</MetaDataID>
         public FoodServiceClientSession()
         {
         }
 
         /// <MetaDataID>{981f30bb-1479-4652-8ec2-ce0ca2b7ef76}</MetaDataID>
-        public FoodServiceClientSession(OrganizationStorageRef menu=null)
+        public FoodServiceClientSession(OrganizationStorageRef menu = null)
         {
 
             _Menu = menu;
@@ -1382,8 +1403,33 @@ namespace FlavourBusinessManager.EndUsers
             {
                 if (_Menu == null)
                 {
-                    var graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
-                    
+                    OrganizationStorageRef graphicMenu = null;
+                    if (ServicesContextRunTime.GraphicMenus.Count==1)
+                        graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
+                    else
+                    {
+                        //var Portrait = null;
+                        //var Landscape = null;
+
+                        if (ClientDeviceType==DeviceType.Phone)
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsPortrait(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.Desktop)
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.Tablet)
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.TV)
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+
+                        if (graphicMenu==null)
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.FirstOrDefault();
+
+
+                    }
+
+
                     string versionSuffix = "";
                     if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
                         versionSuffix = "/" + graphicMenu.Version;
@@ -1394,8 +1440,40 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 return _Menu;
             }
-            
+
         }
+        private bool IsLandscape(OrganizationStorageRef graphicMenu)
+        {
+            string menuPageHeightAsString = null;
+            string menuPageWidthAsString = null;
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            {
+                double height = 0;
+                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+                double width = 0;
+                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+                return width>height;
+            }
+
+            return false;
+        }
+        private bool IsPortrait(OrganizationStorageRef graphicMenu)
+        {
+            string menuPageHeightAsString = null;
+            string menuPageWidthAsString = null;
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            {
+                double height = 0;
+                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+                double width = 0;
+                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+                return height>width;
+            }
+
+            return false;
+        }
+
+        /// <MetaDataID>{a31148d7-08cf-459f-bc06-f355081edb15}</MetaDataID>
         internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GraphicMenu
         {
             get
@@ -1439,10 +1517,10 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <exclude>Excluded</exclude>;
-        
+
 
         /// <MetaDataID>{efecab6b-0f79-4b59-8137-e18550333365}</MetaDataID>
-        
+
         [BackwardCompatibilityID("+21")]
         public FlavourBusinessFacade.HumanResources.IWaiter Waiter
         {
@@ -2579,7 +2657,7 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
-          
+
         /// <MetaDataID>{de284aed-075a-4c1b-877f-ee5a70fa3b3a}</MetaDataID>
         public IBill GetBill()
         {
@@ -2644,7 +2722,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        
+
 
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)

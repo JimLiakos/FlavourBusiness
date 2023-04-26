@@ -51,7 +51,7 @@ namespace FLBManager.ViewModel.TakeAway
         {
 
 
-
+            // .ServicesContext.GetRunTime
 
             TakeAwayStationsTreeNode = parent;
             this.TakeAwayStation = takeAwayStation;
@@ -402,10 +402,14 @@ namespace FLBManager.ViewModel.TakeAway
         /// <MetaDataID>{6d4862ac-5434-4fc0-8e58-f8ec7710fec4}</MetaDataID>
         public void Drop(object sender, DragEventArgs e)
         {
-            MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenuTreeNode = e.Data.GetData(typeof(MenuDesigner.ViewModel.GraphicMenuTreeNode)) as MenuDesigner.ViewModel.GraphicMenuTreeNode;
+            MenuDesigner.ViewModel.GraphicMenuTreeNode graphicMenuTreeNode = e.Data.GetData(typeof(GraphicMenuTreeNode)) as GraphicMenuTreeNode;
             if (graphicMenuTreeNode  != null)
             {
+
+                 //FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
+
                 this.TakeAwayStation.GraphicMenuStorageIdentity=graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity;
+                TakeAwayStationsTreeNode.ServiceContextInfrastructure.ServicesContextPresentation.AssignGraphicMenu(graphicMenuTreeNode);
                 GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             }

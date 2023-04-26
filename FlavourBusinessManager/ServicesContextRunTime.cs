@@ -1013,7 +1013,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var storageUrl = urlRoot + fbStorage.Url;
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
 
-                    OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
+                    OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version, PropertiesValues=fbStorage.PropertiesValues };
                     graphicMenusStorages.Add(storageRef);
                 }
 
@@ -1047,6 +1047,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     fbstorage.FlavourStorageType = OrganizationStorages.GraphicMenu;
                     ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(fbstorage);
                     _Storages.Add(fbstorage);
+
+                    GraphicMenuStorageMetaDataUpdated(graphicMenuStorageRef);
                     stateTransition.Consistent = true;
                 }
             }
@@ -1233,7 +1235,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     if (pageHeight!=null)
                     {
                         fbstorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
-                        fbstorage.SetPropertyValue("MenuPageWidth", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
+                        fbstorage.SetPropertyValue("MenuPageWidth", pageWidth.Value.ToString(CultureInfo.GetCultureInfo(1033)));
                     }
                     else
                     {

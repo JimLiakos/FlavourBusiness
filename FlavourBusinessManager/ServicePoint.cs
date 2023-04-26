@@ -397,6 +397,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         fsClientSession = new EndUsers.FoodServiceClientSession();
                         fsClientSession.ClientName = clientName;
                         fsClientSession.ClientDeviceID = clientDeviceID;
+                        fsClientSession.ClientDeviceType=deviceType;
                         fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
                         fsClientSession.SessionStarts = DateTime.UtcNow;
                         fsClientSession.ModificationTime = DateTime.UtcNow;
@@ -483,7 +484,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                 }
             }
-
+            fsClientSession.ClientDeviceType=deviceType;
             return fsClientSession;
         }
 
