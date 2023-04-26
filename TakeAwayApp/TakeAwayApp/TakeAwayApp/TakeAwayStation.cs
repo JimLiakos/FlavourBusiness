@@ -2,6 +2,7 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
+using FlavourBusinessManager.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
 using OOAdvantech.MetaDataRepository;
@@ -38,6 +39,9 @@ namespace TakeAwayApp
         /// <MetaDataID>{0d0668da-c0ce-49ed-9a74-c6a574409a1c}</MetaDataID>
         Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable);
 
+        Task<bool> IsActive { get; }
+
+
         /// <summary>
         /// Check if application is granted to access infrastructure for QR code scanning 
         /// </summary>
@@ -57,6 +61,8 @@ namespace TakeAwayApp
         /// </returns>
         /// <MetaDataID>{ba8d35eb-61c2-4e41-9464-66a58f9e7e7b}</MetaDataID>
         Task<bool> RequestPermissionsForQRCodeScan();
+
+
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
@@ -247,7 +253,14 @@ namespace TakeAwayApp
 
                 TakeAwayStation = servicesContextManagment.GetTakeAwayStation(credentialKey);
                 if (TakeAwayStation!=null)
+                {
                     CommunicationCredentialKey = credentialKey;
+
+                    OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.NewFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+
+                    
+                }
 
                 return Task.FromResult(TakeAwayStation!=null);
 
@@ -255,7 +268,27 @@ namespace TakeAwayApp
             return Task.FromResult(true);
         }
 
-            
+        public Task<bool> IsActive
+        {
+            get
+            {
+                if(TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                    TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
+                    if (TakeAwayStation!=null)
+                    {
+                        IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.NewFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                    }
+                    
+                }
+                return Task.FromResult(TakeAwayStation!=null);
+            }
+        }
 
 
 #if DeviceDotNet

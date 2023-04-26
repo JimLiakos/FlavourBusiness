@@ -224,6 +224,11 @@ namespace TakeAwayApp
 
             TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
 
+            if(TakeAwayStation != null)
+            {
+                //TakeAwayStation.new
+            }
+
 
             return Task.FromResult(true);
 

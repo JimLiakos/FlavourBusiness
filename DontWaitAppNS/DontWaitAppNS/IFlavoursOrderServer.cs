@@ -249,8 +249,11 @@ namespace DontWaitApp
 
         /// <MetaDataID>{1296cf3c-a0c6-4483-a8ec-3c2ac3874660}</MetaDataID>
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
+
+        Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession);
+
         /// <MetaDataID>{d4579596-157a-494d-ba17-908edbf4586b}</MetaDataID>
-    
+
 
     }
 

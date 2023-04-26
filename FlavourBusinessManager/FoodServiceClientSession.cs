@@ -1105,6 +1105,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{43da29bd-ea42-4020-9278-9e27db289e48}</MetaDataID>
         public FoodServiceClientSession()
         {
+            _SessionID = Guid.NewGuid().ToString("N");
         }
 
         /// <MetaDataID>{981f30bb-1479-4652-8ec2-ce0ca2b7ef76}</MetaDataID>
