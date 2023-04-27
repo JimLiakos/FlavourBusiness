@@ -11,6 +11,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
     /// <MetaDataID>{f59ddc23-752d-474e-a198-07f5ef4faa80}</MetaDataID>
     public class MenuCanvasLine : MenuCanvas.IMenuCanvasLine
     {
+        public MenuCanvasLine()
+        {
+
+        }
 
         MenuPageCanvas _Page;
         public MenuCanvasLine(MenuPageCanvas page, MenuCanvas.IMenuCanvasLine menuCanvasLine)

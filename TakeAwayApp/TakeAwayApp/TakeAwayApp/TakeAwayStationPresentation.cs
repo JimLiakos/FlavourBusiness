@@ -231,7 +231,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{d7005bd3-dec7-4101-a42c-8ad172b92829}</MetaDataID>
         public Task<bool> SignIn()
         {
-            throw new System.NotImplementedException();
+            return Task<bool>.FromResult( false);
         }
 
         /// <MetaDataID>{c73714ed-3114-486e-ad8a-cbc9308ab2ee}</MetaDataID>
