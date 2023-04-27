@@ -387,12 +387,12 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
-        public string Language { get { return deflan; } }
+        public string Language { get { return lan; } }
 
         /// <MetaDataID>{a265f74d-25a6-4304-aef3-7653e47bb721}</MetaDataID>
         string deflan = "en";
         /// <MetaDataID>{37345ef4-1bfa-44c3-82ce-5539786fcb18}</MetaDataID>
-        public string DefaultLanguage { get { return deflan; } }
+        public string DefaultLanguage { get { return lan; } }
 
         /// <MetaDataID>{01c697c1-fd73-454c-89cd-1c72d7c39116}</MetaDataID>
         public string FontsLink { get; set; } = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";

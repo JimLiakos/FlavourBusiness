@@ -336,7 +336,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// return the client session
         /// </returns>
         /// <MetaDataID>{d9fdfbcc-661f-4f13-a29d-2c7e42a886aa}</MetaDataID>
-        public IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false)
+        public virtual IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;

@@ -3339,6 +3339,22 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, FlavourBusinessFacade.DeviceType deviceType, string deviceFirebaseToken)
+        {
+            object[] args = new object[4];
+            System.Type[] argsTypes = new System.Type[4];
+            args[0] = clientName;
+            argsTypes[0] = typeof(string);
+            args[1] = clientDeviceID;
+            argsTypes[1] = typeof(string);
+            args[2] = deviceType;
+            argsTypes[2] = typeof(FlavourBusinessFacade.DeviceType);
+            args[3] = deviceFirebaseToken;
+            argsTypes[3] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "GetUncommittedFoodServiceClientSession", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
+        }
+        
         public void AddMealType(string mealTypeUri)
         {
             object[] args = new object[1];

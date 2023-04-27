@@ -132,6 +132,11 @@ namespace FlavourBusinessManager.EndUsers
                     defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
                     servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
+                if (defaultMealTypeUri == null && ServicePoint is ITakeAwayStation)
+                {
+                    defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+                    servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
+                }
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
 

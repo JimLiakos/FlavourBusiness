@@ -66,7 +66,7 @@ namespace TakeAwayApp
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser, OOAdvantech.Remoting.RestApi.IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
@@ -257,7 +257,7 @@ namespace TakeAwayApp
                     CommunicationCredentialKey = credentialKey;
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.NewFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
 
                     
                 }
@@ -282,7 +282,7 @@ namespace TakeAwayApp
                     if (TakeAwayStation!=null)
                     {
                         IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.NewFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
                     }
                     
                 }
@@ -408,6 +408,13 @@ namespace TakeAwayApp
 #else
             return await Task<bool>.FromResult(false);
 #endif
+        }
+
+        public MarshalByRefObject GetObjectFromUri(string uri)
+        {
+              if (uri == "./TakeAwayStation")
+                return this;
+            return FlavoursOrderServer as MarshalByRefObject;
         }
 
         /// <MetaDataID>{0f27ba87-430d-45b2-95fb-b950d1f90482}</MetaDataID>

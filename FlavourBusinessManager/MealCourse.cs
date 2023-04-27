@@ -737,7 +737,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{e8a414af-4141-45ef-bc7a-5c7081052f7b}</MetaDataID>
-        public static ItemPreparationState GetMinimumCommonItemPreparationState(this List<IItemPreparation> foodItems)
+        public static ItemPreparationState GetMinimumCommonItemPreparationState(this IList<IItemPreparation> foodItems)
         {
             var ss = Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderByDescending(x => (int)x).ToArray();
             ItemPreparationState commonState = ItemPreparationState.New;

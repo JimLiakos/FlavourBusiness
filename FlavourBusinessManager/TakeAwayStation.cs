@@ -6,13 +6,16 @@ using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
+using System.Linq;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessFacade.RoomService;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{99f0adb9-6986-412c-9f26-aa956ec96f18}</MetaDataID>
     [BackwardCompatibilityID("{99f0adb9-6986-412c-9f26-aa956ec96f18}")]
     [Persistent()]
-    public class TakeAwayStation : ServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation
+    public class TakeAwayStation : ServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject, ITakeAwayStation
     {
         /// <exclude>Excluded</exclude>
         string _GraphicMenuStorageIdentity;
@@ -127,7 +130,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
 
-        public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID,DeviceType deviceType, string deviceFirebaseToken)
+        public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;
@@ -138,14 +141,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             try
             {
-                EndUsers.FoodServiceClientSession fsClientSession=null;
+                EndUsers.FoodServiceClientSession fsClientSession = null;
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepointid_Mega 
 
                     //fsClientSession = ServicesContextRunTime.NewFoodServiceClientSession(fsClientSession);
                     fsClientSession = new EndUsers.FoodServiceClientSession();
-                    
+
                     fsClientSession.ClientName = clientName;
                     fsClientSession.ClientDeviceID = clientDeviceID;
                     fsClientSession.DeviceFirebaseToken = deviceFirebaseToken;
@@ -184,7 +187,21 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 throw;
             }
-           
+
         }
+
+        public IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
+        {
+
+            var uncommitedFoodServiceClientSession = this.OpenClientSessions.Where(x => x.ServicePoint==this&& ((int)x.FlavourItems.GetMinimumCommonItemPreparationState())<(int)ItemPreparationState.Committed).OrderBy(x => x.SessionStarts).LastOrDefault();
+            if (uncommitedFoodServiceClientSession!=null)
+                return uncommitedFoodServiceClientSession;
+
+            else
+                return NewFoodServiceClientSession(clientName, clientDeviceID, deviceType, deviceFirebaseToken);
+
+        }
+
+
     }
 }

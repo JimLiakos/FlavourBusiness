@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -14,6 +15,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{a007d657-c566-4605-bdcc-e204a71b166f}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         string TakeAwayStationIdentity { get; set; }
+
+        IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken);
+
         ///// <MetaDataID>{60768d22-7047-4dd0-b0db-0d34a6734813}</MetaDataID>
         //[BackwardCompatibilityID("+2")]
         //string ServicesContextIdentity { get; set; }

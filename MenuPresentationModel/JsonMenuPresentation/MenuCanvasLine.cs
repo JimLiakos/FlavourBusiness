@@ -16,7 +16,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
         public MenuCanvasLine(MenuPageCanvas page, MenuCanvas.IMenuCanvasLine menuCanvasLine)
         {
             _Page = page;
-            Stroke = menuCanvasLine.Stroke;
+            Stroke = menuCanvasLine?.Stroke;
             StrokeThickness = menuCanvasLine.StrokeThickness;
             X1 = menuCanvasLine.X1;
             X2 = menuCanvasLine.X2;
