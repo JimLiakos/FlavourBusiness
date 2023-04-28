@@ -505,7 +505,12 @@ namespace DontWaitApp
                 var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 OOAdvantech.IDeviceOOAdvantechCore device = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 if (!WaiterView)
-                    return (_EndUser as FoodServiceClientVM).GetFriendlyName();
+                {
+                    if (_EndUser is FoodServiceClientVM)
+                        return (_EndUser as FoodServiceClientVM).GetFriendlyName();
+                    else
+                        return _EndUser.FullName;
+                }
                 else
                     return _EndUser.FullName;
 
