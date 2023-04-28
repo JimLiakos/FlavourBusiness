@@ -434,5 +434,10 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
