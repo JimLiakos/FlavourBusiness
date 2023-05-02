@@ -156,7 +156,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     fsClientSession.ModificationTime = DateTime.UtcNow;
                     fsClientSession.PreviousYouMustDecideMessageTime = DateTime.UtcNow;
 
-
+                    fsClientSession.ClientDeviceType = deviceType;
                     fsClientSession.SessionType = SessionType.Takeaway;
 
 
@@ -194,8 +194,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             var uncommitedFoodServiceClientSession = this.OpenClientSessions.Where(x => x.ServicePoint==this&& ((int)x.FlavourItems.GetMinimumCommonItemPreparationState())<(int)ItemPreparationState.Committed).OrderBy(x => x.SessionStarts).LastOrDefault();
+            
             if (uncommitedFoodServiceClientSession!=null)
+            {
+                uncommitedFoodServiceClientSession.ClientDeviceType= deviceType;
                 return uncommitedFoodServiceClientSession;
+            }
 
             else
                 return NewFoodServiceClientSession(clientName, clientDeviceID, deviceType, deviceFirebaseToken);
