@@ -2,7 +2,7 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
-using FlavourBusinessManager.ServicesContextResources;
+
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
 using OOAdvantech.MetaDataRepository;
@@ -20,6 +20,7 @@ using Acr.UserDialogs;
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
+using FlavourBusinessManager.ServicesContextResources;
 using MarshalByRefObject = System.MarshalByRefObject;
 #endif
 
@@ -257,7 +258,7 @@ namespace TakeAwayApp
                     CommunicationCredentialKey = credentialKey;
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
                     
                 }
@@ -282,7 +283,7 @@ namespace TakeAwayApp
                     if (TakeAwayStation!=null)
                     {
                         IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                     }
                     
                 }
