@@ -511,24 +511,27 @@ namespace MenuPresentationModel.MenuCanvas
             set
             {
 
-
-                if (_Description != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _Description.Value = value;
-                        stateTransition.Consistent = true;
-                    }
-                    var culture = CultureContext.CurrentCultureInfo;
-                    var useDefaultCultureValue = CultureContext.UseDefaultCultureValue;
-                    OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
-                    {
-                        using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
-                        {
-                            _ObjectChangeState?.Invoke(this, nameof(Description));
-                        }
-                    }));
+                    if (_Description == value)
+                        return;
                 }
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Description.Value = value;
+                    stateTransition.Consistent = true;
+                }
+                var culture = CultureContext.CurrentCultureInfo;
+                var useDefaultCultureValue = CultureContext.UseDefaultCultureValue;
+                OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
+                {
+                    using (CultureContext cultureContext = new CultureContext(culture, useDefaultCultureValue))
+                    {
+                        _ObjectChangeState?.Invoke(this, nameof(Description));
+                    }
+                }));
+
 
             }
         }
@@ -563,13 +566,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_Width != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Width != value)
                     {
-                        _Width.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _Width.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -590,13 +595,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-
-                if (_XPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_XPos != value)
                     {
-                        _XPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _XPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -618,13 +625,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_YPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_YPos != value)
                     {
-                        _YPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _YPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -673,13 +682,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_HeadingType != value && value != HeadingType.SubHeading)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_HeadingType != value && value != HeadingType.SubHeading)
                     {
-                        _HeadingType = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _HeadingType = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -855,12 +866,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-                if (_BaseLine != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_BaseLine != value)
                     {
-                        _BaseLine.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _BaseLine.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -883,12 +897,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-                if (_Height != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Height != value)
                     {
-                        _Height.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _Height.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }

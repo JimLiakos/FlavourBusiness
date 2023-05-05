@@ -345,13 +345,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-
-                if (_MaxHeight != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_MaxHeight != value)
                     {
-                        _MaxHeight.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _MaxHeight.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -429,19 +431,21 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-
-                if (_Description != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Description != value)
                     {
-                        _Description.Value = value;
-                        stateTransition.Consistent = true;
-                    }
-                    FontData font = Font;
-                    font.Foreground = "#80141C";
-                    //Font = font;
-                    ObjectChangeState?.Invoke(this, nameof(Description));
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _Description.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        FontData font = Font;
+                        font.Foreground = "#80141C";
+                        //Font = font;
+                        ObjectChangeState?.Invoke(this, nameof(Description));
 
+                    }
                 }
             }
         }
@@ -1609,12 +1613,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-                if (_XPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_XPos != value)
                     {
-                        _XPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _XPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -1635,13 +1642,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_YPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_YPos != value)
                     {
-                        _YPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _YPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -1676,12 +1685,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-                if (_PriceLeader != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_PriceLeader != value)
                     {
-                        _PriceLeader.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _PriceLeader.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -1863,19 +1875,21 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_Extras != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Extras != value)
                     {
-                        _Extras.Value = value;
-                        stateTransition.Consistent = true;
-                    }
-                    OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
-                    {
-                        ObjectChangeState?.Invoke(this, nameof(Extras));
-                    }));
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _Extras.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
+                        {
+                            ObjectChangeState?.Invoke(this, nameof(Extras));
+                        }));
 
+                    }
                 }
 
             }
@@ -1898,19 +1912,21 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_FullDescription != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_FullDescription != value)
                     {
-                        _FullDescription.Value = value;
-                        stateTransition.Consistent = true;
-                    }
-                    OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
-                    {
-                        ObjectChangeState?.Invoke(this, nameof(FullDescription));
-                    }));
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _FullDescription.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
+                        {
+                            ObjectChangeState?.Invoke(this, nameof(FullDescription));
+                        }));
 
+                    }
                 }
 
             }
@@ -1933,25 +1949,27 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_ExtraDescription != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_ExtraDescription != value)
                     {
-                        if (string.IsNullOrWhiteSpace(value))
-                            _ExtraDescription.Value = null;
-                        else
-                            _ExtraDescription.Value = value;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            if (string.IsNullOrWhiteSpace(value))
+                                _ExtraDescription.Value = null;
+                            else
+                                _ExtraDescription.Value = value;
 
-                        stateTransition.Consistent = true;
+                            stateTransition.Consistent = true;
+                        }
+                        OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
+                        {
+
+
+                            ObjectChangeState?.Invoke(this, nameof(ExtraDescription));
+                        }));
+
                     }
-                    OOAdvantech.Transactions.Transaction.RunAsynch(new Action(() =>
-                    {
-
-
-                        ObjectChangeState?.Invoke(this, nameof(ExtraDescription));
-                    }));
-
                 }
 
             }

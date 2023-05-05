@@ -252,14 +252,17 @@ namespace MenuPresentationModel.MenuStyles
             }
             set
             {
-                if (_Font != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_Font != value)
                     {
-                        _Font.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _Font.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        ObjectChangeState?.Invoke(this, nameof(Font));
                     }
-                    ObjectChangeState?.Invoke(this, nameof(Font));
                 }
 
             }
@@ -348,15 +351,17 @@ namespace MenuPresentationModel.MenuStyles
 
             set
             {
-
-                if (_ExtrasFont != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_ExtrasFont != value)
                     {
-                        _ExtrasFont.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _ExtrasFont.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        ObjectChangeState?.Invoke(this, nameof(ExtrasFont));
                     }
-                    ObjectChangeState?.Invoke(this, nameof(ExtrasFont));
                 }
 
             }
@@ -384,14 +389,17 @@ namespace MenuPresentationModel.MenuStyles
             }
             set
             {
-                if (_DescriptionFont != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_DescriptionFont != value)
                     {
-                        _DescriptionFont.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _DescriptionFont.Value = value;
+                            stateTransition.Consistent = true;
+                        }
+                        ObjectChangeState?.Invoke(this, nameof(DescriptionFont));
                     }
-                    ObjectChangeState?.Invoke(this, nameof(DescriptionFont));
                 }
             }
         }

@@ -352,7 +352,7 @@ namespace MenuPresentationModel
             }
         }
 
-
+         
         /// <exclude>Excluded</exclude>
         MultilingualMember<IRestaurantMenu> _Menu = new MultilingualMember<IRestaurantMenu>();
 

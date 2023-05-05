@@ -58,13 +58,16 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-                if (_BaseLine != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_BaseLine != value)
                     {
-                        _BaseLine.Value = value;
-                        stateTransition.Consistent = true;
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _BaseLine.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -266,13 +269,15 @@ namespace MenuPresentationModel.MenuCanvas
 
             set
             {
-
-                if (_XPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_XPos != value)
                     {
-                        _XPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _XPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -295,12 +300,15 @@ namespace MenuPresentationModel.MenuCanvas
             }
             set
             {
-                if (_YPos != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_YPos != value)
                     {
-                        _YPos.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _YPos.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
             }
@@ -404,13 +412,15 @@ namespace MenuPresentationModel.MenuCanvas
         {
             set
             {
-
-                if (_HeadingTextMedline != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_HeadingTextMedline != value)
                     {
-                        _HeadingTextMedline.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _HeadingTextMedline.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -432,13 +442,15 @@ namespace MenuPresentationModel.MenuCanvas
         {
             set
             {
-
-                if (_HeadingTextHeight != value)
+                using (new CultureContext(CultureContext.CurrentCultureInfo, false))
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_HeadingTextHeight != value)
                     {
-                        _HeadingTextHeight.Value = value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _HeadingTextHeight.Value = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
