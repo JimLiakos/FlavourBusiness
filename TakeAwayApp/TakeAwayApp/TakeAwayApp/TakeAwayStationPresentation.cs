@@ -273,6 +273,10 @@ namespace TakeAwayApp
         {
             get
             {
+                if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
+                {
+                    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                }
                 if(TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
