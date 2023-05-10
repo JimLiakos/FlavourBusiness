@@ -273,10 +273,10 @@ namespace TakeAwayApp
         {
             get
             {
-                if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
-                {
-                    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
-                }
+                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
+                //{
+                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                //}
                 if(TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -327,12 +327,14 @@ namespace TakeAwayApp
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
 
-                    TakeAwayStation = servicesContextManagment.GetTakeAwayStation(communicationCredentialKey);
-                    if (TakeAwayStation!=null)
-                        CommunicationCredentialKey = communicationCredentialKey;
+
+                    return await AssignCommunicationCredentialKey(communicationCredentialKey);
+                    //var takeAwayStation = servicesContextManagment.GetTakeAwayStation(communicationCredentialKey);
+                    //if (takeAwayStation!=null)
+                    //    CommunicationCredentialKey = communicationCredentialKey;
 
 
-                    return TakeAwayStation!=null;
+                    //return TakeAwayStation!=null;
                 }
                 catch (System.Exception error)
                 {
