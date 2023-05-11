@@ -425,7 +425,7 @@ namespace DontWaitApp
             //    var clientSessionData = await GetFoodServiceSession(ApplicationSettings.Current.LastServicePointIdentity, false);
             //}
 
-        }
+        } 
 
 
 
