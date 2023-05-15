@@ -1830,6 +1830,11 @@ namespace DontWaitApp
                                 throw connectionError;
                         }
                         catch (TimeoutException timeoutError)
+
+
+
+
+
                         {
                         }
                     } while (clientSessionData == null);
