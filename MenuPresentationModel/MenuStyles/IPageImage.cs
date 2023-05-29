@@ -5,6 +5,7 @@ namespace MenuPresentationModel.MenuStyles
     /// <MetaDataID>{9399b994-5271-4848-9f26-8a57a5a30ada}</MetaDataID>
     public interface IPageImage
     {
+        /// <MetaDataID>{a4b5caff-e014-4b55-8272-16469cf02d0a}</MetaDataID>
         double Opacity { get; set; }
 
         /// <MetaDataID>{c1be6bf8-7766-42ed-8fa7-6b822ce895ed}</MetaDataID>

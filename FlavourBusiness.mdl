@@ -879,6 +879,20 @@
 		quid       	"6444B0A401CA"
 		exportControl 	"Public"
 		logical_models 	(list unit_reference_list)
+		logical_presentations 	(list unit_reference_list))
+	    (object Class_Category "UIBaseEx"
+		attributes 	(list Attribute_Set
+		    (object Attribute
+			tool       	"MetaData"
+			name       	"MetaObjectID"
+			value      	"UIBaseEx")
+		    (object Attribute
+			tool       	"C#"
+			name       	"FullName"
+			value      	"UIBaseEx"))
+		quid       	"6474ABEC00C5"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list)
 		logical_presentations 	(list unit_reference_list)))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
