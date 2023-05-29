@@ -458,10 +458,30 @@ namespace MenuModel
                         optionMenuItemSpecific = new OptionMenuItemSpecific(menuItem, this);
                         OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(optionMenuItemSpecific);
                         _MenuItemsOptionSpecific.Add(optionMenuItemSpecific);
+                        optionMenuItemSpecific.InitialLevel = initialLevel;
                         stateTransition.Consistent = true;
                     }
+
+                } 
+                else
+                {
+                    
+                    if (Initial==initialLevel)
+                    {
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _MenuItemsOptionSpecific.Remove(optionMenuItemSpecific);
+                            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(optionMenuItemSpecific);
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                    else
+                        optionMenuItemSpecific.InitialLevel = initialLevel;
                 }
-                optionMenuItemSpecific.InitialLevel = initialLevel;
+                
+                
             }
             else
                 Initial = initialLevel;
