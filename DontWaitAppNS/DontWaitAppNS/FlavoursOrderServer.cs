@@ -425,7 +425,7 @@ namespace DontWaitApp
             //    var clientSessionData = await GetFoodServiceSession(ApplicationSettings.Current.LastServicePointIdentity, false);
             //}
 
-        }
+        } 
 
 
 
@@ -1830,6 +1830,11 @@ namespace DontWaitApp
                                 throw connectionError;
                         }
                         catch (TimeoutException timeoutError)
+
+
+
+
+
                         {
                         }
                     } while (clientSessionData == null);

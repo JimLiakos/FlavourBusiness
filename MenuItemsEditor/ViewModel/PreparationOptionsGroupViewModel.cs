@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using MenuModel;
 using OOAdvantech.Transactions;
 using UIBaseEx;
@@ -473,6 +474,7 @@ namespace MenuItemsEditor.ViewModel
             {
                 _SelectedOption = value;
                 _PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedOption)));
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 
