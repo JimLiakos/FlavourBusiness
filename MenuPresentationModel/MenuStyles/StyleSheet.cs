@@ -5,8 +5,6 @@ using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System.Linq;
 using OOAdvantech;
-using SharpVectors.Dom.Stylesheets;
-using System.Windows.Controls;
 
 namespace MenuPresentationModel.MenuStyles
 {
@@ -279,60 +277,28 @@ namespace MenuPresentationModel.MenuStyles
         {
             if (!string.IsNullOrWhiteSpace(OrgStyleSheetIdentity))
             {
-
-
                 _OrgStyleSheet = (from styleSheet in MenuPresentationModel.MenuStyles.StyleSheet.StyleSheets
                                   where styleSheet.StyleSheetIdentity == OrgStyleSheetIdentity
                                   select styleSheet).FirstOrDefault() as StyleSheet;
 
-
-                var styles = Styles;
-                var missingStyle = _OrgStyleSheet._Styles.Where(x => !styles.ContainsKey(x.Name)).ToList();
-                if (missingStyle.Count() > 0)
-                {
-                    using (SystemStateTransition outStateTransition = new SystemStateTransition(TransactionOption.Required))
-                    {
-                        foreach (var style in missingStyle)
-                        {
-                            if (!Styles.ContainsKey(style.Name))
-                            {
-
-                                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                                {
-                                    var derivedStyle = style.GetDerivedStyle();
-                                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(derivedStyle);
-                                    _Styles.Add(derivedStyle);
-                                    stateTransition.Consistent = true;
-                                }
-                            }
-                        }
-                        outStateTransition.Consistent = true;
-                    }
-                }
-
                 foreach (var style in _OrgStyleSheet._Styles)
                     Styles[style.Name].ChangeOrgStyle(style);
+            }
+            else
+            {
+
+                var styles = Styles;
+                if (!styles.ContainsKey("order-pad"))
+                {
+                    OrderPadStyle orderPadStyle = new OrderPadStyle();
+                    orderPadStyle.Name="order-pad";
+                    orderPadStyle.Background=styles[]
+                }
 
             }
+
             foreach (var style in _Styles)
                 style.ObjectChangeState += Style_ObjectChangeState;
-
-            //if (string.IsNullOrWhiteSpace(OrgStyleSheetIdentity))
-            //{
-            //    var styles = Styles;
-            //    if(!styles.ContainsKey("order-pad"))
-            //    {
-            //        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //        {
-            //            var orderPadStyle = new OrderPadStyle();
-            //            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(orderPadStyle);
-            //            orderPadStyle.Name = "order-pad";
-            //            orderPadStyle.Background = (styles["page"] as IPageStyle).Background;
-            //            AddStyle(orderPadStyle);
-            //            stateTransition.Consistent = true;
-            //        }
-            //    }
-            //}
 
         }
 
@@ -381,7 +347,7 @@ namespace MenuPresentationModel.MenuStyles
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage);
 
                 return (from styleSheet in storage.GetObjectCollection<IStyleSheet>()
-                        select styleSheet).ToList().Select(x => new StyleSheetRef() { Name = x.Name, Uri = ObjectStorage.GetPersistentObjectUri(x) }).ToList();
+                        select styleSheet).ToList().Select(x => new StyleSheetRef() { Name = x.Name, Uri= ObjectStorage.GetPersistentObjectUri(x) }).ToList();
             }
         }
     }
