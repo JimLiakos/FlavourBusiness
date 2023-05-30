@@ -10,6 +10,7 @@ using UIBaseEx;
 using System.Net.Http;
 using MenuModel.JsonViewModel;
 using System.Security.Cryptography;
+using MenuPresentationModel.MenuStyles;
 
 
 
@@ -31,6 +32,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
         //{
 
         //}
+        /// <MetaDataID>{f59f5e92-7686-4821-ae48-e8adff55e4d3}</MetaDataID>
         public RestaurantMenu()
         {
 
@@ -49,6 +51,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
                     _Pages.Def = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
                 }
             }
+
+            OrderPadBackground = (menu.Style.Styles["order-pad"] as IOrderPadStyle).Background;
+            OrderPadBackgroundMargin = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundMargin;
+            OrderPadBackgroundStretch = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundStretch;
 
             foreach (var languageEntry in menu.MultilingualPages.Values)
             {
@@ -93,13 +99,16 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
         }
 
+        /// <MetaDataID>{76d231f2-08d2-441e-aa09-3314e26a4010}</MetaDataID>
         public List<MenuModel.IMealType> MealTypes { get; set; }
 
+        /// <MetaDataID>{84b040cb-32c2-4079-b6d1-c238395a1960}</MetaDataID>
         public List<FontData> MenuFonts { get; set; } = new List<FontData>();
+        /// <MetaDataID>{440178af-19d4-422f-ae64-ccaf8a162d92}</MetaDataID>
         internal int GetFontID(FontData font)
         {
-            var existingFont = MenuFonts.Where(x => x==font).FirstOrDefault();
-            if (MenuFonts.Where(x => x==font).Count()==0)
+            var existingFont = MenuFonts.Where(x => x == font).FirstOrDefault();
+            if (MenuFonts.Where(x => x == font).Count() == 0)
             {
 
                 var client = new HttpClient();
@@ -115,21 +124,28 @@ namespace MenuPresentationModel.JsonMenuPresentation
                 var contentTask = response.Content.ReadAsStringAsync();
                 contentTask.Wait();
 
-                font.Uri=contentTask.Result;
-                if (font.Uri[0]=='"'&&font.Uri[font.Uri.Length-1]=='"')
-                    font.Uri =font.Uri.Substring(1, font.Uri.Length-2);
-                existingFont=font;
+                font.Uri = contentTask.Result;
+                if (font.Uri[0] == '"' && font.Uri[font.Uri.Length - 1] == '"')
+                    font.Uri = font.Uri.Substring(1, font.Uri.Length - 2);
+                existingFont = font;
                 MenuFonts.Add(font);
             }
             int fontID = MenuFonts.IndexOf(existingFont) + 1;
             return fontID;
         }
+        /// <MetaDataID>{7532f24b-a99e-4916-8c8d-6192dd5f839a}</MetaDataID>
         internal FontData GetFont(int fontID)
         {
-            return MenuFonts[fontID-1];
+            return MenuFonts[fontID - 1];
         }
 
 #endif
+
+        /// <MetaDataID>{fca0ece9-69a2-4660-8620-d5499bc3cade}</MetaDataID>
+        public IPageImage OrderPadBackground { get; set; }
+        public Margin OrderPadBackgroundMargin { get; set; }
+        /// <MetaDataID>{0d2c5d81-e777-4735-9867-7f57d437a0e5}</MetaDataID>
+        public ImageStretch OrderPadBackgroundStretch { get; set; }
 
         /// <MetaDataID>{3b146064-345b-4565-b25b-8ac17b33f3e0}</MetaDataID>
         public string Type { get; set; }
@@ -182,6 +198,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
                     _MenuCanvasItems = null;
             }
         }
+        /// <MetaDataID>{c97d0260-6fcb-4471-bdbd-071eba012b22}</MetaDataID>
         public void RemoveMenuItem(MenuCanvas.IMenuCanvasItem manuCanvasitem)
         {
             if (_MenuCanvasItems != null && _MenuCanvasItems.Contains(manuCanvasitem))
@@ -189,6 +206,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
 
         }
 
+        /// <MetaDataID>{91b521a0-c094-42fb-8947-3f8fe4b00c46}</MetaDataID>
         public void AddMenuItem(MenuCanvas.IMenuCanvasItem manuCanvasitem)
         {
             if (_MenuCanvasItems != null && !_MenuCanvasItems.Contains(manuCanvasitem))
@@ -213,6 +231,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
         }
 
 
+        /// <MetaDataID>{a9725368-63d4-4d4b-ac60-7f90943e65f0}</MetaDataID>
         public OOAdvantech.Multilingual MultilingualPages { get => _Pages; set => _Pages = value; }
         /// <exclude>Excluded</exclude>
         OOAdvantech.Multilingual _Pages = new OOAdvantech.Multilingual();
@@ -248,6 +267,8 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
         }
 
+        public IStyleSheet Style { get; set; }
+
         /// <MetaDataID>{da319689-b8dc-4c45-bd80-a935edeb05af}</MetaDataID>
         public void AddPage(IMenuPageCanvas page)
         {
@@ -266,13 +287,14 @@ namespace MenuPresentationModel.JsonMenuPresentation
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{f0213f02-015c-451a-aa9f-535abb375822}</MetaDataID>
         public IMenuCanvasFoodItem GetMenuCanvasFoodItem(string menuItemUri)
         {
             var init = (from page in Pages
                         from menuCanvasItem in page.MenuCanvasItems
                         select menuCanvasItem).ToList();
 
-            return this.MenuCanvasItems.OfType<IMenuCanvasFoodItem>().Where(x => (x.MenuItem as MenuFoodItem)?.Uri== menuItemUri).FirstOrDefault();
+            return this.MenuCanvasItems.OfType<IMenuCanvasFoodItem>().Where(x => (x.MenuItem as MenuFoodItem)?.Uri == menuItemUri).FirstOrDefault();
         }
     }
 }

@@ -15,9 +15,9 @@ namespace MenuPresentationModel.MenuStyles
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
-
         public OrderPadStyle()
-        { }
+        { 
+        }
         /// <MetaDataID>{475670fb-28eb-4fa3-bf27-74f2867155bb}</MetaDataID>
         OrderPadStyle OrgOrderPadStyle;
         /// <MetaDataID>{74b16fe8-db3d-49dc-9d62-54218b2ca9b2}</MetaDataID>
@@ -35,20 +35,44 @@ namespace MenuPresentationModel.MenuStyles
         [BackwardCompatibilityID("+1")]
         public MenuPresentationModel.MenuStyles.IPageImage Background
         {
-            get => _Background;
+
+
+            get
+            {
+                if (OrgOrderPadStyle != null && _Background == null)
+                    return OrgOrderPadStyle.Background;
+
+                return _Background;
+            }
+
             set
             {
-                if (_Background!=value)
+                if (_Background != value)
                 {
+                    if (_Background != null)
+                        _Background.ObjectChangeState -= Background_ObjectChangeState;
+
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Background=value;
+                        _Background = value;
                         stateTransition.Consistent = true;
                     }
+
+                    if (OrgOrderPadStyle != null && OrgOrderPadStyle.Background == _Background)
+                        _Background = null;
+
+                    if (_Background != null)
+                        _Background.ObjectChangeState += Background_ObjectChangeState;
+
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Background)));
                 }
+
             }
         }
-
+        private void Background_ObjectChangeState(object _object, string member)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Background)));
+        }
         /// <exclude>Excluded</exclude>
         Margin? _BackgroundMargin;
 
@@ -95,7 +119,7 @@ namespace MenuPresentationModel.MenuStyles
         {
             get
             {
-                if (OrgOrderPadStyle!= null && !_BackgroundStretch.HasValue)
+                if (OrgOrderPadStyle != null && !_BackgroundStretch.HasValue)
                     return OrgOrderPadStyle.BackgroundStretch;
 
                 if (!_BackgroundStretch.HasValue)
@@ -146,11 +170,11 @@ namespace MenuPresentationModel.MenuStyles
             }
             set
             {
-                if (_Name!=value)
+                if (_Name != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Name=value;
+                        _Name = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -162,7 +186,7 @@ namespace MenuPresentationModel.MenuStyles
         {
             get
             {
-                if (OrgOrderPadStyle!= null)
+                if (OrgOrderPadStyle != null)
                     return true;
                 else
                     return false;
@@ -196,7 +220,7 @@ namespace MenuPresentationModel.MenuStyles
                 Background = null;
                 _BackgroundMargin = null;
                 _BackgroundStretch = null;
-              
+
                 stateTransition.Consistent = true;
             }
 

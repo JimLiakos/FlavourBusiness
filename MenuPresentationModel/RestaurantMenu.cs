@@ -461,18 +461,18 @@ namespace MenuPresentationModel
         public event MenuStyleChangedHandle MenuStyleChanged;
 
         public event MenuCanvasItemChangedHandle MenuCanvasItemChanged;
+        
+        
         /// <exclude>Excluded</exclude>
-        MenuStyles.IStyleSheet _Style;
-
-
-        [Association("MenuStyle", Roles.RoleA, "d0d8fa48-b643-4d17-aa7e-df449e985844")]
+        Member<MenuStyles.IStyleSheet> _Style=new Member<MenuStyles.IStyleSheet>();
+                
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [PersistentMember(nameof(_Style))]
         public MenuPresentationModel.MenuStyles.IStyleSheet Style
         {
             get
             {
-                return _Style;
+                return _Style.Value;
             }
 
             set
@@ -481,11 +481,11 @@ namespace MenuPresentationModel
                 if (_Style != value)
                 {
 
-                    var oldStyle = _Style;
+                    var oldStyle = _Style.Value;
                     var newStyle = value;
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Style = value;
+                        _Style.Value = value;
                         stateTransition.Consistent = true;
                     }
                     MenuStyleChanged?.Invoke(oldStyle, newStyle);

@@ -5,6 +5,7 @@ namespace MenuPresentationModel.MenuStyles
     /// <MetaDataID>{13ebcb47-5b4b-427b-85f7-8122296822f3}</MetaDataID>
     public interface IOrderPadStyle : IStyleRule
     {
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [Association("OrderPadBackground", Roles.RoleA, "1bc5fe45-ea6b-407e-a09a-b8593028ddb3")]
         IPageImage Background { get; set; }
 
