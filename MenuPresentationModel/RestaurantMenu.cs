@@ -57,8 +57,8 @@ namespace MenuPresentationModel
 
         }
 
-     
-        
+
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<FoodItemsHeading> _AvailableHeadings = new OOAdvantech.Collections.Generic.Set<FoodItemsHeading>();
@@ -95,11 +95,22 @@ namespace MenuPresentationModel
 
 
                 Dictionary<string, string> pageImages = new Dictionary<string, string>();
+
+                if (jsonRestaurantMenu.OrderPadBackground!=null)
+                {
+                    if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
+                        pageImages[jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri] = jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri;
+
+                    if (jsonRestaurantMenu.OrderPadBackground.PortraitImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri))
+                        pageImages[jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri] = jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri;
+
+                }
+
                 foreach (var entry in jsonRestaurantMenu.MultilingualPages.Values.Keys)
                 {
-                    
 
-                        foreach (var page in (from pages in jsonRestaurantMenu.MultilingualPages.Values.Values.OfType<List<IMenuPageCanvas>>() from page in pages.OfType<JsonMenuPresentation.MenuPageCanvas>() select page))
+
+                    foreach (var page in (from pages in jsonRestaurantMenu.MultilingualPages.Values.Values.OfType<List<IMenuPageCanvas>>() from page in pages.OfType<JsonMenuPresentation.MenuPageCanvas>() select page))
                     {
                         if (page.Background != null)
                         {
@@ -131,6 +142,16 @@ namespace MenuPresentationModel
                     if (fileManager != null)
                         fileManager.Copy(aboluteImageUri, newImageUri);
                     pageImages[uri] = menuResourcesPrefix + imageFileName;
+
+                }
+
+                if (jsonRestaurantMenu.OrderPadBackground!=null)
+                {
+
+                    if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
+                        jsonRestaurantMenu.OrderPadBackground.LandscapeImage = new MenuPresentationModel.MenuStyles.Resource() { Name = jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Name, Uri = pageImages[jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri], TimeStamp = DateTime.Now };
+                    if (jsonRestaurantMenu.OrderPadBackground.PortraitImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri))
+                        jsonRestaurantMenu.OrderPadBackground.PortraitImage = new MenuPresentationModel.MenuStyles.Resource() { Name = jsonRestaurantMenu.OrderPadBackground.PortraitImage.Name, Uri = pageImages[jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri], TimeStamp = DateTime.Now };
 
                 }
                 foreach (var page in (from pages in jsonRestaurantMenu.MultilingualPages.Values.Values.OfType<List<IMenuPageCanvas>>() from page in pages.OfType<JsonMenuPresentation.MenuPageCanvas>() select page))
@@ -294,7 +315,7 @@ namespace MenuPresentationModel
 
 
 
-            
+
 
             try
             {
@@ -314,7 +335,7 @@ namespace MenuPresentationModel
 
             string json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
 
-           //
+            //
 
             MemoryStream jsonRestaurantMenuStream = new MemoryStream();
 
@@ -442,7 +463,7 @@ namespace MenuPresentationModel
         {
             get
             {
-                
+
                 return _MenuCanvasItems.AsReadOnly();
             }
         }
@@ -461,11 +482,11 @@ namespace MenuPresentationModel
         public event MenuStyleChangedHandle MenuStyleChanged;
 
         public event MenuCanvasItemChangedHandle MenuCanvasItemChanged;
-        
-        
+
+
         /// <exclude>Excluded</exclude>
-        Member<MenuStyles.IStyleSheet> _Style=new Member<MenuStyles.IStyleSheet>();
-                
+        Member<MenuStyles.IStyleSheet> _Style = new Member<MenuStyles.IStyleSheet>();
+
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [PersistentMember(nameof(_Style))]
         public MenuPresentationModel.MenuStyles.IStyleSheet Style
@@ -680,6 +701,6 @@ namespace MenuPresentationModel
             throw new NotImplementedException();
         }
 
-       
+
     }
 }

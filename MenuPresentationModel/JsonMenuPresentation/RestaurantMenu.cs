@@ -11,6 +11,7 @@ using System.Net.Http;
 using MenuModel.JsonViewModel;
 using System.Security.Cryptography;
 using MenuPresentationModel.MenuStyles;
+using System.Windows.Controls.Primitives;
 
 
 
@@ -52,7 +53,9 @@ namespace MenuPresentationModel.JsonMenuPresentation
                 }
             }
 
-            OrderPadBackground = (menu.Style.Styles["order-pad"] as IOrderPadStyle).Background;
+            
+
+            OrderPadBackground = new PageImage((menu.Style.Styles["order-pad"] as IOrderPadStyle).Background); 
             OrderPadBackgroundMargin = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundMargin;
             OrderPadBackgroundStretch = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundStretch;
 
