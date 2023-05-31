@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
+using System.IO.Ports;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -21,10 +24,19 @@ namespace TakeAwayApp.Wpf
         public event EventHandler ApplicationSleeping;
         OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
 
-
+        //private SerialPort port = new SerialPort("COM6", 9600, Parity.None, 8, StopBits.One);
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
+            //port.Open();
+            ////869
+            //var qrESCPOS = GetQrcodeData("http://dontwaitwaiter.com/7f9bde62e6da45dc8c5661ee2220a7b0/e566783c311a48489a97f7beede1ff7f");
+            ////var bytes= System.Text.Encoding.ASCII.GetBytes("\"Print Test !\n\n\n\n");
+            ////var bytes = System.Text.Encoding.ASCII.GetBytes(qrESCPOSstring);
+
+
+            //port.Write(qrESCPOS, 0, qrESCPOS.Count());
+
 
 
 
@@ -41,6 +53,34 @@ namespace TakeAwayApp.Wpf
             var sds = Fraction.RealToFraction(0.8232323343, 0.01);
 
             base.OnStartup(e);
+        }
+        private static Byte[] GetQrcodeData(string qrData)
+        {
+            string ESC = Convert.ToString((char)27);
+            string center = ESC + "a" + (char)1; //align center
+            string initp = ESC + (char)64; //initialize printer
+
+            byte[] centerByte = Encoding.ASCII.GetBytes(center);
+
+            string result = qrData;
+
+            MemoryStream stream = new MemoryStream();
+            stream.Write(Encoding.ASCII.GetBytes(initp), 0, initp.Length);
+            stream.Write(centerByte, 0, centerByte.Length);
+
+            stream.Write(new byte[5] { 27, 90, 00, 03, 06 }, 0, 5);
+            byte[] length = new byte[2] { BitConverter.GetBytes(result.Length)[0], BitConverter.GetBytes(result.Length)[1] };
+            stream.Write(length, 0, 2);
+            var data = System.Text.Encoding.ASCII.GetBytes(result);
+            stream.Write(data, 0, data.Length);
+            stream.Write(new byte[1] { 0x0a }, 0, 1);
+            stream.Position = 0;
+            byte[] buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, (int)stream.Length);
+            stream.Close();
+            return buffer;
+            //return Encoding.UTF8.GetString(buffer);
+
         }
 
 
