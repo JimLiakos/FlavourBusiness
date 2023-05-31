@@ -28,6 +28,19 @@ namespace TakeAwayApp.Wpf
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            var ticks = new DateTime(2022, 1, 1).Ticks;
+            var ans = DateTime.Now.Ticks - ticks;
+
+            var uniqueId = ans.ToString("x");
+
+            //http://dontwaitwaiter.com/179678/200644
+            //http://dontwaitwaiter.com/3af3c14996e54/3af3c14996e54
+            //http://dontwaitwaiter.com/7f9bde62e6da45dc8c5661ee2220a7b0/
+            System.DateTime rtr = new DateTime(2022, 1, 1);
+            var tt = (System.DateTime.UtcNow -rtr).TotalSeconds;
+
+
             //port.Open();
             ////869
             //var qrESCPOS = GetQrcodeData("http://dontwaitwaiter.com/7f9bde62e6da45dc8c5661ee2220a7b0/e566783c311a48489a97f7beede1ff7f");
