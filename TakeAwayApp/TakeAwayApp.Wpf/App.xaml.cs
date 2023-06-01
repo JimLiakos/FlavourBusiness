@@ -24,7 +24,7 @@ namespace TakeAwayApp.Wpf
         public event EventHandler ApplicationSleeping;
         OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
 
-        //private SerialPort port = new SerialPort("COM6", 9600, Parity.None, 8, StopBits.One);
+        private SerialPort port = new SerialPort("COM6", 9600, Parity.None, 8, StopBits.One);
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -41,9 +41,9 @@ namespace TakeAwayApp.Wpf
             var tt = (System.DateTime.UtcNow -rtr).TotalSeconds;
 
 
-            //port.Open();
+            port.Open();
             ////869
-            //var qrESCPOS = GetQrcodeData("http://dontwaitwaiter.com/7f9bde62e6da45dc8c5661ee2220a7b0/e566783c311a48489a97f7beede1ff7f");
+            var qrESCPOS = GetQrcodeData("http://dontwaitwaiter.com/3af3c14996e54/3af3c14996e54");
             ////var bytes= System.Text.Encoding.ASCII.GetBytes("\"Print Test !\n\n\n\n");
             ////var bytes = System.Text.Encoding.ASCII.GetBytes(qrESCPOSstring);
 
