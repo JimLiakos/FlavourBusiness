@@ -5,6 +5,7 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Acr.UserDialogs;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace TakeAwayApp.Droid
 {
@@ -22,6 +23,9 @@ namespace TakeAwayApp.Droid
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
             UserDialogs.Init(this);
             LoadApplication(new App());
+
+            //Keyboard-overlapping
+            App.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

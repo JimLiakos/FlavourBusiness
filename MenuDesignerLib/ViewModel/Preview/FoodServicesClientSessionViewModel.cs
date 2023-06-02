@@ -38,6 +38,7 @@ namespace MenuDesigner.ViewModel.Preview
         public string DeliveryComment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public List<TipOption> TipOptions => throw new NotImplementedException();
+        public List<CurrencyOption> CurrencyOptions { get; }
 
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
