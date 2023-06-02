@@ -15,7 +15,7 @@ namespace TakeAwayApp
         public MainPage()
         {
             InitializeComponent();
-
+            this.SizeChanged+=MainPage_SizeChanged;
             BindingContext = new TakeAwayStationPresentation();
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
@@ -31,6 +31,11 @@ namespace TakeAwayApp
 
 
             }
+        }
+
+        private void MainPage_SizeChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

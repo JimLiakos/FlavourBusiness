@@ -19,6 +19,12 @@ namespace DontWaitApp
         public MainPage()
         {
             InitializeComponent();
+            this.SizeChanged+=MainPage_SizeChanged;
+        }
+
+        private void MainPage_SizeChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

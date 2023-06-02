@@ -156,6 +156,27 @@ namespace DontWaitApp
             }
         }
 
+
+        public List<CurrencyOption> CurrencyOptions
+        {
+            get
+            {
+                var isoCurrencySymbol = OrderItems?.FirstOrDefault()?.ISOCurrencySymbol;
+                if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
+                    isoCurrencySymbol = FlavoursOrderServer.ISOCurrencySymbol;
+                return new List<CurrencyOption>() {
+                new CurrencyOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=2, ISOCurrencySymbol= isoCurrencySymbol},
+                new CurrencyOption() { Amount=5, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=10, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=20, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=50, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=100, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=200, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=500, ISOCurrencySymbol= isoCurrencySymbol }};
+            }
+        }
+
         /// <MetaDataID>{ccaeca74-9ca0-4cbe-aebc-f9d785696fdf}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+14")]

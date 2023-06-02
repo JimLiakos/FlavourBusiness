@@ -21,7 +21,7 @@ namespace DontWaitApp
             //"http://10.0.0.10/WebPart/index.html" 
 
             InitializeComponent();
-
+            this.SizeChanged+=HybridWebViewPage_SizeChanged;
             hybridWebView.RegisterAction(async (string data) =>
             {
                 string res = await hybridWebView.NativeWebBrowser.InvockeJSMethod("logA", new[] { data });
@@ -102,6 +102,12 @@ namespace DontWaitApp
 
 
         }
+
+        private void HybridWebViewPage_SizeChanged(object sender, EventArgs e)
+        {
+            
+        }
+
         bool Refresh;
         private void HybridWebView_Navigated(object sender, OOAdvantech.Web.NavigatedEventArgs e)
         {
