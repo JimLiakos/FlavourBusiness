@@ -42,9 +42,11 @@ namespace FlavourBusinessFacade.RoomService
     /// <MetaDataID>{18cbc6aa-6498-4d87-a07f-730961b17c13}</MetaDataID>
     public enum OptionChangeType
     {
+        Implicit = 0,
         CheckedOption = 1,
         NotifiedUnCheckedOption = 2,
         Extra = 3,
-        Without = 4
+        Without = 4,
+        Reduce = 5
     }
 }

@@ -41,7 +41,7 @@ namespace TakeAwayApp.Wpf
             var tt = (System.DateTime.UtcNow -rtr).TotalSeconds;
 
 
-            port.Open();
+           // port.Open();
             ////869
             var qrESCPOS = GetQrcodeData("http://dontwaitwaiter.com/3af3c14996e54/3af3c14996e54");
             ////var bytes= System.Text.Encoding.ASCII.GetBytes("\"Print Test !\n\n\n\n");
