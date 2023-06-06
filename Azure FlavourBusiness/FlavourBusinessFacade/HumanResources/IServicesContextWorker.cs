@@ -8,6 +8,17 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IServicesContextWorker : IParty
     {
+        /// <MetaDataID>{adc60835-ab6b-4576-89a2-3f6a7e4aa9f9}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        string WorkerAssignKey { get; set; }
+
+        /// <MetaDataID>{337b7e3f-56a4-4115-bfc7-5a91295fba8c}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
+        bool Suspended { get; }
+
+        /// <MetaDataID>{f1cb514f-f976-4008-9605-7129f1b57790}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
+        string ServicesContextIdentity { get; set; }
         [Association("WorkerShifWork", Roles.RoleA, "484dfd7b-d501-43b7-871c-f247f3e648b1" )]
         System.Collections.Generic.IList<IShiftWork> ShiftWorks { get; }
 

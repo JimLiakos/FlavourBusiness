@@ -149,22 +149,22 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _SupervisorAssignKey;
+        string _WorkerAssignKey;
 
         /// <MetaDataID>{da2f05f0-c1f2-4848-b589-26609995340d}</MetaDataID>
-        [PersistentMember(nameof(_SupervisorAssignKey))]
+        [PersistentMember(nameof(_WorkerAssignKey))]
         [BackwardCompatibilityID("+10")]
-        public string SupervisorAssignKey
+        public string WorkerAssignKey
         {
-            get => _SupervisorAssignKey;
+            get => _WorkerAssignKey;
             set
             {
 
-                if (_SupervisorAssignKey != value)
+                if (_WorkerAssignKey != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SupervisorAssignKey = value;
+                        _WorkerAssignKey = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -400,8 +400,9 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{74bd474b-62f8-402f-aa8f-47226fbad1e7}</MetaDataID>
         FlavourBusinessFacade.IFlavoursServicesContextRuntime IServiceContextSupervisor.ServicesContextRunTime => ServicesContextRunTime;
 
-        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get=> FlavoursServicesContext.GetServicesContext(ServicesContextIdentity); }
-        
+        /// <MetaDataID>{53fa5c17-a8ca-4cc4-969b-c095bf374cd3}</MetaDataID>
+        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get => FlavoursServicesContext.GetServicesContext(ServicesContextIdentity); }
+
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
         public void RemoveShiftWork(IShiftWork shiftWork)
         {

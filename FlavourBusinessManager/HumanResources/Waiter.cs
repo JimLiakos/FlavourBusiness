@@ -411,21 +411,21 @@ namespace FlavourBusinessManager.HumanResources
 
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{2f0a1110-26d6-4c9d-975d-16ba26dd1bb2}</MetaDataID>
-        string _WaiterAssignKey;
+        string _WorkerAssignKey;
 
         /// <MetaDataID>{07b0929c-0a6c-4db4-bba0-d36b0b087714}</MetaDataID>
-        [PersistentMember(nameof(_WaiterAssignKey))]
+        [PersistentMember(nameof(_WorkerAssignKey))]
         [BackwardCompatibilityID("+5")]
-        public string WaiterAssignKey
+        public string WorkerAssignKey
         {
-            get => _WaiterAssignKey;
+            get => _WorkerAssignKey;
             set
             {
-                if (_WaiterAssignKey != value)
+                if (_WorkerAssignKey != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _WaiterAssignKey = value;
+                        _WorkerAssignKey = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -1130,11 +1130,12 @@ namespace FlavourBusinessManager.HumanResources
         [BackwardCompatibilityID("+22")]
         DateTime? LastThreeShiftsPeriodStart;
 
+        /// <MetaDataID>{341989f2-85ba-4805-b05d-4bdeeacd9915}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
         {
             if (LastThreeShiftsPeriodStart!=null)
             {
-                List<IServingShiftWork> lastThreeSifts = GetSifts(  LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
+                List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
                 lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
                 if (lastThreeSifts.Count>3)
                 {
@@ -1150,7 +1151,7 @@ namespace FlavourBusinessManager.HumanResources
                     shiftWork.RecalculateDeptData();
 
                 return lastThreeSifts;
-            } 
+            }
             else
             {
                 var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);

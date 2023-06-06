@@ -9,18 +9,13 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IServiceContextSupervisor : IServicesContextWorker, IUser
     {
-        /// <MetaDataID>{d56b1c62-f661-4152-bdc5-e1e56ed7de7b}</MetaDataID>
-        [BackwardCompatibilityID("+8")]
-        bool Suspended { get; }
-
+   
         /// <MetaDataID>{49119625-8e20-4fbb-92a2-8bbbe5c2762f}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]
         string FlavoursServiceContextDescription { get; }
 
-        /// <MetaDataID>{ae24a8ef-1a64-4601-94e0-003c4b2f4b65}</MetaDataID>
-        [BackwardCompatibilityID("+6")]
-        string SupervisorAssignKey { get; set; }
+      
 
 
         [RemoteEventPublish(InvokeType.Async)]
@@ -28,15 +23,12 @@ namespace FlavourBusinessFacade.HumanResources
 
 
     
-        /// <MetaDataID>{149349fa-11af-4b3a-9a0a-87f48eca6862}</MetaDataID>
-        [BackwardCompatibilityID("+2")]
-        [CachingDataOnClientSide]
-        string ServicesContextIdentity { get; set; }
-
+   
         /// <MetaDataID>{0a94826c-6b90-4b08-8776-b3c3ea0d6635}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         IFlavoursServicesContextRuntime ServicesContextRunTime { get; }
 
+        /// <MetaDataID>{ded978ff-be44-4d88-955f-e71821410aa7}</MetaDataID>
         FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get; }
 
 

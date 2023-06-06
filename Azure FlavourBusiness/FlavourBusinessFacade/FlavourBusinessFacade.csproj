@@ -79,6 +79,7 @@
     <Compile Include="IServingBatch.cs" />
     <Compile Include="IServingShiftWork.cs" />
     <Compile Include="ISettings.cs" />
+    <Compile Include="HumanResources\ITakeawayCashier.cs" />
     <Compile Include="ITakeAwayStation.cs" />
     <Compile Include="ItemPreparationAbbreviation.cs" />
     <Compile Include="HumanResources\ITranslator.cs" />

@@ -24363,101 +24363,6 @@
 			    quid       	"5F55134302AA"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "ServicesContextIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{b7089f78-0d6d-456d-b88d-7b1ea2744972}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F5529150355")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+4"))
-			    quid       	"5F5529150355"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "WaiterAssignKey"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{915f5c19-eff7-4bc5-81a2-ee312d6f8902}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F9D7D9B019F")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+5"))
-			    quid       	"5F9D7D9B019F"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "Suspended"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{21cb6307-65d2-4394-b1d9-bb1cc076eea4}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5FA0DA850192")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+8"))
-			    quid       	"5FA0DA850192"
-			    type       	"bool"
-			    exportControl 	"Public")
 			(object ClassAttribute "DeviceFirebaseToken"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -24619,72 +24524,6 @@
 			    supplier   	"Logical View::FlavourBusinessFacade::IUser"
 			    quidu      	"5F756AF90177"))
 		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "ServicesContextIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{149349fa-11af-4b3a-9a0a-87f48eca6862}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F59B5D200B5")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+2"))
-			    quid       	"5F59B5D200B5"
-			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "SupervisorAssignKey"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{ae24a8ef-1a64-4601-94e0-003c4b2f4b65}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F7A167D0310")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+6"))
-			    quid       	"5F7A167D0310"
-			    type       	"string"
-			    exportControl 	"Public")
 			(object ClassAttribute "FlavoursServiceContextDescription"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -24713,35 +24552,6 @@
 				    value      	"+7"))
 			    quid       	"5F7C0CEA0127"
 			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "Suspended"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{d56b1c62-f661-4152-bdc5-e1e56ed7de7b}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"5F9B9224013B")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Generate Backward ID"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+8"))
-			    quid       	"5F9B9224013B"
-			    type       	"bool"
 			    exportControl 	"Public")
 			(object ClassAttribute "ServicesContextRunTime"
 			    attributes 	(list Attribute_Set
@@ -24912,7 +24722,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"2")
+			    value      	"5")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Generate Backward ID"
@@ -25016,6 +24826,101 @@
 				    value      	TRUE))
 			    quid       	"5FC135BA00D2"
 			    type       	"FlavourBusinessFacade.HumanResources.IShiftWork"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContextIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f1cb514f-f976-4008-9605-7129f1b57790}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"647EA105025C")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
+			    quid       	"647EA105025C"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Suspended"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{337b7e3f-56a4-4115-bfc7-5a91295fba8c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"647EA3F20116")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+3"))
+			    quid       	"647EA3F20116"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "WorkerAssignKey"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{adc60835-ab6b-4576-89a2-3f6a7e4aa9f9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"647EA43F00EF")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
+			    quid       	"647EA43F00EF"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -25929,10 +25834,10 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@434
-				location   	(1912, 2001)
+				location   	(1921, 2008)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	683
+				max_width  	664
 				justify    	0
 				label      	"IServiceContextSupervisor")
 			    icon       	"Interface"
@@ -25940,8 +25845,8 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B55A023E"
-			    width      	701
-			    height     	237
+			    width      	682
+			    height     	222
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IShiftWork" @435
@@ -25972,6 +25877,24 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0B8490118"
+			    compartment 	(object Compartment
+				Parent_View 	@435
+				location   	(3521, 1426)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	4
+				max_width  	571)
 			    width      	594
 			    height     	269
 			    annotation 	8)
@@ -25979,7 +25902,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(2569, 1352)
+			    location   	(2566, 1352)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -25992,7 +25915,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@436
-				location   	(2297, 1237)
+				location   	(2294, 1237)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	545
@@ -26003,17 +25926,35 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0BBC80230"
+			    compartment 	(object Compartment
+				Parent_View 	@436
+				location   	(2294, 1298)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	1350)
 			    width      	563
 			    height     	431
 			    annotation 	8)
 			(object InheritTreeView "" @437
-			    location   	(2569, 1760)
+			    location   	(2563, 1759)
 			    line_color 	3342489
 			    fill_color 	13434879
 			    supplier   	@436
 			    vertices   	(list Points
-				(2569, 1760)
-				(2569, 1567)))
+				(2563, 1759)
+				(2563, 1567)))
 			(object InheritView "" @438
 			    stereotype 	TRUE
 			    line_color 	3342489
@@ -26022,10 +25963,10 @@
 			    supplier   	@436
 			    line_style 	3
 			    origin_attachment 	(3041, 1901)
-			    terminal_attachment 	(3041, 1760)
+			    terminal_attachment 	(3041, 1759)
 			    drawSupplier 	@437)
 			(object AssociationViewNew "WorkerShifWork" @439
-			    location   	(3181, 1398)
+			    location   	(3179, 1400)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -26038,7 +25979,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @440
 				Parent_View 	@439
-				location   	(3181, 1339)
+				location   	(3179, 1341)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -26064,7 +26005,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "ShiftWorks" @441
 				    Parent_View 	@439
-				    location   	(2341, 939)
+				    location   	(2339, 941)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -26077,7 +26018,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @442
 					Parent_View 	@441
-					location   	(3445, 1357)
+					location   	(3445, 1359)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -26103,11 +26044,11 @@
 				    client     	@439
 				    supplier   	@435
 				    line_style 	3
-				    origin_attachment 	(3181, 1398)
-				    terminal_attachment 	(3512, 1398)
+				    origin_attachment 	(3179, 1400)
+				    terminal_attachment 	(3512, 1400)
 				    label      	(object SegLabel @443
 					Parent_View 	@441
-					location   	(3478, 1452)
+					location   	(3478, 1454)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -26129,7 +26070,7 @@
 					orientation 	1))
 				(object RoleView "Worker" @444
 				    Parent_View 	@439
-				    location   	(2341, 939)
+				    location   	(2339, 941)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -26142,7 +26083,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @445
 					Parent_View 	@444
-					location   	(2917, 1357)
+					location   	(2914, 1359)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -26168,11 +26109,11 @@
 				    client     	@439
 				    supplier   	@436
 				    line_style 	3
-				    origin_attachment 	(3181, 1398)
-				    terminal_attachment 	(2850, 1398)
+				    origin_attachment 	(3179, 1400)
+				    terminal_attachment 	(2847, 1400)
 				    label      	(object SegLabel @446
 					Parent_View 	@444
-					location   	(2884, 1452)
+					location   	(2881, 1454)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -26199,8 +26140,8 @@
 			    client     	@434
 			    supplier   	@436
 			    line_style 	3
-			    origin_attachment 	(2244, 1901)
-			    terminal_attachment 	(2244, 1760)
+			    origin_attachment 	(2244, 1907)
+			    terminal_attachment 	(2244, 1759)
 			    drawSupplier 	@437)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::ITranslator" @448
 			    ShowCompartmentStereotypes 	TRUE
@@ -26402,6 +26343,24 @@
 			    line_color 	3342489
 			    fill_color 	12632256
 			    quidu      	"6009D41F0331"
+			    compartment 	(object Compartment
+				Parent_View 	@455
+				location   	(3203, 715)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	303)
 			    width      	482
 			    height     	256
 			    annotation 	8)
@@ -26684,8 +26643,8 @@
 			    client     	@436
 			    supplier   	@469
 			    line_style 	3
-			    origin_attachment 	(2538, 1137)
-			    terminal_attachment 	(2538, 1068)
+			    origin_attachment 	(2535, 1137)
+			    terminal_attachment 	(2535, 1068)
 			    drawSupplier 	@470)
 			(object InheritView "" @472
 			    stereotype 	TRUE

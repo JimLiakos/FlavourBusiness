@@ -216,7 +216,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     WaiterAssignKey = servicesContextIdentity + ";" + unassignedWaiter.Identity + ";" + Guid.NewGuid().ToString("N");
 
-                    unassignedWaiter.WaiterAssignKey = WaiterAssignKey;
+                    unassignedWaiter.WorkerAssignKey = WaiterAssignKey;
                     stateTransition.Consistent = true;
                 }
 
@@ -759,9 +759,18 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 ActiveShiftWorks.Add(waiter.ActiveShiftWork);
 
             var activeShiftWorks = GetActiveShiftWorks();
-
-
         }
+
+
+        /// <MetaDataID>{9cae1cbf-00a7-48df-8b4b-e7fd8ad6177f}</MetaDataID>
+        internal void WaiterSiftWorkUpdated(HumanResources.TakeawayCashier cashier)
+        {
+            if (cashier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(cashier.ActiveShiftWork))
+                ActiveShiftWorks.Add(cashier.ActiveShiftWork);
+
+            var activeShiftWorks = GetActiveShiftWorks();
+        }
+
 
         /// <MetaDataID>{fa22f19b-550e-4ae2-8c6c-315fa0ea2b26}</MetaDataID>
         [PersistentMember(nameof(_Description))]
@@ -2178,7 +2187,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     supervisorAssignKey = servicesContextIdentity + ";" + unassignedSupervisor.Identity + ";" + Guid.NewGuid().ToString("N");
 
-                    unassignedSupervisor.SupervisorAssignKey = supervisorAssignKey;
+                    unassignedSupervisor.WorkerAssignKey = supervisorAssignKey;
                     stateTransition.Consistent = true;
                 }
 
@@ -2192,14 +2201,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (SupervisorsLock)
             {
                 var unassignedSupervisor = (from supervisor in Supervisors
-                                            where supervisor.SupervisorAssignKey == supervisorAssignKey
+                                            where supervisor.WorkerAssignKey == supervisorAssignKey
                                             select supervisor).FirstOrDefault();
 
                 if (unassignedSupervisor != null)
                 {
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
-                        unassignedSupervisor.SupervisorAssignKey = null;
+                        unassignedSupervisor.WorkerAssignKey = null;
                         (unassignedSupervisor as ServiceContextSupervisor).OAuthUserIdentity = signUpUserIdentity;
                         unassignedSupervisor.Name = userName;
                         stateTransition.Consistent = true;
@@ -2230,14 +2239,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (SupervisorsLock)
             {
                 var unassignedWaiter = (from waiter in Waiters
-                                        where waiter.WaiterAssignKey == waiterAssignKey
+                                        where waiter.WorkerAssignKey == waiterAssignKey
                                         select waiter).FirstOrDefault();
 
                 if (unassignedWaiter != null)
                 {
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
-                        unassignedWaiter.WaiterAssignKey = null;
+                        unassignedWaiter.WorkerAssignKey = null;
                         (unassignedWaiter as Waiter).OAuthUserIdentity = signUpUserIdentity;
                         unassignedWaiter.Name = userName;
                         stateTransition.Consistent = true;

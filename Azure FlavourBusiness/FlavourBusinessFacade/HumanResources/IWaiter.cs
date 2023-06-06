@@ -40,24 +40,8 @@ namespace FlavourBusinessFacade.HumanResources
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;
 
-        ///// <MetaDataID>{a2b1a0a3-2229-426c-a66d-5ba110f0605a}</MetaDataID>
-        //void RemoveClientSession(EndUsers.IFoodServiceClientSession clientSession);
+    
 
-
-        /// <MetaDataID>{21cb6307-65d2-4394-b1d9-bb1cc076eea4}</MetaDataID>
-        [BackwardCompatibilityID("+8")]
-        bool Suspended { get; }
-
-
-   
-
-        /// <MetaDataID>{915f5c19-eff7-4bc5-81a2-ee312d6f8902}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+5")]
-        string WaiterAssignKey { get; set; }
-
-        /// <MetaDataID>{b7089f78-0d6d-456d-b88d-7b1ea2744972}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+4")]
-        string ServicesContextIdentity { get; set; }
 
         /// <MetaDataID>{0db5ebc9-5c07-4512-ba47-dc6c0dd7e177}</MetaDataID>
         [BackwardCompatibilityID("+9")]
@@ -97,6 +81,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{8208e84b-28c4-47f7-bab8-3ee583b64ad7}</MetaDataID>
         List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
 
+        /// <MetaDataID>{a8a89ad3-7f08-4444-86ea-9371bd15d201}</MetaDataID>
         List<IServingShiftWork> GetLastThreeSifts();
     }
 
