@@ -567,7 +567,7 @@ namespace ServiceContextManagerApp
 
 
 
-
+        object SignInTaskLock = new object();
 
 
         UserData UserData;
@@ -593,118 +593,120 @@ namespace ServiceContextManagerApp
             if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
                 return true;
 
-            if (OnSignIn && SignInTask != null)
-                return await SignInTask;
-            else
+
+            if (SignInTask == null||!OnSignIn)
             {
 
-                SignInTask = Task<bool>.Run(async () =>
+                lock (SignInTaskLock)
                 {
+                    SignInTask = Task<bool>.Run(async () =>
+            {
 
 
 
-                    OnSignIn = true;
+                OnSignIn = true;
+                try
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                    serverUrl = "http://localhost:8090/api/";
+                    serverUrl = AzureServerUrl;
+                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
                     try
                     {
-                        string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                        string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                        System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-                        string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                        serverUrl = "http://localhost:8090/api/";
-                        serverUrl = AzureServerUrl;
-                        IAuthFlavourBusiness pAuthFlavourBusiness = null;
+                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
 
-                        try
-                        {
-                            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-
-                        }
-                        catch (System.Net.WebException error)
-                        {
-                            throw;
-                        }
-                        catch (Exception error)
-                        {
-                            throw;
-                        }
-
-
-                        //sds.SendTimeout
-                        //OOAdvantech.Remoting.RestApi.RemotingServices.T
-                        authUser = DeviceAuthentication.AuthUser;
-                        if (DeviceAuthentication.AuthUser == null)
-                        {
-
-                        }
-                        if (authUser == null)
-                        {
-
-                        }
-                        authUser = DeviceAuthentication.AuthUser;
-                        UserData = pAuthFlavourBusiness.SignIn();
-                        if (UserData != null)
-                        {
-                            _FullName = UserData.FullName;
-                            _UserName = UserData.UserName;
-                            _PhoneNumber = UserData.PhoneNumber;
-                            _Address = UserData.Address;
-
-                            AuthUser=authUser;
-
-                            var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
-                            if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
-                            {
-                                ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                                _OAuthUserIdentity=UserData.OAuthUserIdentity;
-                            }
-
-                            role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                            if (role.RoleType == UserData.RoleType.Organization)
-                            {
-                                Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                                string administratorIdentity = "";
-                                _OAuthUserIdentity=UserData.OAuthUserIdentity;
-
-                                if (ServiceContextSupervisor != null)
-                                {
-                                    administratorIdentity = ServiceContextSupervisor.Identity;
-                                    var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                                    ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
-                                }
-                                else
-                                {
-
-                                }
-                                _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
-                            }
-                            else
-                                _ServicesContexts = new List<IServicesContextPresentation>();
-
-
-                            _ObjectChangeState?.Invoke(this, null);
-                            return true;
-                        }
-                        else
-                            return false;
-
-
+                    }
+                    catch (System.Net.WebException error)
+                    {
+                        throw;
                     }
                     catch (Exception error)
                     {
-
                         throw;
                     }
-                    finally
+
+
+                    //sds.SendTimeout
+                    //OOAdvantech.Remoting.RestApi.RemotingServices.T
+                    authUser = DeviceAuthentication.AuthUser;
+                    if (DeviceAuthentication.AuthUser == null)
                     {
-                        OnSignIn = false;
+
                     }
-                });
+                    if (authUser == null)
+                    {
+
+                    }
+                    authUser = DeviceAuthentication.AuthUser;
+                    UserData = pAuthFlavourBusiness.SignIn();
+                    if (UserData != null)
+                    {
+                        _FullName = UserData.FullName;
+                        _UserName = UserData.UserName;
+                        _PhoneNumber = UserData.PhoneNumber;
+                        _Address = UserData.Address;
+
+                        AuthUser=authUser;
+
+                        var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
+                        if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
+                        {
+                            ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
+                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+                        }
+
+                        role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
+                        if (role.RoleType == UserData.RoleType.Organization)
+                        {
+                            Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
+                            string administratorIdentity = "";
+                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+
+                            if (ServiceContextSupervisor != null)
+                            {
+                                administratorIdentity = ServiceContextSupervisor.Identity;
+                                var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
+                                ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
+                            }
+                            else
+                            {
+
+                            }
+                            _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
+                        }
+                        else
+                            _ServicesContexts = new List<IServicesContextPresentation>();
 
 
-                return await SignInTask;
+                        _ObjectChangeState?.Invoke(this, null);
+                        return true;
+                    }
+                    else
+                        return false;
+
+
+                }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    OnSignIn = false;
+                }
+            }); 
+                }
+
+                
 
             }
+            return await SignInTask;
         }
 
         List<IServicesContextPresentation> _ServicesContexts = new List<IServicesContextPresentation>();

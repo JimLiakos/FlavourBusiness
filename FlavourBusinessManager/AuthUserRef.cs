@@ -378,8 +378,16 @@ namespace FlavourBusinessManager
         {
             lock (rolesLock)
             {
+
                 if (_Roles == null)
+                {
+                    if(!string.IsNullOrWhiteSpace(RolesJson))
                     _Roles = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Role>>(RolesJson);
+                    else
+                        _Roles = new List<Role>();
+                            
+                }
+
                 return _Roles.ToList();
             }
         }
