@@ -14,4 +14,4 @@ namespace MenuPresentationModel.MenuCanvas
     {
         FontData GetFont(string fontUri);
     }
-}
+} 

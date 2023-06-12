@@ -11,7 +11,7 @@ using FlavourBusinessFacade.HumanResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
-using MenuPresentationModel.MenuCanvas;
+
 using UIBaseEx;
 
 
@@ -19,11 +19,19 @@ using UIBaseEx;
 using Xamarin.Forms;
 using ZXing;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+public interface IFontsResolver
+{
+
+}
 #else
 using QRCoder;
+using MenuPresentationModel.MenuCanvas;
 using System.Drawing.Imaging;
 using MarshalByRefObject = System.MarshalByRefObject;
+
+
 #endif
+
 
 namespace ServiceContextManagerApp
 {
