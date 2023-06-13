@@ -503,7 +503,7 @@ namespace ServiceContextManagerApp
 
 
 
-        public NewSupervisorCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color)
+        public NewUserCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color)
         {
 
 
@@ -570,7 +570,7 @@ namespace ServiceContextManagerApp
 #endif
 
 
-            return new NewSupervisorCode() { QRCode = SigBase64, Code = codeValue };
+            return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
         }
 
 

@@ -2258,6 +2258,36 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
+        {
+            lock (SupervisorsLock)
+            {
+
+
+                var unassignedWaiter = (from waiter in Waiters
+                                        where waiter.WorkerAssignKey == waiterAssignKey
+                                        select waiter).FirstOrDefault();
+
+                AuthFlavourBusiness.Current.NewNativeUser(userName, password, userFullName)
+
+                return null;
+
+                //if (unassignedWaiter != null)
+                //{
+                //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                //    {
+                //        unassignedWaiter.WorkerAssignKey = null;
+                //        (unassignedWaiter as Waiter).OAuthUserIdentity = signUpUserIdentity;
+                //        unassignedWaiter.Name = userName;
+                //        stateTransition.Consistent = true;
+                //    }
+                //    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                //}
+
+                //return unassignedWaiter;
+            }
+        }
+
         /// <MetaDataID>{bc4d31f4-b44e-4d59-845e-582531cd8584}</MetaDataID>
         public bool IsGraphicMenuAssigned(string storageIdentity)
         {

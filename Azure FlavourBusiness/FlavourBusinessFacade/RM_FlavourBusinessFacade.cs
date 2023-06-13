@@ -1676,6 +1676,22 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
         }
         
+        public FlavourBusinessFacade.HumanResources.IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
+        {
+            object[] args = new object[4];
+            System.Type[] argsTypes = new System.Type[4];
+            args[0] = waiterAssignKey;
+            argsTypes[0] = typeof(string);
+            args[1] = userName;
+            argsTypes[1] = typeof(string);
+            args[2] = password;
+            argsTypes[2] = typeof(string);
+            args[3] = userFullName;
+            argsTypes[3] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignWaiterNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+        }
+        
         public FinanceFacade.IFisicalParty NewFisicalParty()
         {
             object[] args = new object[0];

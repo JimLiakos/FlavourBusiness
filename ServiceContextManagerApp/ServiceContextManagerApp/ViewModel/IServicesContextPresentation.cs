@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.ServicesContextResources;
+﻿using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService.ViewModel;
 using OOAdvantech.MetaDataRepository;
 using System;
@@ -48,9 +49,13 @@ namespace ServiceContextManagerApp
         event ServicePointChangeStateHandle ServicePointChangeState;
 
         /// <MetaDataID>{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}</MetaDataID>
-        NewSupervisorCode GetNewWaiterQRCode(string color);
+        NewUserCode GetNewWaiterQRCode(string color);
+       // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 
         IList<IHallLayout> Halls { get; }
+
+
+        IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName);
 
 
     }

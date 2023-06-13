@@ -43,6 +43,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{5e9707d0-6984-41c6-a3eb-785aa3a69450}</MetaDataID>
         string NewWaiter();
 
+
         /// <MetaDataID>{e22a146a-d86a-477e-a7f8-6fa9cc5a8a9b}</MetaDataID>
         IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours);
 
@@ -156,6 +157,8 @@ namespace FlavourBusinessFacade
         IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey, string signUpUserIdentity, string userName);
         /// <MetaDataID>{0ce43403-4320-4054-9d8d-80422791c490}</MetaDataID>
         IWaiter AssignWaiterUser(string waiterAssignKey, string signUpUserIdentity, string userName);
+
+        IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password,string userFullName );
 
 
 

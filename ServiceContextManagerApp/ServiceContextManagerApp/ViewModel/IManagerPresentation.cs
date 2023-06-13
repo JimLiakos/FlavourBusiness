@@ -15,7 +15,7 @@ namespace ServiceContextManagerApp
 
         bool IsServiceContextSupervisor { get; }
 
-        NewSupervisorCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color);
+        NewUserCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color);
 
 
 
@@ -31,7 +31,7 @@ namespace ServiceContextManagerApp
 
     /// <MetaDataID>{8ec8c78a-0c9b-4abb-9340-5f1186361844}</MetaDataID>
     [HttpVisible]
-    public class NewSupervisorCode
+    public class NewUserCode
     {
         public string QRCode { get; set; }
         public string Code { get; set; }

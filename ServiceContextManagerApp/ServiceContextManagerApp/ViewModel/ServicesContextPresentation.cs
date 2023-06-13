@@ -277,8 +277,12 @@ namespace ServiceContextManagerApp
             }
         }
 
+        public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
+        {
+           return ServicesContextRuntime.AssignWaiterNativeUser(waiterAssignKey, userName, password, userFullName);
+        }
 
-        public NewSupervisorCode GetNewWaiterQRCode(string color)
+        public NewUserCode GetNewWaiterQRCode(string color)
         {
 
 
@@ -342,7 +346,7 @@ namespace ServiceContextManagerApp
 #endif
 
 
-            return new NewSupervisorCode() { QRCode = SigBase64, Code = codeValue };
+            return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
         }
 
 
