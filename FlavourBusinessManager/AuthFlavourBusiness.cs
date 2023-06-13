@@ -85,6 +85,16 @@ namespace FlavourBusinessManager
         }
 
 
+       public static  AuthFlavourBusiness Current
+        {
+            get
+            {
+                return MonoStateClass.GetInstance<AuthFlavourBusiness>(true);
+
+            }
+        }
+
+
         public IUser SignUp(UserData userData, UserData.RoleType roleType)
         {
             if (roleType == UserData.RoleType.Organization)
