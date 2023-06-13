@@ -1,8 +1,9 @@
 ﻿namespace Firebase.Auth
 {
     /// <summary>
-    /// Basic information about the signed in user.
-    /// </summary>
+    ///     /// Basic information about the signed in user.
+    ///     /// </summary>
+    /// <MetaDataID>{c800b98a-94c2-45b5-9197-f419f05914a5}</MetaDataID>
     public class UserInfo
     {
         public string Uid { get; set; }

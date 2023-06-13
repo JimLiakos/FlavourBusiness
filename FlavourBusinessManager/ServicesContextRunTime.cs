@@ -389,8 +389,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 //AnonymousUpgradeConflict = conflict => conflict.SignInWithPendingCredentialAsync(true)
             };
 
-             FireBaseClient = new FirebaseAuthClient(config);
-
+            FireBaseClient = new FirebaseAuthClient(config);
+            Task.Run(async () =>
+            {
+                var User = await FireBaseClient.SignInWithEmailAndPasswordAsync("jim.liakos@hotmail.com", "astraxan");
+            });
 
             //Task.Run(() =>
             //{
@@ -1309,7 +1312,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     stateTransition.Consistent = true;
                 }
 
-                 
+
 
             }
 
@@ -1829,7 +1832,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         //clientName="clientName"
 
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName,  string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -2315,7 +2318,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{ca263376-0c75-4e57-abf9-2e06345ff26c}</MetaDataID>
-        public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
+        public async IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {
             lock (SupervisorsLock)
             {
@@ -2333,20 +2336,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
                     nativeAuthUser.CreateFirebaseEmailUserCredential();
+                    this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
                     var objectStorage = ObjectStorage.GetStorageOfObject(this);
                     objectStorage.CommitTransientObjectState(nativeAuthUser);
 
 
                     stateTransition.Consistent = true;
                 }
-
-
-
-
-
-
-
-                return null;
+                return default(IWaiter);
 
                 //if (unassignedWaiter != null)
                 //{
@@ -2477,7 +2474,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 ObjectStorage.DeleteObject(takeAwayStationStation);
                 lock (takeAwayStationsLock)
                 {
-                    
+
                     if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationStation.TakeAwayStationIdentity))
                         TakeAwayStationsDictionary.Remove(takeAwayStationStation.TakeAwayStationIdentity);
                 }
@@ -2489,7 +2486,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-      
+
     }
 
 

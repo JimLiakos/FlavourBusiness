@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 
 namespace Firebase.Auth
 {
+    /// <MetaDataID>{7e1e0d21-6133-4bc9-892c-7f2ace52f0e4}</MetaDataID>
     public class UserManager
     {
         private readonly IUserRepository fs;
 
-        private (UserInfo info, FirebaseCredential credential)? cache;
+        private UserData? cache;
 
         public event EventHandler<UserEventArgs> UserChanged;
 
@@ -16,18 +17,18 @@ namespace Firebase.Auth
         /// Creates a new instance of <see cref="UserManager"/> with custom repository.
         /// </summary>
         /// <param name="fileSystem"> Proxy to the filesystem operations. </param>
-        public UserManager(IUserRepository fileSystem) 
+        public UserManager(IUserRepository fileSystem)
         {
             this.fs = fileSystem;
         }
 
-        public (UserInfo info, FirebaseCredential credential) GetUser()
+        public UserData GetUser()
         {
             if (!this.cache.HasValue)
             {
                 if (!this.fs.UserExists())
                 {
-                    this.cache = (null, null);
+                    this.cache =new UserData (null, null);
                     return this.cache.Value;
                 }
 
@@ -39,7 +40,7 @@ namespace Firebase.Auth
 
         public void SaveNewUser(User user)
         {
-            this.cache = (user.Info, user.Credential);
+            this.cache =new UserData(user.Info, user.Credential);
             this.fs.SaveUser(user);
             this.UserChanged?.Invoke(this, new UserEventArgs(user));
         }
@@ -64,9 +65,10 @@ namespace Firebase.Auth
                 return;
             }
 
-            this.cache = (null, null);
+            this.cache =new UserData(default(UserInfo), default(FirebaseCredential));
             this.fs.DeleteUser();
             this.UserChanged?.Invoke(this, new UserEventArgs(null));
         }
+      
     }
 }

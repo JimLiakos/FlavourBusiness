@@ -36,7 +36,7 @@ namespace Firebase.Auth.Providers
         /// <returns></returns>
         public async Task<UserCredential> ContinueSignInAsync(string redirectUri, string idToken = null)
         {
-            var (user, response) = await this.verifyAssertion.ExecuteAndParseAsync(
+            var userData = await this.verifyAssertion.ExecuteAndParseAsync(
                 this.providerType, 
                 new VerifyAssertionRequest
                 {
@@ -48,11 +48,11 @@ namespace Firebase.Auth.Providers
                 }).ConfigureAwait(false);
 
             var provider = this.config.GetAuthProvider(this.providerType) as OAuthProvider ?? throw new InvalidOperationException($"{this.providerType} is not a OAuthProvider");
-            var credential = provider.GetCredential(response);
+            var credential = provider.GetCredential(userData.response);
 
-            response.Validate(credential);
+            userData.response.Validate(credential);
 
-            return new UserCredential(user, credential, OperationType.SignIn);
+            return new UserCredential(userData.user, credential, OperationType.SignIn);
         }
     }
 }

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 namespace Firebase.Auth.Repository
 {
     /// <summary>
-    /// <see cref="IUserRepository"/> implementation which saves user data application data folder using the <see cref="File"/> API.
-    /// </summary>
+    ///     /// <see cref="IUserRepository" /> implementation which saves user data application data folder using the <see cref="File" /> API.
+    ///     /// </summary>
     /// <inheritdoc />
+    /// <MetaDataID>{9cf37b5f-bcd1-4fb9-892b-07d7b3c21dbf}</MetaDataID>
     public class FileUserRepository : IUserRepository
     {
         public const string UserFileName = "firebase.json";
-        
+
         private readonly string filename;
         private readonly JsonSerializerSettings options;
 
@@ -31,11 +32,11 @@ namespace Firebase.Auth.Repository
             Directory.CreateDirectory(Path.Combine(appdata, folder));
         }
 
-        public virtual (UserInfo, FirebaseCredential) ReadUser()
+        public virtual UserData ReadUser()
         {
             var content = File.ReadAllText(this.filename);
             var obj = JsonConvert.DeserializeObject<UserDal>(content, this.options);
-            return (obj.UserInfo, obj.Credential);
+            return new UserData(obj.UserInfo, obj.Credential);
         }
 
         public virtual void SaveUser(User user)

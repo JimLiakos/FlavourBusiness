@@ -21,9 +21,9 @@ namespace Firebase.Auth.Repository
             return this.user != null;
         }
 
-        public (UserInfo, FirebaseCredential) ReadUser()
+        public UserData ReadUser()
         {
-            return (this.user?.Info, this.user?.Credential);
+            return new UserData (this.user?.Info, this.user?.Credential);
         }
 
         public void SaveUser(User user)

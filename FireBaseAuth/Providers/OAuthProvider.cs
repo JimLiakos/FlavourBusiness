@@ -81,7 +81,7 @@ namespace Firebase.Auth.Providers
         protected internal override async Task<UserCredential> SignInWithCredentialAsync(AuthCredential credential)
         {
             var c = (OAuthCredential)credential;
-            var (user, response) = await this.verifyAssertion.ExecuteAndParseAsync(credential.ProviderType, new VerifyAssertionRequest
+            var userData = await this.verifyAssertion.ExecuteAndParseAsync(credential.ProviderType, new VerifyAssertionRequest
             {
                 RequestUri = $"https://{this.config.AuthDomain}",
                 PostBody = c.GetPostBodyValue(credential.ProviderType),
@@ -90,17 +90,17 @@ namespace Firebase.Auth.Providers
                 ReturnSecureToken = true
             }).ConfigureAwait(false);
             
-            credential = this.GetCredential(response);
+            credential = this.GetCredential(userData.response);
 
-            response.Validate(credential);
+            userData.response.Validate(credential);
 
-            return new UserCredential(user, credential, OperationType.SignIn);
+            return new UserCredential(userData.user, credential, OperationType.SignIn);
         }
 
         protected internal override async Task<UserCredential> LinkWithCredentialAsync(string idToken, AuthCredential credential)
         {
             var c = (OAuthCredential)credential;
-            var (user, response) = await this.verifyAssertion.ExecuteAndParseAsync(credential.ProviderType, new VerifyAssertionRequest
+            var data = await this.verifyAssertion.ExecuteAndParseAsync(credential.ProviderType, new VerifyAssertionRequest
             {
                 IdToken = idToken,
                 RequestUri = $"https://{this.config.AuthDomain}",
@@ -110,11 +110,11 @@ namespace Firebase.Auth.Providers
                 ReturnSecureToken = true
             }).ConfigureAwait(false);
 
-            credential = this.GetCredential(response);
+            credential = this.GetCredential(data.response);
 
-            response.Validate(credential);
+            data.response.Validate(credential);
 
-            return new UserCredential(user, this.GetCredential(response), OperationType.Link);
+            return new UserCredential(data.user, this.GetCredential(data.response), OperationType.Link);
         }
 
         protected string GetParsedOauthScopes()

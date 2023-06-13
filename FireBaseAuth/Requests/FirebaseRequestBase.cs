@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace Firebase.Auth.Requests
 {
+    /// <MetaDataID>{0979ebde-5594-4488-9b91-3acb54b3a066}</MetaDataID>
     public class IdTokenRequest
     {
         public string IdToken { get; set; }
     }
 
     /// <summary>
-    /// Base class for issuing http requests against google <see cref="Endpoints"/>.
-    /// </summary>
+    ///     /// Base class for issuing http requests against google <see cref="Endpoints" />.
+    ///     /// </summary>
     /// <typeparam name="TRequest"> Specifies the type of request payload. </typeparam>
     /// <typeparam name="TResponse"> Specifies the type of response payload. </typeparam>
+    /// <MetaDataID>{5cf00dc0-dd0a-47e5-b922-3a44f5de8e13}</MetaDataID>
     public abstract class FirebaseRequestBase<TRequest, TResponse>
     {
         protected readonly FirebaseAuthConfig config;
@@ -47,7 +49,7 @@ namespace Firebase.Auth.Requests
 
                 var httpResponse = await this.config.HttpClient.SendAsync(message).ConfigureAwait(false);
                 responseData = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                
+
                 var response = JsonConvert.DeserializeObject<TResponse>(responseData, this.JsonSettingsOverride ?? this.config.JsonSettings);
 
                 httpResponse.EnsureSuccessStatusCode();

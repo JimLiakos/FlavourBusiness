@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace Firebase.Auth
 {
     /// <summary>
-    /// Represents a signed-in Firebase user. 
-    /// </summary>
+    ///     /// Represents a signed-in Firebase user. 
+    ///     /// </summary>
+    /// <MetaDataID>{760b7fa6-27f1-4594-8aa3-0e6f20803a37}</MetaDataID>
     [DebuggerDisplay("{Uid} | {Info.Email} | {Info.DisplayName}")]
     public class User
     {
@@ -98,8 +99,8 @@ namespace Firebase.Auth
         public async Task ChangePasswordAsync(string password)
         {
             var token = await this.GetIdTokenAsync().ConfigureAwait(false);
-            var result = await this.updateAccount.ExecuteAsync(new UpdateAccountRequest 
-            { 
+            var result = await this.updateAccount.ExecuteAsync(new UpdateAccountRequest
+            {
                 IdToken = token,
                 Password = password,
                 ReturnSecureToken = true

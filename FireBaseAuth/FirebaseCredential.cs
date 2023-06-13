@@ -3,8 +3,9 @@
 namespace Firebase.Auth
 {
     /// <summary>
-    /// Firebase credentials used to make Firebase requests.
-    /// </summary>
+    ///     /// Firebase credentials used to make Firebase requests.
+    ///     /// </summary>
+    /// <MetaDataID>{31398f30-0271-41cc-9443-0c62e7646a92}</MetaDataID>
     public class FirebaseCredential
     {
         public FirebaseCredential()
