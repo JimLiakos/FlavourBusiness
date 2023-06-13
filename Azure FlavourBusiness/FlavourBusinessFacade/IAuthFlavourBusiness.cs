@@ -14,11 +14,14 @@ namespace FlavourBusinessFacade
 #if DEBUG
         /// <MetaDataID>{a63bbf17-8e18-475e-aaf9-7fae77753b15}</MetaDataID>
         UserData GetUser(string userName);
-        
+
+        /// <MetaDataID>{2a98d270-5673-4bdd-8055-2bb327aae030}</MetaDataID>
         IUser SignIn(UserData.RoleType roleType);
 
+        /// <MetaDataID>{7821eb13-4e78-41e6-9c75-a418f8db10bb}</MetaDataID>
         IUser SignUp(UserData userData, UserData.RoleType roleType);
 
+        /// <MetaDataID>{ac99ba38-5fe1-4ce7-822e-dd38904b32b4}</MetaDataID>
         void UpdateUserProfile(UserData userData, UserData.RoleType roleType);
 #endif
 

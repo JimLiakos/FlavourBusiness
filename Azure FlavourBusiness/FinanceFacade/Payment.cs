@@ -785,6 +785,7 @@ namespace FinanceFacade
                 if (ItemsOrTipToPay)
                     throw new InvalidConstraintException("There isn't amount to pay.");
 
+                
                 //Normalize
                 NormalizeNettingItems();
 

@@ -3324,11 +3324,238 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"1"))
+		    value      	"6")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{ceb3c975-18f5-4a16-b67d-90ce4f29185e}"))
 	    quid       	"648817130216"
+	    operations 	(list Operations
+		(object Operation "CreateFirebaseEmailUserCredential"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{eb0a6728-600a-450a-9fe6-e8dfbc80e0af}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883FFE01B9"))
+		    quid       	"64883FFE01B9"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NativeAuthUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{37ef69d9-5bcf-4e04-92cf-e51a6eb4da50}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883FFE01EB"))
+		    quid       	"64883FFE01EB"
+		    parameters 	(list Parameters
+			(object Parameter "userName"
+			    quid       	"64883FFE0201"
+			    type       	"string")
+			(object Parameter "password"
+			    quid       	"64883FFE0210"
+			    type       	"string")
+			(object Parameter "userFullName"
+			    quid       	"64883FFE0221"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NativeAuthUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{968d050a-111c-4d82-82d6-ca25b56f4687}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883FFE023B"))
+		    quid       	"64883FFE023B"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "UserName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1af5a0fe-8c69-4f14-84a8-fa1c7f21e96d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883A5401E0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"64883A5401E0"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Password"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{413b971b-6a23-418d-8217-1d362375a2ee}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883A54027F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"64883A54027F"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "UserFullName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b6f2b05a-dd34-4231-a44a-13426263c386}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883A5402DC")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"64883A5402DC"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "FireBaseUserName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7d0f4f4c-d86a-4cc9-960b-657997cc7bef}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883FFE00CC")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"64883FFE00CC"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "FireBasePasword"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8131869e-e4a8-401d-8e47-713f1e2523dd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64883FFE0134")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"64883FFE0134"
+		    type       	"string"
+		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 	    quidu      	"5A71E29001B9"
-	    language   	"C#")
+	    language   	"C#"
+	    persistence 	"Persistent")
 	(object Association "OrganizationStorages"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -45445,7 +45672,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	1446
+	    origin_y   	1599
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FlavourBusinessManager::Organization::OrganizationsManager" @681
 		    ShowCompartmentStereotypes 	TRUE
@@ -46822,7 +47049,7 @@
 		    line_style 	0)
 		(object ClassView "Class" "Logical View::FlavourBusinessManager::NativeAuthUser" @736
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(1428, 2820)
+		    location   	(1425, 2821)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -46835,7 +47062,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@736
-			location   	(1112, 2729)
+			location   	(1109, 2730)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	632

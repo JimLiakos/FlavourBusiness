@@ -501,6 +501,9 @@ namespace FlavourBusinessManager
                         {
                         }
 
+                        OOAdvantech.Linq.Storage storage = null;
+
+                        storage.GetObjectCollection<FlavoursServicesContext>
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;

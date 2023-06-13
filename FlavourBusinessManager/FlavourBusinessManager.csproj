@@ -533,6 +533,10 @@
       <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
       <Name>FlavourBusinessToolKit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FireBaseAuth\FireBaseAuth.csproj">
+      <Project>{ff0ab957-e8ba-4742-8f28-0ae9ff094c37}</Project>
+      <Name>FireBaseAuth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MenuModel\MenuModel.csproj">
       <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
       <Name>MenuModel</Name>

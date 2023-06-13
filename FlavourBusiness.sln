@@ -143,6 +143,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentProviders", "Payment
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TakeAwayApp.Wpf", "TakeAwayApp\TakeAwayApp.Wpf\TakeAwayApp.Wpf.csproj", "{867E2D3C-1C58-4944-819B-90A4762B6CA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireBaseAuth", "FireBaseAuth\FireBaseAuth.csproj", "{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -993,6 +995,18 @@ Global
 		{867E2D3C-1C58-4944-819B-90A4762B6CA4}.Release|x64.Build.0 = Release|Any CPU
 		{867E2D3C-1C58-4944-819B-90A4762B6CA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{867E2D3C-1C58-4944-819B-90A4762B6CA4}.Release|x86.Build.0 = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x64.Build.0 = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

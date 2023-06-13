@@ -31,6 +31,8 @@ using FlavourBusinessManager.HumanResources;
 using System.Net.Http;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using System.Globalization;
+using Firebase.Auth.Providers;
+using Firebase.Auth;
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -289,6 +291,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
         /// <exclude>Excluded</exclude>
         MenuModel.Menu _OperativeRestaurantMenu;
 
@@ -358,6 +361,36 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
 #endif
+
+            // Firebase UI initialization
+            var config = new Firebase.Auth.FirebaseAuthConfig
+            {
+                ApiKey = "AIzaSyD8rMRJMQaDZob0bW4QFY2rOxW2s6D2a1Q",
+                AuthDomain = "demomicroneme.firebaseapp.com",
+                Providers = new FirebaseAuthProvider[]
+                   {
+                    new GoogleProvider(),
+                    new FacebookProvider(),
+                    new AppleProvider(),
+                    new TwitterProvider(),
+                    new GithubProvider(),
+                    new MicrosoftProvider(),
+                    new EmailProvider()
+                   },
+                //PrivacyPolicyUrl = "https://github.com/step-up-labs/firebase-authentication-dotnet",
+                //TermsOfServiceUrl = "https://github.com/step-up-labs/firebase-database-dotnet",
+                //IsAnonymousAllowed = true,
+                //AutoUpgradeAnonymousUsers = true,
+                //UserRepository = new StorageRepository(),
+                // Func called when upgrade of anonymous user fails because the user already exists
+                // You should grab any data created under your anonymous user, sign in with the pending credential
+                // and copy the existing data to the new user
+                // see details here: https://github.com/firebase/firebaseui-web#upgrading-anonymous-users
+                //AnonymousUpgradeConflict = conflict => conflict.SignInWithPendingCredentialAsync(true)
+            };
+
+             FireBaseClient = new FirebaseAuthClient(config);
+
 
             //Task.Run(() =>
             //{
@@ -963,6 +996,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
                     }
                 }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        FlavoursServicesContext _FlavoursServicesContext;
+
+        /// <MetaDataID>{3787eccb-d3dd-49cf-890a-0acad8f729df}</MetaDataID>
+        internal FlavoursServicesContext FlavoursServicesContext
+        {
+            get
+            {
+                if (_FlavoursServicesContext!=null)
+                    return _FlavoursServicesContext;
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
+
+                _FlavoursServicesContext=(from flavoursServicesContext in storage.GetObjectCollection<FlavoursServicesContext>()
+                                          where flavoursServicesContext.ServicesContextIdentity==ServicesContextIdentity
+                                          select flavoursServicesContext).FirstOrDefault();
+
+                return _FlavoursServicesContext;
             }
         }
 
@@ -1932,7 +1985,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         object takeAwayStationsLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, ITakeAwayStation> _TakeAwayStationsDictionary;
-        
+
+        /// <MetaDataID>{717900a3-bd70-4e5c-814f-228ffd01fb35}</MetaDataID>
         public Dictionary<string, ITakeAwayStation> TakeAwayStationsDictionary
         {
             get
@@ -1947,8 +2001,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         var servicesContextIdentity = ServicesContextIdentity;
                         foreach (var takeAwayStation in (from aTakeAwayStation in servicesContextStorage.GetObjectCollection<ITakeAwayStation>()
-                                                            where aTakeAwayStation.ServicesContextIdentity == servicesContextIdentity
-                                                            select aTakeAwayStation))
+                                                         where aTakeAwayStation.ServicesContextIdentity == servicesContextIdentity
+                                                         select aTakeAwayStation))
                         {
                             if (!string.IsNullOrWhiteSpace(takeAwayStation.TakeAwayStationIdentity))
                                 this._TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] = takeAwayStation;
@@ -1960,8 +2014,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{6fe2bea5-c425-4733-afee-7f472727e728}</MetaDataID>
+        public FirebaseAuthClient FireBaseClient { get; private set; }
 
-
+        /// <MetaDataID>{e24e3ae2-eef3-4240-8237-cae30fd5dcd4}</MetaDataID>
         public ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey)
         {
             lock (takeAwayStationsLock)
@@ -2258,6 +2314,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{ca263376-0c75-4e57-abf9-2e06345ff26c}</MetaDataID>
         public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {
             lock (SupervisorsLock)
@@ -2268,7 +2325,26 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                         where waiter.WorkerAssignKey == waiterAssignKey
                                         select waiter).FirstOrDefault();
 
-                AuthFlavourBusiness.Current.NewNativeUser(userName, password, userFullName)
+
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                    nativeAuthUser.CreateFirebaseEmailUserCredential();
+                    var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                    objectStorage.CommitTransientObjectState(nativeAuthUser);
+
+
+                    stateTransition.Consistent = true;
+                }
+
+
+
+
+
+
 
                 return null;
 

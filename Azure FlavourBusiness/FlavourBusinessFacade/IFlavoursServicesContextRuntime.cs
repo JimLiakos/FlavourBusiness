@@ -158,7 +158,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{0ce43403-4320-4054-9d8d-80422791c490}</MetaDataID>
         IWaiter AssignWaiterUser(string waiterAssignKey, string signUpUserIdentity, string userName);
 
-        IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password,string userFullName );
+        /// <MetaDataID>{489998f0-6ec5-474c-a1fd-5ca4a5956ac8}</MetaDataID>
+        IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName);
 
 
 

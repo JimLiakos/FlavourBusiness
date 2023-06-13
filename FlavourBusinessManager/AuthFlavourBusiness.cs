@@ -85,7 +85,8 @@ namespace FlavourBusinessManager
         }
 
 
-       public static  AuthFlavourBusiness Current
+        /// <MetaDataID>{fb4a6a54-c230-43eb-878e-089b4df61f55}</MetaDataID>
+        public static AuthFlavourBusiness Current
         {
             get
             {
@@ -95,6 +96,7 @@ namespace FlavourBusinessManager
         }
 
 
+        /// <MetaDataID>{ca1b7a82-c02a-4edb-b0a9-db46655cf482}</MetaDataID>
         public IUser SignUp(UserData userData, UserData.RoleType roleType)
         {
             if (roleType == UserData.RoleType.Organization)
@@ -120,6 +122,7 @@ namespace FlavourBusinessManager
 
         }
 
+        /// <MetaDataID>{0707051e-517c-4c7f-bf02-31e9a82ade80}</MetaDataID>
         private IUser SignUpMenuMaker(UserData userData)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -290,6 +293,7 @@ namespace FlavourBusinessManager
 
 
 
+        /// <MetaDataID>{396d117f-ab3d-4cef-8f7f-32d629e096e5}</MetaDataID>
         public IUser SignIn(UserData.RoleType roleType)
         {
 
@@ -310,6 +314,7 @@ namespace FlavourBusinessManager
             }
         }
 
+        /// <MetaDataID>{837b58e8-8a8e-4cd4-a7d6-b0b60a227eb9}</MetaDataID>
         private IUser SignInManuMaker()
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -455,12 +460,14 @@ namespace FlavourBusinessManager
 
         }
 #endif
-        bool tested= false;
+        /// <MetaDataID>{8d82f733-69c3-4b32-a766-d2c37a270bfd}</MetaDataID>
+        bool tested = false;
+        /// <MetaDataID>{12f74187-0d6a-4581-8669-f6400db2b6f7}</MetaDataID>
         void ObjectStorageMTTest()
         {
-            lock(this)
+            lock (this)
             {
-                if(tested) return;
+                if (tested) return;
 
                 tested = true;
             }
@@ -565,6 +572,7 @@ namespace FlavourBusinessManager
         }
 
 
+        /// <MetaDataID>{c0373131-b751-4fa7-9f53-a893041de741}</MetaDataID>
         public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
         {
 
@@ -801,5 +809,7 @@ namespace FlavourBusinessManager
             else
                 return null;
         }
+
+      
     }
 }
