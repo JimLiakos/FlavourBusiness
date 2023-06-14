@@ -9,7 +9,7 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{ceb3c975-18f5-4a16-b67d-90ce4f29185e}</MetaDataID>
     [BackwardCompatibilityID("{ceb3c975-18f5-4a16-b67d-90ce4f29185e}")]
     [Persistent()]
-    public class NativeAuthUser
+    public class NativeAuthUser : FlavourBusinessFacade.INativeAuthUser
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -18,7 +18,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{968d050a-111c-4d82-82d6-ca25b56f4687}</MetaDataID>
         public NativeAuthUser()
         {
-            
+
         }
         /// <MetaDataID>{37ef69d9-5bcf-4e04-92cf-e51a6eb4da50}</MetaDataID>
         public NativeAuthUser(string userName, string password, string userFullName)
@@ -115,7 +115,8 @@ namespace FlavourBusinessManager
                         stateTransition.Consistent = true;
                     }
                 }
-            } }
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -149,11 +150,11 @@ namespace FlavourBusinessManager
             {
                 var ticks = new DateTime(2022, 1, 1).Ticks;
                 var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                
+
 
                 FireBaseUserName = ServicePointRunTime.ServicesContextRunTime.Current.FlavoursServicesContext.ContextStorageName+"_"+uniqueId+"@fakeuser.com";
 
-                FireBasePasword=uniqueId; 
+                FireBasePasword=uniqueId;
                 stateTransition.Consistent = true;
             }
 

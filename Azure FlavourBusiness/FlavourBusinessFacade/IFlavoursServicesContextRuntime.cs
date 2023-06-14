@@ -43,6 +43,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{5e9707d0-6984-41c6-a3eb-785aa3a69450}</MetaDataID>
         string NewWaiter();
 
+        string NewTakeAwayCashier();
+
 
         /// <MetaDataID>{e22a146a-d86a-477e-a7f8-6fa9cc5a8a9b}</MetaDataID>
         IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours);

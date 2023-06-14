@@ -72,6 +72,7 @@
     <Compile Include="IMenuDesignActivity.cs" />
     <Compile Include="IMessageConsumer.cs" />
     <Compile Include="HumanResources\IServiceContextSupervisor.cs" />
+    <Compile Include="INativeAuthUser.cs" />
     <Compile Include="IParty.cs" />
     <Compile Include="IPlace.cs" />
     <Compile Include="IPrepareFortInfo.cs" />

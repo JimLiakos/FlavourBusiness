@@ -34,7 +34,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
-
+        public event ObjectChangeStateHandle ObjectChangeState;
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
 

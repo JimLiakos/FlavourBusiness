@@ -176,6 +176,45 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        List<ITakeawayCashier> _TakeawayCashiers;
+        public IList<ITakeawayCashier> TakeawayCashiers
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_TakeawayCashiers == null)
+                    {
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        _TakeawayCashiers = (from takeawayCashier in servicesContextStorage.GetObjectCollection<ITakeawayCashier>()
+                                    where takeawayCashier.ServicesContextIdentity == servicesContextIdentity
+                                    select takeawayCashier).ToList();
+
+                        foreach (var takeawayCashier in _TakeawayCashiers)
+                            takeawayCashier.ObjectChangeState +=TakeawayCashier_ObjectChangeState   ; 
+                    }
+
+                    return _TakeawayCashiers.ToList();
+                }
+
+            }
+        }
+
+        private void TakeawayCashier_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IWaiter.ActiveShiftWork))
+            {
+                Task.Run(() =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                });
+            }
+        }
+
         /// <MetaDataID>{e9759669-6bd8-4091-b318-90229918434e}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
@@ -188,10 +227,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
+
+
         /// <MetaDataID>{ee50a4b3-0173-4323-87b6-36f53b6a2459}</MetaDataID>
         public string NewWaiter()
         {
-
 
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
@@ -241,6 +282,42 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //}
             //return waiter;
 
+        }
+
+
+        public string NewTakeAwayCashier()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+            //OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+            var servicesContextIdentity = ServicesContextIdentity;
+
+            lock (SupervisorsLock)
+            {
+                var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
+                                        select takeawayCashier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
+                string WaiterAssignKey = "";
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    if (unassignedWaiter == null)
+                    {
+                        unassignedWaiter = new HumanResources.Waiter();
+                        unassignedWaiter.ServicesContextIdentity = servicesContextIdentity;
+                        unassignedWaiter.Name = Properties.Resources.DefaultWaiterName;
+
+                        objectStorage.CommitTransientObjectState(unassignedWaiter);
+                        _Waiters.Add(unassignedWaiter);
+                    }
+                    WaiterAssignKey = servicesContextIdentity + ";" + unassignedWaiter.Identity + ";" + Guid.NewGuid().ToString("N");
+
+                    unassignedWaiter.WorkerAssignKey = WaiterAssignKey;
+                    stateTransition.Consistent = true;
+                }
+
+                return WaiterAssignKey;
+            }
         }
 
         /// <MetaDataID>{9b816e2c-6456-47a3-b95b-9ee396b80b1b}</MetaDataID>
@@ -806,7 +883,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         /// <MetaDataID>{9cae1cbf-00a7-48df-8b4b-e7fd8ad6177f}</MetaDataID>
-        internal void WaiterSiftWorkUpdated(HumanResources.TakeawayCashier cashier)
+        internal void CashierSiftWorkUpdated(HumanResources.TakeawayCashier cashier)
         {
             if (cashier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(cashier.ActiveShiftWork))
                 ActiveShiftWorks.Add(cashier.ActiveShiftWork);

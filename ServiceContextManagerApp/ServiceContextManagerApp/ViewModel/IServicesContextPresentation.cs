@@ -50,7 +50,10 @@ namespace ServiceContextManagerApp
 
         /// <MetaDataID>{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}</MetaDataID>
         NewUserCode GetNewWaiterQRCode(string color);
-       // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
+
+        NewUserCode GetNewCashierQRCode(string color);
+
+        // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 
         IList<IHallLayout> Halls { get; }
 
