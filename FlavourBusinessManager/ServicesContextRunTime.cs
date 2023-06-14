@@ -33,6 +33,8 @@ using OOAdvantech.Remoting.RestApi.Serialization;
 using System.Globalization;
 using Firebase.Auth.Providers;
 using Firebase.Auth;
+using OOAdvantech.Remoting.RestApi;
+
 
 namespace FlavourBusinessManager.ServicePointRunTime
 {
@@ -390,10 +392,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
             };
 
             FireBaseClient = new FirebaseAuthClient(config);
-            Task.Run(async () =>
-            {
-                var User = await FireBaseClient.SignInWithEmailAndPasswordAsync("jim.liakos@hotmail.com", "astraxan");
-            });
+            //Task.Run(async () =>
+            //{
+            //    var User = await FireBaseClient.SignInWithEmailAndPasswordAsync("jim.liakos@hotmail.com", "astraxan");
+            //    AuthUser authUser = AuthUser.GetAuthUserFromToken(User.User.Credential.IdToken);
+            //    AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+
+
+            //});
 
             //Task.Run(() =>
             //{
@@ -2318,7 +2325,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{ca263376-0c75-4e57-abf9-2e06345ff26c}</MetaDataID>
-        public async IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
+        public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {
             lock (SupervisorsLock)
             {
@@ -2330,15 +2337,43 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
+                if (unassignedWaiter != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+
+                        NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser.CreateFirebaseEmailUserCredential();
+                        UserCredential user = null;
+                        var FireBaseAcoountTask = Task.Run(async () =>
+                         {
+                             user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
+                         });
+
+                        FireBaseAcoountTask.Wait(TimeSpan.FromSeconds(30));
+
+                        AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
+                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+                        authUserRef.AddRole(unassignedWaiter);
+
+
+
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        objectStorage.CommitTransientObjectState(nativeAuthUser);
+                        unassignedWaiter.WorkerAssignKey = null;
+                        (unassignedWaiter as Waiter).OAuthUserIdentity =authUser.User_ID;
+                        unassignedWaiter.Name = userFullName;
+
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                }
+
+
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
 
-                    NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
-                    nativeAuthUser.CreateFirebaseEmailUserCredential();
-                    this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
-                    var objectStorage = ObjectStorage.GetStorageOfObject(this);
-                    objectStorage.CommitTransientObjectState(nativeAuthUser);
 
 
                     stateTransition.Consistent = true;
