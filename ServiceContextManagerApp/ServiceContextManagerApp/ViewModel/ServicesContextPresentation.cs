@@ -257,6 +257,7 @@ namespace ServiceContextManagerApp
             _ObjectChangeState?.Invoke(this, nameof(Supervisors));
 
             _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
+            _Waiters = ServicesContext.ServiceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Waiters));
 
         }
@@ -350,10 +351,10 @@ namespace ServiceContextManagerApp
         }
 
 
-        NewUserCode GetNewCashierQRCode(string color)
+        public NewUserCode GetNewCashierQRCode(string color)
         {
 
-            string codeValue = ServicesContextRuntime.NewCashier();
+            string codeValue = ServicesContextRuntime.NewTakeAwayCashier();
             string SigBase64 = "";
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()

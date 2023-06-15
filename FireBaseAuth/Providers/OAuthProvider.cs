@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firebase.Auth.Providers
 {
+    /// <MetaDataID>{58731fcb-f606-421a-96ef-b28709d6fc89}</MetaDataID>
     public abstract class OAuthProvider : FirebaseAuthProvider
     {
         protected VerifyAssertion verifyAssertion;
@@ -53,8 +54,8 @@ namespace Firebase.Auth.Providers
         internal virtual AuthCredential GetCredential(VerifyAssertionResponse response)
         {
             return GetCredential(
-                this.ProviderType, 
-                response.PendingToken ?? response.OauthAccessToken, 
+                this.ProviderType,
+                response.PendingToken ?? response.OauthAccessToken,
                 response.PendingToken == null ? OAuthCredentialTokenType.AccessToken : OAuthCredentialTokenType.PendingToken);
         }
 
@@ -89,7 +90,7 @@ namespace Firebase.Auth.Providers
                 ReturnIdpCredential = true,
                 ReturnSecureToken = true
             }).ConfigureAwait(false);
-            
+
             credential = this.GetCredential(userData.response);
 
             userData.response.Validate(credential);
@@ -151,8 +152,8 @@ namespace Firebase.Auth.Providers
                 //    _ => "access_token"
                 //};
 
-                return tokenType == null 
-                    ? null 
+                return tokenType == null
+                    ? null
                     : $"{tokenType}={this.Token}&providerId={ProviderType.ToEnumString()}";
             }
 
@@ -165,6 +166,7 @@ namespace Firebase.Auth.Providers
         }
     }
 
+    /// <MetaDataID>{739ba455-618a-4828-a155-ddfc977246e7}</MetaDataID>
     public enum OAuthCredentialTokenType
     {
         AccessToken = 0,

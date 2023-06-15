@@ -2,6 +2,7 @@
 
 namespace Firebase.Auth.Providers
 {
+    /// <MetaDataID>{ce781fb3-c0fd-44c5-ad25-7da2554fe030}</MetaDataID>
     public class TwitterProvider : OAuthProvider
     {
         public static AuthCredential GetCredential(string token, string secret)

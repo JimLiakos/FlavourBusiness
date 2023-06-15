@@ -9,6 +9,7 @@ namespace Firebase.Auth.Requests.Converters
     /// <summary>
     /// Defaults enum values to the base value if 
     /// </summary>
+    /// <MetaDataID>{4e2202ab-f262-4f11-8bfa-0daa6964fde3}</MetaDataID>
     public class DefaultEnumConverter : StringEnumConverter
     {
         /// <summary>

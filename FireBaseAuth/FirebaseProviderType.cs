@@ -5,6 +5,7 @@ namespace Firebase.Auth
     /// <summary>
     /// Type of authentication provider.
     /// </summary>
+    /// <MetaDataID>{be00f5b8-8a71-48e8-99e4-4661f3de2fc4}</MetaDataID>
     public enum FirebaseProviderType
     {
         Unknown,
@@ -34,5 +35,5 @@ namespace Firebase.Auth
         Phone,
 
         Anonymous
-    } 
+    }
 }

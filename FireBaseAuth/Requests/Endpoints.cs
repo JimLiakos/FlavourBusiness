@@ -1,5 +1,6 @@
 ﻿namespace Firebase.Auth.Requests
 {
+    /// <MetaDataID>{08eb03b4-9739-4969-b951-8b62f465a224}</MetaDataID>
     internal static class Endpoints
     {
         public const string GoogleRefreshAuth = "https://securetoken.googleapis.com/v1/token?key={0}";

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 namespace Firebase.Auth
 {
     /// <inherit />
+    /// <MetaDataID>{b498ad9f-e043-4666-bce7-2d79f8064fdc}</MetaDataID>
     public class FirebaseAuthClient : IFirebaseAuthClient
     {
         private readonly FirebaseAuthConfig config;
         private readonly ProjectConfig projectConfig;
         private readonly SignupNewUser signupNewUser;
         private readonly CreateAuthUri createAuthUri;
-        
+
         private bool domainChecked;
         private event EventHandler<UserEventArgs> authStateChanged;
 
@@ -73,7 +74,7 @@ namespace Firebase.Auth
                 {
                     this.TriggerAuthStateChanged(value, new User(this.config, user.info, user.credential));
                 }
-                
+
             }
             remove
             {
@@ -84,7 +85,7 @@ namespace Firebase.Auth
         public async Task<UserCredential> SignInWithRedirectAsync(FirebaseProviderType authType, SignInRedirectDelegate redirectDelegate)
         {
             var provider = this.config.GetAuthProvider(authType);
-            
+
             if (!(provider is OAuthProvider oauthProvider))
             {
                 throw new InvalidOperationException("You cannot sign in with this provider using this method.");
@@ -110,7 +111,7 @@ namespace Firebase.Auth
         public async Task<UserCredential> SignInWithCredentialAsync(AuthCredential credential)
         {
             await this.CheckAuthDomain().ConfigureAwait(false);
-            
+
             var userCredential = await this.config
                 .GetAuthProvider(credential.ProviderType)
                 .SignInWithCredentialAsync(credential);

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace Firebase.Auth.Providers
 {
+    /// <MetaDataID>{9f48a140-e84d-4bff-9816-c02bc1d8484e}</MetaDataID>
     public class EmailProvider : FirebaseAuthProvider
     {
         private SignupNewUser signupNewUser;

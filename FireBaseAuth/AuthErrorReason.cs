@@ -1,5 +1,6 @@
 ﻿namespace Firebase.Auth
 {
+    /// <MetaDataID>{35f09450-5dda-4c0b-af57-0e24ffc31101}</MetaDataID>
     public enum AuthErrorReason
     {
         /// <summary>

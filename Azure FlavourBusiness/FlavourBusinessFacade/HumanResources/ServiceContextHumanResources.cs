@@ -8,6 +8,8 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{4f5502c2-abdf-4257-b850-57ecb031435c}</MetaDataID>
         public IList<IWaiter> Waiters { get; set; }
 
+        public IList<ITakeawayCashier> TakeawayCashiers { get; set; }
+
         /// <MetaDataID>{0d85a95f-541f-4f8d-8547-0edf585187c2}</MetaDataID>
         public IList<IServiceContextSupervisor> Supervisors { get; set; }
 

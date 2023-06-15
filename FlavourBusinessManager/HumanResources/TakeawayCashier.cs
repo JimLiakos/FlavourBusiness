@@ -1,4 +1,7 @@
+using FlavourBusinessFacade;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using Microsoft.ServiceBus.Messaging;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
@@ -6,12 +9,63 @@ using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace FlavourBusinessManager.HumanResources
 {
     /// <MetaDataID>{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}</MetaDataID>
     public class TakeawayCashier : ITakeawayCashier
     {
+        /// <MetaDataID>{54f7a325-c970-4b1c-a4df-329219094002}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+17")]
+        private DateTime? LastThreeShiftsPeriodStart;
+
+        /// <exclude>Excluded</exclude>
+        string _Identity;
+
+        /// <MetaDataID>{48dc1d34-f201-4c2b-8664-ea76961a718a}</MetaDataID>
+        [PersistentMember(nameof(_Identity))]
+        [BackwardCompatibilityID("+16")]
+        public string Identity
+        {
+            get => _Identity;
+            set
+            {
+
+                if (_Identity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Identity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _OAuthUserIdentity;
+
+        /// <MetaDataID>{350ec78b-469c-4035-ba60-694083495251}</MetaDataID>
+        [PersistentMember(nameof(_OAuthUserIdentity))]
+        [BackwardCompatibilityID("+9")]
+        public string OAuthUserIdentity
+        {
+            get => _OAuthUserIdentity;
+            set
+            {
+                if (_OAuthUserIdentity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OAuthUserIdentity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         bool _Suspended;
@@ -35,6 +89,30 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         public event ObjectChangeStateHandle ObjectChangeState;
+
+        /// <exclude>Excluded</exclude>
+        event MessageReceivedHandle _MessageReceived;
+        public event MessageReceivedHandle MessageReceived
+        {
+            add
+            {
+
+                System.Diagnostics.Debug.WriteLine("******************************* add MessageReceived **************************************");
+                System.Diagnostics.Debug.WriteLine("******************************* add MessageReceived **************************************");
+                System.Diagnostics.Debug.WriteLine("******************************* add MessageReceived **************************************");
+
+                _MessageReceived += value;
+            }
+            remove
+            {
+                System.Diagnostics.Debug.WriteLine("******************************* remove MessageReceived **************************************");
+                System.Diagnostics.Debug.WriteLine("******************************* remove MessageReceived **************************************");
+                System.Diagnostics.Debug.WriteLine("******************************* remove MessageReceived **************************************");
+
+                _MessageReceived -= value;
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
 
@@ -97,16 +175,15 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         /// <MetaDataID>{1909309d-6473-4d8d-8ec9-eaf329ef9f42}</MetaDataID>
-        [PersistentMember(nameof(_ShiftWorks))]
         [BackwardCompatibilityID("+1")]
-        public IList<IShiftWork> ShiftWorks => _ShiftWorks;
+        public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
 
 
         /// <MetaDataID>{f233ab03-3b88-44a3-a035-b018afa68f5d}</MetaDataID>
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{acb9a452-7452-47e9-be6f-bd4c05a720c3}</MetaDataID>
-        public IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
         {
             get
             {
@@ -155,10 +232,142 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
         }
-        public event ObjectChangeStateHandle ObjectChangeState;
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<Message> _Messages;
+
+        /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
+        [PersistentMember(nameof(_Messages))]
+        [BackwardCompatibilityID("+10")]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
+        public IList<Message> Messages => _Messages.ToThreadSafeList();
+
+        /// <exclude>Excluded</exclude>
+        string _PhotoUrl;
+
+        /// <MetaDataID>{54d0280b-fc9e-45a8-a9d0-2cb49617ffaf}</MetaDataID>
+        [PersistentMember(nameof(_PhotoUrl))]
+        [BackwardCompatibilityID("+11")]
+        public string PhotoUrl
+        {
+            get => _PhotoUrl; set
+            {
+                if (_PhotoUrl!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PhotoUrl=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _FullName;
+        /// <MetaDataID>{aec913c7-6413-49e9-bee1-b2c52ed93245}</MetaDataID>
+        [PersistentMember(nameof(_FullName))]
+        [BackwardCompatibilityID("+12")]
+        public string FullName
+        {
+            get => _FullName; set
+            {
+                if (_PhotoUrl!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PhotoUrl=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _Email;
+
+        /// <MetaDataID>{ced46e0b-9207-45f6-af79-f6c9c753f328}</MetaDataID>
+        [PersistentMember(nameof(_Email))]
+        [BackwardCompatibilityID("+13")]
+        public string Email
+        {
+            get => _Email; set
+            {
+                if (_Email!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Email=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _PhoneNumber;
+
+        /// <MetaDataID>{4a1d8d66-f25f-4cd2-81d5-dbcd97541bde}</MetaDataID>
+        [PersistentMember(nameof(_PhoneNumber))]
+        [BackwardCompatibilityID("+14")]
+        public string PhoneNumber
+        {
+            get => _PhoneNumber; set
+            {
+                if (_PhoneNumber!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PhoneNumber=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _UserName;
+
+        /// <MetaDataID>{7c71f0c5-24ba-4bac-9765-5356b8c92ae1}</MetaDataID>
+        [PersistentMember(nameof(_UserName))]
+        [BackwardCompatibilityID("+15")]
+        public string UserName
+        {
+            get => _UserName; set
+            {
+                if (_UserName!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserName=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        List<FlavourBusinessFacade.UserData.UserRole> _Roles;
+
+        /// <MetaDataID>{134c4f86-90e1-4f84-b602-7e13936e5a2a}</MetaDataID>
+        public List<UserData.UserRole> Roles
+        {
+            get
+            {
+                if (_Roles == null)
+                {
+                    FlavourBusinessFacade.UserData.UserRole role = new FlavourBusinessFacade.UserData.UserRole() { User = this, RoleType = FlavourBusinessFacade.UserData.UserRole.GetRoleType(GetType().FullName) };
+                    _Roles = new List<FlavourBusinessFacade.UserData.UserRole>() { role };
+                }
+                return _Roles;
+            }
+        }
+
 
         /// <MetaDataID>{1478a073-3a9b-4f68-9d77-b1859d666c17}</MetaDataID>
-        public void ChangeSiftWork(IShiftWork shiftWork, DateTime startedAt, double timespanInHours)
+        public void ChangeSiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shiftWork, System.DateTime startedAt, double timespanInHours)
         {
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
@@ -185,11 +394,12 @@ namespace FlavourBusinessManager.HumanResources
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
 
 
-            ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
+            ServicePointRunTime.ServicesContextRunTime.Current.CashierSiftWorkUpdated(this);
 
             return shiftWork;
         }
-        public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
+        /// <MetaDataID>{5e438d51-5635-44c5-8de2-a6870dabc50c}</MetaDataID>
+        public IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours, decimal openingBalanceFloatCash)
         {
             ServingShiftWork shiftWork = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition())
@@ -205,13 +415,14 @@ namespace FlavourBusinessManager.HumanResources
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
 
 
-            ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
+            ServicePointRunTime.ServicesContextRunTime.Current.CashierSiftWorkUpdated(this);
 
             return shiftWork;
 
 
         }
 
+        /// <MetaDataID>{f9f29918-cbb2-43e5-ae35-e5db6c60c504}</MetaDataID>
         internal void AddShiftWork(ShiftWork shiftWork)
         {
 
@@ -235,5 +446,145 @@ namespace FlavourBusinessManager.HumanResources
             }
             RecentlyShiftWorks = null;
         }
+
+        /// <MetaDataID>{7660bcb0-8af4-43d8-939e-d60bb15550ba}</MetaDataID>
+        public void RemoveMessage(string messageId)
+        {
+            var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Messages.Remove(message);
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <MetaDataID>{41cd19e1-abb9-4711-b7f0-42dd9c2e3921}</MetaDataID>
+        public Message GetMessage(string messageId)
+        {
+            var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();
+            return message;
+        }
+
+        /// <MetaDataID>{df39629d-ed30-45bd-8207-3bdcc01594ab}</MetaDataID>
+        public Message PeekMessage()
+        {
+            var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+            if (message != null)
+                message.MessageReaded = true;
+            return message;
+        }
+
+        /// <MetaDataID>{8db90e1e-0487-4436-93c2-b682b3bfede8}</MetaDataID>
+        public Message PopMessage()
+        {
+            var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Messages.Remove(message);
+                    stateTransition.Consistent = true;
+                }
+            }
+            return message;
+        }
+
+        /// <MetaDataID>{67802e91-1da5-4ddb-ac25-bae8a89c968b}</MetaDataID>
+        public void PushMessage(Message message)
+        {
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
+                {
+
+                    message.MessageTimestamp = DateTime.UtcNow;
+                    if (!_Messages.Contains(message))
+                    {
+                        _Messages.Add(message);
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+            }
+            _MessageReceived?.Invoke(this);
+
+        }
+
+        public List<IServingShiftWork> GetLastThreeSifts()
+        {
+            if (LastThreeShiftsPeriodStart!=null)
+            {
+                List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
+                lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                foreach (var shiftWork in lastThreeSifts)
+                    shiftWork.RecalculateDeptData();
+
+                return lastThreeSifts;
+            }
+            else
+            {
+                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                List<IServingShiftWork> lastThreeSifts = (from shiftWork in storage.GetObjectCollection<IServingShiftWork>()
+                                                          where shiftWork.Worker == this
+                                                          orderby shiftWork.StartsAt descending
+                                                          select shiftWork).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                foreach (var shiftWork in lastThreeSifts)
+                    shiftWork.RecalculateDeptData();
+
+                return lastThreeSifts;
+            }
+
+        }
+
+
+        
+        public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
+        {
+            var periodStartDate = startDate;
+            var periodEndDate = endDate;
+
+            var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+            if (objectStorage != null)
+            {
+
+
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                var shiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                  where shiftWork.StartsAt >= periodStartDate && shiftWork.StartsAt <= periodEndDate && shiftWork.Worker == this
+                                  select shiftWork).ToList();
+
+                return shiftWorks.OrderBy(x => x.StartsAt).OfType<IServingShiftWork>().ToList();
+            }
+            else
+                return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
+        }
+
+
+
     }
 }

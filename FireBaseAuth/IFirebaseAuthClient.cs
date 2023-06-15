@@ -7,6 +7,7 @@ namespace Firebase.Auth
     /// <summary>
     /// Firebase client which encapsulates communication with Firebase servers.
     /// </summary>
+    /// <MetaDataID>{6e9c69d6-a46f-4c29-96d9-5cab5c9e2def}</MetaDataID>
     public interface IFirebaseAuthClient
     {
         /// <summary>
@@ -23,12 +24,12 @@ namespace Firebase.Auth
         /// Gets a list of sign-in methods for given email. If there are no methods, it means the user with given email doesn't exist.
         /// </summary>
         Task<FetchUserProvidersResult> FetchSignInMethodsForEmailAsync(string email);
-        
+
         /// <summary>
         /// Creates a new user with given email, password and display name (optional) and signs this user in.
         /// </summary>
         Task<UserCredential> CreateUserWithEmailAndPasswordAsync(string email, string password, string displayName = null);
-        
+
         /// <summary>
         /// Signs in as an anonymous user.
         /// </summary>
@@ -40,7 +41,7 @@ namespace Firebase.Auth
         /// <param name="authType"> Type of the provider, must be an oauth one. </param>
         /// <param name="redirectDelegate"> Delegate which should invoke the passed uri for oauth authentication and return the final redirect uri. </param>
         Task<UserCredential> SignInWithRedirectAsync(FirebaseProviderType authType, SignInRedirectDelegate redirectDelegate);
-        
+
         /// <summary>
         /// Signs in with email and password. If the email &amp; password combination is incorrect, <see cref="FirebaseAuthException"/> is thrown.
         /// </summary>

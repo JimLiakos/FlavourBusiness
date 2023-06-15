@@ -12,6 +12,7 @@ namespace Firebase.Auth
     /// <summary>
     /// Configuration of firebase auth.
     /// </summary>
+    /// <MetaDataID>{41e42d5e-9149-4023-ab82-ddd354268bd3}</MetaDataID>
     public class FirebaseAuthConfig
     {
         private UserManager userManager;
@@ -44,8 +45,8 @@ namespace Firebase.Auth
         /// <summary>
         /// Repository of firebase tokens. Default is in-memory.
         /// </summary>
-        public IUserRepository UserRepository 
-        { 
+        public IUserRepository UserRepository
+        {
             get;
             set;
         }
@@ -53,8 +54,8 @@ namespace Firebase.Auth
         /// <summary>
         /// Collection of auth providers (e.g. Google, Facebook etc.)
         /// </summary>
-        public FirebaseAuthProvider[] Providers 
-        { 
+        public FirebaseAuthProvider[] Providers
+        {
             get;
             set;
         }
@@ -62,19 +63,19 @@ namespace Firebase.Auth
         /// <summary>
         /// Json.net serializer settings.
         /// </summary>
-        public JsonSerializerSettings JsonSettings 
-        { 
-            get; 
-            set; 
+        public JsonSerializerSettings JsonSettings
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// HttpClient to be used for web requests.
         /// </summary>
-        public HttpClient HttpClient 
-        { 
-            get; 
-            set; 
+        public HttpClient HttpClient
+        {
+            get;
+            set;
         }
 
         /// <summary>

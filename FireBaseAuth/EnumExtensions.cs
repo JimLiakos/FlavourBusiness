@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Runtime.Serialization;
 
+    /// <MetaDataID>{a14e05f8-5b28-4db7-8a41-d925b607ece4}</MetaDataID>
     public static class EnumExtensions
     {
         /// <summary>

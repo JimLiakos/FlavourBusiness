@@ -19,6 +19,7 @@ namespace Firebase.Auth.Repository
 
     }
 
+    /// <MetaDataID>{64e9d1cf-cfe8-403b-bc81-c4f33cbf0a07}</MetaDataID>
     public struct UserData
     {
         public UserInfo info;

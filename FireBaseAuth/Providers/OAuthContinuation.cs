@@ -7,6 +7,7 @@ namespace Firebase.Auth.Providers
     /// <summary>
     /// Continuation of OAuth sign in. This class processes the redirect uri user is navigated to and signs the user in.
     /// </summary>
+    /// <MetaDataID>{f31d3914-ba75-4dbd-9a0c-858cda26000b}</MetaDataID>
     public class OAuthContinuation
     {
         private readonly VerifyAssertion verifyAssertion;
@@ -37,7 +38,7 @@ namespace Firebase.Auth.Providers
         public async Task<UserCredential> ContinueSignInAsync(string redirectUri, string idToken = null)
         {
             var userData = await this.verifyAssertion.ExecuteAndParseAsync(
-                this.providerType, 
+                this.providerType,
                 new VerifyAssertionRequest
                 {
                     IdToken = idToken,

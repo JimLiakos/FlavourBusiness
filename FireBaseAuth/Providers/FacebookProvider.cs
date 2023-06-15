@@ -1,5 +1,6 @@
 ﻿namespace Firebase.Auth.Providers
 {
+    /// <MetaDataID>{635d3373-3bab-4d11-8406-2d401d11cde4}</MetaDataID>
     public class FacebookProvider : OAuthProvider
     {
         public const string DefaultEmailScope = "email";

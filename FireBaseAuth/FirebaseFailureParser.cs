@@ -5,8 +5,9 @@ using System.Diagnostics;
 namespace Firebase.Auth
 {
     /// <summary>
-    /// Parser of HTTP response errors into <see cref="AuthErrorReason"/> enum.
+    /// Parser of HTTP response errors into <see cref="AuthErrorReason" /> enum.
     /// </summary>
+    /// <MetaDataID>{3a7e4ca0-261e-4deb-b645-ddbe0b600091}</MetaDataID>
     internal static class FirebaseFailureParser
     {
         /// <summary>
@@ -73,7 +74,7 @@ namespace Firebase.Auth
                         return AuthErrorReason.MissingEmail;
                     case "RESET_PASSWORD_EXCEED_LIMIT":
                         return AuthErrorReason.ResetPasswordExceedLimit;
-                        
+
                     //possible errors from Password Recovery
                     case "MISSING_REQ_TYPE":
                         return AuthErrorReason.MissingRequestType;
@@ -105,7 +106,7 @@ namespace Firebase.Auth
                 {
                     return AuthErrorReason.InvalidAccessToken;
                 }
-                
+
             }
             catch (JsonReaderException)
             {

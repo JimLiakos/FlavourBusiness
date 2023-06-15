@@ -135,6 +135,7 @@ namespace DontWaitApp
         public string ISOCurrencySymbol { get; set; }
     }
 
+    /// <MetaDataID>{37764e57-f95e-4ea7-aa8b-dd3f670500ea}</MetaDataID>
     public class CurrencyOption
     {
         public string Name { get; set; }

@@ -43,6 +43,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{5e9707d0-6984-41c6-a3eb-785aa3a69450}</MetaDataID>
         string NewWaiter();
 
+        /// <MetaDataID>{7648e907-7186-4bfa-b99e-fb057c0af603}</MetaDataID>
         string NewTakeAwayCashier();
 
 
@@ -163,6 +164,9 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{489998f0-6ec5-474c-a1fd-5ca4a5956ac8}</MetaDataID>
         IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName);
 
+
+        /// <MetaDataID>{5baba715-4433-44f0-9317-8031e719f00c}</MetaDataID>
+        ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
 
         /// <MetaDataID>{bb9b4c11-c932-495d-ab49-31f5ad2e4241}</MetaDataID>

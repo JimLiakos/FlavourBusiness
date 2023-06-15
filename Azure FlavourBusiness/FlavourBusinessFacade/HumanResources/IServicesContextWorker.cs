@@ -1,5 +1,6 @@
 using OOAdvantech.MetaDataRepository;
 using System;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -37,6 +38,12 @@ namespace FlavourBusinessFacade.HumanResources
         IShiftWork ActiveShiftWork { get; }
 
         /// <MetaDataID>{8ded2820-79d2-4ae2-8508-15d1f9d7458b}</MetaDataID>
-        void ChangeSiftWork(IShiftWork shiftWork, DateTime startedAt, double timespanInHours);
+        void ChangeSiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shiftWork, System.DateTime startedAt, double timespanInHours);
+
+        
+        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
+
+        
+        List<IServingShiftWork> GetLastThreeSifts();
     }
 }

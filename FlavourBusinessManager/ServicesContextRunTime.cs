@@ -294,6 +294,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             lock (SupervisorsLock)
             {
+                //unassignedtakeawayCashier
                 var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
                                         select takeawayCashier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
                 string WaiterAssignKey = "";
@@ -301,18 +302,18 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
 
-                    if (unassignedWaiter == null)
+                    if (unassignedtakeawayCashier == null)
                     {
-                        unassignedWaiter = new HumanResources.Waiter();
-                        unassignedWaiter.ServicesContextIdentity = servicesContextIdentity;
-                        unassignedWaiter.Name = Properties.Resources.DefaultWaiterName;
+                        unassignedtakeawayCashier = new TakeawayCashier() ;
+                        unassignedtakeawayCashier.ServicesContextIdentity = servicesContextIdentity;
+                        unassignedtakeawayCashier.Name = Properties.Resources.DefaultWaiterName;
 
-                        objectStorage.CommitTransientObjectState(unassignedWaiter);
-                        _Waiters.Add(unassignedWaiter);
+                        objectStorage.CommitTransientObjectState(unassignedtakeawayCashier);
+                        _TakeawayCashiers.Add(unassignedtakeawayCashier);
                     }
-                    WaiterAssignKey = servicesContextIdentity + ";" + unassignedWaiter.Identity + ";" + Guid.NewGuid().ToString("N");
+                    WaiterAssignKey = servicesContextIdentity + ";" + unassignedtakeawayCashier.Identity + ";" + Guid.NewGuid().ToString("N");
 
-                    unassignedWaiter.WorkerAssignKey = WaiterAssignKey;
+                    unassignedtakeawayCashier.WorkerAssignKey = WaiterAssignKey;
                     stateTransition.Consistent = true;
                 }
 
@@ -1614,7 +1615,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(),TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2471,6 +2472,78 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 //return unassignedWaiter;
             }
+        }
+
+        public ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName)
+        {
+            lock (SupervisorsLock)
+            {
+
+
+                var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
+                                        where takeawayCashier.WorkerAssignKey == takeAwayCashierAssignKey
+                                        select takeawayCashier).FirstOrDefault();
+
+
+
+                if (unassignedtakeawayCashier != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+
+                        NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser.CreateFirebaseEmailUserCredential();
+                        UserCredential user = null;
+                        var FireBaseAcoountTask = Task.Run(async () =>
+                        {
+                            user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
+                        });
+
+                        FireBaseAcoountTask.Wait(TimeSpan.FromSeconds(30));
+
+                        AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
+                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+                        authUserRef.AddRole(unassignedtakeawayCashier);
+
+
+
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        objectStorage.CommitTransientObjectState(nativeAuthUser);
+                        unassignedtakeawayCashier.WorkerAssignKey = null;
+                        (unassignedtakeawayCashier as Waiter).OAuthUserIdentity =authUser.User_ID;
+                        unassignedtakeawayCashier.Name = userFullName;
+
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                }
+
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+
+
+                    stateTransition.Consistent = true;
+                }
+                return default(ITakeawayCashier);
+
+                //if (unassignedWaiter != null)
+                //{
+                //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                //    {
+                //        unassignedWaiter.WorkerAssignKey = null;
+                //        (unassignedWaiter as Waiter).OAuthUserIdentity = signUpUserIdentity;
+                //        unassignedWaiter.Name = userName;
+                //        stateTransition.Consistent = true;
+                //    }
+                //    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                //}
+
+                //return unassignedWaiter;
+            }
+
         }
 
         /// <MetaDataID>{bc4d31f4-b44e-4d59-845e-582531cd8584}</MetaDataID>

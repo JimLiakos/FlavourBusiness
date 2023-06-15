@@ -6,6 +6,7 @@ namespace Firebase.Auth.Providers
     /// <summary>
     /// Base class for Firebase auth providers.
     /// </summary>
+    /// <MetaDataID>{7cedd338-3764-4b0f-bb9d-8a07f00e9aad}</MetaDataID>
     public abstract class FirebaseAuthProvider
     {
         protected FirebaseAuthConfig config;

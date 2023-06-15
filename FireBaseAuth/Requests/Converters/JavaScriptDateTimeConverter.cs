@@ -3,6 +3,7 @@ using System;
 
 namespace Firebase.Auth.Requests.Converters
 {
+    /// <MetaDataID>{7219d556-f7e7-49b5-8267-c6133f1edf08}</MetaDataID>
     internal class JavaScriptDateTimeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

@@ -99,6 +99,9 @@
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ISupervisorPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\ISupervisorPresentation.cs</Link>
     </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ITakeawayCashierPresentation.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\ITakeawayCashierPresentation.cs</Link>
+    </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\IWaiterPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\IWaiterPresentation.cs</Link>
     </Compile>
@@ -110,6 +113,9 @@
     </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\SupervisorPresentation.cs.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\SupervisorPresentation.cs.cs</Link>
+    </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\TakeawayCashierPresentation.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\TakeawayCashierPresentation.cs</Link>
     </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\WaiterPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\WaiterPresentation.cs</Link>

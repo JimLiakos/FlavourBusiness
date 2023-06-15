@@ -13,6 +13,10 @@ namespace FlavourBusinessManager.HumanResources
     [OOAdvantech.MetaDataRepository.Persistent()]
     public class ServiceContextSupervisor : MarshalByRefObject, IServiceContextSupervisor, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <MetaDataID>{f790295a-47d5-488e-8da9-2333c35b205e}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+17")]
+        private DateTime? LastThreeShiftsPeriodStart;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IAccountability> _Responsibilities = new OOAdvantech.Collections.Generic.Set<IAccountability>();
@@ -453,5 +457,77 @@ namespace FlavourBusinessManager.HumanResources
             }
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
         }
+
+        /// <MetaDataID>{3a57fdb9-81a1-44d3-ac1b-dbab6ccab19d}</MetaDataID>
+        public List<IServingShiftWork> GetLastThreeSifts()
+        {
+            if (LastThreeShiftsPeriodStart!=null)
+            {
+                List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
+                lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                foreach (var shiftWork in lastThreeSifts)
+                    shiftWork.RecalculateDeptData();
+
+                return lastThreeSifts;
+            }
+            else
+            {
+                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                List<IServingShiftWork> lastThreeSifts = (from shiftWork in storage.GetObjectCollection<IServingShiftWork>()
+                                                          where shiftWork.Worker == this
+                                                          orderby shiftWork.StartsAt descending
+                                                          select shiftWork).ToList();
+                if (lastThreeSifts.Count>3)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        stateTransition.Consistent = true;
+                    }
+                }
+                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                foreach (var shiftWork in lastThreeSifts)
+                    shiftWork.RecalculateDeptData();
+
+                return lastThreeSifts;
+            }
+
+        }
+
+
+        /// <MetaDataID>{6ea57a74-4029-4bd4-b7cc-fabd7b93b307}</MetaDataID>
+        public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
+        {
+            var periodStartDate = startDate;
+            var periodEndDate = endDate;
+
+            var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+            if (objectStorage != null)
+            {
+
+
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                var shiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                  where shiftWork.StartsAt >= periodStartDate && shiftWork.StartsAt <= periodEndDate && shiftWork.Worker == this
+                                  select shiftWork).ToList();
+
+                return shiftWorks.OrderBy(x => x.StartsAt).OfType<IServingShiftWork>().ToList();
+            }
+            else
+                return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
+        }
+
     }
 }

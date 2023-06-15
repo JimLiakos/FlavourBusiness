@@ -1,5 +1,6 @@
 ﻿namespace Firebase.Auth.Providers
 {
+    /// <MetaDataID>{7a7c9d07-7409-4b93-a3e9-3e2faf8487f9}</MetaDataID>
     public class GoogleProvider : OAuthProvider
     {
         public const string DefaultProfileScope = "profile";
