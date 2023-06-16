@@ -40,10 +40,12 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{8ded2820-79d2-4ae2-8508-15d1f9d7458b}</MetaDataID>
         void ChangeSiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shiftWork, System.DateTime startedAt, double timespanInHours);
 
-        
+
+        /// <MetaDataID>{e10ce69e-6209-4970-98d0-de98153fd84f}</MetaDataID>
         List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
 
-        
+
+        /// <MetaDataID>{41bd3c34-4706-430b-b450-48d352418ae6}</MetaDataID>
         List<IServingShiftWork> GetLastThreeSifts();
     }
 }

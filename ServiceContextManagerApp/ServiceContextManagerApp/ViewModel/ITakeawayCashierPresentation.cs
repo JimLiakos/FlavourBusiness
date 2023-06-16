@@ -9,7 +9,7 @@ namespace ServiceContextManagerApp
 
     /// <MetaDataID>{3fa3a62c-423a-4b4f-aa48-6ee62af2c1ee}</MetaDataID>
     [HttpVisible]
-    interface ITakeawayCashierPresentation
+    public interface ITakeawayCashierPresentation
     {
 
         /// <MetaDataID>{f45b37b5-78d2-47a3-9e2a-1418b826be85}</MetaDataID>

@@ -14,8 +14,14 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 namespace FlavourBusinessManager.HumanResources
 {
     /// <MetaDataID>{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}</MetaDataID>
+    [BackwardCompatibilityID("{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}")]
+    [Persistent()]
     public class TakeawayCashier : ITakeawayCashier
     {
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
+
         /// <MetaDataID>{54f7a325-c970-4b1c-a4df-329219094002}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+17")]
@@ -352,7 +358,7 @@ namespace FlavourBusinessManager.HumanResources
         List<FlavourBusinessFacade.UserData.UserRole> _Roles;
 
         /// <MetaDataID>{134c4f86-90e1-4f84-b602-7e13936e5a2a}</MetaDataID>
-        public List<UserData.UserRole> Roles
+        public System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole> Roles
         {
             get
             {
@@ -514,6 +520,7 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        /// <MetaDataID>{03cbec0d-378b-4d10-93d5-834db2202c06}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
         {
             if (LastThreeShiftsPeriodStart!=null)
@@ -562,7 +569,8 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
-        
+
+        /// <MetaDataID>{add76ae6-335c-4982-8330-8210f352b30f}</MetaDataID>
         public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
         {
             var periodStartDate = startDate;

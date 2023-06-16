@@ -168,6 +168,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{5baba715-4433-44f0-9317-8031e719f00c}</MetaDataID>
         ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
+        
+
 
         /// <MetaDataID>{bb9b4c11-c932-495d-ab49-31f5ad2e4241}</MetaDataID>
         string RestaurantMenuDataSharedUri { get; }

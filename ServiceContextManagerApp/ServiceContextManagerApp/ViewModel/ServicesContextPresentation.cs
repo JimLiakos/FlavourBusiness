@@ -36,6 +36,7 @@ namespace ServiceContextManagerApp
 
         public string ServicesContextName { get => ServicesContext.Description; set { } }
 
+        /// <exclude>Excluded</exclude>
         List<IWaiterPresentation> _Waiters;
         public List<IWaiterPresentation> Waiters
         {
@@ -59,6 +60,28 @@ namespace ServiceContextManagerApp
                     return new List<IWaiterPresentation>();
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        List<ITakeawayCashierPresentation> _TakeawayCashiers;
+
+        public List<ITakeawayCashierPresentation> TakeawayCashiers
+        {
+            get
+            {
+                if (_TakeawayCashiers == null && ServicesContext != null)
+                {
+                    _TakeawayCashiers = ServicesContext.ServiceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
+
+                    return _TakeawayCashiers;
+                }
+                else if (_TakeawayCashiers != null)
+                    return _TakeawayCashiers;
+                else
+                    return new List<ITakeawayCashierPresentation>();
+            }
+        }
+
+
 
 
         List<ISupervisorPresentation> _Supervisors;
@@ -234,6 +257,8 @@ namespace ServiceContextManagerApp
             }
         }
 
+        
+
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint, ServicePointState newState)
@@ -281,6 +306,12 @@ namespace ServiceContextManagerApp
         public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {
            return ServicesContextRuntime.AssignWaiterNativeUser(waiterAssignKey, userName, password, userFullName);
+        }
+
+
+        public ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName)
+        {
+            return ServicesContextRuntime.AssignTakeAwayCashierNativeUser(takeAwayCashierAssignKey, userName, password, userFullName);
         }
 
         public NewUserCode GetNewWaiterQRCode(string color)
@@ -350,8 +381,8 @@ namespace ServiceContextManagerApp
             return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
         }
 
-
-        public NewUserCode GetNewCashierQRCode(string color)
+        
+        public NewUserCode GetNewTakeAwayCashierQRCode(string color)
         {
 
             string codeValue = ServicesContextRuntime.NewTakeAwayCashier();

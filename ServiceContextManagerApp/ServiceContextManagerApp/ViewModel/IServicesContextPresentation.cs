@@ -21,6 +21,8 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{b77cb491-e799-4e17-be6f-be68b760b1ea}</MetaDataID>
         List<IWaiterPresentation> Waiters { get; }
 
+        List<ITakeawayCashierPresentation> TakeawayCashiers { get; }
+
         List<MealCourse> MealCoursesInProgress { get; }
 
         /// <MetaDataID>{059a02f3-5f3c-4768-84bb-681a837bfa0e}</MetaDataID>
@@ -51,7 +53,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}</MetaDataID>
         NewUserCode GetNewWaiterQRCode(string color);
 
-        NewUserCode GetNewCashierQRCode(string color);
+        NewUserCode GetNewTakeAwayCashierQRCode(string color);
 
         // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 
