@@ -29,6 +29,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HomeDeliveryServicePointInfo.cs" Link="HomeDeliveryServicePointInfo.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IActivity.cs" Link="HumanResources\IActivity.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IServicesContextWorker.cs" Link="HumanResources\IServicesContextWorker.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITakeawayCashier.cs" Link="HumanResources\ITakeawayCashier.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITranslationActivity.cs" Link="HumanResources\ITranslationActivity.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITranslator.cs" Link="HumanResources\ITranslator.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IWorker.cs" Link="HumanResources\IWorker.cs" />

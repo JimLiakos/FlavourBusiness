@@ -36793,7 +36793,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"17")
+			    value      	"18")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -37457,7 +37457,27 @@
 				    value      	"+16"))
 			    quid       	"6045AD110161"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAcountability>"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "LastThreeShiftsPeriodStart"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+17")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"648AC1E40015")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f790295a-47d5-488e-8da9-2333c35b205e}"))
+			    quid       	"648AC1E40015"
+			    type       	"DateTime?"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -39580,7 +39600,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"17"))
+			    value      	"18"))
 		    quid       	"647EB0A600DF"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
@@ -40314,7 +40334,27 @@
 				    value      	TRUE))
 			    quid       	"648A8C81038C"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole>"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "LastThreeShiftsPeriodStart"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+17")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"648AC272002C")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{54f7a325-c970-4b1c-a4df-329219094002}"))
+			    quid       	"648AC272002C"
+			    type       	"DateTime?"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#")
@@ -40566,6 +40606,24 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B9180030"
+			    compartment 	(object Compartment
+				Parent_View 	@575
+				location   	(99, 1694)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	0)
 			    width      	596
 			    height     	336
 			    annotation 	8
