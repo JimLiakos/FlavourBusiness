@@ -16,7 +16,7 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}</MetaDataID>
     [BackwardCompatibilityID("{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}")]
     [Persistent()]
-    public class TakeawayCashier : ITakeawayCashier
+    public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject 
     {
 
         /// <exclude>Excluded</exclude>

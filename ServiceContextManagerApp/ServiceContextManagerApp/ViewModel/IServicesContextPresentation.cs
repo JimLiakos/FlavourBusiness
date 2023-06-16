@@ -62,6 +62,7 @@ namespace ServiceContextManagerApp
 
         IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName);
 
+        ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
     }
 

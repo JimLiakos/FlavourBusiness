@@ -2510,7 +2510,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedtakeawayCashier.WorkerAssignKey = null;
-                        (unassignedtakeawayCashier as Waiter).OAuthUserIdentity =authUser.User_ID;
+                        (unassignedtakeawayCashier as TakeawayCashier).OAuthUserIdentity =authUser.User_ID;
                         unassignedtakeawayCashier.Name = userFullName;
 
                         stateTransition.Consistent = true;
