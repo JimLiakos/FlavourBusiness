@@ -81,7 +81,7 @@ namespace TakeAwayApp
 
             //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
             //var ss = Xamarin.Forms.Device.Idiom;
-        }
+        } 
 
         /// <MetaDataID>{f39575a9-0c7a-4e09-80e8-415fffdee64f}</MetaDataID>
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
