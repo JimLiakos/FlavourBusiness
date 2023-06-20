@@ -278,14 +278,14 @@ namespace ServiceContextManagerApp
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
 
+
+
             _Supervisors = ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Supervisors));
 
             _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Waiters));
 
-            _TakeawayCashiers = ServicesContext.ServiceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
-            _ObjectChangeState?.Invoke(this, nameof(TakeawayCashiers));
 
         }
 

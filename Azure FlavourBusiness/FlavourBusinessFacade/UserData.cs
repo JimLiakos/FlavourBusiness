@@ -65,7 +65,7 @@ namespace FlavourBusinessFacade
 
         public struct UserRole
         {
-            public IUser User { get; set; }
+            public IUser User { get;  set; }
             public RoleType RoleType { get; set; }
 
             public static RoleType GetRoleType(string typeFullName)

@@ -46,7 +46,7 @@ namespace ServiceContextManagerApp
 
         public ManagerPresentation()
         {
-
+            
             DeviceAuthentication.AuthStateChanged += DeviceAuthentication_AuthStateChanged;
 #if DeviceDotNet
 

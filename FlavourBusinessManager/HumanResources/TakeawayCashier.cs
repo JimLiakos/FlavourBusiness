@@ -35,18 +35,18 @@ namespace FlavourBusinessManager.HumanResources
         [BackwardCompatibilityID("+16")]
         public string Identity
         {
-            get => _Identity;
-            set
+            get
             {
-
-                if (_Identity!=value)
+                if (_Identity == null)
                 {
+
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Identity=value;
+                        _Identity = Guid.NewGuid().ToString("N");
                         stateTransition.Consistent = true;
                     }
                 }
+                return _Identity;
             }
         }
 

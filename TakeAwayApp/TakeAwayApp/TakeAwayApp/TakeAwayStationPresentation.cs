@@ -77,11 +77,19 @@ namespace TakeAwayApp
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
             var appSettings = ApplicationSettings.Current;
 
+
+            string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
+            TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
+
+
+            //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
             //var dd = DeviceDisplay.MainDisplayInfo;
 
             //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
             //var ss = Xamarin.Forms.Device.Idiom;
         }
+
+        FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
 
         /// <MetaDataID>{f39575a9-0c7a-4e09-80e8-415fffdee64f}</MetaDataID>
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
