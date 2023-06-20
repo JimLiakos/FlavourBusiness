@@ -15,6 +15,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
+                
+
                 if(string.IsNullOrWhiteSpace(_FisicalPartyUri))
                     _FisicalPartyUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.GetPersistentObjectUri(this);
 

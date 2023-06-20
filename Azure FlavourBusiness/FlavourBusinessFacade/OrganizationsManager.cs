@@ -2,6 +2,7 @@ using System;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using OOAdvantech.Authentication;
 using OOAdvantech.PersistenceLayer;
 
 namespace FlavourBusinessFacade
@@ -108,6 +109,11 @@ namespace FlavourBusinessFacade
         public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
         {
             AuthFlavourBusiness.UpdateUserProfile(userData, roleType);
+        }
+
+        public bool IsUserNameUnique(string username, SignInProvider signInProvider)
+        {
+            return AuthFlavourBusiness.IsUserNameUnique(username, signInProvider);
         }
 #endif
     }
