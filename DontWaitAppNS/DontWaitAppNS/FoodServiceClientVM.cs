@@ -10,6 +10,7 @@ using OOAdvantech.MetaDataRepository;
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
+using System;
 
 #if DeviceDotNet
 using Xamarin.Essentials;
@@ -723,6 +724,30 @@ namespace DontWaitApp
                 if (ApplicationSettings.Current.ClientAsGuest == null)
                     CreateClientAsGuest();
                 return FoodServiceClient.FriendlyName;
+            }
+        }
+
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+            string serverUrl = AzureServerUrl;
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+            try
+            {
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
             }
         }
 

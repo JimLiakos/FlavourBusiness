@@ -10,6 +10,8 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 
 namespace FlavourBusinessManager
 {
@@ -17,11 +19,26 @@ namespace FlavourBusinessManager
     public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness, IExtMarshalByRefObject
     {
 
-        public bool IsUserNameUnique(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
-            //Unique
-            //FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserByEmailAsync()
-            return true;
+            try
+            {
+                CloudNotificationManager.Init();//Force FirbaseI nitialization 
+                var getUserTask = FirebaseAuth.DefaultInstance.GetUserByEmailAsync(username);
+                getUserTask.Wait();
+                var userRecord = getUserTask.Result;
+                if (userRecord!=null)
+                    return true;
+                else
+                    return false;
+
+            }
+            catch (Exception error)
+            {
+
+                return false;
+            }            
+          
         }
         /// <MetaDataID>{5e35f804-9b98-4c34-beea-1c00d4676c53}</MetaDataID>
         public IFoodServiceClient SignUpEndUser(EndUserData endUser)

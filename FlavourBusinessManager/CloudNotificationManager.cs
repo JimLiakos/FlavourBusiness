@@ -11,7 +11,10 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{84732946-5b28-4f05-882e-9340b767c79e}</MetaDataID>
     public class CloudNotificationManager
     {
+        public static void Init()
+        {
 
+        }
         static FirebaseApp FirebaseApp;
         static CloudNotificationManager()
         {
@@ -31,7 +34,8 @@ namespace FlavourBusinessManager
 
             FirebaseApp = FirebaseApp.Create(new AppOptions()
             {
-                Credential = Google.Apis.Auth.OAuth2.GoogleCredential.FromJson(Newtonsoft.Json.JsonConvert.SerializeObject(credential))
+                Credential = Google.Apis.Auth.OAuth2.GoogleCredential.FromJson(Newtonsoft.Json.JsonConvert.SerializeObject(credential)),
+                ProjectId="demomicroneme"
             });
             //                FirebaseApp = FirebaseApp.Create(new AppOptions()
             //            {

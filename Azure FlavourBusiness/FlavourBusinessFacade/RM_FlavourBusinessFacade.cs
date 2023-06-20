@@ -55,7 +55,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClient>(retValue);
         }
         
-        public bool IsUserNameUnique(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
@@ -63,7 +63,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             argsTypes[0] = typeof(string);
             args[1] = signInProvider;
             argsTypes[1] = typeof(OOAdvantech.Authentication.SignInProvider);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "IsUserNameUnique", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "IsUsernameInUse", args, argsTypes);
             return this.Proxy.GetValue<bool>(retValue);
         }
         

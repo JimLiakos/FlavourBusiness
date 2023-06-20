@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System;
 
 
 #if DeviceDotNet
@@ -241,6 +242,31 @@ namespace TakeAwayApp
         public Task<bool> SignIn()
         {
             return Task<bool>.FromResult( false);
+        }
+
+
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        {
+            OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+            string serverUrl = AzureServerUrl;
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+            try
+            {
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
         }
 
         /// <MetaDataID>{c73714ed-3114-486e-ad8a-cbc9308ab2ee}</MetaDataID>

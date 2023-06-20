@@ -85,6 +85,8 @@ namespace FlavourBusinessFacade.ViewModel
         /// <MetaDataID>{ab6e6eb2-5155-49f9-b80e-68b00e96b730}</MetaDataID>
         void SaveUserProfile();
 
+        bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider);
+
     }
 
 }

@@ -111,9 +111,9 @@ namespace FlavourBusinessFacade
             AuthFlavourBusiness.UpdateUserProfile(userData, roleType);
         }
 
-        public bool IsUserNameUnique(string username, SignInProvider signInProvider)
+        public bool IsUsernameInUse(string username, SignInProvider signInProvider)
         {
-            return AuthFlavourBusiness.IsUserNameUnique(username, signInProvider);
+            return AuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
         }
 #endif
     }

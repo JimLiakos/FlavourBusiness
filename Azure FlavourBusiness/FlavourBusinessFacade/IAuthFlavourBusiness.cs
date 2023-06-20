@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{abc46398-4664-452f-b75b-26620640c201}</MetaDataID>
         IFoodServiceClient SignUpEndUser(EndUserData endUser);
 
-        bool IsUserNameUnique(string username, SignInProvider signInProvider);
+        bool IsUsernameInUse(string username, SignInProvider signInProvider);
 
 #if DEBUG
         /// <MetaDataID>{a63bbf17-8e18-475e-aaf9-7fae77753b15}</MetaDataID>

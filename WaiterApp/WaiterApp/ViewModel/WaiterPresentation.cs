@@ -641,6 +641,34 @@ namespace WaiterApp.ViewModel
 
         }
 
+
+
+
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+            string serverUrl = AzureServerUrl;
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+            try
+            {
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+
         /// <MetaDataID>{a2faf413-7b2b-4136-91c4-8ac9771b842d}</MetaDataID>
         private void ServingBatchesChanged()
         {
