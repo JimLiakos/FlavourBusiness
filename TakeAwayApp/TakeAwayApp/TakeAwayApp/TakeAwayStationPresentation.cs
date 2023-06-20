@@ -87,7 +87,7 @@ namespace TakeAwayApp
 
             //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
             //var ss = Xamarin.Forms.Device.Idiom;
-        }
+        } 
 
         FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
 

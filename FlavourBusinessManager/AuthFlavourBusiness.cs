@@ -16,6 +16,13 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{7e0db2af-8db5-41a5-b7a7-68c767a4615e}</MetaDataID>
     public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness, IExtMarshalByRefObject
     {
+
+        public bool IsUserNameUnique(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        {
+            //Unique
+            //FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserByEmailAsync()
+            return true;
+        }
         /// <MetaDataID>{5e35f804-9b98-4c34-beea-1c00d4676c53}</MetaDataID>
         public IFoodServiceClient SignUpEndUser(EndUserData endUser)
         {
