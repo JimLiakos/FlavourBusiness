@@ -730,7 +730,8 @@ namespace ServiceContextManagerApp
             try
             {
                 var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                
                 return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
             }
             catch (System.Net.WebException error)
