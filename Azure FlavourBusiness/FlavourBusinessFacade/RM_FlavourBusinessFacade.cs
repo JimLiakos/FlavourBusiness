@@ -77,6 +77,30 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             return this.Proxy.GetValue<FlavourBusinessFacade.UserData>(retValue);
         }
         
+        public void SendVerificationEmail(string emailAddress)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = emailAddress;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SendVerificationEmail", args, argsTypes);
+        }
+        
+        public void SignUpUserWithEmailAndPassword(string email, string password, FlavourBusinessFacade.UserData userData, string verificationCode)
+        {
+            object[] args = new object[4];
+            System.Type[] argsTypes = new System.Type[4];
+            args[0] = email;
+            argsTypes[0] = typeof(string);
+            args[1] = password;
+            argsTypes[1] = typeof(string);
+            args[2] = userData;
+            argsTypes[2] = typeof(FlavourBusinessFacade.UserData);
+            args[3] = verificationCode;
+            argsTypes[3] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SignUpUserWithEmailAndPassword", args, argsTypes);
+        }
+        
         public FlavourBusinessFacade.IUser SignIn(FlavourBusinessFacade.UserData.RoleType roleType)
         {
             object[] args = new object[1];

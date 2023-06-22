@@ -247,17 +247,46 @@ namespace TakeAwayApp
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+        private static IAuthFlavourBusiness GetFlavourBusinessAuth()
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness;
             OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
+            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+            pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+            return pAuthFlavourBusiness;
+        }
+
+        public void SendVerificationEmail(string emailAddress)
+        {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
             try
             {
-                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
-                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                pAuthFlavourBusiness.SendVerificationEmail(emailAddress);
             }
             catch (System.Net.WebException error)
             {

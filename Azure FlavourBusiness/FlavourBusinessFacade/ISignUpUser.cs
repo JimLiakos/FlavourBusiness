@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace FlavourBusinessFacade.ViewModel
 {
@@ -86,6 +87,8 @@ namespace FlavourBusinessFacade.ViewModel
         void SaveUserProfile();
 
         bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider);
+
+        void SendVerificationEmail(string emailAddress);
 
     }
 

@@ -106,6 +106,16 @@ namespace FlavourBusinessFacade
             return AuthFlavourBusiness.SignUp(userData, roleType);
         }
 
+        public void SendVerificationEmail(string emailAddress)
+        {
+            AuthFlavourBusiness.SendVerificationEmail(emailAddress);
+        }
+
+        public void SignUpUserWithEmailAndPassword(string email, string password, UserData userData, string verificationCode)
+        {
+            AuthFlavourBusiness.SignUpUserWithEmailAndPassword(email, password, userData, verificationCode);
+        }
+
         public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
         {
             AuthFlavourBusiness.UpdateUserProfile(userData, roleType);
