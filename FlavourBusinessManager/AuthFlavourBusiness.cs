@@ -121,56 +121,48 @@ namespace FlavourBusinessManager
 
             }
         }
-        public  void SendVerificationEmail(string emailAddress)
+        public void SendVerificationEmail(string emailAddress)
         {
 
-            //if (string.IsNullOrWhiteSpace(email))
-            //    return ResponseToConfirmCodeForEmail.WrongEmail;
-
-            //if (UserExist(email))
-            //    return ResponseToConfirmCodeForEmail.EmailAlreadyExist;
-            string code = CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower())).ToString();
-
-            var getJsonTask= new HttpClient().GetStringAsync("http://dontwaitwaiter.com/config/EmailVerifyConfig.json");
+            string code = Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower())).Hash, 0)).ToString();
+            while (code.Length<6)
+                code=code.Insert(1, "0");
+            var getJsonTask = new HttpClient().GetStringAsync("http://dontwaitwaiter.com/config/EmailVerifyConfig.json");
             getJsonTask.Wait();
             var emailVerifyConfig = getJsonTask.Result;
             VerifyEmailConfig verifyEmailConfig = OOAdvantech.Json.JsonConvert.DeserializeObject<VerifyEmailConfig>(emailVerifyConfig);
 
-            verifyEmailConfig.Signature = "<p><strong><span style=\"font-family: verdana,geneva; font-size: 10pt;\">SALES CONTACT</span></strong><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"mailto:info@arion-software.co.uk\">info@arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"http://www.arion-software.co.uk\">www.arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\">Tel No.: +44 (0)207 193 7039</span></p>";
-            verifyEmailConfig.Textbody = "<p><span style=\"font-family: verdana,geneva; font-size: 12pt;\">The verification code is:</span><br /><span style=\"color: #000000; background-color: #00ffff;\"><strong><span style=\"font-family: verdana,geneva; font-size: 14pt;\">{0}</span></strong></span><br /><span style=\"font-family: verdana,geneva; font-size: 12pt;\">Use this code and follow the instructions to complete registration</span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"></span></p> <p>&nbsp;</p> <p><span style=\"font-family: verdana,geneva; font-size: 10pt;\">This is an automated email, please don't reply. If you didn't initiate this, let us know immediately</span></p>\" signature=\"<p><strong><span style=\"font-family: verdana,geneva; font-size: 10pt;\">SALES CONTACT</span></strong><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"mailto:info@arion-software.co.uk\">info@arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"http://www.arion-software.co.uk\">www.arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\">Tel No.: +44 (0)207 193 7039</span></p>";
-            try
-            {
-                emailVerifyConfig = OOAdvantech.Json.JsonConvert.SerializeObject(verifyEmailConfig);
-                verifyEmailConfig = OOAdvantech.Json.JsonConvert.DeserializeObject<VerifyEmailConfig>(emailVerifyConfig);
+            //verifyEmailConfig.Signature = "<p><strong><span style=\"font-family: verdana,geneva; font-size: 10pt;\">SALES CONTACT</span></strong><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"mailto:info@arion-software.co.uk\">info@arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"http://www.arion-software.co.uk\">www.arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\">Tel No.: +44 (0)207 193 7039</span></p>";
+            //verifyEmailConfig.Textbody = "<p><span style=\"font-family: verdana,geneva; font-size: 12pt;\">The verification code is:</span><br /><span style=\"color: #000000; background-color: #00ffff;\"><strong><span style=\"font-family: verdana,geneva; font-size: 14pt;\">{0}</span></strong></span><br /><span style=\"font-family: verdana,geneva; font-size: 12pt;\">Use this code and follow the instructions to complete registration</span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"></span></p> <p>&nbsp;</p> <p><span style=\"font-family: verdana,geneva; font-size: 10pt;\">This is an automated email, please don't reply. If you didn't initiate this, let us know immediately</span></p>\" signature=\"<p><strong><span style=\"font-family: verdana,geneva; font-size: 10pt;\">SALES CONTACT</span></strong><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"mailto:info@arion-software.co.uk\">info@arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\"><a href=\"http://www.arion-software.co.uk\">www.arion-software.co.uk</a> </span><br /><span style=\"font-family: verdana,geneva; font-size: 10pt;\">Tel No.: +44 (0)207 193 7039</span></p>";
+            //try
+            //{
+            //    emailVerifyConfig = OOAdvantech.Json.JsonConvert.SerializeObject(verifyEmailConfig);
+            //    verifyEmailConfig = OOAdvantech.Json.JsonConvert.DeserializeObject<VerifyEmailConfig>(emailVerifyConfig);
 
-            }
-            catch (Exception error)
-            {
-
-                
-            }
+            //}
+            //catch (Exception error)
+            //{
+            //}
             try
             {
                 MailMessage m = new MailMessage();
                 SmtpClient sc = new SmtpClient();
-                //MailAddress ma = new MailAddress(pAppReg.Email);
-                //ma.DisplayName
                 m.From = new MailAddress(verifyEmailConfig.Email, verifyEmailConfig.Displayname);
                 m.To.Add(new MailAddress(emailAddress));
                 //similarly BCC
 
                 m.Subject = verifyEmailConfig.Subject;
-                //string textBody = new WinFormUserIterface.UserInterfaceTranslator().GetControlData("6B524283-C956-4CB8-8404-562B8DDD56DE");//  "Invoice"
-                //m.Body = textBody + ReadSignature();
                 m.Body = string.Format(verifyEmailConfig.Textbody, code);
                 m.Body += verifyEmailConfig.Signature;
 
                 m.IsBodyHtml = true;
 
-                sc.Host = verifyEmailConfig.Server;// "smtp.gmail.com";
+
+                sc.Host =  verifyEmailConfig.Server;// "smtp.gmail.com";
                 int port = 0;
                 int.TryParse(verifyEmailConfig.Port, out port);
                 sc.Port = port;
+
                 sc.DeliveryMethod = SmtpDeliveryMethod.Network;
                 sc.UseDefaultCredentials = false;
                 sc.Credentials = new System.Net.NetworkCredential(verifyEmailConfig.Username, verifyEmailConfig.Password);
@@ -183,7 +175,7 @@ namespace FlavourBusinessManager
             {
 
 
-            } 
+            }
 
         }
 
@@ -315,7 +307,7 @@ namespace FlavourBusinessManager
                 string storageName = "FlavourBusinesses";
                 string storageLocation = "DevStorage";
                 string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
-
+                 
                 try
                 {
                     storageSession = ObjectStorage.OpenStorage(storageName,

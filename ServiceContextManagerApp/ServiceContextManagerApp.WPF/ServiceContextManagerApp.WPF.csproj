@@ -143,6 +143,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{f20e4565-5ddb-4e1e-a343-369927c01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Net\OOAdvantech.Net.csproj">
       <Project>{CEB65441-0A94-444A-AF99-5E4850AE623C}</Project>
       <Name>OOAdvantech.Net</Name>
