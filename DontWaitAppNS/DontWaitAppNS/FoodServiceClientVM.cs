@@ -780,15 +780,16 @@ namespace DontWaitApp
             }
         }
 
-        public void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode)
+        public void CreateUserWithEmailAndPassword( string emailVerificationCode)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
 
             try
             {
+                UserData userData = new UserData() { UserName=UserName, Email=Email, FullName=FullName, Address=Address, PhoneNumber=PhoneNumber };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
-                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(emailUserName, password,null, emailVerificationCode);
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
             catch (System.Net.WebException error)
             {

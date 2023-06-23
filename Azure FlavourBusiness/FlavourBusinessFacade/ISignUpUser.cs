@@ -90,7 +90,7 @@ namespace FlavourBusinessFacade.ViewModel
 
         void SendVerificationEmail(string emailAddress);
 
-        void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode);
+        void CreateUserWithEmailAndPassword(string emailVerificationCode);
 
     }
 

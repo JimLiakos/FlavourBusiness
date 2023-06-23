@@ -15,6 +15,9 @@ using FirebaseAdmin.Auth;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Data.HashFunction.CRC;
+using Microsoft.Azure.Documents;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 
 namespace FlavourBusinessManager
 {
@@ -80,6 +83,32 @@ namespace FlavourBusinessManager
         public AuthFlavourBusiness()
         {
             var time = System.DateTime.Now;
+            var config = new Firebase.Auth.FirebaseAuthConfig
+            {
+                ApiKey = "AIzaSyD8rMRJMQaDZob0bW4QFY2rOxW2s6D2a1Q",
+                AuthDomain = "demomicroneme.firebaseapp.com",
+                Providers = new FirebaseAuthProvider[]
+            {
+                    new GoogleProvider(),
+                    new FacebookProvider(),
+                    new AppleProvider(),
+                    new TwitterProvider(),
+                    new GithubProvider(),
+                    new MicrosoftProvider(),
+                    new EmailProvider()
+            },
+                //PrivacyPolicyUrl = "https://github.com/step-up-labs/firebase-authentication-dotnet",
+                //TermsOfServiceUrl = "https://github.com/step-up-labs/firebase-database-dotnet",
+                //IsAnonymousAllowed = true,
+                //AutoUpgradeAnonymousUsers = true,
+                //UserRepository = new StorageRepository(),
+                // Func called when upgrade of anonymous user fails because the user already exists
+                // You should grab any data created under your anonymous user, sign in with the pending credential
+                // and copy the existing data to the new user
+                // see details here: https://github.com/firebase/firebaseui-web#upgrading-anonymous-users
+                //AnonymousUpgradeConflict = conflict => conflict.SignInWithPendingCredentialAsync(true)
+            };
+            FireBaseClient = new FirebaseAuthClient(config);
 
             var objectStorage = OpenFlavourBusinessesStorage();
             var ss = System.DateTime.Now - time;
@@ -121,6 +150,8 @@ namespace FlavourBusinessManager
 
             }
         }
+
+        public FirebaseAuthClient FireBaseClient { get; }
 
         public void SendVerificationEmail(string emailAddress)
         {
@@ -182,6 +213,38 @@ namespace FlavourBusinessManager
 
         public void SignUpUserWithEmailAndPassword(string email, string password, UserData userData, string verificationCode)
         {
+            UserCredential user = null;
+            string code = Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(email.ToLower())).Hash, 0)).ToString();
+            while (code.Length<6)
+                code=code.Insert(1, "0");
+
+            if(code==verificationCode)
+            {
+                var FireBaseAcoountTask = Task.Run(async () =>
+                {
+                    user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(email, password, userData.FullName);
+                });
+
+                FireBaseAcoountTask.Wait(TimeSpan.FromSeconds(30));
+
+                AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
+                
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+                authUserRef.FullName=userData.FullName;
+                authUserRef.PhoneNumber=userData.PhoneNumber;
+                authUserRef.Address=userData.Address;
+                authUserRef.Save();
+
+
+
+
+            }
+            else
+            {
+                throw new ServerException("Email address verification failed.", "EMAIL_VERIFICATION_FAILED");
+            }
+
+
 
         }
 

@@ -698,15 +698,18 @@ namespace WaiterApp.ViewModel
         }
 
 
-        public void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode)
+        public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
+
+       
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
 
             try
             {
+                UserData userData = new UserData() { Email=Email, FullName=FullName, Address=Address,  UserName=UserName };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
-                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(emailUserName, password,null, emailVerificationCode);
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
             catch (System.Net.WebException error)
             {
