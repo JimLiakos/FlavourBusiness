@@ -780,6 +780,28 @@ namespace DontWaitApp
             }
         }
 
+        public void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode)
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(emailUserName, password,null, emailVerificationCode);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+
+        }
+
+
         /// <exclude>Excluded</exclude>
         string _LinePhoneNumber;
 

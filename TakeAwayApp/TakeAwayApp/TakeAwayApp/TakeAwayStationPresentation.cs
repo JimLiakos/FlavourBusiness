@@ -297,6 +297,26 @@ namespace TakeAwayApp
                 throw;
             }
         }
+        public void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode)
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(emailUserName, password, null, emailVerificationCode);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+
+        }
 
         /// <MetaDataID>{c73714ed-3114-486e-ad8a-cbc9308ab2ee}</MetaDataID>
         public void SaveUserProfile()

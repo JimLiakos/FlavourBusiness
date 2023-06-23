@@ -13,6 +13,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
 
 using UIBaseEx;
+using System.Net.Mail;
 
 
 
@@ -752,6 +753,27 @@ namespace ServiceContextManagerApp
             return pAuthFlavourBusiness;
         }
 
+        public void CreateUserWithEmailAndPassword(string emailUserName, string password, string emailVerificationCode)
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(emailUserName, password, null, emailVerificationCode);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+
+        }
+
         public void SendVerificationEmail(string emailAddress)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
@@ -771,6 +793,10 @@ namespace ServiceContextManagerApp
                 throw;
             }
         }
+
+
+      
+
 
         List<IServicesContextPresentation> _ServicesContexts = new List<IServicesContextPresentation>();
         public List<IServicesContextPresentation> ServicesContexts

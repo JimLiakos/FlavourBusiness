@@ -121,6 +121,7 @@ namespace FlavourBusinessManager
 
             }
         }
+
         public void SendVerificationEmail(string emailAddress)
         {
 
