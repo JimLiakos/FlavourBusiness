@@ -612,7 +612,7 @@ namespace ServiceContextManagerApp
                     SignInTask = Task<bool>.Run(async () =>
             {
 
-
+                
 
                 OnSignIn = true;
                 try
@@ -653,6 +653,7 @@ namespace ServiceContextManagerApp
 
                     }
                     authUser = DeviceAuthentication.AuthUser;
+                    _OAuthUserIdentity=null;
                     UserData = pAuthFlavourBusiness.SignIn();
                     if (UserData != null)
                     {
