@@ -704,7 +704,7 @@ namespace ServiceContextManagerApp
                 }
                 catch (Exception error)
                 {
-
+                     
                     throw;
                 }
                 finally
@@ -750,7 +750,7 @@ namespace ServiceContextManagerApp
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
