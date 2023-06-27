@@ -142,20 +142,23 @@ namespace ServiceContextManagerApp
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 authUser = DeviceAuthentication.AuthUser;
+
             try
             {
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                this.ServiceContextSupervisor = servicesContextManagment.AssignSupervisorUser(supervisorAssignKey);
-                type = "FlavourBusinessManager.AuthFlavourBusiness";
-                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+               var pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 UserData = pAuthFlavourBusiness.SignIn();
                 return true;
             }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
             catch (Exception error)
             {
-                return false;
+                throw;
             }
+
+       
 
 
 
@@ -385,18 +388,11 @@ namespace ServiceContextManagerApp
                 try
                 {
 
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                    serverUrl = "http://localhost:8090/api/";
-                    serverUrl = AzureServerUrl;
                     IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
                     try
                     {
-                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                     pAuthFlavourBusiness = GetFlavourBusinessAuth();
 
                     }
                     catch (System.Net.WebException error)
@@ -410,7 +406,6 @@ namespace ServiceContextManagerApp
 
                     if (authUser == null)
                     {
-
                     }
                     UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
                     UserData = pAuthFlavourBusiness.SignUp(UserData);
@@ -627,9 +622,7 @@ namespace ServiceContextManagerApp
 
                     try
                     {
-                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-
+                        pAuthFlavourBusiness = GetFlavourBusinessAuth();
                     }
                     catch (System.Net.WebException error)
                     {

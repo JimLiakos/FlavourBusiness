@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="ITag.cs" />
+    <Compile Remove="ITakeawayCashier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="vssver.scc" />

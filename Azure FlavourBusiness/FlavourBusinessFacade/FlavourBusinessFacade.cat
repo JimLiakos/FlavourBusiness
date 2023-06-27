@@ -3873,22 +3873,6 @@
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 	    quidu      	"5AA773E702B6"
 	    language   	"C#")
-	(object Class "ITakeawayCashier"
-	    attributes 	(list Attribute_Set
-		(object Attribute
-		    tool       	"MetaData"
-		    name       	"MetaObjectID"
-		    value      	"{4d8e5461-753a-456c-a900-52f44fa6b943}"))
-	    quid       	"647E36390210"
-	    stereotype 	"Interface"
-	    superclasses 	(list inheritance_relationship_list
-		(object Inheritance_Relationship
-		    quid       	"647E37EB02BF"
-		    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IServicesContextWorker"
-		    quidu      	"5FC0BBC80230"))
-	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
-	    quidu      	"5AA773E702B6"
-	    language   	"C#")
 	(object Association "OrganizationServicesContext"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -13383,7 +13367,7 @@
 				    supplier   	"$UNNAMED$23"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+					(object Message "GetClientSession(        )"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13405,7 +13389,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+					(object Message "GetClientSession(       )"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13427,7 +13411,7 @@
 				    supplier   	"$UNNAMED$24"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
+					(object Message "GetFoodServiceClientSession(     )"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13458,7 +13442,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+					(object Message "MealInvitation( )"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -16115,7 +16099,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool)"
+				label      	"GetClientSession(        )"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -16202,7 +16186,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
+				label      	"GetClientSession(       )"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -16289,7 +16273,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
+				label      	"GetFoodServiceClientSession(     )"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -16584,7 +16568,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
+				label      	"MealInvitation( )"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -25734,6 +25718,30 @@
 			    quid       	"641B3F90029D"
 			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IShiftWork"
 			    quidu      	"5FC0B8490118"))
+		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
+		    quidu      	"5AA773E702B6"
+		    language   	"C#")
+		(object Class "ITakeawayCashier"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4d8e5461-753a-456c-a900-52f44fa6b943}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"{4d8e5461-753a-456c-a900-52f44fa6b943}"))
+		    quid       	"647E36390210"
+		    stereotype 	"Interface"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"647E37EB02BF"
+			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IServicesContextWorker"
+			    quidu      	"5FC0BBC80230"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
