@@ -14,6 +14,7 @@ using OOAdvantech.Remoting.RestApi;
 
 using UIBaseEx;
 using System.Net.Mail;
+using FlavourBusinessManager;
 
 
 
@@ -435,6 +436,7 @@ namespace ServiceContextManagerApp
 
                         _FullName = UserData.FullName;
                         _UserName = UserData.UserName;
+                        _Email=UserData.Email;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
 
@@ -652,6 +654,7 @@ namespace ServiceContextManagerApp
                     {
                         _FullName = UserData.FullName;
                         _UserName = UserData.UserName;
+                        _Email=UserData.Email;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
 
@@ -809,6 +812,21 @@ namespace ServiceContextManagerApp
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void SaveUserProfile()
         {
+            try
+            {
+                IAuthFlavourBusiness pAuthFlavourBusiness = GetFlavourBusinessAuth();// OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
+                UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
+                pAuthFlavourBusiness.UpdateUserProfile(UserData, UserData.RoleType.Waiter);
+
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
         }
 
         public string FlavoursServiceContextDescription

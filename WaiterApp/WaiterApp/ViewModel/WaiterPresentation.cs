@@ -1041,13 +1041,13 @@ namespace WaiterApp.ViewModel
         {
             Task<bool>.Run(() =>
             {
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-                string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                serverUrl = "http://localhost:8090/api/";
-                serverUrl = AzureServerUrl;
-                IAuthFlavourBusiness pAuthFlavourBusiness = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
+                //string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                //string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                //AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+                //string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                //serverUrl = "http://localhost:8090/api/";
+                //serverUrl = AzureServerUrl;
+                IAuthFlavourBusiness pAuthFlavourBusiness = GetFlavourBusinessAuth();// OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
                 UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
                 pAuthFlavourBusiness.UpdateUserProfile(UserData, UserData.RoleType.Waiter);
             });
