@@ -534,31 +534,31 @@ namespace WaiterApp.ViewModel
 
 
 #if DeviceDotNet
-                            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                            Waiter.DeviceFirebaseToken = device.FirebaseToken;
+                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                Waiter.DeviceFirebaseToken = device.FirebaseToken;
 
-                            if (!device.IsBackgroundServiceStarted)
-                            {
-                                BackgroundServiceState serviceState = new BackgroundServiceState();
-                                device.RunInBackground(new Action(async () =>
+                                if (!device.IsBackgroundServiceStarted)
                                 {
-                                    var message = Waiter.PeekMessage();
-                                    Waiter.MessageReceived += Waiter_MessageReceived;
-                                    //if (Waiter is ITransparentProxy)
-                                    //    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
-
-
-                                    do
+                                    BackgroundServiceState serviceState = new BackgroundServiceState();
+                                    device.RunInBackground(new Action(async () =>
                                     {
-                                        System.Threading.Thread.Sleep(1000);
+                                        var message = Waiter.PeekMessage();
+                                        Waiter.MessageReceived += Waiter_MessageReceived;
+                                        //if (Waiter is ITransparentProxy)
+                                        //    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
-                                    } while (!serviceState.Terminate);
 
-                                    Waiter.MessageReceived -= Waiter_MessageReceived;
-                                    //if (Waiter is ITransparentProxy)
-                                    //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
-                                }), serviceState);
-                            }
+                                        do
+                                        {
+                                            System.Threading.Thread.Sleep(1000);
+
+                                        } while (!serviceState.Terminate);
+
+                                        Waiter.MessageReceived -= Waiter_MessageReceived;
+                                        //if (Waiter is ITransparentProxy)
+                                        //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+                                    }), serviceState);
+                                }
 #endif
 
 
@@ -613,8 +613,11 @@ namespace WaiterApp.ViewModel
                         //    _ServicesContexts = new List<IServicesContextPresentation>();
 
                         AuthUser = authUser;
-                        OAuthUserIdentity = Waiter.OAuthUserIdentity;
-                        ObjectChangeState?.Invoke(this, null);
+                        if (Waiter!=null)
+                        {
+                            OAuthUserIdentity = Waiter.OAuthUserIdentity;
+                            ObjectChangeState?.Invoke(this, null);
+                        }
                         return true;
                     }
                     else
@@ -673,7 +676,7 @@ namespace WaiterApp.ViewModel
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
@@ -701,13 +704,13 @@ namespace WaiterApp.ViewModel
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
 
-       
+
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
 
             try
             {
-                UserData userData = new UserData() { Email=Email, FullName=FullName, Address=Address,  UserName=UserName };
+                UserData userData = new UserData() { Email=Email, FullName=FullName, Address=Address, UserName=UserName };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
@@ -1483,7 +1486,7 @@ namespace WaiterApp.ViewModel
             Waiter.RemoveMessage(messageID);
         }
 
-    
+
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
         private void ApplicationResuming(object sender, EventArgs e)
         {

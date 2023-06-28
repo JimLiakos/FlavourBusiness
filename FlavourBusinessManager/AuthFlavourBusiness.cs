@@ -935,7 +935,7 @@ namespace FlavourBusinessManager
                 Address = authUserRef.Address,
                 PhotoUrl = authUserRef.PhotoUrl,
                 Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
-            };
+            };   
 
             return userData;
         }
