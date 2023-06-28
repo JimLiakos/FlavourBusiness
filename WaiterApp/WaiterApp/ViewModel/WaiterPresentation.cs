@@ -409,19 +409,13 @@ namespace WaiterApp.ViewModel
                             Waiter.ServingBatchesChanged -= ServingBatchesChanged;
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
-
-
                         }
 
-                        //Waiter = RemotingServices.DerializeObjectRef<IWaiter>(ApplicationSettings.Current.WaiterObjectRef);
                         if (Waiter != null && Waiter.OAuthUserIdentity == authUser.User_ID)
                         {
-
                             AuthUser = authUser;
                             ActiveShiftWork = Waiter.ActiveShiftWork;
-
                             UpdateServingBatches(Waiter.GetServingBatches());
-
                             if (this._Halls != null)
                             {
                                 foreach (var hall in this._Halls)
@@ -438,15 +432,11 @@ namespace WaiterApp.ViewModel
                             }
                             this.FlavoursOrderServer.Halls = _Halls;
 
-
-
                             Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                             Waiter.MessageReceived += MessageReceived;
                             Waiter.ServingBatchesChanged += ServingBatchesChanged;
                             if (Waiter is ITransparentProxy)
                                 (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
-
-
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
@@ -455,9 +445,7 @@ namespace WaiterApp.ViewModel
                             //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             GetMessages();
 
-
                             OAuthUserIdentity = Waiter.OAuthUserIdentity;
-
                             return true;
 
                         }
@@ -516,13 +504,12 @@ namespace WaiterApp.ViewModel
                                     Waiter.ServingBatchesChanged -= ServingBatchesChanged;
                                     if (Waiter is ITransparentProxy)
                                         (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
-
                                 }
                                 Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
                                 if (Waiter==null)
                                     continue;
                                 string objectRef = RemotingServices.SerializeObjectRef(Waiter);
-                                DontWaitApp.ApplicationSettings.Current.WaiterObjectRef = objectRef;
+                                ApplicationSettings.Current.WaiterObjectRef = objectRef;
                                 Waiter.ObjectChangeState += Waiter_ObjectChangeState;
                                 Waiter.MessageReceived += MessageReceived;
                                 Waiter.ServingBatchesChanged += ServingBatchesChanged;
@@ -530,9 +517,6 @@ namespace WaiterApp.ViewModel
                                     (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
 
                                 HallsServicePointsState = Waiter.HallsServicePointsState;
-
-
-
 #if DeviceDotNet
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                 Waiter.DeviceFirebaseToken = device.FirebaseToken;
@@ -544,10 +528,6 @@ namespace WaiterApp.ViewModel
                                     {
                                         var message = Waiter.PeekMessage();
                                         Waiter.MessageReceived += Waiter_MessageReceived;
-                                        //if (Waiter is ITransparentProxy)
-                                        //    (Waiter as ITransparentProxy).Reconnected += WaiterPresentation_Reconnected;
-
-
                                         do
                                         {
                                             System.Threading.Thread.Sleep(1000);
@@ -560,17 +540,8 @@ namespace WaiterApp.ViewModel
                                     }), serviceState);
                                 }
 #endif
-
-
-
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
-
                                 UpdateServingBatches(Waiter.GetServingBatches());
-
-
-
-
-
                                 (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
                                 //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                                 if (this._Halls != null)
@@ -594,24 +565,7 @@ namespace WaiterApp.ViewModel
                         }
                         //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
 
-                        //role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                        //if (role.RoleType == UserData.RoleType.Organization)
-                        //{
-                        //    Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                        //    string administratorIdentity = "";
-
-
-                        //    if (ServiceContextSupervisor != null)
-                        //    {
-                        //        administratorIdentity = ServiceContextSupervisor.SupervisorIdentity;
-                        //        var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                        //        ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.SignUpUserIdentity != ServiceContextSupervisor.SignUpUserIdentity).ToList();
-                        //    }
-                        //    _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, administratorIdentity)).OfType<IServicesContextPresentation>().ToList();
-                        //}
-                        //else
-                        //    _ServicesContexts = new List<IServicesContextPresentation>();
-
+                 
                         AuthUser = authUser;
                         if (Waiter!=null)
                         {
@@ -1068,20 +1022,20 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{9921c079-439e-4f42-8b4d-44130647d4b1}</MetaDataID>
         public async Task<bool> Assign()
         {
-#if !DeviceDotNet
+#if DeviceDotNet
             string waiterAssignKey = null;
-            //try
-            //{
-            //    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically");
 
-            //    if (result == null || string.IsNullOrWhiteSpace(result.Text))
-            //        return false;
-            //    waiterAssignKey = result.Text;
-            //}
-            //catch (Exception error)
-            //{
-            //    return false;
-            //}
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                waiterAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
 
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.FlavoursServicesContextManagment";

@@ -240,7 +240,7 @@ namespace FlavourBusinessManager
                     return null;
 
                 string partitionKey = GetPartitionKey(authUser.User_ID);
-                
+
                 //CRCFactory.Instance.Create(CRCConfig).ComputeHash(System.Text.Encoding.UTF8.GetBytes(authUser.User_ID)).AsHexString();
 
                 //AuthUserRef authUserRef = (from authUserRefEntry in AuthUserRefCloudTable.CreateQuery<AuthUserRef>()
@@ -381,11 +381,11 @@ namespace FlavourBusinessManager
 
                 if (_Roles == null)
                 {
-                    if(!string.IsNullOrWhiteSpace(RolesJson))
-                    _Roles = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Role>>(RolesJson);
+                    if (!string.IsNullOrWhiteSpace(RolesJson))
+                        _Roles = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Role>>(RolesJson);
                     else
                         _Roles = new List<Role>();
-                            
+
                 }
 
                 return _Roles.ToList();
@@ -415,10 +415,13 @@ namespace FlavourBusinessManager
 
                             var rolesDictionary = _Roles.ToDictionary(x => x.ObjectUri);
 
-                            foreach (var storageRole in OOAdvantech.Json.JsonConvert.DeserializeObject<List<Role>>(authUserRef.RolesJson))
+                            if (!string.IsNullOrWhiteSpace(authUserRef.RolesJson))
                             {
-                                if (!rolesDictionary.ContainsKey(storageRole.ObjectUri))
-                                    rolesDictionary.Add(storageRole.ObjectUri, storageRole);
+                                foreach (var storageRole in OOAdvantech.Json.JsonConvert.DeserializeObject<List<Role>>(authUserRef.RolesJson))
+                                {
+                                    if (!rolesDictionary.ContainsKey(storageRole.ObjectUri))
+                                        rolesDictionary.Add(storageRole.ObjectUri, storageRole);
+                                }
                             }
                             RolesJson = OOAdvantech.Json.JsonConvert.SerializeObject(rolesDictionary.Values);
                             //TableOperation updateOperation = TableOperation.Replace(this);
@@ -500,13 +503,13 @@ namespace FlavourBusinessManager
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal T GetContextRoleObject<T>(bool allowRemote=false) where T : class
+        internal T GetContextRoleObject<T>(bool allowRemote = false) where T : class
         {
-            
+
             lock (rolesLock)
             {
                 GetRoles();
-                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName &&( x.ComputingContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID|| allowRemote) && x.RoleObject != null).FirstOrDefault();
+                Role role = _Roles.Where(x => x.TypeFullName == typeof(T).FullName &&(x.ComputingContextID == ComputationalResources.IsolatedComputingContext.CurrentContextID|| allowRemote) && x.RoleObject != null).FirstOrDefault();
 
                 if (role != null)
                     return role.RoleObject as T;
