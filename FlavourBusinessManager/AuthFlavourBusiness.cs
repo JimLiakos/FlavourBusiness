@@ -249,9 +249,9 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{ca1b7a82-c02a-4edb-b0a9-db46655cf482}</MetaDataID>
-        public IUser SignUp(UserData userData, UserData.RoleType roleType)
+        public IUser SignUp(UserData userData, RoleType roleType)
         {
-            if (roleType == UserData.RoleType.Organization)
+            if (roleType == RoleType.Organization)
             {
                 OrganizationData organizationData = new OrganizationData()
                 {
@@ -264,7 +264,7 @@ namespace FlavourBusinessManager
 
                 return SignUpFounder(organizationData);
             }
-            else if (roleType == UserData.RoleType.MenuMaker)
+            else if (roleType == RoleType.MenuMaker)
             {
                 return SignUpMenuMaker(userData);
             }
@@ -446,19 +446,19 @@ namespace FlavourBusinessManager
 
 
         /// <MetaDataID>{396d117f-ab3d-4cef-8f7f-32d629e096e5}</MetaDataID>
-        public IUser SignIn(UserData.RoleType roleType)
+        public IUser SignIn(RoleType roleType)
         {
 
-            if (roleType == UserData.RoleType.Organization)
+            if (roleType == RoleType.Organization)
                 return SignInFounder();
-            else if (roleType == UserData.RoleType.MenuMaker)
+            else if (roleType == RoleType.MenuMaker)
                 return SignInManuMaker();
             else
             {
                 var userData = SignIn();
                 if (userData != null)
                 {
-                    var role = userData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
+                    var role = userData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
                     return role.User;
                 }
                 else
@@ -725,7 +725,7 @@ namespace FlavourBusinessManager
 
 
         /// <MetaDataID>{c0373131-b751-4fa7-9f53-a893041de741}</MetaDataID>
-        public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
+        public void UpdateUserProfile(UserData userData, RoleType roleType)
         {
 
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -744,7 +744,7 @@ namespace FlavourBusinessManager
             }
 
 
-            if (roleType == UserData.RoleType.Organization)
+            if (roleType == RoleType.Organization)
             {
                 OrganizationData organizationData = new OrganizationData()
                 {
@@ -965,6 +965,7 @@ namespace FlavourBusinessManager
       
     }
 
+    /// <MetaDataID>{73ec8edf-ac89-4daf-83a6-7a452c8b67a7}</MetaDataID>
     public class VerifyEmailConfig
     {
         public string Server { get; set; }

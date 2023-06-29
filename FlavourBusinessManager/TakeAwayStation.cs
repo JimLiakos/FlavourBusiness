@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessFacade.RoomService;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -188,6 +189,16 @@ namespace FlavourBusinessManager.ServicesContextResources
                 throw;
             }
 
+        }
+
+        public IList<UserData> GetNativeUsers()
+        {
+            return ServicePointRunTime.ServicesContextRunTime.Current.GetNativeUsers(RoleType.TakeAwayCashier);
+        }
+        public UserData SignInNativeUser(string userName, string password)
+        {
+
+            return ServicePointRunTime.ServicesContextRunTime.Current.SignInNativeUser(userName, password);
         }
 
         public IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)

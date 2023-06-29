@@ -96,12 +96,12 @@ namespace FlavourBusinessFacade
             return AuthFlavourBusiness.GetUser(userName);
         }
 
-        public IUser SignIn(UserData.RoleType roleType)
+        public IUser SignIn(RoleType roleType)
         {
             return AuthFlavourBusiness.SignIn(roleType);
         }
 
-        public IUser SignUp(UserData userData, UserData.RoleType roleType)
+        public IUser SignUp(UserData userData, RoleType roleType)
         {
             return AuthFlavourBusiness.SignUp(userData, roleType);
         }
@@ -116,7 +116,7 @@ namespace FlavourBusinessFacade
             AuthFlavourBusiness.SignUpUserWithEmailAndPassword(email, password, userData, verificationCode);
         }
 
-        public void UpdateUserProfile(UserData userData, UserData.RoleType roleType)
+        public void UpdateUserProfile(UserData userData, RoleType roleType)
         {
             AuthFlavourBusiness.UpdateUserProfile(userData, roleType);
         }

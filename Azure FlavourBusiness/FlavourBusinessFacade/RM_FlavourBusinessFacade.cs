@@ -101,36 +101,36 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SignUpUserWithEmailAndPassword", args, argsTypes);
         }
         
-        public FlavourBusinessFacade.IUser SignIn(FlavourBusinessFacade.UserData.RoleType roleType)
+        public FlavourBusinessFacade.IUser SignIn(FlavourBusinessFacade.RoleType roleType)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = roleType;
-            argsTypes[0] = typeof(FlavourBusinessFacade.UserData.RoleType);
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoleType);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SignIn", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.IUser>(retValue);
         }
         
-        public FlavourBusinessFacade.IUser SignUp(FlavourBusinessFacade.UserData userData, FlavourBusinessFacade.UserData.RoleType roleType)
+        public FlavourBusinessFacade.IUser SignUp(FlavourBusinessFacade.UserData userData, FlavourBusinessFacade.RoleType roleType)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
             args[0] = userData;
             argsTypes[0] = typeof(FlavourBusinessFacade.UserData);
             args[1] = roleType;
-            argsTypes[1] = typeof(FlavourBusinessFacade.UserData.RoleType);
+            argsTypes[1] = typeof(FlavourBusinessFacade.RoleType);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SignUp", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.IUser>(retValue);
         }
         
-        public void UpdateUserProfile(FlavourBusinessFacade.UserData userData, FlavourBusinessFacade.UserData.RoleType roleType)
+        public void UpdateUserProfile(FlavourBusinessFacade.UserData userData, FlavourBusinessFacade.RoleType roleType)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
             args[0] = userData;
             argsTypes[0] = typeof(FlavourBusinessFacade.UserData);
             args[1] = roleType;
-            argsTypes[1] = typeof(FlavourBusinessFacade.UserData.RoleType);
+            argsTypes[1] = typeof(FlavourBusinessFacade.RoleType);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "UpdateUserProfile", args, argsTypes);
         }
         
@@ -1788,6 +1788,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime>(retValue);
         }
         
+        public System.Collections.Generic.IList<FlavourBusinessFacade.UserData> GetNativeUsers(FlavourBusinessFacade.RoleType roleType)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = roleType;
+            argsTypes[0] = typeof(FlavourBusinessFacade.RoleType);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetNativeUsers", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.UserData>>(retValue);
+        }
+        
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID)
         {
             object[] args = new object[1];
@@ -3415,6 +3425,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public System.Collections.Generic.IList<FlavourBusinessFacade.UserData> GetNativeUsers()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "GetNativeUsers", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.UserData>>(retValue);
+        }
+        
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, FlavourBusinessFacade.DeviceType deviceType, string deviceFirebaseToken)
         {
             object[] args = new object[4];
@@ -3429,6 +3447,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[3] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "GetUncommittedFoodServiceClientSession", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
+        }
+        
+        public FlavourBusinessFacade.UserData SignInNativeUser(string userName, string password)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = userName;
+            argsTypes[0] = typeof(string);
+            args[1] = password;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "SignInNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.UserData>(retValue);
         }
         
         public void AddMealType(string mealTypeUri)

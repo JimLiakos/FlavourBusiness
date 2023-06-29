@@ -92,6 +92,12 @@ namespace FlavourBusinessFacade.ViewModel
 
         void CreateUserWithEmailAndPassword(string emailVerificationCode);
 
+        IList<UserData> GetNativeUsers();
+
+        UserData SignInNativeUser(string userName,string password);
+
+
+
     }
 
 }

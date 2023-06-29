@@ -191,6 +191,13 @@ namespace FlavourBusinessFacade
         void UpdateFisicalParty(IFisicalParty fisicalParty);
         /// <MetaDataID>{2eb4a008-d3a3-4fc9-ad3f-4c0e9031b71d}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
+
+
+        /// <MetaDataID>{cdb8ac60-733a-4837-8102-b5afcea77679}</MetaDataID>
+        IList<UserData> GetNativeUsers(RoleType roleType);
+
+
+
         /// <MetaDataID>{e6d7e9c7-e513-4791-adb7-e9fd2d34ea27}</MetaDataID>
         IFoodServiceClientSession GetMealInvitationInviter(string mealInvitationSessionID);
 #if !FlavourBusinessDevice

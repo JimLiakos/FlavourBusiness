@@ -1684,28 +1684,34 @@
 		    quid       	"5CC99D3600AD"
 		    parameters 	(list Parameters
 			(object Parameter "servicePointIdentity"
-			    quid       	"62D7839100E6"
+			    quid       	"649D6D7F02F3"
 			    type       	"string")
 			(object Parameter "mealInvitationSessionID"
-			    quid       	"62D783910102"
+			    quid       	"649D6D7F0339"
 			    type       	"string")
 			(object Parameter "clientName"
-			    quid       	"62D78391011A"
+			    quid       	"649D6D7F0386"
 			    type       	"string")
 			(object Parameter "clientDeviceID"
-			    quid       	"62D783910134"
+			    quid       	"649D6D7F03D5"
 			    type       	"string")
+			(object Parameter "deviceType"
+			    quid       	"649D6D800043"
+			    type       	"FlavourBusinessFacade.DeviceType")
 			(object Parameter "deviceFirebaseToken"
-			    quid       	"62D78391014E"
+			    quid       	"649D6D80009C"
 			    type       	"string")
 			(object Parameter "organizationIdentity"
-			    quid       	"62D783910169"
+			    quid       	"649D6D8000DF"
 			    type       	"string")
 			(object Parameter "unSafeGraphicMenus"
-			    quid       	"62D78391018D"
+			    quid       	"649D6D800133"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>")
+			(object Parameter "endUser"
+			    quid       	"649D6D80017D"
+			    type       	"bool")
 			(object Parameter "create"
-			    quid       	"62D7839101AA"
+			    quid       	"649D6D8001C3"
 			    type       	"bool"))
 		    result     	"FlavourBusinessFacade.EndUsers.ClientSessionData"
 		    concurrency 	"Sequential"
@@ -2182,6 +2188,196 @@
 		    result     	"FlavourBusinessFacade.ServicesContextResources.ICashiersStationRuntime"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NewTakeAwayCashier"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7648e907-7186-4bfa-b99e-fb057c0af603}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D7D03CF"))
+		    quid       	"649D6D7D03CF"
+		    result     	"string"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NewTakeAwayStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{936c5091-f18b-46eb-b1b8-320302d8d4dc}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D7E0398"))
+		    quid       	"649D6D7E0398"
+		    result     	"FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveTakeAwayStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b1100dc0-5804-4cbb-b5c7-d7b3422f4028}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D7F003B"))
+		    quid       	"649D6D7F003B"
+		    parameters 	(list Parameters
+			(object Parameter "takeAwayStationStation"
+			    quid       	"649D6D7F0083"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AssignWaiterNativeUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{489998f0-6ec5-474c-a1fd-5ca4a5956ac8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D810193"))
+		    quid       	"649D6D810193"
+		    parameters 	(list Parameters
+			(object Parameter "waiterAssignKey"
+			    quid       	"649D6D8101C9"
+			    type       	"string")
+			(object Parameter "userName"
+			    quid       	"649D6D81020C"
+			    type       	"string")
+			(object Parameter "password"
+			    quid       	"649D6D81024F"
+			    type       	"string")
+			(object Parameter "userFullName"
+			    quid       	"649D6D810295"
+			    type       	"string"))
+		    result     	"FlavourBusinessFacade.HumanResources.IWaiter"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AssignTakeAwayCashierNativeUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5baba715-4433-44f0-9317-8031e719f00c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D81033F"))
+		    quid       	"649D6D81033F"
+		    parameters 	(list Parameters
+			(object Parameter "takeAwayCashierAssignKey"
+			    quid       	"649D6D810370"
+			    type       	"string")
+			(object Parameter "userName"
+			    quid       	"649D6D8103B3"
+			    type       	"string")
+			(object Parameter "password"
+			    quid       	"649D6D820015"
+			    type       	"string")
+			(object Parameter "userFullName"
+			    quid       	"649D6D820061"
+			    type       	"string"))
+		    result     	"FlavourBusinessFacade.HumanResources.ITakeawayCashier"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetNativeUsers"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cdb8ac60-733a-4837-8102-b5afcea77679}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D820292"))
+		    quid       	"649D6D820292"
+		    parameters 	(list Parameters
+			(object Parameter "roleType"
+			    quid       	"649D6D8202C7"
+			    type       	"FlavourBusinessFacade.UserData.RoleType"))
+		    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.INativeAuthUser,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMealInvitationInviter"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e6d7e9c7-e513-4791-adb7-e9fd2d34ea27}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D82037F"))
+		    quid       	"649D6D82037F"
+		    parameters 	(list Parameters
+			(object Parameter "mealInvitationSessionID"
+			    quid       	"649D6D8203B3"
+			    type       	"string"))
+		    result     	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "WebHook"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{6465189b-ee0a-4f51-b8ef-857de79ae040}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D83013F"))
+		    quid       	"649D6D83013F"
+		    parameters 	(list Parameters
+			(object Parameter "method"
+			    quid       	"649D6D830179"
+			    type       	"string")
+			(object Parameter "webHookName"
+			    quid       	"649D6D8301BB"
+			    type       	"string")
+			(object Parameter "headers"
+			    quid       	"649D6D830204"
+			    type       	"System.Collections.Generic.Dictionary<string,string>")
+			(object Parameter "content"
+			    quid       	"649D6D830250"
+			    type       	"string"))
+		    result     	"OOAdvantech.Remoting.RestApi.HookRespnose"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetTakeAwayStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{3775750f-2f13-458b-ac13-c682be2e15d2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D8302D7"))
+		    quid       	"649D6D8302D7"
+		    parameters 	(list Parameters
+			(object Parameter "takeAwayStationCredentialKey"
+			    quid       	"649D6D83030B"
+			    type       	"string"))
+		    result     	"FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Description"
@@ -2589,6 +2785,48 @@
 			    value      	TRUE))
 		    quid       	"62D7805F00D6"
 		    type       	"FlavourBusinessFacade.ServicesContextResources.ISettings"
+		    exportControl 	"Public")
+		(object ClassAttribute "DeliveryServicePoint"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8538c2c0-46b3-4d5c-b8ef-e4184193cfd6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D83037D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"649D6D83037D"
+		    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"
+		    exportControl 	"Public")
+		(object ClassAttribute "TakeAwayStations"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{d0c2a384-0a71-4dd1-b788-afd8055ee9bb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"649D6D8402AB")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"649D6D8402AB"
+		    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 	    quidu      	"5AA773E702B6"
@@ -8450,7 +8688,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	893
+		    origin_y   	1053
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @1
 			    ShowCompartmentStereotypes 	TRUE
@@ -8480,6 +8718,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
+			    compartment 	(object Compartment
+				Parent_View 	@1
+				location   	(9, 2183)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	62
+				max_width  	2384)
 			    width      	800
 			    height     	594
 			    annotation 	8)
@@ -8509,6 +8765,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C7DEC4B0254"
+			    compartment 	(object Compartment
+				Parent_View 	@2
+				location   	(4403, 1488)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	3
+				max_width  	2246)
 			    width      	743
 			    height     	337
 			    annotation 	8)
@@ -8604,6 +8878,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5DF32099019D"
+			    compartment 	(object Compartment
+				Parent_View 	@6
+				location   	(340, 208)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	621)
 			    width      	494
 			    height     	269
 			    annotation 	8)
@@ -8721,6 +9013,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@10
+				location   	(4014, 339)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	15
+				max_width  	1587)
 			    width      	569
 			    height     	300
 			    annotation 	8)
@@ -8752,6 +9062,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
+			    compartment 	(object Compartment
+				Parent_View 	@11
+				location   	(2497, 167)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	20
+				max_width  	2459)
 			    width      	706
 			    height     	394
 			    annotation 	8)
@@ -8987,6 +9315,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D722E01C3"
+			    compartment 	(object Compartment
+				Parent_View 	@22
+				location   	(2656, 1525)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	475)
 			    width      	500
 			    height     	275
 			    annotation 	8)
@@ -9083,6 +9429,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C3D71BB026B"
+			    compartment 	(object Compartment
+				Parent_View 	@26
+				location   	(1624, 1514)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	3
+				max_width  	621)
 			    width      	588
 			    height     	281
 			    annotation 	8)
@@ -9260,6 +9624,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
+			    compartment 	(object Compartment
+				Parent_View 	@34
+				location   	(1437, 1081)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	16
+				max_width  	715)
 			    width      	675
 			    height     	325
 			    annotation 	8)
@@ -9291,6 +9673,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
+			    compartment 	(object Compartment
+				Parent_View 	@35
+				location   	(1675, 1955)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	787)
 			    width      	656
 			    height     	343
 			    annotation 	8)
@@ -9465,6 +9865,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
+			    compartment 	(object Compartment
+				Parent_View 	@43
+				location   	(1241, 680)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	621)
 			    width      	594
 			    height     	319
 			    annotation 	8)
@@ -9700,6 +10118,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
+			    compartment 	(object Compartment
+				Parent_View 	@54
+				location   	(9, 1320)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	28
+				max_width  	2062)
 			    width      	638
 			    height     	488
 			    annotation 	8)
@@ -13367,7 +13803,7 @@
 				    supplier   	"$UNNAMED$23"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(        )"
+					(object Message "GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13389,7 +13825,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13411,7 +13847,7 @@
 				    supplier   	"$UNNAMED$24"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -13442,7 +13878,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -16099,7 +16535,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(        )"
+				label      	"GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -16186,7 +16622,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -16273,7 +16709,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -16568,7 +17004,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -27106,6 +27542,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B4B225E006D"
+		    compartment 	(object Compartment
+			Parent_View 	@490
+			location   	(1277, 1812)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	62
+			max_width  	0)
 		    width      	1006
 		    height     	443
 		    annotation 	8)

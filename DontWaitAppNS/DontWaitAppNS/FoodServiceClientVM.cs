@@ -550,6 +550,17 @@ namespace DontWaitApp
 
         }
 
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+
+        public IList<UserData> GetNativeUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserData SignInNativeUser(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
 
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
@@ -918,5 +929,9 @@ namespace DontWaitApp
                 //ApplicationSettings.Current.SignInUserName = value;
             }
         }
+
+
     }
+
+
 }

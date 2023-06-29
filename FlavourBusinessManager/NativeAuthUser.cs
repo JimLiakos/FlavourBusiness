@@ -1,3 +1,4 @@
+using Firebase.Auth.Repository;
 using FirebaseAdmin.Auth;
 using OOAdvantech.Authentication;
 using OOAdvantech.MetaDataRepository;
@@ -11,6 +12,30 @@ namespace FlavourBusinessManager
     [Persistent()]
     public class NativeAuthUser : FlavourBusinessFacade.INativeAuthUser
     {
+
+
+        /// <exclude>Excluded</exclude>
+        FlavourBusinessFacade.RoleType _RoleType;
+
+        /// <MetaDataID>{17a2c1a7-0a37-480d-b527-957be217bea1}</MetaDataID>
+        [PersistentMember(nameof(_RoleType))]
+        [BackwardCompatibilityID("+6")]
+        public FlavourBusinessFacade.RoleType RoleType
+        {
+            get => _RoleType;
+            set
+            {
+                if (_RoleType!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _RoleType=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
@@ -48,8 +73,6 @@ namespace FlavourBusinessManager
                 }
             }
         }
-
-
 
         /// <exclude>Excluded</exclude>
         string _Password;

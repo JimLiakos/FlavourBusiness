@@ -12,7 +12,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.EndUsers;
 using System.Xml.Linq;
 using FlavourBusinessManager.ServicesContextResources;
-using Microsoft.Azure.Storage;
+
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
@@ -22,8 +22,8 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
 using FinanceFacade;
 using MenuModel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
-using Microsoft.WindowsAzure.ServiceRuntime;
+
+
 //using WebhooksToLocalServer;
 
 using FlavourBusinessManager.HumanResources;
@@ -2414,13 +2414,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                         select waiter).FirstOrDefault();
 
 
-
+                NativeAuthUser nativeAuthUser = null;
                 if (unassignedWaiter != null)
                 {
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
 
-                        NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                         nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser.RoleType=RoleType.Waiter;
                         nativeAuthUser.CreateFirebaseEmailUserCredential();
                         UserCredential user = null;
                         var FireBaseAcoountTask = Task.Run(async () =>
@@ -2444,9 +2445,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         stateTransition.Consistent = true;
                     }
+                    lock(NativeUsersLock)
+                    {
+                        NativeUsers.Add(nativeAuthUser);
+                    }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
 
+               
 
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -2488,10 +2494,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 if (unassignedtakeawayCashier != null)
                 {
+                    NativeAuthUser nativeAuthUser = null;
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
 
-                        NativeAuthUser nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser.RoleType=RoleType.TakeAwayCashier;
                         nativeAuthUser.CreateFirebaseEmailUserCredential();
                         UserCredential user = null;
                         var FireBaseAcoountTask = Task.Run(async () =>
@@ -2515,6 +2523,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         stateTransition.Consistent = true;
                     }
+                    lock (NativeUsersLock)
+                    {
+                        NativeUsers.Add(nativeAuthUser);
+                    }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
 
@@ -2522,9 +2534,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-
-
-
                     stateTransition.Consistent = true;
                 }
                 return default(ITakeawayCashier);
@@ -2670,8 +2679,48 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 throw;
             }
         }
+        object NativeUsersLock = new object();
+        List<NativeAuthUser> _NativeUsers;
+        List<NativeAuthUser>  NativeUsers
+        {
+            get
+            {
+                lock (NativeUsersLock)
+                {
+                    if (_NativeUsers==null)
+                    {
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
+                        _NativeUsers= (from nativeUser in servicesContextStorage.GetObjectCollection<NativeAuthUser>()
+
+                                        select nativeUser).ToList();
+                    }
+                    return _NativeUsers;
+                }
+            }
+        }
+        public IList<UserData> GetNativeUsers(RoleType roleType)
+        {
+
+            return NativeUsers.Where(x=>(x.RoleType&roleType)!=0).Select(x=>new UserData() { UserName=x.UserName,FullName=x.UserFullName}).ToList();
+
+        }
+
+        internal  UserData SignInNativeUser(string userName, string password)
+        {
+            lock(NativeUsersLock)
+            {
+                var nativeUser = NativeUsers.Where(x => x.UserName==userName&&x.Password==password).FirstOrDefault();
+                if (nativeUser!=null)
+                    return null;
+
+                UserData userData = new UserData() { Email=nativeUser.FireBaseUserName, Password=nativeUser.Password, UserName=nativeUser.UserName, FullName=nativeUser.UserFullName };
+                return userData;
+
+            }
+        }
     }
 
 

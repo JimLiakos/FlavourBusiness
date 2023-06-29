@@ -493,9 +493,9 @@ namespace WaiterApp.ViewModel
                         _Address = UserData.Address;
                         _OAuthUserIdentity = UserData.OAuthUserIdentity;
 
-                        foreach (var role in UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Waiter))
+                        foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Waiter))
                         {
-                            if (role.RoleType == UserData.RoleType.Waiter)
+                            if (role.RoleType == RoleType.Waiter)
                             {
                                 if (Waiter != null)
                                 {
@@ -620,6 +620,18 @@ namespace WaiterApp.ViewModel
                 throw;
             }
         }
+
+
+        public IList<UserData> GetNativeUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserData SignInNativeUser(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private static IAuthFlavourBusiness GetFlavourBusinessAuth()
         {
@@ -1006,7 +1018,7 @@ namespace WaiterApp.ViewModel
                 //serverUrl = AzureServerUrl;
                 IAuthFlavourBusiness pAuthFlavourBusiness = GetFlavourBusinessAuth();// OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
                 UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
-                pAuthFlavourBusiness.UpdateUserProfile(UserData, UserData.RoleType.Waiter);
+                pAuthFlavourBusiness.UpdateUserProfile(UserData, RoleType.Waiter);
             });
 
         }

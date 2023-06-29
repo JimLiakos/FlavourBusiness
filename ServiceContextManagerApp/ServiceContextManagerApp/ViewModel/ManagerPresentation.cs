@@ -413,15 +413,15 @@ namespace ServiceContextManagerApp
 
                     if (UserData != null)
                     {
-                        var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
-                        if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
+                        var role = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault();
+                        if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
                             _OAuthUserIdentity=UserData.OAuthUserIdentity;
                         }
 
-                        role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                        if (role.RoleType == UserData.RoleType.Organization)
+                        role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
+                        if (role.RoleType == RoleType.Organization)
                         {
                             string administratorIdentity = "";
                             if (ServiceContextSupervisor != null)
@@ -483,7 +483,7 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                return UserData != null && UserData.Roles != null && UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault().User != null;
+                return UserData != null && UserData.Roles != null && UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault().User != null;
             }
         }
 
@@ -491,7 +491,7 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                return UserData.Roles != null && UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault().User != null;
+                return UserData.Roles != null && UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault().User != null;
             }
         }
 #if DeviceDotNet
@@ -660,15 +660,15 @@ namespace ServiceContextManagerApp
 
                         AuthUser=authUser;
 
-                        var role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.ServiceContextSupervisor).FirstOrDefault();
-                        if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
+                        var role = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault();
+                        if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
                             _OAuthUserIdentity=UserData.OAuthUserIdentity;
                         }
 
-                        role = UserData.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
-                        if (role.RoleType == UserData.RoleType.Organization)
+                        role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
+                        if (role.RoleType == RoleType.Organization)
                         {
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
                             string administratorIdentity = "";
@@ -735,6 +735,16 @@ namespace ServiceContextManagerApp
             {
                 throw;
             }
+        }
+
+        public IList<UserData> GetNativeUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserData SignInNativeUser(string userName, string password)
+        {
+            throw new NotImplementedException();
         }
 
         private static IAuthFlavourBusiness GetFlavourBusinessAuth()
@@ -816,7 +826,7 @@ namespace ServiceContextManagerApp
             {
                 IAuthFlavourBusiness pAuthFlavourBusiness = GetFlavourBusinessAuth();// OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
                 UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
-                pAuthFlavourBusiness.UpdateUserProfile(UserData, UserData.RoleType.Waiter);
+                pAuthFlavourBusiness.UpdateUserProfile(UserData, RoleType.Waiter);
 
             }
             catch (System.Net.WebException error)

@@ -53,9 +53,9 @@ namespace FLBAuthentication.ViewModel
 
         public event EventHandler SwitchOnOffPopupView;
 
-        UserData.RoleType RoleType;
+        RoleType RoleType;
 
-        public SignInUserPopupViewModel(UserData.RoleType roleType)
+        public SignInUserPopupViewModel(RoleType roleType)
         {
             RoleType = roleType;
             _PopupWitdh = 510;

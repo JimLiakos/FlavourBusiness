@@ -353,6 +353,7 @@ namespace FlavourBusinessManager
                 {
                     try
                     {
+                        
 
                         if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName) || objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
                         {

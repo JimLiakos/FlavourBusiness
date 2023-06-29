@@ -35,7 +35,7 @@ namespace CashierStationDevice.ViewModel
         /// <MetaDataID>{5b9797ed-270d-471b-88e3-f47f9488c62d}</MetaDataID>
         public CashierStationDevicePresentation()
         {
-            _SignInUserPopup = new SignInUserPopupViewModel(UserData.RoleType.ServiceContextSupervisor);
+            _SignInUserPopup = new SignInUserPopupViewModel(RoleType.ServiceContextSupervisor);
             _SignInUserPopup.SignedIn += SignInUserPopup_SignedIn;
             _SignInUserPopup.SignedOut += SignInUserPopup_SignedOut;
             if (ApplicationSettings.Current.CompanyHeader != null)
@@ -180,7 +180,7 @@ namespace CashierStationDevice.ViewModel
 
             foreach (var role in user.Roles)
             {
-                if (role.RoleType == UserData.RoleType.ServiceContextSupervisor)
+                if (role.RoleType == RoleType.ServiceContextSupervisor)
                 {
 
 

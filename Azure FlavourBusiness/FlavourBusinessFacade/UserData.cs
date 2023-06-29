@@ -10,6 +10,9 @@ namespace FlavourBusinessFacade
 
         public string UserName { get=>FullName; set=>FullName=value; }
 
+
+        public string Password { get; set; }
+
         /// <MetaDataID>{9e96b5f9-98c1-4c91-b2e1-9c5036007374}</MetaDataID>
         public string PhoneNumber { get; set; }
 
@@ -41,7 +44,7 @@ namespace FlavourBusinessFacade
 
         object rolesLock = new object();
 
-        public IUser GetRoleObject(UserData.RoleType roleType)
+        public IUser GetRoleObject(RoleType roleType)
         {
             lock (rolesLock)
             {
@@ -53,15 +56,7 @@ namespace FlavourBusinessFacade
 
 
 
-        public enum RoleType
-        {
-            Unknown=0,
-            Organization=0b000001,
-            ServiceContextSupervisor= 0b000010,
-            Waiter = 0b000100,
-            EndUser = 0b001000,
-            MenuMaker = 0b010000
-        }
+     
 
         public struct UserRole
         {
@@ -97,6 +92,18 @@ namespace FlavourBusinessFacade
 
 
 
+
+    }
+
+    public enum RoleType
+    {
+        Unknown = 0,
+        Organization = 0b000001,
+        ServiceContextSupervisor = 0b000010,
+        Waiter = 0b000100,
+        EndUser = 0b001000,
+        MenuMaker = 0b010000,
+        TakeAwayCashier = 0b100000
 
     }
 }

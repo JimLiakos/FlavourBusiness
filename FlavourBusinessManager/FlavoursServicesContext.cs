@@ -517,7 +517,7 @@ namespace FlavourBusinessManager
                         AuthUserRef authUserRef = AuthUserRef.GetAuthUserRefForRole(Owner.OAuthUserIdentity);
 
 
-                        IServiceContextSupervisor masterSupervisor = authUserRef.GetRoles().Where(x => UserData.UserRole.GetRoleType(x.TypeFullName) == UserData.RoleType.ServiceContextSupervisor && (x.RoleObject is IServiceContextSupervisor) && (x.RoleObject as IServiceContextSupervisor).ServicesContextIdentity == this.ServicesContextIdentity).Select(x => x.RoleObject).OfType<IServiceContextSupervisor>().FirstOrDefault();
+                        IServiceContextSupervisor masterSupervisor = authUserRef.GetRoles().Where(x => UserData.UserRole.GetRoleType(x.TypeFullName) == RoleType.ServiceContextSupervisor && (x.RoleObject is IServiceContextSupervisor) && (x.RoleObject as IServiceContextSupervisor).ServicesContextIdentity == this.ServicesContextIdentity).Select(x => x.RoleObject).OfType<IServiceContextSupervisor>().FirstOrDefault();
 
                         if (masterSupervisor == null)
                         {
