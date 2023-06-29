@@ -941,11 +941,11 @@ namespace WaiterApp.ViewModel
                     serverUrl = "http://localhost:8090/api/";
                     serverUrl = AzureServerUrl;
                     IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
+                     
                     try
                     {
                         var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+                        pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
 
                     }
                     catch (System.Net.WebException error)

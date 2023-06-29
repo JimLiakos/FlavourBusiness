@@ -6,7 +6,7 @@ using FlavourBusinessFacade.ViewModel;
 using OOAdvantech;
 using OOAdvantech.Json.Linq;
 using OOAdvantech.MetaDataRepository;
-using OOAdvantech.Remoting;
+using OOAdvantech.Remoting.RestApi;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +68,7 @@ namespace TakeAwayApp
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, IExtMarshalByRefObject, ILocalization, ISecureUser, OOAdvantech.Remoting.RestApi.IBoundObject
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, OOAdvantech.Remoting.RestApi.IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
@@ -274,7 +274,7 @@ namespace TakeAwayApp
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness = remoteObject as IAuthFlavourBusiness;
+            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
