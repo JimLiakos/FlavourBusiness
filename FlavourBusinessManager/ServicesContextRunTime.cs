@@ -2434,7 +2434,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
                         AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                         authUserRef.AddRole(unassignedWaiter);
-
+                        authUserRef.UserName=userName;
+                        authUserRef.FullName=userFullName;
+                        authUserRef.Save();
 
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -2712,7 +2714,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock(NativeUsersLock)
             {
-                var nativeUser = NativeUsers.Where(x => x.UserName==userName&&x.Password==password).FirstOrDefault();
+                var nativeUser = NativeUsers.Where(x => x.UserName?.ToLower()==userName?.ToLower()&&x.Password==password).FirstOrDefault();
                 if (nativeUser==null)
                     return null;
 

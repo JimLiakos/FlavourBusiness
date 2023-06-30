@@ -624,7 +624,7 @@ namespace WaiterApp.ViewModel
 
         public IList<UserData> GetNativeUsers()
         {
-            throw new NotImplementedException();
+            return new List<UserData>();
         }
 
         public UserData SignInNativeUser(string userName, string password)

@@ -8,7 +8,7 @@ namespace FlavourBusinessFacade
     public class UserData:IUser
     {
 
-        public string UserName { get=>FullName; set=>FullName=value; }
+        public string UserName { get; set; }
 
 
         public string Password { get; set; }
@@ -80,6 +80,10 @@ namespace FlavourBusinessFacade
                     return RoleType.MenuMaker;
                 if ("FlavourBusinessManager.EndUsers.FoodServiceClient" == typeFullName)
                     return RoleType.EndUser;
+                if ("FlavourBusinessManager.HumanResources.TakeawayCashier" == typeFullName)
+                    return RoleType.TakeAwayCashier;
+
+                
 
                 return RoleType.Unknown;
             }

@@ -204,6 +204,8 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{45bd7f73-5188-4dc2-a0cf-b6f5dd868ab8}</MetaDataID>
         public string Email { get; set; }
 
+        public string UserName { get; set; }
+
         /// <MetaDataID>{0dca16c1-59f0-4423-bf0a-2b3f39f1dfb5}</MetaDataID>
         public string Address { get; set; }
 

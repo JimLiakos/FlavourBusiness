@@ -703,6 +703,7 @@ namespace FlavourBusinessManager
                 {
                     Identity = authUserRef.GetIdentity(),
                     Email = authUserRef.Email,
+                    UserName=authUserRef.UserName,
                     FullName = authUserRef.FullName,
                     PhoneNumber = authUserRef.PhoneNumber,
                     PhotoUrl = authUserRef.PhotoUrl,

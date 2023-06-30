@@ -14,6 +14,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.HumanResources;
+using static QRCoder.PayloadGenerator;
+using FlavourBusinessFacade.EndUsers;
 
 
 #if DeviceDotNet
@@ -65,12 +69,21 @@ namespace TakeAwayApp
         Task<bool> RequestPermissionsForQRCodeScan();
 
 
+        bool InActiveShiftWork { get; }
+
+        /// <MetaDataID>{872cf9a1-885b-48ee-b71c-19abceda805f}</MetaDataID>
+        System.DateTime ActiveShiftWorkStartedAt { get; }
+
+        /// <MetaDataID>{3c03cff2-dd6b-43e3-8436-12093d1a91f0}</MetaDataID>
+        System.DateTime ActiveShiftWorkEndsAt { get; }
+
+
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, OOAdvantech.Remoting.RestApi.IBoundObject
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
-
+         
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
         public TakeAwayStationPresentation()
         {
@@ -79,8 +92,8 @@ namespace TakeAwayApp
             var appSettings = ApplicationSettings.Current;
 
 
-            string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
-            TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
+            //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
+           // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
 
 
             //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
@@ -88,9 +101,9 @@ namespace TakeAwayApp
 
             //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
             //var ss = Xamarin.Forms.Device.Idiom;
-        } 
+        }
 
-        FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
+        //FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
 
         /// <MetaDataID>{f39575a9-0c7a-4e09-80e8-415fffdee64f}</MetaDataID>
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
@@ -229,7 +242,20 @@ namespace TakeAwayApp
         /// <MetaDataID>{ed01239e-f11b-4c45-a163-a5111c93d476}</MetaDataID>
         public void SignOut()
         {
-            throw new System.NotImplementedException();
+            UserData = new UserData();
+            AuthUser = null;
+            if (TakeAwayCashier != null)
+            {
+                TakeAwayCashier.ObjectChangeState -= TakeAwayCashier_ObjectChangeState;
+                TakeAwayCashier.MessageReceived -= MessageReceived;
+                //TakeAwayCashier.ServingBatchesChanged -= ServingBatchesChanged;
+                if (TakeAwayCashier is ITransparentProxy)
+                    (TakeAwayCashier as ITransparentProxy).Reconnected -= TakeAwayCashierPresentation_Reconnected;
+            }
+
+            TakeAwayCashier = null;
+
+            ActiveShiftWork = null;
         }
 
         /// <MetaDataID>{3f9b769c-7a99-4487-a68e-6f9d077ea4be}</MetaDataID>
@@ -237,13 +263,274 @@ namespace TakeAwayApp
         {
             throw new System.NotImplementedException();
         }
+        AuthUser AuthUser;
+
+        ITakeawayCashier TakeAwayCashier;
+        IShiftWork ActiveShiftWork;
 
         /// <MetaDataID>{d7005bd3-dec7-4101-a42c-8ad172b92829}</MetaDataID>
-        public Task<bool> SignIn()
+        [OOAdvantech.MetaDataRepository.HttpVisible]
+        public async Task<bool> SignIn()
         {
-            return Task<bool>.FromResult( false);
+
+            //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
+            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            if (DeviceAuthentication.AuthUser == null)
+            {
+            }
+            if (authUser == null)
+                return false;
+
+            if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
+            {
+                Task.Run(async () =>
+                {
+                    await Task.Delay(5000);
+                    GetMessages();
+                });
+
+                ObjectChangeState?.Invoke(this, null);
+                if (TakeAwayCashier!=null)
+                    OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+                return true;
+            }
+
+            if (OnSignIn && SignInTask != null)
+                return await SignInTask;
+            else
+            {
+                SignInTask = Task<bool>.Run(async () =>
+                {
+                    OnSignIn = true;
+                    try
+                    {
+                        if (authUser != null && !string.IsNullOrWhiteSpace(ApplicationSettings.Current.WaiterObjectRef))
+                        {
+                            if (TakeAwayCashier != null)
+                            {
+                                TakeAwayCashier.ObjectChangeState -= TakeAwayCashier_ObjectChangeState;
+                                TakeAwayCashier.MessageReceived -= MessageReceived;
+                                //TakeAwayCashier.ServingBatchesChanged -= ServingBatchesChanged;
+                                if (TakeAwayCashier is ITransparentProxy)
+                                    (TakeAwayCashier as ITransparentProxy).Reconnected -= TakeAwayCashierPresentation_Reconnected;
+                            }
+                            if (TakeAwayCashier != null && TakeAwayCashier.OAuthUserIdentity == authUser.User_ID)
+                            {
+                                AuthUser = authUser;
+                                ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
+                                //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
+                                TakeAwayCashier.ObjectChangeState += TakeAwayCashier_ObjectChangeState;
+                                TakeAwayCashier.MessageReceived += MessageReceived;
+                                //TakeAwayCashier.ServingBatchesChanged += ServingBatchesChanged;
+                                if (TakeAwayCashier is ITransparentProxy)
+                                    (TakeAwayCashier as ITransparentProxy).Reconnected += TakeAwayCashierPresentation_Reconnected;
+#if DeviceDotNet
+                            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                            TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+#endif
+                                (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
+                                //ApplicationSettings.Current.FriendlyName = TakeAwayCashier.FullName;
+                                GetMessages();
+
+                                OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+                                return true;
+
+                            }
+                        }
+                        IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+                        try
+                        {
+                            pAuthFlavourBusiness =TakeAwayStationPresentation.GetFlavourBusinessAuth();
+                        }
+                        catch (System.Net.WebException error)
+                        {
+                            throw;
+                        }
+                        catch (Exception error)
+                        {
+                            throw;
+                        }
+                     
+                        this.UserData = pAuthFlavourBusiness.SignIn();
+                        if (UserData != null)
+                        {
+                            FullName = UserData.FullName;
+                            UserName = UserData.UserName;
+                            PhoneNumber = UserData.PhoneNumber;
+                            Email=UserData.Email;
+                            OAuthUserIdentity = UserData.OAuthUserIdentity;
+
+                            foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.TakeAwayCashier))
+                            {
+                                if (role.RoleType == RoleType.TakeAwayCashier)
+                                {
+                                    if (TakeAwayCashier != null)
+                                    {
+                                        TakeAwayCashier.ObjectChangeState -= TakeAwayCashier_ObjectChangeState;
+                                        TakeAwayCashier.MessageReceived -= MessageReceived;
+                                        //TakeAwayCashier.ServingBatchesChanged -= ServingBatchesChanged;
+                                        if (TakeAwayCashier is ITransparentProxy)
+                                            (TakeAwayCashier as ITransparentProxy).Reconnected -= TakeAwayCashierPresentation_Reconnected;
+                                    }
+                                    TakeAwayCashier = RemotingServices.CastTransparentProxy<ITakeawayCashier>(role.User);
+                                    if (TakeAwayCashier==null)
+                                        continue;
+                                    string objectRef = RemotingServices.SerializeObjectRef(TakeAwayCashier);
+                                    ApplicationSettings.Current.WaiterObjectRef = objectRef;
+                                    TakeAwayCashier.ObjectChangeState +=TakeAwayCashier_ObjectChangeState;
+                                    TakeAwayCashier.MessageReceived += MessageReceived;
+                                    //TakeAwayCashier.ServingBatchesChanged += ServingBatchesChanged;
+                                    if (TakeAwayCashier is ITransparentProxy)
+                                        (TakeAwayCashier as ITransparentProxy).Reconnected += TakeAwayCashierPresentation_Reconnected;
+
+
+#if DeviceDotNet
+                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+                                if (!device.IsBackgroundServiceStarted)
+                                {
+                                    BackgroundServiceState serviceState = new BackgroundServiceState();
+                                    device.RunInBackground(new Action(async () =>
+                                    {
+                                        var message = TakeAwayCashier.PeekMessage();
+                                        TakeAwayCashier.MessageReceived += Waiter_MessageReceived;
+                                        do
+                                        {
+                                            System.Threading.Thread.Sleep(1000);
+
+                                        } while (!serviceState.Terminate);
+
+                                        TakeAwayCashier.MessageReceived -= Waiter_MessageReceived;
+                                        //if (Waiter is ITransparentProxy)
+                                        //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+                                    }), serviceState);
+                                }
+#endif
+                                    ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
+                                    //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
+                                    (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
+
+                                    GetMessages();
+                                }
+                            }
+                            //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
+
+
+                            AuthUser = authUser;
+                            if (TakeAwayCashier!=null)
+                            {
+                                OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+                                
+                            }
+                            ObjectChangeState?.Invoke(this, null);
+                            return true;
+                        }
+                        else
+                            return false;
+
+
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
+                    }
+                    finally
+                    {
+                        OnSignIn = false;
+                    }
+                });
+
+                var result = await SignInTask;
+                SignInTask = null;
+                return result;
+
+            }
+
         }
 
+        private void TakeAwayCashierPresentation_Reconnected(object sender)
+        {
+
+        }
+
+        private void MessageReceived(IMessageConsumer sender)
+        {
+
+        }
+
+        private void TakeAwayCashier_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IServicesContextWorker.ActiveShiftWork))
+            {
+                ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
+
+                GetMessages();
+            }
+
+        }
+
+        public DateTime ActiveShiftWorkStartedAt
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                    return ActiveShiftWork.StartsAt;
+                else
+                    return DateTime.MinValue;
+            }
+        }
+        public DateTime ActiveShiftWorkEndsAt
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                else
+                    return DateTime.MinValue;
+            }
+        }
+
+        public bool InActiveShiftWork
+        {
+            get
+            {
+                if (ActiveShiftWork != null)
+                {
+                    var startedAt = ActiveShiftWork.StartsAt;
+                    var workingHours = ActiveShiftWork.PeriodInHours;
+
+                    var billingPayments = (ActiveShiftWork as IDebtCollection)?.BillingPayments;
+
+                    var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
+                    hour = Math.Round((hour * 2)) / 2;
+                    var utcNow = DateTime.UtcNow.Date + TimeSpan.FromHours(hour);
+                    if (utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        ActiveShiftWork = null;
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        private void GetMessages()
+        {
+
+        }
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
@@ -306,7 +593,7 @@ namespace TakeAwayApp
                 throw;
             }
         }
-        public void CreateUserWithEmailAndPassword( string emailVerificationCode)
+        public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
@@ -351,9 +638,9 @@ namespace TakeAwayApp
                     CommunicationCredentialKey = credentialKey;
 
                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    FlavoursOrderServer.OpenFoodServicesClientSession( TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
-                    
+
                 }
 
                 return Task.FromResult(TakeAwayStation!=null);
@@ -370,7 +657,7 @@ namespace TakeAwayApp
                 //{
                 //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
                 //}
-                if(TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
+                if (TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
@@ -379,11 +666,11 @@ namespace TakeAwayApp
                     TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
                     if (TakeAwayStation!=null)
                     {
-                        
+
                         IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                         FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                     }
-                    
+
                 }
                 return Task.FromResult(TakeAwayStation!=null);
             }
@@ -395,6 +682,9 @@ namespace TakeAwayApp
 #endif
         /// <MetaDataID>{4dc92e1a-0ad3-4ea3-a9d3-b629e653f1cc}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+        private bool OnSignIn;
+        private Task<bool> SignInTask;
+        private UserData UserData;
 
         /// <MetaDataID>{5427ba17-39b5-4067-bb96-925c49e549fe}</MetaDataID>
         public async Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
@@ -513,7 +803,7 @@ namespace TakeAwayApp
 
         public MarshalByRefObject GetObjectFromUri(string uri)
         {
-              if (uri == "./TakeAwayStation")
+            if (uri == "./TakeAwayStation")
                 return this;
             return FlavoursOrderServer as MarshalByRefObject;
         }
@@ -553,7 +843,7 @@ namespace TakeAwayApp
             }
         }
 
-     
+
 
         /// <MetaDataID>{4fdf451e-b550-45bf-aabe-aa7de6c3bb94}</MetaDataID>
         public ITakeAwayStation TakeAwayStation { get; private set; }
