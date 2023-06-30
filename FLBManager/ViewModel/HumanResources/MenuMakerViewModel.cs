@@ -138,7 +138,7 @@ namespace FLBManager.ViewModel.HumanResources
                     IAuthFlavourBusiness pAuthFlavourBusines = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
 
                     UserData = pAuthFlavourBusines.GetUser(UserName);
-                    if (UserData != null && UserData.GetRoleObject(UserData.RoleType.MenuMaker) != null)
+                    if (UserData != null && UserData.GetRoleObject(RoleType.MenuMaker) != null)
                     {
                         FullName = UserData.FullName;
                         try

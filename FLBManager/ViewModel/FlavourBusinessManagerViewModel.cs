@@ -168,7 +168,7 @@ namespace FLBManager.ViewModel
         public static FlavourBusinessManagerViewModel Current;
         public FlavourBusinessManagerViewModel()
         {
-            _SignInUserPopup = new SignInUserPopupViewModel(UserData.RoleType.Organization);
+            _SignInUserPopup = new SignInUserPopupViewModel(RoleType.Organization);
             _SignInUserPopup.SignedIn += SignInUserPopup_SignedIn;
             _SignInUserPopup.SignedOut += SignInUserPopup_SignedOut;
             Current = this;
@@ -724,9 +724,9 @@ namespace FLBManager.ViewModel
         private async void SignInUserPopup_SignedIn(SignInUserPopupViewModel authedication, IUser user)
         {
 
-            var role = user.Roles.Where(x => x.RoleType == UserData.RoleType.Organization).FirstOrDefault();
+            var role = user.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
             FlavourBusinessManager.Organization organization = null;
-            if (role.RoleType == UserData.RoleType.Organization)
+            if (role.RoleType == RoleType.Organization)
             {
                 organization = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<FlavourBusinessManager.Organization>(role.User);
                 FlavourBusinessManager.Organization.CurrentOrganization = organization;

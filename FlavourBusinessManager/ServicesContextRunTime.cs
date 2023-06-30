@@ -2713,10 +2713,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock(NativeUsersLock)
             {
                 var nativeUser = NativeUsers.Where(x => x.UserName==userName&&x.Password==password).FirstOrDefault();
-                if (nativeUser!=null)
+                if (nativeUser==null)
                     return null;
 
-                UserData userData = new UserData() { Email=nativeUser.FireBaseUserName, Password=nativeUser.Password, UserName=nativeUser.UserName, FullName=nativeUser.UserFullName };
+                UserData userData = new UserData() { Email=nativeUser.FireBaseUserName, Password=nativeUser.FireBasePasword, UserName=nativeUser.UserName, FullName=nativeUser.UserFullName };
                 return userData;
 
             }
