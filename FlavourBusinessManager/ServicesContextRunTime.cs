@@ -191,11 +191,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         var servicesContextIdentity = ServicesContextIdentity;
                         _TakeawayCashiers = (from takeawayCashier in servicesContextStorage.GetObjectCollection<ITakeawayCashier>()
-                                    where takeawayCashier.ServicesContextIdentity == servicesContextIdentity
-                                    select takeawayCashier).ToList();
+                                             where takeawayCashier.ServicesContextIdentity == servicesContextIdentity
+                                             select takeawayCashier).ToList();
 
                         foreach (var takeawayCashier in _TakeawayCashiers)
-                            takeawayCashier.ObjectChangeState +=TakeawayCashier_ObjectChangeState   ; 
+                            takeawayCashier.ObjectChangeState +=TakeawayCashier_ObjectChangeState;
                     }
 
                     return _TakeawayCashiers.ToList();
@@ -296,7 +296,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 //unassignedtakeawayCashier
                 var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
-                                        select takeawayCashier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
+                                                 select takeawayCashier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
                 string WaiterAssignKey = "";
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -304,7 +304,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     if (unassignedtakeawayCashier == null)
                     {
-                        unassignedtakeawayCashier = new TakeawayCashier() ;
+                        unassignedtakeawayCashier = new TakeawayCashier();
                         unassignedtakeawayCashier.ServicesContextIdentity = servicesContextIdentity;
                         unassignedtakeawayCashier.Name = Properties.Resources.DefaultWaiterName;
 
@@ -1615,7 +1615,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(),TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2420,7 +2420,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
 
-                         nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
                         nativeAuthUser.RoleType=RoleType.Waiter;
                         nativeAuthUser.CreateFirebaseEmailUserCredential();
                         UserCredential user = null;
@@ -2447,14 +2447,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         stateTransition.Consistent = true;
                     }
-                    lock(NativeUsersLock)
+                    lock (NativeUsersLock)
                     {
-                        NativeUsers.Add(nativeAuthUser);
+                        if (!NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
 
-               
+
 
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -2489,8 +2490,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
                 var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
-                                        where takeawayCashier.WorkerAssignKey == takeAwayCashierAssignKey
-                                        select takeawayCashier).FirstOrDefault();
+                                                 where takeawayCashier.WorkerAssignKey == takeAwayCashierAssignKey
+                                                 select takeawayCashier).FirstOrDefault();
 
 
 
@@ -2527,7 +2528,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        NativeUsers.Add(nativeAuthUser);
+                        if (!NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -2683,7 +2685,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
         object NativeUsersLock = new object();
         List<NativeAuthUser> _NativeUsers;
-        List<NativeAuthUser>  NativeUsers
+        List<NativeAuthUser> NativeUsers
         {
             get
             {
@@ -2697,7 +2699,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         _NativeUsers= (from nativeUser in servicesContextStorage.GetObjectCollection<NativeAuthUser>()
 
-                                        select nativeUser).ToList();
+                                       select nativeUser).ToList();
                     }
                     return _NativeUsers;
                 }
@@ -2706,13 +2708,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public IList<UserData> GetNativeUsers(RoleType roleType)
         {
 
-            return NativeUsers.Where(x=>(x.RoleType&roleType)!=0).Select(x=>new UserData() { UserName=x.UserName,FullName=x.UserFullName}).ToList();
+            return NativeUsers.Where(x => (x.RoleType&roleType)!=0).Select(x => new UserData() { UserName=x.UserName, FullName=x.UserFullName }).ToList();
 
         }
 
-        internal  UserData SignInNativeUser(string userName, string password)
+        internal UserData SignInNativeUser(string userName, string password)
         {
-            lock(NativeUsersLock)
+            lock (NativeUsersLock)
             {
                 var nativeUser = NativeUsers.Where(x => x.UserName?.ToLower()==userName?.ToLower()&&x.Password==password).FirstOrDefault();
                 if (nativeUser==null)

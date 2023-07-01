@@ -257,7 +257,7 @@ namespace ServiceContextManagerApp
             }
         }
 
-        
+
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
@@ -279,16 +279,18 @@ namespace ServiceContextManagerApp
         {
 
 
-
-            _Supervisors = ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
+            var serviceContextHumanResources = ServicesContext.ServiceContextHumanResources;
+            _Supervisors = serviceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Supervisors));
 
-            _Waiters = ServicesContext.ServiceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
+            _Waiters = serviceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Waiters));
 
+            _TakeawayCashiers = serviceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
+            _ObjectChangeState?.Invoke(this, nameof(TakeawayCashiers));
 
         }
-
+         
         [OOAdvantech.MetaDataRepository.HttpInVisible]
         event OOAdvantech.ObjectChangeStateHandle _ObjectChangeState;
 
@@ -307,7 +309,7 @@ namespace ServiceContextManagerApp
 
         public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {
-           return ServicesContextRuntime.AssignWaiterNativeUser(waiterAssignKey, userName, password, userFullName);
+            return ServicesContextRuntime.AssignWaiterNativeUser(waiterAssignKey, userName, password, userFullName);
         }
 
 
@@ -383,7 +385,7 @@ namespace ServiceContextManagerApp
             return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
         }
 
-        
+
         public NewUserCode GetNewTakeAwayCashierQRCode(string color)
         {
 

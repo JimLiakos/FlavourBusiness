@@ -29,7 +29,7 @@ namespace MenuMaker.ViewModel
         readonly MenuCommand RestaurantMenusMenu;
         public MenuMakerViewModel()
         {
-            _SignInUserPopup = new SignInUserPopupViewModel(UserData.RoleType.MenuMaker);
+            _SignInUserPopup = new SignInUserPopupViewModel(RoleType.MenuMaker);
             _SignInUserPopup.SignedIn += SignInUserPopup_SignedIn;
             _SignInUserPopup.SignedOut += SignInUserPopup_SignedOut;
             RestaurantMenusMenu = global::MenuDesigner.Views.MenuDesignerControl.RestaurantMenusMenu;
