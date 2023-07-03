@@ -18,6 +18,7 @@ using FlavourBusinessFacade.HumanResources;
 
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
+using FlavourBusinessManager.HumanResources;
 
 
 #if DeviceDotNet
@@ -76,6 +77,12 @@ namespace TakeAwayApp
 
         /// <MetaDataID>{3c03cff2-dd6b-43e3-8436-12093d1a91f0}</MetaDataID>
         System.DateTime ActiveShiftWorkEndsAt { get; }
+
+
+   
+           //period
+        /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
+        void SiftWorkStart(DateTime startedAt, double timespanInHours);
 
 
 
@@ -527,6 +534,12 @@ namespace TakeAwayApp
             }
         }
 
+
+        public void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        {
+            ActiveShiftWork = TakeAwayCashier.NewShiftWork(startedAt, timespanInHours);
+
+        }
 
         private void GetMessages()
         {
