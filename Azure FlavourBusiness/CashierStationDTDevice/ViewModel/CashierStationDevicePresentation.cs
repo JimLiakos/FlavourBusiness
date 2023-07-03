@@ -60,10 +60,11 @@ namespace CashierStationDevice.ViewModel
                 if (ApplicationSettings.Current.DocumentSignerType == typeof(RBSDocSigner).Name)
                 {
                     var rbsDocSigner = new RBSDocSigner();
-                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress, ApplicationSettings.Current.AESKey, ApplicationSettings.Current.AADESendDataUrl);
-                    string message = null;
                     if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerOutputFolder))
                         rbsDocSigner.SetOutputFolder(ApplicationSettings.Current.DocumentSignerOutputFolder);
+
+                    rbsDocSigner.Start(ApplicationSettings.Current.DocumentSignerDeviceIPAddress, ApplicationSettings.Current.AESKey, ApplicationSettings.Current.AADESendDataUrl);
+                    string message = null;
 
                     if (rbsDocSigner.IssueZreport(out message))
                     {
