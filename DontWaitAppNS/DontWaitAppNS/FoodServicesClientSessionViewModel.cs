@@ -165,7 +165,10 @@ namespace DontWaitApp
                 if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
                     isoCurrencySymbol = FlavoursOrderServer.ISOCurrencySymbol;
                 return new List<CurrencyOption>() {
-                new CurrencyOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.05M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.1M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.2M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.5M, ISOCurrencySymbol= isoCurrencySymbol },                new CurrencyOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
                 new CurrencyOption() { Amount=2, ISOCurrencySymbol= isoCurrencySymbol},
                 new CurrencyOption() { Amount=5, ISOCurrencySymbol= isoCurrencySymbol },
                 new CurrencyOption() { Amount=10, ISOCurrencySymbol= isoCurrencySymbol },
@@ -1368,7 +1371,7 @@ namespace DontWaitApp
 
 #else
 
-                if (paymentMethod==PaymentMethod.Card)
+            if (paymentMethod==PaymentMethod.Card)
                 payment.CardPaymentCompleted(null, null, true, null, tipAmount);
             if (paymentMethod==PaymentMethod.Cash)
                 payment.CashPaymentCompleted(tipAmount);

@@ -16,8 +16,34 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}</MetaDataID>
     [BackwardCompatibilityID("{5fed1c2d-6b02-4b07-b13e-0dca8bf8782f}")]
     [Persistent()]
-    public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject 
+    public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+   
+
+        /// <exclude>Excluded</exclude>
+        string _DeviceFirebaseToken;
+
+        /// <MetaDataID>{9e7f8fe2-0f57-4d64-be1f-c88a5fc2ea49}</MetaDataID>
+        /// <summary>This token is the identity of device for push notification mechanism</summary>
+        [PersistentMember(nameof(_DeviceFirebaseToken))]
+        [BackwardCompatibilityID("+18")]
+        public string DeviceFirebaseToken
+        {
+            get => _DeviceFirebaseToken;
+            set
+            {
+
+                if (_DeviceFirebaseToken!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceFirebaseToken=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

@@ -2515,6 +2515,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
                         AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                         authUserRef.AddRole(unassignedtakeawayCashier);
+                        authUserRef.UserName=userName;
+                        authUserRef.FullName=userFullName;
+                        authUserRef.Save();
 
 
 

@@ -13,5 +13,7 @@ namespace FlavourBusinessFacade.HumanResources
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;
+
+        string DeviceFirebaseToken { get; set; }
     }
 }

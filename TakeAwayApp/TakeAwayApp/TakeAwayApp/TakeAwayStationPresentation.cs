@@ -15,9 +15,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.HumanResources;
-using static QRCoder.PayloadGenerator;
+
 using FlavourBusinessFacade.EndUsers;
+using Xamarin.Forms;
 
 
 #if DeviceDotNet
@@ -330,6 +330,7 @@ namespace TakeAwayApp
 #if DeviceDotNet
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+                                
 #endif
                                 (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
                                 //ApplicationSettings.Current.FriendlyName = TakeAwayCashier.FullName;
@@ -397,14 +398,14 @@ namespace TakeAwayApp
                                     device.RunInBackground(new Action(async () =>
                                     {
                                         var message = TakeAwayCashier.PeekMessage();
-                                        TakeAwayCashier.MessageReceived += Waiter_MessageReceived;
+                                        TakeAwayCashier.MessageReceived +=MessageReceived;
                                         do
                                         {
                                             System.Threading.Thread.Sleep(1000);
 
                                         } while (!serviceState.Terminate);
 
-                                        TakeAwayCashier.MessageReceived -= Waiter_MessageReceived;
+                                        TakeAwayCashier.MessageReceived -= MessageReceived;
                                         //if (Waiter is ITransparentProxy)
                                         //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                     }), serviceState);

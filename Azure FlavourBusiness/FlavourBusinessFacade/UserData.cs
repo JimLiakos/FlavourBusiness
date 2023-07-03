@@ -99,6 +99,7 @@ namespace FlavourBusinessFacade
 
     }
 
+    /// <MetaDataID>{cb914bfc-3a7a-4c5e-8c4b-97a03a9cdcf5}</MetaDataID>
     public enum RoleType
     {
         Unknown = 0,
