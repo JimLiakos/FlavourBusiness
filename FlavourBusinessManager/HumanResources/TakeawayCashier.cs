@@ -207,8 +207,9 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         /// <MetaDataID>{1909309d-6473-4d8d-8ec9-eaf329ef9f42}</MetaDataID>
+        [PersistentMember(nameof(_ShiftWorks))]
         [BackwardCompatibilityID("+1")]
-        public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
+        public IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
 
 
         /// <MetaDataID>{f233ab03-3b88-44a3-a035-b018afa68f5d}</MetaDataID>

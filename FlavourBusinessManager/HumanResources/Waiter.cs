@@ -396,7 +396,7 @@ namespace FlavourBusinessManager.HumanResources
         public string OAuthUserIdentity
         {
             get => _OAuthUserIdentity;
-            set
+            private set
             {
                 if (_OAuthUserIdentity != value)
                 {

@@ -21680,24 +21680,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@327
-				location   	(187, 305)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	54
-				max_width  	1400)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -36367,7 +36349,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Identity"
-				    value      	"+8"))
+				    value      	"+8")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
 			    quid       	"5FA0D9D1018B"
 			    type       	"string"
 			    exportControl 	"Public")
