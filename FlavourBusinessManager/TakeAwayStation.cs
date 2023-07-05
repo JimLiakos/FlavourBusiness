@@ -137,7 +137,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             FlavourBusinessFacade.IUser user = null;
 
             if (authUserRef != null)
-                user = authUserRef.GetContextRoleObject<Waiter>();
+                user = authUserRef.GetContextRoleObject<TakeawayCashier>();
             var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
 
             try
@@ -164,6 +164,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
                         fsClientSession.UserIdentity = user.Identity;
+
+
+                    ((user as TakeawayCashier).ActiveShiftWork as ServingShiftWork).AddClientSession(fsClientSession);
+
 
 
 

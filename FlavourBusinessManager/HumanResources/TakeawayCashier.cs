@@ -19,7 +19,11 @@ namespace FlavourBusinessManager.HumanResources
     public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
    
+        public TakeawayCashier()
+        { 
 
+
+        }
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
 

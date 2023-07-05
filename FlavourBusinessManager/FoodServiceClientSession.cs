@@ -1448,6 +1448,7 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
+        /// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
         private bool IsLandscape(OrganizationStorageRef graphicMenu)
         {
             string menuPageHeightAsString = null;
@@ -1463,6 +1464,7 @@ namespace FlavourBusinessManager.EndUsers
 
             return false;
         }
+        /// <MetaDataID>{c40451a6-e3ae-4e91-8999-bda8d857ab9a}</MetaDataID>
         private bool IsPortrait(OrganizationStorageRef graphicMenu)
         {
             string menuPageHeightAsString = null;
@@ -1528,11 +1530,11 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{efecab6b-0f79-4b59-8137-e18550333365}</MetaDataID>
 
         [BackwardCompatibilityID("+21")]
-        public FlavourBusinessFacade.HumanResources.IWaiter Waiter
+        public FlavourBusinessFacade.HumanResources.IServicesContextWorker Worker
         {
             get
             {
-                return SessionCreator?.Waiter;
+                return SessionCreator?.Worker;
             }
         }
 

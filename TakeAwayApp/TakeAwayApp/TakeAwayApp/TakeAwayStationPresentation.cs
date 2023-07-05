@@ -344,6 +344,10 @@ namespace TakeAwayApp
                                 GetMessages();
 
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+
+                                OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+
                                 return true;
 
                             }
@@ -432,7 +436,11 @@ namespace TakeAwayApp
                             if (TakeAwayCashier!=null)
                             {
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
-                                
+
+                                OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+
+
                             }
                             ObjectChangeState?.Invoke(this, null);
                             return true;
@@ -650,10 +658,6 @@ namespace TakeAwayApp
                 if (TakeAwayStation!=null)
                 {
                     CommunicationCredentialKey = credentialKey;
-
-                    OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
-
 
                 }
 

@@ -12,6 +12,7 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+  
         /// <MetaDataID>{630e9a95-85cd-4be3-b8ec-7d7abd35ec47}</MetaDataID>
         [BackwardCompatibilityID("+15")]
         string UserLanguageCode { set; get; }
@@ -41,8 +42,11 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+9")]
         bool IsWaiterSession { get; }
 
-        [Association("WaterServiceSession", Roles.RoleB, "0c49af08-a143-4f46-8e69-6f3b0f44870b")]
-        HumanResources.IWaiter Waiter { get; }
+     
+
+        [Association("WorkerServiceSession", Roles.RoleA, "892bb54a-e901-429f-85fb-bb5d14cd92fc")]
+        HumanResources.IServicesContextWorker Worker { get; }
+
 
         /// <MetaDataID>{5836e2e7-7c37-421b-b576-64fa7d361f43}</MetaDataID>
         [BackwardCompatibilityID("+11")]

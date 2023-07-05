@@ -7461,14 +7461,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IWaiter Waiter
+        public FlavourBusinessFacade.HumanResources.IServicesContextWorker Worker
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Waiter", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Worker", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IServicesContextWorker>(retValue);
             }
         }
         

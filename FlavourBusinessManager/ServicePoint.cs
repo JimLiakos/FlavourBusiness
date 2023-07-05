@@ -466,7 +466,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         }
 
 
-                        if (waiter != null && fsClientSession.Waiter == null)
+                        if (waiter != null && fsClientSession.Worker == null)
                         {
                             fsClientSession.IsWaiterSession = true;
 
