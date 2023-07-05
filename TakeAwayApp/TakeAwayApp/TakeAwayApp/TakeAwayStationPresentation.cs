@@ -19,6 +19,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
 using FlavourBusinessManager.HumanResources;
+using FlavourBusinessFacade.RoomService;
 
 
 #if DeviceDotNet
@@ -166,6 +167,7 @@ namespace TakeAwayApp
             return null;
         }
 
+    
 
 
         /// <MetaDataID>{de6cdc5e-fc2a-41a1-bcce-4bc34047e827}</MetaDataID>
@@ -344,6 +346,7 @@ namespace TakeAwayApp
                                 GetMessages();
 
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+                                var sdds=DeviceAuthentication.AuthUser;
 
                                 OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                 FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
@@ -436,6 +439,7 @@ namespace TakeAwayApp
                             if (TakeAwayCashier!=null)
                             {
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
+                                var sdds = DeviceAuthentication.AuthUser;
 
                                 OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                 FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
@@ -684,9 +688,9 @@ namespace TakeAwayApp
                     TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
                     if (TakeAwayStation!=null)
                     {
-
-                        IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                        FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                        var sdds = DeviceAuthentication.AuthUser;
+                        //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                        //FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                     }
 
                 }

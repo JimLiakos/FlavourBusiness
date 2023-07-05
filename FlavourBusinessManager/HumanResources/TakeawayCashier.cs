@@ -1,6 +1,8 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.EndUsers;
 using Microsoft.ServiceBus.Messaging;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -18,9 +20,9 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-   
+
         public TakeawayCashier()
-        { 
+        {
 
 
         }
@@ -122,6 +124,10 @@ namespace FlavourBusinessManager.HumanResources
                     }
                 }
             }
+        }
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
+        {
+            return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
         }
 
         public event ObjectChangeStateHandle ObjectChangeState;

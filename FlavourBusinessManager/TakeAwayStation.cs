@@ -207,10 +207,22 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         public IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
         {
+            AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
+            IUser user = null;
+
+            if (authUserRef != null)
+                user = authUserRef.GetContextRoleObject<TakeawayCashier>();
+
+
+
+
 
             var uncommitedFoodServiceClientSession = this.OpenClientSessions.Where(x => x.ServicePoint==this&& ((int)x.FlavourItems.GetMinimumCommonItemPreparationState())<(int)ItemPreparationState.Committed).OrderBy(x => x.SessionStarts).LastOrDefault();
-            
-            if (uncommitedFoodServiceClientSession!=null)
+
+            if (!((user as TakeawayCashier).ActiveShiftWork is ServingShiftWork))
+                throw new Exception("there is not active shiftwork");
+
+            if (uncommitedFoodServiceClientSession!=null&&uncommitedFoodServiceClientSession.SessionCreator==((user as TakeawayCashier).ActiveShiftWork as ServingShiftWork))
             {
                 uncommitedFoodServiceClientSession.ClientDeviceType= deviceType;
                 return uncommitedFoodServiceClientSession;

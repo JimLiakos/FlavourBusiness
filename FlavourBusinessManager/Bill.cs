@@ -253,11 +253,7 @@ namespace FlavourBusinessManager.EndUsers
             payments=payments.Where(x => x.State==PaymentState.Completed||x.Identity==paymentIdentity).ToList();
             payments = payments.OrderBy(x => x.TransactionDate).ToList();
 
-
-
-
             var payment = payments.Where(x => (x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress)&&x.Identity==paymentIdentity).FirstOrDefault();
-
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {

@@ -41,13 +41,13 @@ namespace FlavourBusinessManager.HumanResources
         public IWaiter Waiter => Worker as IWaiter;
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession> _WaiterFoodServiceClientSessions = new OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession>();
+        OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession> _FoodServiceClientSessions = new OOAdvantech.Collections.Generic.Set<EndUsers.FoodServiceClientSession>();
 
         [RoleAMultiplicityRange(0)]
         [Association("FoodServiceClientSessionInTheShiftWork", Roles.RoleA, "2076b2c6-2c5e-415a-93ab-187654f7c04a")]
         [RoleBMultiplicityRange(0, 1)]
-        [PersistentMember(nameof(_WaiterFoodServiceClientSessions))]
-        public List<EndUsers.FoodServiceClientSession> WaiterFoodServiceClientSessions => _WaiterFoodServiceClientSessions.ToThreadSafeList();
+        [PersistentMember(nameof(_FoodServiceClientSessions))]
+        public List<EndUsers.FoodServiceClientSession> FoodServiceClientSessions => _FoodServiceClientSessions.ToThreadSafeList();
 
         /// <MetaDataID>{ddc56525-f246-48c0-b41d-71f82b87f8cb}</MetaDataID>
         public void RemoveClientSession(EndUsers.FoodServiceClientSession clientSession)
@@ -55,7 +55,7 @@ namespace FlavourBusinessManager.HumanResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _WaiterFoodServiceClientSessions.Remove(clientSession);
+                _FoodServiceClientSessions.Remove(clientSession);
                 stateTransition.Consistent = true;
             }
 
@@ -66,7 +66,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _WaiterFoodServiceClientSessions.Add(clientSession);
+                _FoodServiceClientSessions.Add(clientSession);
                 stateTransition.Consistent = true;
             }
         }
@@ -90,7 +90,7 @@ namespace FlavourBusinessManager.HumanResources
             get
             {
                 //WaiterFoodServiceClientSessions[0].
-                var billingPayments = (from foodServiceClientSession in WaiterFoodServiceClientSessions
+                var billingPayments = (from foodServiceClientSession in FoodServiceClientSessions
                                        from payment in foodServiceClientSession.GetPayments()
                                        where payment.State==PaymentState.Completed
                                        orderby payment.TransactionDate
@@ -103,7 +103,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             get
             {
-                var sessionsBillingPayments = (from foodServiceClientSession in WaiterFoodServiceClientSessions
+                var sessionsBillingPayments = (from foodServiceClientSession in FoodServiceClientSessions
                                        select new SessionBillingPayments()
                                        {
                                            Description=GetSessionBillingDescription(foodServiceClientSession),

@@ -1707,6 +1707,10 @@ namespace DontWaitApp
 #if DeviceDotNet
                 DeviceApplication.Current.Log(new List<string>() { "get_CurrentFoodServicesClientSession" });
 #endif
+                if(FoodServicesClientSessionViewModel==null)
+                {
+
+                }
                 return FoodServicesClientSessionViewModel;
             }
         }
