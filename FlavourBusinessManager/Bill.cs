@@ -54,7 +54,7 @@ namespace FlavourBusinessManager.EndUsers
 
             foreach (var flavourItem in flavourItems)
             {
-                
+
                 decimal paidAmount = flavourItem.GetPaidAmount(foodServiceClientSession, payments);
                 paidItemsAmounts[flavourItem] = paidAmount;
                 FinanceFacade.Item item = null;
@@ -231,6 +231,8 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var item in Bill.GetPayItems(foodServicesClientSession, payments, sessionFlavourItems))
                 {
                     var itemPreparation = sessionitemsEntry.Where(x => x.uid==item.GetItemPreparationUid()).FirstOrDefault();
+                    if (itemPreparation==null)
+                        continue;
                     if (itemPreparation.Quantity!=null)
                     {
                         decimal unpaidAmount = item.Amount-item.PaidAmount;
@@ -339,7 +341,12 @@ namespace FlavourBusinessManager.EndUsers
                 return flavourItem.uid+sessionsIDS;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="foodServiceClientSession">
+        /// </param>
+        /// <returns></returns>
         public static List<Payment> GetPayments(this FoodServiceClientSession foodServiceClientSession)
         {
             List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
