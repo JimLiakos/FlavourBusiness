@@ -138,7 +138,7 @@ namespace DontWaitApp
             FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
             return true;
         }
-
+         
         public Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
