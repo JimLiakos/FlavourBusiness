@@ -80,18 +80,20 @@ namespace TakeAwayApp
         System.DateTime ActiveShiftWorkEndsAt { get; }
 
 
-   
-           //period
+
+        //period
         /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
         void SiftWorkStart(DateTime startedAt, double timespanInHours);
 
+        [GenerateEventConsumerProxy]
+        event ObjectChangeStateHandle ObjectChangeState;
 
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
     public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
-         
+
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
         public TakeAwayStationPresentation()
         {
@@ -101,7 +103,7 @@ namespace TakeAwayApp
 
 
             //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
-           // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
+            // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
 
 
             //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
@@ -167,7 +169,7 @@ namespace TakeAwayApp
             return null;
         }
 
-    
+
 
 
         /// <MetaDataID>{de6cdc5e-fc2a-41a1-bcce-4bc34047e827}</MetaDataID>
@@ -346,10 +348,11 @@ namespace TakeAwayApp
                                 GetMessages();
 
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
-                                var sdds=DeviceAuthentication.AuthUser;
-
+                                var sdds = DeviceAuthentication.AuthUser;
+                                
                                 OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                                if (ActiveShiftWork!=null)
+                                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
                                 return true;
 
@@ -369,7 +372,7 @@ namespace TakeAwayApp
                         {
                             throw;
                         }
-                     
+
                         this.UserData = pAuthFlavourBusiness.SignIn();
                         if (UserData != null)
                         {
@@ -441,8 +444,12 @@ namespace TakeAwayApp
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
                                 var sdds = DeviceAuthentication.AuthUser;
 
-                                OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                                if (ActiveShiftWork!=null)
+                                {
+                                    OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+                                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                                }
 
 
                             }
@@ -550,6 +557,16 @@ namespace TakeAwayApp
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = TakeAwayCashier.NewShiftWork(startedAt, timespanInHours);
+
+            if (ActiveShiftWork!=null)
+            {
+                IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+
+
+                ObjectChangeState?.Invoke(this,nameof(ActiveShiftWork));
+            }
+
 
         }
 

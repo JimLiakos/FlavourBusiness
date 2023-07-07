@@ -220,7 +220,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var uncommitedFoodServiceClientSession = this.OpenClientSessions.Where(x => x.ServicePoint==this&& ((int)x.FlavourItems.GetMinimumCommonItemPreparationState())<(int)ItemPreparationState.Committed).OrderBy(x => x.SessionStarts).LastOrDefault();
 
             if (!((user as TakeawayCashier).ActiveShiftWork is ServingShiftWork))
-                throw new Exception("there is not active shiftwork");
+                throw new Exception("there is not active shift work");
 
             if (uncommitedFoodServiceClientSession!=null&&uncommitedFoodServiceClientSession.SessionCreator==((user as TakeawayCashier).ActiveShiftWork as ServingShiftWork))
             {
