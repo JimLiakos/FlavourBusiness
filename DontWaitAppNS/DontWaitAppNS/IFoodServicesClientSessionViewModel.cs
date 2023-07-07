@@ -60,6 +60,10 @@ namespace DontWaitApp
         IList<Messmate> GetMessmates();
 
 
+        IFoodServiceClientSession FoodServicesClientSession
+        {
+            get;
+        }
 
 
 

@@ -85,6 +85,8 @@ namespace TakeAwayApp
         /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
         void SiftWorkStart(DateTime startedAt, double timespanInHours);
 
+        void OrderCommitted();
+
         [GenerateEventConsumerProxy]
         event ObjectChangeStateHandle ObjectChangeState;
 
@@ -845,6 +847,16 @@ namespace TakeAwayApp
             if (uri == "./TakeAwayStation")
                 return this;
             return FlavoursOrderServer as MarshalByRefObject;
+        }
+
+        public void OrderCommitted()
+        {
+            if (FlavoursOrderServer.CurrentFoodServicesClientSession?.FoodServicesClientSession?.SessionState==ClientSessionState.ItemsCommited)
+            {
+                IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+            }
+
         }
 
         /// <MetaDataID>{0f27ba87-430d-45b2-95fb-b950d1f90482}</MetaDataID>

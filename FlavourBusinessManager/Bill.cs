@@ -229,7 +229,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-
+         
 
         internal static IBill GetBillFor(FoodServiceClientSession foodServiceClientSession)
         {
