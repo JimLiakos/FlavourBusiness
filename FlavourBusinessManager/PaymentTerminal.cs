@@ -1,3 +1,4 @@
+using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -6,7 +7,9 @@ using System;
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{21612961-3fff-4664-a99d-b3619c9159c2}</MetaDataID>
-    public class PaymentTerminal :MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal
+    [BackwardCompatibilityID("{21612961-3fff-4664-a99d-b3619c9159c2}")]
+    [Persistent()]
+    public class PaymentTerminal : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal
     {
 
         /// <exclude>Excluded</exclude>
@@ -64,6 +67,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{73b4a925-fd49-495e-8761-3c1ed1c4274f}</MetaDataID>
         public PaymentTerminal(string servicesContextIdentity)
         {
+            _PaymentTerminalIdentity = servicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
             ServicesContextIdentity=servicesContextIdentity;
         }
         /// <MetaDataID>{a95e5da5-c4ea-4c44-8385-42b91901b497}</MetaDataID>
@@ -77,7 +81,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+3")]
         public string PaymentTerminalIdentity
         {
-            get => _PaymentTerminalIdentity; set
+            get => _PaymentTerminalIdentity; 
+            set
             {
                 if (_PaymentTerminalIdentity!=value)
                 {

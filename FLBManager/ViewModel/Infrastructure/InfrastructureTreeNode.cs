@@ -28,7 +28,9 @@ namespace FLBManager.ViewModel.Infrastructure
         TreasuryTreeNode TreasuryTreeNode;
         Preparation.PreparationSationsTreeNode PreparationSattionsTreeNode;
 
-        TakeAwayStationsTreeNode TakeAwayStationsTreeNode; 
+        TakeAwayStationsTreeNode TakeAwayStationsTreeNode;
+
+        internal PaymentTerminalsTreeNode PaymentTerminalsTreeNode { get; }
 
         public InfrastructureTreeNode(FlavoursServicesContextPresentation servicesContextPresentation) : base(servicesContextPresentation)
         {
@@ -50,6 +52,7 @@ namespace FLBManager.ViewModel.Infrastructure
             TreasuryTreeNode = new TreasuryTreeNode(this);
             PreparationSattionsTreeNode = new Preparation.PreparationSationsTreeNode(this);
             TakeAwayStationsTreeNode=new TakeAway.TakeAwayStationsTreeNode(this);
+            PaymentTerminalsTreeNode=new PaymentTerminalsTreeNode(this);
         }
 
 
@@ -131,6 +134,7 @@ namespace FLBManager.ViewModel.Infrastructure
                 members.Add(PreparationSattionsTreeNode);
                 members.Add(TakeAwayStationsTreeNode);
                 members.Add(TreasuryTreeNode);
+                members.Add(PaymentTerminalsTreeNode);
                 if (CallerIDServerTreeNode != null)
                     members.Add(CallerIDServerTreeNode);
 

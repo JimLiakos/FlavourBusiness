@@ -116,6 +116,7 @@ namespace CashierStationDevice.ViewModel
                 report.CreateDocument();
 
                 report.Print();
+                report.ExportToPdf(@"F:\invoice.pdf");
                 //report.PrinterName = "Microsoft Print to PDF";
                 //report.Print("Microsoft Print to PDF");
                 //var printers = PrinterSettings.InstalledPrinters.OfType<string>().ToList();

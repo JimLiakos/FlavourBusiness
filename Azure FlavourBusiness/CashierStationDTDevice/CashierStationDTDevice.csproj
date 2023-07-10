@@ -143,10 +143,14 @@
     <Compile Include="ViewModel\CashierStationDevicePresentation.cs" />
     <Compile Include="ViewModel\CashierStationPresentation.cs" />
     <Compile Include="ViewModel\Invoice.cs" />
+    <Compile Include="ViewModel\PaymentTerminalsViewModel.cs" />
     <Compile Include="ViewModel\TransactionEx.cs" />
     <Compile Include="ViewModel\TransactionPrinterPresentation.cs" />
     <Compile Include="Views\CashierStationSettingsPage.xaml.cs">
       <DependentUpon>CashierStationSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PaymentTerminalsPage.xaml.cs">
+      <DependentUpon>PaymentTerminalsPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -298,6 +302,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CashierStationSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PaymentTerminalsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

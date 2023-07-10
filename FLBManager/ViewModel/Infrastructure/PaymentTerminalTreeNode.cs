@@ -88,7 +88,7 @@ namespace FLBManager.ViewModel.Infrastructure
                 return member;
             }
         }
-
+        public override bool IsEditable => true;
         private void EditMode()
         {
             if (_Edit == true)
@@ -134,7 +134,7 @@ namespace FLBManager.ViewModel.Infrastructure
             }
         }
 
-
+        public override bool HasContextMenu => true;
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
 

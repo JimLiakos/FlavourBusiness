@@ -22,5 +22,6 @@ namespace FlavourBusinessFacade.ServicesContextResources
         public IList<IServiceArea> ServiceAreas { get; set; }
         /// <MetaDataID>{4691fb51-6ffd-45a2-acc8-d51e847a6130}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint { get; set; }
+        public List<IPaymentTerminal> PaymentTerminals { get; set; }
     }
 }
