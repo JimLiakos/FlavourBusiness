@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="IPos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VivaWalletPos.cs" />
+    <Compile Include="VivaWalletPaymentTerminal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CardLinkPos\CardLinkPos.csproj">
