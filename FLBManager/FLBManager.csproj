@@ -183,6 +183,8 @@
     <Compile Include="ViewModel\HumanResources\WaiterViewModel.cs" />
     <Compile Include="ViewModel\Infrastructure\CallerIDLineTreeNode.cs" />
     <Compile Include="ViewModel\Infrastructure\CallerIDServerTreeNode.cs" />
+    <Compile Include="ViewModel\Infrastructure\PaymentTerminalsTreeNode.cs" />
+    <Compile Include="ViewModel\Infrastructure\PaymentTerminalTreeNode.cs" />
     <Compile Include="ViewModel\MenuDesignerHost.cs" />
     <Compile Include="ViewModel\TakeAway\TakeAwayStationsTreeNode.cs" />
     <Compile Include="ViewModel\TakeAway\TakeAwayStationTreeNode.cs" />
@@ -718,6 +720,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\pos-terminal16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\cards.png" />
+    <Resource Include="Resources\Images\Metro\pos.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

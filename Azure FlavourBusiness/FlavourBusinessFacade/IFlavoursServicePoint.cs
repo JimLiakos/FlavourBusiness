@@ -12,7 +12,16 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
-       
+        [Association("ServiceContexPaymentTerminal", Roles.RoleA, "bbb9a30d-0c4c-46fa-b55d-a46068da59e0")]
+        [RoleBMultiplicityRange(1, 1)]
+        List<IPaymentTerminal> PaymentTerminals { get; }
+
+        /// <MetaDataID>{c0a8500a-b139-4f50-9ded-ff939a4c3e12}</MetaDataID>
+        void RemovePaymentTerminal(IPaymentTerminal paymentTerminal);
+
+        /// <MetaDataID>{91cd236d-f13a-4c5a-9b83-1d846d295280}</MetaDataID>
+        IPaymentTerminal NewPaymentTerminal();
+
         [RoleAMultiplicityRange(0)]
         [Association("ServiceContexTakeAwayStation", Roles.RoleA, "a8709498-f1bc-42f9-a61b-d2f47e5656f3")]
         IList<ITakeAwayStation> TakeAwayStations { get; }

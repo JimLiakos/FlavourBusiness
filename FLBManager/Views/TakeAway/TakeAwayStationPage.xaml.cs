@@ -19,6 +19,7 @@ namespace FLBManager.Views.TakeAway
     /// <summary>
     /// Interaction logic for TakeAwayStationPage.xaml
     /// </summary>
+    /// <MetaDataID>{5fbee374-2e50-4d94-975c-69380ba88186}</MetaDataID>
     public partial class TakeAwayStationPage : PageDialogViewEmulator
     {
         /// <MetaDataID>{d0669a66-0566-4568-9622-d2bd5005a773}</MetaDataID>

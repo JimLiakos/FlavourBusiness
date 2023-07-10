@@ -27,7 +27,21 @@ namespace FlavourBusinessManager
     [Persistent()]
     public class FlavoursServicesContext : MarshalByRefObject, IFlavoursServicesContext, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-        /// <MetaDataID>{c4e48188-9beb-42ae-9bb2-0c8e2ef345b6}</MetaDataID>
+        /// <MetaDataID>{093d728f-914a-47a7-aa1e-9e95d605263b}</MetaDataID>
+        public void RemovePaymentTerminal(IPaymentTerminal paymentTerminal)
+        {
+            GetRunTime().RemovePaymentTerminal(paymentTerminal);
+        }
+
+        /// <MetaDataID>{10e5b27d-5996-4f8a-8873-07b64114d51a}</MetaDataID>
+        public IPaymentTerminal NewPaymentTerminal()
+        {
+            return GetRunTime().NewPaymentTerminal();
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IFoodTypeTag> _FoodTypes = new OOAdvantech.Collections.Generic.Set<IFoodTypeTag>();
 
         /// <MetaDataID>{057cd81b-2ed5-4e0a-9a82-c905c36086f5}</MetaDataID>
@@ -67,11 +81,13 @@ namespace FlavourBusinessManager
         {
             return GetRunTime().NewPreparationStation();
         }
+        /// <MetaDataID>{d5772667-b75a-425a-a963-b41ed9a64ac8}</MetaDataID>
         public ITakeAwayStation NewTakeAwayStation()
         {
             return GetRunTime().NewTakeAwayStation();
         }
 
+        /// <MetaDataID>{68705304-f7f3-4545-84ec-88bb0ae2d614}</MetaDataID>
         public void RemoveTakeAwayStation(ITakeAwayStation takeAwayStationStation)
         {
             GetRunTime().RemoveTakeAwayStation(takeAwayStationStation);
@@ -134,6 +150,7 @@ namespace FlavourBusinessManager
                     where flavoursServicesContext.ServicesContextIdentity == servicesContextIdentity
                     select flavoursServicesContext).FirstOrDefault();
         }
+        /// <MetaDataID>{13da411d-ba9c-4447-a2fe-cc1aa1b1315b}</MetaDataID>
         public static IFlavoursServicesContextRuntime GetServicesContextRuntime(string servicesContextIdentity)
         {
             return GetServicesContext(servicesContextIdentity).GetRunTime();
@@ -780,6 +797,11 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{97b2ae66-b89d-4e66-883b-e03bb1d3817a}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint => GetRunTime().DeliveryServicePoint;
 
-        public IList<ITakeAwayStation> TakeAwayStations =>  GetRunTime().TakeAwayStations;
+        /// <MetaDataID>{3fd3e0d5-cc05-489f-8278-ce9a00f8e851}</MetaDataID>
+        public IList<ITakeAwayStation> TakeAwayStations => GetRunTime().TakeAwayStations;
+
+
+        /// <MetaDataID>{7304523e-3bf9-4445-94de-dbe61fa2ee57}</MetaDataID>
+        public List<IPaymentTerminal> PaymentTerminals => GetRunTime().PaymentTerminals;
     }
 }

@@ -830,10 +830,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-
+              
                 foreach (var paymentItem in payment.Items)
                 {
-                    var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.uid&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
+                    var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.GetItemPreparationUid()&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
                     if (flavourItem!=null)
                     {
                         List<FlavourBusinessFacade.RoomService.IItemPreparation> flavoursItem = null;

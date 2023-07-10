@@ -145,6 +145,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TakeAwayApp.Wpf", "TakeAway
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireBaseAuth", "FireBaseAuth\FireBaseAuth.csproj", "{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivaWalletPos", "VivaWalletPos\VivaWalletPos.csproj", "{688DB738-1378-49D3-B507-E3EA8A808FF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1007,6 +1009,18 @@ Global
 		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x64.Build.0 = Release|Any CPU
 		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x86.ActiveCfg = Release|Any CPU
 		{FF0AB957-E8BA-4742-8F28-0AE9FF094C37}.Release|x86.Build.0 = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|x64.Build.0 = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Debug|x86.Build.0 = Debug|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|x64.ActiveCfg = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|x64.Build.0 = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|x86.ActiveCfg = Release|Any CPU
+		{688DB738-1378-49D3-B507-E3EA8A808FF4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

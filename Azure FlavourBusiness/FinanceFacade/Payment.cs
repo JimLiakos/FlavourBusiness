@@ -570,7 +570,10 @@ namespace FinanceFacade
                     PaymentInfoFields["TransactionID"] = transactionID;
                 if (tipAmount!=null)
                     _TipsAmount = tipAmount.Value;
+
+                this.Subject.PaymentCompleted(this);
                 State = PaymentState.Completed;
+                
                 if (isDebit)
                     _PaymentType=PaymentType.DebitCard;
                 else
@@ -584,7 +587,7 @@ namespace FinanceFacade
                 //Normalize
                 NormalizeNettingItems();
 
-                this.Subject.PaymentCompleted(this);
+                
 
                 stateTransition.Consistent = true;
             }
@@ -619,8 +622,9 @@ namespace FinanceFacade
                     //Normalize
                     NormalizeNettingItems();
 
-                    State = PaymentState.Completed;
+                    
                     this.Subject.PaymentCompleted(this);
+                    State = PaymentState.Completed;
                     stateTransition.Consistent = true;
                 }
                 return true;
@@ -647,9 +651,12 @@ namespace FinanceFacade
                     //Normalize
                     NormalizeNettingItems();
 
-                    State = PaymentState.Completed;
+                    
                     _PaymentType= PaymentType.Cash;
+
                     this.Subject.PaymentCompleted(this);
+                    State = PaymentState.Completed;
+                    
                     stateTransition.Consistent = true;
                 }
 
@@ -660,8 +667,10 @@ namespace FinanceFacade
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     _TipsAmount = tipAmount;
-                    State = PaymentState.Completed;
+                    
                     _PaymentType= PaymentType.Cash;
+                    
+                    State = PaymentState.Completed;
                     this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
                 }

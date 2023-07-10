@@ -18,6 +18,7 @@ using StyleableWindow;
 
 namespace FLBManager.ViewModel.TakeAway
 {
+    /// <MetaDataID>{2bb30666-3e80-4eab-b048-ceb0d1aa7f26}</MetaDataID>
     public class TakeAwayStationPresentation : FBResourceTreeNode, IGraphicMenusOwner, INotifyPropertyChanged, IDragDropTarget
     {
 
@@ -406,7 +407,7 @@ namespace FLBManager.ViewModel.TakeAway
             if (graphicMenuTreeNode  != null)
             {
 
-                 //FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
+                //FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
 
                 this.TakeAwayStation.GraphicMenuStorageIdentity=graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity;
                 TakeAwayStationsTreeNode.ServiceContextInfrastructure.ServicesContextPresentation.AssignGraphicMenu(graphicMenuTreeNode);

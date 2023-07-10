@@ -28,6 +28,7 @@ using OOAdvantech.Pay;
 using FinanceFacade;
 
 
+
 #else
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
@@ -1345,6 +1346,8 @@ namespace DontWaitApp
             {
 
                 FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+
+
                 RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                 if (await this.FlavoursOrderServer.Pay(payment))
                 {
@@ -1363,7 +1366,7 @@ namespace DontWaitApp
 
                 var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
 #endif
-               
+
 
             }
             else if (paymentMethod==PaymentMethod.Cash)
@@ -1379,73 +1382,72 @@ namespace DontWaitApp
         }
 
 
-        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
-        {
+//        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
+//        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+//        {
 
 
-#if DeviceDotNet
+//#if DeviceDotNet
 
+//            try
+//            {
+//                FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+//            }
+//            catch (Exception error)
+//            {
 
-            try
-            {
-                FoodServicesClientSession.CreatePaymentToCommitOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
-            }
-            catch (Exception error)
-            {
+//                if(error.HResult==5001)
+//                {
 
-                if(error.HResult==5001)
-                {
+//                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+//                    foreach (var item in OrderItems)
+//                    {
+//                        ItemPreparationState itemState;
+//                        if (itemsState.TryGetValue(item.uid, out itemState))
+//                            item.State = itemState;
+//                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+//                        if (allCommited)
+//                            return true;
+//                    }
+//                }
+//                throw;
+//            }
+//            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+//            if (await this.FlavoursOrderServer.Pay(payment))
+//            {
+//                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+//                var state = payment.State;
+//                if (state==FinanceFacade.PaymentState.Completed)
+//                {
 
-                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
-                    foreach (var item in OrderItems)
-                    {
-                        ItemPreparationState itemState;
-                        if (itemsState.TryGetValue(item.uid, out itemState))
-                            item.State = itemState;
-                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
-                        if (allCommited)
-                            return true;
-                    }
-                }
-                throw;
-            }
-            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-            if (await this.FlavoursOrderServer.Pay(payment))
-            {
-                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-                var state = payment.State;
-                if (state==FinanceFacade.PaymentState.Completed)
-                {
+//                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+//                    foreach (var item in OrderItems)
+//                    {
+//                        ItemPreparationState itemState;
+//                        if (itemsState.TryGetValue(item.uid, out itemState))
+//                            item.State = itemState;
+//                    }
 
-                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
-                    foreach (var item in OrderItems)
-                    {
-                        ItemPreparationState itemState;
-                        if (itemsState.TryGetValue(item.uid, out itemState))
-                            item.State = itemState;
-                    }
+//                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+//                    var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
+//                    var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
 
-                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
-                    var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
-                    var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+//                    return allCommited;
+//                }
+//                else
+//                {
+//                    return false;
+//                }
+//            }
+//            return false;
+//#else
+//            payment.CashPaymentCompleted(tipAmount);
+//            var paymenta = payment.State;
+//            this.SendItemsForPreparation();
 
-                    return allCommited;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return false;
-#else
-            payment.CashPaymentCompleted(tipAmount);
-            var paymenta = payment.State;
-            this.SendItemsForPreparation();
-
-            return true;
-#endif
-        }
+//            return true;
+//#endif
+//        }
 
 
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>

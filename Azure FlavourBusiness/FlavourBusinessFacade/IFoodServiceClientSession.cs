@@ -112,18 +112,18 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{1d25a168-7cbe-49e4-9823-639d78a27ee5}</MetaDataID>
         void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount,string paramsJson);
 
-        /// <summary>
-        /// Creates a payment order for the items o payment parameter
-        /// When payment order completed, the items of payment goes to Committed state
-        /// </summary>
-        /// <param name="payment">
-        /// The payment parameter specifies a list of items that are pending payment
-        /// </param>
-        /// <param name="tipAmount">
-        /// Defines the tip amount for  the service person 
-        /// </param>
-        /// <MetaDataID>{5ba36666-0762-4942-8c91-baea92cf52d4}</MetaDataID>
-        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson);
+        ///// <summary>
+        ///// Creates a payment order for the items o payment parameter
+        ///// When payment order completed, the items of payment goes to Committed state
+        ///// </summary>
+        ///// <param name="payment">
+        ///// The payment parameter specifies a list of items that are pending payment
+        ///// </param>
+        ///// <param name="tipAmount">
+        ///// Defines the tip amount for  the service person 
+        ///// </param>
+        ///// <MetaDataID>{5ba36666-0762-4942-8c91-baea92cf52d4}</MetaDataID>
+        //void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson);
 
 
 

@@ -3440,14 +3440,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IWaiter Waiter
+        public FlavourBusinessFacade.HumanResources.IServicesContextWorker Worker
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Waiter", args, argsTypes);
-                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_Worker", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IServicesContextWorker>(retValue);
             }
         }
         
@@ -3901,19 +3901,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[2] = paramsJson;
             argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentGatewayOrder", args, argsTypes);
-        }
-        
-        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
-        {
-            object[] args = new object[3];
-            System.Type[] argsTypes = new System.Type[3];
-            args[0] = payment;
-            argsTypes[0] = typeof(FinanceFacade.IPayment);
-            args[1] = tipAmount;
-            argsTypes[1] = typeof(decimal);
-            args[2] = paramsJson;
-            argsTypes[2] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentToCommitOrder", args, argsTypes);
         }
         
         public void DeviceResume()

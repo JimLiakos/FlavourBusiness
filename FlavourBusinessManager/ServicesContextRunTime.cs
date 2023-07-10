@@ -43,6 +43,51 @@ namespace FlavourBusinessManager.ServicePointRunTime
     [Persistent()]
     public class ServicesContextRunTime : MarshalByRefObject, IExtMarshalByRefObject, IFlavoursServicesContextRuntime, IUploadService
     {
+
+        /// <MetaDataID>{bbfa9e26-c08a-44ca-9b67-e4d172ffecb2}</MetaDataID>
+        public void RemovePaymentTerminal(IPaymentTerminal paymentTerminal)
+        {
+            try
+            {
+                ObjectStorage.DeleteObject(paymentTerminal);
+                lock (ServiceContextRTLock)
+                {
+                    if (_PaymentTerminals!=null)
+                        _PaymentTerminals.Remove(paymentTerminal);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+        /// <MetaDataID>{8e21cb9c-f2f7-4304-81f4-790bdefed874}</MetaDataID>
+        public IPaymentTerminal NewPaymentTerminal()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+            PaymentTerminal paymentTerminal = null;
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                paymentTerminal = new PaymentTerminal(ServicesContextIdentity);
+                paymentTerminal.Description = Properties.Resources.DefaultPaymentTerminalDescription;
+
+                objectStorage.CommitTransientObjectState(paymentTerminal);
+
+                lock (ServiceContextRTLock)
+                {
+                    _PaymentTerminals.Add(paymentTerminal);
+                }
+
+
+                stateTransition.Consistent = true;
+            }
+            return paymentTerminal;
+
+        }
+
         /// <MetaDataID>{1d4e96ea-00e3-43e2-a710-ed93ee808246}</MetaDataID>
         public bool RemoveSupervisor(IServiceContextSupervisor supervisor)
         {
@@ -176,7 +221,41 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        List<IPaymentTerminal> _PaymentTerminals;
+
+        /// <MetaDataID>{c612de4d-29a7-47c5-9569-4e02a81c5580}</MetaDataID>
+        public List<IPaymentTerminal> PaymentTerminals
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_PaymentTerminals == null)
+                    {
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        _PaymentTerminals = (from takeawayCashier in servicesContextStorage.GetObjectCollection<IPaymentTerminal>()
+                                             where takeawayCashier.ServicesContextIdentity == servicesContextIdentity
+                                             select takeawayCashier).ToList();
+
+                        foreach (var paymentTerminal in _PaymentTerminals)
+                            paymentTerminal.ObjectChangeState +=PaymentTerminal_ObjectChangeState;
+                    }
+
+                    return _PaymentTerminals.ToList();
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
         List<ITakeawayCashier> _TakeawayCashiers;
+        /// <MetaDataID>{658dd45b-6685-4313-9835-b2bcebc603f3}</MetaDataID>
         public IList<ITakeawayCashier> TakeawayCashiers
         {
             get
@@ -204,6 +283,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{c543c675-b069-4660-a061-3fbbe7a42b0b}</MetaDataID>
         private void TakeawayCashier_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IWaiter.ActiveShiftWork))
@@ -215,6 +295,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
+        private void PaymentTerminal_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IWaiter.ActiveShiftWork))
+            {
+                Task.Run(() =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                });
+            }
+        }
         /// <MetaDataID>{e9759669-6bd8-4091-b318-90229918434e}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
@@ -285,6 +376,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{0fe4559a-d8a3-412d-b711-5cc3bb020bd0}</MetaDataID>
         public string NewTakeAwayCashier()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -309,7 +401,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         unassignedtakeawayCashier.Name = Properties.Resources.DefaultWaiterName;
 
                         objectStorage.CommitTransientObjectState(unassignedtakeawayCashier);
-                        _TakeawayCashiers.Add(unassignedtakeawayCashier);
+                        lock (ServiceContextRTLock)
+                        {
+                            _TakeawayCashiers.Add(unassignedtakeawayCashier);
+                        }
                     }
                     WaiterAssignKey = servicesContextIdentity + ";" + unassignedtakeawayCashier.Identity + ";" + Guid.NewGuid().ToString("N");
 
@@ -1605,7 +1700,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations };
+                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals };
             }
         }
 
@@ -1615,7 +1710,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks};
             }
         }
 
@@ -1750,7 +1845,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        /// <MetaDataID>{43a48158-e9c5-4be3-9813-4433f3d0c580}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         ISettings _Settings;
 
         /// <MetaDataID>{a219ef11-d9cb-4af1-886e-ea14f9e844d9}</MetaDataID>
@@ -1901,7 +1996,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
             catch (Exception error)
             {
-
                 throw;
             }
         }
@@ -2483,6 +2577,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{6c4a37cf-4c90-4108-be8b-c3fa0f238af9}</MetaDataID>
         public ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName)
         {
             lock (SupervisorsLock)
@@ -2686,8 +2781,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 throw;
             }
         }
+        /// <MetaDataID>{895528db-162c-4fef-b4e0-aa2dcb0e60ec}</MetaDataID>
         object NativeUsersLock = new object();
+        /// <MetaDataID>{8f937803-ac74-41c3-bc61-cf1e5af8ee2c}</MetaDataID>
         List<NativeAuthUser> _NativeUsers;
+        /// <MetaDataID>{25fe9404-b580-4dc4-b373-e552ce7682db}</MetaDataID>
         List<NativeAuthUser> NativeUsers
         {
             get
@@ -2708,6 +2806,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
         }
+        /// <MetaDataID>{52248cf8-a28f-493a-82ec-fd456600df81}</MetaDataID>
         public IList<UserData> GetNativeUsers(RoleType roleType)
         {
 
@@ -2715,6 +2814,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+        /// <MetaDataID>{294f1115-7a48-48a6-a5c4-58870a77a191}</MetaDataID>
         internal UserData SignInNativeUser(string userName, string password)
         {
             lock (NativeUsersLock)

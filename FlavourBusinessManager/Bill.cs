@@ -520,7 +520,10 @@ namespace FlavourBusinessManager.EndUsers
             return item.uid.Split('?')[0];
         }
 
-
+        public static string GetItemPreparationUid(this IItem item)
+        {
+            return item.uid.Split('?')[0];
+        }
 
         public static decimal GetPaidAmount(this ItemPreparation flavourItem, FoodServiceClientSession foodServiceClientSession, List<Payment> payments)
         {

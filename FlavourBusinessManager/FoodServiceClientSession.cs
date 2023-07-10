@@ -2289,6 +2289,10 @@ namespace FlavourBusinessManager.EndUsers
                     if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
                         flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
 
+                    if (item.State==ItemPreparationState.New&&SessionType==SessionType.HomeDelivery||SessionType==SessionType.HomeDeliveryGuest||SessionType==SessionType.Takeaway)
+                        item.State=ItemPreparationState.AwaitingPaymentToCommit;
+
+
                     stateTransition.Consistent = true;
                 }
 
@@ -2640,7 +2644,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{f50229d0-2dfa-46c4-9173-09e98ec19a6d}</MetaDataID>
-        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+         void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
             if (payment.State != FinanceFacade.PaymentState.Completed)
             {
@@ -2762,10 +2766,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (_MainSession.Value == null)
                     AutoMealParticipation();
 
-                var sds = MainSession.PartialClientSessions.Count;
-
                 AllItemsCommited();
-
                 stateTransition.Consistent = true;
             }
 

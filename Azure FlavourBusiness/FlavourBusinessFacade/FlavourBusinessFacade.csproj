@@ -74,6 +74,7 @@
     <Compile Include="HumanResources\IServiceContextSupervisor.cs" />
     <Compile Include="INativeAuthUser.cs" />
     <Compile Include="IParty.cs" />
+    <Compile Include="IPaymentTerminal.cs" />
     <Compile Include="IPlace.cs" />
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />

@@ -225,12 +225,8 @@ namespace PaymentProviders
                         var paymentOrder = inProgressPayment.GetPaymentOrder();
                         paymentOrder.TransactionId = vivaEvent.EventData.TransactionId;
                         inProgressPayment.SetPaymentOrder(paymentOrder);
-
-
-
                         try
                         {
-
                             var client = new RestClient($"{vivaPaymentGateWayApiUrl}/checkout/v2/transactions/{paymentOrder.TransactionId}");
                             client.Timeout = -1;
                             var request = new RestRequest(Method.GET);

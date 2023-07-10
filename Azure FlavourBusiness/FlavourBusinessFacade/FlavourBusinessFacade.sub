@@ -229,7 +229,11 @@
 		(object Realize_Relationship
 		    quid       	"6489B37E0342"
 		    supplier   	"Logical View::FlavourBusinessFacade::INativeAuthUser"
-		    quidu      	"6489B2CF0151"))
+		    quidu      	"6489B2CF0151")
+		(object Realize_Relationship
+		    quid       	"64AAD42A00EA"
+		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IPaymentTerminal"
+		    quidu      	"64AAD4130385"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -2197,4 +2201,36 @@
 		    quidu      	"6489B37E0342"
 		    client     	@1
 		    supplier   	@110
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::ServicesContextResources::IPaymentTerminal" @112
+		    location   	(3719, 1113)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@112
+			location   	(3718, 1221)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPaymentTerminal")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"64AAD4130385")
+		(object RealizeView "" @113
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"64AAD42A00EA"
+		    client     	@1
+		    supplier   	@112
 		    line_style 	0)))))

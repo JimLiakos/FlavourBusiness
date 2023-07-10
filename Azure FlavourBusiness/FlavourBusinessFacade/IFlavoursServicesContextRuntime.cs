@@ -15,6 +15,12 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContextRuntime
     {
+        /// <MetaDataID>{6a091d06-0b2c-4ff2-9cad-61d3803d2873}</MetaDataID>
+        void RemovePaymentTerminal(IPaymentTerminal paymentTerminal);
+
+        /// <MetaDataID>{6da06f95-9fe2-4cf0-8360-f3b7c0fc080e}</MetaDataID>
+        IPaymentTerminal NewPaymentTerminal();
+
         /// <MetaDataID>{8538c2c0-46b3-4d5c-b8ef-e4184193cfd6}</MetaDataID>
         IHomeDeliveryServicePoint DeliveryServicePoint { get; }
 
@@ -28,7 +34,6 @@ namespace FlavourBusinessFacade
         /// Defines the timespan in seconds to wait in AllMessmetesCommited state before move to meal monitoring state and starts meal preparation. 
         /// </summary>
         /// <MetaDataID>{968458ec-cde6-4550-aaf1-7a07b8c2df52}</MetaDataID>
-        //// <MetaDataID>{365997d7-44db-4eb6-ac10-1a82b540c918}</MetaDataID>
         int AllMessmetesCommitedTimeSpan { get; set; }
 
         /// <MetaDataID>{477e1b7a-ca3c-4692-9916-8da26be81967}</MetaDataID>
@@ -182,6 +187,9 @@ namespace FlavourBusinessFacade
         IList<IFisicalParty> FisicalParties { get; }
         /// <MetaDataID>{310f17fa-17ec-4821-8abe-abe6c2bd39b9}</MetaDataID>
         ISettings Settings { get; }
+
+        /// <MetaDataID>{d723c156-151b-4d32-a096-49c208fe55ed}</MetaDataID>
+        List<IPaymentTerminal> PaymentTerminals { get; }
 
         /// <MetaDataID>{25381c19-c35a-4d5a-b5cd-469f99929a73}</MetaDataID>
         IFisicalParty NewFisicalParty();

@@ -447,6 +447,7 @@
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="NativeAuthUser.cs" />
+    <Compile Include="PaymentTerminal.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
@@ -569,6 +570,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
     <Folder Include="PaymentProviders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

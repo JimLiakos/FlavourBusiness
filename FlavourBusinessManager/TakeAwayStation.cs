@@ -18,6 +18,29 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class TakeAwayStation : ServicePoint, OOAdvantech.Remoting.IExtMarshalByRefObject, ITakeAwayStation
     {
+
+        /// <exclude>Excluded</exclude>
+        string _PaymentTerminalIdentity;
+
+        /// <MetaDataID>{3497ea83-2577-404c-a6c4-c4ea9939bd5c}</MetaDataID>
+        [PersistentMember(nameof(_PaymentTerminalIdentity))]
+        [BackwardCompatibilityID("+5")]
+        public string PaymentTerminalIdentity
+        {
+            get => _PaymentTerminalIdentity;
+            set
+            {
+                if (_PaymentTerminalIdentity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PaymentTerminalIdentity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         string _GraphicMenuStorageIdentity;
         /// <MetaDataID>{0301f3d5-d132-499d-aef0-c04561c4dc80}</MetaDataID>
@@ -131,6 +154,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
 
+        /// <MetaDataID>{8820a755-040e-4924-a0f4-4b295b3cfd34}</MetaDataID>
         public override IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
@@ -195,16 +219,19 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{091ac110-e485-4b1f-ae86-89245ef6a966}</MetaDataID>
         public IList<UserData> GetNativeUsers()
         {
             return ServicePointRunTime.ServicesContextRunTime.Current.GetNativeUsers(RoleType.TakeAwayCashier);
         }
+        /// <MetaDataID>{98f55080-0ecf-4ba3-91c4-bcce991dcd11}</MetaDataID>
         public UserData SignInNativeUser(string userName, string password)
         {
 
             return ServicePointRunTime.ServicesContextRunTime.Current.SignInNativeUser(userName, password);
         }
 
+        /// <MetaDataID>{ae5013ad-1152-478f-8267-3f16c4aef816}</MetaDataID>
         public IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);

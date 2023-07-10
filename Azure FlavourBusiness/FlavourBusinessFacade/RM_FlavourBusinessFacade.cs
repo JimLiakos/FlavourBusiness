@@ -531,6 +531,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal> PaymentTerminals
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_PaymentTerminals", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation> TakeAwayStations
         {
             get
@@ -764,6 +776,23 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemovePaymentTerminal(FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal paymentTerminal)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = paymentTerminal;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "RemovePaymentTerminal", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal NewPaymentTerminal()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "NewPaymentTerminal", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>(retValue);
         }
         
         public void RemoveTakeAwayStation(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation takeAwayStationStation)
@@ -1405,12 +1434,41 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal> PaymentTerminals
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_PaymentTerminals", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void RemovePaymentTerminal(FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal paymentTerminal)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = paymentTerminal;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemovePaymentTerminal", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal NewPaymentTerminal()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewPaymentTerminal", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>(retValue);
         }
         
         public void RemoveHomeDeliveryService()
@@ -3215,6 +3273,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         public Pr_ITakeAwayStation(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string PaymentTerminalIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "get_PaymentTerminalIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "set_PaymentTerminalIdentity", args, argsTypes);
+            }
         }
         
         // The Width property for the object.
@@ -7922,19 +8000,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[2] = paramsJson;
             argsTypes[2] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentGatewayOrder", args, argsTypes);
-        }
-        
-        public void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
-        {
-            object[] args = new object[3];
-            System.Type[] argsTypes = new System.Type[3];
-            args[0] = payment;
-            argsTypes[0] = typeof(FinanceFacade.IPayment);
-            args[1] = tipAmount;
-            argsTypes[1] = typeof(decimal);
-            args[2] = paramsJson;
-            argsTypes[2] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CreatePaymentToCommitOrder", args, argsTypes);
         }
         
         public void DeviceResume()

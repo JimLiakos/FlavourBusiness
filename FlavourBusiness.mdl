@@ -1453,7 +1453,7 @@
 			width      	512
 			height     	181)
 		    (object CategoryView "Logical View::TakeAwayStationDevice" @26
-			location   	(2632, 1687)
+			location   	(2616, 1728)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1466,7 +1466,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@26
-			    location   	(2400, 1578)
+			    location   	(2384, 1619)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	464

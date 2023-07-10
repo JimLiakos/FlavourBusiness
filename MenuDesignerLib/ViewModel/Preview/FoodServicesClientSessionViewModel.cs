@@ -40,6 +40,8 @@ namespace MenuDesigner.ViewModel.Preview
         public List<TipOption> TipOptions => throw new NotImplementedException();
         public List<CurrencyOption> CurrencyOptions { get; }
 
+        public IFoodServiceClientSession FoodServicesClientSession => throw new NotImplementedException();
+
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
         public event MessmatesWaitForYouToDecideHandle MessmatesWaitForYouToDecide;
