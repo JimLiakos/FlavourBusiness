@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.ServicesContextResources;
 using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.HumanResources
@@ -14,5 +15,6 @@ namespace FlavourBusinessFacade.HumanResources
         public IList<IServiceContextSupervisor> Supervisors { get; set; }
 
         public IList<IShiftWork> ActiveShiftWorks { get; set; }
+        
     }
 }

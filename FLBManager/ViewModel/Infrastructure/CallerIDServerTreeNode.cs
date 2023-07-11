@@ -159,13 +159,13 @@ namespace FLBManager.ViewModel.Infrastructure
                 return true;
             }
         }
-
+        /// <exclude>Excluded</exclude>
         List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                return _Members.ToList();
+                return _Members.ToList();   
             }
         }
 
