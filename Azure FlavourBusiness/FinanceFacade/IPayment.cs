@@ -120,6 +120,9 @@ namespace FinanceFacade
         string Comments { get; set; }
 
 
+        IPaymentGateway PaymentGateway { get; }
+
+
     }
 
     /// <MetaDataID>{566e5205-215a-4e34-9ba5-1ce305fe583d}</MetaDataID>

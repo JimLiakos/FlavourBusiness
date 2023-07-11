@@ -350,6 +350,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
+        // The Width property for the object.
+        public FinanceFacade.IPaymentGateway PaymentGateway
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "get_PaymentGateway", args, argsTypes);
+                return this.Proxy.GetValue<FinanceFacade.IPaymentGateway>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];

@@ -51,7 +51,7 @@ namespace DontWaitApp
         Task<FlavourBusinessFacade.RoomService.IBill> GetBill();
 
         /// <MetaDataID>{ff44b605-d9c9-4796-9b41-5bd22ed8e965}</MetaDataID>
-        Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount);
+        Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount);
         //Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount);
 
 
@@ -146,11 +146,5 @@ namespace DontWaitApp
         public decimal Amount { get; set; }
         public string ISOCurrencySymbol { get; set; }
     }
-    /// <MetaDataID>{88ab68cf-f4e1-4093-8c40-5e940f581637}</MetaDataID>
-    public enum PaymentMethod
-    {
-        Cash = 1,
-        Card = 2,
-        PaymentGateway = 3
-    }
+ 
 }

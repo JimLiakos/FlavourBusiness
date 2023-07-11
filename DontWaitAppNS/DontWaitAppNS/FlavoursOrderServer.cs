@@ -2004,7 +2004,7 @@ namespace DontWaitApp
         PaymentService PaymentService = new PaymentService();
 #endif
         /// <MetaDataID>{a34440a6-11d3-4378-8cdc-58bc87f87269}</MetaDataID>
-        internal async Task<bool> Pay(IPayment payment)
+        internal async Task<bool> Pay(IPayment payment, decimal tipAmount)
         {
             if (payment.State==PaymentState.Completed)
                 return true;
@@ -2012,7 +2012,7 @@ namespace DontWaitApp
 
 
             var paymentService = new PaymentService();
-            return await paymentService.Pay(payment, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
+            return await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
 #else
             return true;
 #endif

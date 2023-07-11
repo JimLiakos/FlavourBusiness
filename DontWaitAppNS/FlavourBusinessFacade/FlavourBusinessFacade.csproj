@@ -45,6 +45,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IFoodTypeTag.cs" Link="IFoodTypeTag.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IGeocoding.cs" Link="IGeocoding.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IHomeDeliveryServicePoint.cs" Link="IHomeDeliveryServicePoint.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPaymentTerminal.cs" Link="IPaymentTerminal.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IPlace.cs" Link="IPlace.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IServingShiftWork.cs" Link="HumanResources\IServingShiftWork.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ISettings.cs" Link="ISettings.cs" />

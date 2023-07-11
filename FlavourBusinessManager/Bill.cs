@@ -257,7 +257,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (payment == null)
                 {
-                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol, foodServiceClientSession);
 
                     ObjectStorage.GetStorageOfObject(foodServiceClientSession).CommitTransientObjectState(payment);
                     if (foodServiceClientSession.MainSession== null)
@@ -381,7 +381,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (payment == null)
                 {
-                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol, waiterFoodServicesClientSession);
 
                     ObjectStorage.GetStorageOfObject(waiterFoodServicesClientSession).CommitTransientObjectState(payment);
                     if (waiterFoodServicesClientSession.MainSession== null)
@@ -472,7 +472,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (payment == null)
                 {
-                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
+                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol, waiterFoodServicesClientSession);
 
                     ObjectStorage.GetStorageOfObject(waiterFoodServicesClientSession).CommitTransientObjectState(payment);
                     if (waiterFoodServicesClientSession.MainSession== null)

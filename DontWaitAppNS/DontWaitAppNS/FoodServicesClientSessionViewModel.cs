@@ -1336,20 +1336,17 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-        public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+        public async Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount)
         {
 
 
 #if DeviceDotNet
 
-            if (paymentMethod==PaymentMethod.PaymentGateway)
+            if (paymentMethod==FinanceFacade.PaymentMethod.PaymentGateway)
             {
 
-                FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
-
-
-                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-                if (await this.FlavoursOrderServer.Pay(payment))
+             
+                if (await this.FlavoursOrderServer.Pay(payment, tipAmount))
                 {
                     RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                     var state = payment.State;
@@ -1359,7 +1356,7 @@ namespace DontWaitApp
                     }
                 }
             }
-            else  if (paymentMethod==PaymentMethod.Card)
+            else  if (paymentMethod==FinanceFacade.PaymentMethod.Card)
             {
 #if WaiterApp
                 var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
@@ -1369,14 +1366,14 @@ namespace DontWaitApp
 
 
             }
-            else if (paymentMethod==PaymentMethod.Cash)
+            else if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
                 payment.CashPaymentCompleted(tipAmount);
 
 #else
 
-            if (paymentMethod==PaymentMethod.Card)
+            if (paymentMethod==FinanceFacade.PaymentMethod.Card)
                 payment.CardPaymentCompleted(null, null, true, null, tipAmount);
-            if (paymentMethod==PaymentMethod.Cash)
+            if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
                 payment.CashPaymentCompleted(tipAmount);
 #endif
         }

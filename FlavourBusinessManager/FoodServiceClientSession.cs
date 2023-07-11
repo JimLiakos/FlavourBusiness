@@ -32,7 +32,7 @@ namespace FlavourBusinessManager.EndUsers
     /// <MetaDataID>{174fc4ef-b90f-4a30-892d-7cc9c28f8fe0}</MetaDataID>
     [BackwardCompatibilityID("{174fc4ef-b90f-4a30-892d-7cc9c28f8fe0}")]
     [Persistent()]
-    public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
+    public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer, FinanceFacade.IPaymentGateway
     {
 
         /// <exclude>Excluded</exclude>

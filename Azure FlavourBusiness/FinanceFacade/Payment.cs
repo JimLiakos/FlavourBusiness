@@ -247,13 +247,14 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{762d1d71-4f66-4454-a3ed-b695f6ca611e}</MetaDataID>
-        public Payment(string paymentIdentity, List<Item> paymentItems, string currency)
+        public Payment(string paymentIdentity, List<Item> paymentItems, string currency,IPaymentGateway paymentGateway)
         {
             Identity = paymentIdentity;
             _Items = paymentItems.OfType<IItem>().ToList();
             _Currency = currency;
             _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
             _Amount=decimal.Round(_Amount, 5);
+            _PaymentGateway=paymentGateway;
 
 
         }
@@ -731,6 +732,9 @@ namespace FinanceFacade
                 }
             }
         }
+        /// <exclude>Excluded</exclude>
+        IPaymentGateway _PaymentGateway;
+        public IPaymentGateway PaymentGateway { get=>_PaymentGateway; }
 
         /// <MetaDataID>{3ca1eb89-c1ed-4c8d-9901-80e259cd9e15}</MetaDataID>
         private void NormalizeNettingItems()

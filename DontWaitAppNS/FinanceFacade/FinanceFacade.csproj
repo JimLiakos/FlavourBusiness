@@ -10,6 +10,7 @@
     <DefineConstants>$(DefineConstants)TRACE;DeviceDotNet</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ICheckoutManager.cs" Link="ICheckoutManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\IPayment.cs" Link="IPayment.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\ITem.cs" Link="ITem.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FinanceFacade\TaxAmount.cs" Link="TaxAmount.cs" />

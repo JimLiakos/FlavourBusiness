@@ -4916,6 +4916,54 @@
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
 	    language   	"C#")
+	(object Class "ICheckoutManager"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{d814eb42-0c33-4143-8682-85840141c7e8}"))
+	    quid       	"64ACEAEF01C3"
+	    stereotype 	"Interface"
+	    operations 	(list Operations
+		(object Operation "Pay"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64ACEB4603DF")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ba5a4589-f470-4fc1-a8f7-f3ff207d3e03}"))
+		    quid       	"64ACEB4603DF"
+		    parameters 	(list Parameters
+			(object Parameter "payment"
+			    quid       	"64ACEF380326"
+			    type       	"FinanceFacade.IPayment")
+			(object Parameter "paymentMethod"
+			    quid       	"64ACEF380333"
+			    type       	"FinanceFacade.PaymentMethod")
+			(object Parameter "tipAmount"
+			    quid       	"64ACEF38033C"
+			    type       	"decimal"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
+	(object Class "IPaymentGateway"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{0d547eab-ccbb-4482-964e-048b8dfa9f0c}"))
+	    quid       	"64AD009303C9"
+	    stereotype 	"Interface"
+	    module     	"Component View:: FinanceFacade:: FinanceFacade"
+	    quidu      	"5C6A6F8C02D7"
+	    language   	"C#")
 	(object Association "TransactionItem"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -5348,14 +5396,14 @@
 			    supplier   	"checkoutManager"
 			    quidu      	"64ACDCF10367"
 			    messages   	(list Messages
-				(object Message ""
+				(object Message "Pay(   )"
 				    quid       	"64ACE4670198"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1"
 				    ordinal    	0
-				    quidu      	"000000000000"
+				    quidu      	"64ACEB4603DF"
 				    creation   	FALSE))))
 		    class      	"Use Case View::ClientCode"
 		    quidu      	"5CFF27AE027E"
@@ -5364,6 +5412,13 @@
 		    multi      	FALSE)
 		(object Object "checkoutManager"
 		    quid       	"64ACDCF10367"
+		    class      	"Logical View::FinanceFacade::ICheckoutManager"
+		    quidu      	"64ACEAEF01C3"
+		    persistence 	"Transient"
+		    creationObj 	FALSE
+		    multi      	FALSE)
+		(object Object "paymentGateway"
+		    quid       	"64ACF108031E"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
 		    multi      	FALSE))))
@@ -7888,19 +7943,10 @@
 			    supplier   	@96
 			    line_style 	3
 			    origin_attachment 	(2917, 591)
-			    terminal_attachment 	(2305, 591))))))
-	(object ObjectDiagram "Payment"
-	    mechanism_ref 	@1
-	    quid       	"64ACDCBF0255"
-	    title      	"Payment"
-	    zoom       	100
-	    max_height 	28350
-	    max_width  	21600
-	    origin_x   	0
-	    origin_y   	0
-	    items      	(list diagram_item_list
-		(object ObjectView "$UNNAMED$7" @118
-		    location   	(200, 231)
+			    terminal_attachment 	(2305, 591))))
+		(object ClassView "Class" "Logical View::FinanceFacade::ICheckoutManager" @118
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(487, 987)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -7913,23 +7959,23 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@118
-			location   	(200, 391)
-			anchor_loc 	1
-			nlines     	2
-			max_width  	324
+			location   	(262, 968)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	451
 			justify    	0
-			label      	"")
-		    icon       	"Actor"
-		    icon_style 	"Icon"
+			label      	"ICheckoutManager")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"64ACDCE90330"
-		    annotation 	4
-		    subobjects 	0
-		    x_offset   	0.000000
-		    y_offset   	0.000000)
-		(object ObjectView "checkoutManager" @119
-		    location   	(975, 281)
+		    quidu      	"64ACEAEF01C3"
+		    width      	469
+		    height     	238
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::FinanceFacade::IPaymentGateway" @119
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(512, 1441)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -7942,12 +7988,80 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@119
-			location   	(759, 225)
+			location   	(280, 1413)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	464
+			justify    	0
+			label      	"IPaymentGateway")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"64AD009303C9"
+		    width      	482
+		    height     	256
+		    annotation 	8)))
+	(object ObjectDiagram "Payment"
+	    mechanism_ref 	@1
+	    quid       	"64ACDCBF0255"
+	    title      	"Payment"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ObjectView "$UNNAMED$7" @120
+		    location   	(192, 412)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@120
+			location   	(192, 572)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	324
+			justify    	0
+			label      	"")
+		    icon       	"Actor"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"64ACDCE90330"
+		    annotation 	4
+		    subobjects 	0
+		    x_offset   	0.000000
+		    y_offset   	0.000000)
+		(object ObjectView "checkoutManager" @121
+		    location   	(1347, 428)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@121
+			location   	(1131, 372)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	432
 			justify    	0
 			label      	"checkoutManager")
+		    icon       	"Interface"
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
@@ -7958,15 +8072,47 @@
 		    subobjects 	0
 		    x_offset   	0.000000
 		    y_offset   	0.000000)
-		(object LinkView "" @120
+		(object ObjectView "paymentGateway" @122
+		    location   	(2253, 421)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@122
+			location   	(2022, 371)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	463
+			justify    	0
+			label      	"paymentGateway")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"64ACF108031E"
+		    width      	481
+		    height     	125
+		    annotation 	4
+		    subobjects 	0
+		    x_offset   	0.000000
+		    y_offset   	0.000000)
+		(object LinkView "" @123
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"64ACE4670197"
-		    client     	@118
-		    supplier   	@119
-		    line_style 	0)
-		(object MessView "" @121
-		    location   	(505, 205)
+		    client     	@120
+		    supplier   	@121
+		    line_style 	3
+		    origin_attachment 	(249, 428)
+		    terminal_attachment 	(1122, 428))
+		(object MessView "" @124
+		    location   	(689, 189)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -7978,9 +8124,9 @@
 			color      	0
 			default_color 	TRUE)
 		    line_color 	3342489
-		    label      	(object SegLabel @122
-			Parent_View 	@121
-			location   	(508, 161)
+		    label      	(object SegLabel @125
+			Parent_View 	@124
+			location   	(689, 145)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7994,19 +8140,130 @@
 			quidu      	"64ACE4670198"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	44
+			max_width  	175
 			justify    	0
-			label      	""
+			label      	"Pay(   )"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)
-		    object_arc 	@120
-		    pctDist    	0.500000
-		    height     	45
+		    DataFlowView 	@126
+		    DataFlowView 	@127
+		    DataFlowView 	@128
+		    object_arc 	@123
+		    pctDist    	0.505155
+		    height     	240
 		    orientation 	0
 		    dir        	1
-		    origin     	(445, 201)
-		    terminus   	(565, 209))))
+		    origin     	(629, 189)
+		    terminus   	(749, 189))
+		(object DataFlowView "" @128
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    line_color 	3342489
+		    label      	(object SegLabel @129
+			Parent_View 	@128
+			location   	(595, 377)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor_loc 	2
+			nlines     	1
+			max_width  	188
+			justify    	2
+			label      	"tipAmount"
+			pctDist    	-0.291667
+			height     	8
+			orientation 	1)
+		    dir        	1
+		    height     	180
+		    MessView   	@124)
+		(object DataFlowView "" @127
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    line_color 	3342489
+		    label      	(object SegLabel @130
+			Parent_View 	@127
+			location   	(593, 309)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor_loc 	2
+			nlines     	1
+			max_width  	296
+			justify    	2
+			label      	"paymentMethod"
+			pctDist    	-0.300000
+			height     	0
+			orientation 	1)
+		    dir        	1
+		    height     	120
+		    MessView   	@124)
+		(object DataFlowView "" @126
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    line_color 	3342489
+		    label      	(object SegLabel @131
+			Parent_View 	@126
+			location   	(593, 249)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor_loc 	2
+			nlines     	1
+			max_width  	160
+			justify    	2
+			label      	"payment"
+			pctDist    	-0.300000
+			height     	0
+			orientation 	1)
+		    dir        	1
+		    height     	60
+		    MessView   	@124)))
 	(object InteractionDiagram "Payment"
 	    mechanism_ref 	@1
 	    quid       	"64ACE4400201"
@@ -8017,7 +8274,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object InterObjView "$UNNAMED$7" @123
+		(object InterObjView "$UNNAMED$7" @132
 		    location   	(275, 225)
 		    font       	(object Font
 			size       	10
@@ -8030,11 +8287,11 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@123
+			Parent_View 	@132
 			location   	(275, 250)
 			anchor_loc 	1
 			nlines     	2
-			max_width  	324
+			max_width  	360
 			justify    	0
 			label      	"")
 		    icon       	"Actor"
@@ -8042,20 +8299,59 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"64ACDCE90330"
-		    width      	300
+		    width      	336
 		    height     	376
-		    icon_height 	150
-		    icon_width 	108
+		    icon_height 	162
+		    icon_width 	120
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @124
+		    Focus_Of_Control 	(object Focus_Of_Control "" @133
 			location   	(275, 391)
 			line_color 	3342489
-			InterObjView 	@123
+			InterObjView 	@132
 			height     	120
 			y_coord    	60
 			Nested     	FALSE))
-		(object InterObjView "checkoutManager" @125
+		(object InterObjView "checkoutManager" @134
+		    location   	(1464, 225)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@134
+			location   	(1464, 225)
+			fill_color 	13434879
+			anchor_loc 	1
+			nlines     	2
+			max_width  	550
+			justify    	0
+			label      	"checkoutManager")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"64ACDCF10367"
+		    width      	568
+		    height     	376
+		    icon_height 	0
+		    icon_width 	0
+		    icon_y_offset 	0
+		    annotation 	1
+		    Focus_Of_Control 	(object Focus_Of_Control "" @135
+			location   	(1000, 391)
+			line_color 	3342489
+			InterObjView 	@134
+			height     	60
+			y_coord    	0
+			Nested     	FALSE))
+		(object InterObjView "paymentGateway" @136
 		    location   	(1000, 225)
 		    font       	(object Font
 			size       	10
@@ -8068,32 +8364,25 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@125
+			Parent_View 	@136
 			location   	(1000, 225)
 			fill_color 	13434879
 			anchor_loc 	1
 			nlines     	2
-			max_width  	450
+			max_width  	282
 			justify    	0
-			label      	"checkoutManager")
+			label      	"paymentGateway")
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"64ACDCF10367"
-		    width      	468
+		    quidu      	"64ACF108031E"
+		    width      	300
 		    height     	376
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
-		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @126
-			location   	(1000, 391)
-			line_color 	3342489
-			InterObjView 	@125
-			height     	60
-			y_coord    	0
-			Nested     	FALSE))
-		(object InterMessView "" @127
+		    annotation 	1)
+		(object InterMessView "" @137
 		    location   	(0, 391)
 		    font       	(object Font
 			size       	10
@@ -8105,9 +8394,9 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @128
-			Parent_View 	@127
-			location   	(637, 347)
+		    label      	(object SegLabel @138
+			Parent_View 	@137
+			location   	(869, 347)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8121,17 +8410,17 @@
 			quidu      	"64ACE4670198"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	44
+			max_width  	185
 			justify    	0
-			label      	""
+			label      	"Pay(   )"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@123
-		    supplier   	@125
-		    Focus_Src  	@124
-		    Focus_Entry 	@126
+		    client     	@132
+		    supplier   	@134
+		    Focus_Src  	@133
+		    Focus_Entry 	@135
 		    origin     	(290, 391)
-		    terminus   	(984, 391)
+		    terminus   	(1448, 391)
 		    ordinal    	0)))))
