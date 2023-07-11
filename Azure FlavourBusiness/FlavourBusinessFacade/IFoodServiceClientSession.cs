@@ -100,17 +100,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
-        /// <summary>
-        /// Creates a payment order for the items o payment parameter
-        /// </summary>
-        /// <param name="payment">
-        /// The payment parameter specifies a list of items that are pending payment
-        /// </param>
-        /// <param name="tipAmount">
-        /// Defines the tip amount for  the service person 
-        /// </param>
-        /// <MetaDataID>{1d25a168-7cbe-49e4-9823-639d78a27ee5}</MetaDataID>
-        void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount,string paramsJson);
+    
 
         ///// <summary>
         ///// Creates a payment order for the items o payment parameter
