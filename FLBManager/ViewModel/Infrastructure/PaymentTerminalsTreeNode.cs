@@ -39,15 +39,10 @@ namespace FLBManager.ViewModel.Infrastructure
                 NewPaymentTerminal();
             });
 
-
-
             try
             {
-
-
                 foreach (var paymentTerminal in ServiceContextInfrastructure.ServiceContextResources.PaymentTerminals)
                     PaymentTerminals.Add(paymentTerminal, new PaymentTerminalTreeNode(this, paymentTerminal));
-
             }
             catch (System.Exception error)
             {
@@ -74,8 +69,9 @@ namespace FLBManager.ViewModel.Infrastructure
 
             try
             {
+                PaymentTerminals.Remove(paymentTerminalTreeNode.PaymentTerminal);
                 this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemovePaymentTerminal(paymentTerminalTreeNode.PaymentTerminal);
-                _Members.Remove(paymentTerminalTreeNode);
+                //_Members.Remove(paymentTerminalTreeNode);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
             }
@@ -132,13 +128,14 @@ namespace FLBManager.ViewModel.Infrastructure
         }
 
 
-        /// <exclude>Excluded</exclude>
-        List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
+        ///// <exclude>Excluded</exclude>
+        //List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                return _Members.ToList();
+                return this.PaymentTerminals.Values.OfType<FBResourceTreeNode>().ToList();
+                //return _Members.ToList();
             }
         }
 

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace VivaWalletPos
 {
-    public class VivaWalletPos
+    public class VivaWalletPaymentTerminal
     {
 
         TimeSpan WaitTimeOut;
         string PosAddress;
         int Port;
-        public VivaWalletPos(string posAddress, int port, TimeSpan waitTimeOut)
+        public VivaWalletPaymentTerminal(string posAddress, int port, TimeSpan waitTimeOut)
         {
             WaitTimeOut = waitTimeOut;
             PosAddress = posAddress;
