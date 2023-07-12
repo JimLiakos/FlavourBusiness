@@ -1334,6 +1334,20 @@ namespace DontWaitApp
 
         }
 
+        internal async Task<bool> Pay(FinanceFacade.IPayment payment, decimal tipAmount)
+        {
+            if (payment.State== FinanceFacade.PaymentState.Completed)
+                return true;
+#if DeviceDotNet
+
+
+            var paymentService = new PaymentService();
+            return await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
+#else
+            return true;
+#endif
+        }
+
 
         /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
         public async Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount)

@@ -2624,11 +2624,10 @@ namespace FlavourBusinessManager.EndUsers
         /// Defines some extra parameters which are necessary for payment gateway
         /// </param>
         /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
-        public void CreatePaymentGatewayOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+        public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
             if (payment.State != FinanceFacade.PaymentState.Completed)
             {
-
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
