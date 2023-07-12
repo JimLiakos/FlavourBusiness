@@ -13,5 +13,7 @@ namespace FinanceFacade
         Cash = 1,
         Card = 2,
         PaymentGateway = 3
+        
+
     }
 }

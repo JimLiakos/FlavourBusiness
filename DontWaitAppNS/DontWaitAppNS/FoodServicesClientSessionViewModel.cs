@@ -1340,42 +1340,9 @@ namespace DontWaitApp
         {
 
 
-#if DeviceDotNet
-
-            if (paymentMethod==FinanceFacade.PaymentMethod.PaymentGateway)
-            {
-
-             
-                if (await this.FlavoursOrderServer.Pay(payment, tipAmount))
-                {
-                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-                    var state = payment.State;
-                    if (state==FinanceFacade.PaymentState.Completed)
-                    {
-                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
-                    }
-                }
-            }
-            else  if (paymentMethod==FinanceFacade.PaymentMethod.Card)
-            {
-#if WaiterApp
-                var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
-
-                var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
-#endif
+            await this.FlavoursOrderServer.Pay(payment, paymentMethod, tipAmount);
 
 
-            }
-            else if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
-                payment.CashPaymentCompleted(tipAmount);
-
-#else
-
-            if (paymentMethod==FinanceFacade.PaymentMethod.Card)
-                payment.CardPaymentCompleted(null, null, true, null, tipAmount);
-            if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
-                payment.CashPaymentCompleted(tipAmount);
-#endif
         }
 
 

@@ -138,14 +138,14 @@ namespace DontWaitApp
             FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
             return true;
         }
-         
+
         public Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
             var clientSessionData = foodServiceClientSession.ClientSessionData;
             if (foodServicesClientSessionViewModel==null)
             {
-                
+
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
@@ -224,9 +224,9 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{cc704161-f4c2-454b-9ff6-010d1e190a4b}</MetaDataID>
-        public FlavoursOrderServer()
+        public FlavoursOrderServer(bool useAssignedPaymentTerminal)
         {
-
+            this.UseAssignedPaymentTerminal=useAssignedPaymentTerminal;
         }
 
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
@@ -378,7 +378,7 @@ namespace DontWaitApp
         }
 #endif
 
-         
+
 
         public event WebViewLoadedHandle OnWebViewLoaded;
 
@@ -425,7 +425,7 @@ namespace DontWaitApp
             //    var clientSessionData = await GetFoodServiceSession(ApplicationSettings.Current.LastServicePointIdentity, false);
             //}
 
-        } 
+        }
 
 
 
@@ -1707,7 +1707,7 @@ namespace DontWaitApp
 #if DeviceDotNet
                 DeviceApplication.Current.Log(new List<string>() { "get_CurrentFoodServicesClientSession" });
 #endif
-                if(FoodServicesClientSessionViewModel==null)
+                if (FoodServicesClientSessionViewModel==null)
                 {
 
                 }
@@ -1751,6 +1751,9 @@ namespace DontWaitApp
                    });
             }
         }
+
+        public bool UseAssignedPaymentTerminal { get; private set; }
+
         /// <MetaDataID>{3b8f1bd2-0697-4d3e-81d2-e304771ac9b6}</MetaDataID>
         public void Speak(string text)
         {
@@ -2004,18 +2007,55 @@ namespace DontWaitApp
         PaymentService PaymentService = new PaymentService();
 #endif
         /// <MetaDataID>{a34440a6-11d3-4378-8cdc-58bc87f87269}</MetaDataID>
-        internal async Task<bool> Pay(IPayment payment, decimal tipAmount)
+        internal async Task<bool> Pay(IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
             if (payment.State==PaymentState.Completed)
                 return true;
+
+            if (paymentMethod==FinanceFacade.PaymentMethod.PaymentGateway)
+            {
 #if DeviceDotNet
+                var paymentService = new PaymentService();
+                if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
+                {
+                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+                    var state = payment.State;
+                    if (state==FinanceFacade.PaymentState.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    }
+                    return true;
+                }
 
-
-            var paymentService = new PaymentService();
-            return await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS");
-#else
-            return true;
 #endif
+                return false;
+            }
+            else if (paymentMethod==FinanceFacade.PaymentMethod.Card)
+            {
+                if (this.UseAssignedPaymentTerminal)
+                {
+#if WaiterApp
+                    var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+                    var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
+#else
+                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+                    return true;
+#endif
+                }
+                else
+                {
+                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+                    return true;
+                }
+            }
+            else if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
+            {
+                payment.CashPaymentCompleted(tipAmount);
+                return true;
+            }
+            else
+                return false;
+
         }
 
 

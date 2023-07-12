@@ -435,6 +435,10 @@
       <Project>{0111e912-93a7-4e95-81c6-1f565684336a}</Project>
       <Name>RestaurantHallLayoutModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VivaWalletPos\VivaWalletPos.csproj">
+      <Project>{688db738-1378-49d3-b507-e3ea8a808ff4}</Project>
+      <Name>VivaWalletPos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Backup\RestaurantMenuData.xml" />

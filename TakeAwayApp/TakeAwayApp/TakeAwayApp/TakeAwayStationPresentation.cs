@@ -98,21 +98,29 @@ namespace TakeAwayApp
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
         public TakeAwayStationPresentation()
-        {
+        { 
 
-            FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer() { EndUser = this };
+            FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(true) { EndUser = this };
             var appSettings = ApplicationSettings.Current;
+            var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+            if(vivaWalletPos!=null)
+                vivaWalletPos.c
+#if DeviceDotNet
+            
 
 
-            //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
-            // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
+#endif
 
 
-            //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
-            //var dd = DeviceDisplay.MainDisplayInfo;
+                //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
+                // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
 
-            //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
-            //var ss = Xamarin.Forms.Device.Idiom;
+
+                //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
+                //var dd = DeviceDisplay.MainDisplayInfo;
+
+                //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
+                //var ss = Xamarin.Forms.Device.Idiom;
         }
 
         //FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;

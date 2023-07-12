@@ -26,7 +26,7 @@ namespace DontWaitApp
     {
         public WebBrowserOverlay Browser;
 
-        FlavoursOrderServer FlavoursOrderServer = new FlavoursOrderServer();
+        FlavoursOrderServer FlavoursOrderServer = new FlavoursOrderServer(false);
 
         public MainWindow(Uri appLinkUri = null)
         {
