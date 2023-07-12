@@ -98,13 +98,15 @@ namespace TakeAwayApp
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
         public TakeAwayStationPresentation()
-        { 
+        {
+            
+            VivaWalletPos.IPos sds = null;
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(true) { EndUser = this };
             var appSettings = ApplicationSettings.Current;
             var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
-            if(vivaWalletPos!=null)
-                vivaWalletPos.c
+            if (vivaWalletPos!=null)
+                vivaWalletPos.Confing(VivaWalletPos.POSType.TerminalPos, "127.0.0.1", 6000, 120);
 #if DeviceDotNet
             
 

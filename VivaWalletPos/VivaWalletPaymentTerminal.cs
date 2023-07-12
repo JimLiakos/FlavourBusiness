@@ -23,25 +23,41 @@ namespace VivaWalletPos
         Task<PaymentData> SalesTask;
 
         int Sessionid = 1;
-        public PaymentData Sale(double amount)
+        public PaymentData ReceivePayment(decimal amount, decimal tips)
         {
-#if DEBUG
-            amount = 0.01;
-#endif
 
 
             SalesTask = Task<PaymentData>.Run(() =>
             {
-                txSaleRequest txRequest = new txSaleRequest() { sessionId = Sessionid++, msgType = "200", msgCode = "00", uniqueTxnId = Guid.NewGuid().ToString("N"), amount = amount, msgOpt = "0000" };
+                txSaleRequest txRequest = new txSaleRequest() { sessionId = Sessionid++, msgType = "200", msgCode = "00", uniqueTxnId = Guid.NewGuid().ToString("N"), amount = (double)amount, msgOpt = "0000" };
                 string msm = txRequest.Message;
                 //string message = "0061|002690|200|00|12345678901234567890123456789012|0.10|0000||||";
                 try
                 {
+                    PaymentData paymentData = null;
+                    var ticks = new DateTime(2022, 1, 1).Ticks;
+                    var transactionID = (DateTime.Now.Ticks - ticks).ToString("x");
+
+                    txSalesResponse response = txSalesResponse.Parse("0135|000065|210|00|00|Contactless/None~RRN:108813789134|VISA|406001******4011|789134|181644|000001|0.05|1010|00|00|00|00|00|00|    16038894");
+                    if (response.respCodeResp == "00")
+                    {
+                        //response.amount=amount;
+                        paymentData = new PaymentData();
+                        paymentData.CardType = response.cardTypeResp;
+                        paymentData.AccountNum = response.accNumberResp;
+                        paymentData.PayAmount = amount.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo(1033));
+                        paymentData.TransactionID = transactionID;
+                        return paymentData;
+
+                    }
+#if DEBUG
+                    amount = 0.01M;
+#endif
 
                     TcpClient client = new TcpClient(PosAddress, Port);
                     NetworkStream stream = client.GetStream();
 
-                    PaymentData paymentData = null;
+                    
                     try
                     {
                         client.ReceiveTimeout = (int)WaitTimeOut.TotalMilliseconds;
@@ -73,7 +89,7 @@ namespace VivaWalletPos
                         {
                             bytes = stream.Read(data, 0, data.Length);
                             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                            txSalesResponse response = txSalesResponse.Parse(responseData);
+                             response = txSalesResponse.Parse(responseData);
 
                             //txSalesResponse response = txSalesResponse.Parse("0135|000065|210|00|00|Contactless/None~RRN:108813789134|VISA|406001******4011|789134|181644|000001|0.05|1010|00|00|00|00|00|00|    16038894");
                             if (response.respCodeResp == "00")

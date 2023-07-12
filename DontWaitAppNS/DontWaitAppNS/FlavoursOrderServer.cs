@@ -2034,13 +2034,13 @@ namespace DontWaitApp
             {
                 if (this.UseAssignedPaymentTerminal)
                 {
-#if WaiterApp
+
                     var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
-                    var paymentData = await vivaWalletPos.Sale(payment.Amount, tipAmount);
-#else
-                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+                    var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
+
+                    payment.CardPaymentCompleted(paymentData.CardType,  paymentData.AccountNum,true,paymentData.TransactionID, tipAmount);
                     return true;
-#endif
+
                 }
                 else
                 {

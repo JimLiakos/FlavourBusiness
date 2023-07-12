@@ -58,6 +58,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
+            Xamarin.Forms.DependencyService.Register<VivaWalletPos.Pos>();
         }
     }
 }

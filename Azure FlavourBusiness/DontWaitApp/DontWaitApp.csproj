@@ -118,9 +118,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
-      <Link>FlavoursOrderServer.cs</Link>
-    </Compile>
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
       <Link>ApplicationSettings.cs</Link>
     </Compile>
@@ -133,6 +130,9 @@
     <None Include="..\..\MenuModel\JsonViewModel\Tag.cs">
       <Link>MenuModel\Tag.cs</Link>
     </None>
+    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
+      <Link>FlavoursOrderServer.cs</Link>
+    </Compile>
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\FoodServicesClientSessionViewModel.cs">
       <Link>FoodServicesClientSessionViewModel.cs</Link>
     </Compile>
@@ -422,6 +422,10 @@
     <ProjectReference Include="..\..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
       <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
       <Name>MenuModelFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VivaWalletPos\VivaWalletPos.csproj">
+      <Project>{688db738-1378-49d3-b507-e3ea8a808ff4}</Project>
+      <Name>VivaWalletPos</Name>
     </ProjectReference>
     <ProjectReference Include="..\FinanceFacade\FinanceFacade.csproj">
       <Project>{BC023782-2913-447E-90C1-AF934F8F2CE1}</Project>
