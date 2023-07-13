@@ -1199,6 +1199,11 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
+                if(_MainSession.Value==null)
+                {
+
+                }
+
                 return _MainSession.Value;
             }
         }

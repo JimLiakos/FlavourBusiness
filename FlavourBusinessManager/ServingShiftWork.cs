@@ -102,7 +102,7 @@ namespace FlavourBusinessManager.HumanResources
         public List<SessionBillingPayments> SessionsBillingPayments
         {
             get
-            {
+            { 
                 var sessionsBillingPayments = (from foodServiceClientSession in FoodServiceClientSessions
                                        select new SessionBillingPayments()
                                        {
@@ -126,7 +126,17 @@ namespace FlavourBusinessManager.HumanResources
         string GetSessionBillingDescription(FoodServiceClientSession foodServiceClientSession)
         {
 
-            if (foodServiceClientSession.MainSession.ServicePoint is HallServicePoint)
+            if (foodServiceClientSession.MainSession?.ServicePoint is HallServicePoint)
+            {
+
+                return foodServiceClientSession.MainSession.ServicePoint.Description;
+                //if (!string.IsNullOrWhiteSpace(foodServiceClientSession.UserLanguageCode))
+                //    return string.Format(Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(foodServiceClientSession.UserLanguageCode)), foodServiceClientSession.MainSession.ServicePoint.Description);
+                //else
+                //    return string.Format(Properties.Resources.TablePaymentDescription, foodServiceClientSession.MainSession.ServicePoint.Description);
+            }
+
+            if (foodServiceClientSession.MainSession?.ServicePoint is TakeAwayStation)
             {
 
                 return foodServiceClientSession.MainSession.ServicePoint.Description;
