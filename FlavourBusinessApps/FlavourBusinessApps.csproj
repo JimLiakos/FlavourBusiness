@@ -105,6 +105,9 @@
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\IWaiterPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\IWaiterPresentation.cs</Link>
     </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\IWorkerPresentation.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\IWorkerPresentation.cs</Link>
+    </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ManagerPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\ManagerPresentation.cs</Link>
     </Compile>

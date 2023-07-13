@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade.HumanResources;
 using OOAdvantech.MetaDataRepository;
+using ServiceContextManagerApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{a83f46df-66d6-4c24-96ce-ce17f03b4056}</MetaDataID>
     [HttpVisible]
-    public interface IWaiterPresentation
+    public interface IWaiterPresentation: IWorkerPresentation
     {
         /// <MetaDataID>{f9330aa3-1bad-4709-ae81-e63572f423bc}</MetaDataID>
         string FullName { get; set; }
@@ -21,20 +22,7 @@ namespace ServiceContextManagerApp
 
         string WaiterIdentity { get; }
 
-        bool Suspended { get; }
 
-
-        bool InActiveShiftWork { get; }
-
-        System.DateTime ActiveShiftWorkStartedAt { get; }
-
-        void ChangeSiftWork(DateTime startedAt, double timespanInHours);
-
-        System.DateTime ActiveShiftWorkEndsAt { get; }
-
-        List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate);
-
-        List<IServingShiftWork> GetLastThreeSifts();
 
 
     }
