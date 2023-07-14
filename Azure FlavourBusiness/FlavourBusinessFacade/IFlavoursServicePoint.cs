@@ -13,15 +13,15 @@ namespace FlavourBusinessFacade
     public interface IFlavoursServicesContext
     {
         /// <MetaDataID>{c6cf8b81-57e2-423f-ac30-eaa5e3167e0c}</MetaDataID>
-        void RemoveCallCenterStation(IHomeDeliveryCallcenterStation homeDeliveryCallcenterStation);
+        void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation);
 
         /// <MetaDataID>{37ab9263-abc5-46b7-a53d-dd7976875286}</MetaDataID>
-        IHomeDeliveryCallcenterStation NewCallCenterStation();
+        IHomeDeliveryCallCenterStation NewCallCenterStation();
 
         [RoleAMultiplicityRange(0)]
         [Association("FlavoursServiceContextCallCenter", Roles.RoleA, "18e50a98-3b7c-4cc5-96f2-6ee6002d426f")]
         [RoleBMultiplicityRange(0)]
-        List<IHomeDeliveryCallcenterStation> CallCenterStations { get; }
+        List<IHomeDeliveryCallCenterStation> CallCenterStations { get; }
 
 
         [Association("ServiceContexPaymentTerminal", Roles.RoleA, "bbb9a30d-0c4c-46fa-b55d-a46068da59e0")]

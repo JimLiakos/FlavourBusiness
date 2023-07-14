@@ -4,7 +4,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{39b7faeb-7f7c-4152-b423-858e6d611999}</MetaDataID>
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{39b7faeb-7f7c-4152-b423-858e6d611999}")]
-    public interface IHomeDeliveryCallcenterStation
+    public interface IHomeDeliveryCallCenterStation
     {
         /// <MetaDataID>{0525f79f-be19-4d04-9ac8-518d03fc14f6}</MetaDataID>
         [RoleAMultiplicityRange(0)]
