@@ -5396,7 +5396,7 @@
 			    supplier   	"checkoutManager"
 			    quidu      	"64ACDCF10367"
 			    messages   	(list Messages
-				(object Message "Pay(   )"
+				(object Message "Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 				    quid       	"64ACE4670198"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -8140,9 +8140,9 @@
 			quidu      	"64ACE4670198"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	175
+			max_width  	10
 			justify    	0
-			label      	"Pay(   )"
+			label      	"Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)
@@ -8170,7 +8170,7 @@
 		    line_color 	3342489
 		    label      	(object SegLabel @129
 			Parent_View 	@128
-			location   	(595, 377)
+			location   	(594, 377)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8345,7 +8345,7 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @135
-			location   	(1000, 391)
+			location   	(1464, 391)
 			line_color 	3342489
 			InterObjView 	@134
 			height     	60
@@ -8410,9 +8410,9 @@
 			quidu      	"64ACE4670198"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	185
+			max_width  	10
 			justify    	0
-			label      	"Pay(   )"
+			label      	"Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)

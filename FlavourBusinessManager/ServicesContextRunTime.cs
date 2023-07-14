@@ -1710,7 +1710,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks};
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2204,8 +2204,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (takeAwayStationsLock)
             {
-                if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationCredentialKey))
-                    return TakeAwayStationsDictionary[takeAwayStationCredentialKey];
+                if (_TakeAwayStationsDictionary.ContainsKey(takeAwayStationCredentialKey))
+                    return _TakeAwayStationsDictionary[takeAwayStationCredentialKey];
                 return null;
             }
 
@@ -2771,8 +2771,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 lock (takeAwayStationsLock)
                 {
 
-                    if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationStation.TakeAwayStationIdentity))
-                        TakeAwayStationsDictionary.Remove(takeAwayStationStation.TakeAwayStationIdentity);
+                    if (_TakeAwayStationsDictionary.ContainsKey(takeAwayStationStation.TakeAwayStationIdentity))
+                        _TakeAwayStationsDictionary.Remove(takeAwayStationStation.TakeAwayStationIdentity);
                 }
             }
             catch (Exception error)
@@ -2806,6 +2806,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
         }
+
+
+
         /// <MetaDataID>{52248cf8-a28f-493a-82ec-fd456600df81}</MetaDataID>
         public IList<UserData> GetNativeUsers(RoleType roleType)
         {
@@ -2827,6 +2830,85 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return userData;
 
             }
+        }
+
+        public IHomeDeliveryCallcenterStation NewCallCenterStation()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        object DeliveryCallcenterStationsLock = new object();
+
+        /// <exclude>Excluded</exclude>
+        Dictionary<string, IHomeDeliveryCallcenterStation> _CallCenterStationsDictionary;
+
+        /// <MetaDataID>{717900a3-bd70-4e5c-814f-228ffd01fb35}</MetaDataID>
+        public Dictionary<string, IHomeDeliveryCallcenterStation> CallCenterStationsDictionary
+        {
+            get
+            {
+                lock (DeliveryCallcenterStationsLock)
+                {
+                    if (_CallCenterStationsDictionary == null)
+                    {
+                        _CallCenterStationsDictionary = new Dictionary<string, IHomeDeliveryCallcenterStation>();
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        foreach (var takeAwayStation in (from aTakeAwayStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallcenterStation>()
+                                                         where aTakeAwayStation.ServicesContextIdentity == servicesContextIdentity
+                                                         select aTakeAwayStation))
+                        {
+                            if (!string.IsNullOrWhiteSpace(takeAwayStation.CallcenterStationIdentity))
+                                this._CallCenterStationsDictionary[takeAwayStation.CallcenterStationIdentity] = takeAwayStation;
+
+                        }
+                    }
+                    return new Dictionary<string, IHomeDeliveryCallcenterStation>(_CallCenterStationsDictionary);
+                }
+            }
+        }
+
+
+        public void RemoveCallCenterStation(IHomeDeliveryCallcenterStation homeDeliveryCallcenterStation)
+        {
+            try
+            {
+                ObjectStorage.DeleteObject(homeDeliveryCallcenterStation);
+                lock (DeliveryCallcenterStationsLock)
+                {
+
+                    if (_CallCenterStationsDictionary.ContainsKey(homeDeliveryCallcenterStation.CallcenterStationIdentity))
+                        _CallCenterStationsDictionary.Remove(homeDeliveryCallcenterStation.CallcenterStationIdentity);
+                }
+
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
+        }
+
+        public List<IHomeDeliveryCallcenterStation> CallCenterStations
+        {
+
+            get
+            {
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                var servicesContextIdentity = ServicesContextIdentity;
+                return (from homeDeliveryCallcenterStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallcenterStation>()
+                        where homeDeliveryCallcenterStation.ServicesContextIdentity == servicesContextIdentity
+                        select homeDeliveryCallcenterStation).ToList();
+
+            }
+
         }
     }
 

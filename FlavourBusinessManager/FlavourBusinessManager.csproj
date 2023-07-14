@@ -438,6 +438,7 @@
     <Compile Include="FoodServiceClientSession.cs" />
     <Compile Include="FoodServiceSession.cs" />
     <Compile Include="FoodTypeTag.cs" />
+    <Compile Include="HomeDeliveryCallcenterStation.cs" />
     <Compile Include="HomeDeliveryServicePoint.cs" />
     <Compile Include="HumanResources\MenuMaker.cs" />
     <Compile Include="HumanResources\ServiceContextSupervisor.cs" />

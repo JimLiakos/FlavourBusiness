@@ -64,6 +64,7 @@
     <Compile Include="IDebtCollection.cs" />
     <Compile Include="IFoodTypeTag.cs" />
     <Compile Include="IGeocoding.cs" />
+    <Compile Include="IHomeDeliveryCallcenterStation.cs" />
     <Compile Include="IHomeDeliveryServicePoint.cs" />
     <Compile Include="IMeal.cs" />
     <Compile Include="IMealController.cs" />
