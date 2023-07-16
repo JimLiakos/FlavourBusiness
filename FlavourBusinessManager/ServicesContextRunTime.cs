@@ -1700,7 +1700,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals };
+                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals, DeliveryCallCenterStations=this.CallCenterStations };
             }
         }
 
@@ -2834,7 +2834,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         public IHomeDeliveryCallCenterStation NewCallCenterStation()
         {
-            throw new NotImplementedException();
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+            HomeDeliveryCallCenterStation homeDeliveryCallCenterStation = new HomeDeliveryCallCenterStation(this);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                homeDeliveryCallCenterStation.Description = Properties.Resources.DefaultHomeDeliveryCallCenterStationDescription;
+                homeDeliveryCallCenterStation.ServicesContextIdentity = this.ServicesContextIdentity;
+                objectStorage.CommitTransientObjectState(homeDeliveryCallCenterStation);
+                stateTransition.Consistent = true;
+            }
+            var count = CallCenterStationsDictionary.Count;
+            lock (DeliveryCallcenterStationsLock)
+            {
+                _CallCenterStationsDictionary[homeDeliveryCallCenterStation.CallcenterStationIdentity] =  homeDeliveryCallCenterStation;
+            }
+            //var count = PreparationStationRuntimes.Count;
+            return homeDeliveryCallCenterStation;
         }
 
 

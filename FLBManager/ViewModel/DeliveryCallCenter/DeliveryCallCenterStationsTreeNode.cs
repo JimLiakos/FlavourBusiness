@@ -1,44 +1,46 @@
-﻿using System;
+﻿using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel.Preparation;
+using MenuItemsEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using FlavourBusinessFacade.ServicesContextResources;
-using MenuItemsEditor.ViewModel;
+using System.Windows.Media;
+using System.Windows;
 using WPFUIElementObjectBind;
 
-namespace FLBManager.ViewModel.Preparation
+namespace FLBManager.ViewModel.Delivery
 {
-    /// <MetaDataID>{98bdc5c9-e359-40e1-93c6-5140f8c02cb1}</MetaDataID>
-    public class PreparationSationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
+    /// <MetaDataID>{81be8dd2-bc0b-41e1-9383-12d9fc580626}</MetaDataID>
+    public class DeliveryCallCenterStationsTreeNode : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget
     {
-        /// <MetaDataID>{a9d9e791-3309-46a6-bbe2-8ffa316df9b0}</MetaDataID>
+
+        /// <MetaDataID>{e89e824d-e9f6-47f8-8935-a5f8b8c0e046}</MetaDataID>
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
             throw new NotImplementedException();
         }
-        /// <MetaDataID>{693b6572-cadd-40b4-8ab7-888267b37b31}</MetaDataID>
-        public PreparationSationsTreeNode(Infrastructure.InfrastructureTreeNode parent) : base(parent)
+        /// <MetaDataID>{1f2747fe-2ded-46e9-80bb-95a4dc34372a}</MetaDataID>
+        public DeliveryCallCenterStationsTreeNode(Infrastructure.InfrastructureTreeNode parent) : base(parent)
         {
             ServiceContextInfrastructure = parent;
 
-            NewPreparationSationCommand = new RelayCommand((object sender) =>
+            NewTakeAwaySationCommand = new RelayCommand((object sender) =>
             {
-                NewPreparationSation();
+                NewTakeAwaySation();
             });
 
 
 
             try
             {
-                var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
+                //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
-                foreach (var preparationStation in ServiceContextInfrastructure.ServiceContextResources.PreparationStations)
-                    PreparationStations.Add(preparationStation, new PreparationStationPresentation(this, preparationStation, menuViewModel));
+                //foreach (var preparationStation in ServiceContextInfrastructure.ServiceContextResources.DeliveryCallCenterStations)
+                //    DeliveryCallCenterStations.Add(preparationStation, new DeliveryCallCenterStationPresentation(this, preparationStation));
 
             }
             catch (System.Exception error)
@@ -47,34 +49,33 @@ namespace FLBManager.ViewModel.Preparation
 
 
         }
-        /// <MetaDataID>{59ff9b8c-0cc4-4617-8c1c-4367e79017ce}</MetaDataID>
-        Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
+        /// <MetaDataID>{4247958b-c4a6-488a-8690-94ca7ecace15}</MetaDataID>
+        public readonly Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
-        /// <MetaDataID>{538d43ac-584e-4e19-b349-dc5a2b082cdb}</MetaDataID>
-        Dictionary<IPreparationStation, PreparationStationPresentation> PreparationStations = new Dictionary<IPreparationStation, PreparationStationPresentation>();
+        /// <MetaDataID>{1dae1a90-d421-40bf-b460-fd515121a71f}</MetaDataID>
+        Dictionary<IHomeDeliveryCallCenterStation, DeliveryCallCenterStationPresentation> DeliveryCallCenterStations = new Dictionary<IHomeDeliveryCallCenterStation, DeliveryCallCenterStationPresentation>();
 
         /// <MetaDataID>{9e7b6800-d297-4665-93f3-169c7e95ca65}</MetaDataID>
-        internal void RemovePreparationStation(PreparationStationPresentation preparationStationPresentation)
+        internal void RemoveDeliveryCallCenterStation(DeliveryCallCenterStationPresentation DeliveryCallCenterStationTreeNode)
         {
-            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemovePreparationStation(preparationStationPresentation.PreparationStation);
-            PreparationStations.Remove(preparationStationPresentation.PreparationStation);
+            this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveCallCenterStation(DeliveryCallCenterStationTreeNode.HomeDeliveryCallCenterStation);
+            DeliveryCallCenterStations.Remove(DeliveryCallCenterStationTreeNode.HomeDeliveryCallCenterStation);
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
         /// <MetaDataID>{bd1d6ad9-e654-4595-90ba-d9e6c11b60f0}</MetaDataID>
-        private void NewPreparationSation()
+        private void NewTakeAwaySation()
         {
-            var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
 
-            var preparationStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewPreparationStation();
-            var preparationStationPresentation = new PreparationStationPresentation(this, preparationStation, menuViewModel);
-            preparationStationPresentation.Edit = true;
-            PreparationStations.Add(preparationStation, preparationStationPresentation);
+            //var DeliveryCallCenterStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewCallCenterStation();
+            //var preparationStationPresentation = new DeliveryCallCenterStationPresentation(this, DeliveryCallCenterStation);
+            //preparationStationPresentation.Edit = true;
+            //DeliveryCallCenterStations.Add(DeliveryCallCenterStation, preparationStationPresentation);
 
 
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-            IsNodeExpanded = true;
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            //IsNodeExpanded = true;
+            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
 
         }
 
@@ -83,7 +84,7 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                return Properties.Resources.PreparationStationsTitle;
+                return Properties.Resources.DeliveryCallCenterStationsTitle;
             }
 
             set
@@ -96,7 +97,7 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/kitchen16.png"));
+                return new System.Windows.Media.Imaging.BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/call-centers16.png"));
             }
         }
         /// <MetaDataID>{3e506a85-51f2-4874-8bdf-0019863e1e67}</MetaDataID>
@@ -104,13 +105,13 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
-                var members = this.PreparationStations.Values.OfType<FBResourceTreeNode>().ToList();
+                var members = this.DeliveryCallCenterStations.Values.OfType<FBResourceTreeNode>().ToList();
 
                 return members;
             }
         }
         /// <MetaDataID>{45476233-5c6c-4fe9-ac7a-51598ed22856}</MetaDataID>
-        public RelayCommand NewPreparationSationCommand { get; protected set; }
+        public RelayCommand NewTakeAwaySationCommand { get; protected set; }
 
         /// <MetaDataID>{87bcd558-ccdc-4ba6-8577-b17d80936925}</MetaDataID>
         public override bool HasContextMenu
@@ -137,10 +138,10 @@ namespace FLBManager.ViewModel.Preparation
 
 
                     MenuCommand menuItem = new MenuCommand(); ;
-                    var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/chef16.png"));
-                    menuItem.Header = Properties.Resources.NewPreparationStationPrompt;
+                    var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/pos-terminal16.png"));
+                    menuItem.Header = Properties.Resources.NewDeliveryCallCenterStationPrompt;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                    menuItem.Command = NewPreparationSationCommand;
+                    menuItem.Command = NewTakeAwaySationCommand;
                     _ContextMenuItems.Add(menuItem);
 
                 }
@@ -221,6 +222,7 @@ namespace FLBManager.ViewModel.Preparation
         public void Drop(object sender, DragEventArgs e)
         {
         }
+
 
     }
 }

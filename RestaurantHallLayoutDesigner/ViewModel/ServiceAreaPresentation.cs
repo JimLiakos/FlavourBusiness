@@ -535,8 +535,10 @@ namespace FloorLayoutDesigner.ViewModel
     /// <MetaDataID>{572fa887-0e6d-440c-88c3-82122fd188bf}</MetaDataID>
     public interface IServiceAreaTreeNodeOwner
     {
+        /// <MetaDataID>{80b6ff61-8819-4a73-bc49-a3887a134c81}</MetaDataID>
         IFlavoursServicesContext ServicesContext { get; }
 
+        /// <MetaDataID>{a9fa9c29-6842-49ca-926e-c98004d7a206}</MetaDataID>
         void RemoveServiceArea(ServiceAreaPresentation serviceAreaPresentation);
     }
 

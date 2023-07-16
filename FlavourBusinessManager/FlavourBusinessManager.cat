@@ -13297,7 +13297,7 @@
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
 		    persistence 	"Persistent")
-		(object Class "HomeDeliveryCallcenterStation"
+		(object Class "HomeDeliveryCallCenterStation"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -13314,7 +13314,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"5")
+			    value      	"7")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -13343,7 +13343,7 @@
 			    quid       	"64B179E0035B"
 			    parameters 	(list Parameters
 				(object Parameter "homeDeliveryServicePoint"
-				    quid       	"64B179E00369"
+				    quid       	"64B275C90095"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -13362,7 +13362,7 @@
 			    quid       	"64B179E00377"
 			    parameters 	(list Parameters
 				(object Parameter "homeDeliveryServicePoint"
-				    quid       	"64B179E00380"
+				    quid       	"64B275C900DA"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -13495,6 +13495,39 @@
 				    name       	"Identity"
 				    value      	"+4"))
 			    quid       	"64B179E003C7"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "GraphicMenuStorageIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4e8369d3-e6a4-45ac-8a03-e79a3c051eff}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B275C902D3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
+			    quid       	"64B275C902D3"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
@@ -18874,7 +18907,7 @@
 			    line_style 	3
 			    origin_attachment 	(2746, 1300)
 			    terminal_attachment 	(2746, 1043))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::HomeDeliveryCallcenterStation" @264
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::HomeDeliveryCallCenterStation" @264
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1078, 1403)
 			    font       	(object Font
@@ -18894,7 +18927,7 @@
 				nlines     	1
 				max_width  	619
 				justify    	0
-				label      	"HomeDeliveryCallcenterStation")
+				label      	"HomeDeliveryCallCenterStation")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	33023

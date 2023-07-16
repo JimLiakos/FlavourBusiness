@@ -1165,7 +1165,7 @@
 			width      	542
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @12
-			location   	(1317, 668)
+			location   	(1314, 668)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1178,7 +1178,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@12
-			    location   	(1052, 584)
+			    location   	(1049, 584)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530

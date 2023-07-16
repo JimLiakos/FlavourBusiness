@@ -783,6 +783,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{5d3ee750-210e-492a-85bf-d520ca29377e}</MetaDataID>
         public void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation)
         {
+          
             GetRunTime().RemoveCallCenterStation(homeDeliveryCallcenterStation);
         }
 
@@ -817,8 +818,7 @@ namespace FlavourBusinessManager
         public List<IPaymentTerminal> PaymentTerminals => GetRunTime().PaymentTerminals;
 
         /// <MetaDataID>{cdffcca5-5e85-41bb-b599-d91ca392c5f9}</MetaDataID>
-        public List<IHomeDeliveryCallCenterStation> CallCenterStation => GetRunTime().CallCenterStations;
+        public List<IHomeDeliveryCallCenterStation> CallCenterStations => GetRunTime().CallCenterStations;
 
-        
     }
 }

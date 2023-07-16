@@ -1,5 +1,5 @@
 using FlavourBusinessFacade.ServicesContextResources;
-
+using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -12,6 +12,14 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class HomeDeliveryCallCenterStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IHomeDeliveryCallCenterStation
     {
+
+        public HomeDeliveryCallCenterStation(ServicesContextRunTime servicesContextRunTime)
+
+        {
+            _CallcenterStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
+            ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
+        }
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint> _HomeDeliveryServicePoints = new OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint>();
@@ -90,13 +98,34 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _GraphicMenuStorageIdentity;
+
+        /// <MetaDataID>{4e8369d3-e6a4-45ac-8a03-e79a3c051eff}</MetaDataID>
+        [PersistentMember(nameof(_GraphicMenuStorageIdentity))]
+        [BackwardCompatibilityID("+6")]
+        public string GraphicMenuStorageIdentity
+        {
+            get => _GraphicMenuStorageIdentity; set
+            {
+                if (_GraphicMenuStorageIdentity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _GraphicMenuStorageIdentity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{ff543df5-ff7a-4610-99df-47046b84bce3}</MetaDataID>
         public void AddHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _HomeDeliveryServicePoints.Add(homeDeliveryServicePoint); 
+                _HomeDeliveryServicePoints.Add(homeDeliveryServicePoint);
                 stateTransition.Consistent = true;
             }
 
@@ -108,7 +137,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _HomeDeliveryServicePoints.Remove(homeDeliveryServicePoint); 
+                _HomeDeliveryServicePoints.Remove(homeDeliveryServicePoint);
                 stateTransition.Consistent = true;
             }
 

@@ -157,6 +157,10 @@
     <value>Main Room</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>
   </data>
+  <data name="DeliveryCallCenterStationsTitle" xml:space="preserve">
+    <value>Home Deliver Call Center</value>
+    <comment>Tree view node Name for home delivery call center</comment>
+  </data>
   <data name="DeliveryServicePointDescription" xml:space="preserve">
     <value>Delivery</value>
     <comment>Defines the description for Service point type Delivery</comment>
@@ -236,6 +240,9 @@
   </data>
   <data name="NewCashierStationPrompt" xml:space="preserve">
     <value>New cashier desk</value>
+  </data>
+  <data name="NewDeliveryCallCenterStationPrompt" xml:space="preserve">
+    <value>New Call Center Station</value>
   </data>
   <data name="NewGraphicMenuDesignerMenuItemHeader" xml:space="preserve">
     <value>Add Menu Maker</value>

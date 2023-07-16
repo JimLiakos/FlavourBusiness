@@ -15,6 +15,7 @@ namespace FLBManager.ViewModel.Infrastructure
     /// <MetaDataID>{ad3b8d96-a759-4d5b-b969-cae505b4949f}</MetaDataID>
     public class TreasuryTreeNode : FBResourceTreeNode, INotifyPropertyChanged
     {
+        /// <MetaDataID>{1bdd8662-778b-44c2-93d9-8ca5120415d6}</MetaDataID>
         public TreasuryTreeNode(InfrastructureTreeNode parent) : base(parent)
         {
             ServiceContextInfrastructure = parent;
@@ -45,12 +46,14 @@ namespace FLBManager.ViewModel.Infrastructure
         }
 
 
+        /// <MetaDataID>{51198457-43f8-41d2-85d5-6965050d000e}</MetaDataID>
         internal void RemoveCashierStation(CashierStationPresentation cashierStationPresentation)
         {
             this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.RemoveCashierStation(cashierStationPresentation.CashierStation);
             CashierStations.Remove(cashierStationPresentation.CashierStation);
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
+        /// <MetaDataID>{a6a82b8b-ca03-434b-aa75-7d0a40cf5912}</MetaDataID>
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
             if (treeNode is CashierStationPresentation)
@@ -59,21 +62,26 @@ namespace FLBManager.ViewModel.Infrastructure
 
         }
 
+        /// <MetaDataID>{c854e482-273d-4b0f-b2d6-5800320c7ebb}</MetaDataID>
         private void NewCashierStation()
         {
-            
-            var cashierStation= ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewCashierStation();
+
+            var cashierStation = ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext.NewCashierStation();
             CashierStations.Add(cashierStation, new CashierStationPresentation(this, cashierStation, this.ServiceContextInfrastructure.ServicesContextPresentation.ServicesContext));
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
+        /// <MetaDataID>{037e3606-37e6-483b-92e5-3d74ad3c0b9e}</MetaDataID>
         public RelayCommand NewCashierCommand { get; protected set; }
 
+        /// <MetaDataID>{9c8d2733-b5f7-4ff7-9042-5f9b5c5250ae}</MetaDataID>
         public readonly InfrastructureTreeNode ServiceContextInfrastructure;
 
 
+        /// <MetaDataID>{0e92ad0c-1a54-4aae-a36d-42aaa4e1a3ef}</MetaDataID>
         List<MenuCommand> _ContextMenuItems;
+        /// <MetaDataID>{9917dcaa-d198-4c5b-9af7-8f7ae66ac5b0}</MetaDataID>
         public override List<MenuCommand> ContextMenuItems
         {
             get
@@ -130,19 +138,22 @@ namespace FLBManager.ViewModel.Infrastructure
         }
 
 
+        /// <MetaDataID>{b1fc78fa-0b6b-4d39-8936-002779043da5}</MetaDataID>
         Dictionary<ICashierStation, CashierStationPresentation> CashierStations = new Dictionary<ICashierStation, CashierStationPresentation>();
 
 
+        /// <MetaDataID>{6d3e6876-5750-4a40-9e5f-cd57b44f4d9b}</MetaDataID>
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                var members =this.CashierStations.Values.OfType<FBResourceTreeNode>().ToList();
+                var members = this.CashierStations.Values.OfType<FBResourceTreeNode>().ToList();
 
                 return members;
             }
         }
 
+        /// <MetaDataID>{d995a4ee-b483-4b93-b00a-fd2157d54247}</MetaDataID>
         public override string Name
         {
             get
@@ -155,6 +166,7 @@ namespace FLBManager.ViewModel.Infrastructure
             }
         }
 
+        /// <MetaDataID>{68da3c22-7ca0-4fe0-8ab3-2cf8fb4c2e80}</MetaDataID>
         public override List<MenuCommand> SelectedItemContextMenuItems
         {
             get
@@ -173,6 +185,7 @@ namespace FLBManager.ViewModel.Infrastructure
             }
         }
 
+        /// <MetaDataID>{58535afa-e9d7-456d-b057-af1fbb628df4}</MetaDataID>
         public override ImageSource TreeImage
         {
             get
@@ -183,9 +196,11 @@ namespace FLBManager.ViewModel.Infrastructure
 
 
 
+        /// <MetaDataID>{1ceb2c01-a519-4095-8814-6a75178c70ff}</MetaDataID>
         public override void SelectionChange()
         {
         }
+        /// <MetaDataID>{9b2617be-56c8-44c2-91f0-6c053678089c}</MetaDataID>
         public override bool HasContextMenu
         {
             get

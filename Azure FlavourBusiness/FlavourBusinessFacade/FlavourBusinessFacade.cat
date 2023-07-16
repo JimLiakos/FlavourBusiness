@@ -8379,7 +8379,11 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{39b7faeb-7f7c-4152-b423-858e6d611999}"))
+			    value      	"{39b7faeb-7f7c-4152-b423-858e6d611999}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"6"))
 		    quid       	"64B13ACB033C"
 		    stereotype 	"Interface"
 		    operations 	(list Operations
@@ -8443,7 +8447,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
 			    quid       	"64B13B14028E"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -8468,7 +8480,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+3"))
 			    quid       	"64B13B1402DD"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -8493,8 +8513,49 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
 			    quid       	"64B13B140324"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "GraphicMenuStorageIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0a59d844-6b8e-4e2f-99c9-54f71ccea47d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B25EA800A7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+5"))
+			    quid       	"64B25EA800A7"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
@@ -9640,114 +9701,7 @@
 			    width      	669
 			    height     	281
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDLine" @10
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    location   	(3016, 1203)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@10
-				location   	(2775, 1166)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	482
-				justify    	0
-				label      	"ICallerIDLine")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"5C3D722E01C3"
-			    compartment 	(object Compartment
-				Parent_View 	@10
-				location   	(2775, 1227)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	475)
-			    width      	500
-			    height     	275
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @11
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3031, 1633)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@11
-				location   	(2724, 1571)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	614
-				justify    	0
-				label      	"IFisicalParty")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"61A723C7032B"
-			    width      	632
-			    height     	325
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHallServicePoint" @12
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(2678, 684)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@12
-				location   	(2431, 672)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	495
-				justify    	0
-				label      	"IHallServicePoint")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"62D5B4860206"
-			    width      	513
-			    height     	225
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @13
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::RoomService::IFoodServiceSession" @10
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -9763,7 +9717,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@13
+				Parent_View 	@10
 				location   	(4014, 234)
 				fill_color 	13434879
 				nlines     	1
@@ -9776,7 +9730,7 @@
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
 			    compartment 	(object Compartment
-				Parent_View 	@13
+				Parent_View 	@10
 				location   	(4014, 339)
 				font       	(object Font
 				    size       	10
@@ -9796,7 +9750,7 @@
 			    width      	569
 			    height     	300
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint" @14
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServicePoint" @11
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -9812,7 +9766,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@14
+				Parent_View 	@11
 				location   	(2497, 106)
 				fill_color 	13434879
 				nlines     	1
@@ -9825,7 +9779,7 @@
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
 			    compartment 	(object Compartment
-				Parent_View 	@14
+				Parent_View 	@11
 				location   	(2497, 167)
 				font       	(object Font
 				    size       	10
@@ -9845,14 +9799,7 @@
 			    width      	706
 			    height     	394
 			    annotation 	8)
-			(object InheritView "" @15
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"62D5B51E0049"
-			    client     	@12
-			    supplier   	@14
-			    line_style 	0)
-			(object AssociationViewNew "ServicePointSesions" @16
+			(object AssociationViewNew "ServicePointSesions" @12
 			    location   	(3599, 216)
 			    font       	(object Font
 				size       	10
@@ -9864,8 +9811,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @17
-				Parent_View 	@16
+			    label      	(object SegLabel @13
+				Parent_View 	@12
 				location   	(3629, 43)
 				font       	(object Font
 				    size       	10
@@ -9890,8 +9837,8 @@
 			    line_color 	3342489
 			    quidu      	"5BF914960134"
 			    roleview_list 	(list RoleViews
-				(object RoleView "ServiceSessions" @18
-				    Parent_View 	@16
+				(object RoleView "ServiceSessions" @14
+				    Parent_View 	@12
 				    location   	(604, -434)
 				    font       	(object Font
 					size       	10
@@ -9903,8 +9850,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @19
-					Parent_View 	@18
+				    label      	(object SegLabel @15
+					Parent_View 	@14
 					location   	(3793, 151)
 					font       	(object Font
 					    size       	10
@@ -9928,13 +9875,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5BF914980078"
-				    client     	@16
-				    supplier   	@13
+				    client     	@12
+				    supplier   	@10
 				    line_style 	3
 				    origin_attachment 	(3599, 216)
 				    terminal_attachment 	(4005, 216)
-				    label      	(object SegLabel @20
-					Parent_View 	@18
+				    label      	(object SegLabel @16
+					Parent_View 	@14
 					location   	(3963, 270)
 					font       	(object Font
 					    size       	10
@@ -9955,8 +9902,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "ServicePoint" @21
-				    Parent_View 	@16
+				(object RoleView "ServicePoint" @17
+				    Parent_View 	@12
 				    location   	(604, -434)
 				    font       	(object Font
 					size       	10
@@ -9968,8 +9915,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @22
-					Parent_View 	@21
+				    label      	(object SegLabel @18
+					Parent_View 	@17
 					location   	(3395, 176)
 					font       	(object Font
 					    size       	10
@@ -9993,13 +9940,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5BF914980082"
-				    client     	@16
-				    supplier   	@14
+				    client     	@12
+				    supplier   	@11
 				    line_style 	3
 				    origin_attachment 	(3599, 216)
 				    terminal_attachment 	(3194, 216)
-				    label      	(object SegLabel @23
-					Parent_View 	@21
+				    label      	(object SegLabel @19
+					Parent_View 	@17
 					location   	(3235, 270)
 					font       	(object Font
 					    size       	10
@@ -10020,7 +9967,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryServicePoint" @24
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryServicePoint" @20
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(3356, 675)
 			    font       	(object Font
@@ -10034,7 +9981,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@24
+				Parent_View 	@20
 				location   	(3056, 672)
 				fill_color 	13434879
 				nlines     	1
@@ -10049,16 +9996,18 @@
 			    width      	619
 			    height     	206
 			    annotation 	8)
-			(object InheritView "" @25
+			(object InheritView "" @21
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"62D63A03011E"
-			    client     	@24
-			    supplier   	@14
+			    client     	@20
+			    supplier   	@11
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryServicePoint" @26
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDLine" @22
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3493, 2281)
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    location   	(3016, 1203)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -10070,22 +10019,105 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@26
-				location   	(3193, 2278)
+				Parent_View 	@22
+				location   	(2775, 1166)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	601
+				max_width  	482
 				justify    	0
-				label      	"IHomeDeliveryServicePoint")
+				label      	"ICallerIDLine")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
-			    fill_color 	33023
-			    quidu      	"62D639AF0057"
-			    width      	619
-			    height     	206
+			    fill_color 	4227327
+			    quidu      	"5C3D722E01C3"
+			    compartment 	(object Compartment
+				Parent_View 	@22
+				location   	(2775, 1227)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	475)
+			    width      	500
+			    height     	275
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDServer" @27
+			(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @23
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3031, 1633)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@23
+				location   	(2724, 1571)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	614
+				justify    	0
+				label      	"IFisicalParty")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"61A723C7032B"
+			    width      	632
+			    height     	325
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHallServicePoint" @24
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(2678, 684)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@24
+				location   	(2431, 672)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	495
+				justify    	0
+				label      	"IHallServicePoint")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"62D5B4860206"
+			    width      	513
+			    height     	225
+			    annotation 	8)
+			(object InheritView "" @25
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"62D5B51E0049"
+			    client     	@24
+			    supplier   	@11
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICallerIDServer" @26
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -10101,7 +10133,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@27
+				Parent_View 	@26
 				location   	(1605, 1194)
 				fill_color 	13434879
 				nlines     	1
@@ -10114,7 +10146,7 @@
 			    fill_color 	4227327
 			    quidu      	"5C3D71BB026B"
 			    compartment 	(object Compartment
-				Parent_View 	@27
+				Parent_View 	@26
 				location   	(1605, 1255)
 				font       	(object Font
 				    size       	10
@@ -10134,7 +10166,7 @@
 			    width      	588
 			    height     	281
 			    annotation 	8)
-			(object AssociationViewNew "CallerIDLines" @28
+			(object AssociationViewNew "CallerIDLines" @27
 			    location   	(2474, 1217)
 			    font       	(object Font
 				size       	10
@@ -10146,8 +10178,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @29
-				Parent_View 	@28
+			    label      	(object SegLabel @28
+				Parent_View 	@27
 				location   	(2472, 1143)
 				font       	(object Font
 				    size       	10
@@ -10172,8 +10204,8 @@
 			    line_color 	3342489
 			    quidu      	"5C3D724C0035"
 			    roleview_list 	(list RoleViews
-				(object RoleView "Lines" @30
-				    Parent_View 	@28
+				(object RoleView "Lines" @29
+				    Parent_View 	@27
 				    location   	(906, -160)
 				    font       	(object Font
 					size       	10
@@ -10185,8 +10217,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @31
-					Parent_View 	@30
+				    label      	(object SegLabel @30
+					Parent_View 	@29
 					location   	(2689, 1174)
 					font       	(object Font
 					    size       	10
@@ -10210,11 +10242,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5C3D724D0005"
-				    client     	@28
-				    supplier   	@10
+				    client     	@27
+				    supplier   	@22
 				    line_style 	0
-				    label      	(object SegLabel @32
-					Parent_View 	@30
+				    label      	(object SegLabel @31
+					Parent_View 	@29
 					location   	(2737, 1264)
 					font       	(object Font
 					    size       	10
@@ -10235,8 +10267,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$9" @33
-				    Parent_View 	@28
+				(object RoleView "$UNNAMED$9" @32
+				    Parent_View 	@27
 				    location   	(906, -160)
 				    font       	(object Font
 					size       	10
@@ -10251,11 +10283,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"5C3D724D0008"
-				    client     	@28
-				    supplier   	@27
+				    client     	@27
+				    supplier   	@26
 				    line_style 	0
-				    label      	(object SegLabel @34
-					Parent_View 	@33
+				    label      	(object SegLabel @33
+					Parent_View 	@32
 					location   	(2215, 1278)
 					font       	(object Font
 					    size       	10
@@ -10276,7 +10308,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStation" @35
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStation" @34
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -10292,7 +10324,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@35
+				Parent_View 	@34
 				location   	(1381, 853)
 				fill_color 	13434879
 				nlines     	1
@@ -10305,7 +10337,7 @@
 			    fill_color 	4227327
 			    quidu      	"5D56D11C002D"
 			    compartment 	(object Compartment
-				Parent_View 	@35
+				Parent_View 	@34
 				location   	(1381, 914)
 				font       	(object Font
 				    size       	10
@@ -10325,7 +10357,7 @@
 			    width      	675
 			    height     	325
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashierStation" @36
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ICashierStation" @35
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -10341,7 +10373,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@36
+				Parent_View 	@35
 				location   	(1684, 1545)
 				fill_color 	13434879
 				nlines     	1
@@ -10354,7 +10386,7 @@
 			    fill_color 	4227327
 			    quidu      	"5C66ABEF02DB"
 			    compartment 	(object Compartment
-				Parent_View 	@36
+				Parent_View 	@35
 				location   	(1684, 1606)
 				font       	(object Font
 				    size       	10
@@ -10374,7 +10406,7 @@
 			    width      	656
 			    height     	343
 			    annotation 	8)
-			(object AssociationViewNew "CashierOwner" @37
+			(object AssociationViewNew "CashierOwner" @36
 			    location   	(2523, 1600)
 			    font       	(object Font
 				size       	10
@@ -10386,8 +10418,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @38
-				Parent_View 	@37
+			    label      	(object SegLabel @37
+				Parent_View 	@36
 				location   	(2511, 1489)
 				font       	(object Font
 				    size       	10
@@ -10412,8 +10444,8 @@
 			    line_color 	3342489
 			    quidu      	"61A7327D0091"
 			    roleview_list 	(list RoleViews
-				(object RoleView "Issuer" @39
-				    Parent_View 	@37
+				(object RoleView "Issuer" @38
+				    Parent_View 	@36
 				    location   	(698, -681)
 				    font       	(object Font
 					size       	10
@@ -10425,8 +10457,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @40
-					Parent_View 	@39
+				    label      	(object SegLabel @39
+					Parent_View 	@38
 					location   	(2676, 1559)
 					font       	(object Font
 					    size       	10
@@ -10450,13 +10482,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7327E00C7"
-				    client     	@37
-				    supplier   	@11
+				    client     	@36
+				    supplier   	@23
 				    line_style 	3
 				    origin_attachment 	(2523, 1600)
 				    terminal_attachment 	(2715, 1600)
-				    label      	(object SegLabel @41
-					Parent_View 	@39
+				    label      	(object SegLabel @40
+					Parent_View 	@38
 					location   	(2696, 1654)
 					font       	(object Font
 					    size       	10
@@ -10477,18 +10509,18 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$14" @42
-				    Parent_View 	@37
+				(object RoleView "$UNNAMED$14" @41
+				    Parent_View 	@36
 				    location   	(698, -681)
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"61A7327E00D2"
-				    client     	@37
-				    supplier   	@36
+				    client     	@36
+				    supplier   	@35
 				    line_style 	3
 				    origin_attachment 	(2523, 1600)
 				    terminal_attachment 	(2331, 1600))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ISettings" @43
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ISettings" @42
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(463, 563)
 			    font       	(object Font
@@ -10502,7 +10534,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@43
+				Parent_View 	@42
 				location   	(122, 529)
 				fill_color 	13434879
 				nlines     	1
@@ -10517,7 +10549,7 @@
 			    width      	700
 			    height     	269
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServiceArea" @44
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IServiceArea" @43
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -10533,7 +10565,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@44
+				Parent_View 	@43
 				location   	(1249, 509)
 				fill_color 	13434879
 				nlines     	1
@@ -10546,7 +10578,7 @@
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
 			    compartment 	(object Compartment
-				Parent_View 	@44
+				Parent_View 	@43
 				location   	(1249, 570)
 				font       	(object Font
 				    size       	10
@@ -10566,14 +10598,14 @@
 			    width      	594
 			    height     	319
 			    annotation 	8)
-			(object UsesView "" @45
+			(object UsesView "" @44
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5DF3216503A7"
-			    client     	@44
+			    client     	@43
 			    supplier   	@6
 			    line_style 	0)
-			(object AssociationViewNew "AreaServicePoints" @46
+			(object AssociationViewNew "AreaServicePoints" @45
 			    location   	(2128, 653)
 			    font       	(object Font
 				size       	10
@@ -10585,8 +10617,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @47
-				Parent_View 	@46
+			    label      	(object SegLabel @46
+				Parent_View 	@45
 				location   	(2131, 532)
 				font       	(object Font
 				    size       	10
@@ -10611,8 +10643,8 @@
 			    line_color 	3342489
 			    quidu      	"62D5B52203E3"
 			    roleview_list 	(list RoleViews
-				(object RoleView "ServicePoints" @48
-				    Parent_View 	@46
+				(object RoleView "ServicePoints" @47
+				    Parent_View 	@45
 				    location   	(1768, 101)
 				    font       	(object Font
 					size       	10
@@ -10624,8 +10656,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @49
-					Parent_View 	@48
+				    label      	(object SegLabel @48
+					Parent_View 	@47
 					location   	(2305, 607)
 					font       	(object Font
 					    size       	10
@@ -10649,13 +10681,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"62D5B52203E4"
-				    client     	@46
-				    supplier   	@12
+				    client     	@45
+				    supplier   	@24
 				    line_style 	3
 				    origin_attachment 	(2128, 653)
 				    terminal_attachment 	(2422, 653)
-				    label      	(object SegLabel @50
-					Parent_View 	@48
+				    label      	(object SegLabel @49
+					Parent_View 	@47
 					location   	(2393, 707)
 					font       	(object Font
 					    size       	10
@@ -10676,8 +10708,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "ServiceArea" @51
-				    Parent_View 	@46
+				(object RoleView "ServiceArea" @50
+				    Parent_View 	@45
 				    location   	(1768, 101)
 				    font       	(object Font
 					size       	10
@@ -10689,8 +10721,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @52
-					Parent_View 	@51
+				    label      	(object SegLabel @51
+					Parent_View 	@50
 					location   	(1968, 607)
 					font       	(object Font
 					    size       	10
@@ -10714,8 +10746,8 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"62D5B52203E5"
-				    client     	@46
-				    supplier   	@44
+				    client     	@45
+				    supplier   	@43
 				    vertices   	(list Points
 					(2128, 653)
 					(2128, 612)
@@ -10723,8 +10755,8 @@
 				    line_style 	3
 				    origin_attachment 	(2128, 653)
 				    terminal_attachment 	(1834, 612)
-				    label      	(object SegLabel @53
-					Parent_View 	@51
+				    label      	(object SegLabel @52
+					Parent_View 	@50
 					location   	(1863, 707)
 					font       	(object Font
 					    size       	10
@@ -10745,7 +10777,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ITakeAwayStation" @54
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::ITakeAwayStation" @53
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2062, 1944)
 			    font       	(object Font
@@ -10759,7 +10791,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@54
+				Parent_View 	@53
 				location   	(1850, 1922)
 				fill_color 	13434879
 				nlines     	1
@@ -10774,7 +10806,7 @@
 			    width      	443
 			    height     	244
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPaymentTerminal" @55
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPaymentTerminal" @54
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1241, 2368)
 			    font       	(object Font
@@ -10788,7 +10820,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@55
+				Parent_View 	@54
 				location   	(1000, 2334)
 				fill_color 	13434879
 				nlines     	1
@@ -10802,6 +10834,35 @@
 			    quidu      	"64AAD4130385"
 			    width      	500
 			    height     	269
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryServicePoint" @55
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3493, 2281)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@55
+				location   	(3193, 2278)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	601
+				justify    	0
+				label      	"IHomeDeliveryServicePoint")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	33023
+			    quidu      	"62D639AF0057"
+			    width      	619
+			    height     	206
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContext" @56
 			    ShowCompartmentStereotypes 	TRUE
@@ -10936,7 +10997,7 @@
 				    line_color 	3342489
 				    quidu      	"5C3D7CD400E3"
 				    client     	@58
-				    supplier   	@27
+				    supplier   	@26
 				    line_style 	0
 				    label      	(object SegLabel @62
 					Parent_View 	@60
@@ -11046,7 +11107,7 @@
 				    line_color 	3342489
 				    quidu      	"5D56D274020F"
 				    client     	@64
-				    supplier   	@35
+				    supplier   	@34
 				    line_style 	0
 				    label      	(object SegLabel @68
 					Parent_View 	@66
@@ -11156,7 +11217,7 @@
 				    line_color 	3342489
 				    quidu      	"5C66B5EE021E"
 				    client     	@70
-				    supplier   	@36
+				    supplier   	@35
 				    line_style 	0
 				    label      	(object SegLabel @74
 					Parent_View 	@72
@@ -11266,7 +11327,7 @@
 				    line_color 	3342489
 				    quidu      	"620214DE0377"
 				    client     	@76
-				    supplier   	@43
+				    supplier   	@42
 				    line_style 	0
 				    label      	(object SegLabel @80
 					Parent_View 	@78
@@ -11376,7 +11437,7 @@
 				    line_color 	3342489
 				    quidu      	"5B8FF5390260"
 				    client     	@82
-				    supplier   	@44
+				    supplier   	@43
 				    line_style 	0
 				    label      	(object SegLabel @86
 					Parent_View 	@84
@@ -11518,7 +11579,7 @@
 				    line_color 	3342489
 				    quidu      	"6440F0BB0228"
 				    client     	@89
-				    supplier   	@54
+				    supplier   	@53
 				    line_style 	0
 				    label      	(object SegLabel @93
 					Parent_View 	@91
@@ -11628,7 +11689,7 @@
 				    line_color 	3342489
 				    quidu      	"64AB84F70093"
 				    client     	@95
-				    supplier   	@55
+				    supplier   	@54
 				    line_style 	0
 				    label      	(object SegLabel @99
 					Parent_View 	@97
@@ -11863,7 +11924,7 @@
 				    line_color 	3342489
 				    quidu      	"64B13B140362"
 				    client     	@103
-				    supplier   	@26
+				    supplier   	@55
 				    line_style 	0
 				    label      	(object SegLabel @110
 					Parent_View 	@108
@@ -15017,7 +15078,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(          )"
+					(object Message "GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15039,7 +15100,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15061,7 +15122,7 @@
 				    supplier   	"$UNNAMED$30"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15092,7 +15153,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -17749,7 +17810,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(          )"
+				label      	"GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -17836,7 +17897,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -17923,7 +17984,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -18218,7 +18279,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
