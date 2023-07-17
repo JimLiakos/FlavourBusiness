@@ -1700,7 +1700,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals };
+                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals, DeliveryCallCenterStations=this.CallCenterStations };
             }
         }
 
@@ -2832,9 +2832,24 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        public IHomeDeliveryCallcenterStation NewCallCenterStation()
+        public IHomeDeliveryCallCenterStation NewCallCenterStation()
         {
-            throw new NotImplementedException();
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+            HomeDeliveryCallCenterStation homeDeliveryCallCenterStation = new HomeDeliveryCallCenterStation(this);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                homeDeliveryCallCenterStation.Description = Properties.Resources.DefaultHomeDeliveryCallCenterStationDescription;
+                homeDeliveryCallCenterStation.ServicesContextIdentity = this.ServicesContextIdentity;
+                objectStorage.CommitTransientObjectState(homeDeliveryCallCenterStation);
+                stateTransition.Consistent = true;
+            }
+            var count = CallCenterStationsDictionary.Count;
+            lock (DeliveryCallcenterStationsLock)
+            {
+                _CallCenterStationsDictionary[homeDeliveryCallCenterStation.CallcenterStationIdentity] =  homeDeliveryCallCenterStation;
+            }
+            //var count = PreparationStationRuntimes.Count;
+            return homeDeliveryCallCenterStation;
         }
 
 
@@ -2842,10 +2857,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
         object DeliveryCallcenterStationsLock = new object();
 
         /// <exclude>Excluded</exclude>
-        Dictionary<string, IHomeDeliveryCallcenterStation> _CallCenterStationsDictionary;
+        Dictionary<string, IHomeDeliveryCallCenterStation> _CallCenterStationsDictionary;
 
         /// <MetaDataID>{717900a3-bd70-4e5c-814f-228ffd01fb35}</MetaDataID>
-        public Dictionary<string, IHomeDeliveryCallcenterStation> CallCenterStationsDictionary
+        public Dictionary<string, IHomeDeliveryCallCenterStation> CallCenterStationsDictionary
         {
             get
             {
@@ -2853,12 +2868,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 {
                     if (_CallCenterStationsDictionary == null)
                     {
-                        _CallCenterStationsDictionary = new Dictionary<string, IHomeDeliveryCallcenterStation>();
+                        _CallCenterStationsDictionary = new Dictionary<string, IHomeDeliveryCallCenterStation>();
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                         var servicesContextIdentity = ServicesContextIdentity;
-                        foreach (var takeAwayStation in (from aTakeAwayStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallcenterStation>()
+                        foreach (var takeAwayStation in (from aTakeAwayStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallCenterStation>()
                                                          where aTakeAwayStation.ServicesContextIdentity == servicesContextIdentity
                                                          select aTakeAwayStation))
                         {
@@ -2867,13 +2882,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         }
                     }
-                    return new Dictionary<string, IHomeDeliveryCallcenterStation>(_CallCenterStationsDictionary);
+                    return new Dictionary<string, IHomeDeliveryCallCenterStation>(_CallCenterStationsDictionary);
                 }
             }
         }
 
 
-        public void RemoveCallCenterStation(IHomeDeliveryCallcenterStation homeDeliveryCallcenterStation)
+        public void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation)
         {
             try
             {
@@ -2893,7 +2908,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        public List<IHomeDeliveryCallcenterStation> CallCenterStations
+        public List<IHomeDeliveryCallCenterStation> CallCenterStations
         {
 
             get
@@ -2903,7 +2918,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
                 var servicesContextIdentity = ServicesContextIdentity;
-                return (from homeDeliveryCallcenterStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallcenterStation>()
+                return (from homeDeliveryCallcenterStation in servicesContextStorage.GetObjectCollection<IHomeDeliveryCallCenterStation>()
                         where homeDeliveryCallcenterStation.ServicesContextIdentity == servicesContextIdentity
                         select homeDeliveryCallcenterStation).ToList();
 

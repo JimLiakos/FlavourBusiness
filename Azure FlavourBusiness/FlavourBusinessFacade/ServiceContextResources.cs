@@ -14,6 +14,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         public IList<IPreparationStation> PreparationStations { get; set; }
 
 
+        /// <MetaDataID>{89beb1b4-cee5-42f6-ad62-7ad83bc0c720}</MetaDataID>
         public IList<ITakeAwayStation> TakeAwayStations { get; set; }
         /// <MetaDataID>{f209db6e-02f8-4929-8524-b9cafe311f10}</MetaDataID>
         public ICallerIDServer CallerIDServer { get; set; }
@@ -22,6 +23,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         public IList<IServiceArea> ServiceAreas { get; set; }
         /// <MetaDataID>{4691fb51-6ffd-45a2-acc8-d51e847a6130}</MetaDataID>
         public IHomeDeliveryServicePoint DeliveryServicePoint { get; set; }
+        /// <MetaDataID>{e49c336c-fa52-4519-b2c1-31591e4daca6}</MetaDataID>
         public List<IPaymentTerminal> PaymentTerminals { get; set; }
+        /// <MetaDataID>{669df26e-21af-4835-8cf7-11b2dee2f70e}</MetaDataID>
+        public List<IHomeDeliveryCallCenterStation> DeliveryCallCenterStations { get; set; }
     }
 }

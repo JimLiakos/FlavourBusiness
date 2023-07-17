@@ -17,6 +17,7 @@ namespace Finance.Views
     /// <summary>
     /// Interaction logic for TaxAuthorityWindowWindow.xaml
     /// </summary>
+    /// <MetaDataID>{fbec59cc-15e0-4edc-9ed3-4f0bd5a166bb}</MetaDataID>
     public partial class TaxAuthorityWindow : StyleableWindow.Window
     {
         public TaxAuthorityWindow()

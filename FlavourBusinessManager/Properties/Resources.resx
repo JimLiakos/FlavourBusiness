@@ -129,6 +129,10 @@
     <value>Menu</value>
     <comment>Specifies the name of the 'GraphicMenu when it is created.</comment>
   </data>
+  <data name="DefaultHomeDeliveryCallCenterStationDescription" xml:space="preserve">
+    <value>Call Center</value>
+    <comment>Specifies the description of the home delivery call centerStationDescription station' when it is created.</comment>
+  </data>
   <data name="DefaultPaymentTerminalDescription" xml:space="preserve">
     <value>POS</value>
     <comment>Specifies the description of the 'payment terminal' when it is created.</comment>

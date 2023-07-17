@@ -6184,24 +6184,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(2318, 523)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	67
-				max_width  	0)
 			    width      	807
 			    height     	538
 			    annotation 	8)
@@ -6233,24 +6215,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@2
-				location   	(50, 507)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	31
-				max_width  	0)
 			    width      	825
 			    height     	831
 			    annotation 	8)
@@ -6702,24 +6666,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B2074026F"
-			    compartment 	(object Compartment
-				Parent_View 	@23
-				location   	(2215, 1004)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	94
-				max_width  	0)
 			    width      	925
 			    height     	394
 			    annotation 	8)
@@ -13351,7 +13297,7 @@
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
 		    persistence 	"Persistent")
-		(object Class "HomeDeliveryCallcenterStation"
+		(object Class "HomeDeliveryCallCenterStation"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -13368,16 +13314,226 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"1"))
+			    value      	"7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"{eacd7ffb-4107-4ce3-ae6b-154b56792f54}"))
 		    quid       	"64B148490230"
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
 			    quid       	"64B148830028"
-			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallcenterStation"
-			    quidu      	"64B13ACB033C"))
+			    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallCenterStation"
+			    quidu      	"64B13ACB033C")
+			(object Realize_Relationship
+			    quid       	"64B179E0030F"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
+		    operations 	(list Operations
+			(object Operation "AddHomeDeliveryServicePoint"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ff543df5-ff7a-4610-99df-47046b84bce3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E0035B"))
+			    quid       	"64B179E0035B"
+			    parameters 	(list Parameters
+				(object Parameter "homeDeliveryServicePoint"
+				    quid       	"64B275C90095"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveHomeDeliveryServicePoint"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{06f8a5e7-45a5-4ab8-97fd-3e75409531fa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E00377"))
+			    quid       	"64B179E00377"
+			    parameters 	(list Parameters
+				(object Parameter "homeDeliveryServicePoint"
+				    quid       	"64B275C900DA"
+				    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "HomeDeliveryServicePoints"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e3266bfc-45a7-4348-8a96-b44092eb9ae7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E00398")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+1"))
+			    quid       	"64B179E00398"
+			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5c6d7b59-3a2b-40b6-90f0-392978df84ee}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E003A9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
+			    quid       	"64B179E003A9"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContextIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ce07ba48-ffb9-4383-b9cb-e61fc01386b1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E003B6")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+3"))
+			    quid       	"64B179E003B6"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "CallcenterStationIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{519ff5fa-ec0c-40b7-9131-6c9d156bf632}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B179E003C7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
+			    quid       	"64B179E003C7"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "GraphicMenuStorageIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4e8369d3-e6a4-45ac-8a03-e79a3c051eff}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64B275C902D3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
+			    quid       	"64B275C902D3"
+			    type       	"string"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
-		    language   	"C#")
+		    language   	"C#"
+		    persistence 	"Persistent")
 		(object Association "PreparationStationItemsInfo"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -14004,24 +14160,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(1656, 1797)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	17
-				max_width  	2887)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -14108,24 +14246,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(2859, 2336)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	1365)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -14270,24 +14390,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@47
-				location   	(5436, 527)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	15
-				max_width  	1587)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -14319,24 +14421,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@48
-				location   	(3408, 471)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -14730,24 +14814,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@68
-				location   	(924, 1692)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1225)
 			    width      	719
 			    height     	556
 			    annotation 	8)
@@ -14788,24 +14854,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@70
-				location   	(1614, 755)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -15124,24 +15172,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@86
-				location   	(65, 916)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	31
-				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -18610,10 +18640,10 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	366
-		    origin_y   	1044
+		    origin_x   	0
+		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallcenterStation" @252
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallCenterStation" @252
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1100, 900)
 			    font       	(object Font
@@ -18633,7 +18663,7 @@
 				nlines     	1
 				max_width  	645
 				justify    	0
-				label      	"IHomeDeliveryCallcenterStation")
+				label      	"IHomeDeliveryCallCenterStation")
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
@@ -18877,9 +18907,9 @@
 			    line_style 	3
 			    origin_attachment 	(2746, 1300)
 			    terminal_attachment 	(2746, 1043))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::HomeDeliveryCallcenterStation" @264
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::ServicesContextResources::HomeDeliveryCallCenterStation" @264
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1053, 1403)
+			    location   	(1078, 1403)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -18892,12 +18922,12 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@264
-				location   	(744, 1284)
+				location   	(769, 1284)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	619
 				justify    	0
-				label      	"HomeDeliveryCallcenterStation")
+				label      	"HomeDeliveryCallCenterStation")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	33023
@@ -18912,8 +18942,8 @@
 			    client     	@264
 			    supplier   	@252
 			    line_style 	3
-			    origin_attachment 	(1063, 1272)
-			    terminal_attachment 	(1063, 1053))))))
+			    origin_attachment 	(1088, 1272)
+			    terminal_attachment 	(1088, 1053))))))
 	(object Class_Category "EndUsers"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -47218,24 +47248,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B2CE9870228"
-		    compartment 	(object Compartment
-			Parent_View 	@702
-			location   	(2618, 943)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	53
-			max_width  	0)
 		    width      	644
 		    height     	300
 		    annotation 	8)
@@ -47770,24 +47782,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B1600111"
-		    compartment 	(object Compartment
-			Parent_View 	@723
-			location   	(2599, 593)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	31
-			max_width  	0)
 		    width      	588
 		    height     	318
 		    annotation 	8)

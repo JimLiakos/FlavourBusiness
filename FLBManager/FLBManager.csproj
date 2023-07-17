@@ -158,6 +158,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\CompanyPresentation.cs" />
+    <Compile Include="ViewModel\DeliveryCallCenter\DeliveryCallCenterStationsTreeNode.cs" />
+    <Compile Include="ViewModel\DeliveryCallCenter\DeliveryCallCenterStationTreeNode.cs" />
     <Compile Include="ViewModel\FlavourBusinessManagerViewModel.cs" />
     <Compile Include="ViewModel\FlavourBusinessResourcesPresentation.cs" />
     <Compile Include="ViewModel\FlavoursServicesContextPresentation.cs" />
@@ -724,6 +726,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\cards.png" />
     <Resource Include="Resources\Images\Metro\pos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\call-center16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\call-centers16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -24,6 +24,7 @@ namespace FLBManager.ViewModel
     /// <MetaDataID>{0d1d707a-9f9c-473c-a556-daedf99c71b2}</MetaDataID>
     public class FlavoursServicesContextPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaTreeNodeOwner,IGraphicMenusOwner
     {
+        /// <MetaDataID>{bbb2d3bf-b421-4173-a6ed-16cc837e6d9a}</MetaDataID>
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
             throw new NotImplementedException();
@@ -78,6 +79,7 @@ namespace FLBManager.ViewModel
         /// <MetaDataID>{a80ba1bd-ddfb-440a-a4d8-5726b18158e9}</MetaDataID>
         internal ServiceContextResources ServiceContextResources;
 
+        /// <MetaDataID>{5ce994a6-332e-426d-9d87-2514de79d960}</MetaDataID>
         internal ServiceContextHumanResources ServiceContextHumanResources;
 
 
@@ -87,8 +89,10 @@ namespace FLBManager.ViewModel
         /// <MetaDataID>{a123ee8e-9353-4c12-9c31-43a8f98f1232}</MetaDataID>
         InfrastructureTreeNode InfrastructureTreeNode;
 
+        /// <MetaDataID>{fbd2b3b1-7f84-4082-9a8d-e99d5f26c2af}</MetaDataID>
         StaffTreeNode StaffTreeNode;
 
+        /// <MetaDataID>{f334631c-078e-482e-af74-8f5894bb877c}</MetaDataID>
         public RelayCommand LaunchHomeDeliveryCommand { get; protected set; }
 
 
@@ -197,7 +201,9 @@ namespace FLBManager.ViewModel
             });
 
         }
+        /// <MetaDataID>{f55cff4f-a1bf-4085-94da-4c4220995107}</MetaDataID>
         public HomeDeliveryServiceTreeNode HomeDeliveryServiceTreeNode { get; private set; }
+        /// <MetaDataID>{e793e50a-e5e3-44e8-a8af-446b8d97eebe}</MetaDataID>
         private void LaunchHomeDeliveryService()
         {
 
@@ -212,7 +218,8 @@ namespace FLBManager.ViewModel
             }
         }
 
-      
+
+        /// <MetaDataID>{7c25119b-4d82-47ab-9cb0-4ac9de2c65f8}</MetaDataID>
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
             ServiceContextHumanResources = ServicesContext.ServiceContextHumanResources;
@@ -477,10 +484,13 @@ namespace FLBManager.ViewModel
             }
         }
 
+        /// <MetaDataID>{bda35925-5665-4a91-925e-35c2c6692d65}</MetaDataID>
         IFlavoursServicesContext IServiceAreaTreeNodeOwner.ServicesContext => ServicesContext;
 
+        /// <MetaDataID>{acbf8a60-507c-4e1f-b2d9-87819c9e7261}</MetaDataID>
         public List<GraphicMenuTreeNode> GraphicMenus => _GraphicMenus.Values.ToList();
 
+        /// <MetaDataID>{5131d595-0967-4835-b469-8f2e03020aa8}</MetaDataID>
         public bool NewGraphicMenuAllowed => false;
 
         //public event PropertyChangedEventHandler PropertyChanged;
@@ -537,12 +547,14 @@ namespace FLBManager.ViewModel
         {
         }
 
+        /// <MetaDataID>{ab8e0804-223c-4f55-9e13-1e3f5bfe640d}</MetaDataID>
         public bool RemoveGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
         {
             //FlavoursServicesContextRuntime.RemoveGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
-            return false; 
+            return false;
         }
 
+        /// <MetaDataID>{db846dcd-5953-472a-bce8-46dc700128a6}</MetaDataID>
         public void AssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
         {
             if (_GraphicMenus.ContainsKey(graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity))
@@ -552,7 +564,7 @@ namespace FLBManager.ViewModel
                 FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
             FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
 
-            _GraphicMenus[graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef.Clone(), null, MenusTreeNode,this, false);
+            _GraphicMenus[graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef.Clone(), null, MenusTreeNode, this, false);
 
             if (MenusTreeNode == null)
                 MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
@@ -565,6 +577,7 @@ namespace FLBManager.ViewModel
 
         }
 
+        /// <MetaDataID>{108306aa-9045-4180-8949-3338df3349a9}</MetaDataID>
         public bool CanAssignGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNode)
         {
             if (MenusTreeNode == null)
@@ -578,9 +591,10 @@ namespace FLBManager.ViewModel
 
         }
 
+        /// <MetaDataID>{296ea51c-4ebf-496c-a4d8-19a4a2ebf6cb}</MetaDataID>
         public void NewGraphicMenu()
         {
-            
+
         }
     }
        

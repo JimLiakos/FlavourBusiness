@@ -16,14 +16,14 @@ namespace FlavourBusinessFacade
     public interface IFlavoursServicesContextRuntime
     {
         /// <MetaDataID>{7adbeb8f-b7ac-4983-83cc-064d05f98154}</MetaDataID>
-        List<IHomeDeliveryCallcenterStation> CallCenterStations { get; }
+        List<IHomeDeliveryCallCenterStation> CallCenterStations { get; }
 
 
         /// <MetaDataID>{a45bbbe1-97ab-462b-b957-b9103ea53cbf}</MetaDataID>
-        IHomeDeliveryCallcenterStation NewCallCenterStation();
+        IHomeDeliveryCallCenterStation NewCallCenterStation();
 
         /// <MetaDataID>{0f32234c-ac19-45d2-9191-fadcc6d6c5ee}</MetaDataID>
-        void RemoveCallCenterStation(IHomeDeliveryCallcenterStation homeDeliveryCallcenterStation);
+        void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation);
 
         /// <MetaDataID>{6a091d06-0b2c-4ff2-9cad-61d3803d2873}</MetaDataID>
         void RemovePaymentTerminal(IPaymentTerminal paymentTerminal);

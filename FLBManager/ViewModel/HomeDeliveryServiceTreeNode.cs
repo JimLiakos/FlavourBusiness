@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
+using FLBManager.ViewModel.Delivery;
 using OOAdvantech.Transactions;
 using StyleableWindow;
 using System;
@@ -33,8 +34,51 @@ namespace FLBManager.ViewModel
             {
                 OpenHomeDeliverySettings();
             });
+
+
+
+            NewTakeAwaySationCommand = new RelayCommand((object sender) =>
+            {
+                NewTakeAwaySation();
+            });
+
+            try
+            {
+                foreach (var preparationStation in servicesContextPresentation.ServiceContextResources.DeliveryCallCenterStations)
+                    DeliveryCallCenterStations.Add(preparationStation, new DeliveryCallCenterStationPresentation(this, preparationStation));
+
+            }
+            catch (System.Exception error)
+            {
+            }
         }
-   
+        Dictionary<IHomeDeliveryCallCenterStation, DeliveryCallCenterStationPresentation> DeliveryCallCenterStations = new Dictionary<IHomeDeliveryCallCenterStation, DeliveryCallCenterStationPresentation>();
+
+        private void NewTakeAwaySation()
+        {
+            //var menuViewModel = ServiceContextInfrastructure.ServicesContextPresentation.Company.RestaurantMenus.Members[0] as MenuViewModel;
+
+            var DeliveryCallCenterStation = ServicesContextPresentation.ServicesContext.NewCallCenterStation();
+            var preparationStationPresentation = new DeliveryCallCenterStationPresentation(this, DeliveryCallCenterStation);
+            preparationStationPresentation.Edit = true;
+            DeliveryCallCenterStations.Add(DeliveryCallCenterStation, preparationStationPresentation);
+
+
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            IsNodeExpanded = true;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsNodeExpanded)));
+
+        }
+
+        internal void RemoveDeliveryCallCenterStation(DeliveryCallCenterStationPresentation DeliveryCallCenterStationTreeNode)
+        {
+            this.ServicesContextPresentation.ServicesContext.RemoveCallCenterStation(DeliveryCallCenterStationTreeNode.HomeDeliveryCallCenterStation);
+            DeliveryCallCenterStations.Remove(DeliveryCallCenterStationTreeNode.HomeDeliveryCallCenterStation);
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        }
+
+        public RelayCommand NewTakeAwaySationCommand { get; protected set; }
+
         private void Delete()
         {
             throw new NotImplementedException();
@@ -58,12 +102,13 @@ namespace FLBManager.ViewModel
             }
         }
 
-        List<FBResourceTreeNode> _Members = new List<FBResourceTreeNode>();
         public override List<FBResourceTreeNode> Members
         {
             get
             {
-                return _Members.ToList();
+                var members = this.DeliveryCallCenterStations.Values.OfType<FBResourceTreeNode>().ToList();
+
+                return members;
             }
         }
         public RelayCommand DeleteCommand { get; protected set; }
@@ -75,7 +120,7 @@ namespace FLBManager.ViewModel
             System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                
+
                 var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
                 Views.HomeDeliveryServicePage homeDeliveryServicePage = new Views.HomeDeliveryServicePage();
                 homeDeliveryServicePage.GetObjectContext().SetContextInstance(new HomeDeliveryServicePresentation(HomeDeliveryService, ServicesContextPresentation.ServicesContext));
@@ -100,10 +145,15 @@ namespace FLBManager.ViewModel
 
                     var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/Empty.png"));
                     var emptyImage = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-
-
-
                     MenuCommand menuItem = new MenuCommand(); ;
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/pos-terminal16.png"));
+                    menuItem.Header = Properties.Resources.NewDeliveryCallCenterStationPrompt;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = NewTakeAwaySationCommand;
+                    _ContextMenuItems.Add(menuItem);
+
+
+                    menuItem = new MenuCommand(); ;
                     //imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/CallerIDLine16.png"));
                     //menuItem.Header = Properties.Resources.AddCallerIDLine;
                     //menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
@@ -118,7 +168,7 @@ namespace FLBManager.ViewModel
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = SettingsCommand;
                     _ContextMenuItems.Add(menuItem);
-                    
+
                     _ContextMenuItems.Add(null);
 
                     menuItem = new MenuCommand();
@@ -145,7 +195,7 @@ namespace FLBManager.ViewModel
         public override List<MenuCommand> SelectedItemContextMenuItems => ContextMenuItems;
         public IHomeDeliveryServicePoint HomeDeliveryService { get; }
 
-        FlavoursServicesContextPresentation ServicesContextPresentation;
+        internal FlavoursServicesContextPresentation ServicesContextPresentation;
 
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
