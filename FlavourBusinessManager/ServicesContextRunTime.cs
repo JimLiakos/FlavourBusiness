@@ -2204,7 +2204,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (takeAwayStationsLock)
             {
-                if (_TakeAwayStationsDictionary.ContainsKey(takeAwayStationCredentialKey))
+                if (TakeAwayStationsDictionary.ContainsKey(takeAwayStationCredentialKey))
                     return _TakeAwayStationsDictionary[takeAwayStationCredentialKey];
                 return null;
             }

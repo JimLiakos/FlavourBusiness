@@ -19,6 +19,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             _CallcenterStationIdentity = servicesContextRunTime.ServicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
             ServicesContextIdentity = servicesContextRunTime.ServicesContextIdentity;
         }
+        protected HomeDeliveryCallCenterStation()
+        {
+
+        }
 
 
         /// <exclude>Excluded</exclude>

@@ -201,6 +201,9 @@
     <Compile Include="Views\CompanySettingsWindow.xaml.cs">
       <DependentUpon>CompanySettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DeliveryCallCenter\CallCenterStationPage.xaml.cs">
+      <DependentUpon>CallCenterStationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FlavourBusinessResourcesView.xaml.cs">
       <DependentUpon>FlavourBusinessResourcesView.xaml</DependentUpon>
     </Compile>
@@ -381,6 +384,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CompanySettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeliveryCallCenter\CallCenterStationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

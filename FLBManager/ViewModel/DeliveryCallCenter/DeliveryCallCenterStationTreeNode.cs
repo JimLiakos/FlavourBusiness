@@ -86,7 +86,7 @@ namespace FLBManager.ViewModel.Delivery
             AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(RenameCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("TakeAway Station", "Scan to register as TakeAway station") { CodeValue = this.CallcenterStationIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Home Deivery Call Center Station", "Scan to register as Call Center Station") { CodeValue = this.CallcenterStationIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 
@@ -124,7 +124,7 @@ namespace FLBManager.ViewModel.Delivery
             {
 
                 var frame = PageDialogFrame.LoadedPageDialogFrames.FirstOrDefault();// WPFUIElementObjectBind.ObjectContext.FindChilds<PageDialogFrame>(win).Where(x => x.Name == "PageDialogHost").FirstOrDefault();
-                Views.TakeAway.TakeAwayStationPage takeAwayStationItemsPage = new Views.TakeAway.TakeAwayStationPage();
+                Views.Deliverty.CallCenterStationPage takeAwayStationItemsPage = new Views.Deliverty.CallCenterStationPage();
                 takeAwayStationItemsPage.GetObjectContext().SetContextInstance(this);
 
                 frame.ShowDialogPage(takeAwayStationItemsPage);
@@ -272,7 +272,7 @@ namespace FLBManager.ViewModel.Delivery
 
             set
             {
-                HomeDeliveryCallCenterStation.CallcenterStationIdentity  = value;
+                HomeDeliveryCallCenterStation.Description  = value;
                 _Description=value;
                 Task.Run(() =>
                 {
