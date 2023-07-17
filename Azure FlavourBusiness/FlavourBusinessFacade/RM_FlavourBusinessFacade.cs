@@ -531,13 +531,13 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
-        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation> CallCenterStation
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation> CallCenterStations
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_CallCenterStation", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContext), "get_CallCenterStations", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation>>(retValue);
             }
         }
@@ -1224,6 +1224,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation> CallCenterStations
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_CallCenterStations", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint DeliveryServicePoint
         {
             get
@@ -1481,6 +1493,23 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation NewCallCenterStation()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewCallCenterStation", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation>(retValue);
+        }
+        
+        public void RemoveCallCenterStation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation homeDeliveryCallcenterStation)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = homeDeliveryCallcenterStation;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallcenterStation);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveCallCenterStation", args, argsTypes);
         }
         
         public void RemovePaymentTerminal(FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal paymentTerminal)

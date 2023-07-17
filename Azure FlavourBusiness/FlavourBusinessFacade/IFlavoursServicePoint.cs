@@ -22,6 +22,7 @@ namespace FlavourBusinessFacade
         [Association("FlavoursServiceContextCallCenter", Roles.RoleA, "18e50a98-3b7c-4cc5-96f2-6ee6002d426f")]
         [RoleBMultiplicityRange(0)]
         List<IHomeDeliveryCallcenterStation> CallCenterStations { get; }
+         
 
 
         [Association("ServiceContexPaymentTerminal", Roles.RoleA, "bbb9a30d-0c4c-46fa-b55d-a46068da59e0")]
