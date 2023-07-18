@@ -18,15 +18,17 @@ using FlavourBusinessFacade.HumanResources;
 
 using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
-using FlavourBusinessManager.HumanResources;
+
 using FlavourBusinessFacade.RoomService;
 
 
 #if DeviceDotNet
+
 using Acr.UserDialogs;
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
+using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicesContextResources;
 using MarshalByRefObject = System.MarshalByRefObject;
 #endif
@@ -350,9 +352,10 @@ namespace TakeAwayApp
                                 //TakeAwayCashier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (TakeAwayCashier is ITransparentProxy)
                                     (TakeAwayCashier as ITransparentProxy).Reconnected += TakeAwayCashierPresentation_Reconnected;
+                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 #if DeviceDotNet
-                            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                            TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+
+                                TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
                                 
 #endif
                                 (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
@@ -362,7 +365,7 @@ namespace TakeAwayApp
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
                                 var sdds = DeviceAuthentication.AuthUser;
                                 
-                                OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                
                                 if (ActiveShiftWork!=null)
                                     FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
@@ -573,7 +576,7 @@ namespace TakeAwayApp
             if (ActiveShiftWork!=null)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
-                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, DeviceType.Desktop, device.FirebaseToken));
+                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID,FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
 
                 ObjectChangeState?.Invoke(this,nameof(ActiveShiftWork));
