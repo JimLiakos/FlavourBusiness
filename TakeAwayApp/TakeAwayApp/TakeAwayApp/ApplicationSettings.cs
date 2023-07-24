@@ -39,7 +39,27 @@ namespace TakeAwayApp
             }
         }
 
-        public string DeliveryCallCenterCredentialKey { get; internal set; }
+        /// <exclude>Excluded</exclude>
+        string _DeliveryCallCenterCredentialKey;
+
+        /// <MetaDataID>{dc7d2a80-7eb1-42a7-a5e9-b8f71560acfa}</MetaDataID>
+        [PersistentMember(nameof(_DeliveryCallCenterCredentialKey))]
+        [BackwardCompatibilityID("+3")]
+        public string DeliveryCallCenterCredentialKey
+        {
+            get => _DeliveryCallCenterCredentialKey;
+            internal set
+            {
+                if (_DeliveryCallCenterCredentialKey!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeliveryCallCenterCredentialKey=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
 

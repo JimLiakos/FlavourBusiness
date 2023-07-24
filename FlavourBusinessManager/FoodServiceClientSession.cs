@@ -1164,7 +1164,7 @@ namespace FlavourBusinessManager.EndUsers
         public FlavourBusinessFacade.EndUsers.IFoodServiceClient Client
         {
             get
-            {
+            { 
                 if (!string.IsNullOrWhiteSpace(UserIdentity) && _Client == null)
                 {
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());

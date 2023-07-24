@@ -40,6 +40,7 @@ namespace TakeAwayApp
     [HttpVisible]
     public interface IFlavoursServiceOrderTakingStation
     {
+        /// <MetaDataID>{16541ed5-9f09-45e2-a16e-cb1e661a7a15}</MetaDataID>
         Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey);
 
 
@@ -106,12 +107,16 @@ namespace TakeAwayApp
 
 
     }
+    
+    
+    
+    
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class FlavoursServiceOrderTakingStationPresentation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
-        public FlavoursServiceOrderTakingStationPresentation()
+        public TakeAwayStationPresentation()
         {
             
             VivaWalletPos.IPos sds = null;
@@ -908,24 +913,7 @@ namespace TakeAwayApp
 
         }
 
-        public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)
-        {
-            if (DeliveryCallCenterCredentialKey != credentialKey)
-            {
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                string serverUrl = AzureServerUrl;
-                IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-
-                HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(credentialKey);
-                if (HomeDeliveryCallCenterStation!=null)
-                {
-                    DeliveryCallCenterCredentialKey = credentialKey;
-                }
-                return Task.FromResult(TakeAwayStation!=null);
-            }
-            return Task.FromResult(true);
-        }
+ 
 
         /// <MetaDataID>{115be581-0ca0-47e1-8580-f74b9aa5019a}</MetaDataID>
         IPlace HomeDeliveryPlaceOfDistribution { get; }
@@ -969,13 +957,15 @@ namespace TakeAwayApp
 
         /// <MetaDataID>{4fdf451e-b550-45bf-aabe-aa7de6c3bb94}</MetaDataID>
         public ITakeAwayStation TakeAwayStation { get; private set; }
-        public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
-
-        public string DeliveryCallCenterCredentialKey {
-
+        /// <MetaDataID>{1fb7bf4b-c6a4-4320-af85-cec3ca9fccd1}</MetaDataID>
+        public string DeliveryCallCenterCredentialKey
+        {
             get
             {
-              
+                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DeliveryCallCenterCredentialKey))
+                {
+
+                }
                 return ApplicationSettings.Current.DeliveryCallCenterCredentialKey;
             }
             set
@@ -983,5 +973,30 @@ namespace TakeAwayApp
                 ApplicationSettings.Current.DeliveryCallCenterCredentialKey = value;
             }
         }
+
+        /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
+        public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)
+        {
+            if (DeliveryCallCenterCredentialKey != credentialKey)
+            {
+
+                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                string serverUrl = AzureServerUrl;
+                IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                TakeAwayStation = servicesContextManagment.GetTakeAwayStation(credentialKey);
+                if (TakeAwayStation!=null)
+                {
+                    TakeAwayStationCredentialKey = credentialKey;
+
+                }
+
+                return Task.FromResult(TakeAwayStation!=null);
+
+            }
+            return Task.FromResult(true);
+        }
+
     }
 }
