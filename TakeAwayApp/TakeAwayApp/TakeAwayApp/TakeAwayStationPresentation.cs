@@ -40,6 +40,8 @@ namespace TakeAwayApp
     [HttpVisible]
     public interface IFlavoursServiceOrderTakingStation
     {
+        System.Threading.Tasks.Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey);
+
         /// <MetaDataID>{d665ceb1-47b3-4a6a-9671-c12e4bf7737d}</MetaDataID>
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
         /// <MetaDataID>{0cc4170b-f2a9-47e0-a93c-813f6ec8abd1}</MetaDataID>
