@@ -1,17 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk" ProjectGUID="bd4e9b2f-8603-4d7a-aad0-e224b32d5070">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;DeviceDotNet;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;DeviceDotNet;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\FontData.cs" Link="UIBaseEx\FontData.cs" />
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\IHtmlView.cs" Link="UIBaseEx\IHtmlView.cs" />
@@ -59,13 +55,11 @@
     <Compile Include="..\DontWaitAppNS\IFoodServicesClientSessionViewModel.cs" Link="IFoodServicesClientSessionViewModel.cs" />
     <Compile Include="..\DontWaitAppNS\Messmate.cs" Link="Messmate.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="2.80.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
@@ -75,14 +69,12 @@
     <ProjectReference Include="..\FinanceFacade\FinanceFacade.csproj" />
     <ProjectReference Include="..\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="MenuCanvas\" />
     <Folder Include="MenuModel\" />
     <Folder Include="UIBaseEx\" />
     <Folder Include="RestaurantHallLayoutModel\" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\MenuPresentationModel\IPriceHeading.cs" Link="MenuCanvas\IPriceHeading.cs" />
     <None Include="..\..\MenuPresentationModel\JsonMenuPresentation\HeadingAccent.cs" Link="MenuCanvas\HeadingAccent.cs" />
@@ -123,5 +115,4 @@
     <None Include="..\..\MenuPresentationModel\MenuStyles\Resource.cs" Link="MenuCanvas\Resource.cs" />
     <None Include="..\..\MenuPresentationModel\TransformOrigin.cs" Link="MenuCanvas\TransformOrigin.cs" />
   </ItemGroup>
-
 </Project>

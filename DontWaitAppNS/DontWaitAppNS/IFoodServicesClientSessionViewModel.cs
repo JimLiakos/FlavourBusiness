@@ -121,7 +121,10 @@ namespace DontWaitApp
 
         List<TipOption> TipOptions { get; }
         List<CurrencyOption> CurrencyOptions { get; }
-         
+
+
+        
+
     }
 
     /// <MetaDataID>{0cb06dce-d187-4c17-9caa-ad584c8854f1}</MetaDataID>

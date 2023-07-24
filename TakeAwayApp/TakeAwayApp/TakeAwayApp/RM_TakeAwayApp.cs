@@ -13,7 +13,7 @@ namespace TakeAwayApp.Proxies
     using System;
     
     
-    public sealed class CNSPr_IFlavoursTakeAwayStation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    public sealed class CNSPr_IFlavoursServiceOrderTakingStation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         
         public void Invoke(object _object, string member)

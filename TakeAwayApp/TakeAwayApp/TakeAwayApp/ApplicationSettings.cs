@@ -16,23 +16,23 @@ namespace TakeAwayApp
 
 
         /// <exclude>Excluded</exclude>
-        string _CommunicationCredentialKey;
+        string _TakeAwayStationCredentialKey;
 
 
         /// <MetaDataID>{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}</MetaDataID>
 
-        [PersistentMember(nameof(_CommunicationCredentialKey))]
+        [PersistentMember(nameof(_TakeAwayStationCredentialKey))]
         [BackwardCompatibilityID("+1")]
-        public string CommunicationCredentialKey
+        public string TakeAwayStationCredentialKey
         {
-            get => _CommunicationCredentialKey;
+            get => _TakeAwayStationCredentialKey;
             set
             {
-                if (_CommunicationCredentialKey != value)
+                if (_TakeAwayStationCredentialKey != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _CommunicationCredentialKey = value;
+                        _TakeAwayStationCredentialKey = value;
                         stateTransition.Consistent = true;
                     }
                 }

@@ -328,7 +328,7 @@ namespace FLBManager.ViewModel
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
         /// <MetaDataID>{4c0137a5-0923-4453-b323-f1411b8ac3a1}</MetaDataID>
-        public HomeDeliveryServicePresentation(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint, IFlavoursServicesContext servicesContext)
+        public HomeDeliveryServicePresentation(IHomeDeliveryServicePoint homeDeliveryServicePoint, IFlavoursServicesContext servicesContext)
         {
             ServicesContext = servicesContext;
 

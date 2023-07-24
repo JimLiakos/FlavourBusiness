@@ -38,19 +38,23 @@ namespace TakeAwayApp
 {
     /// <MetaDataID>{1dca0d48-ef5c-41ac-a964-127385b2e256}</MetaDataID>
     [HttpVisible]
-    public interface IFlavoursTakeAwayStation
+    public interface IFlavoursServiceOrderTakingStation
     {
         /// <MetaDataID>{d665ceb1-47b3-4a6a-9671-c12e4bf7737d}</MetaDataID>
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
         /// <MetaDataID>{0cc4170b-f2a9-47e0-a93c-813f6ec8abd1}</MetaDataID>
-        string CommunicationCredentialKey { get; set; }
+        string TakeAwayStationCredentialKey { get; set; }
         /// <MetaDataID>{0a4ccfb0-2a60-41cc-8cce-2577a15b84ea}</MetaDataID>
-        Task<bool> AssignCommunicationCredentialKey(string credentialKey);
+        Task<bool> AssignTakeAwayStationCredentialKey(string credentialKey);
         /// <MetaDataID>{0d0668da-c0ce-49ed-9a74-c6a574409a1c}</MetaDataID>
         Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable);
 
+        /// <MetaDataID>{30510e04-e498-47df-8334-83573a2d20c0}</MetaDataID>
         Task<bool> IsActive { get; }
 
+
+
+        //IPlace HomeDeliveryPlaceOfDistribution { get; }
 
         /// <summary>
         /// Check if application is granted to access infrastructure for QR code scanning 
@@ -73,6 +77,7 @@ namespace TakeAwayApp
         Task<bool> RequestPermissionsForQRCodeScan();
 
 
+        /// <MetaDataID>{6dfec609-25e3-40e1-b5ae-8e8ca1d74993}</MetaDataID>
         bool InActiveShiftWork { get; }
 
         /// <MetaDataID>{872cf9a1-885b-48ee-b71c-19abceda805f}</MetaDataID>
@@ -87,6 +92,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
         void SiftWorkStart(DateTime startedAt, double timespanInHours);
 
+        /// <MetaDataID>{ef901fe7-db80-466c-9826-742e38f6623f}</MetaDataID>
         void OrderCommitted();
 
         [GenerateEventConsumerProxy]
@@ -95,7 +101,7 @@ namespace TakeAwayApp
 
     }
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursTakeAwayStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
+    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
@@ -680,9 +686,9 @@ namespace TakeAwayApp
         }
 
         /// <MetaDataID>{4e633d11-713d-459a-8516-4b488f2694c2}</MetaDataID>
-        public Task<bool> AssignCommunicationCredentialKey(string credentialKey)
+        public Task<bool> AssignTakeAwayStationCredentialKey(string credentialKey)
         {
-            if (CommunicationCredentialKey != credentialKey)
+            if (TakeAwayStationCredentialKey != credentialKey)
             {
 
                 string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -693,7 +699,7 @@ namespace TakeAwayApp
                 TakeAwayStation = servicesContextManagment.GetTakeAwayStation(credentialKey);
                 if (TakeAwayStation!=null)
                 {
-                    CommunicationCredentialKey = credentialKey;
+                    TakeAwayStationCredentialKey = credentialKey;
 
                 }
 
@@ -711,13 +717,13 @@ namespace TakeAwayApp
                 //{
                 //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
                 //}
-                if (TakeAwayStation==null&&!string.IsNullOrEmpty(CommunicationCredentialKey))
+                if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    TakeAwayStation = servicesContextManagment.GetTakeAwayStation(CommunicationCredentialKey);
+                    TakeAwayStation = servicesContextManagment.GetTakeAwayStation(TakeAwayStationCredentialKey);
                     if (TakeAwayStation!=null)
                     {
                         var sdds = DeviceAuthentication.AuthUser;
@@ -766,7 +772,7 @@ namespace TakeAwayApp
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
 
 
-                    return await AssignCommunicationCredentialKey(communicationCredentialKey);
+                    return await AssignTakeAwayStationCredentialKey(communicationCredentialKey);
                     //var takeAwayStation = servicesContextManagment.GetTakeAwayStation(communicationCredentialKey);
                     //if (takeAwayStation!=null)
                     //    CommunicationCredentialKey = communicationCredentialKey;
@@ -872,6 +878,8 @@ namespace TakeAwayApp
 
         }
 
+        IPlace HomeDeliveryPlaceOfDistribution { get; }
+
         /// <MetaDataID>{0f27ba87-430d-45b2-95fb-b950d1f90482}</MetaDataID>
         public DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; private set; }
         /// <MetaDataID>{a1576909-e02c-40f2-8798-fba2f670f73f}</MetaDataID>
@@ -891,19 +899,19 @@ namespace TakeAwayApp
         /// <MetaDataID>{96870bba-3747-4b7a-ae7e-27cb503f28ff}</MetaDataID>
         public string PhoneNumber { get; set; }
         /// <MetaDataID>{f46e93f1-6ec1-4507-964e-1efab28b06c2}</MetaDataID>
-        public string CommunicationCredentialKey
+        public string TakeAwayStationCredentialKey
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.CommunicationCredentialKey))
+                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.TakeAwayStationCredentialKey))
                 {
 
                 }
-                return ApplicationSettings.Current.CommunicationCredentialKey;
+                return ApplicationSettings.Current.TakeAwayStationCredentialKey;
             }
             set
             {
-                ApplicationSettings.Current.CommunicationCredentialKey = value;
+                ApplicationSettings.Current.TakeAwayStationCredentialKey = value;
             }
         }
 

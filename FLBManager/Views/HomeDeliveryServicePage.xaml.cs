@@ -49,7 +49,7 @@ namespace FLBManager.Views
             string url = @"http://localhost:4300/";
             url = @"https://localhost:4300/";
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
-            Browser.Navigate(new Uri(url + "/#/service-area-map"));
+            Browser.Navigate(new Uri(url + "#/service-area-map"));
         }
 
         private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
