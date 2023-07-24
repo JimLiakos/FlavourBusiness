@@ -223,6 +223,7 @@ namespace FlavourBusinessFacade
         OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content);
         /// <MetaDataID>{3775750f-2f13-458b-ac13-c682be2e15d2}</MetaDataID>
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
+        IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
 
 
 #endif

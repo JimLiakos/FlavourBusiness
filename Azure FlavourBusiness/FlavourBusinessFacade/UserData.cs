@@ -8,9 +8,11 @@ namespace FlavourBusinessFacade
     public class UserData:IUser
     {
 
+        /// <MetaDataID>{528fe583-6574-47f2-aa4b-c84174f2d76d}</MetaDataID>
         public string UserName { get; set; }
 
 
+        /// <MetaDataID>{fd4f5d74-36ce-4a65-9e62-a15b1dfa6bc8}</MetaDataID>
         public string Password { get; set; }
 
         /// <MetaDataID>{9e96b5f9-98c1-4c91-b2e1-9c5036007374}</MetaDataID>
@@ -34,29 +36,34 @@ namespace FlavourBusinessFacade
         public string PhotoUrl { get; set; }
 
 
+        /// <MetaDataID>{f58f1ca4-0790-4dc9-b672-cb2732c0f33f}</MetaDataID>
         public string Trademark { get; set; }
 
+        /// <MetaDataID>{8e9fcb10-61f8-4805-814a-a8e3a44d246b}</MetaDataID>
         public string Address { get; set; }
 
+        /// <MetaDataID>{2b82ed7b-31d9-4e8a-81a5-74de6c4f236e}</MetaDataID>
         public string OAuthUserIdentity => Identity;
 
         //public string OAuthUserIdentity { get; set; }
 
+        /// <MetaDataID>{908446b2-0dac-4b19-9208-c07b89fcd96c}</MetaDataID>
         object rolesLock = new object();
 
+        /// <MetaDataID>{89b791d2-f9a9-4c77-b295-3dc06dc15fd1}</MetaDataID>
         public IUser GetRoleObject(RoleType roleType)
         {
             lock (rolesLock)
             {
-                if(Roles==null)
+                if (Roles==null)
                     return default(IUser);
-                return Roles.Where(x => x.RoleType == roleType).Select(x=>x.User).FirstOrDefault();
+                return Roles.Where(x => x.RoleType == roleType).Select(x => x.User).FirstOrDefault();
             }
         }
 
 
 
-     
+
 
         public struct UserRole
         {
