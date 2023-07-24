@@ -39,6 +39,8 @@ namespace TakeAwayApp
             }
         }
 
+        public string DeliveryCallCenterCredentialKey { get; internal set; }
+
 
 
         /// <exclude>Excluded</exclude>
@@ -153,5 +155,6 @@ namespace TakeAwayApp
             }
         }
 
+        
     }
 }

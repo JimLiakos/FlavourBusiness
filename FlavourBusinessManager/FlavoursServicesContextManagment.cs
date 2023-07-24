@@ -220,6 +220,23 @@ namespace FlavourBusinessManager
             return takeAwayStation;
         }
 
+        public IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey)
+        {
+
+            string servicesContextIdentity = deliveryCallCenterCredentialKey.Substring(0, deliveryCallCenterCredentialKey.IndexOf("_"));
+            string preparationStationIdentity = deliveryCallCenterCredentialKey.Substring(deliveryCallCenterCredentialKey.IndexOf("_") + 1);
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            if (flavoursServicesContext == null)
+                return null;
+
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            IHomeDeliveryCallCenterStation homeDeliveryCallCenterStation = flavoursServicesContextRunTime.GetHomeDeliveryCallCenterStation(deliveryCallCenterCredentialKey);//, clientName, clientDeviceID, deviceFirebaseToken, clientIdentity, orgIdentity, graphicMenus);
+
+            return homeDeliveryCallCenterStation;
+
+        }
+
         /// <MetaDataID>{1726fda9-eed5-4e8c-8a04-a3fc80a093bc}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationCredentialKey)
         {

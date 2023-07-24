@@ -86,15 +86,20 @@ namespace FlavourBusinessFacade.ViewModel
         /// <MetaDataID>{ab6e6eb2-5155-49f9-b80e-68b00e96b730}</MetaDataID>
         void SaveUserProfile();
 
+        /// <MetaDataID>{7495ec7c-a77a-41b9-81c4-5e7c2f59226d}</MetaDataID>
         bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider);
 
+        /// <MetaDataID>{763106d8-994b-489e-be2e-44130d719f3b}</MetaDataID>
         void SendVerificationEmail(string emailAddress);
 
+        /// <MetaDataID>{9e7f3e6a-740f-4e76-a7e3-61d571ecd90a}</MetaDataID>
         void CreateUserWithEmailAndPassword(string emailVerificationCode);
 
+        /// <MetaDataID>{4fe32dc1-cc74-4993-a441-f5e10dace55b}</MetaDataID>
         IList<UserData> GetNativeUsers();
 
-        UserData SignInNativeUser(string userName,string password);
+        /// <MetaDataID>{a3ec8eff-c8ac-4898-b0a2-24c571c9082b}</MetaDataID>
+        UserData SignInNativeUser(string userName, string password);
 
 
 

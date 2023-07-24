@@ -2165,6 +2165,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{1f046455-d3b7-4545-a1ea-1aebda104e94}</MetaDataID>
         object takeAwayStationsLock = new object();
+
+
+        object homeDeliveryCallCenterStationsLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, ITakeAwayStation> _TakeAwayStationsDictionary;
 
@@ -2209,6 +2212,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return null;
             }
 
+        }
+        public IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey)
+        {
+            lock (homeDeliveryCallCenterStationsLock)
+            {
+                if (CallCenterStationsDictionary.ContainsKey(deliveryCallCenterCredentialKey))
+                    return _CallCenterStationsDictionary[deliveryCallCenterCredentialKey];
+                return null;
+            }
         }
 
         /// <MetaDataID>{84849525-39ef-4904-a46a-dae0f0abdf47}</MetaDataID>

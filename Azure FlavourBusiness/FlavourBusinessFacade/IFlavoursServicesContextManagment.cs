@@ -47,6 +47,9 @@ namespace FlavourBusinessFacade
         System.Collections.Generic.List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location);
         IFoodServiceClientSession GetMealInvitationInviter(string invitationUri);
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
+
+        IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
+        
     }
     //
     // Summary:
