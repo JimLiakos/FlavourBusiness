@@ -13,6 +13,7 @@ namespace FinanceFacade
         /// <param name="tipAmount">
         /// Defines the tip amount for  the service person 
         /// </param>
+        /// <MetaDataID>{b3f0889b-64f4-460f-a0f2-e0b98ac63c95}</MetaDataID>
         void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson);
     }
 }

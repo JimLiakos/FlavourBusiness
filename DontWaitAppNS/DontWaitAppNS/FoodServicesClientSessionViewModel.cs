@@ -1131,15 +1131,14 @@ namespace DontWaitApp
 
                 _FoodServicesClientSession = value;
                 if (_FoodServicesClientSession!=null&&FlavoursOrderServer!=null)
-                    _FoodServicesClientSession.UserLanguageCode=FlavoursOrderServer.Language;
+                    _FoodServicesClientSession.UpdateSessionUser(FlavoursOrderServer.Language);
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
                 {
                     if (DeliveryPlace != null)
                     {
                         if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
-                        {
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
-                        }
+                        
                     }
                     _DeliveryComment=_FoodServicesClientSession.DeliveryComment;
                 }

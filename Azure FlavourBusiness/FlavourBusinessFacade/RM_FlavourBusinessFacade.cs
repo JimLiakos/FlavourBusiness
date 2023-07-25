@@ -1186,6 +1186,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetTakeAwayStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>(retValue);
         }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deliveryCallCenterCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetHomeDeliveryCallCenterStation", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation>(retValue);
+        }
     }
     
     public sealed class Pr_IFlavoursServicesContextRuntime : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContextRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -1948,6 +1958,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetTakeAwayStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation>(retValue);
+        }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deliveryCallCenterCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetHomeDeliveryCallCenterStation", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation>(retValue);
         }
     }
     
@@ -8241,6 +8261,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = value;
             argsTypes[0] = typeof(System.Nullable<System.DateTime>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "SetSessionServiceTime", args, argsTypes);
+        }
+        
+        public void UpdateSessionUser(string userLanguageCode)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = userLanguageCode;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "UpdateSessionUser", args, argsTypes);
         }
         
         public void RemoveMessage(string messageId)

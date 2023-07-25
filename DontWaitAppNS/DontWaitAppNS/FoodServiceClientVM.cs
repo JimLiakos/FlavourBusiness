@@ -92,9 +92,9 @@ namespace DontWaitApp
             {
                 _PhoneNumber = value;
                 FoodServiceClient.PhoneNumber= value;
-                //if ((this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser!=null)
-                //    (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser.PhoneNumber=_PhoneNumber;
-                //if (ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.CurrentUser)
+                //if ((this.FlavoursOrderServer as FlavoursOrderServer)?.SignedInFlavourBusinessUser!=null)
+                //    (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser.PhoneNumber=_PhoneNumber;
+                //if (ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.SignedInFlavourBusinessUser)
                 //    ApplicationSettings.Current.ClientAsGuest.PhoneNumber=value;
             }
         }
@@ -505,7 +505,7 @@ namespace DontWaitApp
                             IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             FoodServiceClient.DeviceFirebaseToken = device.FirebaseToken;
 #endif
-                            (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser =  FoodServiceClient;
+                            (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser =  FoodServiceClient;
                             (this.FlavoursOrderServer as FlavoursOrderServer).AuthUser = authUser;
                             OAuthUserIdentity = FoodServiceClient.OAuthUserIdentity;
                             ObjectChangeState?.Invoke(this, null);
@@ -679,7 +679,7 @@ namespace DontWaitApp
                         IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                         FoodServiceClient.DeviceFirebaseToken = device.FirebaseToken;
 #endif
-                        (FlavoursOrderServer as FlavoursOrderServer).CurrentUser = FoodServiceClient;
+                        (FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = FoodServiceClient;
                         (FlavoursOrderServer as FlavoursOrderServer).AuthUser = authUser;
                         ObjectChangeState?.Invoke(this, null);
                         OAuthUserIdentity = FoodServiceClient.OAuthUserIdentity;
@@ -713,7 +713,7 @@ namespace DontWaitApp
             FullName = null;
             UserName = null;
             Email = null;
-            (FlavoursOrderServer as FlavoursOrderServer).CurrentUser = null;
+            (FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = null;
 
             ObjectChangeState?.Invoke(this, null);
         }

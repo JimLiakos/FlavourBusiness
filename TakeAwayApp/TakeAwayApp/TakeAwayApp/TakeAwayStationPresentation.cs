@@ -378,7 +378,7 @@ namespace TakeAwayApp
                                 TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
                                 
 #endif
-                                (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
+                                (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).SignedInFlavourBusinessUser = TakeAwayCashier;
                                 //ApplicationSettings.Current.FriendlyName = TakeAwayCashier.FullName;
                                 GetMessages();
 
@@ -465,7 +465,7 @@ namespace TakeAwayApp
 #endif
                                     ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
                                     //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
-                                    (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).CurrentUser = TakeAwayCashier;
+                                    (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).SignedInFlavourBusinessUser = TakeAwayCashier;
 
                                     GetMessages();
                                 }

@@ -12,13 +12,11 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
-  
+        Dictionary<string, ItemPreparationState> CommitAll();
+
         /// <MetaDataID>{630e9a95-85cd-4be3-b8ec-7d7abd35ec47}</MetaDataID>
         [BackwardCompatibilityID("+15")]
         string UserLanguageCode { set; get; }
-
-        /// <MetaDataID>{951fa5da-519f-4faa-90cd-621ff2274725}</MetaDataID>
-
 
 
         /// <MetaDataID>{9ca27920-120c-46c5-a5a2-3a949b957d2b}</MetaDataID>
@@ -244,6 +242,8 @@ namespace FlavourBusinessFacade.EndUsers
         void SetSessionDeliveryPlace(IPlace deliveryPlace);
         /// <MetaDataID>{8ad09d41-4b56-4ad8-9cf2-6e90b48bf9bb}</MetaDataID>
         void SetSessionServiceTime(DateTime? value);
+        /// <MetaDataID>{2c79ce1f-2d6e-4179-a123-e187fba12cc1}</MetaDataID>
+        void UpdateSessionUser(string userLanguageCode);
 
 
         /// <MetaDataID>{dc05706a-50a3-44ad-9dbf-5a74cad9ce7a}</MetaDataID>
