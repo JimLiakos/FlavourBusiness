@@ -8263,6 +8263,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "SetSessionServiceTime", args, argsTypes);
         }
         
+        public void UpdateSessionUser(string userLanguageCode)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = userLanguageCode;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "UpdateSessionUser", args, argsTypes);
+        }
+        
         public void RemoveMessage(string messageId)
         {
             object[] args = new object[1];

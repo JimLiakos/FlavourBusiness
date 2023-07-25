@@ -441,7 +441,7 @@ namespace WaiterApp.ViewModel
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
 #endif
-                            (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
+                            (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = Waiter;
                             //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             GetMessages();
 
@@ -542,7 +542,7 @@ namespace WaiterApp.ViewModel
 #endif
                                 ActiveShiftWork = Waiter.ActiveShiftWork;
                                 UpdateServingBatches(Waiter.GetServingBatches());
-                                (this.FlavoursOrderServer as FlavoursOrderServer).CurrentUser = Waiter;
+                                (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = Waiter;
                                 //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                                 if (this._Halls != null)
                                 {

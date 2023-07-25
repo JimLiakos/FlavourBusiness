@@ -520,6 +520,8 @@ namespace FlavourBusinessManager
             }
         }
 
+
+
         /// <MetaDataID>{313295d7-0029-44af-8cfb-13c59b664e3d}</MetaDataID>
         internal bool HasRole(object roleObject)
         {

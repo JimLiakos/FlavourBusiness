@@ -21461,6 +21461,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@293
+				location   	(1489, 1046)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	55
+				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -22358,6 +22376,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@336
+				location   	(187, 407)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	55
+				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -29355,6 +29391,11 @@
 				    quid       	"6448A21F03CD"
 				    type       	"string"))
 			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "opname"
+			    quid       	"64BF6AA90184"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))

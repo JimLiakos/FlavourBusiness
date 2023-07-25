@@ -20,7 +20,7 @@ using System.Web;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.Azure.Documents.Spatial;
 using MenuPresentationModel;
-
+using FlavourBusinessManager.HumanResources;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -1128,8 +1128,8 @@ namespace FlavourBusinessManager.EndUsers
         string _UserIdentity;
 
         /// <MetaDataID>{0daa969e-0db4-4687-94e3-814449b6a897}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.PersistentMember("_UserIdentity")]
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
+        [PersistentMember("_UserIdentity")]
+        [BackwardCompatibilityID("+1")]
         internal string UserIdentity
         {
             get => _UserIdentity;
@@ -2829,6 +2829,31 @@ namespace FlavourBusinessManager.EndUsers
                     stateTransition.Consistent = true;
                 }
             }
+
+        }
+
+        /// <MetaDataID>{e1482ae5-b23a-4f23-a3bd-4ae21f383dc7}</MetaDataID>
+        public void UpdateSessionUser(string userLanguageCode)
+        {
+            AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                if (Worker==null)
+                {
+                    var foodServiceClient = authUserRef.GetContextRoleObject<FoodServiceClient>();
+                    if (foodServiceClient!=null)
+                    {
+                        if (Client!=null&&Client!=foodServiceClient)
+                            throw new AuthenticationException("User hasn't access right for this action");
+
+                        Client=foodServiceClient;
+                    }
+                }
+                this.UserLanguageCode = userLanguageCode;
+                stateTransition.Consistent = true;
+            }
+
 
         }
 

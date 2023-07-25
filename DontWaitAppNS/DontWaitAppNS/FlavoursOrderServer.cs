@@ -587,10 +587,12 @@ namespace DontWaitApp
         {
             get
             {
+
                 return _EndUser;
             }
             set
             {
+
                 if (_EndUser!=null)
                     _EndUser.ObjectChangeState-=EndUser_ObjectChangeState;
                 _EndUser = value;
@@ -869,9 +871,23 @@ namespace DontWaitApp
 
         }
 
-
+        FoodServicesClientSessionViewModel _FoodServicesClientSessionViewModel;
         /// <MetaDataID>{636f2c8c-bead-4c32-abbe-36fb33977ac0}</MetaDataID>
-        FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel;
+        FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel
+        {
+            get => _FoodServicesClientSessionViewModel;
+            set
+            {
+                if (_FoodServicesClientSessionViewModel!=value)
+                {
+                    _FoodServicesClientSessionViewModel=value;
+                    _FoodServicesClientSessionViewModel?.FoodServicesClientSession?.UpdateSessionUser(Language);
+                }
+
+            }
+        }
+
+
         /// <summary>
         /// Open a new or get existing session for service point (servicePointIdentity)
         /// This object is the proxy of server side client session 
@@ -1797,10 +1813,24 @@ namespace DontWaitApp
 
 
 
-
+        /// <exclude>Excluded</exclude>
+        IUser _SignedInFlavourBusinessUser;
 
         /// <MetaDataID>{afbf90c0-ee2f-4692-9ef0-8ed3c80f7bd2}</MetaDataID>
-        public IUser CurrentUser;
+        public IUser SignedInFlavourBusinessUser
+        {
+            get => _SignedInFlavourBusinessUser;
+            set
+            {
+                _SignedInFlavourBusinessUser=value;
+                if (FoodServicesClientSessionViewModel!=null&&FoodServicesClientSessionViewModel.FoodServicesClientSession!=null)
+                    FoodServicesClientSessionViewModel.FoodServicesClientSession.UpdateSessionUser(Language);
+
+
+
+
+            }
+        }
 
         /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
         Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
@@ -2038,7 +2068,7 @@ namespace DontWaitApp
                     var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
                     var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
 
-                    payment.CardPaymentCompleted(paymentData.CardType,  paymentData.AccountNum,true,paymentData.TransactionID, tipAmount);
+                    payment.CardPaymentCompleted(paymentData.CardType, paymentData.AccountNum, true, paymentData.TransactionID, tipAmount);
                     return true;
 
                 }
