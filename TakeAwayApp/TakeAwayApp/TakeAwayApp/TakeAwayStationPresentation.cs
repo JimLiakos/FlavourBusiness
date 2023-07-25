@@ -43,6 +43,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{16541ed5-9f09-45e2-a16e-cb1e661a7a15}</MetaDataID>
         Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey);
 
+        Task<bool> AssignDeliveryCallCenterStation(bool useFrontCameraIfAvailable);
 
         /// <MetaDataID>{9caf87cf-a117-4483-aba5-584de37e1337}</MetaDataID>
         string DeliveryCallCenterCredentialKey { get; set; }
@@ -55,6 +56,7 @@ namespace TakeAwayApp
         Task<bool> AssignTakeAwayStationCredentialKey(string credentialKey);
         /// <MetaDataID>{0d0668da-c0ce-49ed-9a74-c6a574409a1c}</MetaDataID>
         Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable);
+        
 
         /// <MetaDataID>{30510e04-e498-47df-8334-83573a2d20c0}</MetaDataID>
         Task<bool> IsActive { get; }
@@ -974,6 +976,8 @@ namespace TakeAwayApp
             }
         }
 
+        public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
+
         /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
         public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)
         {
@@ -985,18 +989,55 @@ namespace TakeAwayApp
                 string serverUrl = AzureServerUrl;
                 IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
 
-                TakeAwayStation = servicesContextManagment.GetTakeAwayStation(credentialKey);
-                if (TakeAwayStation!=null)
+                HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(credentialKey);
+                if (HomeDeliveryCallCenterStation!=null)
                 {
-                    TakeAwayStationCredentialKey = credentialKey;
+                    DeliveryCallCenterCredentialKey = credentialKey;
 
                 }
 
-                return Task.FromResult(TakeAwayStation!=null);
+                return Task.FromResult(HomeDeliveryCallCenterStation!=null);
 
             }
             return Task.FromResult(true);
         }
 
+        public async Task<bool> AssignDeliveryCallCenterStation(bool useFrontCameraIfAvailable)
+        {
+            //UserDialogs.Instance.Prompt(("Hello world", "Take away");
+            return await Task<bool>.Run(async () =>
+            {
+#if DeviceDotNet
+                try
+                {
+                    var result = await ScanCode.Scan("Hold your phone up to the place Identity", "Scanning will happen automatically", useFrontCameraIfAvailable);
+
+                    if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                        return false;
+
+                    //string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
+                    string communicationCredentialKey = result.Text;
+
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+
+                    return await AssignDeliveryCallCenterCredentialKey(communicationCredentialKey);
+                    
+                }
+                catch (System.Exception error)
+                {
+
+                    throw;
+                }
+  
+#else
+                return false;
+#endif
+            });
+
+        }
     }
 }
