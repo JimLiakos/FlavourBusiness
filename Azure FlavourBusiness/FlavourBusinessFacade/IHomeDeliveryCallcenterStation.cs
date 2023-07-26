@@ -3,13 +3,14 @@ using OOAdvantech.MetaDataRepository;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{39b7faeb-7f7c-4152-b423-858e6d611999}</MetaDataID>
+    [GenerateFacadeProxy]
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{39b7faeb-7f7c-4152-b423-858e6d611999}")]
     public interface IHomeDeliveryCallCenterStation
     {
         /// <MetaDataID>{0a59d844-6b8e-4e2f-99c9-54f71ccea47d}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         string GraphicMenuStorageIdentity { get; set; }
-
+         
         /// <MetaDataID>{0525f79f-be19-4d04-9ac8-518d03fc14f6}</MetaDataID>
         [RoleAMultiplicityRange(0)]
         [RoleBMultiplicityRange(1, 1)]
