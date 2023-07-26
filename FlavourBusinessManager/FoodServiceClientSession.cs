@@ -2857,6 +2857,11 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        public Dictionary<string, ItemPreparationState> CommitAll()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <MetaDataID>{94e00e71-9da0-4e0f-bf45-9d421e9b84cf}</MetaDataID>
 
     }

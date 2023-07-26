@@ -183,7 +183,7 @@ namespace DontWaitApp
 
         }
 
-        FlavoursOrderServer FlavoursOrderServer = new FlavoursOrderServer();
+        FlavoursOrderServer FlavoursOrderServer = new FlavoursOrderServer(false);
         protected override bool OnBackButtonPressed()
         {
             //hybridWebView.NativeWebBrowser.InvockeJSMethod("NavigationButtonPress", new object[] { 1 });

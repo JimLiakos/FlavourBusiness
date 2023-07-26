@@ -67,6 +67,7 @@
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay\OOAdvantech.Pay.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\VivaWalletPos\VivaWalletPos\VivaWalletPos.csproj" />
     <ProjectReference Include="..\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
 

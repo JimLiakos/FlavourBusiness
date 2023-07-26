@@ -59,7 +59,10 @@ namespace TakeAwayApp
         
 
         /// <MetaDataID>{30510e04-e498-47df-8334-83573a2d20c0}</MetaDataID>
-        Task<bool> IsActive { get; }
+        Task<bool> IsTakeAwayStationActive { get; }
+
+        Task<bool> IsDeliveryCallCenterStationActive { get; }
+
 
 
 
@@ -740,7 +743,7 @@ namespace TakeAwayApp
         }
 
         /// <MetaDataID>{644e3027-eddf-448e-8b60-9cb055b47487}</MetaDataID>
-        public Task<bool> IsActive
+        public Task<bool> IsTakeAwayStationActive
         {
             get
             {
@@ -766,6 +769,30 @@ namespace TakeAwayApp
                 return Task.FromResult(TakeAwayStation!=null);
             }
         }
+
+        
+
+        public Task<bool> IsDeliveryCallCenterStationActive
+        {
+            get
+            {
+                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
+                //{
+                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                //}
+                if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+                    IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(TakeAwayStationCredentialKey);
+            
+                }
+                return Task.FromResult(HomeDeliveryCallCenterStation!=null);
+            }
+        }
+
 
 
 #if DeviceDotNet
