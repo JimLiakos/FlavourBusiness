@@ -11,43 +11,44 @@
 namespace FinanceFacade.Proxies
 {
     using System;
-    
-    
+
+
+    /// <MetaDataID>{ca0a7138-c84f-483e-a4a3-ebce2cfd1082}</MetaDataID>
     public sealed class Pr_IPayment : OOAdvantech.Remoting.MarshalByRefObject, FinanceFacade.IPayment, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
-        
+
         private OOAdvantech.Remoting.RestApi.Proxy Proxy;
-        
+
         public FinanceFacade.IPayment Org;
-        
-public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+
+        public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+        {
+            add
             {
-                add
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
-                }
+                this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected", new object[] { value }, new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle) });
             }
-public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            remove
             {
-                add
-                {
-                    this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
-                remove
-                {
-                    this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
-                }
+                this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected", new object[] { value }, new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle) });
             }
-        
+        }
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+        {
+            add
+            {
+                this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "add_ObjectChangeState", new object[] { value }, new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle) });
+            }
+            remove
+            {
+                this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "remove_ObjectChangeState", new object[] { value }, new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle) });
+            }
+        }
+
         public Pr_IPayment(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
         }
-        
+
         // The Width property for the object.
         public bool UserDeclared
         {
@@ -59,7 +60,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<bool>(retValue);
             }
         }
-        
+
         // The Width property for the object.
         public string PaymentOrderUrl
         {
@@ -71,7 +72,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<string>(retValue);
             }
         }
-        
+
         // The Width property for the object.
         public decimal TipsAmount
         {
@@ -83,7 +84,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<decimal>(retValue);
             }
         }
-        
+
         // The Width property for the object.
         public FinanceFacade.PaymentState State
         {
@@ -103,7 +104,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_State", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public string PaymentProviderJson
         {
@@ -123,7 +124,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_PaymentProviderJson", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public System.Nullable<System.DateTime> TransactionDate
         {
@@ -135,7 +136,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
             }
         }
-        
+
         // The Width property for the object.
         public System.Collections.Generic.List<FinanceFacade.IItem> Items
         {
@@ -147,7 +148,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<System.Collections.Generic.List<FinanceFacade.IItem>>(retValue);
             }
         }
-        
+
         // The Width property for the object.
         public decimal Amount
         {
@@ -167,7 +168,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Amount", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public FinanceFacade.PaymentType PaymentType
         {
@@ -187,7 +188,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_PaymentType", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public string Currency
         {
@@ -207,7 +208,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Currency", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public string Identity
         {
@@ -227,7 +228,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Identity", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public string Description
         {
@@ -247,7 +248,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Description", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public string Comments
         {
@@ -267,7 +268,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "set_Comments", args, argsTypes);
             }
         }
-        
+
         // The Width property for the object.
         public FinanceFacade.IPaymentGateway PaymentGateway
         {
@@ -279,7 +280,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 return this.Proxy.GetValue<FinanceFacade.IPaymentGateway>(retValue);
             }
         }
-        
+
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -287,7 +288,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
-        
+
         public void CardPaymentCompleted(string cardType, string accountNumber, bool isDebit, string transactionID, System.Nullable<decimal> tipAmount)
         {
             object[] args = new object[5];
@@ -304,7 +305,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[4] = typeof(System.Nullable<decimal>);
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "CardPaymentCompleted", args, argsTypes);
         }
-        
+
         public void CashPaymentCompleted(decimal tipAmount)
         {
             object[] args = new object[1];
@@ -313,7 +314,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(decimal);
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "CashPaymentCompleted", args, argsTypes);
         }
-        
+
         public void CheckPaymentCompleted(string bankDescription, string bic, string iban, string checkID, string issuer, System.DateTime issueDate, string checkNotes, decimal totalAmount, decimal tipAmount)
         {
             object[] args = new object[9];
@@ -338,28 +339,28 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[8] = typeof(decimal);
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "CheckPaymentCompleted", args, argsTypes);
         }
-        
+
         public void Refund()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "Refund", args, argsTypes);
         }
-        
+
         public void PaymentInProgress()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "PaymentInProgress", args, argsTypes);
         }
-        
+
         public void PaymentRequestCanceled()
         {
             object[] args = new object[0];
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "PaymentRequestCanceled", args, argsTypes);
         }
-        
+
         public bool IsCompleted()
         {
             object[] args = new object[0];
@@ -367,7 +368,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPayment), "IsCompleted", args, argsTypes);
             return this.Proxy.GetValue<bool>(retValue);
         }
-        
+
         public FinanceFacade.PaymentActionState ParseResponse(string response)
         {
             object[] args = new object[1];
@@ -378,10 +379,11 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FinanceFacade.PaymentActionState>(retValue);
         }
     }
-    
+
+    /// <MetaDataID>{9052ff74-6035-4596-8974-036bf724147d}</MetaDataID>
     public sealed class CNSPr_IPayment_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
-        
+
         public void Invoke(object _object, string member)
         {
             object[] args = new object[2];
@@ -392,12 +394,12 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[1] = typeof(string);
             object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
         }
-        
+
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
-        
+
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));

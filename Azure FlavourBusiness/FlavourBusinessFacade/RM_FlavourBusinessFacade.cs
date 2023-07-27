@@ -3075,6 +3075,149 @@ namespace FlavourBusinessFacade.ServicesContextResources.Proxies
     using System;
     
     
+    public sealed class Pr_IHomeDeliveryCallCenterStation : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+        
+        public Pr_IHomeDeliveryCallCenterStation(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string GraphicMenuStorageIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_GraphicMenuStorageIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "set_GraphicMenuStorageIdentity", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint> HomeDeliveryServicePoints
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_HomeDeliveryServicePoints", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string Description
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_Description", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "set_Description", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string ServicesContextIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_ServicesContextIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "set_ServicesContextIdentity", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string CallcenterStationIdentity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_CallcenterStationIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "set_CallcenterStationIdentity", args, argsTypes);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void AddHomeDeliveryServicePoint(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = homeDeliveryServicePoint;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "AddHomeDeliveryServicePoint", args, argsTypes);
+        }
+        
+        public void RemoveHomeDeliveryServicePoint(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = homeDeliveryServicePoint;
+            argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "RemoveHomeDeliveryServicePoint", args, argsTypes);
+        }
+    }
+    
     public sealed class Pr_IPreparationStation : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationStation, OOAdvantech.Remoting.RestApi.ITransparentProxy
     {
         
