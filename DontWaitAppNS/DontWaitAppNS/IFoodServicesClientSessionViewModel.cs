@@ -60,6 +60,7 @@ namespace DontWaitApp
         IList<Messmate> GetMessmates();
 
 
+        /// <MetaDataID>{745f2c27-cb6b-48ef-8cc9-42910eb00099}</MetaDataID>
         IFoodServiceClientSession FoodServicesClientSession
         {
             get;
@@ -119,11 +120,13 @@ namespace DontWaitApp
         /// <MetaDataID>{5c8b7177-5047-4ba2-a21e-20644280f845}</MetaDataID>
         PayOptions? PayOption { get; set; }
 
+        /// <MetaDataID>{f93159e7-a54e-471c-b8c9-daaced2165b5}</MetaDataID>
         List<TipOption> TipOptions { get; }
+        /// <MetaDataID>{b59dac49-e6fa-47bc-984f-c4b15863c3a9}</MetaDataID>
         List<CurrencyOption> CurrencyOptions { get; }
 
 
-        
+
 
     }
 

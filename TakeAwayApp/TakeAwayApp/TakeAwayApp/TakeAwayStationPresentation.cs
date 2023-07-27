@@ -40,9 +40,14 @@ namespace TakeAwayApp
     [HttpVisible]
     public interface IFlavoursServiceOrderTakingStation
     {
+        [Association("", Roles.RoleA, "0c702768-e0d2-45f5-8473-677b5cd739fb")]
+        [RoleBMultiplicityRange(1, 1)]
+        List<IHomeDeliverySession> HomeDeliverySessions { get; }
+
         /// <MetaDataID>{16541ed5-9f09-45e2-a16e-cb1e661a7a15}</MetaDataID>
         Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey);
 
+        /// <MetaDataID>{961e59f9-4c92-47af-a975-4fa28c8eb917}</MetaDataID>
         Task<bool> AssignDeliveryCallCenterStation(bool useFrontCameraIfAvailable);
 
         /// <MetaDataID>{9caf87cf-a117-4483-aba5-584de37e1337}</MetaDataID>
@@ -61,6 +66,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{30510e04-e498-47df-8334-83573a2d20c0}</MetaDataID>
         Task<bool> IsTakeAwayStationActive { get; }
 
+        /// <MetaDataID>{f3e59a9a-7d80-4113-b0a7-fddc88db81d1}</MetaDataID>
         Task<bool> IsDeliveryCallCenterStationActive { get; }
 
 
@@ -105,10 +111,14 @@ namespace TakeAwayApp
         void SiftWorkStart(DateTime startedAt, double timespanInHours);
 
         /// <MetaDataID>{ef901fe7-db80-466c-9826-742e38f6623f}</MetaDataID>
-        void OrderCommitted();
+        void TakeAwayOrderCommitted();
 
         [GenerateEventConsumerProxy]
         event ObjectChangeStateHandle ObjectChangeState;
+
+
+
+        IHomeDeliverySession NewHomeDeliverSession();
 
 
     }
@@ -932,7 +942,7 @@ namespace TakeAwayApp
         }
 
         /// <MetaDataID>{77cc5b05-dca8-4c49-a7e7-4a0a0c7c16d6}</MetaDataID>
-        public void OrderCommitted()
+        public void TakeAwayOrderCommitted()
         {
             if (FlavoursOrderServer.CurrentFoodServicesClientSession?.FoodServicesClientSession?.SessionState==ClientSessionState.ItemsCommited)
             {
