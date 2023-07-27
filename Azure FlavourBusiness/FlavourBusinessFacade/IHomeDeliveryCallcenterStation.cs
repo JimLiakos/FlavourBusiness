@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -32,6 +33,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{e229d169-2500-41cc-98c9-d1daa6e306ca}</MetaDataID>
         void AddHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);
+        IFoodServiceClientSession NewHomeDeliverFoodServicesClientSession();
 
         /// <MetaDataID>{608a2ffa-549d-4e62-aaba-fe09751f93a6}</MetaDataID>
         void RemoveHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);

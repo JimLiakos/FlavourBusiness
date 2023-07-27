@@ -13,7 +13,7 @@ namespace TakeAwayApp.Proxies
     using System;
 
 
-    /// <MetaDataID>{0b3f60d8-f0c6-487f-af5d-6e48748f6f7f}</MetaDataID>
+    /// <MetaDataID>{2e037a41-8db5-4e03-b4bc-afd7746b7224}</MetaDataID>
     public sealed class CNSPr_IFlavoursServiceOrderTakingStation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
 

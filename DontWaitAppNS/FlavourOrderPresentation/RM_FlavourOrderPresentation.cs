@@ -11,12 +11,11 @@
 namespace DontWaitApp.Proxies
 {
     using System;
-
-
-    /// <MetaDataID>{8ec9fdff-a993-4770-939c-a0ff8cad9a1d}</MetaDataID>
+    
+    
     public sealed class CNSPr_IFlavoursOrderServer_PartOfMealRequest : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(DontWaitApp.IFlavoursOrderServer flavoursOrderServer, DontWaitApp.Messmate messmate, string messageID)
         {
             object[] args = new object[3];
@@ -29,22 +28,21 @@ namespace DontWaitApp.Proxies
             argsTypes[2] = typeof(string);
             object retValue = this.Invoke(typeof(DontWaitApp.PartOfMealRequestHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new DontWaitApp.PartOfMealRequestHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new DontWaitApp.PartOfMealRequestHandle(this.Invoke));
         }
     }
-
-    /// <MetaDataID>{2978586e-bc9d-48ce-a1c0-93e5584d8570}</MetaDataID>
+    
     public sealed class CNSPr_IFlavoursOrderServer_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(object _object, string member)
         {
             object[] args = new object[2];
@@ -55,22 +53,21 @@ namespace DontWaitApp.Proxies
             argsTypes[1] = typeof(string);
             object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
     }
-
-    /// <MetaDataID>{c2a24840-dd1f-465f-b336-774a15d1cf85}</MetaDataID>
+    
     public sealed class CNSPr_IFoodServicesClientSessionViewModel_SharedItemChanged : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(DontWaitApp.IFoodServicesClientSessionViewModel flavoursOrderServer, DontWaitApp.Messmate messmate, string sharedItemUid, string messageID)
         {
             object[] args = new object[4];
@@ -85,22 +82,21 @@ namespace DontWaitApp.Proxies
             argsTypes[3] = typeof(string);
             object retValue = this.Invoke(typeof(DontWaitApp.SharedItemChangedHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new DontWaitApp.SharedItemChangedHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new DontWaitApp.SharedItemChangedHandle(this.Invoke));
         }
     }
-
-    /// <MetaDataID>{fae1a15d-5fc1-4fc5-83d1-acc244883001}</MetaDataID>
+    
     public sealed class CNSPr_IFoodServicesClientSessionViewModel_MenuItemProposal : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(DontWaitApp.IFoodServicesClientSessionViewModel flavoursOrderServer, DontWaitApp.Messmate messmate, string menuItemUri, string messageID)
         {
             object[] args = new object[4];
@@ -115,22 +111,21 @@ namespace DontWaitApp.Proxies
             argsTypes[3] = typeof(string);
             object retValue = this.Invoke(typeof(DontWaitApp.MenuItemProposalHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new DontWaitApp.MenuItemProposalHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new DontWaitApp.MenuItemProposalHandle(this.Invoke));
         }
     }
-
-    /// <MetaDataID>{0f8f931c-6288-409a-bc75-0c332f8cee82}</MetaDataID>
+    
     public sealed class CNSPr_IFoodServicesClientSessionViewModel_MessmatesWaitForYouToDecide : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(DontWaitApp.IFoodServicesClientSessionViewModel flavoursOrderServer, System.Collections.Generic.List<DontWaitApp.Messmate> messmates, string messageID)
         {
             object[] args = new object[3];
@@ -143,22 +138,21 @@ namespace DontWaitApp.Proxies
             argsTypes[2] = typeof(string);
             object retValue = this.Invoke(typeof(DontWaitApp.MessmatesWaitForYouToDecideHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new DontWaitApp.MessmatesWaitForYouToDecideHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new DontWaitApp.MessmatesWaitForYouToDecideHandle(this.Invoke));
         }
     }
-
-    /// <MetaDataID>{ec42f5ed-d068-4324-8616-1bfb05844b82}</MetaDataID>
+    
     public sealed class CNSPr_IFoodServicesClientSessionViewModel_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(object _object, string member)
         {
             object[] args = new object[2];
@@ -169,12 +163,12 @@ namespace DontWaitApp.Proxies
             argsTypes[1] = typeof(string);
             object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));

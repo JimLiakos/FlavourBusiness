@@ -196,6 +196,34 @@ namespace DontWaitApp
         {
         }
 
+       public static FoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession, IFlavoursOrderServer flavoursOrderServer)
+        {
+            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
+            var clientSessionData = foodServiceClientSession.ClientSessionData;
+            if (foodServicesClientSessionViewModel==null)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current).CommitTransientObjectState(foodServicesClientSessionViewModel);
+                    foodServicesClientSessionViewModel.Init(clientSessionData, flavoursOrderServer as FlavoursOrderServer);
+                    ApplicationSettings.Current.AddClientSession(foodServicesClientSessionViewModel);
+                    stateTransition.Consistent = true;
+                }
+                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
+                return foodServicesClientSessionViewModel;
+            }
+            else
+            {
+                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
+                foodServicesClientSessionViewModel.Init(clientSessionData, flavoursOrderServer as FlavoursOrderServer);
+                return foodServicesClientSessionViewModel;
+            }
+            
+        }
+
+
         /// <MetaDataID>{a5f046d9-c7fa-43f3-8c49-24c32be142f1}</MetaDataID>
         internal void Init(FlavourBusinessFacade.EndUsers.ClientSessionData clientSessionData, DontWaitApp.FlavoursOrderServer flavoursOrderServer)
         {

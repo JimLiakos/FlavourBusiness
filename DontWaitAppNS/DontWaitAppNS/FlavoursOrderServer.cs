@@ -139,32 +139,7 @@ namespace DontWaitApp
             return true;
         }
 
-        public Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession)
-        {
-            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
-            var clientSessionData = foodServiceClientSession.ClientSessionData;
-            if (foodServicesClientSessionViewModel==null)
-            {
 
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current).CommitTransientObjectState(foodServicesClientSessionViewModel);
-                    foodServicesClientSessionViewModel.Init(clientSessionData, this);
-                    ApplicationSettings.Current.AddClientSession(foodServicesClientSessionViewModel);
-                    stateTransition.Consistent = true;
-                }
-                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
-                FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
-            }
-            else
-            {
-                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
-                foodServicesClientSessionViewModel.Init(clientSessionData, this);
-                FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
-            }
-            return Task<bool>.FromResult(true);
-        }
 
 
 
@@ -957,7 +932,7 @@ namespace DontWaitApp
                 {
                     homeDeliveryServicePointInfo=NeighborhoodFoodServers.SelectMany(x => x.Value).Where(x => x.ServicePointIdentity== servicePointIdentity).FirstOrDefault();
                 }
-                FoodServicesClientSessionViewModel = await GetFoodServiceSession(servicePointIdentity, homeDeliveryServicePointInfo?.FlavoursServices);
+                FoodServicesClientSessionViewModel = await GetFoodServicesClientSessionViewModel(servicePointIdentity, homeDeliveryServicePointInfo?.FlavoursServices);
 
                 if (FoodServicesClientSessionViewModel != null)
                     ApplicationSettings.Current.DisplayedFoodServicesClientSession = FoodServicesClientSessionViewModel;
@@ -1833,7 +1808,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
-        Task<FoodServicesClientSessionViewModel> GetFoodServiceSession(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
+        public Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
         {
             return Task<IFoodServiceClientSession>.Run(async () =>
             {
@@ -1916,7 +1891,34 @@ namespace DontWaitApp
 
         }
 
+    
 
+        public Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
+        {
+            FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
+            var clientSessionData = foodServiceClientSession.ClientSessionData;
+            if (foodServicesClientSessionViewModel==null)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current).CommitTransientObjectState(foodServicesClientSessionViewModel);
+                    foodServicesClientSessionViewModel.Init(clientSessionData, this);
+                    ApplicationSettings.Current.AddClientSession(foodServicesClientSessionViewModel);
+                    stateTransition.Consistent = true;
+                }
+                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
+                return Task<FoodServicesClientSessionViewModel>.FromResult( foodServicesClientSessionViewModel);
+            }
+            else
+            {
+                ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
+                foodServicesClientSessionViewModel.Init(clientSessionData, this);
+                return Task<FoodServicesClientSessionViewModel>.FromResult(foodServicesClientSessionViewModel);
+            }
+
+        }
 
         ///// <summary>
         ///// this method gets food services client session  data and synchronize caching data 
@@ -2088,7 +2090,7 @@ namespace DontWaitApp
 
         }
 
-
+      
 
 
 

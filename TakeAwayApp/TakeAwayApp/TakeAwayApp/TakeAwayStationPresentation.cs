@@ -20,6 +20,7 @@ using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
 
 using FlavourBusinessFacade.RoomService;
+using DontWaitApp;
 
 
 #if DeviceDotNet
@@ -118,14 +119,25 @@ namespace TakeAwayApp
 
 
 
+        /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
         IHomeDeliverySession NewHomeDeliverSession();
+
+        /// <MetaDataID>{06fd4791-60ad-4ab6-9788-d28a2fc13e29}</MetaDataID>
+        void CancelHomeDeliverySession(IHomeDeliverySession homeDeliverySession);
+
+
+
+
+        IFoodServicesClientSessionViewModel TakeAwaySession { get; }
+
+
 
 
     }
-    
-    
-    
-    
+
+
+
+
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
     public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
@@ -399,10 +411,10 @@ namespace TakeAwayApp
 
                                 OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
                                 var sdds = DeviceAuthentication.AuthUser;
-                                
-                                
+
+
                                 if (ActiveShiftWork!=null)
-                                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                                    _TakeAwaySession=await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
                                 return true;
 
@@ -498,7 +510,7 @@ namespace TakeAwayApp
                                 {
                                     OOAdvantech.IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-                                    FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                                    _TakeAwaySession= await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                                 }
 
 
@@ -529,6 +541,8 @@ namespace TakeAwayApp
             }
 
         }
+
+
 
         /// <MetaDataID>{90d96b7e-007e-4998-a9f5-b83ec28479a7}</MetaDataID>
         private void TakeAwayCashierPresentation_Reconnected(object sender)
@@ -611,14 +625,14 @@ namespace TakeAwayApp
 
 
         /// <MetaDataID>{544700dd-b3ab-48f8-9fb9-a92603c17d3b}</MetaDataID>
-        public void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        public async void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = TakeAwayCashier.NewShiftWork(startedAt, timespanInHours);
 
             if (ActiveShiftWork!=null)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
-                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                _TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken) );
 
 
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
@@ -743,7 +757,7 @@ namespace TakeAwayApp
                 if (TakeAwayStation!=null)
                 {
                     TakeAwayStationCredentialKey = credentialKey;
-
+                     
                 }
 
                 return Task.FromResult(TakeAwayStation!=null);
@@ -817,6 +831,7 @@ namespace TakeAwayApp
         private Task<bool> SignInTask;
         /// <MetaDataID>{c6f564b3-49b0-403b-867f-b519b17e5bae}</MetaDataID>
         private UserData UserData;
+        
 
         /// <MetaDataID>{5427ba17-39b5-4067-bb96-925c49e549fe}</MetaDataID>
         public async Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
@@ -942,12 +957,12 @@ namespace TakeAwayApp
         }
 
         /// <MetaDataID>{77cc5b05-dca8-4c49-a7e7-4a0a0c7c16d6}</MetaDataID>
-        public void TakeAwayOrderCommitted()
+        public async void TakeAwayOrderCommitted()
         {
             if (FlavoursOrderServer.CurrentFoodServicesClientSession?.FoodServicesClientSession?.SessionState==ClientSessionState.ItemsCommited)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                FlavoursOrderServer.OpenFoodServicesClientSession(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                _TakeAwaySession=await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
             }
 
         }
@@ -1015,6 +1030,12 @@ namespace TakeAwayApp
 
         public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
 
+        public List<IHomeDeliverySession> HomeDeliverySessions => throw new NotImplementedException();
+
+        /// <exclude>Excluded</exclude>
+        IFoodServicesClientSessionViewModel _TakeAwaySession;
+        public IFoodServicesClientSessionViewModel TakeAwaySession => _TakeAwaySession;
+
         /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
         public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)
         {
@@ -1075,6 +1096,22 @@ namespace TakeAwayApp
 #endif
             });
 
+        }
+
+        public async Task<IHomeDeliverySession>  NewHomeDeliverSession()
+        {
+
+            IFoodServiceClientSession foodServiceClientSession=this.HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
+            var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
+            var homeDeliverySession = new HomeDeliverySession(foodServicesClientSessionViewModel);
+            this.HomeDeliverySessions.Add(new HomeDeliverySession(foodServicesClientSessionViewModel));
+            return homeDeliverySession;
+
+        }
+
+        public void CancelHomeDeliverySession(IHomeDeliverySession homeDeliverySession)
+        {
+            throw new NotImplementedException();
         }
     }
 }
