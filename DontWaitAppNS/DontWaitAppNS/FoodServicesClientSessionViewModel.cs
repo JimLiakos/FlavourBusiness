@@ -235,7 +235,14 @@ namespace DontWaitApp
 
         }
 
+        internal void Init(OrganizationStorageRef menu, FlavoursOrderServer flavoursOrderServer)
+        {
+            FlavoursOrderServer = flavoursOrderServer;
+            MenuName = menu.Name;
+            MenuRoot = menu.StorageUrl.Substring(0, menu.StorageUrl.LastIndexOf("/") + 1);
+            MenuFile = menu.StorageUrl.Substring(menu.StorageUrl.LastIndexOf("/") + 1);
 
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<ItemPreparation> _OrderItems = new OOAdvantech.Collections.Generic.Set<ItemPreparation>();
@@ -2026,6 +2033,8 @@ namespace DontWaitApp
         {
             DeliveryPlaceJson = OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlace);
         }
+
+     
 
         /// <MetaDataID>{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}</MetaDataID>
         FlavourBusinessFacade.EndUsers.Message MenuItemProposalMessage;

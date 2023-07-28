@@ -243,7 +243,7 @@ namespace DontWaitApp
                             }
                         }
                         if (FoodServicesClientSessionViewModel != null)
-                            FoodServicesClientSessionViewModel.GetMessages();
+                            _FoodServicesClientSessionViewModel.GetMessages();
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -444,7 +444,7 @@ namespace DontWaitApp
         public void WebViewLoaded()
         {
             OnWebViewLoaded?.Invoke();
-            this.FoodServicesClientSessionViewModel?.GetMessages();
+            this._FoodServicesClientSessionViewModel?.GetMessages();
 
         }
 
@@ -769,7 +769,7 @@ namespace DontWaitApp
                 {
 
 
-                    if (FoodServicesClientSessionViewModel != null && FoodServicesClientSessionViewModel.MessmatesLoaded)
+                    if (FoodServicesClientSessionViewModel != null && _FoodServicesClientSessionViewModel.MessmatesLoaded)
                     {
                         PendingPartOfMealMessage = message;
 
@@ -848,14 +848,14 @@ namespace DontWaitApp
 
         FoodServicesClientSessionViewModel _FoodServicesClientSessionViewModel;
         /// <MetaDataID>{636f2c8c-bead-4c32-abbe-36fb33977ac0}</MetaDataID>
-        FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel
+        IFoodServicesClientSessionViewModel FoodServicesClientSessionViewModel
         {
             get => _FoodServicesClientSessionViewModel;
             set
             {
                 if (_FoodServicesClientSessionViewModel!=value)
                 {
-                    _FoodServicesClientSessionViewModel=value;
+                    _FoodServicesClientSessionViewModel=value as FoodServicesClientSessionViewModel;
                     _FoodServicesClientSessionViewModel?.FoodServicesClientSession?.UpdateSessionUser(Language);
                 }
 
@@ -935,7 +935,7 @@ namespace DontWaitApp
                 FoodServicesClientSessionViewModel = await GetFoodServicesClientSessionViewModel(servicePointIdentity, homeDeliveryServicePointInfo?.FlavoursServices);
 
                 if (FoodServicesClientSessionViewModel != null)
-                    ApplicationSettings.Current.DisplayedFoodServicesClientSession = FoodServicesClientSessionViewModel;
+                    ApplicationSettings.Current.DisplayedFoodServicesClientSession = FoodServicesClientSessionViewModel as FoodServicesClientSessionViewModel;
 
                 return true;
             });
@@ -1226,7 +1226,7 @@ namespace DontWaitApp
         /// <MetaDataID>{94762c9c-6a70-4d24-886e-39e408f5911a}</MetaDataID>
         private string GetMealInvitationUri()
         {
-            string codeValue = "MealInvitation;" + FoodServicesClientSessionViewModel.ServicePointIdentity + ";" + FoodServicesClientSessionViewModel.ClientSessionID;
+            string codeValue = "MealInvitation;" + _FoodServicesClientSessionViewModel.ServicePointIdentity + ";" + _FoodServicesClientSessionViewModel.ClientSessionID;
 
             //var lastServicePoinMenuData = ApplicationSettings.Current.LastServicePoinMenuData;
             //if (lastServicePoinMenuData.ClientSessionID == null)
@@ -1284,7 +1284,7 @@ namespace DontWaitApp
                     if (messageID != null)
                         FoodServicesClientSessionViewModel?.FoodServicesClientSession.RemoveMessage(messageID);
 
-                    FoodServicesClientSessionViewModel?.FoodServicesClientSession?.AcceptMealInvitation(FoodServicesClientSessionViewModel?.ClientSessionToken, clientSession);
+                    FoodServicesClientSessionViewModel?.FoodServicesClientSession?.AcceptMealInvitation(_FoodServicesClientSessionViewModel?.ClientSessionToken, clientSession);
                     var ss = FoodServicesClientSessionViewModel?.FoodServicesClientSession?.MainSession;
                     var ss1 = FoodServicesClientSessionViewModel?.FoodServicesClientSession?.MainSession?.SessionID;
                     //if (ApplicationSettings.Current.DisplayedFoodServicesClientSession==null.MainSessionID != FoodServicesClientSessionViewModel?.MainSession?.SessionID)
@@ -1295,7 +1295,7 @@ namespace DontWaitApp
                     //    menuData.MainSessionID = FoodServicesClientSessionViewModel.MainSession?.SessionID;
 
                     //}
-                    FoodServicesClientSessionViewModel?.GetMessages();
+                    _FoodServicesClientSessionViewModel?.GetMessages();
 
                     return true;
                 }
@@ -1346,7 +1346,7 @@ namespace DontWaitApp
                                      where theMessmate.ClientSessionID == messmate.ClientSessionID
                                      select theMessmate.ClientSession).FirstOrDefault();
                 clientSession.MealInvitationDenied(FoodServicesClientSessionViewModel.FoodServicesClientSession);
-                FoodServicesClientSessionViewModel.GetMessages();
+                _FoodServicesClientSessionViewModel.GetMessages();
             }
         }
 
@@ -1374,7 +1374,7 @@ namespace DontWaitApp
                     Task.Run(() =>
                     {
                         Thread.Sleep(2000);
-                        if (FoodServicesClientSessionViewModel != null && FoodServicesClientSessionViewModel.MessmatesLoaded)
+                        if (FoodServicesClientSessionViewModel != null && _FoodServicesClientSessionViewModel.MessmatesLoaded)
                         {
                             FoodServicesClientSessionViewModel.GetCandidateMessmates();
                             var messmate = (from theMessmate in this.CandidateMessmates
@@ -1807,10 +1807,20 @@ namespace DontWaitApp
             }
         }
 
-        /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
-        public Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
+        public IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu)
         {
-            return Task<IFoodServiceClientSession>.Run(async () =>
+
+            var foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
+
+            foodServicesClientSessionViewModel.Init(menu, this);
+            return foodServicesClientSessionViewModel;
+        }
+
+
+        /// <MetaDataID>{0a4b8da3-005a-4dad-9728-12c5fb1ea1dd}</MetaDataID>
+        public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
+        {
+            return Task<IFoodServicesClientSessionViewModel>.Run(async () =>
             {
                 try
                 {
@@ -1879,9 +1889,9 @@ namespace DontWaitApp
                             stateTransition.Consistent = true;
                         }
                     }
-
+                    //IFoodServicesClientSessionViewModel sds = foodServicesClientSessionViewModel;
                     foodServicesClientSessionViewModel.FlavoursOrderServer = this;
-                    return foodServicesClientSessionViewModel;
+                    return foodServicesClientSessionViewModel as IFoodServicesClientSessionViewModel;
                 }
                 catch (Exception error)
                 {
@@ -1893,7 +1903,7 @@ namespace DontWaitApp
 
     
 
-        public Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
+        public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
             var clientSessionData = foodServiceClientSession.ClientSessionData;
@@ -1908,13 +1918,13 @@ namespace DontWaitApp
                     stateTransition.Consistent = true;
                 }
                 ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
-                return Task<FoodServicesClientSessionViewModel>.FromResult( foodServicesClientSessionViewModel);
+                return Task<IFoodServicesClientSessionViewModel>.FromResult( foodServicesClientSessionViewModel as IFoodServicesClientSessionViewModel);
             }
             else
             {
                 ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
                 foodServicesClientSessionViewModel.Init(clientSessionData, this);
-                return Task<FoodServicesClientSessionViewModel>.FromResult(foodServicesClientSessionViewModel);
+                return Task<IFoodServicesClientSessionViewModel>.FromResult(foodServicesClientSessionViewModel as IFoodServicesClientSessionViewModel);
             }
 
         }
@@ -1989,11 +1999,11 @@ namespace DontWaitApp
         {
             return Task<bool>.Run(async () =>
             {
-                if (FoodServicesClientSessionViewModel != null && (await FoodServicesClientSessionViewModel.IsActive()) != null && (await FoodServicesClientSessionViewModel.IsActive()).Value)
+                if (FoodServicesClientSessionViewModel != null && (await _FoodServicesClientSessionViewModel.IsActive()) != null && (await _FoodServicesClientSessionViewModel.IsActive()).Value)
                     return true;
-                else if (FoodServicesClientSessionViewModel != null && (await FoodServicesClientSessionViewModel.IsActive()) != null && !(await FoodServicesClientSessionViewModel.IsActive()).Value)
+                else if (_FoodServicesClientSessionViewModel != null && (await _FoodServicesClientSessionViewModel.IsActive()) != null && !(await _FoodServicesClientSessionViewModel.IsActive()).Value)
                 {
-                    FoodServicesClientSessionViewModel = null;
+                    _FoodServicesClientSessionViewModel = null;
                     ApplicationSettings.Current.RemoveClientSession(ApplicationSettings.Current.DisplayedFoodServicesClientSession);
                     Path = "";
                 }

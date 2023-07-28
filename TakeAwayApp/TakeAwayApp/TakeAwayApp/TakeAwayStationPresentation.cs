@@ -1105,8 +1105,9 @@ namespace TakeAwayApp
         public async Task<IHomeDeliverySession>  NewHomeDeliverSession()
         {
 
-            IFoodServiceClientSession foodServiceClientSession=this.HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
-            var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
+            var foodServicesClientSessionViewModel =this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+            //IFoodServiceClientSession foodServiceClientSession=HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
+            //var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
             var homeDeliverySession = new HomeDeliverySession(foodServicesClientSessionViewModel);
             this.HomeDeliverySessions.Add(new HomeDeliverySession(foodServicesClientSessionViewModel));
             return homeDeliverySession;

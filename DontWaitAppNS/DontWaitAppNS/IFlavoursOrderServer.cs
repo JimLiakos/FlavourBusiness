@@ -249,14 +249,15 @@ namespace DontWaitApp
 
         /// <MetaDataID>{1296cf3c-a0c6-4483-a8ec-3c2ac3874660}</MetaDataID>
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
-        Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession);
+        Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession);
 
 
         
 
-        Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true);
+        Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true);
 
         void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel);
+        IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu);
 
 
         //Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession);
