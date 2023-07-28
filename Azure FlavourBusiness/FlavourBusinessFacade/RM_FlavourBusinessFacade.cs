@@ -3191,6 +3191,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             }
         }
         
+        // The Width property for the object.
+        public FlavourBusinessFacade.OrganizationStorageRef Menu
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_Menu", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.OrganizationStorageRef>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -3206,6 +3218,23 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             args[0] = homeDeliveryServicePoint;
             argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "AddHomeDeliveryServicePoint", args, argsTypes);
+        }
+        
+        public void CancelHomeDeliverFoodServicesClientSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodServicesClientSession;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "CancelHomeDeliverFoodServicesClientSession", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession NewHomeDeliverFoodServicesClientSession()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "NewHomeDeliverFoodServicesClientSession", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
         
         public void RemoveHomeDeliveryServicePoint(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint homeDeliveryServicePoint)

@@ -251,7 +251,13 @@ namespace DontWaitApp
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
         Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession);
 
+
+        
+
         Task<FoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true);
+
+        void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel);
+
 
         //Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession);
 

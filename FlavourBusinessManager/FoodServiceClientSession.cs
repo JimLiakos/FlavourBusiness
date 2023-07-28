@@ -1423,16 +1423,16 @@ namespace FlavourBusinessManager.EndUsers
                         //var Landscape = null;
 
                         if (ClientDeviceType==DeviceType.Phone)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsPortrait(x)).FirstOrDefault();
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
 
                         if (ClientDeviceType==DeviceType.Desktop)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
                         if (ClientDeviceType==DeviceType.Tablet)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
                         if (ClientDeviceType==DeviceType.TV)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => IsLandscape(x)).FirstOrDefault();
+                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
                         if (graphicMenu==null)
                             graphicMenu= ServicesContextRunTime.GraphicMenus.FirstOrDefault();
@@ -1453,38 +1453,39 @@ namespace FlavourBusinessManager.EndUsers
             }
 
         }
-        /// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
-        private bool IsLandscape(OrganizationStorageRef graphicMenu)
-        {
-            string menuPageHeightAsString = null;
-            string menuPageWidthAsString = null;
-            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
-            {
-                double height = 0;
-                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
-                double width = 0;
-                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
-                return width>height;
-            }
+        ///// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
+        //private bool IsLandscape(OrganizationStorageRef graphicMenu)
+        //{
+            
+        //    string menuPageHeightAsString = null;
+        //    string menuPageWidthAsString = null;
+        //    if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+        //    {
+        //        double height = 0;
+        //        double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+        //        double width = 0;
+        //        double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+        //        return width>height;
+        //    }
 
-            return false;
-        }
-        /// <MetaDataID>{c40451a6-e3ae-4e91-8999-bda8d857ab9a}</MetaDataID>
-        private bool IsPortrait(OrganizationStorageRef graphicMenu)
-        {
-            string menuPageHeightAsString = null;
-            string menuPageWidthAsString = null;
-            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
-            {
-                double height = 0;
-                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
-                double width = 0;
-                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
-                return height>width;
-            }
+        //    return false;
+        //}
+        ///// <MetaDataID>{c40451a6-e3ae-4e91-8999-bda8d857ab9a}</MetaDataID>
+        //private bool IsPortrait(OrganizationStorageRef graphicMenu)
+        //{
+        //    string menuPageHeightAsString = null;
+        //    string menuPageWidthAsString = null;
+        //    if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+        //    {
+        //        double height = 0;
+        //        double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+        //        double width = 0;
+        //        double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+        //        return height>width;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         /// <MetaDataID>{a31148d7-08cf-459f-bc06-f355081edb15}</MetaDataID>
         internal MenuPresentationModel.MenuCanvas.IRestaurantMenu GraphicMenu

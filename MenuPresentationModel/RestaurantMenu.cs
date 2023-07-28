@@ -700,7 +700,39 @@ namespace MenuPresentationModel
         {
             throw new NotImplementedException();
         }
+        /// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
+        public static bool IsLandscape(OrganizationStorageRef graphicMenu)
+        {
+            
+            string menuPageHeightAsString = null;
+            string menuPageWidthAsString = null;
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            {
+                double height = 0;
+                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+                double width = 0;
+                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+                return width>height;
+            }
 
+            return false;
+        }
+        /// <MetaDataID>{c40451a6-e3ae-4e91-8999-bda8d857ab9a}</MetaDataID>
+        public static bool IsPortrait(OrganizationStorageRef graphicMenu)
+        {
+            string menuPageHeightAsString = null;
+            string menuPageWidthAsString = null;
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            {
+                double height = 0;
+                double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
+                double width = 0;
+                double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
+                return height>width;
+            }
+
+            return false;
+        }
 
     }
 }

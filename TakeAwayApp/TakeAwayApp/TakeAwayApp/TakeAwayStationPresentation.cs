@@ -120,7 +120,7 @@ namespace TakeAwayApp
 
 
         /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
-        IHomeDeliverySession NewHomeDeliverSession();
+        Task<IHomeDeliverySession> NewHomeDeliverSession();
 
         /// <MetaDataID>{06fd4791-60ad-4ab6-9788-d28a2fc13e29}</MetaDataID>
         void CancelHomeDeliverySession(IHomeDeliverySession homeDeliverySession);
@@ -1028,9 +1028,13 @@ namespace TakeAwayApp
             }
         }
 
+
         public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
 
-        public List<IHomeDeliverySession> HomeDeliverySessions => throw new NotImplementedException();
+        /// <exclude>Excluded</exclude>
+        List<IHomeDeliverySession> _HomeDeliverySessions;
+
+        public List<IHomeDeliverySession> HomeDeliverySessions => _HomeDeliverySessions;
 
         /// <exclude>Excluded</exclude>
         IFoodServicesClientSessionViewModel _TakeAwaySession;
@@ -1111,7 +1115,10 @@ namespace TakeAwayApp
 
         public void CancelHomeDeliverySession(IHomeDeliverySession homeDeliverySession)
         {
-            throw new NotImplementedException();
+            this.HomeDeliveryCallCenterStation.CancelHomeDeliverFoodServicesClientSession(homeDeliverySession.FoodServiceClientSession.FoodServicesClientSession);
+            FlavoursOrderServer.SessionIsNoLongerActive(homeDeliverySession.FoodServiceClientSession);
         }
+
+       
     }
 }

@@ -829,9 +829,9 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{a02f8ab0-6c5a-49af-b84c-5fee1271991d}</MetaDataID>
-        internal void SessionIsNoLongerActive(FoodServicesClientSessionViewModel foodServicesClientSessionViewModel)
+        public void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel)
         {
-            ApplicationSettings.Current.RemoveClientSession(foodServicesClientSessionViewModel);
+            ApplicationSettings.Current.RemoveClientSession(foodServicesClientSessionViewModel as FoodServicesClientSessionViewModel);
             if (ApplicationSettings.Current.DisplayedFoodServicesClientSession == null)
             {
                 Path = "";
@@ -1899,7 +1899,6 @@ namespace DontWaitApp
             var clientSessionData = foodServiceClientSession.ClientSessionData;
             if (foodServicesClientSessionViewModel==null)
             {
-
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();

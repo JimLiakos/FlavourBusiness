@@ -1,9 +1,13 @@
+using FlavourBusinessFacade;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicePointRunTime;
+using MenuPresentationModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -145,6 +149,65 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
+        }
+
+        public void CancelHomeDeliverFoodServicesClientSession(IFoodServiceClientSession foodServicesClientSession)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFoodServiceClientSession NewHomeDeliverFoodServicesClientSession()
+        {
+            throw new NotImplementedException();
+        }
+
+        DeviceType ClientDeviceType = DeviceType.Desktop;
+        /// <exclude>Excluded</exclude>
+        OrganizationStorageRef _Menu;
+
+        public OrganizationStorageRef Menu
+        {
+            get
+            {
+                if (_Menu == null)
+                {
+                    OrganizationStorageRef graphicMenu = null;
+                    if (ServicesContextRunTime.Current.GraphicMenus.Count==1)
+                        graphicMenu = ServicesContextRunTime.Current.GraphicMenus.FirstOrDefault();
+                    else
+                    {
+                        //var Portrait = null;
+                        //var Landscape = null;
+
+                        if (ClientDeviceType==DeviceType.Phone)
+                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.Desktop)
+                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.Tablet)
+                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+
+                        if (ClientDeviceType==DeviceType.TV)
+                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+
+                        if (graphicMenu==null)
+                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.FirstOrDefault();
+
+
+                    }
+
+
+                    string versionSuffix = "";
+                    if (!string.IsNullOrWhiteSpace(graphicMenu.Version))
+                        versionSuffix = "/" + graphicMenu.Version;
+                    else
+                        versionSuffix = "";
+                    graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", ServicesContextRunTime.Current.OrganizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
+                    _Menu = graphicMenu;
+                }
+                return _Menu;
+            }
         }
     }
 }

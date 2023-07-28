@@ -186,6 +186,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+
                     if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
                         fsClientSession.UserIdentity = user.Identity;
 

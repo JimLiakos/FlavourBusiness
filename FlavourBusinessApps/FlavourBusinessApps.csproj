@@ -129,6 +129,12 @@
     <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\ApplicationSettings.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\ApplicationSettings.cs</Link>
     </Compile>
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\HomeDeliverySession.cs">
+      <Link>TakeAwayApp.Wpf\ViewModel\HomeDeliverySession.cs</Link>
+    </Compile>
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\IHomeDeliverySession.cs">
+      <Link>TakeAwayApp.Wpf\ViewModel\IHomeDeliverySession.cs</Link>
+    </Compile>
     <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\TakeAwayStationPresentation.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\TakeAwayStationPresentation.cs</Link>
     </Compile>
