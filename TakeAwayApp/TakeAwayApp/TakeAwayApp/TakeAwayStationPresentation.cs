@@ -800,17 +800,18 @@ namespace TakeAwayApp
         {
             get
             {
-                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
-                //{
-                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
-                //}
-                if (HomeDeliveryCallCenterStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
+
+                if (string.IsNullOrWhiteSpace(DeliveryCallCenterCredentialKey))
+                {
+                    DeliveryCallCenterCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_37c2a132289d42cd94083ce402cd2f3f";
+                }
+                if (HomeDeliveryCallCenterStation==null&&!string.IsNullOrEmpty(DeliveryCallCenterCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(TakeAwayStationCredentialKey);
+                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(DeliveryCallCenterCredentialKey);
             
                 }
                 return Task.FromResult(HomeDeliveryCallCenterStation!=null);
@@ -1032,7 +1033,7 @@ namespace TakeAwayApp
         public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
 
         /// <exclude>Excluded</exclude>
-        List<IHomeDeliverySession> _HomeDeliverySessions;
+        List<IHomeDeliverySession> _HomeDeliverySessions=new List<IHomeDeliverySession>();
 
         public List<IHomeDeliverySession> HomeDeliverySessions => _HomeDeliverySessions;
 

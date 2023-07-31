@@ -29,6 +29,5 @@ namespace TakeAwayApp
         PendingCall,
         OrderTaking,
         Commited
-
     }
 }

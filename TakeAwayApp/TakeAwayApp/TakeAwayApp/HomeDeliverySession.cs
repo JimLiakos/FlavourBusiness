@@ -11,7 +11,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 namespace TakeAwayApp
 {
     /// <MetaDataID>{4cc9fb7d-6b96-44f5-9d05-a5f74fd7034d}</MetaDataID>
-    public class HomeDeliverySession :MarshalByRefObject, IHomeDeliverySession, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class HomeDeliverySession : IHomeDeliverySession
     {
 
         public HomeDeliverySession(IFoodServicesClientSessionViewModel foodServiceClientSession, string callerPhone = "")

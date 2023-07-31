@@ -439,5 +439,25 @@ namespace MenuDesigner.ViewModel.Preview
         {
             throw new NotImplementedException();
         }
+
+        public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, FlavourBusinessFacade.IFlavoursServicesContextRuntime flavoursServices = null, bool create = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(FlavourBusinessFacade.OrganizationStorageRef menu)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
