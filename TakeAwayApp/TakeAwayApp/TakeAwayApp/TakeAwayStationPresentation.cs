@@ -62,7 +62,7 @@ namespace TakeAwayApp
         Task<bool> AssignTakeAwayStationCredentialKey(string credentialKey);
         /// <MetaDataID>{0d0668da-c0ce-49ed-9a74-c6a574409a1c}</MetaDataID>
         Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable);
-        
+
 
         /// <MetaDataID>{30510e04-e498-47df-8334-83573a2d20c0}</MetaDataID>
         Task<bool> IsTakeAwayStationActive { get; }
@@ -131,6 +131,20 @@ namespace TakeAwayApp
         IFoodServicesClientSessionViewModel TakeAwaySession { get; }
 
 
+        List<HomeDeliveryServicePointAbbreviation> HomeDeliveryServicePoints { get; }
+
+
+
+
+    }
+
+    public class HomeDeliveryServicePointAbbreviation
+    {
+
+       public string Description { get; set; }
+
+        public string ServicesContextIdentity { get; set; }
+        public string ServicesPointIdentity { get; set; }
 
 
     }
@@ -139,13 +153,13 @@ namespace TakeAwayApp
 
 
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class TakeAwayStationPresentation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
+    public class FlavoursServiceOrderTakingStation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
-        public TakeAwayStationPresentation()
+        public FlavoursServiceOrderTakingStation()
         {
-            
+
             VivaWalletPos.IPos sds = null;
 
             FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(true) { EndUser = this };
@@ -160,15 +174,15 @@ namespace TakeAwayApp
 #endif
 
 
-                //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
-                // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
+            //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
+            // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
 
 
-                //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
-                //var dd = DeviceDisplay.MainDisplayInfo;
+            //[{ "TypeFullName":"FlavourBusinessManager.HumanResources.TakeawayCashier","ObjectUri":"3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d","ComputingContextID":"0470e076603e47b6a82556fe4c1bf335"}]
+            //var dd = DeviceDisplay.MainDisplayInfo;
 
-                //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
-                //var ss = Xamarin.Forms.Device.Idiom;
+            //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
+            //var ss = Xamarin.Forms.Device.Idiom;
         }
 
         //FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
@@ -424,7 +438,7 @@ namespace TakeAwayApp
 
                         try
                         {
-                            pAuthFlavourBusiness =TakeAwayStationPresentation.GetFlavourBusinessAuth();
+                            pAuthFlavourBusiness =FlavoursServiceOrderTakingStation.GetFlavourBusinessAuth();
                         }
                         catch (System.Net.WebException error)
                         {
@@ -632,7 +646,7 @@ namespace TakeAwayApp
             if (ActiveShiftWork!=null)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
-                _TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken) );
+                _TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
 
 
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
@@ -757,7 +771,7 @@ namespace TakeAwayApp
                 if (TakeAwayStation!=null)
                 {
                     TakeAwayStationCredentialKey = credentialKey;
-                     
+
                 }
 
                 return Task.FromResult(TakeAwayStation!=null);
@@ -771,10 +785,10 @@ namespace TakeAwayApp
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(TakeAwayStationCredentialKey))
-                {
-                    TakeAwayStationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
-                }
+                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
+                //{
+                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                //}
                 if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -794,25 +808,24 @@ namespace TakeAwayApp
             }
         }
 
-        
 
+         
         public Task<bool> IsDeliveryCallCenterStationActive
         {
             get
             {
-
-                if (string.IsNullOrWhiteSpace(DeliveryCallCenterCredentialKey))
-                {
-                    DeliveryCallCenterCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_37c2a132289d42cd94083ce402cd2f3f";
-                }
-                if (HomeDeliveryCallCenterStation==null&&!string.IsNullOrEmpty(DeliveryCallCenterCredentialKey))
+                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
+                //{
+                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                //}
+                if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(DeliveryCallCenterCredentialKey);
-            
+                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(TakeAwayStationCredentialKey);
+
                 }
                 return Task.FromResult(HomeDeliveryCallCenterStation!=null);
             }
@@ -832,7 +845,7 @@ namespace TakeAwayApp
         private Task<bool> SignInTask;
         /// <MetaDataID>{c6f564b3-49b0-403b-867f-b519b17e5bae}</MetaDataID>
         private UserData UserData;
-        
+
 
         /// <MetaDataID>{5427ba17-39b5-4067-bb96-925c49e549fe}</MetaDataID>
         public async Task<bool> AssignTakeAwayStation(bool useFrontCameraIfAvailable)
@@ -968,7 +981,7 @@ namespace TakeAwayApp
 
         }
 
- 
+
 
         /// <MetaDataID>{115be581-0ca0-47e1-8580-f74b9aa5019a}</MetaDataID>
         IPlace HomeDeliveryPlaceOfDistribution { get; }
@@ -1033,13 +1046,32 @@ namespace TakeAwayApp
         public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
 
         /// <exclude>Excluded</exclude>
-        List<IHomeDeliverySession> _HomeDeliverySessions=new List<IHomeDeliverySession>();
+        List<IHomeDeliverySession> _HomeDeliverySessions;
 
         public List<IHomeDeliverySession> HomeDeliverySessions => _HomeDeliverySessions;
 
         /// <exclude>Excluded</exclude>
         IFoodServicesClientSessionViewModel _TakeAwaySession;
         public IFoodServicesClientSessionViewModel TakeAwaySession => _TakeAwaySession;
+
+
+        List<IHomeDeliveryServicePoint> _HomeDeliveryServicePoints;
+        
+
+        public List<HomeDeliveryServicePointAbbreviation> HomeDeliveryServicePoints
+        {
+            get
+            {
+                if(this.HomeDeliveryCallCenterStation!=null)
+                {
+                    if (_HomeDeliveryServicePoints==null)
+                        _HomeDeliveryServicePoints=this.HomeDeliveryCallCenterStation.HomeDeliveryServicePoints;
+
+                    return _HomeDeliveryServicePoints.Select(x => new HomeDeliveryServicePointAbbreviation() { Description=x.Description, ServicesContextIdentity=x.ServicesContextIdentity, ServicesPointIdentity=x.ServicesPointIdentity }).ToList();
+                }
+                return new List<HomeDeliveryServicePointAbbreviation>();
+            }
+        }
 
         /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
         public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)
@@ -1103,10 +1135,10 @@ namespace TakeAwayApp
 
         }
 
-        public async Task<IHomeDeliverySession>  NewHomeDeliverSession()
+        public async Task<IHomeDeliverySession> NewHomeDeliverSession()
         {
 
-            var foodServicesClientSessionViewModel =this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+            var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
             //IFoodServiceClientSession foodServiceClientSession=HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
             //var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
             var homeDeliverySession = new HomeDeliverySession(foodServicesClientSessionViewModel);
@@ -1121,6 +1153,6 @@ namespace TakeAwayApp
             FlavoursOrderServer.SessionIsNoLongerActive(homeDeliverySession.FoodServiceClientSession);
         }
 
-       
+
     }
 }

@@ -255,6 +255,14 @@ namespace FlavourBusinessManager
                         if (_RunAtContext.Value != null)
                             _RunAtContext.Value.Description = _Description;
 
+                        Transaction.RunOnTransactionCompleted(() =>
+                        {
+                            if (FlavoursServicesContextRuntime != null)
+                                FlavoursServicesContextRuntime.Description = Description;
+
+                        });
+
+
                         stateTransition.Consistent = true;
                     }
                 }
@@ -487,7 +495,7 @@ namespace FlavourBusinessManager
                                         ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodTypeTag);
                                     }
 
-                                } 
+                                }
                                 stateTransition.Consistent = true;
                             }
 
@@ -783,7 +791,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{5d3ee750-210e-492a-85bf-d520ca29377e}</MetaDataID>
         public void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation)
         {
-          
+
             GetRunTime().RemoveCallCenterStation(homeDeliveryCallcenterStation);
         }
 

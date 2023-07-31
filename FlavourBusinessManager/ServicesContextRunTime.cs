@@ -1005,6 +1005,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _Description = value;
+                        
+                        if (DeliveryServicePoint!=null)
+                            DeliveryServicePoint.Description=Description;
+
                         stateTransition.Consistent = true;
                     }
                     ObjectChangeState?.Invoke(this, nameof(Description));
@@ -1907,7 +1911,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     if (DeliveryServicePointLoaded)
                     {
                         if (_DeliveryServicePoint?.IsActive == true)
+                        {
+                            _DeliveryServicePoint.Description=Description;
                             return _DeliveryServicePoint;
+                        }
                         else
                             return null;
                     }
@@ -2218,13 +2225,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (homeDeliveryCallCenterStationsLock)
             {
                 if (CallCenterStationsDictionary.ContainsKey(deliveryCallCenterCredentialKey))
-                {
-                    //var homeDeliveryCallCenterStation = CallCenterStationsDictionary[deliveryCallCenterCredentialKey];
-                    //if (this.DeliveryServicePoint!=null&&!homeDeliveryCallCenterStation.HomeDeliveryServicePoints.Contains(this.DeliveryServicePoint))
-                    //    homeDeliveryCallCenterStation.AddHomeDeliveryServicePoint(this.DeliveryServicePoint);
-
                     return _CallCenterStationsDictionary[deliveryCallCenterCredentialKey];
-                }
                 return null;
             }
         }
@@ -2859,9 +2860,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 homeDeliveryCallCenterStation.Description = Properties.Resources.DefaultHomeDeliveryCallCenterStationDescription;
                 homeDeliveryCallCenterStation.ServicesContextIdentity = this.ServicesContextIdentity;
                 objectStorage.CommitTransientObjectState(homeDeliveryCallCenterStation);
-
-                if (this.DeliveryServicePoint!=null)
-                    homeDeliveryCallCenterStation.AddHomeDeliveryServicePoint(this.DeliveryServicePoint);
                 stateTransition.Consistent = true;
             }
             var count = CallCenterStationsDictionary.Count;
