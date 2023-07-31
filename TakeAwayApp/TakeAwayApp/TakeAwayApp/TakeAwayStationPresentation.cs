@@ -138,20 +138,19 @@ namespace TakeAwayApp
 
     }
 
+
     public class HomeDeliveryServicePointAbbreviation
     {
-
-       public string Description { get; set; }
-
+        public string Description { get; set; }
         public string ServicesContextIdentity { get; set; }
         public string ServicesPointIdentity { get; set; }
-
 
     }
 
 
 
 
+    
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
     public class FlavoursServiceOrderTakingStation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
     {
@@ -785,10 +784,10 @@ namespace TakeAwayApp
         {
             get
             {
-                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
-                //{
-                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
-                //}
+                if (string.IsNullOrWhiteSpace(TakeAwayStationCredentialKey))
+                {
+                    TakeAwayStationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                }
                 if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -809,22 +808,24 @@ namespace TakeAwayApp
         }
 
 
-         
+
         public Task<bool> IsDeliveryCallCenterStationActive
         {
             get
             {
-                //if(string.IsNullOrWhiteSpace( CommunicationCredentialKey))
-                //{
-                //    CommunicationCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
-                //}
-                if (TakeAwayStation==null&&!string.IsNullOrEmpty(TakeAwayStationCredentialKey))
+
+
+                if (string.IsNullOrWhiteSpace(DeliveryCallCenterCredentialKey))
+                         {
+                    DeliveryCallCenterCredentialKey="7f9bde62e6da45dc8c5661ee2220a7b0_37c2a132289d42cd94083ce402cd2f3f";
+                }
+                if (HomeDeliveryCallCenterStation==null&&!string.IsNullOrEmpty(DeliveryCallCenterCredentialKey))
                 {
                     string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                     string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                     string serverUrl = AzureServerUrl;
                     IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(TakeAwayStationCredentialKey);
+                    HomeDeliveryCallCenterStation = servicesContextManagment.GetHomeDeliveryCallCenterStation(DeliveryCallCenterCredentialKey);
 
                 }
                 return Task.FromResult(HomeDeliveryCallCenterStation!=null);
@@ -1046,7 +1047,7 @@ namespace TakeAwayApp
         public IHomeDeliveryCallCenterStation HomeDeliveryCallCenterStation { get; private set; }
 
         /// <exclude>Excluded</exclude>
-        List<IHomeDeliverySession> _HomeDeliverySessions;
+        List<IHomeDeliverySession> _HomeDeliverySessions = new List<IHomeDeliverySession>();
 
         public List<IHomeDeliverySession> HomeDeliverySessions => _HomeDeliverySessions;
 
@@ -1056,7 +1057,7 @@ namespace TakeAwayApp
 
 
         List<IHomeDeliveryServicePoint> _HomeDeliveryServicePoints;
-        
+
 
         public List<HomeDeliveryServicePointAbbreviation> HomeDeliveryServicePoints
         {
@@ -1142,7 +1143,10 @@ namespace TakeAwayApp
             //IFoodServiceClientSession foodServiceClientSession=HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
             //var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
             var homeDeliverySession = new HomeDeliverySession(foodServicesClientSessionViewModel);
-            this.HomeDeliverySessions.Add(new HomeDeliverySession(foodServicesClientSessionViewModel));
+            this.HomeDeliverySessions.Add(homeDeliverySession);
+            homeDeliverySession.HomeDeliveryServicePoints=HomeDeliveryServicePoints;
+
+
             return homeDeliverySession;
 
         }

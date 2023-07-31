@@ -29,5 +29,6 @@ namespace TakeAwayApp
             get;
             set;
         }
+        public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> HomeDeliveryServicePoints { get; internal set; }
     }
 }
