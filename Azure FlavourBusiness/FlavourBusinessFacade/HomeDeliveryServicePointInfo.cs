@@ -33,4 +33,17 @@ namespace FlavourBusinessFacade
         }
 
     }
+
+
+
+    public class HomeDeliveryServicePointAbbreviation
+    {
+        public string Description { get; set; }
+        public string ServicesContextIdentity { get; set; }
+        public string ServicesPointIdentity { get; set; }
+
+        public double Distance { get; set; }
+
+    }
+
 }

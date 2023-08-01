@@ -3245,6 +3245,16 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             argsTypes[0] = typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "RemoveHomeDeliveryServicePoint", args, argsTypes);
         }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(FlavourBusinessFacade.EndUsers.Coordinate location)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = location;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetNeighborhoodFoodServers", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation>>(retValue);
+        }
     }
     
     public sealed class Pr_IPreparationStation : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationStation, OOAdvantech.Remoting.RestApi.ITransparentProxy
