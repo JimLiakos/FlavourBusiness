@@ -86,6 +86,28 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
+        {
+            List<HomeDeliveryServicePointAbbreviation> deliveryServicePoints = new List<HomeDeliveryServicePointAbbreviation>();
+
+            foreach (var deliveryServicePoint in HomeDeliveryServicePoints)
+            {
+                var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
+                if (placeOfDistribution!=null)
+                {
+                    double distance = Coordinate.CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
+
+                    var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
+
+                    if (polyGon.FindPoint(location.Latitude, location.Longitude))
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description,Distance=distance,ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity,ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity });
+                }
+
+            }
+            return deliveryServicePoints;
+
+        }
+
         /// <exclude>Excluded</exclude>
         string _CallcenterStationIdentity;
         /// <MetaDataID>{519ff5fa-ec0c-40b7-9131-6c9d156bf632}</MetaDataID>
