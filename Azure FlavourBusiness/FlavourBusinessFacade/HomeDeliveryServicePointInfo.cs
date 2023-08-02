@@ -51,6 +51,14 @@ namespace FlavourBusinessFacade
 
     PlaceOfDistributionJson : {"ExtensionProperties":{},"CityTown":"Αθήνα","StateProvinceRegion":null,"Description":"Λαζαράδων 29, Αθήνα, Ελλάδα","StreetNumber":"29","Street":"Λαζαράδων","Area":null,"PostalCode":"113 63","Country":"Ελλάδα","Location":{"Longitude":23.7472703,"Latitude":38.00026},"PlaceID":"ChIJxZ_kbbqioRQRYiLJ5_50sQQ","Default":true}
 
+
+    Λάκωνος
+    
+    ServiceAreaMapJson  : [{"Longitude":23.756942191409244,"Latitude":37.997785513901349},{"Longitude":23.754968085574284,"Latitude":37.997075316210584},{"Longitude":23.753895201968326,"Latitude":37.996314382481863},{"Longitude":23.753444590853825,"Latitude":37.9951306921011},{"Longitude":23.753873744296207,"Latitude":37.9936087763995},{"Longitude":23.752500453280582,"Latitude":37.990564850264242},{"Longitude":23.751749434756412,"Latitude":37.988247999610365},{"Longitude":23.75780049829401,"Latitude":37.986962707840867},{"Longitude":23.76495109988965,"Latitude":37.985793796814477},{"Longitude":23.766410221593752,"Latitude":37.987079109060993},{"Longitude":23.767182697790041,"Latitude":37.987890873615555},{"Longitude":23.767526020543947,"Latitude":37.9884658680742},{"Longitude":23.771388401525392,"Latitude":37.990867266805964},{"Longitude":23.775637020604982,"Latitude":37.993031840552639},{"Longitude":23.769113888280764,"Latitude":37.998206265799595},{"Longitude":23.765594830053224,"Latitude":38.001114606002155},{"Longitude":23.76396404697217,"Latitude":38.001114606002155},{"Longitude":23.759887089269533,"Latitude":38.000810250221747},{"Longitude":23.758814205663576,"Latitude":37.999897175301392},{"Longitude":23.758556713598146,"Latitude":37.998950270783524},{"Longitude":23.757784237401857,"Latitude":37.998104809989734}]
+
+    PlaceOfDistributionJson : {"ExtensionProperties":{},"CityTown":"Αθήνα","StateProvinceRegion":null,"Description":"Λάκωνος 26, Αθήνα, Ελλάδα ","StreetNumber":"26","Street":"Λάκωνος","Area":null,"PostalCode":"115 24","Country":"Ελλάδα","Location":{"Longitude":23.765026,"Latitude":37.9960904},"PlaceID":"ChIJq1RxdAiYoRQRvVR_EYQH2gw","Default":true}
+
+
      */
 
 }
