@@ -39,7 +39,7 @@ namespace FLBManager
 
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
 
-           
+
 
             var location = watcher.Position.Location;
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el");
@@ -168,7 +168,7 @@ namespace FLBManager
             base.OnStartup(e);
         }
 
-        
+
         void CreateQRCodeCards()
         {
 
@@ -315,6 +315,7 @@ namespace FLBManager
             SerializationBinder.NamesTypesDictionary["MenuModel.MealType"] = typeof(MenuModel.MealType);
             SerializationBinder.NamesTypesDictionary["MenuModel.FixedMealType"] = typeof(MenuModel.FixedMealType);
             SerializationBinder.NamesTypesDictionary["MenuModel.MealCourseType"] = typeof(MenuModel.MealCourseType);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
 
 
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.HallLayout"] = typeof(RestaurantHallLayoutModel.HallLayout);
@@ -324,14 +325,15 @@ namespace FLBManager
             SerializationBinder.NamesTypesDictionary["UIBaseEx.Margin"] = typeof(UIBaseEx.Margin);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
             SerializationBinder.NamesTypesDictionary["FLBManager.ViewModel.FoodTypeTagPresentation"] = typeof(FLBManager.ViewModel.FoodTypeTagPresentation);
-            
 
+             
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealType)] = "MenuModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.FixedMealType)] = "MenuModel.FixedMealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
 
 
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.HallLayout)] = "RestaurantHallLayoutModel.HallLayout";
@@ -529,7 +531,7 @@ namespace FLBManager
             storageName = "FlavourBusinessesResources";
             demoStorage = ObjectStorage.OpenStorage(storageName, storageLocation, storageType);
             archive = new OOAdvantech.WindowsAzureTablesPersistenceRunTime.CloudBlockBlobArchive(string.Format(@"{0}\{1}.dat", backupFolder, storageName));
-           demoStorage.Backup(archive);
+            demoStorage.Backup(archive);
 
             storageName = "jimliakosgmailcom";
             string suffix = "";
@@ -572,7 +574,7 @@ namespace FLBManager
             catch (Exception error)
             {
             }
-           
+
         }
 
 

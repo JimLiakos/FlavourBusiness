@@ -10,7 +10,7 @@ namespace FlavourBusinessManager.EndUsers
     /// <MetaDataID>{affca228-cac8-42fa-be5b-7da4d5f457bb}</MetaDataID>
     [BackwardCompatibilityID("{affca228-cac8-42fa-be5b-7da4d5f457bb}")]
     [Persistent()]
-    public class Place : FlavourBusinessFacade.EndUsers.IPlace
+    public class Place : IPlace
     {
       
         /// <MetaDataID>{3e6ca39a-d174-4656-85e5-19abdc70c408}</MetaDataID>
