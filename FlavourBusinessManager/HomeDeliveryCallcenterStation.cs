@@ -235,27 +235,27 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
-        public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
-        {
-            System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> deliveryServicePoints = new OOAdvantech.Collections.Generic.List<HomeDeliveryServicePointAbbreviation>();
-            foreach (var deliveryServicePoint in this.HomeDeliveryServicePoints)
-            {
-                if (deliveryServicePoint != null)
-                {
-                    var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
-                    if (placeOfDistribution!=null)
-                    {
-                        double distance = Coordinate.CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
+        //public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
+        //{
+        //    System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> deliveryServicePoints = new OOAdvantech.Collections.Generic.List<HomeDeliveryServicePointAbbreviation>();
+        //    foreach (var deliveryServicePoint in this.HomeDeliveryServicePoints)
+        //    {
+        //        if (deliveryServicePoint != null)
+        //        {
+        //            var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
+        //            if (placeOfDistribution!=null)
+        //            {
+        //                double distance = Coordinate.CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
 
-                        var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
+        //                var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 
-                        if (polyGon.FindPoint(location.Latitude, location.Longitude))
-                            deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description,Distance=distance,ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity,ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity });
-                    }
-                }
-            }
-            return deliveryServicePoints;
-        }
+        //                if (polyGon.FindPoint(location.Latitude, location.Longitude))
+        //                    deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description,Distance=distance,ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity,ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity });
+        //            }
+        //        }
+        //    }
+        //    return deliveryServicePoints;
+        //}
          
         /*
          lazaradon 
