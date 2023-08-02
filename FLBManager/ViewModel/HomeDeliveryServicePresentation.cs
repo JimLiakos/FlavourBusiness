@@ -474,7 +474,7 @@ namespace FLBManager.ViewModel
             }
 
         }
-
+         
 
         /// <MetaDataID>{0fc6dea2-0872-488c-9b25-f319adea9d86}</MetaDataID>
         Dictionary<DayOfWeek, List<OpeningHours>> WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
