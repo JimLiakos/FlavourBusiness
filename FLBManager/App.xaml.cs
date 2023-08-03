@@ -329,7 +329,7 @@ namespace FLBManager
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
             SerializationBinder.NamesTypesDictionary["FLBManager.ViewModel.FoodTypeTagPresentation"] = typeof(FLBManager.ViewModel.FoodTypeTagPresentation);
 
-             
+              
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
