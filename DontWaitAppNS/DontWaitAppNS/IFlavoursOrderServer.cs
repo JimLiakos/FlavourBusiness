@@ -413,9 +413,13 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{c1cae543-a1ee-4cbe-b16a-4f7c01ade0a1}</MetaDataID>
         public IPlace DeliveryPlace { get; internal set; }
+        /// <MetaDataID>{043a6e47-6296-4ef5-bf78-370869586f9a}</MetaDataID>
         public ISecureUser EndUser { get; internal set; }
+        /// <MetaDataID>{f351c88b-1a2d-4bf9-bcfa-ff48e16839cc}</MetaDataID>
         public DateTime? ServiceTime { get; internal set; }
+        /// <MetaDataID>{95fc2074-cae0-4b70-9c7f-153e55edde82}</MetaDataID>
         public PayOptions? PayOption { get; internal set; }
 
         /// <MetaDataID>{94b21849-ddf7-4553-9b1b-76bf018e6f84}</MetaDataID>

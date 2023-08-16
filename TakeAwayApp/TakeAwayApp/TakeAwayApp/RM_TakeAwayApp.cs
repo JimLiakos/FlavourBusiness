@@ -11,12 +11,11 @@
 namespace TakeAwayApp.Proxies
 {
     using System;
-
-
-    /// <MetaDataID>{2e037a41-8db5-4e03-b4bc-afd7746b7224}</MetaDataID>
+    
+    
     public sealed class CNSPr_IFlavoursServiceOrderTakingStation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(object _object, string member)
         {
             object[] args = new object[2];
@@ -27,12 +26,12 @@ namespace TakeAwayApp.Proxies
             argsTypes[1] = typeof(string);
             object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));

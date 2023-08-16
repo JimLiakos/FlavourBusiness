@@ -97,7 +97,7 @@ namespace FlavourBusinessManager
 
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
-            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceType, deviceFirebaseToken, orgIdentity, graphicMenus,endUser, create);
+            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceType, deviceFirebaseToken, orgIdentity, graphicMenus, endUser, create);
 
             return clientSession;
         }
@@ -331,7 +331,7 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{f20f9e9d-c06f-440b-afdc-1a8f38dd82ea}</MetaDataID>
-        public IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicesContextIdentity, string organizationIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false)
+        public IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicesContextIdentity, string organizationIdentity, string organizationStorageIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false)
         {
             //7f9bde62e6da45dc8c5661ee2220a7b0_bf55f9a68e5048d0b6b1676fa18ca64a
 
@@ -370,7 +370,7 @@ namespace FlavourBusinessManager
                 {
                     try
                     {
-                        
+
 
                         if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName) || objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
                         {
@@ -419,6 +419,7 @@ namespace FlavourBusinessManager
                     {
                         servicesContextRunTime = new ServicePointRunTime.ServicesContextRunTime();
                         servicesContextRunTime.OrganizationIdentity = organizationIdentity;
+                        servicesContextRunTime.OrganizationStorageIdentity=organizationStorageIdentity;
                         servicesContextRunTime.ServicesContextIdentity = servicesContextIdentity;
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
@@ -439,8 +440,12 @@ namespace FlavourBusinessManager
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
 
+
                         if (servicesContextRunTime.OrganizationIdentity != organizationIdentity)
                             servicesContextRunTime.OrganizationIdentity = organizationIdentity;
+
+                        if (servicesContextRunTime.OrganizationStorageIdentity != organizationStorageIdentity)
+                            servicesContextRunTime.OrganizationStorageIdentity = organizationStorageIdentity;
 
                         stateTransition.Consistent = true;
                     }
@@ -672,7 +677,7 @@ namespace FlavourBusinessManager
 
         }
 
-   
+
         public IFoodServiceClientSession GetMealInvitationInviter(string invitationUri)
         {
 
@@ -706,7 +711,7 @@ namespace FlavourBusinessManager
         public MapPolyGon(List<Coordinate> points)
         {
             Points = points.ToList();
-             
+
         }
 
 

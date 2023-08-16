@@ -1500,12 +1500,15 @@
 		    quid       	"63C8D5C00077"
 		    parameters 	(list Parameters
 			(object Parameter "payment"
-			    quid       	"63C8D5C00086"
+			    quid       	"64DBA014008A"
 			    type       	"FinanceFacade.IPayment")
+			(object Parameter "paymentMethod"
+			    quid       	"64DBA01400B5"
+			    type       	"FinanceFacade.PaymentMethod")
 			(object Parameter "tipAmount"
-			    quid       	"63C8D5C00099"
+			    quid       	"64DBA01400DF"
 			    type       	"decimal"))
-		    result     	"void"
+		    result     	"System.Threading.Tasks.Task"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -1534,31 +1537,6 @@
 			    value      	TRUE))
 		    quid       	"634B769E006F"
 		    type       	"FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession"
-		    exportControl 	"Public")
-		(object ClassAttribute "ServiceTime"
-		    attributes 	(list Attribute_Set
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"MetaObjectID"
-			    value      	"{e98cf14f-0ec4-4d7a-811e-28d6e9e75e18}")
-			(object Attribute
-			    tool       	"MetaData"
-			    name       	"UniqueID"
-			    value      	"63C8D5C001A5")
-			(object Attribute
-			    tool       	"C#"
-			    name       	"As Property"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"GenerateGetOperation"
-			    value      	TRUE)
-			(object Attribute
-			    tool       	"C#"
-			    name       	"GenerateSetOperation"
-			    value      	TRUE))
-		    quid       	"63C8D5C001A5"
-		    type       	"System.Nullable<System.DateTime>"
 		    exportControl 	"Public")
 		(object ClassAttribute "ServicePointState"
 		    attributes 	(list Attribute_Set
@@ -1672,6 +1650,61 @@
 			    value      	TRUE))
 		    quid       	"63C8E258003D"
 		    type       	"DontWaitApp.PayOptions"
+		    exportControl 	"Public")
+		(object ClassAttribute "DeliveryComment"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ad945fbe-f52f-4c07-9b70-bfa13139db91}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA01403CA"))
+		    quid       	"64DBA01403CA"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "OrderComment"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{751c779c-3b56-4669-a8e0-a04471502a28}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA0170395")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"64DBA0170395"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "NotesForClient"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{48783de4-ce28-425e-8e36-e5eeec6daa2e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA019000E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"64DBA019000E"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::DontWaitApp::DontWaitApp"
 	    quidu      	"5EFCA653000D"
@@ -1693,7 +1726,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"18")
+		    value      	"20")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -1794,7 +1827,7 @@
 		    quid       	"634B7BDD0293"
 		    parameters 	(list Parameters
 			(object Parameter "newItemsState"
-			    quid       	"63CD906E021B"
+			    quid       	"64DBA2FA0360"
 			    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -1813,16 +1846,16 @@
 		    quid       	"634B7BDD0327"
 		    parameters 	(list Parameters
 			(object Parameter "itemUid"
-			    quid       	"63CD906E028B"
+			    quid       	"64DBA2FA03C3"
 			    type       	"string")
 			(object Parameter "itemOwnerSession"
-			    quid       	"63CD906E02A4"
+			    quid       	"64DBA2FA03E4"
 			    type       	"string")
 			(object Parameter "isShared"
-			    quid       	"63CD906E02B6"
+			    quid       	"64DBA2FB0013"
 			    type       	"bool")
 			(object Parameter "shareInSessions"
-			    quid       	"63CD906E02D4"
+			    quid       	"64DBA2FB0039"
 			    type       	"System.Collections.Generic.List<string>"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2001,7 +2034,7 @@
 		    quid       	"634B7BDE0173"
 		    parameters 	(list Parameters
 			(object Parameter "item"
-			    quid       	"63CD906F01CD"
+			    quid       	"64DBA2FB01C3"
 			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2020,7 +2053,7 @@
 		    quid       	"634B7BDE0190"
 		    parameters 	(list Parameters
 			(object Parameter "item"
-			    quid       	"63CD906F01F3"
+			    quid       	"64DBA2FB01E4"
 			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2039,7 +2072,7 @@
 		    quid       	"634B7BDE01AC"
 		    parameters 	(list Parameters
 			(object Parameter "item"
-			    quid       	"63CD906F021C"
+			    quid       	"64DBA2FB0206"
 			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2058,7 +2091,7 @@
 		    quid       	"634B7BDE01C7"
 		    parameters 	(list Parameters
 			(object Parameter "item"
-			    quid       	"63CD906F0244"
+			    quid       	"64DBA2FB0228"
 			    type       	"FlavourBusinessManager.RoomService.ItemPreparation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2133,10 +2166,10 @@
 		    quid       	"634B7BDE029C"
 		    parameters 	(list Parameters
 			(object Parameter "messmate"
-			    quid       	"63CD906F0317"
+			    quid       	"64DBA2FB02C5"
 			    type       	"DontWaitApp.Messmate")
 			(object Parameter "messageID"
-			    quid       	"63CD906F032A"
+			    quid       	"64DBA2FB02D9"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2155,16 +2188,16 @@
 		    quid       	"634B7BDE02C1"
 		    parameters 	(list Parameters
 			(object Parameter "messmate"
-			    quid       	"63CD906F035B"
+			    quid       	"64DBA2FB0300"
 			    type       	"DontWaitApp.Messmate")
 			(object Parameter "menuItemUri"
-			    quid       	"63CD906F0375"
+			    quid       	"64DBA2FB0317"
 			    type       	"string"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "FoodServicesClientSessionViewModel"
+		(object Operation "Init"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -2177,10 +2210,10 @@
 		    quid       	"634B7BDE0332"
 		    parameters 	(list Parameters
 			(object Parameter "clientSessionData"
-			    quid       	"634B7BDE0341"
+			    quid       	"64DBA1CA025D"
 			    type       	"FlavourBusinessFacade.EndUsers.ClientSessionData")
 			(object Parameter "flavoursOrderServer"
-			    quid       	"634B7BDE034A"
+			    quid       	"64DBA1CA0288"
 			    type       	"DontWaitApp.FlavoursOrderServer"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2348,11 +2381,77 @@
 		    quid       	"63C8D5E201A4"
 		    parameters 	(list Parameters
 			(object Parameter "newDeliveryPlace"
-			    quid       	"63CD906F03D6"
+			    quid       	"64DBA2FB033D"
 			    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
 		    result     	"FlavourBusinessFacade.EndUsers.ChangeDeliveryPlaceResponse"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetFoodServicesClientSessionViewModel"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4a636953-f1c9-4b78-9261-ba47b8f9a1c6}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1CA013B"))
+		    quid       	"64DBA1CA013B"
+		    parameters 	(list Parameters
+			(object Parameter "foodServiceClientSession"
+			    quid       	"64DBA1CA0165"
+			    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
+			(object Parameter "flavoursOrderServer"
+			    quid       	"64DBA1CA0187"
+			    type       	"DontWaitApp.IFlavoursOrderServer"))
+		    result     	"DontWaitApp.FoodServicesClientSessionViewModel"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Init"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5428ae4b-3c26-4a24-b187-43f089d168f8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1CA0375"))
+		    quid       	"64DBA1CA0375"
+		    parameters 	(list Parameters
+			(object Parameter "menu"
+			    quid       	"64DBA1CA0399"
+			    type       	"FlavourBusinessFacade.OrganizationStorageRef")
+			(object Parameter "flavoursOrderServer"
+			    quid       	"64DBA1CA03B8"
+			    type       	"DontWaitApp.FlavoursOrderServer"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
+		    uid        	0)
+		(object Operation "Pay"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{da16b8ff-3972-47e6-b92c-f1f169f54c3a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1CC01CC"))
+		    quid       	"64DBA1CC01CC"
+		    parameters 	(list Parameters
+			(object Parameter "payment"
+			    quid       	"64DBA1CC01ED"
+			    type       	"FinanceFacade.IPayment")
+			(object Parameter "tipAmount"
+			    quid       	"64DBA1CC0209"
+			    type       	"decimal"))
+		    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Implementation"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "MenuData"
@@ -2625,10 +2724,18 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"As Property"
-			    value      	FALSE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
 		    quid       	"634B7BE000AD"
 		    type       	"DontWaitApp.FlavoursOrderServer"
-		    exportControl 	"Implementation")
+		    exportControl 	"Public")
 		(object ClassAttribute "ServicePointIdentity"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -3210,7 +3317,7 @@
 			    name       	"Identity"
 			    value      	"+16"))
 		    quid       	"63C8E2D101DD"
-		    type       	"DontWaitApp.PayOptions"
+		    type       	"System.Nullable<DontWaitApp.PayOptions>"
 		    exportControl 	"Public")
 		(object ClassAttribute "DeliveryComment"
 		    attributes 	(list Attribute_Set
@@ -3243,6 +3350,115 @@
 			    name       	"Identity"
 			    value      	"+17"))
 		    quid       	"63CD907201B7"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "TipOptions"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{a1bf2f75-d92f-4180-b98d-61cf23697119}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1CD0315"))
+		    quid       	"64DBA1CD0315"
+		    type       	"System.Collections.Generic.List`1[[DontWaitApp.TipOption,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    exportControl 	"Public")
+		(object ClassAttribute "CurrencyOptions"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{333a5215-f8ae-4fbe-9c0f-a30a3ea4ac30}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1CD0361"))
+		    quid       	"64DBA1CD0361"
+		    type       	"System.Collections.Generic.List`1[[DontWaitApp.CurrencyOption,{1351A577-4267-492C-894C-E3B5705E321D}]]"
+		    exportControl 	"Public")
+		(object ClassAttribute "EndUser"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e7648f67-8aba-4332-8173-27b6c422daa5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1D0010D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"64DBA1D0010D"
+		    type       	"FlavourBusinessFacade.ViewModel.ISecureUser"
+		    exportControl 	"Public")
+		(object ClassAttribute "OrderComment"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0a248fc2-7e80-4304-8590-3eb598558067}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1D0033C")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+18"))
+		    quid       	"64DBA1D0033C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "NotesForClient"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{45654077-d907-4760-9c9a-a256352ae795}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64DBA1D00388")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+19"))
+		    quid       	"64DBA1D00388"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::DontWaitApp::DontWaitApp"

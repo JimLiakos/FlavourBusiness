@@ -28,7 +28,7 @@ namespace FlavourBusinessFacade
 
 
         /// <MetaDataID>{9a58a699-0bbb-486b-be8e-0755cb0fcac1}</MetaDataID>
-        IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicePointIdentity, string organizationIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false);
+        IFlavoursServicesContextRuntime GetServicesContextRuntime(string storageName, string storageLocation, string servicePointIdentity, string organizationIdentity, string  organizationStorageIdentity, OrganizationStorageRef restaurantMenusDataStorageRef, bool create = false);
         /// <MetaDataID>{a92703b9-7329-4e49-813d-f2c5925f2545}</MetaDataID>
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
 

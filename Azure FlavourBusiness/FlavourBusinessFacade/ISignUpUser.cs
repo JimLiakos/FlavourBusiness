@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using OOAdvantech.Json.Linq;
 
 namespace FlavourBusinessFacade.ViewModel
 {
@@ -101,6 +102,18 @@ namespace FlavourBusinessFacade.ViewModel
         /// <MetaDataID>{a3ec8eff-c8ac-4898-b0a2-24c571c9082b}</MetaDataID>
         UserData SignInNativeUser(string userName, string password);
 
+
+
+    }
+
+    /// <MetaDataID>{b2178661-8030-4ca2-aceb-cb14553d12df}</MetaDataID>
+    public interface IFoodServiceClient
+    {
+        string PhoneNumber { get; set; }
+        string FullName { get; set; }
+        string EmailAddress { get; set; }
+
+        string Identity { get; }
 
 
     }

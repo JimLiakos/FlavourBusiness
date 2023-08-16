@@ -26,11 +26,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _SignInProvider;
             set
             {
-                if (_SignInProvider!=value)
+                if (_SignInProvider != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _SignInProvider=value;
+                        _SignInProvider = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -365,6 +365,26 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{a2292de8-f2bf-4093-9e13-0db9e99b5a91}</MetaDataID>
         public string OAuthUserIdentity { get => Identity; }
 
+        /// <exclude>Excluded</exclude>
+        string _NotesForClient;
+        /// <MetaDataID>{53e5c155-3df3-4aa7-ba90-d03aadd36ab0}</MetaDataID>
+        [PersistentMember(nameof(_NotesForClient))]
+        [BackwardCompatibilityID("+17")]
+        public string NotesForClient
+        {
+            get => _NotesForClient; set
+            {
+                if (_NotesForClient != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _NotesForClient = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{7e30445f-1aeb-4ff7-91b2-b83606628ad5}</MetaDataID>
         public void RemoveDeliveryPlace(IPlace place)
         {
@@ -412,12 +432,20 @@ namespace FlavourBusinessManager.EndUsers
         {
             lock (this)
             {
-                if (OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(this))
+                try
                 {
-                    if (DeliveryPlacesJson != null)
-                        _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
-                    else
-                        _DeliveryPlaces = new List<Place>();
+                    if (OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(this))
+                    {
+                        if (DeliveryPlacesJson != null)
+                            _DeliveryPlaces = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Place>>(DeliveryPlacesJson);
+                        else
+                            _DeliveryPlaces = new List<Place>();
+                    }
+                }
+                catch (Exception error)
+                {
+
+
                 }
             }
         }
@@ -456,22 +484,23 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{e9fe7d06-c494-437a-9cd3-4fee6fc59129}</MetaDataID>
         public void Synchronize(IFoodServiceClient foodServiceClient)
         {
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                this._Identity=foodServiceClient.Identity;
-                this._Email=foodServiceClient.Email;
-                this._DeliveryPlaces=foodServiceClient.DeliveryPlaces.OfType<Place>().ToList();
-                this._FriendlyName=foodServiceClient.FriendlyName;
-                this._FullName=foodServiceClient.FullName;
-                this._Name=foodServiceClient.Name;
-                this._PhoneNumber=foodServiceClient.PhoneNumber;
-                this._Roles=foodServiceClient.Roles;
-                this._PhotoUrl=foodServiceClient.PhotoUrl;
-                this._SignInProvider=foodServiceClient.SignInProvider;
-                this._UserName=foodServiceClient.UserName;
+                this._Identity = foodServiceClient.Identity;
+                this._Email = foodServiceClient.Email;
+                this._DeliveryPlaces = foodServiceClient.DeliveryPlaces.OfType<Place>().ToList();
+                this._FriendlyName = foodServiceClient.FriendlyName;
+                this._FullName = foodServiceClient.FullName;
+                this._Name = foodServiceClient.Name;
+                this._PhoneNumber = foodServiceClient.PhoneNumber;
+                this._Roles = foodServiceClient.Roles;
+                this._PhotoUrl = foodServiceClient.PhotoUrl;
+                this._SignInProvider = foodServiceClient.SignInProvider;
+                this._UserName = foodServiceClient.UserName;
                 stateTransition.Consistent = true;
             }
 

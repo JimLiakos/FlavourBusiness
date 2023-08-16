@@ -145,7 +145,7 @@ namespace TakeAwayApp
 
     
     /// <MetaDataID>{efe40e2f-68a3-4ee7-afde-5cf1ffd4c62e}</MetaDataID>
-    public class FlavoursServiceOrderTakingStation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ISecureUser, IBoundObject
+    public class FlavoursServiceOrderTakingStation : MarshalByRefObject, IFlavoursServiceOrderTakingStation, OOAdvantech.Remoting.IExtMarshalByRefObject,  ILocalization, ISecureUser, IBoundObject
     {
 
         /// <MetaDataID>{67d25e6d-5d8c-498a-bced-8522e4e9ac08}</MetaDataID>
@@ -407,9 +407,7 @@ namespace TakeAwayApp
                                     (TakeAwayCashier as ITransparentProxy).Reconnected += TakeAwayCashierPresentation_Reconnected;
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 #if DeviceDotNet
-
                                 TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
-                                
 #endif
                                 (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).SignedInFlavourBusinessUser = TakeAwayCashier;
                                 //ApplicationSettings.Current.FriendlyName = TakeAwayCashier.FullName;
@@ -1135,7 +1133,7 @@ namespace TakeAwayApp
             var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
             //IFoodServiceClientSession foodServiceClientSession=HomeDeliveryCallCenterStation.NewHomeDeliverFoodServicesClientSession();
             //var foodServicesClientSessionViewModel = await this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(foodServiceClientSession);
-            var homeDeliverySession = new HomeDeliverySession(foodServicesClientSessionViewModel);
+            var homeDeliverySession = new HomeDeliverySession(this, foodServicesClientSessionViewModel);
             this.HomeDeliverySessions.Add(homeDeliverySession);
             homeDeliverySession.HomeDeliveryServicePoints=HomeDeliveryServicePoints;
 
@@ -1150,6 +1148,9 @@ namespace TakeAwayApp
             FlavoursOrderServer.SessionIsNoLongerActive(homeDeliverySession.FoodServiceClientSession);
         }
 
+      
+
+   
 
     }
 }

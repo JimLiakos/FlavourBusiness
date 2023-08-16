@@ -45,15 +45,15 @@ namespace FlavourBusinessManager.EndUsers
             get => _UserLanguageCode;
             set
             {
-                if (_UserLanguageCode!=value)
+                if (_UserLanguageCode != value)
                 {
 
                     string neutralLang = OOAdvantech.CultureContext.GetNeutralCultureInfo(value)?.Name;
-                    if (neutralLang!=null)
+                    if (neutralLang != null)
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _UserLanguageCode=neutralLang;
+                            _UserLanguageCode = neutralLang;
                             stateTransition.Consistent = true;
                         }
                     }
@@ -547,11 +547,11 @@ namespace FlavourBusinessManager.EndUsers
             get => _ClientDeviceType;
             set
             {
-                if (_ClientDeviceType!=value)
+                if (_ClientDeviceType != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _ClientDeviceType=value;
+                        _ClientDeviceType = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -1164,7 +1164,7 @@ namespace FlavourBusinessManager.EndUsers
         public FlavourBusinessFacade.EndUsers.IFoodServiceClient Client
         {
             get
-            { 
+            {
                 if (!string.IsNullOrWhiteSpace(UserIdentity) && _Client == null)
                 {
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
@@ -1199,7 +1199,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                if(_MainSession.Value==null)
+                if (_MainSession.Value == null)
                 {
 
                 }
@@ -1415,27 +1415,27 @@ namespace FlavourBusinessManager.EndUsers
                 if (_Menu == null)
                 {
                     OrganizationStorageRef graphicMenu = null;
-                    if (ServicesContextRunTime.GraphicMenus.Count==1)
+                    if (ServicesContextRunTime.GraphicMenus.Count == 1)
                         graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
                     else
                     {
                         //var Portrait = null;
                         //var Landscape = null;
 
-                        if (ClientDeviceType==DeviceType.Phone)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Phone)
+                            graphicMenu = ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.Desktop)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Desktop)
+                            graphicMenu = ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.Tablet)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Tablet)
+                            graphicMenu = ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.TV)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.TV)
+                            graphicMenu = ServicesContextRunTime.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (graphicMenu==null)
-                            graphicMenu= ServicesContextRunTime.GraphicMenus.FirstOrDefault();
+                        if (graphicMenu == null)
+                            graphicMenu = ServicesContextRunTime.GraphicMenus.FirstOrDefault();
 
 
                     }
@@ -1456,7 +1456,7 @@ namespace FlavourBusinessManager.EndUsers
         ///// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
         //private bool IsLandscape(OrganizationStorageRef graphicMenu)
         //{
-            
+
         //    string menuPageHeightAsString = null;
         //    string menuPageWidthAsString = null;
         //    if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
@@ -2295,8 +2295,8 @@ namespace FlavourBusinessManager.EndUsers
                     if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
                         flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
 
-                    if (item.State==ItemPreparationState.New&&SessionType==SessionType.HomeDelivery||SessionType==SessionType.HomeDeliveryGuest||SessionType==SessionType.Takeaway)
-                        item.State=ItemPreparationState.AwaitingPaymentToCommit;
+                    if (item.State == ItemPreparationState.New && SessionType == SessionType.HomeDelivery || SessionType == SessionType.HomeDeliveryGuest || SessionType == SessionType.Takeaway)
+                        item.State = ItemPreparationState.AwaitingPaymentToCommit;
 
 
                     stateTransition.Consistent = true;
@@ -2649,7 +2649,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         /// <MetaDataID>{f50229d0-2dfa-46c4-9173-09e98ec19a6d}</MetaDataID>
-         void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+        void CreatePaymentToCommitOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
         {
             if (payment.State != FinanceFacade.PaymentState.Completed)
             {
@@ -2738,6 +2738,27 @@ namespace FlavourBusinessManager.EndUsers
                 return itemsState;
             }
         }
+        /// <exclude>Excluded</exclude>
+        string _OrderComment;
+        /// <MetaDataID>{8ada8ca2-18aa-4c6b-b18a-69825fc8e010}</MetaDataID>
+        [PersistentMember(nameof(_OrderComment))]
+        [BackwardCompatibilityID("+31")]
+        public string OrderComment
+        {
+            get => _OrderComment; set
+            {
+                if (_OrderComment != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OrderComment = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
 
 
 
@@ -2840,15 +2861,15 @@ namespace FlavourBusinessManager.EndUsers
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                if (Worker==null)
+                if (Worker == null)
                 {
-                    var foodServiceClient = authUserRef.GetContextRoleObject<FoodServiceClient>();
-                    if (foodServiceClient!=null)
+                    var foodServiceClient = authUserRef?.GetContextRoleObject<FoodServiceClient>();
+                    if (foodServiceClient != null)
                     {
-                        if (Client!=null&&Client!=foodServiceClient)
+                        if (Client != null && Client != foodServiceClient)
                             throw new AuthenticationException("User hasn't access right for this action");
 
-                        Client=foodServiceClient;
+                        Client = foodServiceClient;
                     }
                 }
                 this.UserLanguageCode = userLanguageCode;
@@ -2858,6 +2879,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        /// <MetaDataID>{647d84e3-f212-4bdc-902c-d54bc57eb9cb}</MetaDataID>
         public Dictionary<string, ItemPreparationState> CommitAll()
         {
             throw new NotImplementedException();

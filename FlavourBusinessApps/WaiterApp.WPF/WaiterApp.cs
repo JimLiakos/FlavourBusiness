@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessApps.TakeAwayApp.WPF
+namespace FlavourBusinessApps.Waiter.WPF
 {
     /// <MetaDataID>{8f191801-4c6c-4a70-b7e9-818f84ea701c}</MetaDataID>
-    public class TakeAwayApp
+    public class WaiterApp
     {
         public static void Startup(string deviceID)
         {

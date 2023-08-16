@@ -8,6 +8,10 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClient:IUser
     {
+        /// <MetaDataID>{c3cf39ab-aa93-4d73-afcc-079c272f548f}</MetaDataID>
+        [BackwardCompatibilityID("+12")]
+        string NotesForClient { get; set; }
+
         /// <MetaDataID>{7038376b-2b4c-49bc-abe3-8696fa562d4d}</MetaDataID>
         [BackwardCompatibilityID("+11")]
         string SignInProvider { get; set; }
@@ -90,5 +94,12 @@ namespace FlavourBusinessFacade.EndUsers
         }
     }
 
-   
+    /// <MetaDataID>{2bb56202-7fe4-4198-adc2-b9a5170777e1}</MetaDataID>
+    public class FoodServiceClienttUri
+    {
+        public string UniqueId { get; set; }
+        public IFoodServiceClient FoodServiceClient { get; set; }
+    }
+
+
 }

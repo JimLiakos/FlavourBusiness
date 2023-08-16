@@ -1,4 +1,5 @@
 ﻿using DontWaitApp;
+using OOAdvantech.Json.Serialization;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using System;
 using System.Collections.Generic;
@@ -6,18 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessApps.WaiterApp.WPF
+namespace FlavourBusinessApps.TakeAwayApp.WPF
 {
     /// <MetaDataID>{8f191801-4c6c-4a70-b7e9-818f84ea701c}</MetaDataID>
     public class TakeAwayApp
     {
+        class Tesa
+        {
+            public string Name { get; set; }
+            public double? Age { get; set; }
+            public int? torder { get; set; }
+
+        }
         public static void Startup(string deviceID)
         {
 
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = deviceID;
             ApplicationSettings.ExtraStoragePath = deviceID;
 
+            //List<Tesa> col = new List<Tesa>() { new Tesa() { Name = "las" }, new Tesa() { Name = "las" ,torder=0}, new Tesa() { Name = "las" }, new Tesa() { Name = "las" } };
+            
+            //try
+            //{
 
+            //   //var asdsa  =new DefaultContractResolver().CreateProperties(typeof(FlavourBusinessManager.EndUsers.Place),OOAdvantech.Json.MemberSerialization.OptOut);
+            //  // var sd= asdsa.OrderBy(p => p.Order ?? -1).ToList();
+            //    var res = col.OrderBy(x => x.torder==null? 1: x.torder).ToList();
+            //    OOAdvantech.Json.JsonConvert.DeserializeObject<List<FlavourBusinessManager.EndUsers.Place>>("[]");
+            //}
+            //catch (Exception error)
+            //{
+
+                
+            //}
 
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
@@ -40,6 +62,13 @@ namespace FlavourBusinessApps.WaiterApp.WPF
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.ShapesGroup"] = typeof(RestaurantHallLayoutModel.ShapesGroup);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.Margin"] = typeof(UIBaseEx.Margin);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.EndUsers.Coordinate"] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation);
+
+
+
+
 
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
@@ -56,6 +85,11 @@ namespace FlavourBusinessApps.WaiterApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.ServicePointShape)] = "RestaurantHallLayoutModel.ServicePointShape";
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.Shape)] = "RestaurantHallLayoutModel.Shape";
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.ShapesGroup)] = "RestaurantHallLayoutModel.ShapesGroup";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation)]="FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation";
+
+
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";

@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using System;
 using System.Collections.Generic;
@@ -36,14 +37,17 @@ namespace FlavourBusinessFacade
 
 
 
+    /// <MetaDataID>{4380724a-34f1-4b05-aa10-d22c0cafa111}</MetaDataID>
     public class HomeDeliveryServicePointAbbreviation
     {
         public string Description { get; set; }
         public string ServicesContextIdentity { get; set; }
         public string ServicesPointIdentity { get; set; }
 
-        public double Distance { get; set; }
+        public double DistanceInKm { get; set; }
 
+        public bool OutOfDeliveryRange { get; set; }
+        public Coordinate Location { get;set; }
     }
 
     /*

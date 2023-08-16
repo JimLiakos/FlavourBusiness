@@ -23,7 +23,7 @@ namespace DontWaitApp
 {
     /// <MetaDataID>{ceaf19ab-2b52-45d6-a7f7-5dd4e251ed92}</MetaDataID>
     [OOAdvantech.MetaDataRepository.HttpVisible]
-    public class FoodServiceClientVM : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser, IGeocodingPlaces
+    public class FoodServiceClientVM : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ISecureUser, IGeocodingPlaces, FlavourBusinessFacade.ViewModel.IFoodServiceClient
     {
         [GenerateEventConsumerProxy]
         public event ObjectChangeStateHandle ObjectChangeState;
@@ -35,7 +35,8 @@ namespace DontWaitApp
         IFlavoursOrderServer FlavoursOrderServer;
         public FoodServiceClientVM(IFlavoursOrderServer flavoursOrderServer)
         {
-
+            //OTE 6971660086
+            //2106331371
             FlavoursOrderServer = flavoursOrderServer;
 
 #if !DeviceDotNet
@@ -53,10 +54,29 @@ namespace DontWaitApp
                 _FoodServiceClient=ApplicationSettings.Current?.ClientAsGuest;
                 _PhoneNumber=ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
             }
+        }
+        public FoodServiceClientVM(IFlavoursOrderServer flavoursOrderServer, FoodServiceClienttUri foodServiceClienttUri)
+        {
+            //OTE 6971660086
+            //2106331371
+            FlavoursOrderServer = flavoursOrderServer;
+
+#if !DeviceDotNet
+            var sd = typeof(OOAdvantech.Net.DeviceInstantiator).Assembly.GetCustomAttributes(true);
+#endif
+            Identity = foodServiceClienttUri.UniqueId;
+            if (foodServiceClienttUri.FoodServiceClient!=null)
+            {
+                _FoodServiceClient=foodServiceClienttUri.FoodServiceClient;
+                _PhoneNumber=foodServiceClienttUri.FoodServiceClient.PhoneNumber;
+                Identity = foodServiceClienttUri.FoodServiceClient.Identity;
+            }
 
 
 
         }
+
+
         /// <MetaDataID>{b2483c93-a9f2-41f9-b223-ea85797d1490}</MetaDataID>
         object ClientSessionLock = new object();
         /// <MetaDataID>{1737e27b-b763-48ce-b629-0f13e16c0fdd}</MetaDataID>
@@ -741,7 +761,7 @@ namespace DontWaitApp
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
-            
+
 
             try
             {
@@ -791,7 +811,7 @@ namespace DontWaitApp
             }
         }
 
-        public void CreateUserWithEmailAndPassword( string emailVerificationCode)
+        public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
@@ -930,7 +950,8 @@ namespace DontWaitApp
             }
         }
 
-
+        public string Identity { get; set; }
+        public string EmailAddress { get => Email; set => Email=value; }
     }
 
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace VivaWalletPos
 {
+    /// <MetaDataID>{49332dea-4587-4df0-b59b-0029f19a55fe}</MetaDataID>
     public class Pos : IPos
     {
 
@@ -17,10 +18,10 @@ namespace VivaWalletPos
 
         public void Confing(POSType terminalType, string ipAddress = "", int port = 0, double waitTimeOutInSec = 0)
         {
-            TerminalType=terminalType;
+            TerminalType = terminalType;
 
-            if (terminalType==POSType.AppPOS)
-                VivaWalletAppPos=new VivaWalletAppPos();
+            if (terminalType == POSType.AppPOS)
+                VivaWalletAppPos = new VivaWalletAppPos();
             else
             {
                 VivaWalletPaymentTerminal = new VivaWalletPaymentTerminal(ipAddress, port, TimeSpan.FromSeconds(waitTimeOutInSec));
@@ -31,10 +32,10 @@ namespace VivaWalletPos
 
         public Task<PaymentData> ReceivePayment(decimal total, decimal tips)
         {
-            if (TerminalType==POSType.AppPOS)
+            if (TerminalType == POSType.AppPOS)
                 return VivaWalletAppPos.ReceivePayment(total, tips);
 
-            if (TerminalType==POSType.TerminalPos)
+            if (TerminalType == POSType.TerminalPos)
                 return Task<PaymentData>.FromResult(VivaWalletPaymentTerminal.ReceivePayment(total, tips));
             throw new NotImplementedException();
         }

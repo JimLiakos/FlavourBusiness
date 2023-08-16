@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.EndUsers;
+using OOAdvantech.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -34,7 +35,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e229d169-2500-41cc-98c9-d1daa6e306ca}</MetaDataID>
         void AddHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);
         void CancelHomeDeliverFoodServicesClientSession(IFoodServiceClientSession foodServicesClientSession);
-        IFoodServiceClientSession NewHomeDeliverFoodServicesClientSession();
+        IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken,HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint);
 
         /// <MetaDataID>{608a2ffa-549d-4e62-aaba-fe09751f93a6}</MetaDataID>
         void RemoveHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);
@@ -45,5 +46,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location);
 
+
+        System.Collections.Generic.List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone);
+
     }
+
+  
 }

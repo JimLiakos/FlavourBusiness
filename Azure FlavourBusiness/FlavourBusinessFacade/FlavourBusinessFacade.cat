@@ -870,7 +870,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"3")
+		    value      	"5")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -11565,7 +11565,7 @@
 					orientation 	1))))
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallCenterStation" @102
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(2003, 2266)
+			    location   	(2003, 2265)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11578,7 +11578,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@102
-				location   	(1697, 2245)
+				location   	(1697, 2244)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	613
@@ -11758,7 +11758,7 @@
 					height     	54
 					orientation 	1))))
 			(object AssociationViewNew "FlavoursServiceContextCallCenter" @111
-			    location   	(1208, 1837)
+			    location   	(1208, 1836)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -11771,7 +11771,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @112
 				Parent_View 	@111
-				location   	(1208, 1778)
+				location   	(1208, 1777)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -11797,7 +11797,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "$UNNAMED$7" @113
 				    Parent_View 	@111
-				    location   	(-795, -429)
+				    location   	(-795, -430)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -11810,7 +11810,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @114
 					Parent_View 	@113
-					location   	(773, 1556)
+					location   	(772, 1555)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -11861,7 +11861,7 @@
 					orientation 	0))
 				(object RoleView "CallCenterStations" @116
 				    Parent_View 	@111
-				    location   	(-795, -429)
+				    location   	(-795, -430)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -11902,7 +11902,7 @@
 				    line_style 	0
 				    label      	(object SegLabel @118
 					Parent_View 	@116
-					location   	(1746, 2066)
+					location   	(1746, 2065)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -11948,7 +11948,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"12"))
+			    value      	"13"))
 		    quid       	"5C060C8B012B"
 		    stereotype 	"Interface"
 		    superclasses 	(list inheritance_relationship_list
@@ -12254,6 +12254,35 @@
 				    value      	"+11"))
 			    quid       	"63CCB3E40393"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "NotesForClient"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2b5f629a-7c6b-4d9c-91db-2fe2cc8ae522}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBC4DE0367")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+12"))
+			    quid       	"64DBC4DE0367"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -12275,7 +12304,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"16"))
+			    value      	"26"))
 		    quid       	"5C06122402B6"
 		    stereotype 	"Interface"
 		    superclasses 	(list inheritance_relationship_list
@@ -13046,7 +13075,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+18"))
 			    quid       	"5CC9903F0309"
 			    type       	"FlavourBusinessFacade.OrganizationStorageRef"
 			    exportControl 	"Public")
@@ -13200,7 +13237,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+16"))
 			    quid       	"60A144A501DA"
 			    type       	"FlavourBusinessFacade.EndUsers.ClientSessionState"
 			    exportControl 	"Public")
@@ -13254,7 +13299,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+21"))
 			    quid       	"6202075A0045"
 			    type       	"bool"
 			    exportControl 	"Public")
@@ -13304,7 +13357,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+20"))
 			    quid       	"6208DF2A02EA"
 			    type       	"bool"
 			    exportControl 	"Public")
@@ -13358,7 +13419,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+23"))
 			    quid       	"6305019000F6"
 			    type       	"FlavourBusinessFacade.EndUsers.ClientSessionData"
 			    exportControl 	"Public")
@@ -13379,7 +13448,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	(value Text "+13")))
 			    quid       	"63873B6E0235"
 			    type       	"FlavourBusinessFacade.EndUsers.SessionType"
 			    exportControl 	"Public")
@@ -13421,7 +13498,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+19"))
 			    quid       	"63873B6E0383"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -13446,7 +13531,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+22"))
 			    quid       	"63CD8FC90052"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -13463,7 +13556,19 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{951fa5da-519f-4faa-90cd-621ff2274725}"))
+				    value      	"{951fa5da-519f-4faa-90cd-621ff2274725}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+24"))
 			    quid       	"63E3B099009B"
 			    type       	"bool"
 			    exportControl 	"Public")
@@ -13498,6 +13603,39 @@
 				    name       	"Identity"
 				    value      	"+15"))
 			    quid       	"6429A3A40284"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "OrderComment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b0c5787c-858e-422d-abc0-78556541dfdc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBC0C202B7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+25"))
+			    quid       	"64DBC0C202B7"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
@@ -15515,6 +15653,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@138
+				location   	(1605, 1053)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	0)
 			    width      	732
 			    height     	482
 			    annotation 	8)
@@ -15922,6 +16078,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
+			    compartment 	(object Compartment
+				Parent_View 	@157
+				location   	(3097, 920)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	0)
 			    width      	613
 			    height     	662
 			    annotation 	8)
@@ -16282,6 +16456,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
+			    compartment 	(object Compartment
+				Parent_View 	@173
+				location   	(278, 433)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	0)
 			    width      	756
 			    height     	531
 			    annotation 	8)))
@@ -16351,6 +16543,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@175
+				location   	(1669, 378)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -21557,6 +21767,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@273
+				location   	(1409, 814)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -24544,6 +24772,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@411
+				location   	(1634, 898)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)

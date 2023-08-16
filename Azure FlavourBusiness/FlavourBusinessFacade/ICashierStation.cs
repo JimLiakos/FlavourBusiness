@@ -16,6 +16,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [BackwardCompatibilityID("+7")]
         string CashierStationDeviceData { get; set; }
 
+ 
 
         [Association("CashierOwner", Roles.RoleA, "d55e4a11-efb3-4bcb-963a-12c7ad00c2d8")]
         [RoleAMultiplicityRange(1, 1)]

@@ -16,7 +16,7 @@ namespace TakeAwayApp
         {
             InitializeComponent();
             this.SizeChanged+=MainPage_SizeChanged;
-            BindingContext = new TakeAwayStationPresentation();
+            BindingContext =  new FlavoursServiceOrderTakingStation();
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
             {

@@ -12,6 +12,17 @@ namespace FlavourBusinessFacade.EndUsers
     [GenerateFacadeProxy]
     public interface IFoodServiceClientSession : IMessageConsumer
     {
+        /// <MetaDataID>{b0c5787c-858e-422d-abc0-78556541dfdc}</MetaDataID>
+        [BackwardCompatibilityID("+25")]
+        string OrderComment { get; set; }
+
+      
+
+        /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
+        [BackwardCompatibilityID("+19")]
+        string MealInvitationUri { get; }
+
+        /// <MetaDataID>{8ff24c85-9abb-4e75-ba40-9a41911f95e2}</MetaDataID>
         Dictionary<string, ItemPreparationState> CommitAll();
 
         /// <MetaDataID>{630e9a95-85cd-4be3-b8ec-7d7abd35ec47}</MetaDataID>
@@ -33,6 +44,7 @@ namespace FlavourBusinessFacade.EndUsers
         //Dictionary<string, ItemPreparationState> Prepare(List<IItemPreparation> itemPreparations);
 
         /// <MetaDataID>{4cb6fae1-3cb3-4a86-8fc5-2bd785deaf85}</MetaDataID>
+        [BackwardCompatibilityID("+23")]
         ClientSessionData ClientSessionData { get; }
 
 
@@ -198,6 +210,7 @@ namespace FlavourBusinessFacade.EndUsers
 
 
         /// <MetaDataID>{fa5df8bc-0c95-444c-bb59-11d59b3ca7b0}</MetaDataID>
+        [BackwardCompatibilityID("+18")]
         OrganizationStorageRef Menu { get; }
 
 
@@ -221,11 +234,14 @@ namespace FlavourBusinessFacade.EndUsers
         void MenuItemProposal(IFoodServiceClientSession messmateClientSesion, string menuItemUri);
 
         /// <MetaDataID>{f257d379-79da-44ad-800b-8c707abef911}</MetaDataID>
+        [BackwardCompatibilityID("+16")]
         ClientSessionState SessionState { get; }
         /// <MetaDataID>{bb4dd357-c34b-462e-b5d4-2ed725f5123a}</MetaDataID>
+        [BackwardCompatibilityID("+21")]
         bool Forgotten { get; }
 
         /// <MetaDataID>{71269afe-98d1-44e5-9065-1a5189f18053}</MetaDataID>
+        [BackwardCompatibilityID("+20")]
         bool LongTimeForgotten { get; }
         /// <MetaDataID>{c09ba332-68c1-427c-a357-247ac6874f39}</MetaDataID>
         void ItemsInPreparation(List<IItemPreparation> clientSessionItems);
@@ -251,10 +267,8 @@ namespace FlavourBusinessFacade.EndUsers
         SessionType SessionType { get; }
         /// <MetaDataID>{8b960d94-5d4d-4467-bca3-f4a8aaa0c9ad}</MetaDataID>
         string MealInvitationUrl { get; }
-
-        /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
-        string MealInvitationUri { get; }
-        /// <MetaDataID>{224f6e65-5799-41e2-89f3-9e0b27816033}</MetaDataID>
+        /// <MetaDataID>{ff1ace8d-2570-4ce8-84ae-a313e6f85629}</MetaDataID>
+        [BackwardCompatibilityID("+22")]
         string DeliveryComment { get; set; }
     }
 

@@ -75,6 +75,7 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{f76e1d7f-4129-4e42-beb5-d411e3fb8326}</MetaDataID>
         public FlavourBusinessFacade.IUploadService UploadService { get; set; }
+        /// <MetaDataID>{b98f86bd-d90d-484e-9bec-9caa250a2909}</MetaDataID>
         public Dictionary<string, string> PropertiesValues { get; set; }
 
         /// <MetaDataID>{8c56a270-32bc-4192-917d-4c7340696988}</MetaDataID>

@@ -23,7 +23,12 @@ namespace DontWaitApp
         /// <MetaDataID>{ad945fbe-f52f-4c07-9b70-bfa13139db91}</MetaDataID>
         string DeliveryComment { get; set; }
 
+        /// <MetaDataID>{751c779c-3b56-4669-a8e0-a04471502a28}</MetaDataID>
+        string OrderComment { get; set; }
 
+        /// <MetaDataID>{48783de4-ce28-425e-8e36-e5eeec6daa2e}</MetaDataID>
+        string NotesForClient { get; set; }
+ 
         /// <MetaDataID>{f2674898-5add-445e-800d-162ffb6a5087}</MetaDataID>
         DateTime? ServiceTime { get; set; }
 
@@ -141,15 +146,20 @@ namespace DontWaitApp
     public class TipOption
     {
         public string Name { get; set; }
+        /// <MetaDataID>{ebb03da1-e20f-4166-ad1a-4d089b353917}</MetaDataID>
         public decimal Amount { get; set; }
+        /// <MetaDataID>{98b37b23-b0f0-4a6f-a723-f3f7d8fcda4e}</MetaDataID>
         public string ISOCurrencySymbol { get; set; }
     }
 
     /// <MetaDataID>{37764e57-f95e-4ea7-aa8b-dd3f670500ea}</MetaDataID>
     public class CurrencyOption
     {
+        /// <MetaDataID>{eba6dc45-1d79-498b-831d-d907dc6de026}</MetaDataID>
         public string Name { get; set; }
+        /// <MetaDataID>{01d51604-ab8f-4d24-95d6-f660495f972f}</MetaDataID>
         public decimal Amount { get; set; }
+        /// <MetaDataID>{5c1bde0a-262f-46b4-bd1e-817a4ce23619}</MetaDataID>
         public string ISOCurrencySymbol { get; set; }
     }
  

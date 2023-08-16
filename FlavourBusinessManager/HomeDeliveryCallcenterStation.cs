@@ -1,6 +1,7 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
 using MenuPresentationModel;
 
@@ -29,14 +30,55 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-
+        List<IHomeDeliveryServicePoint> HomeDeliveryServicePointsForTest;
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint> _HomeDeliveryServicePoints = new OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint>();
 
         /// <MetaDataID>{e3266bfc-45a7-4348-8a96-b44092eb9ae7}</MetaDataID>
         [PersistentMember(nameof(_HomeDeliveryServicePoints))]
         [BackwardCompatibilityID("+1")]
-        public List<IHomeDeliveryServicePoint> HomeDeliveryServicePoints => _HomeDeliveryServicePoints.ToThreadSafeList();
+        public List<IHomeDeliveryServicePoint> HomeDeliveryServicePoints
+        {
+            get
+            {
+                if (HomeDeliveryServicePointsForTest==null)
+                {
+
+
+                    var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);// OpenServicesContextStorageStorage();
+                    OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+                    var servicesContextIdentity = ServicesContextIdentity;
+                    var deliveryServicePoint = (from theHomeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
+                                                where theHomeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
+                                                select theHomeDeliveryServicePoint).ToList().Where(x => x.ServicesPointIdentity.EndsWith("_test")).FirstOrDefault();
+
+
+
+                    HomeDeliveryServicePointsForTest = _HomeDeliveryServicePoints.ToThreadSafeList();
+                    if (deliveryServicePoint == null)
+                    {
+                        deliveryServicePoint = new HomeDeliveryServicePoint();
+                        deliveryServicePoint.ServicesContextIdentity = ServicesContextIdentity;
+                        deliveryServicePoint.ServicesPointIdentity = _HomeDeliveryServicePoints.First().ServicesPointIdentity + "_test";
+                        deliveryServicePoint.Description = "Starbucks Αμπελοκηποι";
+                        //homeDeliveryServicePoint.
+
+                        string placeOfDistributionJson = "{\"ExtensionProperties\":{},\"CityTown\":\"Αθήνα\",\"StateProvinceRegion\":null,\"Description\":\"Λάκωνος 26, Αθήνα, Ελλάδα \",\"StreetNumber\":\"26\",\"Street\":\"Λάκωνος\",\"Area\":null,\"PostalCode\":\"115 24\",\"Country\":\"Ελλάδα\",\"Location\":{\"Longitude\":23.765026,\"Latitude\":37.9960904},\"PlaceID\":\"ChIJq1RxdAiYoRQRvVR_EYQH2gw\",\"Default\":true}";
+                        var placeOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(placeOfDistributionJson);
+                        deliveryServicePoint.PlaceOfDistribution = placeOfDistribution;
+
+                        string serviceAreaMapJson = "[{\"Longitude\":23.756942191409244,\"Latitude\":37.997785513901349},{\"Longitude\":23.754968085574284,\"Latitude\":37.997075316210584},{\"Longitude\":23.753895201968326,\"Latitude\":37.996314382481863},{\"Longitude\":23.753444590853825,\"Latitude\":37.9951306921011},{\"Longitude\":23.753873744296207,\"Latitude\":37.9936087763995},{\"Longitude\":23.752500453280582,\"Latitude\":37.990564850264242},{\"Longitude\":23.751749434756412,\"Latitude\":37.988247999610365},{\"Longitude\":23.75780049829401,\"Latitude\":37.986962707840867},{\"Longitude\":23.76495109988965,\"Latitude\":37.985793796814477},{\"Longitude\":23.766410221593752,\"Latitude\":37.987079109060993},{\"Longitude\":23.767182697790041,\"Latitude\":37.987890873615555},{\"Longitude\":23.767526020543947,\"Latitude\":37.9884658680742},{\"Longitude\":23.771388401525392,\"Latitude\":37.990867266805964},{\"Longitude\":23.775637020604982,\"Latitude\":37.993031840552639},{\"Longitude\":23.769113888280764,\"Latitude\":37.998206265799595},{\"Longitude\":23.765594830053224,\"Latitude\":38.001114606002155},{\"Longitude\":23.76396404697217,\"Latitude\":38.001114606002155},{\"Longitude\":23.759887089269533,\"Latitude\":38.000810250221747},{\"Longitude\":23.758814205663576,\"Latitude\":37.999897175301392},{\"Longitude\":23.758556713598146,\"Latitude\":37.998950270783524},{\"Longitude\":23.757784237401857,\"Latitude\":37.998104809989734}]";
+                        var serviceAreaMap = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Coordinate>>(serviceAreaMapJson);
+                        deliveryServicePoint.ServiceAreaMap = serviceAreaMap;
+                        objectStorage.CommitTransientObjectState(deliveryServicePoint);
+                    }
+                    HomeDeliveryServicePointsForTest.Add(deliveryServicePoint);
+                }
+                return HomeDeliveryServicePointsForTest.ToList();
+                return _HomeDeliveryServicePoints.ToThreadSafeList();
+            }
+        }
+
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -86,8 +128,34 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone)
+        {
+            var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
 
-        public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
+            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
+            var foodServiceClients = (from foodServiceClient in storage.GetObjectCollection<IFoodServiceClient>()
+                                      where foodServiceClient.PhoneNumber== phone
+                                      select foodServiceClient).ToList().Select(x => new FoodServiceClienttUri()
+                                      {
+                                          UniqueId=x.OAuthUserIdentity,
+                                          FoodServiceClient=x
+                                      }).ToList();
+
+
+           
+
+            if (foodServiceClients.Count==0)
+            {
+                var ticks = new DateTime(2022, 1, 1).Ticks;
+                var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                foodServiceClients.Add(new FoodServiceClienttUri() { UniqueId=uniqueId });
+            }
+
+            return foodServiceClients;
+        }
+
+
+        public List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
         {
             List<HomeDeliveryServicePointAbbreviation> deliveryServicePoints = new List<HomeDeliveryServicePointAbbreviation>();
 
@@ -101,11 +169,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                     var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 
                     if (polyGon.FindPoint(location.Latitude, location.Longitude))
-                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description, Distance=distance, ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity });
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description, DistanceInKm=distance, Location=placeOfDistribution.Location, ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange=false });
+                    else
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description, DistanceInKm=distance, Location=placeOfDistribution.Location, ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange=true });
                 }
-
             }
-            return deliveryServicePoints;
+            return deliveryServicePoints.OrderBy(x => x.OutOfDeliveryRange).ThenBy(x => x.DistanceInKm).ToList();
 
         }
 
@@ -179,10 +248,30 @@ namespace FlavourBusinessManager.ServicesContextResources
             throw new NotImplementedException();
         }
 
-        public IFoodServiceClientSession NewHomeDeliverFoodServicesClientSession()
+        public IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint)
         {
-            throw new NotImplementedException();
+
+            string servicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity+";"+homeDeliveryServicePoint.ServicesPointIdentity;
+            if (homeDeliveryServicePoint.ServicesContextIdentity==ServicesContextIdentity)
+            {
+                var servicePoint = HomeDeliveryServicePoints.Where(x => x.ServicesContextIdentity==homeDeliveryServicePoint.ServicesContextIdentity&&x.ServicesPointIdentity==homeDeliveryServicePoint.ServicesPointIdentity).FirstOrDefault();
+
+                return servicePoint.GetFoodServiceClientSession(clientName, null, clientDeviceID, deviceType, deviceFirebaseToken, true, true);
+               // servicePoint.GetFoodServiceClientSession()
+            }
+
+
+
+
+
+            var sds = homeDeliveryServicePoint.ServicesContextIdentity+";";
+
+            return null;
+
+
         }
+
+
 
         DeviceType ClientDeviceType = DeviceType.Desktop;
         /// <exclude>Excluded</exclude>

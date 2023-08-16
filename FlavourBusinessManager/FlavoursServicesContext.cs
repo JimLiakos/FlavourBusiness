@@ -450,7 +450,7 @@ namespace FlavourBusinessManager
                     var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
-                    var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+                    var graphicMenuStorageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
 
 
 
@@ -469,7 +469,7 @@ namespace FlavourBusinessManager
                         catch (Exception error)
                         {
                         }
-                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
+                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, OrganizationStorageIdentity, graphicMenuStorageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.Description = Description;
                         try
@@ -529,7 +529,7 @@ namespace FlavourBusinessManager
                         OOAdvantech.Linq.Storage storage = null;
 
                         //storage.GetObjectCollection<FlavoursServicesContext>
-                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, storageRef, true);
+                        FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, OrganizationStorageIdentity, graphicMenuStorageRef, true);
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
 
@@ -827,6 +827,26 @@ namespace FlavourBusinessManager
 
         /// <MetaDataID>{cdffcca5-5e85-41bb-b599-d91ca392c5f9}</MetaDataID>
         public List<IHomeDeliveryCallCenterStation> CallCenterStations => GetRunTime().CallCenterStations;
+        /// <exclude>Excluded</exclude>
+        string _OrganizationStorageName;
 
+        /// <MetaDataID>{7b5912c2-6b11-4a5d-a5c5-4e1120aaf54e}</MetaDataID>
+        [PersistentMember(nameof(_OrganizationStorageName))]
+        [BackwardCompatibilityID("+8")]
+        public string OrganizationStorageIdentity
+        {
+            get => _OrganizationStorageName;
+            set
+            {
+                if (_OrganizationStorageName!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OrganizationStorageName=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

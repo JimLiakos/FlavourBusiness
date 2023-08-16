@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace VivaWalletPos
 {
+    /// <MetaDataID>{eebb054d-93c4-4e87-b805-9bbe64069257}</MetaDataID>
     public class VivaWalletPaymentTerminal
     {
 
@@ -57,7 +58,7 @@ namespace VivaWalletPos
                     TcpClient client = new TcpClient(PosAddress, Port);
                     NetworkStream stream = client.GetStream();
 
-                    
+
                     try
                     {
                         client.ReceiveTimeout = (int)WaitTimeOut.TotalMilliseconds;
@@ -89,7 +90,7 @@ namespace VivaWalletPos
                         {
                             bytes = stream.Read(data, 0, data.Length);
                             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                             response = txSalesResponse.Parse(responseData);
+                            response = txSalesResponse.Parse(responseData);
 
                             //txSalesResponse response = txSalesResponse.Parse("0135|000065|210|00|00|Contactless/None~RRN:108813789134|VISA|406001******4011|789134|181644|000001|0.05|1010|00|00|00|00|00|00|    16038894");
                             if (response.respCodeResp == "00")
@@ -140,6 +141,7 @@ namespace VivaWalletPos
     }
 
 
+    /// <MetaDataID>{da8e34fd-0493-4f4e-b1e8-27976f73e926}</MetaDataID>
     class txSaleRequest
     {
         public int sessionId;
@@ -209,6 +211,7 @@ namespace VivaWalletPos
 
 
 
+    /// <MetaDataID>{9cdc1393-920f-4f9a-88e3-9a8cd5f6d6bd}</MetaDataID>
     class txSalesResponse
     {
         public int seqTxnId;

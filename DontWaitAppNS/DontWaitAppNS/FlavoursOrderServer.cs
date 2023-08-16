@@ -349,7 +349,7 @@ namespace DontWaitApp
         private void Device_MessageReceived(OOAdvantech.IRemoteMessage remoteMessage)
         {
             if (remoteMessage.Data.ContainsKey("MessageID") && FoodServicesClientSessionViewModel != null)
-                FoodServicesClientSessionViewModel.Device_MessageReceived(remoteMessage);
+                (FoodServicesClientSessionViewModel as FoodServicesClientSessionViewModel).Device_MessageReceived(remoteMessage);
         }
 #endif
 

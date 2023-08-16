@@ -63,14 +63,14 @@ namespace DontWaitApp
             get => _ServiceTime;
             set
             {
-                if (_ServiceTime!=value)
+                if (_ServiceTime != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         if (value != null)
-                            _ServiceTime=value.Value.ToUniversalTime();
+                            _ServiceTime = value.Value.ToUniversalTime();
                         else
-                            _ServiceTime =value;
+                            _ServiceTime = value;
 
                         stateTransition.Consistent = true;
                     }
@@ -88,7 +88,7 @@ namespace DontWaitApp
                     int tries = 30;
                     while (tries > 0)
                     {
-                        if (this._FoodServicesClientSession==null)
+                        if (this._FoodServicesClientSession == null)
                             await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(3));
                         else
                         {
@@ -126,17 +126,18 @@ namespace DontWaitApp
             get => _PayOption;
             set
             {
-                if (_PayOption!=value)
+                if (_PayOption != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PayOption=value;
+                        _PayOption = value;
                         stateTransition.Consistent = true;
                     }
                 }
             }
         }
 
+        /// <MetaDataID>{a1bf2f75-d92f-4180-b98d-61cf23697119}</MetaDataID>
         public List<TipOption> TipOptions
         {
             get
@@ -158,6 +159,7 @@ namespace DontWaitApp
         }
 
 
+        /// <MetaDataID>{333a5215-f8ae-4fbe-9c0f-a30a3ea4ac30}</MetaDataID>
         public List<CurrencyOption> CurrencyOptions
         {
             get
@@ -196,11 +198,12 @@ namespace DontWaitApp
         {
         }
 
-       public static FoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession, IFlavoursOrderServer flavoursOrderServer)
+        /// <MetaDataID>{2316c59f-16f2-4faf-942b-b0079959f338}</MetaDataID>
+        public static FoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession, IFlavoursOrderServer flavoursOrderServer)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
             var clientSessionData = foodServiceClientSession.ClientSessionData;
-            if (foodServicesClientSessionViewModel==null)
+            if (foodServicesClientSessionViewModel == null)
             {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
@@ -220,7 +223,7 @@ namespace DontWaitApp
                 foodServicesClientSessionViewModel.Init(clientSessionData, flavoursOrderServer as FlavoursOrderServer);
                 return foodServicesClientSessionViewModel;
             }
-            
+
         }
 
 
@@ -235,6 +238,7 @@ namespace DontWaitApp
 
         }
 
+        /// <MetaDataID>{5428ae4b-3c26-4a24-b187-43f089d168f8}</MetaDataID>
         internal void Init(OrganizationStorageRef menu, FlavoursOrderServer flavoursOrderServer)
         {
             FlavoursOrderServer = flavoursOrderServer;
@@ -1079,16 +1083,38 @@ namespace DontWaitApp
                     ServedMealTypesUris = ServedMealTypesUris,
                     SessionType = SessionType,
                     OrderItems = OrderItems,
-                    DeliveryPlace= DeliveryPlace,
-                    EndUser=FlavoursOrderServer.EndUser,
-                    ServiceTime=ServiceTime,
-                    PayOption=PayOption
+                    DeliveryPlace = DeliveryPlace,
+                    EndUser = FlavoursOrderServer.EndUser,
+                    ServiceTime = ServiceTime,
+                    PayOption = PayOption
 
                 };
                 return menuData;
 
             }
         }// => ApplicationSettings.Current.LastServicePoinMenuData; set => ApplicationSettings.Current.LastServicePoinMenuData = value; }
+
+        /// <exclude>Excluded</exclude>
+        FlavourBusinessFacade.ViewModel.ISecureUser _EndUser;
+        /// <MetaDataID>{e7648f67-8aba-4332-8173-27b6c422daa5}</MetaDataID>
+        public FlavourBusinessFacade.ViewModel.ISecureUser EndUser
+        {
+            get
+            {
+                if (_EndUser == null)
+                    return FlavoursOrderServer.EndUser;
+                else
+                    return _EndUser;
+            }
+            set
+            {
+                _EndUser = value;
+
+                _ObjectChangeState?.Invoke(this, nameof(EndUser));
+            }
+
+        }
+
 
         /// <exclude>Excluded</exclude>
         IFoodServiceClientSession _FoodServicesClientSession;
@@ -1165,7 +1191,7 @@ namespace DontWaitApp
                 }
 
                 _FoodServicesClientSession = value;
-                if (_FoodServicesClientSession!=null&&FlavoursOrderServer!=null)
+                if (_FoodServicesClientSession != null && FlavoursOrderServer != null)
                     _FoodServicesClientSession.UpdateSessionUser(FlavoursOrderServer.Language);
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
                 {
@@ -1173,24 +1199,24 @@ namespace DontWaitApp
                     {
                         if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
-                        
+
                     }
-                    _DeliveryComment=_FoodServicesClientSession.DeliveryComment;
+                    _DeliveryComment = _FoodServicesClientSession.DeliveryComment;
                 }
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDeliveryGuest)
                 {
-                    if (_FoodServicesClientSession.MainSession!=null)
+                    if (_FoodServicesClientSession.MainSession != null)
                     {
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace=_FoodServicesClientSession.MainSession.DeleiveryPlace  as FlavourBusinessManager.EndUsers.Place;
-                            _ServiceTime=_FoodServicesClientSession.MainSession.ServiceTime;
+                            _DeliveryPlace = _FoodServicesClientSession.MainSession.DeleiveryPlace as FlavourBusinessManager.EndUsers.Place;
+                            _ServiceTime = _FoodServicesClientSession.MainSession.ServiceTime;
 
                             stateTransition.Consistent = true;
                         }
                     }
-                    _DeliveryComment=_FoodServicesClientSession.DeliveryComment;
+                    _DeliveryComment = _FoodServicesClientSession.DeliveryComment;
                 }
                 if (_FoodServicesClientSession is ITransparentProxy)
                     (_FoodServicesClientSession as ITransparentProxy).Reconnected += FoodServicesClientSessionReconnected;
@@ -1368,9 +1394,10 @@ namespace DontWaitApp
 
         }
 
+        /// <MetaDataID>{da16b8ff-3972-47e6-b92c-f1f169f54c3a}</MetaDataID>
         internal async Task<bool> Pay(FinanceFacade.IPayment payment, decimal tipAmount)
         {
-            if (payment.State== FinanceFacade.PaymentState.Completed)
+            if (payment.State == FinanceFacade.PaymentState.Completed)
                 return true;
 #if DeviceDotNet
 
@@ -1394,72 +1421,72 @@ namespace DontWaitApp
         }
 
 
-//        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
-//        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
-//        {
+        //        /// <MetaDataID>{08af9f7f-89c9-40a9-9aab-e60d1661e7c5}</MetaDataID>
+        //        public async Task<bool> PayAndCommit(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+        //        {
 
 
-//#if DeviceDotNet
+        //#if DeviceDotNet
 
-//            try
-//            {
-//                FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
-//            }
-//            catch (Exception error)
-//            {
+        //            try
+        //            {
+        //                FoodServicesClientSession.CreatePaymentGatewayOrder(payment, tipAmount, @"{""color"": ""607d8b""}");
+        //            }
+        //            catch (Exception error)
+        //            {
 
-//                if(error.HResult==5001)
-//                {
+        //                if(error.HResult==5001)
+        //                {
 
-//                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
-//                    foreach (var item in OrderItems)
-//                    {
-//                        ItemPreparationState itemState;
-//                        if (itemsState.TryGetValue(item.uid, out itemState))
-//                            item.State = itemState;
-//                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
-//                        if (allCommited)
-//                            return true;
-//                    }
-//                }
-//                throw;
-//            }
-//            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-//            if (await this.FlavoursOrderServer.Pay(payment))
-//            {
-//                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-//                var state = payment.State;
-//                if (state==FinanceFacade.PaymentState.Completed)
-//                {
+        //                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+        //                    foreach (var item in OrderItems)
+        //                    {
+        //                        ItemPreparationState itemState;
+        //                        if (itemsState.TryGetValue(item.uid, out itemState))
+        //                            item.State = itemState;
+        //                        var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+        //                        if (allCommited)
+        //                            return true;
+        //                    }
+        //                }
+        //                throw;
+        //            }
+        //            RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+        //            if (await this.FlavoursOrderServer.Pay(payment))
+        //            {
+        //                RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+        //                var state = payment.State;
+        //                if (state==FinanceFacade.PaymentState.Completed)
+        //                {
 
-//                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
-//                    foreach (var item in OrderItems)
-//                    {
-//                        ItemPreparationState itemState;
-//                        if (itemsState.TryGetValue(item.uid, out itemState))
-//                            item.State = itemState;
-//                    }
+        //                    var itemsState = this.FoodServicesClientSession.FlavourItemsPreparationState;
+        //                    foreach (var item in OrderItems)
+        //                    {
+        //                        ItemPreparationState itemState;
+        //                        if (itemsState.TryGetValue(item.uid, out itemState))
+        //                            item.State = itemState;
+        //                    }
 
-//                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
-//                    var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
-//                    var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
+        //                    System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+        //                    var sessionOrderItems = this._OrderItems.Where(x => x.SessionID==SessionID).ToList();
+        //                    var allCommited = this._OrderItems.Where(x => x.SessionID==SessionID).All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed));
 
-//                    return allCommited;
-//                }
-//                else
-//                {
-//                    return false;
-//                }
-//            }
-//            return false;
-//#else
-//            payment.CashPaymentCompleted(tipAmount);
-//            var paymenta = payment.State;
-//            this.SendItemsForPreparation();
+        //                    return allCommited;
+        //                }
+        //                else
+        //                {
+        //                    return false;
+        //                }
+        //            }
+        //            return false;
+        //#else
+        //            payment.CashPaymentCompleted(tipAmount);
+        //            var paymenta = payment.State;
+        //            this.SendItemsForPreparation();
 
-//            return true;
-//#endif
-//        }
+        //            return true;
+        //#endif
+        //        }
 
 
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
@@ -1973,17 +2000,23 @@ namespace DontWaitApp
 
                 if (_DeliveryPlace != value)
                 {
-                    if (value != null && CanChangeDeliveryPlace(value)== ChangeDeliveryPlaceResponse.OK)
+                    if (value != null && CanChangeDeliveryPlace(value) == ChangeDeliveryPlaceResponse.OK)
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
                             _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
-                            if (this.FoodServicesClientSession!=null)
+                            if (this.FoodServicesClientSession != null)
                                 this.FoodServicesClientSession.SetSessionDeliveryPlace(value);
 
-                            FlavourBusinessManager.EndUsers.Place existingPlace = (FlavoursOrderServer.EndUser as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
-                            existingPlace.Update(value);
-                            (FlavoursOrderServer.EndUser as IGeocodingPlaces).SavePlace(existingPlace);
+                            FlavourBusinessManager.EndUsers.Place existingPlace = (EndUser as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
+                            if (existingPlace != null)
+                            {
+                                existingPlace.Update(value);
+                                (EndUser as IGeocodingPlaces).SavePlace(existingPlace);
+                            }
+                            else
+                                (EndUser as IGeocodingPlaces).SavePlace(value);
+
                             stateTransition.Consistent = true;
                         }
                     }
@@ -2003,8 +2036,8 @@ namespace DontWaitApp
             {
                 if (_DeliveryComment != value)
                 {
-                    if (this.FoodServicesClientSession!=null)
-                        this.FoodServicesClientSession.DeliveryComment=value;
+                    if (this.FoodServicesClientSession != null)
+                        this.FoodServicesClientSession.DeliveryComment = value;
 
                     _DeliveryComment = value;
 
@@ -2012,11 +2045,64 @@ namespace DontWaitApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _OrderComment;
+
+        /// <MetaDataID>{0a248fc2-7e80-4304-8590-3eb598558067}</MetaDataID>
+        [PersistentMember(nameof(_OrderComment))]
+        [BackwardCompatibilityID("+18")]
+        public string OrderComment
+        {
+            get => _OrderComment; set
+            {
+                if (_OrderComment != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        if (this.FoodServicesClientSession != null)
+                            this.FoodServicesClientSession.OrderComment = value;
+                        _OrderComment = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _NotesForClient;
+
+        /// <MetaDataID>{45654077-d907-4760-9c9a-a256352ae795}</MetaDataID>
+        [PersistentMember(nameof(_NotesForClient))]
+        [BackwardCompatibilityID("+19")]
+        public string NotesForClient
+        {
+            get => _NotesForClient; set
+            {
+                if (_NotesForClient != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+
+                        _NotesForClient = value;
+                        if ((this.EndUser as FoodServiceClientVM)?.FoodServiceClient != null)
+                            (this.EndUser as FoodServiceClientVM).FoodServiceClient.NotesForClient = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+
 
 
         /// <MetaDataID>{9302cac6-d078-4956-a5d6-b190b3a0700c}</MetaDataID>
         public ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(FlavourBusinessFacade.EndUsers.IPlace newDeliveryPlace)
         {
+            if (_FoodServicesClientSession == null)
+                return ChangeDeliveryPlaceResponse.OK;
+
             return _FoodServicesClientSession.CanChangeDeliveryPlace(newDeliveryPlace.Location);
         }
         /// <MetaDataID>{ebc255f7-6774-4f15-b12a-d8a9cb85c1c3}</MetaDataID>
@@ -2034,7 +2120,7 @@ namespace DontWaitApp
             DeliveryPlaceJson = OOAdvantech.Json.JsonConvert.SerializeObject(_DeliveryPlace);
         }
 
-     
+
 
         /// <MetaDataID>{732cc3b9-e3cc-4b53-88ed-a1d05cf332e5}</MetaDataID>
         FlavourBusinessFacade.EndUsers.Message MenuItemProposalMessage;
@@ -2045,7 +2131,7 @@ namespace DontWaitApp
         /// <MetaDataID>{20bd8838-4798-4082-a3e4-c40299bce52d}</MetaDataID>
         private MenuData lastServicePoinMenuData;
         /// <MetaDataID>{b57c2c39-f423-4c81-b4d4-e6459daed045}</MetaDataID>
-        internal DontWaitApp.FlavoursOrderServer FlavoursOrderServer;
+        public DontWaitApp.FlavoursOrderServer FlavoursOrderServer { get; internal set; }
 
     }
 

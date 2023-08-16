@@ -1999,7 +1999,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8")
+		    value      	"9")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -2058,7 +2058,7 @@
 		    quid       	"5B90D25901A4"
 		    parameters 	(list Parameters
 			(object Parameter "serviceArea"
-			    quid       	"64AB917801D0"
+			    quid       	"64D0BE010348"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.IServiceArea"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2186,7 +2186,7 @@
 		    quid       	"5D571A7F00D9"
 		    parameters 	(list Parameters
 			(object Parameter "cashierStation"
-			    quid       	"64AB91780235"
+			    quid       	"64D0BE0103DE"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.ICashierStation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2261,7 +2261,7 @@
 		    quid       	"5F9D7BC602A0"
 		    parameters 	(list Parameters
 			(object Parameter "serviceArea"
-			    quid       	"64AB91780314"
+			    quid       	"64D0BE02012B"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.IServiceArea"))
 		    result     	"FlavourBusinessFacade.OrganizationStorageRef"
 		    concurrency 	"Sequential"
@@ -2295,7 +2295,7 @@
 		    quid       	"5F9D7BC60301"
 		    parameters 	(list Parameters
 			(object Parameter "waiter"
-			    quid       	"64AB9178036F"
+			    quid       	"64D0BE0201A0"
 			    type       	"FlavourBusinessFacade.HumanResources.IWaiter"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2329,7 +2329,7 @@
 		    quid       	"62D79F7C0145"
 		    parameters 	(list Parameters
 			(object Parameter "fisicalParty"
-			    quid       	"64AB91780289"
+			    quid       	"64D0BE020075"
 			    type       	"FinanceFacade.IFisicalParty"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2348,7 +2348,7 @@
 		    quid       	"62D79F7C01B0"
 		    parameters 	(list Parameters
 			(object Parameter "fisicalParty"
-			    quid       	"64AB917802D5"
+			    quid       	"64D0BE0200CA"
 			    type       	"FinanceFacade.IFisicalParty"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2451,7 +2451,7 @@
 		    quid       	"64AAF654025F"
 		    parameters 	(list Parameters
 			(object Parameter "paymentTerminal"
-			    quid       	"64AB9178005A"
+			    quid       	"64D0BE0000BF"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2485,7 +2485,7 @@
 		    quid       	"64AB8BA40248"
 		    parameters 	(list Parameters
 			(object Parameter "takeAwayStationStation"
-			    quid       	"64AB917800BC"
+			    quid       	"64D0BE000194"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation"))
 		    result     	"void"
 		    concurrency 	"Sequential"
@@ -2507,6 +2507,40 @@
 			    quid       	"64AB8BA40310"
 			    type       	"string"))
 		    result     	"FlavourBusinessFacade.IFlavoursServicesContextRuntime"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "RemoveCallCenterStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5d3ee750-210e-492a-85bf-d520ca29377e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64D0BE020233"))
+		    quid       	"64D0BE020233"
+		    parameters 	(list Parameters
+			(object Parameter "homeDeliveryCallcenterStation"
+			    quid       	"64D0BE020266"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "NewCallCenterStation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{93d2d4c8-c809-47a3-8545-ee5ea81e8c6c}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64D0BE0202C3"))
+		    quid       	"64D0BE0202C3"
+		    result     	"FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -2925,6 +2959,39 @@
 			    value      	"64AB9179012C"))
 		    quid       	"64AB9179012C"
 		    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>"
+		    exportControl 	"Public")
+		(object ClassAttribute "OrganizationStorageIdentity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7b5912c2-6b11-4a5d-a5c5-4e1120aaf54e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"64D0BE030332")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"64D0BE030332"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 	    quidu      	"5A71E29001B9"
@@ -5678,6 +5745,39 @@
 				    value      	"64AB929C0248"))
 			    quid       	"64AB929C0248"
 			    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>"
+			    exportControl 	"Public")
+			(object ClassAttribute "OrganizationStorageIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2cdb9cf0-e524-4798-8198-a31f6716d6f5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64D122B60323")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"64D122B60323"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -14160,24 +14260,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BE5D2035E"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(1656, 1797)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	17
-				max_width  	2887)
 			    width      	724
 			    height     	475
 			    annotation 	8)
@@ -14264,24 +14346,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(2859, 2336)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	1365)
 			    width      	964
 			    height     	482
 			    annotation 	8)
@@ -14426,24 +14490,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@47
-				location   	(5436, 527)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	15
-				max_width  	1587)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -14475,24 +14521,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB60401E2"
-			    compartment 	(object Compartment
-				Parent_View 	@48
-				location   	(3408, 471)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	20
-				max_width  	2459)
 			    width      	719
 			    height     	381
 			    annotation 	8)
@@ -14886,24 +14914,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@68
-				location   	(924, 1692)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	7
-				max_width  	1225)
 			    width      	719
 			    height     	556
 			    annotation 	8)
@@ -14944,24 +14954,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B8BB0B8006B"
-			    compartment 	(object Compartment
-				Parent_View 	@70
-				location   	(1614, 755)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	621)
 			    width      	676
 			    height     	487
 			    annotation 	8)
@@ -15280,24 +15272,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@86
-				location   	(65, 916)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	33
-				max_width  	2062)
 			    width      	788
 			    height     	626
 			    annotation 	8)
@@ -19096,7 +19070,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"17")
+			    value      	"18")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -19159,7 +19133,7 @@
 			    quid       	"62CFB3CC00B5"
 			    parameters 	(list Parameters
 				(object Parameter "place"
-				    quid       	"639EB42401A0"
+				    quid       	"64DBCB3A02FD"
 				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19178,7 +19152,7 @@
 			    quid       	"62CFB3CC0107"
 			    parameters 	(list Parameters
 				(object Parameter "place"
-				    quid       	"639EB42401DC"
+				    quid       	"64DBCB3A03AC"
 				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -19244,6 +19218,25 @@
 				(object Parameter "place"
 				    quid       	"639E058C02F2"
 				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "Synchronize"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e9fe7d06-c494-437a-9cd3-4fee6fc59129}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBCB3C0257"))
+			    quid       	"64DBCB3C0257"
+			    parameters 	(list Parameters
+				(object Parameter "foodServiceClient"
+				    quid       	"64DBCB3C02BD"
+				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClient"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -19722,6 +19715,39 @@
 				    name       	"Identity"
 				    value      	"+16"))
 			    quid       	"63CCB41D0233"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "NotesForClient"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{53e5c155-3df3-4aa7-ba90-d03aadd36ab0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBCB3D0099")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+17"))
+			    quid       	"64DBCB3D0099"
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
@@ -20961,7 +20987,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	1780
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient" @266
@@ -20979,17 +21005,17 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@266
-				location   	(3958, 1409)
+				location   	(3956, 1409)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	426
+				max_width  	430
 				justify    	0
 				label      	"FoodServiceClient")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060F310072"
-			    width      	444
+			    width      	448
 			    height     	126
 			    annotation 	8
 			    autoResize 	TRUE)
@@ -21248,6 +21274,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"63A6C90E03E7"
+			    compartment 	(object Compartment
+				Parent_View 	@276
+				location   	(4457, 1844)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	17
+				max_width  	1425)
 			    width      	644
 			    height     	300
 			    annotation 	8)
@@ -21365,6 +21409,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5C060C8B012B"
+			    compartment 	(object Compartment
+				Parent_View 	@282
+				location   	(3840, 805)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	450)
 			    width      	624
 			    height     	526
 			    annotation 	8
@@ -21587,6 +21649,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@293
+				location   	(1489, 975)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	1400)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -21985,6 +22065,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@312
+				location   	(105, 927)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	15
+				max_width  	1587)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -22484,6 +22582,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@336
+				location   	(187, 407)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -28055,7 +28171,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"31")
+			    value      	"32")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -28076,7 +28192,11 @@
 			(object Realize_Relationship
 			    quid       	"5D3D2B9702FF"
 			    supplier   	"Logical View::OOAdvantech::PersistenceLayer::IObjectStateEventsConsumer"
-			    quidu      	"53F489FD0166"))
+			    quidu      	"53F489FD0166")
+			(object Realize_Relationship
+			    quid       	"64DBC736027C"
+			    supplier   	"Logical View::FinanceFacade::IPaymentGateway"
+			    quidu      	"64AD009303C9"))
 		    operations 	(list Operations
 			(object Operation "FoodServiceClientSession"
 			    attributes 	(list Attribute_Set
@@ -28144,7 +28264,7 @@
 			    quid       	"5D22326D01D5"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"6448A3320174"
+				    quid       	"64DBC743029C"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28271,10 +28391,10 @@
 			    quid       	"5D31519500B6"
 			    parameters 	(list Parameters
 				(object Parameter "clientSessionToken"
-				    quid       	"6448A332006C"
+				    quid       	"64DBC7410349"
 				    type       	"string")
 				(object Parameter "messmateClientSesion"
-				    quid       	"6448A332007D"
+				    quid       	"64DBC7410378"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28293,7 +28413,7 @@
 			    quid       	"5D3D2B980270"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6448A3320145"
+				    quid       	"64DBC743020C"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -28312,7 +28432,7 @@
 			    quid       	"5D3D2B98029C"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"6448A332015C"
+				    quid       	"64DBC743025C"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28450,7 +28570,7 @@
 			    quid       	"5D3D2B990111"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6448A33202AB"
+				    quid       	"64DBC7460241"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28469,7 +28589,7 @@
 			    quid       	"5D3D2B99013B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6448A332033B"
+				    quid       	"64DBC74702C4"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28488,7 +28608,7 @@
 			    quid       	"5D46A46F035B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6448A33202C8"
+				    quid       	"64DBC746028B"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28507,7 +28627,7 @@
 			    quid       	"5D46A46F03C7"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6448A332036D"
+				    quid       	"64DBC7470367"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28526,7 +28646,7 @@
 			    quid       	"5D46A470001A"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"6448A3320388"
+				    quid       	"64DBC74703AC"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28642,7 +28762,7 @@
 			    quid       	"5FB8DAFC0123"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"6448A33201C9"
+				    quid       	"64DBC7440320"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28661,10 +28781,10 @@
 			    quid       	"5FB8DAFC0265"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"6448A33201F4"
+				    quid       	"64DBC7440392"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
 				(object Parameter "menuItemUri"
-				    quid       	"6448A3320206"
+				    quid       	"64DBC74403BD"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -28683,7 +28803,7 @@
 			    quid       	"5FB8DAFD0105"
 			    parameters 	(list Parameters
 				(object Parameter "itemUid"
-				    quid       	"6448A3320354"
+				    quid       	"64DBC747031E"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    concurrency 	"Sequential"
@@ -29400,7 +29520,7 @@
 			    quid       	"63CD916901F7"
 			    parameters 	(list Parameters
 				(object Parameter "location"
-				    quid       	"6448A3320041"
+				    quid       	"64DBC73F0329"
 				    type       	"FlavourBusinessFacade.EndUsers.Coordinate"))
 			    result     	"FlavourBusinessFacade.EndUsers.ChangeDeliveryPlaceResponse"
 			    concurrency 	"Sequential"
@@ -29419,7 +29539,7 @@
 			    quid       	"63CD916F011D"
 			    parameters 	(list Parameters
 				(object Parameter "deliveryPlace"
-				    quid       	"6448A3330021"
+				    quid       	"64DBC7490074"
 				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -29485,7 +29605,50 @@
 			    opExportControl 	"Public"
 			    uid        	0)
 			(object Operation "opname"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64BF6AA90184")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bc3264e7-9fa3-4ecf-bd7e-1399dee885db}"))
 			    quid       	"64BF6AA90184"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "UpdateSessionUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e1482ae5-b23a-4f23-a3bd-4ae21f383dc7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBC74900F1"))
+			    quid       	"64DBC74900F1"
+			    parameters 	(list Parameters
+				(object Parameter "userLanguageCode"
+				    quid       	"64DBC7490120"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CommitAll"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{647d84e3-f212-4bdc-902c-d54bc57eb9cb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBC7490190"))
+			    quid       	"64DBC7490190"
+			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.RoomService.ItemPreparationState,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -30145,8 +30308,7 @@
 				    name       	"Identity"
 				    value      	"+21"))
 			    quid       	"5FB8DFA6006D"
-			    type       	"IServicesContextWorker"
-			    quidu      	"5FC0BBC80230"
+			    type       	"FlavourBusinessFacade.HumanResources.IServicesContextWorker"
 			    exportControl 	"Public")
 			(object ClassAttribute "SessionState"
 			    attributes 	(list Attribute_Set
@@ -30662,6 +30824,39 @@
 				    value      	TRUE))
 			    quid       	"6448A2210290"
 			    type       	"System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>"
+			    exportControl 	"Public")
+			(object ClassAttribute "OrderComment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8ada8ca2-18aa-4c6b-b18a-69825fc8e010}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DBC74C0250")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+31"))
+			    quid       	"64DBC74C0250"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A747FC0350"
@@ -44162,7 +44357,19 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{b57a74a6-b0f3-46f3-81d2-a1db71aefffe}"))
+			    value      	"{b57a74a6-b0f3-46f3-81d2-a1db71aefffe}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
 		    quid       	"63DBAA4501B6"
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "email"
@@ -47037,7 +47244,21 @@
 		    module     	"Component View::PaymentProviders::PaymentProviders"
 		    quidu      	"63DBA9FF000B"
 		    language   	"C#"))
-	    logical_presentations 	(list unit_reference_list)))
+	    logical_presentations 	(list unit_reference_list))
+	(object Class_Category "OrganizationCRM"
+	    quid       	"64CF391E01C3"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list)
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"64CF39870236"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list)))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"5A71E2E003C8"

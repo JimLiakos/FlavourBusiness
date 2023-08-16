@@ -44,6 +44,28 @@ namespace FlavourBusinessManager.ServicePointRunTime
     public class ServicesContextRunTime : MarshalByRefObject, IExtMarshalByRefObject, IFlavoursServicesContextRuntime, IUploadService
     {
 
+        /// <exclude>Excluded</exclude>
+        string _OrganizationStorageIdentity;
+
+        /// <MetaDataID>{2cdb9cf0-e524-4798-8198-a31f6716d6f5}</MetaDataID>
+        [PersistentMember(nameof(_OrganizationStorageIdentity))]
+        [BackwardCompatibilityID("+8")]
+        public string OrganizationStorageIdentity
+        {
+            get => _OrganizationStorageIdentity;
+            set
+            {
+                if (_OrganizationStorageIdentity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OrganizationStorageIdentity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{bbfa9e26-c08a-44ca-9b67-e4d172ffecb2}</MetaDataID>
         public void RemovePaymentTerminal(IPaymentTerminal paymentTerminal)
         {
@@ -296,6 +318,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{179a3bed-629f-4a3f-b79a-bbe334fcbed2}</MetaDataID>
         private void PaymentTerminal_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IWaiter.ActiveShiftWork))
@@ -1925,7 +1948,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 var servicesContextIdentity = ServicesContextIdentity;
                 var deliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
                                             where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
-                                            select homeDeliveryServicePoint).FirstOrDefault();
+                                            select homeDeliveryServicePoint).ToList().Where(x=>!x.ServicesContextIdentity.EndsWith("_test")).FirstOrDefault();
 
                 lock (DeliveryServicePointLock)
                 {
@@ -2173,6 +2196,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         object takeAwayStationsLock = new object();
 
 
+        /// <MetaDataID>{896dab94-f734-4dda-9be5-1a8c21e0039c}</MetaDataID>
         object homeDeliveryCallCenterStationsLock = new object();
         /// <exclude>Excluded</exclude>
         Dictionary<string, ITakeAwayStation> _TakeAwayStationsDictionary;
@@ -2219,6 +2243,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
 
         }
+        /// <MetaDataID>{f70c687d-1a6b-4278-adf6-60692e5a422c}</MetaDataID>
         public IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey)
         {
             lock (homeDeliveryCallCenterStationsLock)
@@ -2856,6 +2881,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{72e35824-8378-44ac-a8ce-768e5aa4437b}</MetaDataID>
         public IHomeDeliveryCallCenterStation NewCallCenterStation()
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -2915,6 +2941,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        /// <MetaDataID>{273fea1f-369c-4340-9f81-8db8d3440da3}</MetaDataID>
         public void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation)
         {
             try
@@ -2935,6 +2962,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        /// <MetaDataID>{8caa1c61-4c4a-4119-8d9c-594ee8b59b6e}</MetaDataID>
         public List<IHomeDeliveryCallCenterStation> CallCenterStations
         {
 
@@ -2951,7 +2979,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
 
-        } 
+        }
     }
 
 

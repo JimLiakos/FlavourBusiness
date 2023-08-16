@@ -12,6 +12,10 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContext
     {
+        /// <MetaDataID>{fd927f39-9d8c-40c7-951b-ded617dac1d7}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        string OrganizationStorageIdentity { get; set; }
+
         /// <MetaDataID>{c6cf8b81-57e2-423f-ac30-eaa5e3167e0c}</MetaDataID>
         void RemoveCallCenterStation(IHomeDeliveryCallCenterStation homeDeliveryCallcenterStation);
 

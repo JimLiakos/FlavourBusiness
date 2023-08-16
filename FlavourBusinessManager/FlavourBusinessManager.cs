@@ -49,6 +49,7 @@ namespace FlavourBusinessManager
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
+            OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.EndUsers.Coordinate"] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
 
 
             //var businessesResourcesInitTask = Task.Run(() =>

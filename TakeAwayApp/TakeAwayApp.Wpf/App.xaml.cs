@@ -28,6 +28,9 @@ namespace TakeAwayApp.Wpf
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
+            //CancelationToken 
+       
+
 
             var ticks = new DateTime(2022, 1, 1).Ticks;
             var ans = DateTime.Now.Ticks - ticks;

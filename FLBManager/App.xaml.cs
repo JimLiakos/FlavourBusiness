@@ -33,6 +33,7 @@ namespace FLBManager
         protected override void OnStartup(StartupEventArgs e)
         {
 
+          
             string foodCategory = "Καφέδες(47); Σουβλάκια(61); Pizza(48); Κινέζικη(18); Κρέπες(21); Burgers(46); Sushi(26); Γλυκά(24); Μαγειρευτά(40); Ζυμαρικά(36); Μεξικάνικη(5); Νηστίσιμα(16); Βάφλες(10); Ινδική(13); Vegan(8); Brunch(20); Vegetarian(5); Hot Dog(5); Γαλακτοκομικά(1); Ασιατική(24); Σφολιάτες(8); Θαλασσινά(21); Σαλάτες(44); Ζαχαροπλαστείο(10); Cocktails(16); Ιταλική(16); Ψητά - Grill(95); Αρτοποιήματα(2); Sandwich(33); Παγωτό(21); Kebab(12); Πεϊνιρλί(7); Ποτά(13); Ethnic(10); Cool food(6); Κοτόπουλα(5); Ανατολίτικη(8); Φαλάφελ(6); Τσέχικη(1); Κεντροευρωπαϊκή(1); Μεζεδοπωλείο(7); Μεσογειακή(9); Ελληνική(9); Πατσάς(1); Snacks(4); Donuts(2); Πιροσκί(1); Λουκουμάδες(3)";
 
             var foodCategoriesNames = foodCategory.Split(';').Select(x => x.Split('(')[0]).ToList();
@@ -318,8 +319,6 @@ namespace FLBManager
             SerializationBinder.NamesTypesDictionary["MenuModel.MealType"] = typeof(MenuModel.MealType);
             SerializationBinder.NamesTypesDictionary["MenuModel.FixedMealType"] = typeof(MenuModel.FixedMealType);
             SerializationBinder.NamesTypesDictionary["MenuModel.MealCourseType"] = typeof(MenuModel.MealCourseType);
-            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
-
 
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.HallLayout"] = typeof(RestaurantHallLayoutModel.HallLayout);
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.ServicePointShape"] = typeof(RestaurantHallLayoutModel.ServicePointShape);
@@ -339,7 +338,7 @@ namespace FLBManager
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealType)] = "MenuModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.FixedMealType)] = "MenuModel.FixedMealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
-            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
+            
 
 
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.HallLayout)] = "RestaurantHallLayoutModel.HallLayout";

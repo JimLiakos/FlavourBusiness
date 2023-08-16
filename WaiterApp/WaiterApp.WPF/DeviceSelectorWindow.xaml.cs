@@ -42,7 +42,7 @@ namespace WaiterApp.WPF
 
         public int SelectedIndex { get; set; }
 
-
+        
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -50,7 +50,7 @@ namespace WaiterApp.WPF
 
             GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
 
-            FlavourBusinessApps.WaiterApp.WPF.TakeAwayApp.Startup(DevicesIDS[SelectedIndex]);
+            FlavourBusinessApps.Waiter.WPF.WaiterApp.Startup(DevicesIDS[SelectedIndex]);
             
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();

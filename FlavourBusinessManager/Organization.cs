@@ -19,6 +19,7 @@ using FlavourBusinessFacade.HumanResources;
 using System.Threading.Tasks;
 using System.IO;
 using System.Globalization;
+using FlavourBusinessManager.EndUsers;
 
 //using FlavourBusinessToolKit;
 
@@ -216,7 +217,7 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{ed0b9ab9-cfdd-475b-9863-6994dbe2e86e}</MetaDataID>
-        protected Organization()
+        public Organization()
         {
 
         }
@@ -1200,7 +1201,7 @@ namespace FlavourBusinessManager
             {
                 double? pageHeight = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Height;
                 double? pageWidth = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Width;
-                if(pageHeight!=null)
+                if (pageHeight!=null)
                 {
                     organizationStorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
                     organizationStorage.SetPropertyValue("MenuPageWidth", pageWidth.Value.ToString(CultureInfo.GetCultureInfo(1033)));
@@ -1331,6 +1332,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{9bfa1150-7dfa-466f-b9f1-4a66d8ad6ffd}</MetaDataID>
         public IFlavoursServicesContext NewFlavoursServicesContext()
         {
+
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 throw new AuthenticationException();
@@ -1345,6 +1347,10 @@ namespace FlavourBusinessManager
             if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
+
+            var organizationMainStorage = OpenOrganizationMainStorage();
+            if (organizationMainStorage==null)
+                organizationMainStorage=OpenOrganizationMainStorage(true);
 
             ObjectStorage objectStorage = ObjectStorage.GetStorageOfObject(this);
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1366,6 +1372,7 @@ namespace FlavourBusinessManager
 
                 FlavoursServicesContext flavoursServiceContext = new FlavoursServicesContext();
                 flavoursServiceContext.ContextStorageName = instanceContextStorageName;
+                flavoursServiceContext.OrganizationStorageIdentity=organizationMainStorage.StorageMetaData.StorageName;
                 flavoursServiceContext.Description = Properties.Resources.FlavoursServicePointDefaultName;
                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(flavoursServiceContext);
                 _ServicesContexts.Add(flavoursServiceContext);
@@ -1394,6 +1401,102 @@ namespace FlavourBusinessManager
 
             //TODO:Να ελεχθεί όταν δεν υπάρχει Email
             return contextStorageName;
+
+
+        }
+
+        //[ObjectActivationCall]
+        //internal void OnActivated()
+        //{
+        //    Task.Run(() =>
+        //    {
+        //        var objectStorage = OpenOrganizationMainStorage();
+        //        foreach (var servicesContext in ServicesContexts)
+        //        {
+        //            (servicesContext as FlavoursServicesContext).OrganizationStorageIdentity=objectStorage.StorageMetaData.StorageIdentity;
+        //        }
+
+        //    });
+        //}
+        static object lockObj = new object();
+        public ObjectStorage OpenOrganizationMainStorage(bool create = false)
+        {
+            lock (lockObj)
+            {
+                ObjectStorage storageSession = null;
+                string storageName = GetOrganizationMainStorageName();
+                string storageLocation = "DevStorage";
+                string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
+
+                try
+                {
+                    storageSession = ObjectStorage.OpenStorage(storageName,
+                                                                storageLocation,
+                                                                storageType, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountName, FlavourBusinessManagerApp.FlavourBusinessStoragesAccountkey);
+
+
+                    System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
+                    string serverUrl = OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.Substring(0, OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.IndexOf("/api"));
+                    var storagesClient = new OOAdvantech.PersistenceLayer.StoragesClient(httpClient);
+                    storagesClient.BaseUrl = serverUrl;
+                    var task = storagesClient.GetAsync(storageSession.StorageMetaData.StorageIdentity);
+                    task.Wait();
+                    var storageMetaData = task.Result;
+                    if (storageMetaData == null || storageMetaData.StorageIdentity == null)
+                        storagesClient.PostAsync(storageSession.StorageMetaData, true);
+
+                }
+                catch (OOAdvantech.PersistenceLayer.StorageException Error)
+                {
+                    if (Error.Reason == OOAdvantech.PersistenceLayer.StorageException.ExceptionReason.StorageDoesnotExist)
+                    {
+                        if (create)
+                            storageSession = ObjectStorage.NewStorage(storageName,
+                                                                    storageLocation,
+                                                                    storageType);
+                        else
+                            return null;
+                    }
+                    else
+                        throw Error;
+                    try
+                    {
+                        RegisterOrganizationMainStorageComponents(storageSession);
+
+                    }
+                    catch (System.Exception Errore)
+                    {
+                        int sdf = 0;
+                    }
+                }
+                catch (System.Exception Error)
+                {
+                    int tt = 0;
+                }
+
+                return storageSession;
+            }
+        }
+
+        private void RegisterOrganizationMainStorageComponents(ObjectStorage objectStorage)
+        {
+            List<string> types = new List<string>() { typeof(FoodServiceClient).FullName };
+            objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName, types);
+        }
+
+        private string GetOrganizationMainStorageName()
+        {
+            string contextStorageName = "jim.liakos@gmail.com";// Email.ToLower();
+
+            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+            contextStorageName = rgx.Replace(contextStorageName, "");
+
+            if (Regex.IsMatch(contextStorageName, @"^\d"))
+                contextStorageName = "s" + contextStorageName;
+
+
+            //TODO:Να ελεχθεί όταν δεν υπάρχει Email
+            return contextStorageName+="Main";
 
 
         }

@@ -325,6 +325,11 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public double RouteDistanceInMeters { get; set; }
+        public double RouteDurationInMinutes { get; set; }
+        public Coordinate RouteOrigin { get; set; }
+
+
         /// <exclude>Excluded</exclude> 
         string _PlaceID;
         /// <MetaDataID>{9407928d-6c94-4570-844d-cdd6b53534be}</MetaDataID>

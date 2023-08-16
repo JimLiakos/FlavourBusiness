@@ -6,6 +6,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{50c6d802-9608-43bd-93ec-0bff5800cce4}</MetaDataID>
     [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{50c6d802-9608-43bd-93ec-0bff5800cce4}")]
+    [GenerateFacadeProxy]
     public interface IHomeDeliveryServicePoint : IServicePoint
     {
         /// <MetaDataID>{b9bc9dc2-b444-4109-99c6-1a976c0ca7b5}</MetaDataID>

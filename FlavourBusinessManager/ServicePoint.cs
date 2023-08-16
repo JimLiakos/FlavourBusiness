@@ -498,10 +498,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
                 if (_ServicesContextRunTime == null)
-                {
-                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
-                    _ServicesContextRunTime = (from runTime in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>() select runTime).FirstOrDefault();
-                }
+                    _ServicesContextRunTime = ServicePointRunTime.ServicesContextRunTime.Current;
+                    //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+                    //_ServicesContextRunTime = (from runTime in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>() select runTime).FirstOrDefault();
+                
                 return _ServicesContextRunTime;
 
             }
