@@ -1,5 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
@@ -41,7 +42,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
-                if (HomeDeliveryServicePointsForTest==null)
+                if (HomeDeliveryServicePointsForTest == null)
                 {
 
 
@@ -95,11 +96,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get => _Description; set
             {
-                if (_Description!=value)
+                if (_Description != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Description=value;
+                        _Description = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -117,16 +118,30 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get => _ServicesContextIdentity; set
             {
-                if (_ServicesContextIdentity!=value)
+                if (_ServicesContextIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _ServicesContextIdentity=value;
+                        _ServicesContextIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        object ObjLock = new object();
+        ///// <exclude>Excluded</exclude>
+        //List<EndUsers.FoodServiceClientSession> _OpenClientSessions;
+        
+        public List<EndUsers.FoodServiceClientSession> OpenClientSessions
+        {
+            get
+            {
+                return ServicesContextRunTime.Current.OpenClientSessions;
+            }
+        }
+
 
         public List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone)
         {
@@ -134,21 +149,23 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
             var foodServiceClients = (from foodServiceClient in storage.GetObjectCollection<IFoodServiceClient>()
-                                      where foodServiceClient.PhoneNumber== phone
+                                      where foodServiceClient.PhoneNumber == phone
                                       select foodServiceClient).ToList().Select(x => new FoodServiceClienttUri()
                                       {
-                                          UniqueId=x.OAuthUserIdentity,
-                                          FoodServiceClient=x
+                                          UniqueId = x.Identity,
+                                          FoodServiceClient = x,
+                                          OpenFoodServiceClientSessions = OpenClientSessions.Where(clientSession => clientSession.UserIdentity == x.Identity).OfType<IFoodServiceClientSession>().ToList()
+
                                       }).ToList();
 
 
-           
 
-            if (foodServiceClients.Count==0)
+
+            if (foodServiceClients.Count == 0)
             {
                 var ticks = new DateTime(2022, 1, 1).Ticks;
                 var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                foodServiceClients.Add(new FoodServiceClienttUri() { UniqueId=uniqueId });
+                foodServiceClients.Add(new FoodServiceClienttUri() { UniqueId = uniqueId });
             }
 
             return foodServiceClients;
@@ -162,16 +179,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             foreach (var deliveryServicePoint in HomeDeliveryServicePoints)
             {
                 var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
-                if (placeOfDistribution!=null)
+                if (placeOfDistribution != null)
                 {
                     double distance = Coordinate.CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
 
                     var polyGon = new MapPolyGon(deliveryServicePoint.ServiceAreaMap);
 
                     if (polyGon.FindPoint(location.Latitude, location.Longitude))
-                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description, DistanceInKm=distance, Location=placeOfDistribution.Location, ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange=false });
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description = deliveryServicePoint.Description, DistanceInKm = distance, Location = placeOfDistribution.Location, ServicesContextIdentity = deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity = deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange = false });
                     else
-                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description=deliveryServicePoint.Description, DistanceInKm=distance, Location=placeOfDistribution.Location, ServicesContextIdentity=deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity=deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange=true });
+                        deliveryServicePoints.Add(new HomeDeliveryServicePointAbbreviation() { Description = deliveryServicePoint.Description, DistanceInKm = distance, Location = placeOfDistribution.Location, ServicesContextIdentity = deliveryServicePoint.ServicesContextIdentity, ServicesPointIdentity = deliveryServicePoint.ServicesPointIdentity, OutOfDeliveryRange = true });
                 }
             }
             return deliveryServicePoints.OrderBy(x => x.OutOfDeliveryRange).ThenBy(x => x.DistanceInKm).ToList();
@@ -187,11 +204,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get => _CallcenterStationIdentity; set
             {
-                if (_CallcenterStationIdentity!=value)
+                if (_CallcenterStationIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _CallcenterStationIdentity=value;
+                        _CallcenterStationIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -208,11 +225,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get => _GraphicMenuStorageIdentity; set
             {
-                if (_GraphicMenuStorageIdentity!=value)
+                if (_GraphicMenuStorageIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _GraphicMenuStorageIdentity=value;
+                        _GraphicMenuStorageIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -251,27 +268,100 @@ namespace FlavourBusinessManager.ServicesContextResources
         public IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint)
         {
 
-            string servicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity+";"+homeDeliveryServicePoint.ServicesPointIdentity;
-            if (homeDeliveryServicePoint.ServicesContextIdentity==ServicesContextIdentity)
+            string servicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + ";" + homeDeliveryServicePoint.ServicesPointIdentity;
+            if (homeDeliveryServicePoint.ServicesContextIdentity == ServicesContextIdentity)
             {
-                var servicePoint = HomeDeliveryServicePoints.Where(x => x.ServicesContextIdentity==homeDeliveryServicePoint.ServicesContextIdentity&&x.ServicesPointIdentity==homeDeliveryServicePoint.ServicesPointIdentity).FirstOrDefault();
+                var servicePoint = HomeDeliveryServicePoints.Where(x => x.ServicesContextIdentity == homeDeliveryServicePoint.ServicesContextIdentity && x.ServicesPointIdentity == homeDeliveryServicePoint.ServicesPointIdentity).FirstOrDefault();
 
                 return servicePoint.GetFoodServiceClientSession(clientName, null, clientDeviceID, deviceType, deviceFirebaseToken, true, true);
-               // servicePoint.GetFoodServiceClientSession()
+                // servicePoint.GetFoodServiceClientSession()
             }
 
 
 
 
 
-            var sds = homeDeliveryServicePoint.ServicesContextIdentity+";";
+            var sds = homeDeliveryServicePoint.ServicesContextIdentity + ";";
 
             return null;
 
 
         }
 
+        public void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace)
+        {
 
+            var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
+            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
+
+            var foodServicesClient = (from foodServiceClient in storage.GetObjectCollection<FoodServiceClient>()
+                                      where foodServiceClient.Identity == foodServicesClientData.Identity
+                                      select foodServiceClient).ToList().FirstOrDefault();
+
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                if (foodServicesClient == null)
+                {
+                    foodServicesClient = new FoodServiceClient(foodServicesClientData.Identity)
+                    {
+                        Name = foodServicesClientData.Name,
+                        UserName = foodServicesClientData.UserName,
+                        Email = foodServicesClientData.Email,
+                        FriendlyName = foodServicesClientData.FriendlyName,
+                        FullName = foodServicesClientData.FullName,
+                        NotesForClient = foodServicesClientData.NotesForClient,
+                        PhoneNumber = foodServicesClientData.PhoneNumber,
+                        PhotoUrl = foodServicesClientData.PhotoUrl
+                    };
+                    foodServicesClient.AddDeliveryPlace(deliveryPlace);
+                    organizationObjectStorage.CommitTransientObjectState(foodServicesClient);
+                }
+                else
+                {
+
+
+                    using (ObjectStateTransition objStateTransition = new ObjectStateTransition(foodServicesClient))
+                    {
+                        foodServicesClient.Name = foodServicesClientData.Name;
+                        foodServicesClient.UserName = foodServicesClientData.UserName;
+                        foodServicesClient.Email = foodServicesClientData.Email;
+                        foodServicesClient.FriendlyName = foodServicesClientData.FriendlyName;
+                        foodServicesClient.FullName = foodServicesClientData.FullName;
+                        foodServicesClient.NotesForClient = foodServicesClientData.NotesForClient;
+                        foodServicesClient.PhoneNumber = foodServicesClientData.PhoneNumber;
+                        foodServicesClient.PhotoUrl = foodServicesClientData.PhotoUrl;
+                        foodServicesClient.AddDeliveryPlace(deliveryPlace); 
+                        objStateTransition.Consistent = true;
+                    }
+
+                }
+                if(foodServicesClientData.DeliveryPlaces!=null)
+                {
+                    foreach(var place in foodServicesClient.DeliveryPlaces)
+                    {
+                        if (foodServicesClientData.DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() == null)
+                            foodServicesClient.RemoveDeliveryPlace(place);
+                    }
+                    foreach (var place in foodServicesClientData.DeliveryPlaces)
+                    {
+                        foodServicesClient.AddDeliveryPlace(place);
+                        if(place.Default)
+                            foodServicesClient.SetDefaultDelivaryPlace(place);
+
+                    }
+
+                }
+                foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
+                var unCommitedItems = foodServicesClientSession.FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).ToList();
+                foodServicesClientSession.Commit(unCommitedItems);
+                (foodServicesClientSession as FoodServiceClientSession).UserIdentity = foodServicesClient.Identity; 
+                stateTransition.Consistent = true;
+            }
+
+
+
+        }
 
         DeviceType ClientDeviceType = DeviceType.Desktop;
         /// <exclude>Excluded</exclude>
@@ -284,27 +374,27 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (_Menu == null)
                 {
                     OrganizationStorageRef graphicMenu = null;
-                    if (ServicesContextRunTime.Current.GraphicMenus.Count==1)
+                    if (ServicesContextRunTime.Current.GraphicMenus.Count == 1)
                         graphicMenu = ServicesContextRunTime.Current.GraphicMenus.FirstOrDefault();
                     else
                     {
                         //var Portrait = null;
                         //var Landscape = null;
 
-                        if (ClientDeviceType==DeviceType.Phone)
-                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Phone)
+                            graphicMenu = ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsPortrait(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.Desktop)
-                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Desktop)
+                            graphicMenu = ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.Tablet)
-                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.Tablet)
+                            graphicMenu = ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (ClientDeviceType==DeviceType.TV)
-                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
+                        if (ClientDeviceType == DeviceType.TV)
+                            graphicMenu = ServicesContextRunTime.Current.GraphicMenus.Where(x => RestaurantMenu.IsLandscape(x)).FirstOrDefault();
 
-                        if (graphicMenu==null)
-                            graphicMenu= ServicesContextRunTime.Current.GraphicMenus.FirstOrDefault();
+                        if (graphicMenu == null)
+                            graphicMenu = ServicesContextRunTime.Current.GraphicMenus.FirstOrDefault();
 
 
                     }

@@ -35,6 +35,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{41af5d0a-7a99-4bac-bae3-196c72cb7134}</MetaDataID>
         HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
 
+        bool OrderCommit();
 
 
 

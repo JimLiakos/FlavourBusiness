@@ -1,5 +1,7 @@
 
+
 using OOAdvantech.MetaDataRepository;
+using System.Diagnostics;
 
 namespace FlavourBusinessFacade.EndUsers
 {
@@ -99,7 +101,11 @@ namespace FlavourBusinessFacade.EndUsers
     {
         public string UniqueId { get; set; }
         public IFoodServiceClient FoodServiceClient { get; set; }
+
+        public System.Collections.Generic.List<IFoodServiceClientSession> OpenFoodServiceClientSessions { get; set; }
     }
+
+
 
 
 }

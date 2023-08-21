@@ -382,6 +382,17 @@ namespace FlavourBusinessManager
                         {
                             objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
                         }
+
+                        if (!string.IsNullOrWhiteSpace(organizationStorageIdentity))
+                        {
+                            var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(organizationStorageIdentity);
+                            if (organizationObjectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName))
+                            {
+                                organizationObjectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                                organizationObjectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                            }
+                        }
+
                     }
                     catch (Exception error)
                     {
@@ -419,7 +430,7 @@ namespace FlavourBusinessManager
                     {
                         servicesContextRunTime = new ServicePointRunTime.ServicesContextRunTime();
                         servicesContextRunTime.OrganizationIdentity = organizationIdentity;
-                        servicesContextRunTime.OrganizationStorageIdentity=organizationStorageIdentity;
+                        servicesContextRunTime.OrganizationStorageIdentity = organizationStorageIdentity;
                         servicesContextRunTime.ServicesContextIdentity = servicesContextIdentity;
 
                         servicesContextRunTime.SetRestaurantMenusData(restaurantMenusDataStorageRef);
@@ -449,6 +460,7 @@ namespace FlavourBusinessManager
 
                         stateTransition.Consistent = true;
                     }
+
                     //if (publishRestaurantMenuData)
                     //    PublishMenuRestaurantMenuData(servicesContextRunTime);
                     //else
@@ -659,7 +671,7 @@ namespace FlavourBusinessManager
                 if (deliveryServicePoint != null)
                 {
                     var placeOfDistribution = deliveryServicePoint.PlaceOfDistribution;
-                    if (placeOfDistribution!=null)
+                    if (placeOfDistribution != null)
                     {
                         double distance = Coordinate.CalDistance(location.Latitude, location.Longitude, placeOfDistribution.Location.Latitude, placeOfDistribution.Location.Longitude);
 

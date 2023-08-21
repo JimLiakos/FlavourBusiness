@@ -11,6 +11,7 @@ using FlavourBusinessFacade.EndUsers;
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
 using System;
+using FlavourBusinessManager.EndUsers;
 
 #if DeviceDotNet
 using Xamarin.Essentials;
@@ -49,10 +50,10 @@ namespace DontWaitApp
             //SIMCards = device.LinesPhoneNumbers.ToList();
             //_LinesPhoneNumbers = device.LinesPhoneNumbers.Select(x => x.SIMCardDescription).ToList();
 
-            if (ApplicationSettings.Current?.ClientAsGuest!=null)
+            if (ApplicationSettings.Current?.ClientAsGuest != null)
             {
-                _FoodServiceClient=ApplicationSettings.Current?.ClientAsGuest;
-                _PhoneNumber=ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
+                _FoodServiceClient = ApplicationSettings.Current?.ClientAsGuest;
+                _PhoneNumber = ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
             }
         }
         public FoodServiceClientVM(IFlavoursOrderServer flavoursOrderServer, FoodServiceClienttUri foodServiceClienttUri)
@@ -65,10 +66,10 @@ namespace DontWaitApp
             var sd = typeof(OOAdvantech.Net.DeviceInstantiator).Assembly.GetCustomAttributes(true);
 #endif
             Identity = foodServiceClienttUri.UniqueId;
-            if (foodServiceClienttUri.FoodServiceClient!=null)
+            if (foodServiceClienttUri.FoodServiceClient != null)
             {
-                _FoodServiceClient=foodServiceClienttUri.FoodServiceClient;
-                _PhoneNumber=foodServiceClienttUri.FoodServiceClient.PhoneNumber;
+                _FoodServiceClient = foodServiceClienttUri.FoodServiceClient;
+                _PhoneNumber = foodServiceClienttUri.FoodServiceClient.PhoneNumber;
                 Identity = foodServiceClienttUri.FoodServiceClient.Identity;
             }
 
@@ -111,7 +112,7 @@ namespace DontWaitApp
             set
             {
                 _PhoneNumber = value;
-                FoodServiceClient.PhoneNumber= value;
+                FoodServiceClient.PhoneNumber = value;
                 //if ((this.FlavoursOrderServer as FlavoursOrderServer)?.SignedInFlavourBusinessUser!=null)
                 //    (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser.PhoneNumber=_PhoneNumber;
                 //if (ApplicationSettings.Current.ClientAsGuest!=null&&ApplicationSettings.Current.ClientAsGuest!=(this.FlavoursOrderServer as FlavoursOrderServer)?.SignedInFlavourBusinessUser)
@@ -129,6 +130,7 @@ namespace DontWaitApp
         }
 
 
+        List<IPlace> _Places = null;
 
         /// <MetaDataID>{310c4d44-a0ae-4508-bb67-c3a7cd859178}</MetaDataID>
         public List<IPlace> Places
@@ -137,12 +139,18 @@ namespace DontWaitApp
             {
                 if (FoodServiceClient != null)
                 {
+                    if (_Places == null)
+                    {
+                        var places = FoodServiceClient.DeliveryPlaces;
+                        var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
+                        if (defaultPlace != null)
+                            this.FlavoursOrderServer.GetNeighborhoodFoodServers(defaultPlace.Location);
 
-                    var places = FoodServiceClient.DeliveryPlaces;
-                    var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
-                    if (defaultPlace != null)
-                        this.FlavoursOrderServer.GetNeighborhoodFoodServers(defaultPlace.Location);
-                    return FoodServiceClient.DeliveryPlaces;
+                        lock (ClientSessionLock)
+                            _Places = places;
+
+                    }
+                    return _Places;
                 }
                 else
                     return new List<IPlace>();
@@ -156,7 +164,12 @@ namespace DontWaitApp
             {
                 if (ApplicationSettings.Current.ClientAsGuest == null)
                     CreateClientAsGuest();
+                _Places = null;
             }
+
+            if (Places.Where(x => Place.AreSame(x, deliveryPlace)).FirstOrDefault() != null)
+                return;
+
             FoodServiceClient.AddDeliveryPlace(deliveryPlace);
         }
 
@@ -167,6 +180,8 @@ namespace DontWaitApp
             {
                 if (ApplicationSettings.Current.ClientAsGuest == null)
                     CreateClientAsGuest();
+
+                _Places = null;
             }
             FoodServiceClient.RemoveDeliveryPlace(deliveryPlace);
 
@@ -182,7 +197,19 @@ namespace DontWaitApp
                 if (ApplicationSettings.Current.ClientAsGuest == null)
                     CreateClientAsGuest();
             }
-            FoodServiceClient.SetDefaultDelivaryPlace(deliveryPlace);
+
+            Place existingPlace = Places.Where(x => x.PlaceID == deliveryPlace.PlaceID).FirstOrDefault() as Place;
+            if (existingPlace?.Default == true)
+                return;
+            else
+            {
+                FoodServiceClient.SetDefaultDelivaryPlace(deliveryPlace);
+                lock (ClientSessionLock)
+                    _Places = null;
+            }
+
+            
+            
 
         }
 
@@ -371,7 +398,7 @@ namespace DontWaitApp
             {
 
             }
-            if (authUser.Firebase_Sign_in_Provider.ToLower()=="google.com")
+            if (authUser.Firebase_Sign_in_Provider.ToLower() == "google.com")
                 UserName = authUser.Email;
 
             return await Task<bool>.Run(() =>
@@ -425,12 +452,15 @@ namespace DontWaitApp
         EndUserData EndUserData;
         /// <exclude>Excluded</exclude>
         IFoodServiceClient _FoodServiceClient;
+
+
+
         public IFoodServiceClient FoodServiceClient
         {
             get
             {
-                if (_FoodServiceClient==null)
-                    _FoodServiceClient=ApplicationSettings.Current?.ClientAsGuest;
+                if (_FoodServiceClient == null)
+                    _FoodServiceClient = ApplicationSettings.Current?.ClientAsGuest;
 
                 return _FoodServiceClient;
 
@@ -438,18 +468,18 @@ namespace DontWaitApp
 
             private set
             {
-                if (_FoodServiceClient!=null)
+                if (_FoodServiceClient != null)
                 {
 
-                    if (_FoodServiceClient!=value&&value!=null)
+                    if (_FoodServiceClient != value && value != null)
                     {
-                        _FoodServiceClient= value;
-                        _PhoneNumber=_FoodServiceClient.PhoneNumber;
+                        _FoodServiceClient = value;
+                        _PhoneNumber = _FoodServiceClient.PhoneNumber;
                         ApplicationSettings.Current.ClientAsGuest.Synchronize(_FoodServiceClient);
                     }
                 }
                 else
-                    _FoodServiceClient=value;
+                    _FoodServiceClient = value;
             }
         }
         public bool OnSignIn { get; private set; }
@@ -469,7 +499,7 @@ namespace DontWaitApp
             if (authUser == null)
                 return false;
 
-            if (OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(FoodServiceClient as MarshalByRefObject)&&FoodServiceClient != null && FoodServiceClient.OAuthUserIdentity == authUser.User_ID)
+            if (OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(FoodServiceClient as MarshalByRefObject) && FoodServiceClient != null && FoodServiceClient.OAuthUserIdentity == authUser.User_ID)
                 return true;
 
 
@@ -512,12 +542,12 @@ namespace DontWaitApp
                         var foodServiceClient = pAuthFlavourBusiness.SignInEndUser();
                         if (foodServiceClient != null)
                         {
-                            FoodServiceClient=foodServiceClient;
+                            FoodServiceClient = foodServiceClient;
                             FullName = FoodServiceClient.FullName;
                             UserName = FoodServiceClient.UserName;
                             Email = FoodServiceClient.Email;
                             if (string.IsNullOrWhiteSpace(UserName))
-                                UserName=Email;
+                                UserName = Email;
 
                             //ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 
@@ -525,7 +555,7 @@ namespace DontWaitApp
                             IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             FoodServiceClient.DeviceFirebaseToken = device.FirebaseToken;
 #endif
-                            (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser =  FoodServiceClient;
+                            (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = FoodServiceClient;
                             (this.FlavoursOrderServer as FlavoursOrderServer).AuthUser = authUser;
                             OAuthUserIdentity = FoodServiceClient.OAuthUserIdentity;
                             ObjectChangeState?.Invoke(this, null);
@@ -599,13 +629,13 @@ namespace DontWaitApp
                                        where simCard.SIMCardDescription == _LinePhoneNumber
                                        select new FlavourBusinessFacade.EndUsers.SIMCardData()
                                        {
-                                           SIMCardDescription=simCard.SIMCardDescription,
-                                           SIMCardIdentity=simCard.SIMCardIdentity,
-                                           SIMCardPhoneNumber=simCard.SIMCardPhoneNumber
+                                           SIMCardDescription = simCard.SIMCardDescription,
+                                           SIMCardIdentity = simCard.SIMCardIdentity,
+                                           SIMCardPhoneNumber = simCard.SIMCardPhoneNumber
                                        }).FirstOrDefault();
 
 
-                pAuthFlavourBusines.UpdateEndUserProfile(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard=selectedSimCard });
+                pAuthFlavourBusines.UpdateEndUserProfile(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard = selectedSimCard });
 
             });
             //SwitchOnOffPopupView?.Invoke(this, EventArgs.Empty);
@@ -635,7 +665,7 @@ namespace DontWaitApp
                                    }).FirstOrDefault();
 
             IAuthFlavourBusiness pAuthFlavourBusines = OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData) as IAuthFlavourBusiness;
-            var endUser = pAuthFlavourBusines.SignUpEndUser(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard= selectedSimCard });
+            var endUser = pAuthFlavourBusines.SignUpEndUser(new EndUserData() { Email = this.Email, Name = this.FullName, SIMCard = selectedSimCard });
             //Organization.CurrentOrganization = organization;
             return endUser != null;
 
@@ -681,7 +711,7 @@ namespace DontWaitApp
                     {
 
                     }
-                    EndUserData = new EndUserData() { Email = authUser.Email, Name = this.FoodServiceClient.FriendlyName, Identity = authUser.User_ID, DeliveryPlaces= this.FoodServiceClient.DeliveryPlaces, FriendlyName=this.FoodServiceClient.FriendlyName };
+                    EndUserData = new EndUserData() { Email = authUser.Email, Name = this.FoodServiceClient.FriendlyName, Identity = authUser.User_ID, DeliveryPlaces = this.FoodServiceClient.DeliveryPlaces, FriendlyName = this.FoodServiceClient.FriendlyName };
                     var foodServiceClient = pAuthFlavourBusiness.SignUpEndUser(EndUserData);
 
 
@@ -691,8 +721,8 @@ namespace DontWaitApp
                         UserName = FoodServiceClient.UserName;
                         Email = FoodServiceClient.Email;
                         if (string.IsNullOrWhiteSpace(UserName))
-                            UserName=Email;
-                        FoodServiceClient=foodServiceClient;
+                            UserName = Email;
+                        FoodServiceClient = foodServiceClient;
                         //ApplicationSettings.Current.FriendlyName = FoodServiceClient.FriendlyName;
 
 #if DeviceDotNet
@@ -742,7 +772,7 @@ namespace DontWaitApp
         {
             lock (ClientSessionLock)
             {
-                FoodServiceClient.FriendlyName= friendlyName;
+                FoodServiceClient.FriendlyName = friendlyName;
             }
 
         }
@@ -787,7 +817,7 @@ namespace DontWaitApp
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
@@ -818,7 +848,7 @@ namespace DontWaitApp
 
             try
             {
-                UserData userData = new UserData() { UserName=UserName, Email=Email, FullName=FullName, Address=Address, PhoneNumber=PhoneNumber };
+                UserData userData = new UserData() { UserName = UserName, Email = Email, FullName = FullName, Address = Address, PhoneNumber = PhoneNumber };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
@@ -888,12 +918,19 @@ namespace DontWaitApp
         {
             get
             {
-                return _Email;
-            }
+                if (!string.IsNullOrWhiteSpace(_Email))
+                    return _Email;
 
+
+                return FoodServiceClient?.Email;
+            }
             set
             {
+
+                if (!string.IsNullOrWhiteSpace(value) || _Email == FoodServiceClient.Email)
+                    FoodServiceClient.Email = value;
                 _Email = value;
+                ObjectChangeState?.Invoke(this, null);
             }
         }
 
@@ -912,7 +949,7 @@ namespace DontWaitApp
             set
             {
 
-                if (!string.IsNullOrWhiteSpace(value)||_FullName==FoodServiceClient.FriendlyName)
+                if (!string.IsNullOrWhiteSpace(value) || _FullName == FoodServiceClient.FriendlyName)
                     FoodServiceClient.FriendlyName = value;
                 _FullName = value;
                 ObjectChangeState?.Invoke(this, null);
@@ -951,7 +988,7 @@ namespace DontWaitApp
         }
 
         public string Identity { get; set; }
-        public string EmailAddress { get => Email; set => Email=value; }
+        public string EmailAddress { get => Email; set => Email = value; }
     }
 
 

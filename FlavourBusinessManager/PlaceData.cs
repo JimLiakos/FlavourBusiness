@@ -22,13 +22,13 @@ namespace FlavourBusinessManager.EndUsers
             return placeData;
         }
 
-        /// <MetaDataID>{72aa5870-d68a-4e49-8b10-d4b7a54222ea}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         public static bool operator ==(PlaceData left, PlaceData right)
         {
             return left.Equals(right);
         }
 
-        /// <MetaDataID>{fafbf187-5dee-444f-b600-78d55976938f}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         public static bool operator !=(PlaceData left, PlaceData right)
         {
             return !(left==right);
@@ -289,5 +289,6 @@ namespace FlavourBusinessManager.EndUsers
 
             }
         }
+
     }
 }

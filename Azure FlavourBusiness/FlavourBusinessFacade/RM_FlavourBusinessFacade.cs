@@ -3297,6 +3297,19 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "FoodServiceClientsSearch", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClienttUri>>(retValue);
         }
+        
+        public void CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = foodServicesClientSession;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession);
+            args[1] = foodServicesClientData;
+            argsTypes[1] = typeof(FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData);
+            args[2] = deliveryPlace;
+            argsTypes[2] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "CommitSession", args, argsTypes);
+        }
     }
     
     public sealed class Pr_IHomeDeliveryServicePoint : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -9087,6 +9100,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = deliveryPlace;
             argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "SetSessionDeliveryPlace", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.IPlace GetSessionDeliveryPlace()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "GetSessionDeliveryPlace", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IPlace>(retValue);
         }
         
         public void SetSessionServiceTime(System.Nullable<System.DateTime> value)

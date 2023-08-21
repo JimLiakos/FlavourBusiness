@@ -18,6 +18,7 @@ using System.Data.HashFunction.CRC;
 using Microsoft.Azure.Documents;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
+using FlavourBusinessManager.ServicePointRunTime;
 
 namespace FlavourBusinessManager
 {
@@ -131,6 +132,9 @@ namespace FlavourBusinessManager
                     {
                         objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
                     }
+
+                    
+ 
                 }
                 catch (Exception error)
                 {

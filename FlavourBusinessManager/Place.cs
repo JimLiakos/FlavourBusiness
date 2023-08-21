@@ -41,7 +41,7 @@ namespace FlavourBusinessManager.EndUsers
         public Place() { }
 
         /// <MetaDataID>{08bc67e4-cd1e-484f-a046-68b9727d79df}</MetaDataID>
-        static internal Place GetPlace(FlavourBusinessManager.EndUsers.PlaceData placeData)
+        static internal Place GetPlace(PlaceData placeData)
         {
             if (placeData.Street == null && placeData.Area == null && placeData.Location.Latitude == 0 && placeData.Location.Longitude == 0)
                 return null;
@@ -49,7 +49,7 @@ namespace FlavourBusinessManager.EndUsers
             Place place = new Place(placeData.PlaceID, placeData.Location, placeData.Country,
                                                placeData.StateProvinceRegion, placeData.CityTown,
                                                placeData.Area, placeData.PostalCode, placeData.Street,
-                                               placeData.StreetNumber, placeData.Description,placeData.ExtensionProperties);
+                                               placeData.StreetNumber, placeData.Description, placeData.ExtensionProperties);
             return place;
         }
 
@@ -121,7 +121,6 @@ namespace FlavourBusinessManager.EndUsers
 
                 stateTransition.Consistent = true;
             }
-
 
         }
 
@@ -325,9 +324,6 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        public double RouteDistanceInMeters { get; set; }
-        public double RouteDurationInMinutes { get; set; }
-        public Coordinate RouteOrigin { get; set; }
 
 
         /// <exclude>Excluded</exclude> 
@@ -357,7 +353,7 @@ namespace FlavourBusinessManager.EndUsers
         bool _Default;
 
         /// <MetaDataID>{69840cba-a26b-43f7-ada5-18fc9bfce6ca}</MetaDataID>
-        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description, Dictionary<string, string> extensionProperties)
+        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description,  Dictionary<string, string> extensionProperties)
         {
             _PlaceID = placeID;
             _Location = location;
@@ -370,6 +366,7 @@ namespace FlavourBusinessManager.EndUsers
             _StreetNumber = streetNumber;
             _Description = description;
             ExtensionProperties= extensionProperties;
+        
         }
 
         /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>
@@ -390,5 +387,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
             }
         }
+
+
     }
 }

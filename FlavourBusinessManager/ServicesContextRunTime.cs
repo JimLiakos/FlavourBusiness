@@ -1948,7 +1948,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 var servicesContextIdentity = ServicesContextIdentity;
                 var deliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
                                             where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
-                                            select homeDeliveryServicePoint).ToList().Where(x=>!x.ServicesContextIdentity.EndsWith("_test")).FirstOrDefault();
+                                            select homeDeliveryServicePoint).ToList().Where(x=>!x.ServicesPointIdentity.EndsWith("_test")).FirstOrDefault();
 
                 lock (DeliveryServicePointLock)
                 {

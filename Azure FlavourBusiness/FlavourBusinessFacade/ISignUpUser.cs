@@ -107,6 +107,7 @@ namespace FlavourBusinessFacade.ViewModel
     }
 
     /// <MetaDataID>{b2178661-8030-4ca2-aceb-cb14553d12df}</MetaDataID>
+    [OOAdvantech.MetaDataRepository.HttpVisible]
     public interface IFoodServiceClient
     {
         string PhoneNumber { get; set; }

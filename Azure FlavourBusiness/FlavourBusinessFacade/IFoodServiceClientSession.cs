@@ -256,6 +256,9 @@ namespace FlavourBusinessFacade.EndUsers
         void ItemsServing(List<IItemPreparation> clientSessionItems);
         /// <MetaDataID>{af43e9d0-b99f-4547-b1d7-33a0b998ee1c}</MetaDataID>
         void SetSessionDeliveryPlace(IPlace deliveryPlace);
+
+        IPlace GetSessionDeliveryPlace();
+
         /// <MetaDataID>{8ad09d41-4b56-4ad8-9cf2-6e90b48bf9bb}</MetaDataID>
         void SetSessionServiceTime(DateTime? value);
         /// <MetaDataID>{2c79ce1f-2d6e-4179-a123-e187fba12cc1}</MetaDataID>

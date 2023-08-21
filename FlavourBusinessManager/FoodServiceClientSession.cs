@@ -2264,72 +2264,80 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{6f3aecf2-dbfb-4493-a33a-88a5f34578f4}</MetaDataID>
         public void AddItem(IItemPreparation item)
         {
-            var flavourItem = (from storedItem in _FlavourItems.OfType<RoomService.ItemPreparation>()
-                               where storedItem.uid == item.uid
-                               select storedItem).FirstOrDefault();
-
-
-
-            if (flavourItem == null)
+            try
             {
-                var sharingFlavourItem = (from storedItem in _SharedItems.OfType<RoomService.ItemPreparation>()
-                                          where storedItem.uid == item.uid
-                                          select storedItem).FirstOrDefault();
+                var flavourItem = (from storedItem in _FlavourItems.OfType<RoomService.ItemPreparation>()
+                                   where storedItem.uid == item.uid
+                                   select storedItem).FirstOrDefault();
 
 
-                flavourItem = item as RoomService.ItemPreparation;
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+
+                if (flavourItem == null)
                 {
+                    var sharingFlavourItem = (from storedItem in _SharedItems.OfType<RoomService.ItemPreparation>()
+                                              where storedItem.uid == item.uid
+                                              select storedItem).FirstOrDefault();
+
+
+                    flavourItem = item as RoomService.ItemPreparation;
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        if (sharingFlavourItem != null)
+                        {
+                            //if(flavourItem.SharedInSessions.Count==1)
+                            //    sharingFlavourItem.IsShared = false;
+                            _SharedItems.Remove(sharingFlavourItem);
+                            item = sharingFlavourItem;
+                        }
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(item);
+                        _FlavourItems.Add(item);
+                        (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
+                        ModificationTime = DateTime.UtcNow;
+                        MealCourse.AssignMealCourseToItem(flavourItem);
+                        if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
+                            flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
+
+                        if (item.State == ItemPreparationState.New && SessionType == SessionType.HomeDelivery || SessionType == SessionType.HomeDeliveryGuest || SessionType == SessionType.Takeaway)
+                            item.State = ItemPreparationState.AwaitingPaymentToCommit;
+
+
+                        stateTransition.Consistent = true;
+                    }
+
+                    CatchStateEvents();
+
+                    //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                    //    preparationStation.OnPreparationItemChangeState(flavourItem);
+
+
+
+                    if (/*flavourItem.IsShared &&*/ MainSession != null)
+                    {
+                        foreach (var clientSession in MainSession.PartialClientSessions.Where(x => x != this))
+                            clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
+                    }
+                    foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && x != this && (MainSession != x.MainSession || MainSession == null)))
+                        clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
+
                     if (sharingFlavourItem != null)
                     {
-                        //if(flavourItem.SharedInSessions.Count==1)
-                        //    sharingFlavourItem.IsShared = false;
-                        _SharedItems.Remove(sharingFlavourItem);
-                        item = sharingFlavourItem;
+                        RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
+                        //ObjectChangeState?.Invoke(this, nameof(FlavourItems));
                     }
-                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(item);
-                    _FlavourItems.Add(item);
-                    (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
-                    ModificationTime = DateTime.UtcNow;
-                    MealCourse.AssignMealCourseToItem(flavourItem);
+                    ObjectChangeState?.Invoke(this, nameof(FlavourItems));
+
+                    if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
+                        (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
+
                     if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
                         flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
 
-                    if (item.State == ItemPreparationState.New && SessionType == SessionType.HomeDelivery || SessionType == SessionType.HomeDeliveryGuest || SessionType == SessionType.Takeaway)
-                        item.State = ItemPreparationState.AwaitingPaymentToCommit;
-
-
-                    stateTransition.Consistent = true;
                 }
+            }
+            catch (Exception error)
+            {
 
-                CatchStateEvents();
-
-                //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
-                //    preparationStation.OnPreparationItemChangeState(flavourItem);
-
-
-
-                if (/*flavourItem.IsShared &&*/ MainSession != null)
-                {
-                    foreach (var clientSession in MainSession.PartialClientSessions.Where(x => x != this))
-                        clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
-                }
-                foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && x != this && (MainSession != x.MainSession || MainSession == null)))
-                    clientSession.RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
-
-                if (sharingFlavourItem != null)
-                {
-                    RaiseItemStateChanged(flavourItem.uid, flavourItem.SessionID, SessionID, flavourItem.IsShared, flavourItem.SharedInSessions);
-                    //ObjectChangeState?.Invoke(this, nameof(FlavourItems));
-                }
-                ObjectChangeState?.Invoke(this, nameof(FlavourItems));
-
-                if (MainSession == null && (ServicePoint as ServicePoint).OpenSessions.Count > 0)
-                    (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-
-                if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
-                    flavourItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
-
+                throw;
             }
 
 
@@ -2834,6 +2842,10 @@ namespace FlavourBusinessManager.EndUsers
                     stateTransition.Consistent = true;
                 }
             }
+        }
+        public IPlace GetSessionDeliveryPlace()
+        {
+            return (_MainSession.Value as FoodServiceSession)?.DeleiveryPlace;
         }
 
         /// <MetaDataID>{f88bff3e-2884-440d-8d4d-12209daca5e9}</MetaDataID>

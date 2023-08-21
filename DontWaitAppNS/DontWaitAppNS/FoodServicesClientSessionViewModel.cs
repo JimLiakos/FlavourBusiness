@@ -826,7 +826,8 @@ namespace DontWaitApp
                         if (!OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(preparationItem))
                         {
                             var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                            objectStarage.CommitTransientObjectState(preparationItem);
+                            if(objectStarage!=null)
+                                objectStarage.CommitTransientObjectState(preparationItem);
                         }
 
                     }
@@ -1579,7 +1580,7 @@ namespace DontWaitApp
 
             //}
             //else
-
+            
             var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
             foreach (var itemNewState in itemsNewState)
             {
@@ -1617,7 +1618,8 @@ namespace DontWaitApp
             {
                 _OrderItems.Add(item);
                 var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                objectStarage.CommitTransientObjectState(item);
+                if(objectStarage!=null)
+                    objectStarage.CommitTransientObjectState(item);
                 stateTransition.Consistent = true;
             }
 

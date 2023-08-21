@@ -153,10 +153,11 @@ namespace TakeAwayApp
         {
 
             VivaWalletPos.IPos sds = null;
-
-            FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(true) { EndUser = this };
-            var appSettings = ApplicationSettings.Current;
             var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+
+            FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(vivaWalletPos != null) { EndUser = this };
+            var appSettings = ApplicationSettings.Current;
+            
             if (vivaWalletPos!=null)
                 vivaWalletPos.Confing(VivaWalletPos.POSType.TerminalPos, "127.0.0.1", 6000, 120);
 #if DeviceDotNet
@@ -965,7 +966,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{77cc5b05-dca8-4c49-a7e7-4a0a0c7c16d6}</MetaDataID>
         public async void TakeAwayOrderCommitted()
         {
-            if (FlavoursOrderServer.CurrentFoodServicesClientSession?.FoodServicesClientSession?.SessionState==ClientSessionState.ItemsCommited)
+            if (_TakeAwaySession?.FoodServicesClientSession?.SessionState==ClientSessionState.ItemsCommited)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 _TakeAwaySession=await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));

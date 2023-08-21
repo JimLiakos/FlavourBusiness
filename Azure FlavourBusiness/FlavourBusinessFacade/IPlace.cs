@@ -37,9 +37,9 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{a4cd01ce-e822-4255-b43b-cc14bd7a344e}</MetaDataID>
         bool Default { get; set; }
-        double RouteDistanceInMeters { get; set; }
-        double RouteDurationInMinutes { get; set; }
-        Coordinate RouteOrigin { get; set; }
+
+        
+   
 
 
         /// <MetaDataID>{a2975c8d-e456-41aa-b753-dd1432594866}</MetaDataID>
@@ -49,6 +49,7 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{32ca9a22-417a-423e-93d3-8c2d87c76a9b}</MetaDataID>
         void RemovetExtensionProperty(string name);
+        
     }
 
 

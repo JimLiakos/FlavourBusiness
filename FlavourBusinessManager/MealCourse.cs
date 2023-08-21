@@ -741,6 +741,8 @@ namespace FlavourBusinessManager.RoomService
         {
             var ss = Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderByDescending(x => (int)x).ToArray();
             ItemPreparationState commonState = ItemPreparationState.New;
+            if (foodItems.Count == 0)
+                return ItemPreparationState.New;
             foreach (int i in Enum.GetValues(typeof(ItemPreparationState)).OfType<ItemPreparationState>().OrderBy(x => (int)x))
             {
                 if (foodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState((ItemPreparationState)i)))

@@ -20402,50 +20402,6 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
-			(object Operation "operator =="
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{72aa5870-d68a-4e49-8b10-d4b7a54222ea}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"63AD23880288"))
-			    quid       	"63AD23880288"
-			    parameters 	(list Parameters
-				(object Parameter "left"
-				    quid       	"63AD23880298"
-				    type       	"FlavourBusinessManager.EndUsers.PlaceData")
-				(object Parameter "right"
-				    quid       	"63AD238802A6"
-				    type       	"FlavourBusinessManager.EndUsers.PlaceData"))
-			    result     	"bool"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0)
-			(object Operation "operator !="
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{fafbf187-5dee-444f-b600-78d55976938f}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"63AD238802C0"))
-			    quid       	"63AD238802C0"
-			    parameters 	(list Parameters
-				(object Parameter "left"
-				    quid       	"63AD238802D1"
-				    type       	"FlavourBusinessManager.EndUsers.PlaceData")
-				(object Parameter "right"
-				    quid       	"63AD238802DE"
-				    type       	"FlavourBusinessManager.EndUsers.PlaceData"))
-			    result     	"bool"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0)
 			(object Operation "PlaceData"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -20459,37 +20415,37 @@
 			    quid       	"63AD23880388"
 			    parameters 	(list Parameters
 				(object Parameter "placeID"
-				    quid       	"63AD2388039B"
+				    quid       	"64DE14BC02C3"
 				    type       	"string")
 				(object Parameter "location"
-				    quid       	"63AD238803A8"
+				    quid       	"64DE14BC02F0"
 				    type       	"FlavourBusinessFacade.EndUsers.Coordinate")
 				(object Parameter "country"
-				    quid       	"63AD238803B6"
+				    quid       	"64DE14BC0318"
 				    type       	"string")
 				(object Parameter "stateProvinceRegion"
-				    quid       	"63AD238803C4"
+				    quid       	"64DE14BC0341"
 				    type       	"string")
 				(object Parameter "cityTown"
-				    quid       	"63AD238803D3"
+				    quid       	"64DE14BC0363"
 				    type       	"string")
 				(object Parameter "area"
-				    quid       	"63AD238803E1"
+				    quid       	"64DE14BC038C"
 				    type       	"string")
 				(object Parameter "postalCode"
-				    quid       	"63AD23890007"
+				    quid       	"64DE14BC03AD"
 				    type       	"string")
 				(object Parameter "street"
-				    quid       	"63AD23890014"
+				    quid       	"64DE14BC03D0"
 				    type       	"string")
 				(object Parameter "streetNumber"
-				    quid       	"63AD23890022"
+				    quid       	"64DE14BD000A"
 				    type       	"string")
 				(object Parameter "description"
-				    quid       	"63AD23890030"
+				    quid       	"64DE14BD002C"
 				    type       	"string")
 				(object Parameter "extensionProperties"
-				    quid       	"63AD23890042"
+				    quid       	"64DE14BD0075"
 				    type       	"System.Collections.Generic.Dictionary<string,string>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -20826,30 +20782,6 @@
 			    quid       	"63A6CA7200A3"
 			    type       	"string"
 			    exportControl 	"Public")
-			(object ClassAttribute "ExtensionPropertiesJson"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{d72df011-55ae-4022-8649-41b699d46b59}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"63AD23890347")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	FALSE)
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+11"))
-			    quid       	"63AD23890347"
-			    type       	"string")
 			(object ClassAttribute "ExtensionProperties"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -20870,7 +20802,23 @@
 				    value      	TRUE))
 			    quid       	"63AD23890392"
 			    type       	"System.Collections.Generic.Dictionary<string,string>"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "ExtensionPropertiesJson"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a4f120c3-0357-43f3-b1a1-72fb360869f4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"64DE14BF035F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"64DE14BF035F"
+			    type       	"string"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -20987,8 +20935,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1780
-		    origin_y   	0
+		    origin_x   	2831
+		    origin_y   	759
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient" @266
 			    ShowCompartmentStereotypes 	TRUE
@@ -21242,7 +21190,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(4770, 1871)
+			    location   	(4768, 1990)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -21255,7 +21203,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@276
-				location   	(4457, 1783)
+				location   	(4455, 1784)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	626
@@ -21263,7 +21211,7 @@
 				label      	"PlaceData")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@276
-				location   	(4457, 1733)
+				location   	(4455, 1734)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -21276,7 +21224,7 @@
 			    quidu      	"63A6C90E03E7"
 			    compartment 	(object Compartment
 				Parent_View 	@276
-				location   	(4457, 1844)
+				location   	(4455, 1845)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -21290,10 +21238,10 @@
 				icon_style 	"Icon"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	17
+				nlines     	15
 				max_width  	1425)
 			    width      	644
-			    height     	300
+			    height     	537
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IWaiter" @277
 			    ShowCompartmentStereotypes 	TRUE
@@ -21426,7 +21374,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	6
-				max_width  	450)
+				max_width  	471)
 			    width      	624
 			    height     	526
 			    annotation 	8
@@ -22582,24 +22530,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@336
-				location   	(187, 407)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	56
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)

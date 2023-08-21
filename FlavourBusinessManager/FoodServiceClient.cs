@@ -501,11 +501,15 @@ namespace FlavourBusinessManager.EndUsers
                 this._PhotoUrl = foodServiceClient.PhotoUrl;
                 this._SignInProvider = foodServiceClient.SignInProvider;
                 this._UserName = foodServiceClient.UserName;
+
                 stateTransition.Consistent = true;
             }
 
 
 
+
         }
+
     }
+
 }
