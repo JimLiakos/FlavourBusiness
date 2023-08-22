@@ -146,6 +146,9 @@ namespace TakeAwayApp
         }
         public bool OrderCommit()
         {
+            if (this.HomeDeliveryServicePoint == null)
+                return false;
+
             var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;
 
             var foodServiceClient = (foodServicesClientSessionPresentation.EndUser as FoodServiceClientVM).FoodServiceClient;

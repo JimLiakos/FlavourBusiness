@@ -1122,7 +1122,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}</MetaDataID>
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServicesClientSession
-        {
+        { 
             get
             {
                 return _FoodServicesClientSession;
