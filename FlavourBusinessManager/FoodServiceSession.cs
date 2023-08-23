@@ -384,7 +384,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                   from itemPreparation in clientSession.FlavourItems
                                   select itemPreparation).OfType<ItemPreparation>().ToList();
 
-            var mealType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri).Meal as MenuModel.MealType;
+            var mealType = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri<MenuModel.IMealCourseType>((itemsToPrepare[0] as ItemPreparation).SelectedMealCourseTypeUri)?.Meal as MenuModel.MealType;
 
 
 

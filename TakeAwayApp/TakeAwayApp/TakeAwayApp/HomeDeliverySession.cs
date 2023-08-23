@@ -90,7 +90,7 @@ namespace TakeAwayApp
 
                         (FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser = SessionClient;
 
-                        var openFoodServiceClientSession = homeDeliveryClient.OpenFoodServiceClientSessions.FirstOrDefault();
+                        var openFoodServiceClientSession = homeDeliveryClient.OpenFoodServiceClientSessions?.FirstOrDefault();
                         if (openFoodServiceClientSession != null)
                         {
                             (FoodServiceClientSession as FoodServicesClientSessionViewModel).DeliveryPlace = openFoodServiceClientSession.GetSessionDeliveryPlace();
