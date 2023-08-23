@@ -2026,6 +2026,16 @@ namespace DontWaitApp
             }
         }
 
+        public bool UncommittedChanges
+        {
+            get
+            {
+                return _OrderItems.ToThreadSafeList().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Committed));
+            }
+        }
+
+
+
         /// <exclude>Excluded</exclude>
         string _DeliveryComment;
         /// <MetaDataID>{a3dff6d9-b898-4414-8766-45fabf3c4aec}</MetaDataID>
