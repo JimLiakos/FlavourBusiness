@@ -3,6 +3,7 @@ using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Transactions;
 
 namespace TakeAwayApp
 {
@@ -15,6 +16,9 @@ namespace TakeAwayApp
         [RoleAMultiplicityRange(1, 1)]
         [CachingDataOnClientSide]
         DontWaitApp.IFoodServicesClientSessionViewModel FoodServiceClientSession { get; }
+
+
+        bool UncommittedChanges { get; }
 
         /// <MetaDataID>{156d964a-37e9-4d03-b7b5-d6fc1480fae6}</MetaDataID>
         string CallerPhone { get; set; }
@@ -34,6 +38,10 @@ namespace TakeAwayApp
 
         /// <MetaDataID>{41af5d0a-7a99-4bac-bae3-196c72cb7134}</MetaDataID>
         HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
+
+         IPlace DeliveryPlace { get; set; }
+  
+
 
         bool OrderCommit();
 

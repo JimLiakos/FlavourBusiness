@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
+using OOAdvantech.Transactions;
 #if DeviceDotNet
 
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -74,7 +75,7 @@ namespace TakeAwayApp
                         SessionClient.PhoneNumber = _CallerPhone;
 
                         SessionClientOrgDeliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(SessionClient.Places);
-                        
+
 
                         if (FoodServiceClientSession.FoodServicesClientSession == null && SessionClient != null && _HomeDeliveryServicePoint != null)
                         {
@@ -179,7 +180,7 @@ namespace TakeAwayApp
             if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
                 foodServicesClientData.DeliveryPlaces = foodServiceClient.DeliveryPlaces;
 
-            FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(this.FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, FoodServiceClientSession.DeliveryPlace);
+            FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(this.FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
 
             return true;
         }
@@ -215,5 +216,58 @@ namespace TakeAwayApp
                     this.HomeDeliveryServicePoint = _HomeDeliveryServicePoints[0];
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        FlavourBusinessManager.EndUsers.Place _DeliveryPlace;
+        public IPlace DeliveryPlace
+        {
+            get => _DeliveryPlace;
+            set
+            {
+
+                if (_DeliveryPlace != value)
+                {
+
+
+                    if (value != null && (FoodServiceClientSession as FoodServicesClientSessionViewModel)?.CanChangeDeliveryPlace(value) == ChangeDeliveryPlaceResponse.OK)
+                    {
+
+                        _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
+
+
+                        FlavourBusinessManager.EndUsers.Place existingPlace = ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser  as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
+                        if (existingPlace != null)
+                        {
+                            existingPlace.Update(value);
+                            ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser as IGeocodingPlaces).SavePlace(existingPlace);
+                        }
+                        else
+                            ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser as IGeocodingPlaces).SavePlace(value);
+
+
+                    }
+                }
+            }
+        }
+
+        public bool UncommittedChanges
+        {
+            get
+            {
+                var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;
+                var foodServiceClient = (foodServicesClientSessionPresentation.EndUser as FoodServiceClientVM).FoodServiceClient;
+                var deliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(foodServiceClient.DeliveryPlaces);
+                if (SessionClientOrgDeliveryPlacesJson!= deliveryPlacesJson)
+                    return true;
+
+                if(foodServicesClientSessionPresentation.UncommittedChanges)
+                    return true;
+
+                return false;
+
+            }
+
+        }
+
     }
 }

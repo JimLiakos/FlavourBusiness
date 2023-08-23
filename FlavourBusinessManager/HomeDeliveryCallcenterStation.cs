@@ -74,6 +74,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         objectStorage.CommitTransientObjectState(deliveryServicePoint);
                     }
                     HomeDeliveryServicePointsForTest.Add(deliveryServicePoint);
+
+                    var sc_deliveryServicePoint = ServicesContextRunTime.Current.DeliveryServicePoint;
                 }
                 return HomeDeliveryServicePointsForTest.ToList();
                 return _HomeDeliveryServicePoints.ToThreadSafeList();
@@ -301,6 +303,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
+                foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
                 if (foodServicesClient == null)
                 {
                     foodServicesClient = new FoodServiceClient(foodServicesClientData.Identity)
