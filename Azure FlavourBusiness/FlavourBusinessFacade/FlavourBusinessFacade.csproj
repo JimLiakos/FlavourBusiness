@@ -52,6 +52,7 @@
     <Compile Include="EndUserData.cs" />
     <Compile Include="Exceptions\TransferException.cs" />
     <Compile Include="HomeDeliveryServicePointInfo.cs" />
+    <Compile Include="HomeDelivery\WatchingOrder.cs" />
     <Compile Include="HumanResources\ITranslationActivity.cs" />
     <Compile Include="HumanResources\IWaiter.cs" />
     <Compile Include="HumanResources\IActivity.cs" />

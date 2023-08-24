@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HomeDlivery;
 using OOAdvantech.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 
@@ -49,6 +50,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         System.Collections.Generic.List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone);
         void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace);
+
+        List<WatchingOrder> GetWatchingOrders();
+
     }
 
     public struct FoodServicesClientUpdateData

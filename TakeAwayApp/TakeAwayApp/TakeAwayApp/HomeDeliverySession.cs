@@ -9,6 +9,7 @@ using System.Linq;
 
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
+using OOAdvantech.Json;
 #if DeviceDotNet
 
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -81,6 +82,9 @@ namespace TakeAwayApp
                         {
                             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop, device.FirebaseToken, _HomeDeliveryServicePoint);
+
+                            if (FoodServiceClientSession.FoodServicesClientSession!=null)
+                                _DeliveryPlace=FoodServiceClientSession.FoodServicesClientSession.GetSessionDeliveryPlace() as Place;
                         }
 
 
@@ -94,7 +98,7 @@ namespace TakeAwayApp
                         {
                             (FoodServiceClientSession as FoodServicesClientSessionViewModel).DeliveryPlace = openFoodServiceClientSession.GetSessionDeliveryPlace();
                             (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = openFoodServiceClientSession;
-
+                            _DeliveryPlace=(FoodServiceClientSession as FoodServicesClientSessionViewModel).DeliveryPlace as Place;
 
                             string sessionServicePointIdentity = (FoodServiceClientSession as FoodServicesClientSessionViewModel).ServicePointIdentity;
                             string homeDeliveryServicePointIdentity = sessionServicePointIdentity.Split(';')[1];
@@ -156,9 +160,8 @@ namespace TakeAwayApp
 
                              }).FirstOrDefault();
 
-
-
-                return OOAdvantech.Json.JsonConvert.SerializeObject(state);
+                
+                return JsonConvert.SerializeObject(state, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
 
             }
         }
@@ -297,7 +300,7 @@ namespace TakeAwayApp
                 if (OrgHomeDeliverySessionState != HomeDeliverySessionState && foodServicesClientSessionPresentation.OrderItems.Count > 0)
                 {
 
-                    var orgHomeDeliverySessionState = OOAdvantech.Json.JsonConvert.DeserializeObject<HomeDeliverySessionState>(OrgHomeDeliverySessionState);
+                    //var orgHomeDeliverySessionState = JsonConvert.DeserializeObject<HomeDeliverySessionState>(OrgHomeDeliverySessionState, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
                     //if (orgHomeDeliverySessionState.OrderItems.Count == 0)
                     //    return false;
                     return true;
