@@ -2026,14 +2026,7 @@ namespace DontWaitApp
             }
         }
 
-        public bool UncommittedChanges
-        {
-            get
-            {
-                return _OrderItems.ToThreadSafeList().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Committed));
-            }
-        }
-
+     
 
 
         /// <exclude>Excluded</exclude>

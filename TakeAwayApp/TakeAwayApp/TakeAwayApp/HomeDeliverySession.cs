@@ -84,8 +84,6 @@ namespace TakeAwayApp
                         }
 
 
-
-
                         if (SessionClient.FoodServiceClient != null)
                             SessionClient = new FoodServiceClientVM((FoodServiceClientSession as FoodServicesClientSessionViewModel).FlavoursOrderServer, homeDeliveryClient);
 
@@ -121,9 +119,14 @@ namespace TakeAwayApp
 
                         }
 
+                        if (OrgHomeDeliverySessionState == null||!UncommittedChanges)
+                            OrgHomeDeliverySessionState = this.HomeDeliverySessionState;
+
                     }
                     else
                         SessionClient = null;
+
+
                 }
             }
         }
@@ -132,6 +135,33 @@ namespace TakeAwayApp
         public FoodServiceClientVM SessionClient { get; set; }
 
 
+
+        string HomeDeliverySessionState
+        {
+            get
+            {
+                var state = (from homeDeliverySession in new List<HomeDeliverySession>() { this }
+                             select new HomeDeliverySessionState()
+                             {
+                                 Client = new ClientState()
+                                 {
+                                     Identity = homeDeliverySession.SessionClient.Identity,
+                                     FullName = homeDeliverySession.SessionClient?.FullName,
+                                     Places = homeDeliverySession.SessionClient.Places.OfType<Place>().ToList(),
+                                     EmailAddress = homeDeliverySession.SessionClient.EmailAddress,
+                                     PhoneNumber = homeDeliverySession.CallerPhone
+                                 },
+                                 DeliveryPlace = homeDeliverySession.DeliveryPlace as Place,
+                                 OrderItems = homeDeliverySession.FoodServiceClientSession.OrderItems
+
+                             }).FirstOrDefault();
+
+
+
+                return OOAdvantech.Json.JsonConvert.SerializeObject(state);
+
+            }
+        }
 
 
 
@@ -157,7 +187,7 @@ namespace TakeAwayApp
             //SessionClientOrgDeliveryPlacesJson
             var deliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(foodServiceClient.DeliveryPlaces);
 
-            if (SessionClientOrgDeliveryPlacesJson!= deliveryPlacesJson)
+            if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
             {
 
             }
@@ -181,7 +211,7 @@ namespace TakeAwayApp
                 foodServicesClientData.DeliveryPlaces = foodServiceClient.DeliveryPlaces;
 
             FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(this.FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
-
+            OrgHomeDeliverySessionState = this.HomeDeliverySessionState;
             return true;
         }
         /// <exclude>Excluded</exclude>
@@ -219,6 +249,8 @@ namespace TakeAwayApp
 
         /// <exclude>Excluded</exclude>
         FlavourBusinessManager.EndUsers.Place _DeliveryPlace;
+        private string OrgHomeDeliverySessionState;
+
         public IPlace DeliveryPlace
         {
             get => _DeliveryPlace;
@@ -235,7 +267,7 @@ namespace TakeAwayApp
                         _DeliveryPlace = value as FlavourBusinessManager.EndUsers.Place;
 
 
-                        FlavourBusinessManager.EndUsers.Place existingPlace = ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser  as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
+                        FlavourBusinessManager.EndUsers.Place existingPlace = ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as FlavourBusinessManager.EndUsers.Place;
                         if (existingPlace != null)
                         {
                             existingPlace.Update(value);
@@ -254,14 +286,24 @@ namespace TakeAwayApp
         {
             get
             {
+                if (string.IsNullOrWhiteSpace(OrgHomeDeliverySessionState))
+                    return false;
                 var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;
-                var foodServiceClient = (foodServicesClientSessionPresentation.EndUser as FoodServiceClientVM).FoodServiceClient;
-                var deliveryPlacesJson = OOAdvantech.Json.JsonConvert.SerializeObject(foodServiceClient.DeliveryPlaces);
-                if (SessionClientOrgDeliveryPlacesJson!= deliveryPlacesJson)
+            
+
+                if (foodServicesClientSessionPresentation.OrderItems.Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Committed)))
                     return true;
 
-                if(foodServicesClientSessionPresentation.UncommittedChanges)
+                if (OrgHomeDeliverySessionState != HomeDeliverySessionState && foodServicesClientSessionPresentation.OrderItems.Count > 0)
+                {
+
+                    var orgHomeDeliverySessionState = OOAdvantech.Json.JsonConvert.DeserializeObject<HomeDeliverySessionState>(OrgHomeDeliverySessionState);
+                    //if (orgHomeDeliverySessionState.OrderItems.Count == 0)
+                    //    return false;
                     return true;
+                }
+
+
 
                 return false;
 
@@ -269,5 +311,22 @@ namespace TakeAwayApp
 
         }
 
+    }
+
+
+    class HomeDeliverySessionState
+    {
+        public ClientState Client { get; set; }
+        public Place DeliveryPlace { get; set; }
+        public List<FlavourBusinessManager.RoomService.ItemPreparation> OrderItems { get; set; }
+
+    }
+    class ClientState
+    {
+        public string FullName { get; set; }
+        public List<Place> Places { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Identity { get; internal set; }
     }
 }

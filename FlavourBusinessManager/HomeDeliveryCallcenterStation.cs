@@ -83,6 +83,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 

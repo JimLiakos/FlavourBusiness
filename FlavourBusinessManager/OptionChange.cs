@@ -141,6 +141,7 @@ namespace FlavourBusinessManager.RoomService
         [PersistentMember(nameof(_ItemPreparation))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+6")]
+        [JsonIgnore]
         public IItemPreparation ItemPreparation
         {
             get
