@@ -693,16 +693,16 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{ba60826c-7385-4e09-a87e-7952c74f69e0}</MetaDataID>
         [BackwardCompatibilityID("+16")]
-        public IPlace DeleiveryPlace
+        public IPlace DeliveryPlace
         {
             get => Place.GetPlace(DeleiveryPlaceData);
             set
             {
-                if (DeleiveryPlaceData!=PlaceData.GetPlaceData(value))
+                if (DeleiveryPlaceData != PlaceData.GetPlaceData(value))
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        DeleiveryPlaceData=PlaceData.GetPlaceData(value);
+                        DeleiveryPlaceData = PlaceData.GetPlaceData(value);
                         stateTransition.Consistent = true;
                     }
                 }
@@ -818,9 +818,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-  
 
-   
+
+
+        /// <MetaDataID>{1cd1337e-465f-4a64-bb0e-c3b501ae7c3b}</MetaDataID>
         public void PaymentCompleted(FinanceFacade.IPayment payment)
         {
             var sessionFlavourItems = (from foodServiceClientSession in PartialClientSessions
@@ -830,24 +831,24 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-              
+
                 foreach (var paymentItem in payment.Items)
                 {
-                    var flavourItem = sessionFlavourItems.Where(x => x.uid==paymentItem.GetItemPreparationUid()&&x.State==FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
-                    if (flavourItem!=null)
+                    var flavourItem = sessionFlavourItems.Where(x => x.uid == paymentItem.GetItemPreparationUid() && x.State == FlavourBusinessFacade.RoomService.ItemPreparationState.AwaitingPaymentToCommit).FirstOrDefault();
+                    if (flavourItem != null)
                     {
                         List<FlavourBusinessFacade.RoomService.IItemPreparation> flavoursItem = null;
 
                         if (!itemsToCommit.TryGetValue(flavourItem.ClientSession, out flavoursItem))
                         {
-                            flavoursItem=new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
-                            itemsToCommit[flavourItem.ClientSession]=flavoursItem;
+                            flavoursItem = new List<FlavourBusinessFacade.RoomService.IItemPreparation>();
+                            itemsToCommit[flavourItem.ClientSession] = flavoursItem;
                         }
                         flavoursItem.Add(flavourItem);
                     }
                 }
                 foreach (var itemsToCommitEntry in itemsToCommit)
-                    itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value); 
+                    itemsToCommitEntry.Key.Commit(itemsToCommitEntry.Value);
                 stateTransition.Consistent = true;
             }
 

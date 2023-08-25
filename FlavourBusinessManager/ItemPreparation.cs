@@ -1279,7 +1279,7 @@ namespace FlavourBusinessManager.RoomService
 
 
         ///// <MetaDataID>{fdd3e18e-43b8-4c77-80b1-d7a17c1a9c8b}</MetaDataID>
-        //public string Timestamp;
+        //public string TimeStamp;
     }
 
 

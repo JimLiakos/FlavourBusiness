@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.HomeDlivery;
+using FlavourBusinessFacade.HomeDelivery;
+
 using OOAdvantech.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 
@@ -51,25 +52,26 @@ namespace FlavourBusinessFacade.ServicesContextResources
         System.Collections.Generic.List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone);
         void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace);
 
-        List<WatchingOrder> GetWatchingOrders();
+        CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<WatchingOrderAbbreviation> stationWatchingOrders = null);
 
 
     }
 
+    /// <MetaDataID>{05a19c03-47b8-443e-886f-1976132586c2}</MetaDataID>
     public struct FoodServicesClientUpdateData
     {
-        public string Identity { get;  set; }
-        public string Email { get;  set; }
+        public string Identity { get; set; }
+        public string Email { get; set; }
 
         public System.Collections.Generic.List<IPlace> DeliveryPlaces { get; set; }
         //public IPlace ExtraDeliveryPlace { get; internal set; }
-        public string FriendlyName { get;  set; }
-        public string FullName { get;  set; }
-        public string Name { get;  set; }
-        public string PhoneNumber { get;  set; }
-        public string PhotoUrl { get;  set; }
-        public string SignInProvider { get;  set; }
-        public string UserName { get;  set; }
+        public string FriendlyName { get; set; }
+        public string FullName { get; set; }
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PhotoUrl { get; set; }
+        public string SignInProvider { get; set; }
+        public string UserName { get; set; }
         public string NotesForClient { get; set; }
     }
 

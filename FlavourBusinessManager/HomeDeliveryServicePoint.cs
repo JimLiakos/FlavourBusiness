@@ -1,5 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessToolKit;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -430,7 +432,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
                 string versionExtension = "_v" + version;
-                string blobUrl = "usersfolder/" + ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity + "/LogoImages/HomeDeliveryLogoBK" + ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + versionExtension+".avif";
+                string blobUrl = "usersfolder/" + ServicePointRunTime.ServicesContextRunTime.Current.OrganizationIdentity + "/LogoImages/HomeDeliveryLogoBK" + ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + versionExtension + ".avif";
 
                 var uploadSlot = new UploadSlot(blobUrl, removePreviousVersionBlobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer, "image/avif");
 
@@ -441,6 +443,34 @@ namespace FlavourBusinessManager.ServicesContextResources
                 throw new AuthenticationException();
 
         }
+
+
+
+        public List<WatchingOrder> GetWatchingOrders()
+        {
+
+            var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
+
+            return (from foodServicesSession in foodServicesSessions
+                    select new WatchingOrder()
+                    {
+                        SessionID = foodServicesSession.SessionID,
+                        DeliveryPlace = foodServicesSession.DeliveryPlace,
+                        EntryDateTime = foodServicesSession.SessionStarts,
+                        HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },
+                        Items = foodServicesSession.PartialClientSessions.SelectMany(x => x.FlavourItems).ToList(),
+                        TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x")
+                    }).ToList();
+        }
+
+        private double GetRouteDistanceInKm(IPlace deleiveryPlace)
+        {
+            double.TryParse(deleiveryPlace.GetExtensionProperty("RouteDistanceInMeters"), out var distance);
+            distance = Math.Round(distance / 100);
+            return distance;
+
+        }
+
 
         /// <MetaDataID>{0a16384f-6eea-40de-9219-93dd5d23b135}</MetaDataID>
         private void LogoBackgroundImageUploadSlot_FileUploaded(object sender, EventArgs e)

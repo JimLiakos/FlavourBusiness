@@ -1,5 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
@@ -137,7 +138,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         object ObjLock = new object();
         ///// <exclude>Excluded</exclude>
         //List<EndUsers.FoodServiceClientSession> _OpenClientSessions;
-        
+
         public List<EndUsers.FoodServiceClientSession> OpenClientSessions
         {
             get
@@ -336,14 +337,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                         foodServicesClient.NotesForClient = foodServicesClientData.NotesForClient;
                         foodServicesClient.PhoneNumber = foodServicesClientData.PhoneNumber;
                         foodServicesClient.PhotoUrl = foodServicesClientData.PhotoUrl;
-                        foodServicesClient.AddDeliveryPlace(deliveryPlace); 
+                        foodServicesClient.AddDeliveryPlace(deliveryPlace);
                         objStateTransition.Consistent = true;
                     }
 
                 }
-                if(foodServicesClientData.DeliveryPlaces!=null)
+                if (foodServicesClientData.DeliveryPlaces != null)
                 {
-                    foreach(var place in foodServicesClient.DeliveryPlaces)
+                    foreach (var place in foodServicesClient.DeliveryPlaces)
                     {
                         if (foodServicesClientData.DeliveryPlaces.Where(x => x.PlaceID == place.PlaceID).FirstOrDefault() == null)
                             foodServicesClient.RemoveDeliveryPlace(place);
@@ -351,7 +352,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     foreach (var place in foodServicesClientData.DeliveryPlaces)
                     {
                         foodServicesClient.AddDeliveryPlace(place);
-                        if(place.Default)
+                        if (place.Default)
                             foodServicesClient.SetDefaultDelivaryPlace(place);
 
                     }
@@ -360,10 +361,30 @@ namespace FlavourBusinessManager.ServicesContextResources
                 foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
                 var unCommitedItems = foodServicesClientSession.FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).ToList();
                 foodServicesClientSession.Commit(unCommitedItems);
-                (foodServicesClientSession as FoodServiceClientSession).UserIdentity = foodServicesClient.Identity; 
+                (foodServicesClientSession as FoodServiceClientSession).UserIdentity = foodServicesClient.Identity;
                 stateTransition.Consistent = true;
             }
 
+
+
+        }
+
+        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null)
+        {
+            if (stationWatchingOrders == null)
+                stationWatchingOrders = new List<WatchingOrderAbbreviation>();
+
+            CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
+            List<WatchingOrder> watchingOrders = new List<WatchingOrder>();
+            foreach (var HomeDeliveryServicePoint in HomeDeliveryServicePoints)
+                watchingOrders.AddRange(HomeDeliveryServicePoint.GetWatchingOrders());
+
+
+            callCenterStationWatchingOrders.WatchingOrders = watchingOrders.Where(x => !stationWatchingOrders.Any(y => y.SessionID == x.SessionID && y.TimeStamp == x.TimeStamp)).ToList();
+
+            callCenterStationWatchingOrders.RemovedWatchingOrders = stationWatchingOrders.Where(x => !watchingOrders.Any(y => y.SessionID == x.SessionID)).ToList();
+
+            return callCenterStationWatchingOrders;
 
 
         }
@@ -417,7 +438,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-      
+
 
 
         //public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)

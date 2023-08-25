@@ -20875,7 +20875,7 @@
 			    value      	"097494e4-9e96-4de2-8b6c-e714bcd0a009"))
 		    quid       	"63A6FE250355"
 		    roles      	(list role_list
-			(object Role "DeleiveryPlace"
+			(object Role "DeliveryPlace"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -20902,7 +20902,7 @@
 				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"63A6FE260270"
-			    label      	"DeleiveryPlace"
+			    label      	"DeliveryPlace"
 			    supplier   	"Logical View::FlavourBusinessFacade::EndUsers::IPlace"
 			    quidu      	"62CF8F5F0018"
 			    client_cardinality 	(value cardinality "0..1")
@@ -20935,8 +20935,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	2831
-		    origin_y   	759
+		    origin_x   	0
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient" @266
 			    ShowCompartmentStereotypes 	TRUE
@@ -22421,7 +22421,7 @@
 			    line_color 	3342489
 			    quidu      	"63A6FE250355"
 			    roleview_list 	(list RoleViews
-				(object RoleView "DeleiveryPlace" @332
+				(object RoleView "DeliveryPlace" @332
 				    Parent_View 	@330
 				    location   	(533, -379)
 				    font       	(object Font
@@ -22450,9 +22450,9 @@
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
-					max_width  	297
+					max_width  	284
 					justify    	0
-					label      	"+DeleiveryPlace"
+					label      	"+DeliveryPlace"
 					pctDist    	0.314526
 					height     	248
 					orientation 	0)
@@ -27137,7 +27137,7 @@
 			    quid       	"6360A0720303"
 			    type       	"System.Collections.Generic.List<FinanceFacade.IPayment>"
 			    exportControl 	"Public")
-			(object ClassAttribute "DeleiveryPlace"
+			(object ClassAttribute "DeliveryPlace"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"

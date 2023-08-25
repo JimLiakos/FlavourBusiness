@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     public interface IFoodServiceSession
     {
         [Association("OrderDeliveryPlace", Roles.RoleA, "097494e4-9e96-4de2-8b6c-e714bcd0a009")]
-        IPlace DeleiveryPlace { get; set; }
+        IPlace DeliveryPlace { get; set; }
 
         /// <summary>
         /// Defines the service time.
