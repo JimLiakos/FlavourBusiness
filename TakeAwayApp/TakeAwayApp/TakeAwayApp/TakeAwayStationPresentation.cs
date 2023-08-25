@@ -71,6 +71,7 @@ namespace TakeAwayApp
         /// <MetaDataID>{f3e59a9a-7d80-4113-b0a7-fddc88db81d1}</MetaDataID>
         Task<bool> IsDeliveryCallCenterStationActive { get; }
 
+        List<WatchingOrder> WatchingOrders { get; }
 
 
 
@@ -1046,14 +1047,7 @@ namespace TakeAwayApp
                 if (_HomeDeliveryCallCenterStation != value)
                 {
                     _HomeDeliveryCallCenterStation = value;
-                    if (_HomeDeliveryCallCenterStation != null)
-                    {
-                        Task.Run(() =>
-                        {
-                            var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
-                            this.WatchingOrders = callCenterStationWatchingOrders.WatchingOrders;
-                        });
-                    }
+                    
                 }
 
             }
@@ -1087,7 +1081,23 @@ namespace TakeAwayApp
             }
         }
 
-        public List<WatchingOrder> WatchingOrders { get; private set; }
+
+        List<WatchingOrder> _WatchingOrders = null;
+        public List<WatchingOrder> WatchingOrders
+        {
+            get
+            {
+                if(_WatchingOrders == null)
+                {
+                    if (_HomeDeliveryCallCenterStation != null)
+                    {
+                        var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
+                        _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders;
+                    }
+                }
+                return _WatchingOrders;
+            }
+        }
 
         /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
         public Task<bool> AssignDeliveryCallCenterCredentialKey(string credentialKey)

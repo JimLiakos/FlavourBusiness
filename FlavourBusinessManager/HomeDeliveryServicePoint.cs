@@ -449,9 +449,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         public List<WatchingOrder> GetWatchingOrders()
         {
 
-            var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
-
+            var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
+              
             return (from foodServicesSession in foodServicesSessions
+                    where foodServicesSession.DeliveryPlace!=null
                     select new WatchingOrder()
                     {
                         SessionID = foodServicesSession.SessionID,
@@ -466,7 +467,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         private double GetRouteDistanceInKm(IPlace deleiveryPlace)
         {
             double.TryParse(deleiveryPlace.GetExtensionProperty("RouteDistanceInMeters"), out var distance);
-            distance = Math.Round(distance / 100);
+            distance = Math.Round(distance / 100)/10;//round  to 100 meters
             return distance;
 
         }
