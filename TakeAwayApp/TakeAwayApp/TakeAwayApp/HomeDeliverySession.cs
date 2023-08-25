@@ -32,6 +32,8 @@ namespace TakeAwayApp
             FoodServiceClientSession = foodServicesClientSessionViewModel;
             _CallerPhone = callerPhone;
             State = CallerCenterSessionState.OrderTaking;
+
+            
         }
 
         public IFoodServicesClientSessionViewModel FoodServiceClientSession { get; }

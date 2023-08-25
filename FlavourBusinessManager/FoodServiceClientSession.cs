@@ -2836,7 +2836,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (_MainSession.Value == null)
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
                     if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
-                        this.MainSession.DeleiveryPlace = deliveryPlace;
+                        this.MainSession.DeliveryPlace = deliveryPlace;
                     else
                         throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
                     stateTransition.Consistent = true;
@@ -2845,7 +2845,7 @@ namespace FlavourBusinessManager.EndUsers
         }
         public IPlace GetSessionDeliveryPlace()
         {
-            return (_MainSession.Value as FoodServiceSession)?.DeleiveryPlace;
+            return (_MainSession.Value as FoodServiceSession)?.DeliveryPlace;
         }
 
         /// <MetaDataID>{f88bff3e-2884-440d-8d4d-12209daca5e9}</MetaDataID>

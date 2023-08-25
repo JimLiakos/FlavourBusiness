@@ -3310,6 +3310,16 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             argsTypes[2] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "CommitSession", args, argsTypes);
         }
+        
+        public FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation> stationWatchingOrders)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = stationWatchingOrders;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetWatchingOrders", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
+        }
     }
     
     public sealed class Pr_IHomeDeliveryServicePoint : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -3780,6 +3790,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetUploadSlotForLogoBackgroundImage", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.IUploadSlot>(retValue);
+        }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrder> GetWatchingOrders()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetWatchingOrders", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrder>>(retValue);
         }
         
         public void AddMealType(string mealTypeUri)
@@ -4535,13 +4553,13 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.EndUsers.IPlace DeleiveryPlace
+        public FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_DeleiveryPlace", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_DeliveryPlace", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IPlace>(retValue);
             }
             set
@@ -4550,7 +4568,7 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                 System.Type[] argsTypes = new System.Type[1];
                 args[0] = value;
                 argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_DeleiveryPlace", args, argsTypes);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_DeliveryPlace", args, argsTypes);
             }
         }
         

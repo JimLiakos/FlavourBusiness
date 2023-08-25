@@ -1198,7 +1198,7 @@ namespace DontWaitApp
                 {
                     if (DeliveryPlace != null)
                     {
-                        if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeleiveryPlace, DeliveryPlace))
+                        if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeliveryPlace, DeliveryPlace))
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
 
                     }
@@ -1211,7 +1211,7 @@ namespace DontWaitApp
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            _DeliveryPlace = _FoodServicesClientSession.MainSession.DeleiveryPlace as FlavourBusinessManager.EndUsers.Place;
+                            _DeliveryPlace = _FoodServicesClientSession.MainSession.DeliveryPlace as FlavourBusinessManager.EndUsers.Place;
                             _ServiceTime = _FoodServicesClientSession.MainSession.ServiceTime;
 
                             stateTransition.Consistent = true;
