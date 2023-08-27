@@ -1410,7 +1410,7 @@ namespace FlavourBusinessManager
         //{
         //    Task.Run(() =>
         //    {
-        //        var objectStorage = OpenOrganizationMainStorage();
+        //        var objectStorage = OpenOrganizationMainStorage(true);
         //        foreach (var servicesContext in ServicesContexts)
         //        {
         //            (servicesContext as FlavoursServicesContext).OrganizationStorageIdentity = objectStorage.StorageMetaData.StorageIdentity;
