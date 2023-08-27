@@ -450,7 +450,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
-              
+
             return (from foodServicesSession in foodServicesSessions
                     where foodServicesSession.DeliveryPlace!=null
                     select new WatchingOrder()
@@ -459,8 +459,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                         DeliveryPlace = foodServicesSession.DeliveryPlace,
                         EntryDateTime = foodServicesSession.SessionStarts,
                         HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },
-                        Items = foodServicesSession.PartialClientSessions.SelectMany(x => x.FlavourItems).ToList(),
-                        TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x")
+                        MealCourses = foodServicesSession.Meal.Courses,
+                        TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
+                        State= WatchingOrderState.InProggres
                     }).ToList();
         }
 

@@ -19,12 +19,12 @@ namespace FlavourBusinessFacade.HomeDelivery
         public IPlace DeliveryPlace { get; set; }
 
         public string SessionID { get; set; }
-        public List<IItemPreparation> Items { get; set; }
+        public List<IMealCourse> MealCourses { get; set; }
 
         public DateTime EntryDateTime { get; set; }
 
         public DateTime? DistributionDateTime { get; set; }
-
+        public WatchingOrderState State { get; set; }
     }
     public enum WatchingOrderState
     {

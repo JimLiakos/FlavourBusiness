@@ -177,7 +177,12 @@ namespace FlavourBusinessManager.EndUsers
         [BackwardCompatibilityID("+8")]
         public string Description
         {
-            get => _Description;
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Description))
+                    return string.Format("{0} {1} {2}", Street, StreetNumber, CityTown);
+                return _Description;
+            }
             set
             {
                 if (_Description != value)

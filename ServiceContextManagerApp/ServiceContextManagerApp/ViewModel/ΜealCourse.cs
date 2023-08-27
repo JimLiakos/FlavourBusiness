@@ -7,8 +7,15 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Json;
 using UIBaseEx;
 
+using FlavourBusinessFacade.EndUsers;
+
 namespace FlavourBusinessManager.RoomService.ViewModel
 {
+
+    public delegate void MealCourseUpdatedHandle(MealCourse mealCourse);
+    public delegate void MealCoursesUpdatedHandle(IList<MealCourse> mealCourses);
+
+
     /// <MetaDataID>{e2ff48b0-ff9f-41df-b754-a190bfc34d1e}</MetaDataID>
     public class MealCourse
     {
@@ -28,15 +35,13 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public string MealCourseUri { get; set; }
         public ItemPreparationState PreparationState { get; }
 
-        [JsonIgnore]
-        ServiceContextManagerApp.ServicesContextPresentation ServicesContextPresentation;
 
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
-        public MealCourse(IMealCourse serverSideMealCourse, ServiceContextManagerApp.ServicesContextPresentation servicesContextPresentation)
+        public MealCourse(IMealCourse serverSideMealCourse )
         {
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
-            ServicesContextPresentation = servicesContextPresentation;
+            
 
             Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
             ServicePointType = serverSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
@@ -67,18 +72,24 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             PreparationState = serverSideMealCourse.PreparationState;
         }
 
+
+        public event MealCourseUpdatedHandle MealCourseUpdated;
+        public event ItemsStateChangedHandle ItemsStateChanged;
+
+
+
         private void ServerSideMealCourse_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IMealCourse.FoodItems))
             {
                 FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
-                ServicesContextPresentation.OnMealCourseUpdated(this);
+                MealCourseUpdated?.Invoke(this);
             }
             if (member == nameof(IMealCourse.Meal))
             {
                 Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
                 ServicePointType = ServerSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
-                ServicesContextPresentation.OnMealCourseUpdated(this);
+                MealCourseUpdated?.Invoke(this);
             }
 
             if (member == nameof(IMealCourse.SessionData))
@@ -107,7 +118,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
         private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
-            ServicesContextPresentation.OnItemsStateChanged(newItemsState);
+            ItemsStateChanged?.Invoke(newItemsState);
 
         }
     }

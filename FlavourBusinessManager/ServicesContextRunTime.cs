@@ -537,6 +537,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             LoadPaymentProviders();
 
+            //foreach(var twsp in TakeAwayStations )
+            //{
+            //    if(twsp.ServesMealTypes.Count==0)
+            //    {
+            //        twsp.AddMealType(GetOneCoursesMealType().MealTypeUri);
+
+            //    }
+            //}
+
             Task.Run(() =>
             {
 
@@ -2175,6 +2184,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             var objectStorage = ObjectStorage.GetStorageOfObject(this);
             TakeAwayStation takeAwayStation = new TakeAwayStation(this);
+
+            takeAwayStation.AddMealType(ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
                 takeAwayStation.Description = Properties.Resources.DefaultTakeAwayStationDescription;
@@ -2764,6 +2775,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     _DeliveryServicePoint.ServicesContextIdentity = this.ServicesContextIdentity;
                     _DeliveryServicePoint.IsActive = true;
                     objectStorage.CommitTransientObjectState(_DeliveryServicePoint);
+
+                    _DeliveryServicePoint.AddMealType(ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri);
                     stateTransition.Consistent = true;
                 }
             }

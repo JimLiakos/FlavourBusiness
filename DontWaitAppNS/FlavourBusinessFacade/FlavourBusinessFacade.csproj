@@ -28,6 +28,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndPoint.cs" Link="EndPoint.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\EndUserData.cs" Link="EndUserData.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HomeDeliveryServicePointInfo.cs" Link="HomeDeliveryServicePointInfo.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HomeDelivery\WatchingOrder.cs" Link="WatchingOrder.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IActivity.cs" Link="HumanResources\IActivity.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IServicesContextWorker.cs" Link="HumanResources\IServicesContextWorker.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ITakeawayCashier.cs" Link="HumanResources\ITakeawayCashier.cs" />

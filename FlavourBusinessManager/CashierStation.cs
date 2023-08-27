@@ -84,7 +84,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{dcddcd6e-8523-46fa-b078-4ea706a3d471}</MetaDataID>
-        List<ServicePointPreparationItemsA> ServicePointsPreparationItems = new List<ServicePointPreparationItemsA>();
+        List<ServicePointPreparationItems> ServicePointsPreparationItems = new List<ServicePointPreparationItems>();
 
         /// <MetaDataID>{516fa955-dc1a-4115-ba39-01eba844f1f9}</MetaDataID>
         [ObjectActivationCall]
@@ -115,7 +115,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     preparationItems.Add(item);
                     item.ObjectChangeState += FlavourItem_ObjectChangeState;
                 }
-                ServicePointsPreparationItems.Add(new ServicePointPreparationItemsA(servicePointPreparationItems.Key, preparationItems));
+                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
 
             }
 
@@ -469,12 +469,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (DeviceUpdateLock)
             {
-                ServicePointPreparationItemsA servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
+                ServicePointPreparationItems servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
                 if (servicePointPreparationItems == null || !servicePointPreparationItems.PreparationItems.Contains(flavourItem))
                 {
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItemsA(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem }));
+                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem }));
                     else
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
                 }

@@ -27,7 +27,7 @@ namespace TakeAwayApp.Wpf
         {
             InitializeComponent();
 
-            DataContext = new FlavoursServiceOrderTakingStation();
+            DataContext = new ViewModel.FlavoursServiceOrderTakingStation();
             string url = @"http://192.168.2.8:4305/";//org
             url = @"http://192.168.2.5:4305/";//Braxati
             //url = @"http://10.0.0.13:4305/";//work

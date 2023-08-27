@@ -16,45 +16,23 @@ namespace TakeAwayApp
 
 
         /// <exclude>Excluded</exclude>
-        string _TakeAwayStationCredentialKey;
+        string _CommunicationCredentialKey;
 
 
         /// <MetaDataID>{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}</MetaDataID>
 
-        [PersistentMember(nameof(_TakeAwayStationCredentialKey))]
+        [PersistentMember(nameof(_CommunicationCredentialKey))]
         [BackwardCompatibilityID("+1")]
-        public string TakeAwayStationCredentialKey
+        public string CommunicationCredentialKey
         {
-            get => _TakeAwayStationCredentialKey;
+            get => _CommunicationCredentialKey;
             set
             {
-                if (_TakeAwayStationCredentialKey != value)
+                if (_CommunicationCredentialKey != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _TakeAwayStationCredentialKey = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
-
-        /// <exclude>Excluded</exclude>
-        string _DeliveryCallCenterCredentialKey;
-
-        /// <MetaDataID>{dc7d2a80-7eb1-42a7-a5e9-b8f71560acfa}</MetaDataID>
-        [PersistentMember(nameof(_DeliveryCallCenterCredentialKey))]
-        [BackwardCompatibilityID("+3")]
-        public string DeliveryCallCenterCredentialKey
-        {
-            get => _DeliveryCallCenterCredentialKey;
-            internal set
-            {
-                if (_DeliveryCallCenterCredentialKey!=value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _DeliveryCallCenterCredentialKey=value;
+                        _CommunicationCredentialKey = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -175,6 +153,5 @@ namespace TakeAwayApp
             }
         }
 
-        
     }
 }

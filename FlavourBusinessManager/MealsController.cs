@@ -242,8 +242,11 @@ namespace FlavourBusinessManager.RoomService
                     if (referencClientSession.Menu != null)
                         foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
 
+                    foodServiceSession.SessionType = referencClientSession.SessionType;
+                    if (foodServiceSession.SessionType == FlavourBusinessFacade.EndUsers.SessionType.HomeDeliveryGuest)
+                        foodServiceSession.SessionType = FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery;
 
-                    foodServiceSession.AddPartialSession(referencClientSession);
+                        foodServiceSession.AddPartialSession(referencClientSession);
                     referencClientSession.ImplicitMealParticipation = true;
 
 

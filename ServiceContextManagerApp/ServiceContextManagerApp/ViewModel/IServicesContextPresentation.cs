@@ -65,7 +65,6 @@ namespace ServiceContextManagerApp
         ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
     }
-
-    public delegate void MealCoursesUpdatedHandle(IList<MealCourse> mealCourses);
     public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
+    
 }

@@ -395,10 +395,20 @@ namespace FlavourBusinessManager.RoomService
 
                 var defaultMealTypeUri = Meal.Session.ServicePoint.ServesMealTypesUris.FirstOrDefault();
                 var servedMealTypesUris = Meal.Session.ServicePoint.ServesMealTypesUris.ToList();
-                if (defaultMealTypeUri == null)
+                if (defaultMealTypeUri == null&& (Meal.Session.ServicePoint is IHallServicePoint))
                 {
                     defaultMealTypeUri = (Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.FirstOrDefault();
                     servedMealTypesUris = (Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.ToList();
+                }
+                if (defaultMealTypeUri == null && Meal.Session.ServicePoint is IHomeDeliveryServicePoint)
+                {
+                    defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+                    servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
+                }
+                if (defaultMealTypeUri == null && Meal.Session.ServicePoint is ITakeAwayStation)
+                {
+                    defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+                    servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
 
                 SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity, Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };

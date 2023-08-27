@@ -6,7 +6,7 @@ using System.Linq;
 namespace FlavourBusinessFacade.ServicesContextResources
 {
     /// <MetaDataID>{359a649b-220c-434b-b676-181d2160d449}</MetaDataID>
-    public class ServicePointPreparationItemsA : IDisposable
+    public class ServicePointPreparationItems : IDisposable
     {
         [Association("MealCoursePreparation", Roles.RoleA, "e0d04b7f-7608-49f4-80ef-301904e97df2")]
         [RoleAMultiplicityRange(1, 1)]
@@ -16,14 +16,22 @@ namespace FlavourBusinessFacade.ServicesContextResources
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{0f0aafc5-6824-4bf8-b2f1-787b2175f9fd}</MetaDataID>
-        public ServicePointPreparationItemsA(IMealCourse mealCourse, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
+        public ServicePointPreparationItems(IMealCourse mealCourse, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
         {
             MealCourse = mealCourse;
             MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;
 
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             PreparationItems = preparationItems;
-            _Description = (ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + ServicePoint.Description;
+
+            if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.Hall)
+                _Description = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+
+            if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
+                _Description = MealCourse.Meal.Session.DeliveryPlace.Description;
+
+            
+            //_Description = (ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + ServicePoint.Description;
             _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
             
@@ -42,7 +50,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{a75bdf3b-c001-4d49-816d-384119f61d70}</MetaDataID>
         [OOAdvantech.Json.JsonConstructor]
-        public ServicePointPreparationItemsA(IServicePoint servicePoint, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems, string description, string uri)
+        public ServicePointPreparationItems(IServicePoint servicePoint, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems, string description, string uri)
         {
             ServicePoint = servicePoint;
             PreparationItems = preparationItems;

@@ -208,23 +208,41 @@ namespace ServiceContextManagerApp
 
             MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
             MealsController.ObjectChangeState += MealsController_ObjectChangeState;
+            _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
 
             Task.Run(() =>
             {
                 System.Threading.Thread.Sleep(5000);
-                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList();
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 
             });
 
         }
 
+        private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> sender, IMealCourse key, MealCourse value)
+        {
+
+            value.MealCourseUpdated += OnMealCourseUpdated;
+            value.ItemsStateChanged += OnItemsStateChanged;
+        }
+
+
+        
+
         private void MealsController_ObjectChangeState(object _object, string member)
         {
 
             if (member == nameof(IMealsController.MealCoursesInProgress))
             {
+                foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
+                {
+                    mealCourseInProgress.MealCourseUpdated -= OnMealCourseUpdated;
+                    mealCourseInProgress.ItemsStateChanged -= OnItemsStateChanged;
+                }
+
                 _MealCoursesInProgress.Clear();
+
                 MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
                 _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
             }

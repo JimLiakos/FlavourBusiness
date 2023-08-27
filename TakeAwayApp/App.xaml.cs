@@ -33,9 +33,6 @@ namespace TakeAwayApp
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.Tag"] = typeof(MenuModel.JsonViewModel.Tag);
             //SerializationBinder.NamesTypesDictionary["MenuModel.ITag"] = typeof(MenuModel.ITag);
             SerializationBinder.NamesTypesDictionary["MenuModel.Tag"] = typeof(MenuModel.JsonViewModel.Tag);
-            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
-            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.EndUsers.Coordinate"] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
-            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointInfo"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo);
 
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
@@ -63,9 +60,6 @@ namespace TakeAwayApp
             //SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.MealType)] = "MenuModel.JsonViewModel.MealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.JsonViewModel.Tag)] = "MenuModel.JsonViewModel.Tag";
             //SerializationBinder.TypesNamesDictionary[typeof(MenuModel.ITag)] = "MenuModel.ITag";
-            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
-            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
-            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo)] = "FlavourBusinessFacade.HomeDeliveryServicePointInfo";
 
 
 
