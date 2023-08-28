@@ -366,6 +366,7 @@
     <None Include="Backup\FlavourBusinesses.dat" />
     <None Include="Backup\FlavourBusinessesResources.dat" />
     <None Include="Backup\jimliakosgmailcom.dat" />
+    <None Include="Backup\jimliakosgmailcomMain.dat" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
