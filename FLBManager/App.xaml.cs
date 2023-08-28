@@ -126,14 +126,14 @@ namespace FLBManager
             EventManager.RegisterClassHandler(typeof(UIElement), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
 
 
-
+             
 
             //var obk= FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
             //Backup(@"F:\NewPc\Azure blob storage\Backup");
             //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup");
-            Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
+            //Backup(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
             //Backup(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup");
 
