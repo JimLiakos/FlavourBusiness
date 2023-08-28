@@ -448,7 +448,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         public List<WatchingOrder> GetWatchingOrders()
         {
-
+             
             var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
               
             return (from foodServicesSession in foodServicesSessions
