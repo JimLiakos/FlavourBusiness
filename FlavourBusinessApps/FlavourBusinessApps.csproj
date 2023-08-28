@@ -126,17 +126,20 @@
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ΜealCourse.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\ΜealCourse.cs</Link>
     </Compile>
-    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\ApplicationSettings.cs">
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\ApplicationSettings.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\ApplicationSettings.cs</Link>
     </Compile>
-    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\HomeDeliverySession.cs">
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\ViewModel\HomeDeliverySession.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\HomeDeliverySession.cs</Link>
     </Compile>
-    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\IHomeDeliverySession.cs">
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\ViewModel\IHomeDeliverySession.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\IHomeDeliverySession.cs</Link>
     </Compile>
-    <Compile Include="..\TakeAwayApp\TakeAwayApp\TakeAwayApp\TakeAwayStationPresentation.cs">
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\ViewModel\TakeAwayStationPresentation.cs">
       <Link>TakeAwayApp.Wpf\ViewModel\TakeAwayStationPresentation.cs</Link>
+    </Compile>
+    <Compile Include="..\TakeAwayApp\TakeAwayApp\ViewModel\WatchingOrderPresentation.cs">
+      <Link>TakeAwayApp.Wpf\ViewModel\WatchingOrderPresentation.cs</Link>
     </Compile>
     <Compile Include="..\WaiterApp\WaiterApp\ViewModel\ItemsReadyToServe.cs">
       <Link>ViewModel\ItemsReadyToServe.cs</Link>
@@ -363,6 +366,7 @@
     <None Include="Backup\FlavourBusinesses.dat" />
     <None Include="Backup\FlavourBusinessesResources.dat" />
     <None Include="Backup\jimliakosgmailcom.dat" />
+    <None Include="Backup\jimliakosgmailcomMain.dat" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

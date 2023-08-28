@@ -88,9 +88,13 @@ namespace FlavourBusinessFacade.RoomService
                 PreparationStationDescription = preparationStation.Description;
 
                 //Description = MealCourse.Meal.Session.ServicePoint.ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                if(MealCourse.Meal.Session.SessionType==EndUsers.SessionType.Hall)
+                    MealCourseDescription = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
 
-                MealCourseDescription = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
-                Description = preparationStation.Description;
+                if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
+                    MealCourseDescription =MealCourse.Meal.Session.DeliveryPlace.Description;
+
+                    Description = preparationStation.Description;
             }
             else
             {

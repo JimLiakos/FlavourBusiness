@@ -78,6 +78,15 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     var sc_deliveryServicePoint = ServicesContextRunTime.Current.DeliveryServicePoint;
                 }
+
+                //foreach (var hdsp in HomeDeliveryServicePointsForTest)
+                //{
+                //    if (hdsp.ServesMealTypes.Count == 0)
+                //    {
+                //        hdsp.AddMealType(ServicePointRunTime.ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri);
+
+                //    }
+                //}
                 return HomeDeliveryServicePointsForTest.ToList();
                 return _HomeDeliveryServicePoints.ToThreadSafeList();
             }
