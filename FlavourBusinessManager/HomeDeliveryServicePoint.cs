@@ -447,7 +447,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         public List<WatchingOrder> GetWatchingOrders()
-        {
+        { 
              
             var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null).Select(x => x.MainSession).Distinct().ToList();
 
@@ -456,6 +456,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     select new WatchingOrder()
                     {
                         SessionID = foodServicesSession.SessionID,
+                        SessionType= foodServicesSession.SessionType,
                         DeliveryPlace = foodServicesSession.DeliveryPlace,
                         EntryDateTime = foodServicesSession.SessionStarts,
                         HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },

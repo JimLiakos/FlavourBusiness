@@ -18,7 +18,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-  
+
     /// <summary>
     /// A meal consisting of multiple dishes (meal courses)
     /// Most Western-world multicourse meals follow a standard sequence.
@@ -106,6 +106,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8b2a7043-450a-4ff3-825a-f505a07ffd2d}</MetaDataID>
         [PersistentMember(nameof(_Name))]
         [BackwardCompatibilityID("+5")]
+        [CachingDataOnClientSide]
         public string Name
         {
             get => _Name;
@@ -291,7 +292,7 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+9")]
         public IMeal Meal => _Meal.Value;
 
-     
+
         /// <summary>
         /// Multi thread synchronization object
         /// </summary>
@@ -395,7 +396,7 @@ namespace FlavourBusinessManager.RoomService
 
                 var defaultMealTypeUri = Meal.Session.ServicePoint.ServesMealTypesUris.FirstOrDefault();
                 var servedMealTypesUris = Meal.Session.ServicePoint.ServesMealTypesUris.ToList();
-                if (defaultMealTypeUri == null&& (Meal.Session.ServicePoint is IHallServicePoint))
+                if (defaultMealTypeUri == null && (Meal.Session.ServicePoint is IHallServicePoint))
                 {
                     defaultMealTypeUri = (Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.FirstOrDefault();
                     servedMealTypesUris = (Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.ServesMealTypesUris.ToList();
@@ -411,7 +412,18 @@ namespace FlavourBusinessManager.RoomService
                     servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
 
-                SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData() { DefaultMealTypeUri = defaultMealTypeUri, ServedMealTypesUris = servedMealTypesUris, FoodServiceSession = Meal.Session, ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity, Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu, ServicesPointName = Meal.Session.ServicePoint.Description, ServicesContextLogo = "Pizza Hut" };
+                SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData()
+                {
+                    Description= Meal.Session.Description,
+                    SessionType= Meal.Session.SessionType,
+                    DefaultMealTypeUri = defaultMealTypeUri,
+                    ServedMealTypesUris = servedMealTypesUris,
+                    FoodServiceSession = Meal.Session,
+                    ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,
+                    Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu,
+                    ServicesPointName = Meal.Session.ServicePoint.Description,
+                    ServicesContextLogo = "Pizza Hut"
+                };
                 return sessionData;
             }
         }
@@ -708,7 +720,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var foodItem in _FoodItems.OfType<ItemPreparation>())
                 foodItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
-         
+
 
             (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
         }
@@ -739,9 +751,9 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2ff27f48-6c0e-463b-993b-34fbb35cc52a}</MetaDataID>
         public static ItemsPreparationContext FindItemsPreparationContext(this IItemPreparation itemPreparation)
         {
-          
+
             if (itemPreparation.PreparationStation != null)
-                return (itemPreparation.PreparationStation as PreparationStation).PreparationSessions.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity&&x.MealCourse== itemPreparation.MealCourse).FirstOrDefault();
+                return (itemPreparation.PreparationStation as PreparationStation).PreparationSessions.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity && x.MealCourse == itemPreparation.MealCourse).FirstOrDefault();
             else
                 return itemPreparation.MealCourse?.FoodItemsInProgress?.Where(x => x.PreparationStationIdentity == ItemsPreparationContext.TradeProductsStationIdentity).FirstOrDefault();
         }

@@ -41,7 +41,22 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{cee5f973-18ba-4776-95d8-3ddd2915d3d1}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]
-        public string Description => ServicePoint?.Description;
+        public string Description
+        {
+            get
+            {
+                if (this.SessionType == SessionType.Hall)
+                    return ServicePoint?.Description;
+                if (this.SessionType == SessionType.Takeaway)
+                    return ServicePoint?.Description;
+
+                if (this.SessionType == SessionType.HomeDelivery)
+                    return DeliveryPlace?.Description;
+
+                return "";
+            }
+        }
+
 
         /// <MetaDataID>{37452f52-1155-4bbb-87c5-f621b27c624c}</MetaDataID>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -438,7 +453,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{8d538032-0365-42f6-a71a-176cf8a85f38}</MetaDataID>
         [PersistentMember(nameof(_Meal))]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.CascadeDelete)]
         [BackwardCompatibilityID("+6")]
         public IMeal Meal
         {
@@ -579,7 +594,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
             #endregion
-            if (firstItemPreparation != null &&SessionState == SessionState.MealValidationDelay&&MealValidationDelayTask!=null&& MealValidationDelayTask.Status==TaskStatus.Faulted)
+            if (firstItemPreparation != null && SessionState == SessionState.MealValidationDelay && MealValidationDelayTask != null && MealValidationDelayTask.Status == TaskStatus.Faulted)
             {
                 MealValidationDelayTask = null;
                 MealValidationDelayRun();
@@ -720,11 +735,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             get => _ServiceTime;
             set
             {
-                if (_ServiceTime!=value)
+                if (_ServiceTime != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _ServiceTime=value;
+                        _ServiceTime = value;
                         stateTransition.Consistent = true;
                     }
                 }

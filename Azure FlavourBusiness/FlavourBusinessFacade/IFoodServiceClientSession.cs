@@ -364,6 +364,10 @@ namespace FlavourBusinessFacade.EndUsers
         public List<string> ServedMealTypesUris;
         /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
+
+        public string Description;
+
+        public SessionType SessionType;
     }
      
 

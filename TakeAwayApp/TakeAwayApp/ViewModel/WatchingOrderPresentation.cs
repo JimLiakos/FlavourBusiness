@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FlavourBusinessFacade.HomeDelivery;
+using OOAdvantech.Json;
 
 namespace TakeAwayApp.ViewModel
 {
@@ -18,13 +19,16 @@ namespace TakeAwayApp.ViewModel
             TimeStamp = watchingOrder.TimeStamp;
             DeliveryPlace = watchingOrder.DeliveryPlace;
             SessionID = watchingOrder.SessionID;
+            SessionType = watchingOrder.SessionType;
             MealCourses = mealCourses;
             EntryDateTime = watchingOrder.EntryDateTime;
             DistributionDateTime = watchingOrder.DistributionDateTime;
             State = watchingOrder.State;
+            Description = watchingOrder.DeliveryPlace?.Description;
 
         }
         public WatchingOrderState State { get; set; }
+        public string Description { get; }
         public HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
 
         public string TimeStamp { get; set; }
@@ -32,11 +36,14 @@ namespace TakeAwayApp.ViewModel
         public IPlace DeliveryPlace { get; set; }
 
         public string SessionID { get; set; }
+        public SessionType SessionType { get;  set; }
         public List<FlavourBusinessManager.RoomService.ViewModel.MealCourse> MealCourses { get; set; }
 
         public DateTime EntryDateTime { get; set; }
 
         public DateTime? DistributionDateTime { get; set; }
+
+        [JsonIgnore]
         public WatchingOrder ServerWatchingOrder { get; }
     }
 }

@@ -19,6 +19,7 @@ namespace FlavourBusinessFacade.HomeDelivery
         public IPlace DeliveryPlace { get; set; }
 
         public string SessionID { get; set; }
+        public SessionType SessionType { get; set; }
         public List<IMealCourse> MealCourses { get; set; }
 
         public DateTime EntryDateTime { get; set; }

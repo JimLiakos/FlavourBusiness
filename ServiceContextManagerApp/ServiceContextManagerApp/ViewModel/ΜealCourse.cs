@@ -24,7 +24,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         [JsonIgnore]
         public IMealCourse ServerSideMealCourse { get; }
 
-        public FlavourBusinessFacade.ServicesContextResources.ServicePointType ServicePointType { get; set; }
+        public SessionType SessionType { get; set; }
 
 
         public string Description { get; private set; }
@@ -41,13 +41,15 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         {
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
-            
-
-            Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
-            ServicePointType = serverSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
-
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
             var sessionData = ServerSideMealCourse.SessionData;
+
+            SessionType = sessionData.SessionType;
+            
+            Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
+            
+
+            
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
 
@@ -85,10 +87,12 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
                 MealCourseUpdated?.Invoke(this);
             }
+            
             if (member == nameof(IMealCourse.Meal))
             {
-                Description = ServerSideMealCourse.Meal.Session.Description + " - " + ServerSideMealCourse.Name;
-                ServicePointType = ServerSideMealCourse.Meal.Session.ServicePoint.ServicePointType;
+                var sessionData = ServerSideMealCourse.SessionData;
+                Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
+                SessionType = sessionData.SessionType;
                 MealCourseUpdated?.Invoke(this);
             }
 
