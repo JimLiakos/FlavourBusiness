@@ -780,7 +780,7 @@ namespace TakeAwayApp.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(TakeAwayStationCredentialKey))
                 {
-                    TakeAwayStationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_66294b0d4ec04e54814c309257358ea4";
+                    TakeAwayStationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_21204920cc31421685ebe82753f61a2b";
                 }
                 if (TakeAwayStation == null && !string.IsNullOrEmpty(TakeAwayStationCredentialKey))
                 {
@@ -1095,6 +1095,11 @@ namespace TakeAwayApp.ViewModel
                         var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
 
                         _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x)).ToList())).ToList();
+                        
+                        _WatchingOrders.AddRange(_WatchingOrders.ToList());
+                        _WatchingOrders.AddRange(_WatchingOrders.ToList());
+                        _WatchingOrders.AddRange(_WatchingOrders.ToList());
+                        _WatchingOrders.AddRange(_WatchingOrders.ToList());
                     }
                 }
                 return _WatchingOrders;

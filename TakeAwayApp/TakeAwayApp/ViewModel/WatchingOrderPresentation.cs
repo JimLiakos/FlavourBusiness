@@ -21,6 +21,7 @@ namespace TakeAwayApp.ViewModel
             SessionID = watchingOrder.SessionID;
             SessionType = watchingOrder.SessionType;
             MealCourses = mealCourses;
+            MealCourses.AddRange(mealCourses);
             EntryDateTime = watchingOrder.EntryDateTime;
             DistributionDateTime = watchingOrder.DistributionDateTime;
             State = watchingOrder.State;
