@@ -1290,11 +1290,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri;
                 foreach (var fbStorage in fbstorages)
                 {
-                    var storageUrl = urlRoot + fbStorage.Url;
-                    var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
+                    try
+                    {
+                        var storageUrl = urlRoot + fbStorage.Url;
+                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
 
-                    OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version, PropertiesValues=fbStorage.PropertiesValues };
-                    graphicMenusStorages.Add(storageRef);
+                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version, PropertiesValues=fbStorage.PropertiesValues };
+                        graphicMenusStorages.Add(storageRef);
+                    }
+                    catch (Exception error)
+                    {
+                    }
                 }
 
                 return graphicMenusStorages;
