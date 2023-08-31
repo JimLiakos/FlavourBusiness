@@ -36,6 +36,10 @@ namespace TakeAwayApp
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.EndUsers.Coordinate"] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointInfo"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation);
+            SerializationBinder.NamesTypesDictionary["TakeAwayApp.ViewModel.WatchingOrderPresentation"] = typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ViewModel.MealCourse"] = typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse);
+
 
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.OptionChange"] = typeof(FlavourBusinessManager.RoomService.OptionChange);
@@ -66,6 +70,9 @@ namespace TakeAwayApp
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo)] = "FlavourBusinessFacade.HomeDeliveryServicePointInfo";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation)] = "FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation";
+            SerializationBinder.TypesNamesDictionary[typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation)] = "TakeAwayApp.ViewModel.WatchingOrderPresentation";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse)] = "FlavourBusinessManager.RoomService.ViewModel.MealCourse";
 
 
 

@@ -1095,6 +1095,7 @@ namespace TakeAwayApp.ViewModel
                         var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
 
                         _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x)).ToList())).ToList();
+                        
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
