@@ -1164,10 +1164,18 @@ namespace FlavourBusinessManager.EndUsers
         public FlavourBusinessFacade.EndUsers.IFoodServiceClient Client
         {
             get
-            {
+            { 
                 if (!string.IsNullOrWhiteSpace(UserIdentity) && _Client == null)
                 {
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
+                    var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
+                    storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
+
+                    var clients = (from client in storage.GetObjectCollection<IFoodServiceClient>()
+                    
+
+             
+
                     _Client = (from client in storage.GetObjectCollection<IFoodServiceClient>()
                                where client.Identity == UserIdentity
                                select client).FirstOrDefault();

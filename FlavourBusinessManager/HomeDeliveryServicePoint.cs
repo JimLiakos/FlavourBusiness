@@ -456,6 +456,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     select new WatchingOrder()
                     {
                         SessionID = foodServicesSession.SessionID,
+                        ClientPhone= foodServicesSession.PartialClientSessions.Where(x=>x.SessionType==SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
                         SessionType= foodServicesSession.SessionType,
                         DeliveryPlace = foodServicesSession.DeliveryPlace,
                         EntryDateTime = foodServicesSession.SessionStarts,

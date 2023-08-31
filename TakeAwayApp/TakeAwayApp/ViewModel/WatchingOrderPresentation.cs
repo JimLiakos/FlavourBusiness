@@ -26,10 +26,12 @@ namespace TakeAwayApp.ViewModel
             DistributionDateTime = watchingOrder.DistributionDateTime;
             State = watchingOrder.State;
             Description = watchingOrder.DeliveryPlace?.Description;
+            ClientPhone=watchingOrder.ClientPhone;
 
         }
         public WatchingOrderState State { get; set; }
         public string Description { get; }
+        public string ClientPhone { get; set; }
         public HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
 
         public string TimeStamp { get; set; }
