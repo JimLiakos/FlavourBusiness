@@ -12,6 +12,8 @@ namespace FlavourBusinessFacade.HomeDelivery
     /// <MetaDataID>{e87404cd-1460-49dc-9cee-fc1c4ad4f7fd}</MetaDataID>
     public class WatchingOrder
     {
+        public string OrderCode { get; set; } = "082439A";
+
         public HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
 
         public string TimeStamp { get; set; }

@@ -178,7 +178,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (foodServiceClients.Count == 0)
             {
                 var ticks = new DateTime(2022, 1, 1).Ticks;
-                var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                var uniqueId = "org_client_" + (DateTime.Now.Ticks - ticks).ToString("x");
                 foodServiceClients.Add(new FoodServiceClienttUri() { UniqueId = uniqueId });
             }
 
@@ -374,8 +374,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 stateTransition.Consistent = true;
             }
 
-
-
+ 
+               
         }
 
         public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null)
