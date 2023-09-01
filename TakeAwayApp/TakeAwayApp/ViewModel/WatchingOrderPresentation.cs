@@ -27,8 +27,10 @@ namespace TakeAwayApp.ViewModel
             State = watchingOrder.State;
             Description = watchingOrder.DeliveryPlace?.Description;
             ClientPhone=watchingOrder.ClientPhone;
-
+            OrderCode = watchingOrder.OrderCode;
+              
         }
+        public string OrderCode { get; set; }
         public WatchingOrderState State { get; set; }
         public string Description { get; }
         public string ClientPhone { get; set; }
