@@ -10,7 +10,7 @@ using OOAdvantech.Json;
 namespace TakeAwayApp.ViewModel
 {
     public class WatchingOrderPresentation
-    {
+    {  
 
         public WatchingOrderPresentation(WatchingOrder watchingOrder, List<FlavourBusinessManager.RoomService.ViewModel.MealCourse> mealCourses)
         {
@@ -28,9 +28,13 @@ namespace TakeAwayApp.ViewModel
             Description = watchingOrder.DeliveryPlace?.Description;
             ClientPhone=watchingOrder.ClientPhone;
             OrderCode = watchingOrder.OrderCode;
-              
+
+            OrderTotal=watchingOrder.OrderTotal;
+            
+
         }
         public string OrderCode { get; set; }
+        public PayAmount OrderTotal { get; set; }
         public WatchingOrderState State { get; set; }
         public string Description { get; }
         public string ClientPhone { get; set; }

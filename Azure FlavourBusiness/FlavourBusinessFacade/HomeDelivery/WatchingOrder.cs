@@ -29,6 +29,7 @@ namespace FlavourBusinessFacade.HomeDelivery
         public DateTime? DistributionDateTime { get; set; }
         public WatchingOrderState State { get; set; }
         public string ClientPhone { get; set; }
+        public PayAmount OrderTotal { get; set; }
     }
     public enum WatchingOrderState
     {
