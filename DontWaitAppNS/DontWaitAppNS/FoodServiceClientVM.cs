@@ -56,7 +56,7 @@ namespace DontWaitApp
                 _PhoneNumber = ApplicationSettings.Current?.ClientAsGuest.PhoneNumber;
             }
         }
-        public FoodServiceClientVM(IFlavoursOrderServer flavoursOrderServer, FoodServiceClienttUri foodServiceClienttUri)
+        public FoodServiceClientVM(IFlavoursOrderServer flavoursOrderServer, FoodServiceClientUri foodServiceClienttUri)
         {
             //OTE 6971660086
             //2106331371

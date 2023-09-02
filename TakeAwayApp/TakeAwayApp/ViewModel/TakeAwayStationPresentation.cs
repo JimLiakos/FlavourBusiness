@@ -124,6 +124,8 @@ namespace TakeAwayApp.ViewModel
         /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
         Task<IHomeDeliverySession> NewHomeDeliverSession();
 
+        Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID);
+
         /// <MetaDataID>{06fd4791-60ad-4ab6-9788-d28a2fc13e29}</MetaDataID>
         void CancelHomeDeliverySession(IHomeDeliverySession homeDeliverySession);
 
@@ -163,7 +165,7 @@ namespace TakeAwayApp.ViewModel
             if (vivaWalletPos != null)
                 vivaWalletPos.Confing(VivaWalletPos.POSType.TerminalPos, "127.0.0.1", 6000, 120);
 #if DeviceDotNet
-            
+
 
 
 #endif
@@ -476,26 +478,26 @@ namespace TakeAwayApp.ViewModel
 
 
 #if DeviceDotNet
-                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
-                                if (!device.IsBackgroundServiceStarted)
-                                {
-                                    BackgroundServiceState serviceState = new BackgroundServiceState();
-                                    device.RunInBackground(new Action(async () =>
+                                    IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                    TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+                                    if (!device.IsBackgroundServiceStarted)
                                     {
-                                        var message = TakeAwayCashier.PeekMessage();
-                                        TakeAwayCashier.MessageReceived +=MessageReceived;
-                                        do
+                                        BackgroundServiceState serviceState = new BackgroundServiceState();
+                                        device.RunInBackground(new Action(async () =>
                                         {
-                                            System.Threading.Thread.Sleep(1000);
+                                            var message = TakeAwayCashier.PeekMessage();
+                                            TakeAwayCashier.MessageReceived += MessageReceived;
+                                            do
+                                            {
+                                                System.Threading.Thread.Sleep(1000);
 
-                                        } while (!serviceState.Terminate);
+                                            } while (!serviceState.Terminate);
 
-                                        TakeAwayCashier.MessageReceived -= MessageReceived;
-                                        //if (Waiter is ITransparentProxy)
-                                        //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
-                                    }), serviceState);
-                                }
+                                            TakeAwayCashier.MessageReceived -= MessageReceived;
+                                            //if (Waiter is ITransparentProxy)
+                                            //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
+                                        }), serviceState);
+                                    }
 #endif
                                     ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
                                     //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
@@ -932,10 +934,10 @@ namespace TakeAwayApp.ViewModel
         public async Task<bool> RequestPermissionsForQRCodeScan()
         {
 #if DeviceDotNet
-         
 
-            var cameraPermissionRequest =await Permissions.RequestAsync<Permissions.Camera>();
-            
+
+            var cameraPermissionRequest = await Permissions.RequestAsync<Permissions.Camera>();
+
             return await CheckPermissionsForQRCodeScan();
 
             //var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
@@ -1053,6 +1055,8 @@ namespace TakeAwayApp.ViewModel
             }
         }
 
+
+
         /// <exclude>Excluded</exclude>
         List<IHomeDeliverySession> _HomeDeliverySessions = new List<IHomeDeliverySession>();
 
@@ -1094,8 +1098,9 @@ namespace TakeAwayApp.ViewModel
                     {
                         var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
 
-                        _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,x)).ToList())).ToList();
-                        
+
+                        _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList();
+
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
                         _WatchingOrders.AddRange(_WatchingOrders.ToList());
@@ -1153,19 +1158,30 @@ namespace TakeAwayApp.ViewModel
 
 
                     return await AssignDeliveryCallCenterCredentialKey(communicationCredentialKey);
-                    
+
                 }
                 catch (System.Exception error)
                 {
 
                     throw;
                 }
-  
+
 #else
                 return false;
 #endif
             });
 
+        }
+
+        public Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID)
+        {
+
+            var watchingOrder = this.WatchingOrders.Where(x => x.SessionID == sessionID).FirstOrDefault();
+            var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+
+            IHomeDeliverySession homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint,HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
+            this.HomeDeliverySessions.Add(homeDeliverySession);
+            return Task<IHomeDeliverySession>.FromResult(homeDeliverySession);
         }
 
         public async Task<IHomeDeliverySession> NewHomeDeliverSession()
@@ -1177,8 +1193,6 @@ namespace TakeAwayApp.ViewModel
             var homeDeliverySession = new HomeDeliverySession(this, foodServicesClientSessionViewModel);
             this.HomeDeliverySessions.Add(homeDeliverySession);
             homeDeliverySession.HomeDeliveryServicePoints = HomeDeliveryServicePoints;
-
-
             return homeDeliverySession;
 
         }

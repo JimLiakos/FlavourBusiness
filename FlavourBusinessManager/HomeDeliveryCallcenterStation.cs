@@ -12,6 +12,8 @@ using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceProcess;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -157,14 +159,14 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-        public List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone)
+        public List<FoodServiceClientUri> FoodServiceClientsSearch(string phone)
         {
             var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
 
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
             var foodServiceClients = (from foodServiceClient in storage.GetObjectCollection<IFoodServiceClient>()
                                       where foodServiceClient.PhoneNumber == phone
-                                      select foodServiceClient).ToList().Select(x => new FoodServiceClienttUri()
+                                      select foodServiceClient).ToList().Select(x => new FoodServiceClientUri()
                                       {
                                           UniqueId = x.Identity,
                                           FoodServiceClient = x,
@@ -179,12 +181,37 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 var ticks = new DateTime(2022, 1, 1).Ticks;
                 var uniqueId = "org_client_" + (DateTime.Now.Ticks - ticks).ToString("x");
-                foodServiceClients.Add(new FoodServiceClienttUri() { UniqueId = uniqueId });
+                foodServiceClients.Add(new FoodServiceClientUri() { UniqueId = uniqueId });
             }
 
             return foodServiceClients;
         }
+        public FoodServiceClientUri GetFoodServicesOpenSession(HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID)
+        {
+            string servicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + ";" + homeDeliveryServicePoint.ServicesPointIdentity;
+            if (homeDeliveryServicePoint.ServicesContextIdentity == ServicesContextIdentity)
+            {
+                var foodServicesSesion = ServicesContextRunTime.Current.OpenSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
+                if (foodServicesSesion == null)
+                    return null;
 
+                IFoodServiceClient foodServiceClient= foodServicesSesion.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.Client;
+                if (foodServiceClient == null)
+                    return null;
+
+
+                var foodServiceClientUri = new FoodServiceClientUri()
+                {
+                    UniqueId = foodServiceClient.Identity,
+                    FoodServiceClient = foodServiceClient,
+                    OpenFoodServiceClientSessions = foodServicesSesion.PartialClientSessions.ToList()
+
+                };
+                return foodServiceClientUri;
+            }
+            return null;
+
+        }
 
         public List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
         {

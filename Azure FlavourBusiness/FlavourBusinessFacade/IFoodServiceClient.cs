@@ -97,7 +97,7 @@ namespace FlavourBusinessFacade.EndUsers
     }
 
     /// <MetaDataID>{2bb56202-7fe4-4198-adc2-b9a5170777e1}</MetaDataID>
-    public class FoodServiceClienttUri
+    public class FoodServiceClientUri
     {
         public string UniqueId { get; set; }
         public IFoodServiceClient FoodServiceClient { get; set; }

@@ -3288,14 +3288,14 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation>>(retValue);
         }
         
-        public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClienttUri> FoodServiceClientsSearch(string phone)
+        public System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClientUri> FoodServiceClientsSearch(string phone)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = phone;
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "FoodServiceClientsSearch", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClienttUri>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClientUri>>(retValue);
         }
         
         public void CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
@@ -3319,6 +3319,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetWatchingOrders", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
+        }
+        
+        public FlavourBusinessFacade.EndUsers.FoodServiceClientUri GetFoodServicesOpenSession(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = homeDeliveryServicePoint;
+            argsTypes[0] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation);
+            args[1] = sessionID;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetFoodServicesOpenSession", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.FoodServiceClientUri>(retValue);
         }
     }
     

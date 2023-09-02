@@ -49,12 +49,12 @@ namespace FlavourBusinessFacade.ServicesContextResources
         System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location);
 
 
-        System.Collections.Generic.List<FoodServiceClienttUri> FoodServiceClientsSearch(string phone);
+
+        System.Collections.Generic.List<FoodServiceClientUri> FoodServiceClientsSearch(string phone);
         void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace);
 
         CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<WatchingOrderAbbreviation> stationWatchingOrders = null);
-
-
+        FoodServiceClientUri GetFoodServicesOpenSession(HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID);
     }
 
     /// <MetaDataID>{05a19c03-47b8-443e-886f-1976132586c2}</MetaDataID>
