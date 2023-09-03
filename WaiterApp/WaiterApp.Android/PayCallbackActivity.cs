@@ -37,9 +37,9 @@ namespace WaiterApp.Droid
                 string messageParameter =  resutlParams.Where(x => x.IndexOf("message") == 0).FirstOrDefault();
                 
                 if (resultStr.Contains("status=fail"))
-                    VivaWalletPos.Android.Pos.SalesCompleted(false, resultStr);
+                    VivaWalletPos.Android.VivaWalletAppPos.SalesCompleted(false, resultStr);
                 else
-                    VivaWalletPos.Android.Pos.SalesCompleted(true, resultStr);
+                    VivaWalletPos.Android.VivaWalletAppPos.SalesCompleted(true, resultStr);
 
 
 
