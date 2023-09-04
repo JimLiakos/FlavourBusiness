@@ -21,6 +21,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{b8a292d1-1cee-444a-a015-98f9403e7ca3}</MetaDataID>
         [PersistentMember(nameof(_SignInProvider))]
         [BackwardCompatibilityID("+16")]
+        [CachingDataOnClientSide]
         public string SignInProvider
         {
             get => _SignInProvider;
@@ -122,6 +123,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{1da2bbe4-9228-4888-a11e-18306e07dafb}</MetaDataID>
         [PersistentMember(nameof(_Identity))]
         [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
         public string Identity
         {
             get
@@ -135,6 +137,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{48f89f72-084a-40c4-bda0-681ce3ce956d}</MetaDataID>
         [PersistentMember(nameof(_Name))]
         [BackwardCompatibilityID("+4")]
+        [CachingDataOnClientSide]
         public string Name
         {
             get
@@ -160,6 +163,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{1076926b-7c1b-434d-9f86-670d4bd52979}</MetaDataID>
         [PersistentMember(nameof(_PhoneNumber))]
         [BackwardCompatibilityID("+5")]
+        [CachingDataOnClientSide]
         public string PhoneNumber
         {
             get
@@ -259,6 +263,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{06174522-1452-417b-86fa-1b23c61e48cb}</MetaDataID>
         [PersistentMember(nameof(_PhotoUrl))]
         [BackwardCompatibilityID("+11")]
+        [CachingDataOnClientSide]
         public string PhotoUrl
         {
             get => _PhotoUrl;
@@ -281,6 +286,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{4d462ce9-99da-4e2c-b4ac-c9856327fd59}</MetaDataID>
         [PersistentMember(nameof(_FullName))]
         [BackwardCompatibilityID("+12")]
+        [CachingDataOnClientSide]
         public string FullName
         {
             get
@@ -481,6 +487,17 @@ namespace FlavourBusinessManager.EndUsers
                     thePlace.Default = false;
 
                 existingPlace.Default = true;
+            }
+        }
+
+        public bool IsPlatformClient
+        {
+            get
+            {
+                if (Identity.IndexOf("org_client_") == 0)
+                    return false;
+                else
+                    return true;
             }
         }
 

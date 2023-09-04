@@ -144,7 +144,7 @@ namespace FlavourBusinessManager.EndUsers
                 //string param1 =HttpUtility.ParseQueryString(myUri.Query).Get("sc");
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
-                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State };
+                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this,Menu=Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode=UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
 
             }
         }
@@ -2068,6 +2068,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{62f96036-7ea5-484d-8463-c4b4ac8c7a04}</MetaDataID>
         [PersistentMember(nameof(_SessionType))]
         [BackwardCompatibilityID("+27")]
+        [CachingDataOnClientSide]
         public SessionType SessionType
         {
             get => _SessionType;
@@ -2114,6 +2115,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{93888b74-6b9f-4250-80d1-0be33073184a}</MetaDataID>
         [PersistentMember(nameof(_DeliveryComment))]
         [BackwardCompatibilityID("+28")]
+        [CachingDataOnClientSide]
         public string DeliveryComment
         {
             get => _DeliveryComment;

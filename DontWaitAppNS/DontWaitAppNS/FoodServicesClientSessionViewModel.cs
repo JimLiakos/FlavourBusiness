@@ -826,7 +826,7 @@ namespace DontWaitApp
                         if (!OOAdvantech.PersistenceLayer.ObjectStorage.IsPersistent(preparationItem))
                         {
                             var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                            if(objectStarage!=null)
+                            if (objectStarage != null)
                                 objectStarage.CommitTransientObjectState(preparationItem);
                         }
 
@@ -1122,7 +1122,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}</MetaDataID>
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServicesClientSession
-        { 
+        {
             get
             {
                 return _FoodServicesClientSession;
@@ -1192,15 +1192,16 @@ namespace DontWaitApp
                 }
 
                 _FoodServicesClientSession = value;
-                if (_FoodServicesClientSession != null && FlavoursOrderServer != null)
+                if (_FoodServicesClientSession != null && FlavoursOrderServer != null && clientSessionData.UserLanguageCode != FlavoursOrderServer.Language)
                     _FoodServicesClientSession.UpdateSessionUser(FlavoursOrderServer.Language);
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
                 {
-                    if (DeliveryPlace != null)
+                    if (DeliveryPlace == null)
+                        _DeliveryPlace = clientSessionData.DeliveryPlace as FlavourBusinessManager.EndUsers.Place;
+                    else
                     {
-                        if (!FlavourBusinessManager.EndUsers.Place.AreSame(_FoodServicesClientSession.MainSession?.DeliveryPlace, DeliveryPlace))
+                        if (!FlavourBusinessManager.EndUsers.Place.AreSame(clientSessionData.DeliveryPlace, DeliveryPlace))
                             _FoodServicesClientSession.SetSessionDeliveryPlace(DeliveryPlace);
-
                     }
                     _DeliveryComment = _FoodServicesClientSession.DeliveryComment;
                 }
@@ -1261,7 +1262,7 @@ namespace DontWaitApp
                 FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
                 FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
 
-                var storeRef = FoodServicesClientSession.Menu;
+                var storeRef = clientSessionData.Menu;
 #if !DeviceDotNet
                 storeRef.StorageUrl = "https://dev-localhost/devstoreaccount1/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
 #endif
@@ -1580,7 +1581,7 @@ namespace DontWaitApp
 
             //}
             //else
-            
+
             var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
             foreach (var itemNewState in itemsNewState)
             {
@@ -1618,7 +1619,7 @@ namespace DontWaitApp
             {
                 _OrderItems.Add(item);
                 var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                if(objectStarage!=null)
+                if (objectStarage != null)
                     objectStarage.CommitTransientObjectState(item);
                 stateTransition.Consistent = true;
             }
@@ -2026,7 +2027,7 @@ namespace DontWaitApp
             }
         }
 
-     
+
 
 
         /// <exclude>Excluded</exclude>

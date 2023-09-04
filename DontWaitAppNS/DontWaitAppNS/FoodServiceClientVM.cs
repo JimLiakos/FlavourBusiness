@@ -143,7 +143,7 @@ namespace DontWaitApp
                     {
                         var places = FoodServiceClient.DeliveryPlaces;
                         var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
-                        if (defaultPlace != null)
+                        if (defaultPlace != null&& FoodServiceClient.IsPlatformClient)
                             this.FlavoursOrderServer.GetNeighborhoodFoodServers(defaultPlace.Location);
 
                         lock (ClientSessionLock)

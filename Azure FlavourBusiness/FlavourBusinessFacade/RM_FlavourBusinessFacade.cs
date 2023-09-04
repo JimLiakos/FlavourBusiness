@@ -8154,6 +8154,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public bool IsPlatformClient
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClient), "get_IsPlatformClient", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string OAuthUserIdentity
         {
             get
