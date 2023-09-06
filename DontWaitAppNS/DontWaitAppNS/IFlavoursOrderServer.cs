@@ -421,6 +421,7 @@ namespace DontWaitApp
         public DateTime? ServiceTime { get; internal set; }
         /// <MetaDataID>{95fc2074-cae0-4b70-9c7f-153e55edde82}</MetaDataID>
         public PayOptions? PayOption { get; internal set; }
+        public string FontsLink { get; internal set; }
 
         /// <MetaDataID>{94b21849-ddf7-4553-9b1b-76bf018e6f84}</MetaDataID>
         [PersistentMember()]

@@ -421,11 +421,11 @@ namespace WaiterApp.ViewModel
                                 foreach (var hall in this._Halls)
                                     (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState -= ServiceArea_ServicePointChangeState;
                             }
+
                             this._Halls = Waiter.GetServiceHalls();
                             this._Halls = this._Halls.Where(x => x != null).ToList();
                             foreach (var hall in this._Halls)
                             {
-
                                 hall.FontsLink = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
                                 (hall as RestaurantHallLayoutModel.HallLayout).SetShapesImagesRoot("https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/");
                                 (hall as RestaurantHallLayoutModel.HallLayout).ServiceArea.ServicePointChangeState += ServiceArea_ServicePointChangeState;

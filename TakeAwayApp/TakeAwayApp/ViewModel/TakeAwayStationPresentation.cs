@@ -1173,15 +1173,19 @@ namespace TakeAwayApp.ViewModel
 
         }
 
-        public Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID)
+        public  Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID)
         {
+            return Task<IHomeDeliverySession>.Run(() =>
+            {
+                var watchingOrder = this.WatchingOrders.Where(x => x.SessionID == sessionID).FirstOrDefault();
+                var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
 
-            var watchingOrder = this.WatchingOrders.Where(x => x.SessionID == sessionID).FirstOrDefault();
-            var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+                IHomeDeliverySession homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint, HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
+                this.HomeDeliverySessions.Add(homeDeliverySession);
+                return homeDeliverySession;
+            });
 
-            IHomeDeliverySession homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint,HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
-            this.HomeDeliverySessions.Add(homeDeliverySession);
-            return Task<IHomeDeliverySession>.FromResult(homeDeliverySession);
+
         }
 
         public async Task<IHomeDeliverySession> NewHomeDeliverSession()

@@ -1087,9 +1087,12 @@ namespace DontWaitApp
                     DeliveryPlace = DeliveryPlace,
                     EndUser = FlavoursOrderServer.EndUser,
                     ServiceTime = ServiceTime,
-                    PayOption = PayOption
+                    PayOption = PayOption,
+                    FontsLink=this.FlavoursOrderServer.FontsLink
+
 
                 };
+                
                 return menuData;
 
             }
