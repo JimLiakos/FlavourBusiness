@@ -1901,7 +1901,7 @@ namespace DontWaitApp
 
         }
 
-    
+
 
         public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
         {
@@ -1918,7 +1918,7 @@ namespace DontWaitApp
                     stateTransition.Consistent = true;
                 }
                 ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
-                return Task<IFoodServicesClientSessionViewModel>.FromResult( foodServicesClientSessionViewModel as IFoodServicesClientSessionViewModel);
+                return Task<IFoodServicesClientSessionViewModel>.FromResult(foodServicesClientSessionViewModel as IFoodServicesClientSessionViewModel);
             }
             else
             {
@@ -2099,7 +2099,7 @@ namespace DontWaitApp
 
         }
 
-      
+
 
 
 

@@ -1518,10 +1518,13 @@ namespace DontWaitApp
                         {
                             var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
                                              select new Messmate(clientSession, OrderItems)).ToList();
-                            var candidateMessmates = (from clientSession in FoodServicesClientSession?.GetPeopleNearMe()
-                                                      select new Messmate(clientSession, OrderItems)).ToList();
                             Messmates = messmates;
-                            CandidateMessmates = candidateMessmates;
+                            if (MenuData.SessionType==SessionType.Hall)
+                            {
+                                var candidateMessmates = (from clientSession in FoodServicesClientSession?.GetPeopleNearMe()
+                                                          select new Messmate(clientSession, OrderItems)).ToList();
+                                CandidateMessmates = candidateMessmates;
+                            }
 
                             MessmatesLoaded = true;
                             //GetMessages();
