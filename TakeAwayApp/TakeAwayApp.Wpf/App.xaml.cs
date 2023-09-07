@@ -16,7 +16,7 @@ namespace TakeAwayApp.Wpf
 
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
 
-
+         
         public event EventHandler ApplicationResuming;
         public event EventHandler ApplicationSleeping;
         OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
