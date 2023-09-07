@@ -1088,11 +1088,11 @@ namespace DontWaitApp
                     EndUser = FlavoursOrderServer.EndUser,
                     ServiceTime = ServiceTime,
                     PayOption = PayOption,
-                    FontsLink=this.FlavoursOrderServer.FontsLink
+                    FontsLink = this.FlavoursOrderServer.FontsLink
 
 
                 };
-                
+
                 return menuData;
 
             }
@@ -1150,7 +1150,7 @@ namespace DontWaitApp
                     }
                 }
 
-                if (_FoodServicesClientSession == null && value != null)
+                if (_FoodServicesClientSession == null && value != null && FlavoursOrderServer.AppType != AppType.OrderTaking)
                     value.DeviceResume();
 
 
@@ -1185,6 +1185,7 @@ namespace DontWaitApp
                 }
 
                 ClientSessionData clientSessionData = value.ClientSessionData;
+
                 string path = FlavoursOrderServer.Path;
                 if (!string.IsNullOrWhiteSpace(this.MenuData.ServicePointIdentity) && this.MenuData.ServicePointIdentity != clientSessionData.ServicePointIdentity)
                 {
@@ -1230,6 +1231,35 @@ namespace DontWaitApp
                 SessionID = FoodServicesClientSession.SessionID;
 
 
+
+
+
+                var storeRef = clientSessionData.Menu;
+#if !DeviceDotNet
+                storeRef.StorageUrl = "https://dev-localhost/devstoreaccount1/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
+#endif
+                //storeRef.StorageUrl = "https://angularhost.z16.web.core.windows.net/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
+
+                MenuName = storeRef.Name;
+                MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
+                MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+                ClientSessionID = FoodServicesClientSession.SessionID;
+                MainSessionID = FoodServicesClientSession.MainSession?.SessionID;
+                FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession);
+                ServicePointIdentity = clientSessionData.ServicePointIdentity;
+                ServicesPointName = clientSessionData.ServicesPointName;
+                ServicesContextLogo = clientSessionData.ServicesContextLogo;
+                DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri;
+                ServedMealTypesUris = clientSessionData.ServedMealTypesUris;
+                SessionType = clientSessionData.SessionType;
+
+                FoodServicesClientSession.MessageReceived += MessageReceived;
+                FoodServicesClientSession.ObjectChangeState += FoodServicesClientSessionChangeState;
+                FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
+                FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
+
+
+
                 #region synchronize cached order items
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1258,32 +1288,10 @@ namespace DontWaitApp
                     stateTransition.Consistent = true;
                 }
                 #endregion
-                RefreshMessmates();
 
-                FoodServicesClientSession.MessageReceived += MessageReceived;
-                FoodServicesClientSession.ObjectChangeState += FoodServicesClientSessionChangeState;
-                FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
-                FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
 
-                var storeRef = clientSessionData.Menu;
-#if !DeviceDotNet
-                storeRef.StorageUrl = "https://dev-localhost/devstoreaccount1/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
-#endif
-                //storeRef.StorageUrl = "https://angularhost.z16.web.core.windows.net/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
-
-                MenuName = storeRef.Name;
-                MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
-                MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
-                ClientSessionID = FoodServicesClientSession.SessionID;
-                MainSessionID = FoodServicesClientSession.MainSession?.SessionID;
-                FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession);
-                ServicePointIdentity = clientSessionData.ServicePointIdentity;
-                ServicesPointName = clientSessionData.ServicesPointName;
-                ServicesContextLogo = clientSessionData.ServicesContextLogo;
-                DefaultMealTypeUri = clientSessionData.DefaultMealTypeUri;
-                ServedMealTypesUris = clientSessionData.ServedMealTypesUris;
-                SessionType = clientSessionData.SessionType;
-
+                if (FlavoursOrderServer.AppType != AppType.OrderTaking)
+                    RefreshMessmates();
 
                 //MenuData menuData = new MenuData()
                 //{
@@ -1352,7 +1360,7 @@ namespace DontWaitApp
         /// <MetaDataID>{7872a80f-383a-4e7e-a7c0-c81c99c9573a}</MetaDataID>
         public System.Collections.Generic.IList<DontWaitApp.Messmate> GetCandidateMessmates()
         {
-            if (!MessmatesLoaded)
+            if (!MessmatesLoaded && FlavoursOrderServer.AppType != AppType.OrderTaking)
                 GetMessmatesFromServer().Wait();
             return CandidateMessmates;
 
@@ -1502,12 +1510,14 @@ namespace DontWaitApp
         /// <MetaDataID>{4f182b25-801d-44a9-bb30-ca0320c4c7d5}</MetaDataID>
         public Task GetMessmatesFromServer()
         {
+
             return Task.Run(() =>
             {
                 try
                 {
                     if (FoodServicesClientSession != null)
                     {
+                        //FlavoursOrderServer.WaiterView
                         //if (WaiterView)
                         //{
                         //    var messmates = (from clientSession in FoodServiceClientSession?.GetServicePointParticipants()
@@ -1522,7 +1532,7 @@ namespace DontWaitApp
                             var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
                                              select new Messmate(clientSession, OrderItems)).ToList();
                             Messmates = messmates;
-                            if (MenuData.SessionType==SessionType.Hall)
+                            if (SessionType == SessionType.Hall)
                             {
                                 var candidateMessmates = (from clientSession in FoodServicesClientSession?.GetPeopleNearMe()
                                                           select new Messmate(clientSession, OrderItems)).ToList();

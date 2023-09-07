@@ -159,7 +159,7 @@ namespace TakeAwayApp.ViewModel
             VivaWalletPos.IPos sds = null;
             var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
 
-            FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(vivaWalletPos != null) { EndUser = this };
+            FlavoursOrderServer = new FlavoursOrderServer(AppType.OrderTaking, vivaWalletPos != null) { EndUser = this };
             var appSettings = ApplicationSettings.Current;
 
             if (vivaWalletPos != null)
@@ -1173,15 +1173,20 @@ namespace TakeAwayApp.ViewModel
 
         }
 
-        public  Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID)
+        public Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID)
         {
             return Task<IHomeDeliverySession>.Run(() =>
-            {
+            { 
                 var watchingOrder = this.WatchingOrders.Where(x => x.SessionID == sessionID).FirstOrDefault();
-                var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+                IHomeDeliverySession homeDeliverySession = HomeDeliverySessions.Where(x => x.FoodServiceClientSession.MainSessionID == sessionID).FirstOrDefault();
 
-                IHomeDeliverySession homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint, HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
+                if (homeDeliverySession != null)
+                    return homeDeliverySession;
+
+                var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
+                homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint, HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
                 this.HomeDeliverySessions.Add(homeDeliverySession);
+
                 return homeDeliverySession;
             });
 

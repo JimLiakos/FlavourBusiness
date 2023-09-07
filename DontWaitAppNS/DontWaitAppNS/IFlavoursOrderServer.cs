@@ -82,6 +82,8 @@ namespace DontWaitApp
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
 
+        AppType AppType { get; }
+
         /// <MetaDataID>{71dba63a-ee1a-457e-aa4a-dc758bc11a06}</MetaDataID>
         string ISOCurrencySymbol { get; }
 
@@ -259,6 +261,7 @@ namespace DontWaitApp
         void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel);
         IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu);
 
+        
 
         //Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession);
 

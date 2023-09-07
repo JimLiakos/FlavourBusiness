@@ -39,12 +39,21 @@ namespace TakeAwayApp.ViewModel
 
         public static HomeDeliverySession GetHomeDeliverySession(FlavoursServiceOrderTakingStation flavoursServiceOrderTakingStation, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, List<HomeDeliveryServicePointAbbreviation> homeDeliveryServicePoints, IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel, string sessionID)
         {
+            DateTime dateTime= DateTime.Now;
+            try
+            {
+                FoodServiceClientUri homeDeliveryClient = flavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesOpenSession(homeDeliveryServicePoint, sessionID);
+                if (homeDeliveryClient == null)
+                    return null;
+                else
+                    return new HomeDeliverySession(flavoursServiceOrderTakingStation, homeDeliveryServicePoint, homeDeliveryServicePoints, homeDeliveryClient, foodServicesClientSessionViewModel);
+            }
+            finally
+            {
+                var mms = (DateTime.Now - dateTime).TotalMilliseconds;
+            }
+            
 
-            FoodServiceClientUri homeDeliveryClient = flavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesOpenSession(homeDeliveryServicePoint, sessionID);
-            if (homeDeliveryClient == null)
-                return null;
-            else
-                return new HomeDeliverySession(flavoursServiceOrderTakingStation, homeDeliveryServicePoint, homeDeliveryServicePoints, homeDeliveryClient, foodServicesClientSessionViewModel);
 
         }
         HomeDeliverySession(FlavoursServiceOrderTakingStation flavoursServiceOrderTakingStation, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, List<HomeDeliveryServicePointAbbreviation> homeDeliveryServicePoints, FoodServiceClientUri homeDeliveryClient, IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel) : this(flavoursServiceOrderTakingStation, foodServicesClientSessionViewModel)

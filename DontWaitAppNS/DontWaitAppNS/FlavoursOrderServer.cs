@@ -198,9 +198,12 @@ namespace DontWaitApp
             }
         }
 
+        [CachingDataOnClientSide]
+        public AppType AppType { get; }
         /// <MetaDataID>{cc704161-f4c2-454b-9ff6-010d1e190a4b}</MetaDataID>
-        public FlavoursOrderServer(bool useAssignedPaymentTerminal)
+        public FlavoursOrderServer(AppType appType, bool useAssignedPaymentTerminal)
         {
+            AppType = appType;
             this.UseAssignedPaymentTerminal=useAssignedPaymentTerminal;
         }
 
@@ -2099,22 +2102,13 @@ namespace DontWaitApp
 
         }
 
-
-
-
-
-
-
         /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>
         internal AuthUser AuthUser;
-
-
-
-
-
-
-
-
-
+    }
+    public enum AppType
+    {
+        DontWaitApp =1,
+        WaiterApp=2,
+        OrderTaking=3
     }
 }

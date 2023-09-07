@@ -70,8 +70,8 @@ namespace DontWaitApp
         {
             get;
         }
-
-
+        [HttpInVisible]
+        string MainSessionID { get; }
 
 
         /// <MetaDataID>{c3c9d4ab-41b4-41a5-a0cb-6d2d6cba58e5}</MetaDataID>
