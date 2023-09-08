@@ -55,6 +55,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<WatchingOrderAbbreviation> stationWatchingOrders = null);
         FoodServiceClientUri GetFoodServicesOpenSession(HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID);
+
+        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
     }
 
     /// <MetaDataID>{05a19c03-47b8-443e-886f-1976132586c2}</MetaDataID>

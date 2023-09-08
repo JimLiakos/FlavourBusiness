@@ -7,6 +7,7 @@ using FlavourBusinessManager.EndUsers;
 using FlavourBusinessToolKit;
 using MenuModel;
 using OOAdvantech;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Transactions;
@@ -359,7 +360,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PlaceOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(PlaceOfDistributionJson);
 
 
+            ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInrogress+=MealsController_NewMealCoursesInrogress;
+
+
         }
+
+    
 
         /// <MetaDataID>{5ef13716-024b-4a7d-9d11-806aeefd906e}</MetaDataID>
         public IUploadSlot GetUploadSlotForLogoImage()
@@ -445,29 +451,56 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        private void MealsController_NewMealCoursesInrogress(IList<FlavourBusinessFacade.RoomService.IMealCourse> mealCoursers)
+        {
+            RunObjectChangeState(this, nameof(mealCoursers));
+        }
 
+        
+        public List<WatchingOrder>  WatchingOrders
+        {
+            get
+            {
+                var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null&&x.MainSession.Meal!=null).Select(x => x.MainSession).Distinct().ToList();
 
-        public List<WatchingOrder> GetWatchingOrders()
-        { 
-             
-            var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null&&x.MainSession.Meal!=null).Select(x => x.MainSession).Distinct().ToList();
-           
-            return (from foodServicesSession in foodServicesSessions
-                    where foodServicesSession.DeliveryPlace!=null
-                    select new WatchingOrder()
-                    {
-                        SessionID = foodServicesSession.SessionID,
-                        ClientPhone= foodServicesSession.PartialClientSessions.Where(x=>x.SessionType==SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
-                        SessionType= foodServicesSession.SessionType,
-                        DeliveryPlace = foodServicesSession.DeliveryPlace,
-                        EntryDateTime = foodServicesSession.SessionStarts,
-                        HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },
-                        MealCourses = foodServicesSession.Meal.Courses,
-                        TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
-                        State= WatchingOrderState.InProggres,
-                        OrderTotal=Bill.GetTotal(foodServicesSession)
+                return (from foodServicesSession in foodServicesSessions
+                        where foodServicesSession.DeliveryPlace!=null
+                        select new WatchingOrder()
+                        {
+                            SessionID = foodServicesSession.SessionID,
+                            ClientPhone= foodServicesSession.PartialClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
+                            SessionType= foodServicesSession.SessionType,
+                            DeliveryPlace = foodServicesSession.DeliveryPlace,
+                            EntryDateTime = foodServicesSession.SessionStarts,
+                            HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },
+                            MealCourses = foodServicesSession.Meal.Courses,
+                            TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
+                            State= WatchingOrderState.InProggres,
+                            OrderTotal=Bill.GetTotal(foodServicesSession)
 
-                    }).ToList();
+                        }).ToList();
+            }
+        }
+
+        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null)
+        {
+
+            CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
+            //List<WatchingOrderAbbreviation> removedWatchingOrders = new OOAdvantech.Collections.Generic.List<WatchingOrderAbbreviation>();
+            if (stationWatchingOrders!=null)
+            {
+                List<WatchingOrder> watchingOrders = WatchingOrders.ToList();
+                callCenterStationWatchingOrders.WatchingOrders = watchingOrders.Where(x => !stationWatchingOrders.Any(y => y.SessionID == x.SessionID && y.TimeStamp == x.TimeStamp)).ToList();
+                callCenterStationWatchingOrders.RemovedWatchingOrders = stationWatchingOrders.Where(x => !watchingOrders.Any(y => y.SessionID == x.SessionID)).ToList();
+                return callCenterStationWatchingOrders;
+            }
+            else
+            {
+                
+                callCenterStationWatchingOrders.WatchingOrders =  WatchingOrders.ToList();
+                return callCenterStationWatchingOrders; 
+            }
+    
         }
 
         private double GetRouteDistanceInKm(IPlace deleiveryPlace)

@@ -2105,10 +2105,5 @@ namespace DontWaitApp
         /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>
         internal AuthUser AuthUser;
     }
-    public enum AppType
-    {
-        DontWaitApp =1,
-        WaiterApp=2,
-        OrderTaking=3
-    }
+  
 }

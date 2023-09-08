@@ -34,6 +34,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
         List<IHomeDeliveryServicePoint> HomeDeliveryServicePointsForTest;
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint> _HomeDeliveryServicePoints = new OOAdvantech.Collections.Generic.Set<IHomeDeliveryServicePoint>();
@@ -76,6 +78,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         deliveryServicePoint.ServiceAreaMap = serviceAreaMap;
                         objectStorage.CommitTransientObjectState(deliveryServicePoint);
                     }
+
+                    deliveryServicePoint.ObjectChangeState+=DeliveryServicePoint_ObjectChangeState;
                     HomeDeliveryServicePointsForTest.Add(deliveryServicePoint);
 
                     var sc_deliveryServicePoint = ServicesContextRunTime.Current.DeliveryServicePoint;
@@ -92,6 +96,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return HomeDeliveryServicePointsForTest.ToList();
                 return _HomeDeliveryServicePoints.ToThreadSafeList();
             }
+        }
+
+        private void DeliveryServicePoint_ObjectChangeState(object _object, string member)
+        {
+            if(member==nameof(HomeDeliveryServicePoint.WatchingOrders))
+                ObjectChangeState.Invoke(this, member);
         }
 
 
@@ -413,16 +423,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
             List<WatchingOrder> watchingOrders = new List<WatchingOrder>();
             foreach (var HomeDeliveryServicePoint in HomeDeliveryServicePoints)
-                watchingOrders.AddRange(HomeDeliveryServicePoint.GetWatchingOrders());
-
-
-            callCenterStationWatchingOrders.WatchingOrders = watchingOrders.Where(x => !stationWatchingOrders.Any(y => y.SessionID == x.SessionID && y.TimeStamp == x.TimeStamp)).ToList();
-
-            callCenterStationWatchingOrders.RemovedWatchingOrders = stationWatchingOrders.Where(x => !watchingOrders.Any(y => y.SessionID == x.SessionID)).ToList();
-
+            {
+                var servicePoint_CallCenterStationWatchingOrders = HomeDeliveryServicePoint.GetWatchingOrders(stationWatchingOrders);
+                callCenterStationWatchingOrders.WatchingOrders.AddRange(servicePoint_CallCenterStationWatchingOrders.WatchingOrders);
+                callCenterStationWatchingOrders.RemovedWatchingOrders.AddRange(servicePoint_CallCenterStationWatchingOrders.RemovedWatchingOrders);
+            }
             return callCenterStationWatchingOrders;
-
-
         }
 
         DeviceType ClientDeviceType = DeviceType.Desktop;

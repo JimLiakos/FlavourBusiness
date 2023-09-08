@@ -200,9 +200,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         OOAdvantech.Collections.Generic.Set<IFoodServiceSession> _ServiceSessions = new OOAdvantech.Collections.Generic.Set<IFoodServiceSession>();
 
         /// <MetaDataID>{e85c6108-a826-45f4-a2b9-bd7b288d9073}</MetaDataID>
-        internal void RunObjectChangeState(HomeDeliveryServicePoint homeDeliveryServicePoint, object p)
+        internal void RunObjectChangeState(HomeDeliveryServicePoint homeDeliveryServicePoint, string member)
         {
-            _ObjectChangeState?.Invoke(this, null);
+            _ObjectChangeState?.Invoke(this, member);
         }
 
         /// <MetaDataID>{3f818102-6573-4e5a-99cf-8f52c39c0805}</MetaDataID>

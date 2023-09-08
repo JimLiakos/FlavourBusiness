@@ -540,5 +540,12 @@ namespace DontWaitApp
         Email = 2,
         FBMessenger = 3
     }
+
+    public enum AppType
+    {
+        DontWaitApp = 1,
+        WaiterApp = 2,
+        OrderTaking = 3
+    }
 }
 

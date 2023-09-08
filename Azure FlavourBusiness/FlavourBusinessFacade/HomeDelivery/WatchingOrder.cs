@@ -47,9 +47,9 @@ namespace FlavourBusinessFacade.HomeDelivery
     /// <MetaDataID>{991b4aaf-6eae-4a72-b4f7-7e3df79aaae5}</MetaDataID>
     public class CallCenterStationWatchingOrders
     {
-        public List<WatchingOrder> WatchingOrders { get; set; }
+        public List<WatchingOrder> WatchingOrders { get; set; } = new List<WatchingOrder>();
 
-        public List<WatchingOrderAbbreviation> RemovedWatchingOrders { get; set; }
+        public List<WatchingOrderAbbreviation> RemovedWatchingOrders { get; set; } = new List<WatchingOrderAbbreviation>();
 
 
     }

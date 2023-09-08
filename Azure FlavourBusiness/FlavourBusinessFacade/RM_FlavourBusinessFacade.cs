@@ -3115,6 +3115,17 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
         
         public Pr_IHomeDeliveryCallCenterStation(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
@@ -3804,10 +3815,12 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.IUploadSlot>(retValue);
         }
         
-        public System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrder> GetWatchingOrders()
+        public System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrder> GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation> stationWatchingOrders)
         {
-            object[] args = new object[0];
-            System.Type[] argsTypes = new System.Type[0];
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = stationWatchingOrders;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetWatchingOrders", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrder>>(retValue);
         }

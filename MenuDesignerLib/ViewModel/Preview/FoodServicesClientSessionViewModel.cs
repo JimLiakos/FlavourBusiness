@@ -45,6 +45,8 @@ namespace MenuDesigner.ViewModel.Preview
         public string OrderComment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string NotesForClient { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public string MainSessionID => throw new NotImplementedException();
+
         public event SharedItemChangedHandle SharedItemChanged;
         public event MenuItemProposalHandle MenuItemProposal;
         public event MessmatesWaitForYouToDecideHandle MessmatesWaitForYouToDecide;

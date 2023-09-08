@@ -86,6 +86,8 @@ namespace MenuDesigner.ViewModel.Preview
 
         ISecureUser IFlavoursOrderServer.EndUser{ get => null; set { } }
 
+        public AppType AppType => throw new NotImplementedException();
+
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
         public event SharedItemChangedHandle SharedItemChanged;
