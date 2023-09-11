@@ -255,7 +255,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
                 if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
                 {
-                    if (itemPreparation.ServedInTheBatch.PreparedItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
+                    if (itemPreparation.ServedInTheBatch!=null&& itemPreparation.ServedInTheBatch.PreparedItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
                         PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
 
                 }

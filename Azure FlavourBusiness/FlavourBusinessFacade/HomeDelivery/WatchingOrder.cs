@@ -49,7 +49,7 @@ namespace FlavourBusinessFacade.HomeDelivery
     {
         public List<WatchingOrder> WatchingOrders { get; set; } = new List<WatchingOrder>();
 
-        public List<WatchingOrderAbbreviation> RemovedWatchingOrders { get; set; } = new List<WatchingOrderAbbreviation>();
+        public List<WatchingOrderAbbreviation> MissingWatchingOrders { get; set; } = new List<WatchingOrderAbbreviation>();
 
 
     }

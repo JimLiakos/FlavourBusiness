@@ -1,0 +1,11 @@
+PartitionKey;RowKey;MultipleObjectContext;MultipleObjectContext@type;StorageLocation;StorageLocation@type;StorageName;StorageName@type;StorageType;StorageType@type
+AAA;16064354-091e-458c-b890-5a6b416be471;true;Boolean;usersfolder/f681df6cc2dd46739958b98407cb9291/RestaurantMenus.xml;String;RestaurantMenuData;String;OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider;String
+AAA;3bdea2dc-3185-4331-bdb9-f17c535f2965;true;Boolean;DevStorage;String;jimliakosgmailcom;String;OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider;String
+AAA;51e6b3db-f7de-4bfa-ac8f-c06f519256aa;true;Boolean;DevStorage;String;FlavourBusinesses;String;OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider;String
+AAA;5ecd00df-907a-4d92-aa24-0c18a0733a1e;true;Boolean;DevStorage;String;jimliakosgmailcom;String;OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider;String
+AAA;636c1bf2-d89b-4912-98b0-18777816557d;true;Boolean;DevStorage;String;FlavourBusinessesResources;String;OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider;String
+AAA;7021ec91-37df-4417-8c1a-a6afb012fd09;true;Boolean;http://127.0.0.1:10000/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/RestaurantMenuData.xml;String;RestaurantMenuData;String;OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider;String
+AAA;71517d9c-8e62-40b5-abeb-531fb804c97b;true;Boolean;http://127.0.0.1:10000/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Main-Room.xml;String;Main-Room;String;OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider;String
+AAA;b35c2378-8bee-4e7d-a2d3-2c79ba83eb66;true;Boolean;http://127.0.0.1:10000/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Loft.xml;String;Loft;String;OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider;String
+AAA;c2dc5527-0765-4ed3-a75d-f3897453c07f;true;Boolean;DevStorage;String;jimliakosgmailcomMain;String;OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider;String
+AAA;e7da24bf-a888-4626-8e12-17a48faa8152;true;Boolean;usersfolder/f681df6cc2dd46739958b98407cb9291/RestaurantMenus.xml;String;RestaurantMenuData;String;OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider;String

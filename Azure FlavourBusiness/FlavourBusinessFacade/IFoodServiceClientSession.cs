@@ -336,12 +336,12 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{eea67de5-e4ff-44f5-9bd8-3de929b95c3c}</MetaDataID>
         public ServicePointState ServicePointState;
+        public OrganizationStorageRef Menu;
 
         /// <MetaDataID>{e6423399-cbc1-48c7-b618-2cfa5631e82c}</MetaDataID>
-        public SessionType SessionType { get; set; }
-        public string UserLanguageCode { get; set; }
-        public OrganizationStorageRef Menu { get; set; }
-        public IPlace DeliveryPlace { get; set; }
+        public SessionType SessionType;
+        public string UserLanguageCode ;
+        public IPlace DeliveryPlace;
     }
 
 

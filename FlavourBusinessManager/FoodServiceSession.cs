@@ -256,7 +256,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                         {
                             StateMachineMonitoring();
-                            partialSession.ObjectChangeState -= PartialSession_ObjectChangeState;
+                            partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
                         }
                     }
                 };
@@ -264,7 +264,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             else
             {
                 StateMachineMonitoring();
-                partialSession.ObjectChangeState -= PartialSession_ObjectChangeState;
+                partialSession.ObjectChangeState += PartialSession_ObjectChangeState;
             }
 
         }
