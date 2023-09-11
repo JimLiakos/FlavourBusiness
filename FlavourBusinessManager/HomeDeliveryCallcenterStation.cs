@@ -67,7 +67,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         deliveryServicePoint.ServicesContextIdentity = ServicesContextIdentity;
                         deliveryServicePoint.ServicesPointIdentity = _HomeDeliveryServicePoints.First().ServicesPointIdentity + "_test";
                         deliveryServicePoint.Description = "Starbucks Αμπελοκηποι";
-                        //homeDeliveryServicePoint.
+                        
 
                         string placeOfDistributionJson = "{\"ExtensionProperties\":{},\"CityTown\":\"Αθήνα\",\"StateProvinceRegion\":null,\"Description\":\"Λάκωνος 26, Αθήνα, Ελλάδα \",\"StreetNumber\":\"26\",\"Street\":\"Λάκωνος\",\"Area\":null,\"PostalCode\":\"115 24\",\"Country\":\"Ελλάδα\",\"Location\":{\"Longitude\":23.765026,\"Latitude\":37.9960904},\"PlaceID\":\"ChIJq1RxdAiYoRQRvVR_EYQH2gw\",\"Default\":true}";
                         var placeOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(placeOfDistributionJson);

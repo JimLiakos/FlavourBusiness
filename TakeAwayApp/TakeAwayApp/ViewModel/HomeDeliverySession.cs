@@ -313,7 +313,7 @@ namespace TakeAwayApp.ViewModel
                 {
 
 
-                    if (value != null && (FoodServiceClientSession as FoodServicesClientSessionViewModel)?.CanChangeDeliveryPlace(value) == ChangeDeliveryPlaceResponse.OK)
+                    if (value != null)// && (FoodServiceClientSession as FoodServicesClientSessionViewModel)?.CanChangeDeliveryPlace(value) == ChangeDeliveryPlaceResponse.OK)
                     {
 
                         _DeliveryPlace = value as Place;
