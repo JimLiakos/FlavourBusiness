@@ -96,7 +96,7 @@ namespace FlavourBusinessFacade.RoomService
 
                     Description = preparationStation.Description;
             }
-            else
+            else 
             {
                 Description = Resource.FoodItemInstantlyAvailable;
                 this.PreparationStationIdentity = TradeProductsStationIdentity;

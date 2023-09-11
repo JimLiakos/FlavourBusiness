@@ -144,7 +144,7 @@ namespace FlavourBusinessManager.EndUsers
                 //string param1 =HttpUtility.ParseQueryString(myUri.Query).Get("sc");
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
-                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this,Menu=Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode=UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
+                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
 
             }
         }
@@ -2843,10 +2843,18 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (_MainSession.Value == null)
                         (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-                    if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
+
+                    if (Client?.IsPlatformClient == false)
+                    {
                         this.MainSession.DeliveryPlace = deliveryPlace;
+                    }
                     else
-                        throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
+                    {
+                        if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
+                            this.MainSession.DeliveryPlace = deliveryPlace;
+                        else
+                            throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
+                    }
                     stateTransition.Consistent = true;
                 }
             }

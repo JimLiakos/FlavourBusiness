@@ -1068,7 +1068,7 @@ namespace TakeAwayApp.ViewModel
                 var stationWatchingOrders= watchingOrders.Select(x => new WatchingOrderAbbreviation() { SessionID=x.SessionID, TimeStamp=x.TimeStamp }).ToList();
                 var callCenterStationWatchingOrders= _HomeDeliveryCallCenterStation.GetWatchingOrders(stationWatchingOrders);
 
-                watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.RemovedWatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
+                watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.MissingWatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
                 watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.WatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
                 watchingOrders.AddRange(callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList());
                 _WatchingOrders=watchingOrders;

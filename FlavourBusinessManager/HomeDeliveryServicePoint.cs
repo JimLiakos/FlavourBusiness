@@ -453,7 +453,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         private void MealsController_NewMealCoursesInrogress(IList<FlavourBusinessFacade.RoomService.IMealCourse> mealCoursers)
         {
-            RunObjectChangeState(this, nameof(mealCoursers));
+            RunObjectChangeState(this, nameof(HomeDeliveryServicePoint.WatchingOrders));
         }
 
         
@@ -461,8 +461,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
-                var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null&&x.MainSession.Meal!=null).Select(x => x.MainSession).Distinct().ToList();
 
+                var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null&&x.MainSession.Meal!=null).Select(x => x.MainSession).Distinct().ToList();
+                var serviceAreaMapPolyGon = new MapPolyGon(ServiceAreaMap);
                 return (from foodServicesSession in foodServicesSessions
                         where foodServicesSession.DeliveryPlace!=null
                         select new WatchingOrder()
@@ -472,7 +473,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             SessionType= foodServicesSession.SessionType,
                             DeliveryPlace = foodServicesSession.DeliveryPlace,
                             EntryDateTime = foodServicesSession.SessionStarts,
-                            HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = false },
+                            HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },
                             MealCourses = foodServicesSession.Meal.Courses,
                             TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
                             State= WatchingOrderState.InProggres,
@@ -482,16 +483,21 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null)
+        private bool IsOutOfDeliveryRange(IPlace deliveryPlace, MapPolyGon serviceAreaMapPolyGon)
+        {
+          return  !serviceAreaMapPolyGon.FindPoint(deliveryPlace.Location.Latitude, deliveryPlace.Location.Longitude);
+        }
+
+        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
         {
 
             CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
             //List<WatchingOrderAbbreviation> removedWatchingOrders = new OOAdvantech.Collections.Generic.List<WatchingOrderAbbreviation>();
-            if (stationWatchingOrders!=null)
+            if (candidateToRemoveWatchingOrders != null)
             {
                 List<WatchingOrder> watchingOrders = WatchingOrders.ToList();
-                callCenterStationWatchingOrders.WatchingOrders = watchingOrders.Where(x => !stationWatchingOrders.Any(y => y.SessionID == x.SessionID && y.TimeStamp == x.TimeStamp)).ToList();
-                callCenterStationWatchingOrders.RemovedWatchingOrders = stationWatchingOrders.Where(x => !watchingOrders.Any(y => y.SessionID == x.SessionID)).ToList();
+                callCenterStationWatchingOrders.WatchingOrders = watchingOrders.Where(x => !candidateToRemoveWatchingOrders.Any(y => y.SessionID == x.SessionID && y.TimeStamp == x.TimeStamp)).ToList();
+                callCenterStationWatchingOrders.MissingWatchingOrders = candidateToRemoveWatchingOrders.Where(x => !watchingOrders.Any(y => y.SessionID == x.SessionID)).ToList();
                 return callCenterStationWatchingOrders;
             }
             else

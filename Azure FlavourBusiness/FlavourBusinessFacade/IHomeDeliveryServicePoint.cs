@@ -71,7 +71,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         IUploadSlot GetUploadSlotForLogoImage();
         /// <MetaDataID>{e1a5d545-2883-4c58-bdb5-da1d8f5d61a7}</MetaDataID>
         IUploadSlot GetUploadSlotForLogoBackgroundImage();
-        CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null);
+        CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
     }
 
 

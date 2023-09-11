@@ -732,8 +732,11 @@ namespace FlavourBusinessManager
         //  then the function may return true or false.
 
         /// <MetaDataID>{a429d4d6-ecb7-45b7-bc39-7fb0aba7cf2b}</MetaDataID>
-        public bool FindPoint(double latitude, double longitude)
+        public bool FindPoint(double? latitude, double? longitude)
         {
+            if(latitude == null || longitude == null) 
+                return false;
+
             int sides = Points.Count - 1;
             int j = sides - 1;
             bool pointStatus = false;

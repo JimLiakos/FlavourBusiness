@@ -67,7 +67,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         deliveryServicePoint.ServicesContextIdentity = ServicesContextIdentity;
                         deliveryServicePoint.ServicesPointIdentity = _HomeDeliveryServicePoints.First().ServicesPointIdentity + "_test";
                         deliveryServicePoint.Description = "Starbucks Αμπελοκηποι";
-                        //homeDeliveryServicePoint.
+                        
 
                         string placeOfDistributionJson = "{\"ExtensionProperties\":{},\"CityTown\":\"Αθήνα\",\"StateProvinceRegion\":null,\"Description\":\"Λάκωνος 26, Αθήνα, Ελλάδα \",\"StreetNumber\":\"26\",\"Street\":\"Λάκωνος\",\"Area\":null,\"PostalCode\":\"115 24\",\"Country\":\"Ελλάδα\",\"Location\":{\"Longitude\":23.765026,\"Latitude\":37.9960904},\"PlaceID\":\"ChIJq1RxdAiYoRQRvVR_EYQH2gw\",\"Default\":true}";
                         var placeOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(placeOfDistributionJson);
@@ -352,7 +352,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
+                
                 if (foodServicesClient == null)
                 {
                     foodServicesClient = new FoodServiceClient(foodServicesClientData.Identity)
@@ -388,6 +388,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
 
                 }
+                
+                
+
                 if (foodServicesClientData.DeliveryPlaces != null)
                 {
                     foreach (var place in foodServicesClient.DeliveryPlaces)
@@ -404,10 +407,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
 
                 }
-                foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
+                
                 var unCommitedItems = foodServicesClientSession.FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).ToList();
                 foodServicesClientSession.Commit(unCommitedItems);
-                (foodServicesClientSession as FoodServiceClientSession).UserIdentity = foodServicesClient.Identity;
+                (foodServicesClientSession as FoodServiceClientSession).Client = foodServicesClient; 
+                foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
                 stateTransition.Consistent = true;
             }
 
@@ -415,18 +419,21 @@ namespace FlavourBusinessManager.ServicesContextResources
                
         }
 
-        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> stationWatchingOrders = null)
+        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
         {
-            if (stationWatchingOrders == null)
-                stationWatchingOrders = new List<WatchingOrderAbbreviation>();
+            if (candidateToRemoveWatchingOrders == null)
+                candidateToRemoveWatchingOrders = new List<WatchingOrderAbbreviation>();
 
             CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
             List<WatchingOrder> watchingOrders = new List<WatchingOrder>();
             foreach (var HomeDeliveryServicePoint in HomeDeliveryServicePoints)
             {
-                var servicePoint_CallCenterStationWatchingOrders = HomeDeliveryServicePoint.GetWatchingOrders(stationWatchingOrders);
+                var servicePoint_CallCenterStationWatchingOrders = HomeDeliveryServicePoint.GetWatchingOrders(candidateToRemoveWatchingOrders);
+                
+                candidateToRemoveWatchingOrders = servicePoint_CallCenterStationWatchingOrders.MissingWatchingOrders;
+
                 callCenterStationWatchingOrders.WatchingOrders.AddRange(servicePoint_CallCenterStationWatchingOrders.WatchingOrders);
-                callCenterStationWatchingOrders.RemovedWatchingOrders.AddRange(servicePoint_CallCenterStationWatchingOrders.RemovedWatchingOrders);
+                callCenterStationWatchingOrders.MissingWatchingOrders.AddRange(servicePoint_CallCenterStationWatchingOrders.MissingWatchingOrders);
             }
             return callCenterStationWatchingOrders;
         }
