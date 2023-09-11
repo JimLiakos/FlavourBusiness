@@ -43,7 +43,7 @@ namespace FlavourBusinessFacade.HomeDelivery
         public string SessionID { get; set; }
         public string TimeStamp { get; set; }
     }
-
+     
     /// <MetaDataID>{991b4aaf-6eae-4a72-b4f7-7e3df79aaae5}</MetaDataID>
     public class CallCenterStationWatchingOrders
     {
