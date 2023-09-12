@@ -10,6 +10,7 @@ using System.Linq;
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
 using OOAdvantech.Json;
+using FlavourBusinessManager.ServicesContextResources;
 
 #if DeviceDotNet
 
@@ -39,7 +40,7 @@ namespace TakeAwayApp.ViewModel
 
         public static HomeDeliverySession GetHomeDeliverySession(FlavoursServiceOrderTakingStation flavoursServiceOrderTakingStation, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, List<HomeDeliveryServicePointAbbreviation> homeDeliveryServicePoints, IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel, string sessionID)
         {
-            DateTime dateTime= DateTime.Now;
+            DateTime dateTime = DateTime.Now;
             try
             {
                 FoodServiceClientUri homeDeliveryClient = flavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesOpenSession(homeDeliveryServicePoint, sessionID);
@@ -52,7 +53,7 @@ namespace TakeAwayApp.ViewModel
             {
                 var mms = (DateTime.Now - dateTime).TotalMilliseconds;
             }
-            
+
 
 
         }
@@ -108,11 +109,14 @@ namespace TakeAwayApp.ViewModel
         {
             if (homeDeliveryClient.FoodServiceClient == null)
             {
+                //There is not server side user.
+
                 homeDeliveryClient.FoodServiceClient = new FoodServiceClient(homeDeliveryClient.UniqueId);
                 homeDeliveryClient.FoodServiceClient.PhoneNumber = _CallerPhone;
             }
             else
             {
+                //There is server side user.
                 var foodServiceClient = new FoodServiceClient(homeDeliveryClient.UniqueId);
                 foodServiceClient.Synchronize(homeDeliveryClient.FoodServiceClient);
                 homeDeliveryClient.FoodServiceClient = foodServiceClient;
@@ -126,11 +130,14 @@ namespace TakeAwayApp.ViewModel
 
             if (FoodServiceClientSession.FoodServicesClientSession == null && SessionClient != null && _HomeDeliveryServicePoint != null)
             {
-                if (homeDeliveryClient.OpenFoodServiceClientSessions.Count == 1)
+                if (homeDeliveryClient.OpenFoodServiceClientSessions?.Count == 1)
                 {
                     (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = homeDeliveryClient.OpenFoodServiceClientSessions.FirstOrDefault();
                     if (FoodServiceClientSession.FoodServicesClientSession != null)
+                    {
                         _DeliveryPlace = FoodServiceClientSession.DeliveryPlace as Place;
+                        _HomeDeliveryServicePoint= GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
+                    }
 
                 }
                 else
@@ -141,45 +148,51 @@ namespace TakeAwayApp.ViewModel
                     if (FoodServiceClientSession.FoodServicesClientSession != null)
                         _DeliveryPlace = FoodServiceClientSession.FoodServicesClientSession.GetSessionDeliveryPlace() as Place;
                 }
+                (FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser = SessionClient;
             }
             else
             {
-
-
-                if (SessionClient.FoodServiceClient != null)
-                    SessionClient = new FoodServiceClientVM((FoodServiceClientSession as FoodServicesClientSessionViewModel).FlavoursOrderServer, homeDeliveryClient);
-
                 (FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser = SessionClient;
-
+                 
                 var openFoodServiceClientSession = homeDeliveryClient.OpenFoodServiceClientSessions?.FirstOrDefault();
                 if (openFoodServiceClientSession != null)
                 {
                     (FoodServiceClientSession as FoodServicesClientSessionViewModel).DeliveryPlace = openFoodServiceClientSession.GetSessionDeliveryPlace();
+                    if ((FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession != openFoodServiceClientSession)
+                    {
+
+                    }
                     (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = openFoodServiceClientSession;
                     _DeliveryPlace = (FoodServiceClientSession as FoodServicesClientSessionViewModel).DeliveryPlace as Place;
 
                     string sessionServicePointIdentity = (FoodServiceClientSession as FoodServicesClientSessionViewModel).ServicePointIdentity;
-                    string homeDeliveryServicePointIdentity = sessionServicePointIdentity.Split(';')[1];
-                    var homeDeliveryServicePointAbbr = HomeDeliveryServicePoints.Where(x => x.ServicesPointIdentity == homeDeliveryServicePointIdentity).FirstOrDefault();
-                    if (homeDeliveryServicePointAbbr != null)
-                    {
-                        _HomeDeliveryServicePoint = homeDeliveryServicePointAbbr;
-                    }
-                    else
-                    {
-                        var homeDeliveryServicePoint = openFoodServiceClientSession.ServicePoint;
-                        _HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation()
-                        {
-                            Description = homeDeliveryServicePoint.Description,
-                            Location = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).PlaceOfDistribution.Location,
-                            OutOfDeliveryRange = false,
-                            ServicesContextIdentity = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).ServicesContextIdentity,
-                            ServicesPointIdentity = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).ServicesPointIdentity
-                        };
-                    }
 
+                    _HomeDeliveryServicePoint= GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
 
                 }
+            }
+        }
+
+        private HomeDeliveryServicePointAbbreviation GetHomeDeliveryServicePoint(FoodServicesClientSessionViewModel foodServicesClientSession)
+        {
+            string sessionServicePointIdentity = foodServicesClientSession.ServicePointIdentity;
+            string homeDeliveryServicePointIdentity = sessionServicePointIdentity.Split(';')[1];
+            var homeDeliveryServicePointAbbr = HomeDeliveryServicePoints.Where(x => x.ServicesPointIdentity == homeDeliveryServicePointIdentity).FirstOrDefault();
+            if (homeDeliveryServicePointAbbr != null)
+            {
+                return homeDeliveryServicePointAbbr;
+            }
+            else
+            {
+                var homeDeliveryServicePoint = foodServicesClientSession.FoodServicesClientSession.ServicePoint;
+                return new HomeDeliveryServicePointAbbreviation()
+                {
+                    Description = homeDeliveryServicePoint.Description,
+                    Location = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).PlaceOfDistribution.Location,
+                    OutOfDeliveryRange = false,
+                    ServicesContextIdentity = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).ServicesContextIdentity,
+                    ServicesPointIdentity = (homeDeliveryServicePoint as IHomeDeliveryServicePoint).ServicesPointIdentity
+                };
             }
         }
 

@@ -2846,12 +2846,18 @@ namespace FlavourBusinessManager.EndUsers
 
                     if (Client?.IsPlatformClient == false)
                     {
+
+                        bool outOfDeliveryRange = CanChangeDeliveryPlace(deliveryPlace.Location) != ChangeDeliveryPlaceResponse.OK;
+                        deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", outOfDeliveryRange.ToString());
                         this.MainSession.DeliveryPlace = deliveryPlace;
                     }
                     else
                     {
                         if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
+                        {
+                            deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", true.ToString());
                             this.MainSession.DeliveryPlace = deliveryPlace;
+                        }
                         else
                             throw new Exception("Δεν μπορείτε να αλλάξετε την διεύθυνσης παράδοσης. Η παραγγελία είναι καθ'οδον.");
                     }
