@@ -46,7 +46,7 @@ namespace FlavourBusinessFacade
 
         public double DistanceInKm { get; set; }
 
-        public bool OutOfDeliveryRange { get; set; }
+        public bool OutOfDeliveryRange { get; set; } = true;
         public Coordinate Location { get;set; }
     }
 

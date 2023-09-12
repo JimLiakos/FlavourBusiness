@@ -317,6 +317,12 @@ namespace TakeAwayApp.ViewModel
                     {
 
                         _DeliveryPlace = value as Place;
+                        if (_DeliveryPlace != null&& _DeliveryPlace.PlaceID==null)
+                        {
+                            var ticks = new DateTime(2022, 1, 1).Ticks;
+                            var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                            _DeliveryPlace.PlaceID= uniqueId;
+                        }
 
 
                         Place existingPlace = ((FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser as IGeocodingPlaces).Places.Where(x => x.PlaceID == value.PlaceID).FirstOrDefault() as Place;
