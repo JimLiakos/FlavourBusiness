@@ -1557,10 +1557,10 @@ namespace FlavourBusinessManager.EndUsers
         [PersistentMember(nameof(_SessionState))]
         [BackwardCompatibilityID("+22")]
         public ClientSessionState SessionState
-        {
+        { 
             get => _SessionState;
             internal set
-            {
+            { 
                 if (_SessionState != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))

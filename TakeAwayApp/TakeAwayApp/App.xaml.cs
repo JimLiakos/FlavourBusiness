@@ -1,4 +1,5 @@
-﻿using OOAdvantech.Remoting.RestApi.Serialization;
+﻿using OOAdvantech;
+using OOAdvantech.Remoting.RestApi.Serialization;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -6,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace TakeAwayApp
 {
     /// <MetaDataID>{50f35b6d-bba8-4dea-bda3-c9a6898e0a0a}</MetaDataID>
-    public partial class App : Application
+    public partial class App : Application, OOAdvantech.IAppLifeTime
     {
         public App()
         {
@@ -97,6 +98,15 @@ namespace TakeAwayApp
         {
         }
 
+
+        public event EventHandler ApplicationResuming;
+        public event EventHandler ApplicationSleeping;
+
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
+        OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
+
+    
         protected override void OnSleep()
         {
         }

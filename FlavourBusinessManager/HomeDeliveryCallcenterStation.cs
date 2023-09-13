@@ -342,6 +342,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         public WatchingOrder CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace)
         {
 
+            if(!(foodServicesClientSession?.FlavourItems?.Count>0))
+                throw new Exception("Session without items can't be committed");
+
+
             var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(organizationObjectStorage);
 
