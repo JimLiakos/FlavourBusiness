@@ -1243,12 +1243,16 @@ namespace TakeAwayApp.ViewModel
                 var existingWatchingOrder= this._WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
                 if (existingWatchingOrder != null)
                 {
-                    
-                    this._WatchingOrders.Insert(_WatchingOrders.IndexOf(existingWatchingOrder), existingWatchingOrder);
+                    var watchingOrderPresentation = new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList());
+
+                    this._WatchingOrders.Insert(_WatchingOrders.IndexOf(existingWatchingOrder), watchingOrderPresentation);
                     this._WatchingOrders.Remove(existingWatchingOrder);
                 }
                 else
+                {
+                    var watchingOrderPresentation = new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList());
                     this._WatchingOrders.Add(existingWatchingOrder);
+                }
 
                 ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
 

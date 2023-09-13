@@ -540,7 +540,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         internal WatchingOrder GetWatchingOrder(IFoodServiceClientSession foodServicesClientSession)
         {
             var watchingOrders = WatchingOrders;
-            var watchingOrder=watchingOrders.Where(x => x.SessionID == foodServicesClientSession.SessionID).FirstOrDefault();
+            var watchingOrder=watchingOrders.Where(x => x.SessionID == foodServicesClientSession.MainSession.SessionID).FirstOrDefault();
             return watchingOrder;
         }
     }

@@ -12,7 +12,7 @@ namespace FlavourBusinessManager.EndUsers
     [Persistent()]
     public class Place : IPlace
     {
-      
+
         /// <MetaDataID>{3e6ca39a-d174-4656-85e5-19abdc70c408}</MetaDataID>
         public static bool AreSame(IPlace a, IPlace b)
         {
@@ -35,6 +35,9 @@ namespace FlavourBusinessManager.EndUsers
             {
                 return false;
             }
+            if (string.IsNullOrEmpty(a.Street)&&string.IsNullOrEmpty(a.StreetNumber)&&string.IsNullOrEmpty(a.Area)&&string.IsNullOrEmpty(a.CityTown)&&string.IsNullOrEmpty(a.PostalCode))
+                if (a.Description!=b.Description)
+                    return false;
             return true;
         }
         /// <MetaDataID>{1012419e-b619-497b-8a29-b6d2e6da2940}</MetaDataID>
@@ -358,7 +361,7 @@ namespace FlavourBusinessManager.EndUsers
         bool _Default;
 
         /// <MetaDataID>{69840cba-a26b-43f7-ada5-18fc9bfce6ca}</MetaDataID>
-        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description,  Dictionary<string, string> extensionProperties)
+        public Place(string placeID, Coordinate location, string country, string stateProvinceRegion, string cityTown, string area, string postalCode, string street, string streetNumber, string description, Dictionary<string, string> extensionProperties)
         {
             _PlaceID = placeID;
             _Location = location;
@@ -371,7 +374,7 @@ namespace FlavourBusinessManager.EndUsers
             _StreetNumber = streetNumber;
             _Description = description;
             ExtensionProperties= extensionProperties;
-        
+
         }
 
         /// <MetaDataID>{6948881c-c426-41a6-8769-a08b2359b329}</MetaDataID>
