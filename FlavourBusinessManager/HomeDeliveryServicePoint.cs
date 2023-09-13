@@ -536,5 +536,12 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             return new List<IFoodServiceClientSession>();
         }
+
+        internal WatchingOrder GetWatchingOrder(IFoodServiceClientSession foodServicesClientSession)
+        {
+            var watchingOrders = WatchingOrders;
+            var watchingOrder=watchingOrders.Where(x => x.SessionID == foodServicesClientSession.SessionID).FirstOrDefault();
+            return watchingOrder;
+        }
     }
 }

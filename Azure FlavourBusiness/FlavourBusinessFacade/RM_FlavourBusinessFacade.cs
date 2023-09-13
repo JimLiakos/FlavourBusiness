@@ -3309,7 +3309,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClientUri>>(retValue);
         }
         
-        public void CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
+        public FlavourBusinessFacade.HomeDelivery.WatchingOrder CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
         {
             object[] args = new object[3];
             System.Type[] argsTypes = new System.Type[3];
@@ -3320,6 +3320,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[2] = deliveryPlace;
             argsTypes[2] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "CommitSession", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.WatchingOrder>(retValue);
         }
         
         public FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)

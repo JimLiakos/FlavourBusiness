@@ -339,7 +339,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-        public void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace)
+        public WatchingOrder CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace)
         {
 
             var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(ServicesContextRunTime.Current.OrganizationStorageIdentity);
@@ -412,11 +412,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                 foodServicesClientSession.Commit(unCommitedItems);
                 (foodServicesClientSession as FoodServiceClientSession).Client = foodServicesClient; 
                 foodServicesClientSession.SetSessionDeliveryPlace(deliveryPlace);
+
+                
+
                 stateTransition.Consistent = true;
+                
             }
 
- 
-               
+            return (foodServicesClientSession.ServicePoint as HomeDeliveryServicePoint).GetWatchingOrder(foodServicesClientSession);
+
+
+
+
         }
 
         public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)

@@ -51,7 +51,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         System.Collections.Generic.List<FoodServiceClientUri> FoodServiceClientsSearch(string phone);
-        void CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace);
+        WatchingOrder CommitSession(IFoodServiceClientSession foodServicesClientSession, FoodServicesClientUpdateData foodServicesClientData, IPlace deliveryPlace);
 
         CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
         FoodServiceClientUri GetFoodServicesOpenSession(HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID);

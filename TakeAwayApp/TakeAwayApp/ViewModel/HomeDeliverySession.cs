@@ -10,13 +10,14 @@ using System.Linq;
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
 using OOAdvantech.Json;
-using FlavourBusinessManager.ServicesContextResources;
+
 
 #if DeviceDotNet
 
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 
 #else
+using FlavourBusinessManager.ServicesContextResources;
 using System.Windows.Media.TextFormatting;
 #endif
 
@@ -136,7 +137,7 @@ namespace TakeAwayApp.ViewModel
                     if (FoodServiceClientSession.FoodServicesClientSession != null)
                     {
                         _DeliveryPlace = FoodServiceClientSession.DeliveryPlace as Place;
-                        _HomeDeliveryServicePoint= GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
+                        _HomeDeliveryServicePoint = GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
                     }
 
                 }
@@ -153,7 +154,7 @@ namespace TakeAwayApp.ViewModel
             else
             {
                 (FoodServiceClientSession as FoodServicesClientSessionViewModel).EndUser = SessionClient;
-                 
+
                 var openFoodServiceClientSession = homeDeliveryClient.OpenFoodServiceClientSessions?.FirstOrDefault();
                 if (openFoodServiceClientSession != null)
                 {
@@ -167,7 +168,7 @@ namespace TakeAwayApp.ViewModel
 
                     string sessionServicePointIdentity = (FoodServiceClientSession as FoodServicesClientSessionViewModel).ServicePointIdentity;
 
-                    _HomeDeliveryServicePoint= GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
+                    _HomeDeliveryServicePoint = GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
 
                 }
             }
@@ -275,7 +276,11 @@ namespace TakeAwayApp.ViewModel
             if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
                 foodServicesClientData.DeliveryPlaces = foodServiceClient.DeliveryPlaces;
 
-            FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
+            var watchingOrder = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
+            if (watchingOrder != null)
+                FlavoursServiceOrderTakingStation.UpdateWatchingOrder(watchingOrder);
+
+
             OrgHomeDeliverySessionState = HomeDeliverySessionState;
             return true;
         }
@@ -330,11 +335,11 @@ namespace TakeAwayApp.ViewModel
                     {
 
                         _DeliveryPlace = value as Place;
-                        if (_DeliveryPlace != null&& _DeliveryPlace.PlaceID==null)
+                        if (_DeliveryPlace != null && _DeliveryPlace.PlaceID == null)
                         {
                             var ticks = new DateTime(2022, 1, 1).Ticks;
                             var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                            _DeliveryPlace.PlaceID= uniqueId;
+                            _DeliveryPlace.PlaceID = uniqueId;
                         }
 
 

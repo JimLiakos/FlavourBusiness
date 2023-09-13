@@ -1235,9 +1235,24 @@ namespace TakeAwayApp.ViewModel
             FlavoursOrderServer.SessionIsNoLongerActive(homeDeliverySession.FoodServiceClientSession);
         }
 
+        internal void UpdateWatchingOrder(WatchingOrder watchingOrder)
+        {
 
+            if(watchingOrder!=null)
+            {
+                var existingWatchingOrder= this._WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
+                if (existingWatchingOrder != null)
+                {
+                    
+                    this._WatchingOrders.Insert(_WatchingOrders.IndexOf(existingWatchingOrder), existingWatchingOrder);
+                    this._WatchingOrders.Remove(existingWatchingOrder);
+                }
+                else
+                    this._WatchingOrders.Add(existingWatchingOrder);
 
+                ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
 
-
+            }
+        }
     }
 }

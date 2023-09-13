@@ -1577,7 +1577,7 @@ namespace FlavourBusinessManager.EndUsers
                                 StartDeviceConnectionStatusCheck();
 
                         };
-                    }
+                    } 
                     ObjectChangeState?.Invoke(this, nameof(SessionState));
                 }
             }
@@ -2848,14 +2848,14 @@ namespace FlavourBusinessManager.EndUsers
                     {
 
                         bool outOfDeliveryRange = CanChangeDeliveryPlace(deliveryPlace.Location) != ChangeDeliveryPlaceResponse.OK;
-                        deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", outOfDeliveryRange.ToString());
+                        deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", outOfDeliveryRange.ToString().ToLower());
                         this.MainSession.DeliveryPlace = deliveryPlace;
                     }
                     else
                     {
                         if (CanChangeDeliveryPlace(deliveryPlace.Location) == ChangeDeliveryPlaceResponse.OK)
                         {
-                            deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", true.ToString());
+                            deliveryPlace.SetExtensionProperty("OutOfDeliveryRange", true.ToString().ToLower());
                             this.MainSession.DeliveryPlace = deliveryPlace;
                         }
                         else
