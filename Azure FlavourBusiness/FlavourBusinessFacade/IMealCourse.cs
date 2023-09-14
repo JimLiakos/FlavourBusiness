@@ -54,6 +54,8 @@ namespace FlavourBusinessFacade.RoomService
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         System.Collections.Generic.IList<IItemPreparation> FoodItems { get; }
 
+        System.Collections.Generic.IList<IItemPreparation> FoodItems_a { get; }
+
         /// <MetaDataID>{f8309b8a-8d4b-491a-9af9-bab1fc04fb67}</MetaDataID>
         void AddItem(IItemPreparation itemPreparation);
 

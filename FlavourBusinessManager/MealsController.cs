@@ -222,36 +222,36 @@ namespace FlavourBusinessManager.RoomService
         /// <summary>
         /// In case where the prerequisites fulfilled, assigns all unassigned partial sessions to a meal session 
         /// </summary>
-        /// <param name="referencClientSession">
+        /// <param name="referenceClientSession">
         /// Defines a partial session as reference to identify service point meal
         /// </param>
         /// <MetaDataID>{b6588e83-9deb-4b52-b259-b8aa89fbdc4c}</MetaDataID>
-        public void AutoMealParticipation(EndUsers.FoodServiceClientSession referencClientSession)
+        public void AutoMealParticipation(EndUsers.FoodServiceClientSession referenceClientSession)
         {
-            if (referencClientSession.MainSession != null)
+            if (referenceClientSession.MainSession != null)
                 return;
-            FoodServiceSession foodServiceSession = (referencClientSession.ServicePoint as HallServicePoint)?.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null && (x.MainSession as FoodServiceSession).CanIncludeAsPart(referencClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
+            FoodServiceSession foodServiceSession = (referenceClientSession.ServicePoint as HallServicePoint)?.ActiveFoodServiceClientSessions.Where(x => x.MainSession != null && (x.MainSession as FoodServiceSession).CanIncludeAsPart(referenceClientSession)).Select(x => x.MainSession).OfType<FoodServiceSession>().OrderBy(x => x.SessionStarts).LastOrDefault();
 
             if (foodServiceSession == null)
             {
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    foodServiceSession = referencClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
+                    foodServiceSession = referenceClientSession.ServicePoint.NewFoodServiceSession() as FoodServiceSession;
                     ObjectStorage.GetStorageOfObject(ServicesContextRunTime.Current).CommitTransientObjectState(foodServiceSession);
-                    if (referencClientSession.Menu != null)
-                        foodServiceSession.MenuStorageIdentity = referencClientSession.Menu.StorageIdentity;
+                    if (referenceClientSession.Menu != null)
+                        foodServiceSession.MenuStorageIdentity = referenceClientSession.Menu.StorageIdentity;
 
-                    foodServiceSession.SessionType = referencClientSession.SessionType;
+                    foodServiceSession.SessionType = referenceClientSession.SessionType;
                     if (foodServiceSession.SessionType == FlavourBusinessFacade.EndUsers.SessionType.HomeDeliveryGuest)
                         foodServiceSession.SessionType = FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery;
 
-                        foodServiceSession.AddPartialSession(referencClientSession);
-                    referencClientSession.ImplicitMealParticipation = true;
+                        foodServiceSession.AddPartialSession(referenceClientSession);
+                    referenceClientSession.ImplicitMealParticipation = true;
 
 
                     //Add all individual active sessions to service point session
-                    foreach (var unAssignedClientSession in (referencClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null && !x.Forgotten))
+                    foreach (var unAssignedClientSession in (referenceClientSession.ServicePoint as ServicePoint).OpenClientSessions.OfType<EndUsers.FoodServiceClientSession>().Where(x => x.MainSession == null && !x.Forgotten))
                     {
                         foodServiceSession.AddPartialSession(unAssignedClientSession);
                         unAssignedClientSession.ImplicitMealParticipation = true;
@@ -267,8 +267,8 @@ namespace FlavourBusinessManager.RoomService
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    foodServiceSession.AddPartialSession(referencClientSession);
-                    referencClientSession.ImplicitMealParticipation = true;
+                    foodServiceSession.AddPartialSession(referenceClientSession);
+                    referenceClientSession.ImplicitMealParticipation = true;
                     stateTransition.Consistent = true;
                 }
             }

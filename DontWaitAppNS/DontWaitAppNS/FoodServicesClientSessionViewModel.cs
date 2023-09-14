@@ -1647,6 +1647,7 @@ namespace DontWaitApp
 
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
+                
                 var datetime = DateTime.Now;
                 string timestamp = DateTime.Now.ToLongTimeString() + ":" + datetime.Millisecond.ToString();
 
@@ -1656,7 +1657,7 @@ namespace DontWaitApp
                     try
                     {
                         this.FoodServicesClientSession.AddItem(item);
-                        int cou = this.FoodServicesClientSession.FlavourItems.Count;
+                        //int cou = this.FoodServicesClientSession.FlavourItems.Count;
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -1799,6 +1800,7 @@ namespace DontWaitApp
             //MenuData = menuData;
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
+                
                 var datetime = DateTime.Now;
                 string timestamp = DateTime.Now.ToLongTimeString() + ":" + datetime.Millisecond.ToString();
 

@@ -2759,6 +2759,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> FoodItems_a
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_FoodItems_a", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.RoomService.ItemPreparationState PreparationState
         {
             get

@@ -4,6 +4,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System.Threading.Tasks;
 
 namespace TakeAwayApp.ViewModel
 {
@@ -43,7 +44,7 @@ namespace TakeAwayApp.ViewModel
 
 
 
-        bool OrderCommit();
+        Task<bool> OrderCommit();
 
 
 

@@ -10,6 +10,7 @@ using System.Linq;
 using Xamarin.Forms;
 using OOAdvantech.Transactions;
 using OOAdvantech.Json;
+using System.Threading.Tasks;
 
 
 #if DeviceDotNet
@@ -241,48 +242,52 @@ namespace TakeAwayApp.ViewModel
             get;
             set;
         }
-        public bool OrderCommit()
+        public Task<bool> OrderCommit()
         {
             if (HomeDeliveryServicePoint == null)
-                return false;
+                return Task<bool>.FromResult(false);
 
-            var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;
+            return Task<bool>.Run(() =>
+              {
+                  var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;
 
-            var foodServiceClient = (foodServicesClientSessionPresentation.EndUser as FoodServiceClientVM).FoodServiceClient;
+                  var foodServiceClient = (foodServicesClientSessionPresentation.EndUser as FoodServiceClientVM).FoodServiceClient;
 
-            //SessionClientOrgDeliveryPlacesJson
-            var deliveryPlacesJson = JsonConvert.SerializeObject(foodServiceClient.DeliveryPlaces);
+                  //SessionClientOrgDeliveryPlacesJson
+                  var deliveryPlacesJson = JsonConvert.SerializeObject(foodServiceClient.DeliveryPlaces);
 
-            if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
-            {
+                  if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
+                  {
 
-            }
-            IPlace extraDeliveryPlace = FoodServiceClientSession.DeliveryPlace;
+                  }
+                  IPlace extraDeliveryPlace = FoodServiceClientSession.DeliveryPlace;
 
-            FoodServicesClientUpdateData foodServicesClientData = new FoodServicesClientUpdateData()
-            {
-                Identity = foodServiceClient.Identity,
-                Email = foodServiceClient.Email,
-                FriendlyName = foodServiceClient.FriendlyName,
-                FullName = foodServiceClient.FullName,
-                Name = foodServiceClient.Name,
-                PhoneNumber = foodServiceClient.PhoneNumber,
-                PhotoUrl = foodServiceClient.PhotoUrl,
-                SignInProvider = foodServiceClient.SignInProvider,
-                UserName = foodServiceClient.UserName,
-                NotesForClient = foodServiceClient.NotesForClient
-            };
+                  FoodServicesClientUpdateData foodServicesClientData = new FoodServicesClientUpdateData()
+                  {
+                      Identity = foodServiceClient.Identity,
+                      Email = foodServiceClient.Email,
+                      FriendlyName = foodServiceClient.FriendlyName,
+                      FullName = foodServiceClient.FullName,
+                      Name = foodServiceClient.Name,
+                      PhoneNumber = foodServiceClient.PhoneNumber,
+                      PhotoUrl = foodServiceClient.PhotoUrl,
+                      SignInProvider = foodServiceClient.SignInProvider,
+                      UserName = foodServiceClient.UserName,
+                      NotesForClient = foodServiceClient.NotesForClient
+                  };
 
-            if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
-                foodServicesClientData.DeliveryPlaces = foodServiceClient.DeliveryPlaces;
+                  if (SessionClientOrgDeliveryPlacesJson != deliveryPlacesJson)
+                      foodServicesClientData.DeliveryPlaces = foodServiceClient.DeliveryPlaces;
 
-            var watchingOrder = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
-            if (watchingOrder != null)
-                FlavoursServiceOrderTakingStation.UpdateWatchingOrder(watchingOrder);
+                  FlavoursOrderServer.SerializeTaskScheduler.Wait();
+                  var watchingOrder = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.CommitSession(FoodServiceClientSession.FoodServicesClientSession, foodServicesClientData, DeliveryPlace);
+                  if (watchingOrder != null)
+                      FlavoursServiceOrderTakingStation.UpdateWatchingOrder(watchingOrder);
 
 
-            OrgHomeDeliverySessionState = HomeDeliverySessionState;
-            return true;
+                  OrgHomeDeliverySessionState = HomeDeliverySessionState;
+                  return true;
+              });
         }
         /// <exclude>Excluded</exclude>
         HomeDeliveryServicePointAbbreviation _HomeDeliveryServicePoint;

@@ -214,7 +214,7 @@ namespace FlavourBusinessManager.RoomService
 
                                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                                 {
-                                    foreach (var mealCourse in Courses.Where(x => x.FoodItems.Count == 0).ToList())
+                                    foreach (var mealCourse in Courses.Where(x => x.FoodItems_a.Count == 0).ToList())
                                     {
                                         _Courses.Remove(mealCourse);
                                         removedMealCourses.Add(mealCourse);
