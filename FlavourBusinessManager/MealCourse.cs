@@ -138,7 +138,7 @@ namespace FlavourBusinessManager.RoomService
         [CachingDataOnClientSide]
         public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
-        public IList<IItemPreparation> FoodItems_a => _FoodItems.ToThreadSafeList();
+        
         
 
 
@@ -342,6 +342,8 @@ namespace FlavourBusinessManager.RoomService
 
                     }
                 }
+
+                var items= _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
                 return _FoodItemsInProgress;
 
                 //List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
@@ -639,7 +641,7 @@ namespace FlavourBusinessManager.RoomService
                         _FoodItems.Add(flavourItem);
                         stateTransition.Consistent = true;
                     }
-                    flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+                    
                     if (flavourItem.State == ItemPreparationState.Committed)
                     {
                         if (flavourItem.MenuItem == null)
@@ -662,7 +664,6 @@ namespace FlavourBusinessManager.RoomService
 
                     }
 
-
                     var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
 
                     if (itemsPreparationContext == null)
@@ -678,9 +679,17 @@ namespace FlavourBusinessManager.RoomService
                             FoodItemsInProgress.Add(itemsPreparationContext);
                         itemsPreparationContext.AddPreparationItem(itemPreparation);
                     }
+                    Transaction.RunOnTransactionCompleted(() => {
+
+                        flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+                        ObjectChangeState?.Invoke(this, nameof(FoodItems));
+
+                    });
+
+                  
                 }
 
-                ObjectChangeState?.Invoke(this, nameof(FoodItems));
+              //  ;
             }
         }
 
@@ -695,22 +704,24 @@ namespace FlavourBusinessManager.RoomService
                     lock (FoodItemsInProgressLock)
                     {
                         var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
-                        if (itemsPreparationContext.PreparationItems.Contains(itemPreparation))
-                            itemsPreparationContext.PreparationItems.Remove(itemPreparation);
+                        itemsPreparationContext.RemovePreparationItem(itemPreparation);
                     }
 
                     _FoodItems.Remove(itemPreparation);
                     (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
-
-
-
+                   
                     stateTransition.Consistent = true;
+
+
+                    Transaction.RunOnTransactionCompleted(() => {
+                        ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                    });
                 }
 
 
 
 
-                ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                
             }
 
         }

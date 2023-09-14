@@ -31,6 +31,9 @@ namespace TakeAwayApp.ViewModel
 
             OrderTotal=watchingOrder.OrderTotal;
             
+            
+
+
 
         }
         public string OrderCode { get; set; }

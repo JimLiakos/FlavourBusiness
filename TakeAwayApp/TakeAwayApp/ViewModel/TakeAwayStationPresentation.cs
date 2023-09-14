@@ -170,6 +170,7 @@ namespace TakeAwayApp.ViewModel
 
 #endif
 
+            _MealCoursesInProgress.OnNewViewModelWrapper+=MealCoursesInProgress_OnNewViewModelWrapper;
 
             //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
             // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
@@ -180,6 +181,16 @@ namespace TakeAwayApp.ViewModel
 
             //var ewr = Xamarin.Essentials.DeviceInfo.Platform;
             //var ss = Xamarin.Forms.Device.Idiom;
+        }
+
+        private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, FlavourBusinessManager.RoomService.ViewModel.MealCourse> sender, IMealCourse key, FlavourBusinessManager.RoomService.ViewModel.MealCourse value)
+        {
+            value.MealCourseUpdated+=OnMealCourseUpdated;
+        }
+
+        private void OnMealCourseUpdated(FlavourBusinessManager.RoomService.ViewModel.MealCourse mealCourse)
+        {
+            ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
         }
 
         //FlavourBusinessFacade.HumanResources.ITakeawayCashier TakeawayCashier;
@@ -977,6 +988,8 @@ namespace TakeAwayApp.ViewModel
             }
 
         }
+
+
 
 
 

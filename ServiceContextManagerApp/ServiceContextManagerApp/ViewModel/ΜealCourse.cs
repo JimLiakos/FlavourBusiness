@@ -85,6 +85,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             if (member == nameof(IMealCourse.FoodItems))
             {
                 FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
+                var items = FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
                 MealCourseUpdated?.Invoke(this);
             }
             

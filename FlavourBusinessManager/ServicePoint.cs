@@ -169,7 +169,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 var mealCourses = (from servicePointOpenSession in OpenSessions
                                    where servicePointOpenSession.Meal != null
                                    from mealCourse in servicePointOpenSession.Meal.Courses
-                                   where mealCourse.FoodItems.OfType<RoomService.ItemPreparation>().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
+                                   where mealCourse.FoodItems_a.OfType<RoomService.ItemPreparation>().Any(x => x.IsInPreviousState(FlavourBusinessFacade.RoomService.ItemPreparationState.Served))
                                    select mealCourse).ToList();
 
                 var overTimeMealCourses = mealCourses.Where(mealCourse => mealCourse.ServedAtForecast <= DateTime.UtcNow).ToList();
