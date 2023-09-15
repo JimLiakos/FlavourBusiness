@@ -453,6 +453,7 @@ namespace FlavourBusinessManager.RoomService
 
 
             var mealCoursesToServe = (from mealCourse in mealCourses
+                                      where mealCourse.Meal.Session.SessionType==FlavourBusinessFacade.EndUsers.SessionType.Hall
                                       from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                       from itemPreparation in itemsPreparationContext.PreparationItems
                                       where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
@@ -474,6 +475,17 @@ namespace FlavourBusinessManager.RoomService
 
             foreach (var a_Waiter in activeWaitersFormealCoursesServing)
                 a_Waiter.FindServingBatchesChanged();
+
+
+
+            var mealCoursesReadyToHomeDelivery = (from mealCourse in mealCourses
+                                      where mealCourse.Meal.Session.SessionType==FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
+                                      select mealCourse).Distinct().ToList();
+
+
         }
 
         /// <MetaDataID>{eb9a6c0c-3a5e-4115-a6e2-c1aaee2b0fb9}</MetaDataID>

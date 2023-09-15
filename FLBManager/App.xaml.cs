@@ -32,7 +32,7 @@ namespace FLBManager
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("eY7Msdmdb1MoRGWS3bgnQCY7VMf1");
+            string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
 
 
 
@@ -42,7 +42,7 @@ namespace FLBManager
 
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
 
-
+            
 
             var location = watcher.Position.Location;
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("el");
