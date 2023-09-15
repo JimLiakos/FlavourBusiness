@@ -2790,7 +2790,7 @@
 			width      	663
 			height     	256)
 		    (object CategoryView "Logical View::FlavourBusinessFacade" @60
-			location   	(1081, 528)
+			location   	(1096, 516)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2803,7 +2803,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@60
-			    location   	(175, 200)
+			    location   	(190, 188)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	1812
@@ -2894,7 +2894,7 @@
 			width      	668
 			height     	200)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::EndUsers" @64
-			location   	(1657, 401)
+			location   	(1678, 398)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2907,7 +2907,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@64
-			    location   	(1392, 317)
+			    location   	(1413, 314)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
@@ -2920,7 +2920,7 @@
 			width      	542
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::RoomService" @65
-			location   	(508, 399)
+			location   	(514, 396)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2933,7 +2933,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@65
-			    location   	(243, 315)
+			    location   	(249, 312)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
@@ -2946,7 +2946,7 @@
 			width      	542
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @66
-			location   	(503, 663)
+			location   	(509, 660)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2959,7 +2959,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@66
-			    location   	(238, 579)
+			    location   	(244, 576)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
@@ -2972,7 +2972,7 @@
 			width      	542
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @67
-			location   	(1656, 666)
+			location   	(1677, 663)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2985,7 +2985,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@67
-			    location   	(1391, 582)
+			    location   	(1412, 579)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	530
@@ -3005,7 +3005,7 @@
 			supplier   	@60
 			line_style 	0)
 		    (object CategoryView "Logical View::FlavourBusinessManager::RoomService" @69
-			location   	(517, 1347)
+			location   	(505, 1347)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3018,7 +3018,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@69
-			    location   	(241, 1263)
+			    location   	(229, 1263)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552
@@ -3031,7 +3031,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessManager::EndUsers" @70
-			location   	(1696, 1354)
+			location   	(1707, 1357)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3044,7 +3044,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@70
-			    location   	(1420, 1270)
+			    location   	(1431, 1273)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552
@@ -3057,7 +3057,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessManager::HumanResources" @71
-			location   	(509, 1633)
+			location   	(497, 1633)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3070,7 +3070,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@71
-			    location   	(233, 1549)
+			    location   	(221, 1549)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552
@@ -3083,7 +3083,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::FlavourBusinessManager::ServicesContextResources" @72
-			location   	(1700, 1627)
+			location   	(1711, 1627)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3096,7 +3096,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@72
-			    location   	(1424, 1543)
+			    location   	(1435, 1543)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	552
@@ -3286,7 +3286,7 @@
 			width      	531
 			height     	181)
 		    (object CategoryView "Logical View::FlavourBusinessFacade::Food Shipping" @82
-			location   	(1065, 515)
+			location   	(1080, 512)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3299,7 +3299,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@82
-			    location   	(815, 431)
+			    location   	(830, 428)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	500

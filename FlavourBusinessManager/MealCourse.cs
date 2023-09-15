@@ -364,7 +364,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{d5bb9342-16b0-4c93-8b7b-07b0c5c5eb36}</MetaDataID>
         internal void Monitoring()
         {
-            if (FoodItems_a.Where(x => x.State == ItemPreparationState.Serving).Count() == FoodItems_a.Count)
+            if (FoodItems.Where(x => x.State == ItemPreparationState.Serving).Count() == FoodItems.Count)
             {
                 if ((System.DateTime.Now - FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
                 {
