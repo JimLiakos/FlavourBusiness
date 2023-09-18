@@ -88,6 +88,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+	  <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.Droid\OOAdvantech.NetStandard.Droid.csproj">
+		  <Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
+		  <Name>OOAdvantech.NetStandard.Droid</Name>
+	  </ProjectReference>
     <ProjectReference Include="..\CourierApp\CourierApp.csproj">
       <Project>{5518E1C5-2C00-48F8-A2A2-5F6BB915A750}</Project>
       <Name>CourierApp</Name>

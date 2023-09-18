@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceFacade", "..\DontWai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlavourOrderPresentation", "..\DontWaitAppNS\FlavourOrderPresentation\FlavourOrderPresentation.csproj", "{652D3AFE-9C08-4B36-AC6F-5E2F07503696}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierApp.Wpf", "CourierApp.Wpf\CourierApp.Wpf.csproj", "{CA5B4170-03F2-48B2-A6FD-11101570FECB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -333,6 +335,18 @@ Global
 		{652D3AFE-9C08-4B36-AC6F-5E2F07503696}.Release|iPhone.Build.0 = Release|Any CPU
 		{652D3AFE-9C08-4B36-AC6F-5E2F07503696}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{652D3AFE-9C08-4B36-AC6F-5E2F07503696}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|iPhone.Build.0 = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

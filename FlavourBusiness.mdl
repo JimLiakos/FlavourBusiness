@@ -3650,7 +3650,52 @@
 				quidu      	"64C1F272014F"
 				client     	@86
 				supplier   	@89
-				line_style 	0))))))
+				line_style 	0)))))
+	    (object SubSystem "CourierApp"
+		quid       	"65087AD0002F"
+		physical_models 	(list unit_reference_list
+		    (object module "CourierAppt" "NotAModuleType" "NotAModulePart"
+			quid       	"65087AFB00DA"
+			stereotype 	""
+			language   	"C#"))
+		physical_presentations 	(list unit_reference_list
+		    (object Module_Diagram "Main"
+			quid       	"65087AF303BF"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ModView "Component View::CourierApp::CourierAppt" "NotAModuleType" "NotAModulePart" @91
+				location   	(562, 400)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@91
+				    location   	(484, 373)
+				    fill_color 	13434879
+				    anchor_loc 	3
+				    nlines     	2
+				    max_width  	294
+				    label      	"CourierAppt")
+				icon_style 	"Decoration"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"65087AFB00DA"
+				width      	531
+				height     	175
+				width      	531
+				height     	175))))))
 	physical_presentations 	(list unit_reference_list
 	    (object Module_Diagram "Main"
 		quid       	"5721F36F021F"
@@ -3661,7 +3706,7 @@
 		origin_x   	0
 		origin_y   	500
 		items      	(list diagram_item_list
-		    (object SubSysView "Component View::MenuDesigner" @91
+		    (object SubSysView "Component View::MenuDesigner" @92
 			location   	(1656, 387)
 			font       	(object Font
 			    size       	10
@@ -3674,7 +3719,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@91
+			    Parent_View 	@92
 			    location   	(1425, 274)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3687,7 +3732,7 @@
 			quidu      	"572068070298"
 			width      	475
 			height     	238)
-		    (object SubSysView "Component View::MenuModel" @92
+		    (object SubSysView "Component View::MenuModel" @93
 			location   	(1024, 365)
 			font       	(object Font
 			    size       	10
@@ -3700,7 +3745,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@92
+			    Parent_View 	@93
 			    location   	(743, 228)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3713,7 +3758,7 @@
 			quidu      	"5721E66E017C"
 			width      	575
 			height     	287)
-		    (object SubSysView "Component View::MenuPresentationModel" @93
+		    (object SubSysView "Component View::MenuPresentationModel" @94
 			location   	(334, 356)
 			font       	(object Font
 			    size       	10
@@ -3726,7 +3771,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@93
+			    Parent_View 	@94
 			    location   	(109, 246)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3739,7 +3784,7 @@
 			quidu      	"57ACBF880210"
 			width      	462
 			height     	232)
-		    (object SubSysView "Component View::FlavourBusinessManager" @94
+		    (object SubSysView "Component View::FlavourBusinessManager" @95
 			location   	(334, 1425)
 			font       	(object Font
 			    size       	10
@@ -3752,7 +3797,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@94
+			    Parent_View 	@95
 			    location   	(97, 1309)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3765,7 +3810,7 @@
 			quidu      	"5A71DF740060"
 			width      	487
 			height     	244)
-		    (object SubSysView "Component View::FlavourBusinessFacade" @95
+		    (object SubSysView "Component View::FlavourBusinessFacade" @96
 			location   	(1403, 1406)
 			font       	(object Font
 			    size       	10
@@ -3778,7 +3823,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@95
+			    Parent_View 	@96
 			    location   	(1112, 1265)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3791,7 +3836,7 @@
 			quidu      	"5AA773BE03DE"
 			width      	594
 			height     	294)
-		    (object SubSysView "Component View::OOAdvantech" @96
+		    (object SubSysView "Component View::OOAdvantech" @97
 			location   	(2238, 1378)
 			font       	(object Font
 			    size       	10
@@ -3804,7 +3849,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@96
+			    Parent_View 	@97
 			    location   	(1947, 1234)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3817,7 +3862,7 @@
 			quidu      	"41B2148C017D"
 			width      	594
 			height     	300)
-		    (object SubSysView "Component View::FlavourBusinessInfrastructure" @97
+		    (object SubSysView "Component View::FlavourBusinessInfrastructure" @98
 			location   	(1731, 1862)
 			font       	(object Font
 			    size       	10
@@ -3830,7 +3875,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@97
+			    Parent_View 	@98
 			    location   	(1450, 1724)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3843,7 +3888,7 @@
 			quidu      	"5C3C7BCE022C"
 			width      	575
 			height     	288)
-		    (object SubSysView "Component View::OOAdvantech.Net" @98
+		    (object SubSysView "Component View::OOAdvantech.Net" @99
 			location   	(334, 1812)
 			font       	(object Font
 			    size       	10
@@ -3856,7 +3901,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@98
+			    Parent_View 	@99
 			    location   	(78, 1687)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3869,7 +3914,7 @@
 			quidu      	"5C4ACAC00249"
 			width      	525
 			height     	263)
-		    (object SubSysView "Component View::ComputationalResources" @99
+		    (object SubSysView "Component View::ComputationalResources" @100
 			location   	(2975, 803)
 			font       	(object Font
 			    size       	10
@@ -3882,7 +3927,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@99
+			    Parent_View 	@100
 			    location   	(2713, 675)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3895,7 +3940,7 @@
 			quidu      	"5C57BD280042"
 			width      	537
 			height     	268)
-		    (object SubSysView "Component View:: FinanceFacade" @100
+		    (object SubSysView "Component View:: FinanceFacade" @101
 			location   	(244, 915)
 			font       	(object Font
 			    size       	10
@@ -3908,7 +3953,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@100
+			    Parent_View 	@101
 			    location   	(100, 846)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3921,7 +3966,7 @@
 			quidu      	"5C6A6F7C01BB"
 			width      	300
 			height     	150)
-		    (object SubSysView "Component View::MicronemeCommon" @101
+		    (object SubSysView "Component View::MicronemeCommon" @102
 			location   	(359, 2218)
 			font       	(object Font
 			    size       	10
@@ -3934,7 +3979,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@101
+			    Parent_View 	@102
 			    location   	(93, 2087)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3947,7 +3992,7 @@
 			quidu      	"5C6D0B7D0348"
 			width      	544
 			height     	275)
-		    (object SubSysView "Component View::PreparationStationDevice" @102
+		    (object SubSysView "Component View::PreparationStationDevice" @103
 			location   	(2723, 1866)
 			font       	(object Font
 			    size       	10
@@ -3960,7 +4005,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@102
+			    Parent_View 	@103
 			    location   	(2454, 1735)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3973,7 +4018,7 @@
 			quidu      	"5D8217F70064"
 			width      	551
 			height     	275)
-		    (object SubSysView "Component View::RestaurantHallLayoutModel" @103
+		    (object SubSysView "Component View::RestaurantHallLayoutModel" @104
 			location   	(822, 768)
 			font       	(object Font
 			    size       	10
@@ -3986,7 +4031,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@103
+			    Parent_View 	@104
 			    location   	(553, 637)
 			    fill_color 	13434879
 			    nlines     	2
@@ -3999,7 +4044,7 @@
 			quidu      	"5DEBF53C00C4"
 			width      	550
 			height     	275)
-		    (object SubSysView "Component View::DontWaitApp" @104
+		    (object SubSysView "Component View::DontWaitApp" @105
 			location   	(1128, 2247)
 			font       	(object Font
 			    size       	10
@@ -4012,7 +4057,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@104
+			    Parent_View 	@105
 			    location   	(853, 2112)
 			    fill_color 	13434879
 			    nlines     	2
@@ -4025,7 +4070,7 @@
 			quidu      	"5EFCA60C02B0"
 			width      	563
 			height     	282)
-		    (object SubSysView "Component View::CashierStationDevice" @105
+		    (object SubSysView "Component View::CashierStationDevice" @106
 			location   	(3448, 1519)
 			font       	(object Font
 			    size       	10
@@ -4038,7 +4083,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@105
+			    Parent_View 	@106
 			    location   	(3148, 1372)
 			    fill_color 	13434879
 			    nlines     	2
@@ -4051,7 +4096,7 @@
 			quidu      	"61AD946702B9"
 			width      	613
 			height     	307)
-		    (object SubSysView "Component View::PaymentProviders" @106
+		    (object SubSysView "Component View::PaymentProviders" @107
 			location   	(1891, 2310)
 			font       	(object Font
 			    size       	10
@@ -4064,7 +4109,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@106
+			    Parent_View 	@107
 			    location   	(1616, 2175)
 			    fill_color 	13434879
 			    nlines     	2
@@ -4077,7 +4122,7 @@
 			quidu      	"63DBA9F2037A"
 			width      	563
 			height     	282)
-		    (object SubSysView "Component View::TakeAwayStationDevice" @107
+		    (object SubSysView "Component View::TakeAwayStationDevice" @108
 			location   	(2708, 2277)
 			font       	(object Font
 			    size       	10
@@ -4090,7 +4135,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@107
+			    Parent_View 	@108
 			    location   	(2461, 2158)
 			    fill_color 	13434879
 			    nlines     	2
@@ -4102,7 +4147,33 @@
 			fill_color 	13434879
 			quidu      	"6444AFBC0319"
 			width      	506
-			height     	250)))
+			height     	250)
+		    (object SubSysView "Component View::CourierApp" @109
+			location   	(340, 2543)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@109
+			    location   	(196, 2474)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"CourierApp")
+			icon_style 	"Decoration"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"65087AD0002F"
+			width      	300
+			height     	150)))
 	    (object Module_Diagram "NewDiagram2"
 		quid       	"5C63CFF102DA"
 		title      	"NewDiagram2"

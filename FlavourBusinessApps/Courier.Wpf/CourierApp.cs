@@ -7,12 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessApps.TakeAwayApp.WPF
+namespace FlavourBusinessApps.Courier.Wpf
 {
-    /// <MetaDataID>{8f191801-4c6c-4a70-b7e9-818f84ea701c}</MetaDataID>
-    public class TakeAwayApp
+    public class CourierApp
     {
-   
+
         public static void Startup(string deviceID)
         {
 
@@ -20,7 +19,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             ApplicationSettings.ExtraStoragePath = deviceID;
 
             //List<Tesa> col = new List<Tesa>() { new Tesa() { Name = "las" }, new Tesa() { Name = "las" ,torder=0}, new Tesa() { Name = "las" }, new Tesa() { Name = "las" } };
-            
+
             //try
             //{
 
@@ -32,7 +31,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             //catch (Exception error)
             //{
 
-                
+
             //}
 
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
@@ -62,7 +61,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             SerializationBinder.NamesTypesDictionary["TakeAwayApp.ViewModel.WatchingOrderPresentation"] = typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ViewModel.MealCourse"] = typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse);
 
-            
+
 
 
 
@@ -75,7 +74,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
             SerializationBinder.TypesNamesDictionary[typeof(global::WaiterApp.ViewModel.ServingBatchPresentation)] = "WaiterApp.ViewModel.ServingBatchPresentation";
 
-            
+
 
 
             SerializationBinder.TypesNamesDictionary[typeof(RestaurantHallLayoutModel.HallLayout)] = "RestaurantHallLayoutModel.HallLayout";
@@ -89,7 +88,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation)] = "TakeAwayApp.ViewModel.WatchingOrderPresentation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse)] = "FlavourBusinessManager.RoomService.ViewModel.MealCourse";
 
-            
+
 
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";

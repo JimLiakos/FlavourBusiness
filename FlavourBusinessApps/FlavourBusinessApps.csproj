@@ -151,6 +151,11 @@
       <Link>ViewModel\ItemsReadyToServe.cs</Link>
     </Compile>
     <Compile Include="Apps.cs" />
+    <Compile Include="Courier.Wpf\CourierApp.cs" />
+    <Compile Include="Courier.Wpf\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Courier.Wpf\ViewModel\ApplicationSettings.cs" />
     <Compile Include="MenuCanvas\IFontsResolver.cs" />
     <Compile Include="PreparationStationDevice.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -383,6 +388,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Courier.Wpf\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PreparationStationDevice.WPF\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
