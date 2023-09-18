@@ -356,7 +356,7 @@ namespace ServiceContextManagerApp
 
             _TakeawayCashiers = serviceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(TakeawayCashiers));
-
+             
         }
 
         [OOAdvantech.MetaDataRepository.HttpInVisible]

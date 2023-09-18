@@ -41356,7 +41356,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"18")
+			    value      	"19")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -42059,10 +42059,6 @@
 				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+3")
-				(object Attribute
-				    tool       	"C#"
 				    name       	"As Property"
 				    value      	TRUE)
 				(object Attribute
@@ -42072,7 +42068,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+18"))
 			    quid       	"6505832F032C"
 			    type       	"string"
 			    exportControl 	"Public")
