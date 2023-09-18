@@ -121,6 +121,10 @@
     <value>Cashier Station</value>
     <comment>Specifies the description of the 'cashier station' when it is created.</comment>
   </data>
+  <data name="DefaultCourierName" xml:space="preserve">
+    <value>Courier</value>
+    <comment>Specifies the name of the 'courier' when it is created.</comment>
+  </data>
   <data name="DefaultFisicalPartName" xml:space="preserve">
     <value>Company</value>
     <comment>Specifies the name of the 'fisical party' when it is created.</comment>

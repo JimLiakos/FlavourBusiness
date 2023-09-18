@@ -531,6 +531,12 @@ namespace ServiceContextManagerApp
 
         }
 
+
+
+
+
+
+
         /// <MetaDataID>{efc09c4c-633b-45de-9a6c-212f03ae5d73}</MetaDataID>
         public NewUserCode GetNewCourierQRCode(string color)
         {
