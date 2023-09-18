@@ -110,12 +110,13 @@ namespace FlavourBusinessFacade
     public enum RoleType
     {
         Unknown = 0,
-        Organization = 0b000001,
-        ServiceContextSupervisor = 0b000010,
-        Waiter = 0b000100,
-        EndUser = 0b001000,
-        MenuMaker = 0b010000,
-        TakeAwayCashier = 0b100000
+        Organization = 0b0000001,
+        ServiceContextSupervisor = 0b0000010,
+        Waiter = 0b0000100,
+        EndUser = 0b0001000,
+        MenuMaker = 0b0010000,
+        TakeAwayCashier = 0b0100000,
+        Courier = 0b1000000
 
     }
 }

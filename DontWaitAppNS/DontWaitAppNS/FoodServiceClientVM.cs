@@ -143,7 +143,7 @@ namespace DontWaitApp
                     {
                         var places = FoodServiceClient.DeliveryPlaces;
                         var defaultPlace = places.Where(x => x.Default).FirstOrDefault();
-                        if (defaultPlace != null&& FoodServiceClient.IsPlatformClient)
+                        if (defaultPlace != null && FoodServiceClient.IsPlatformClient)
                             this.FlavoursOrderServer.GetNeighborhoodFoodServers(defaultPlace.Location);
 
                         lock (ClientSessionLock)
@@ -171,6 +171,10 @@ namespace DontWaitApp
                 return;
 
             FoodServiceClient.AddDeliveryPlace(deliveryPlace);
+            lock (ClientSessionLock)
+            {
+                _Places = null;
+            }
         }
 
         /// <MetaDataID>{14220482-c7b6-492b-ac98-3a289e32ea50}</MetaDataID>
@@ -208,8 +212,8 @@ namespace DontWaitApp
                     _Places = null;
             }
 
-            
-            
+
+
 
         }
 

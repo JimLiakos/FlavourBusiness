@@ -62,6 +62,7 @@
     <Compile Include="ICallerIDLine.cs" />
     <Compile Include="ICallerIDServer.cs" />
     <Compile Include="ICashierStationRuntime.cs" />
+    <Compile Include="ICourier.cs" />
     <Compile Include="IDebtCollection.cs" />
     <Compile Include="IFoodTypeTag.cs" />
     <Compile Include="IGeocoding.cs" />

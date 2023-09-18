@@ -237,7 +237,11 @@
 		(object Realize_Relationship
 		    quid       	"64B13AE30033"
 		    supplier   	"Logical View::FlavourBusinessFacade::ServicesContextResources::IHomeDeliveryCallCenterStation"
-		    quidu      	"64B13ACB033C"))
+		    quidu      	"64B13ACB033C")
+		(object Realize_Relationship
+		    quid       	"6505315400E7"
+		    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::ICourier"
+		    quidu      	"6503D5A30347"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -2273,4 +2277,36 @@
 		    quidu      	"64B13AE30033"
 		    client     	@1
 		    supplier   	@114
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::HumanResources::ICourier" @116
+		    location   	(3269, 2463)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@116
+			location   	(3268, 2571)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ICourier")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"6503D5A30347")
+		(object RealizeView "" @117
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"6505315400E7"
+		    client     	@1
+		    supplier   	@116
 		    line_style 	0)))))

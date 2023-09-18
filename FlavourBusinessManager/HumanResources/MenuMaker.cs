@@ -11,6 +11,7 @@ using OOAdvantech.PersistenceLayer;
 
 namespace FlavourBusinessManager.HumanResources
 {
+
     /// <MetaDataID>{e7d6524c-f870-44cd-a1a9-b3ce0a938cf1}</MetaDataID>
     [BackwardCompatibilityID("{e7d6524c-f870-44cd-a1a9-b3ce0a938cf1}")]
     [Persistent()]

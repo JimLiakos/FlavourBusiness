@@ -305,6 +305,39 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+
+
+        /// <exclude>Excluded</exclude>
+        List<ICourier> _Couriers;
+        
+        public IList<ICourier> Couriers
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_Couriers == null)
+                    {
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+                        OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                        var servicesContextIdentity = ServicesContextIdentity;
+                        _Couriers = (from courier in servicesContextStorage.GetObjectCollection<ICourier>()
+                                             where courier.ServicesContextIdentity == servicesContextIdentity
+                                             select courier).ToList();
+
+                        foreach (var takeawayCashier in _TakeawayCashiers)
+                            takeawayCashier.ObjectChangeState += TakeawayCashier_ObjectChangeState;
+                    }
+
+                    return _Couriers.ToList();
+                }
+
+            }
+        }
+
+
         /// <MetaDataID>{c543c675-b069-4660-a061-3fbbe7a42b0b}</MetaDataID>
         private void TakeawayCashier_ObjectChangeState(object _object, string member)
         {
@@ -412,7 +445,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 //unassignedtakeawayCashier
                 var unassignedtakeawayCashier = (from takeawayCashier in TakeawayCashiers
                                                  select takeawayCashier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
-                string WaiterAssignKey = "";
+                string takeawayCashierKey = "";
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
@@ -429,13 +462,54 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             _TakeawayCashiers.Add(unassignedtakeawayCashier);
                         }
                     }
-                    WaiterAssignKey = servicesContextIdentity + ";" + unassignedtakeawayCashier.Identity + ";" + Guid.NewGuid().ToString("N");
+                    takeawayCashierKey = servicesContextIdentity + ";" + unassignedtakeawayCashier.Identity + ";" + Guid.NewGuid().ToString("N");
 
-                    unassignedtakeawayCashier.WorkerAssignKey = WaiterAssignKey;
+                    unassignedtakeawayCashier.WorkerAssignKey = takeawayCashierKey;
                     stateTransition.Consistent = true;
                 }
 
-                return WaiterAssignKey;
+                return takeawayCashierKey;
+            }
+        }
+
+
+        /// <MetaDataID>{d11f6e72-b8ca-4588-9d09-6f5b3f984e09}</MetaDataID>
+        public string NewCourier()
+        {
+            var objectStorage = ObjectStorage.GetStorageOfObject(this);
+
+            //OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
+            var servicesContextIdentity = ServicesContextIdentity;
+
+            lock (SupervisorsLock)
+            {
+                //unassignedtakeawayCashier
+                var unassignedCourier = (from courier in Couriers
+                                         select courier).ToList().Where((x => string.IsNullOrWhiteSpace(x.OAuthUserIdentity))).FirstOrDefault();
+                string courierKey = "";
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    if (unassignedCourier == null)
+                    {
+                        unassignedCourier = new Courier();
+                        unassignedCourier.ServicesContextIdentity = servicesContextIdentity;
+                        unassignedCourier.Name = Properties.Resources.DefaultWaiterName;
+
+                        objectStorage.CommitTransientObjectState(unassignedCourier);
+                        lock (ServiceContextRTLock)
+                        {
+                            _Couriers.Add(unassignedCourier);
+                        }
+                    }
+                    courierKey = servicesContextIdentity + ";" + unassignedCourier.Identity + ";" + Guid.NewGuid().ToString("N");
+
+                    unassignedCourier.WorkerAssignKey = courierKey;
+                    stateTransition.Consistent = true;
+                }
+
+                return courierKey;
             }
         }
 
@@ -1019,6 +1093,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var activeShiftWorks = GetActiveShiftWorks();
         }
 
+        internal void CourierSiftWorkUpdated(Courier courier)
+        {
+            if (courier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(courier.ActiveShiftWork))
+                ActiveShiftWorks.Add(courier.ActiveShiftWork);
+
+            var activeShiftWorks = GetActiveShiftWorks();
+        }
 
         /// <MetaDataID>{fa22f19b-550e-4ae2-8c6c-315fa0ea2b26}</MetaDataID>
         [PersistentMember(nameof(_Description))]
@@ -1751,7 +1832,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Couriers = Couriers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2723,6 +2804,86 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         }
 
+
+        /// <MetaDataID>{c916e91a-8686-41a1-bae4-6fd42e42da32}</MetaDataID>
+        public ICourier AssignCourierNativeUser(string courierAssignKey, string userName, string password, string userFullName)
+        {
+            lock (SupervisorsLock)
+            {
+
+
+                var unassignedCourier = (from courier in Couriers
+                                                 where courier.WorkerAssignKey == courierAssignKey
+                                                 select courier).FirstOrDefault();
+
+
+
+                if (unassignedCourier != null)
+                {
+                    NativeAuthUser nativeAuthUser = null;
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+
+                        nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
+                        nativeAuthUser.RoleType = RoleType.Courier;
+                        nativeAuthUser.CreateFirebaseEmailUserCredential();
+                        UserCredential user = null;
+                        var FireBaseAcoountTask = Task.Run(async () =>
+                        {
+                            user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
+                        });
+
+                        FireBaseAcoountTask.Wait(TimeSpan.FromSeconds(30));
+
+                        AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
+                        AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
+                        authUserRef.AddRole(unassignedCourier);
+                        authUserRef.UserName = userName;
+                        authUserRef.FullName = userFullName;
+                        authUserRef.Save();
+
+
+
+                        var objectStorage = ObjectStorage.GetStorageOfObject(this);
+                        objectStorage.CommitTransientObjectState(nativeAuthUser);
+                        unassignedCourier.WorkerAssignKey = null;
+                        (unassignedCourier as TakeawayCashier).OAuthUserIdentity = authUser.User_ID;
+                        unassignedCourier.Name = userFullName;
+
+                        stateTransition.Consistent = true;
+                    }
+                    lock (NativeUsersLock)
+                    {
+                        if (!NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                }
+
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    stateTransition.Consistent = true;
+                }
+                return default(ICourier);
+
+                //if (unassignedWaiter != null)
+                //{
+                //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                //    {
+                //        unassignedWaiter.WorkerAssignKey = null;
+                //        (unassignedWaiter as Waiter).OAuthUserIdentity = signUpUserIdentity;
+                //        unassignedWaiter.Name = userName;
+                //        stateTransition.Consistent = true;
+                //    }
+                //    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                //}
+
+                //return unassignedWaiter;
+            }
+
+        }
         /// <MetaDataID>{bc4d31f4-b44e-4d59-845e-582531cd8584}</MetaDataID>
         public bool IsGraphicMenuAssigned(string storageIdentity)
         {

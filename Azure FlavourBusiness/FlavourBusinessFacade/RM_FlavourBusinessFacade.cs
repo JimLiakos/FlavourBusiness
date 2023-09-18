@@ -1619,6 +1619,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<string>(retValue);
         }
         
+        public string NewCourier()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewCourier", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
+        
         public FlavourBusinessFacade.HumanResources.IShiftWork NewShifWork(FlavourBusinessFacade.HumanResources.IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours)
         {
             object[] args = new object[3];
@@ -1990,6 +1998,22 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetHomeDeliveryCallCenterStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation>(retValue);
+        }
+        
+        public FlavourBusinessFacade.HumanResources.ICourier AssignCourierNativeUser(string courierAssignKey, string userName, string password, string userFullName)
+        {
+            object[] args = new object[4];
+            System.Type[] argsTypes = new System.Type[4];
+            args[0] = courierAssignKey;
+            argsTypes[0] = typeof(string);
+            args[1] = userName;
+            argsTypes[1] = typeof(string);
+            args[2] = password;
+            argsTypes[2] = typeof(string);
+            args[3] = userFullName;
+            argsTypes[3] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignCourierNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.ICourier>(retValue);
         }
     }
     

@@ -395,6 +395,7 @@ namespace TakeAwayApp.ViewModel
     }
 
 
+    /// <MetaDataID>{943b6775-9e29-4571-b047-72ba55782504}</MetaDataID>
     class HomeDeliverySessionState
     {
         public ClientState Client { get; set; }
@@ -402,6 +403,7 @@ namespace TakeAwayApp.ViewModel
         public List<FlavourBusinessManager.RoomService.ItemPreparation> OrderItems { get; set; }
 
     }
+    /// <MetaDataID>{629d2916-5528-4409-9ed1-1fab25d91e56}</MetaDataID>
     class ClientState
     {
         public string FullName { get; set; }

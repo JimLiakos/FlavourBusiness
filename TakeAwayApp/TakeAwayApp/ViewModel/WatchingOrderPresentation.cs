@@ -9,8 +9,9 @@ using OOAdvantech.Json;
 
 namespace TakeAwayApp.ViewModel
 {
+    /// <MetaDataID>{22697e86-8646-4738-a7a7-189eaef3638b}</MetaDataID>
     public class WatchingOrderPresentation
-    {  
+    {
 
         public WatchingOrderPresentation(WatchingOrder watchingOrder, List<FlavourBusinessManager.RoomService.ViewModel.MealCourse> mealCourses)
         {
@@ -26,12 +27,12 @@ namespace TakeAwayApp.ViewModel
             DistributionDateTime = watchingOrder.DistributionDateTime;
             State = watchingOrder.State;
             Description = watchingOrder.DeliveryPlace?.Description;
-            ClientPhone=watchingOrder.ClientPhone;
+            ClientPhone = watchingOrder.ClientPhone;
             OrderCode = watchingOrder.OrderCode;
 
-            OrderTotal=watchingOrder.OrderTotal;
-            
-            
+            OrderTotal = watchingOrder.OrderTotal;
+
+
 
 
 
@@ -48,7 +49,7 @@ namespace TakeAwayApp.ViewModel
         public IPlace DeliveryPlace { get; set; }
 
         public string SessionID { get; set; }
-        public SessionType SessionType { get;  set; }
+        public SessionType SessionType { get; set; }
         public List<FlavourBusinessManager.RoomService.ViewModel.MealCourse> MealCourses { get; set; }
 
         public DateTime EntryDateTime { get; set; }

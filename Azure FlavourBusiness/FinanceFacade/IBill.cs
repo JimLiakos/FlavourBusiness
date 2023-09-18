@@ -19,14 +19,15 @@ namespace FlavourBusinessFacade.RoomService
         FinanceFacade.IPayment OpenPayment { get; }
     }
 
-    public struct  PayAmount
+    /// <MetaDataID>{ad23a376-ae8a-48ad-ac04-b79005c2b798}</MetaDataID>
+    public struct PayAmount
     {
-        
+
 
         public PayAmount(decimal amount, string iSOCurrencySymbol)
         {
-            Amount=amount;
-            ISOCurrencySymbol=iSOCurrencySymbol;
+            Amount = amount;
+            ISOCurrencySymbol = iSOCurrencySymbol;
         }
 
         public decimal Amount { get; }

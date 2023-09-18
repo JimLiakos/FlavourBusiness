@@ -61,6 +61,9 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{7648e907-7186-4bfa-b99e-fb057c0af603}</MetaDataID>
         string NewTakeAwayCashier();
 
+        /// <MetaDataID>{5b7d3edf-0cd1-413f-9708-8c6caa18a1ca}</MetaDataID>
+        string NewCourier();
+
 
         /// <MetaDataID>{e22a146a-d86a-477e-a7f8-6fa9cc5a8a9b}</MetaDataID>
         IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours);
@@ -223,7 +226,10 @@ namespace FlavourBusinessFacade
         OOAdvantech.Remoting.RestApi.HookRespnose WebHook(string method, string webHookName, Dictionary<string, string> headers, string content);
         /// <MetaDataID>{3775750f-2f13-458b-ac13-c682be2e15d2}</MetaDataID>
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
+        /// <MetaDataID>{435882c5-db4c-4d32-9d44-ae0607a3fd3d}</MetaDataID>
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
+        /// <MetaDataID>{7c8299af-cb13-47ba-8d8b-57ee819b9d4b}</MetaDataID>
+        ICourier AssignCourierNativeUser(string courierAssignKey, string userName, string password, string userFullName);
 
 
 #endif

@@ -90,6 +90,12 @@
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\ServicePointInfo.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\ServicePointInfo.cs</Link>
     </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\CourierPresentation.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\CourierPresentation.cs</Link>
+    </Compile>
+    <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ICourierPresentation.cs">
+      <Link>ServiceContextManagerApp.WPF\ViewModel\ICourierPresentation.cs</Link>
+    </Compile>
     <Compile Include="..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\IManagerPresentation.cs">
       <Link>ServiceContextManagerApp.WPF\ViewModel\IManagerPresentation.cs</Link>
     </Compile>

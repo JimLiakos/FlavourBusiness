@@ -541,6 +541,7 @@ namespace DontWaitApp
         FBMessenger = 3
     }
 
+    /// <MetaDataID>{5784d212-e99f-4f68-8bf3-fcc383077c5c}</MetaDataID>
     public enum AppType
     {
         DontWaitApp = 1,
